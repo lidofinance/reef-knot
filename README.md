@@ -1,1 +1,2 @@
-# reef-knot
+# ReefKnot
+Web3 Wallets Connection Library
