@@ -1,0 +1,51 @@
+{
+  "name": "@lidofinance/reef-knot_connect-wallet-modal",
+  "version": "0.0.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "lido",
+    "lidofinance",
+    "styled-components",
+    "component",
+    "react-component",
+    "react"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "peerDependencies": {
+    "@lido-sdk/constants": ">=1.6",
+    "@lido-sdk/react": ">=1.18",
+    "@lido-sdk/web3-react": ">=1.25",
+    "@lidofinance/lido-ui": ">=2.9",
+    "react": ">=16",
+    "react-dom": ">=16",
+    "react-is": ">=16",
+    "styled-components": "5",
+    "ua-parser-js": ">=1.0.2"
+  },
+  "devDependencies": {
+    "@lido-sdk/constants": "^1.6.0",
+    "@lido-sdk/react": "^1.18.1",
+    "@lido-sdk/web3-react": "^1.27.0",
+    "@lidofinance/lido-ui": "^2.16.1",
+    "@storybook/react": "6.3.7",
+    "@types/react": "17.0.19",
+    "@types/react-dom": "17.0.9",
+    "@types/react-is": "17.0.2",
+    "@types/styled-components": "5.1.12",
+    "@types/ua-parser-js": "^0.7.36",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-is": "17.0.2",
+    "styled-components": "5.3.0",
+    "ua-parser-js": "1.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
