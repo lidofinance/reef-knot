@@ -1,16 +1,16 @@
-import { helpers } from '@lido-sdk/web3-react'
+import { helpers } from '@lido-sdk/web3-react';
 
-export type ConflictCheck = [checkerFn: () => boolean, walletName: string]
+export type ConflictCheck = [checkerFn: () => boolean, walletName: string];
 
 export type ConflictChecks = {
-  Tally: ConflictCheck
-  Exodus: ConflictCheck
-  Coin98: ConflictCheck
-  MathWallet: ConflictCheck
-  Gamestop: ConflictCheck
-  Coinbase: ConflictCheck
-  Xdefi: ConflictCheck
-}
+  Tally: ConflictCheck;
+  Exodus: ConflictCheck;
+  Coin98: ConflictCheck;
+  MathWallet: ConflictCheck;
+  Gamestop: ConflictCheck;
+  Coinbase: ConflictCheck;
+  Xdefi: ConflictCheck;
+};
 
 export const CONFLICTS: ConflictChecks = {
   Tally: [helpers.isTallyProvider, 'Tally'],
@@ -20,4 +20,4 @@ export const CONFLICTS: ConflictChecks = {
   Gamestop: [helpers.isGamestopProvider, 'GameStop'],
   Coinbase: [helpers.isCoinbaseProvider, 'Coinbase'],
   Xdefi: [helpers.isXdefiProvider, 'XDEFI'],
-}
+};

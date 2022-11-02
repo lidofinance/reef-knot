@@ -1,6 +1,6 @@
-import { WalletsModalProps } from '../WalletsModal'
-import { WalletId } from '../constants'
+import { WalletsModalProps } from '../WalletsModal';
+import { WalletId } from '../constants';
 
 export type WalletsModalForEthProps = Omit<WalletsModalProps, 'children'> & {
-  hiddenWallets?: WalletId[]
-}
+  hiddenWallets?: WalletId[];
+};

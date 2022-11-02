@@ -1,1 +1,1 @@
-export type { ReactProps } from './ReactProps'
+export type { ReactProps } from './ReactProps';

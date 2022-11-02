@@ -1,17 +1,17 @@
-import { FC, useCallback } from 'react'
-import { useConnectorMetamask } from '@lido-sdk/web3-react'
-import { MetaMaskCircle, MetaMaskCircleInversion } from '@lidofinance/lido-ui'
-import { CONFLICTS } from '../constants/conflictChecks'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
-import checkConflicts from './checkConflicts'
+import { FC, useCallback } from 'react';
+import { useConnectorMetamask } from '@lido-sdk/web3-react';
+import { MetaMaskCircle, MetaMaskCircleInversion } from '@lidofinance/lido-ui';
+import { CONFLICTS } from '../constants/conflictChecks';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
+import checkConflicts from './checkConflicts';
 
 const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props
-  const { connect } = useConnectorMetamask()
+  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
+  const { connect } = useConnectorMetamask();
   const WalletIcon = shouldInvertWalletIcon
     ? MetaMaskCircleInversion
-    : MetaMaskCircle
+    : MetaMaskCircle;
 
   const handleConnect = useCallback(async () => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
@@ -22,7 +22,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
         CONFLICTS.Coin98,
         CONFLICTS.MathWallet,
         CONFLICTS.Tally,
-      ])
+      ]);
 
     if (hasConflicts) {
       setRequirements(true, {
@@ -39,13 +39,13 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
             `Your browser has a turned-on “${conflictingApps}” extension.` +
             ' Please, turn off this extension and reload the page to enable MetaMask.'
           ),
-      })
-      return
+      });
+      return;
     }
 
-    onConnect?.()
-    await connect()
-  }, [onConnect, connect, setRequirements, WalletIcon])
+    onConnect?.();
+    await connect();
+  }, [onConnect, connect, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton
@@ -55,7 +55,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     >
       MetaMask
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectMetamask
+export default ConnectMetamask;

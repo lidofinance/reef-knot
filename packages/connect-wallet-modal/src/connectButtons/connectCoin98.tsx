@@ -1,14 +1,14 @@
-import { FC, useCallback } from 'react'
-import { useConnectorCoin98 } from '@lido-sdk/web3-react'
-import { Coin98Circle } from '@lidofinance/lido-ui'
-import { CONFLICTS } from '../constants/conflictChecks'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
-import checkConflicts from './checkConflicts'
+import { FC, useCallback } from 'react';
+import { useConnectorCoin98 } from '@lido-sdk/web3-react';
+import { Coin98Circle } from '@lidofinance/lido-ui';
+import { CONFLICTS } from '../constants/conflictChecks';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
+import checkConflicts from './checkConflicts';
 
 const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, setRequirements, ...rest } = props
-  const { connect } = useConnectorCoin98()
+  const { onConnect, setRequirements, ...rest } = props;
+  const { connect } = useConnectorCoin98();
 
   const handleConnect = useCallback(async () => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
@@ -18,7 +18,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
         CONFLICTS.Exodus,
         CONFLICTS.Gamestop,
         CONFLICTS.Xdefi,
-      ])
+      ]);
 
     if (hasConflicts) {
       setRequirements(true, {
@@ -35,13 +35,13 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
             `Your browser has a turned-on “${conflictingApps}” extension.` +
             ' Please, turn off this extension and reload the page to enable Coin98.'
           ),
-      })
-      return
+      });
+      return;
     }
 
-    onConnect?.()
-    await connect()
-  }, [onConnect, connect, setRequirements])
+    onConnect?.();
+    await connect();
+  }, [onConnect, connect, setRequirements]);
 
   return (
     <ConnectButton
@@ -51,7 +51,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     >
       Coin98
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectCoin98
+export default ConnectCoin98;

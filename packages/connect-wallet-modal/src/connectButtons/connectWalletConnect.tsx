@@ -1,17 +1,17 @@
-import { FC, useCallback } from 'react'
-import { useConnectorWalletConnect } from '@lido-sdk/web3-react'
-import { WalletConnectCircle } from '@lidofinance/lido-ui'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
+import { FC, useCallback } from 'react';
+import { useConnectorWalletConnect } from '@lido-sdk/web3-react';
+import { WalletConnectCircle } from '@lidofinance/lido-ui';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
 
 const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, ...rest } = props
-  const { connect } = useConnectorWalletConnect()
+  const { onConnect, ...rest } = props;
+  const { connect } = useConnectorWalletConnect();
 
   const handleConnect = useCallback(async () => {
-    onConnect?.()
-    await connect()
-  }, [onConnect, connect])
+    onConnect?.();
+    await connect();
+  }, [onConnect, connect]);
 
   return (
     <ConnectButton
@@ -21,7 +21,7 @@ const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
     >
       WalletConnect
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectWalletConnect
+export default ConnectWalletConnect;

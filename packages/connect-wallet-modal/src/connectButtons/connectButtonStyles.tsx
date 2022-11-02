@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import { Button } from '@lidofinance/lido-ui'
+import styled, { css } from 'styled-components';
+import { Button } from '@lidofinance/lido-ui';
 
 export const ConnectButtonStyle = styled(Button).attrs({
   variant: 'ghost',
@@ -14,7 +14,7 @@ export const ConnectButtonStyle = styled(Button).attrs({
     margin-bottom: ${spaceMap.md}px;
     background: ${colors.background};
   `}
-`
+`;
 
 export const ConnectButtonContentStyle = styled.span`
   ${({ theme: { colors } }) => css`
@@ -23,14 +23,14 @@ export const ConnectButtonContentStyle = styled.span`
     align-items: center;
     color: ${colors.text};
   `}
-`
+`;
 
 export const ConnectButtonTitleStyle = styled.div`
   ${({ theme: { colors } }) => css`
     color: ${colors.text};
     line-height: 20px;
   `}
-`
+`;
 
 export const ConnectButtonIconStyle = styled.span`
   display: flex;
@@ -48,4 +48,4 @@ export const ConnectButtonIconStyle = styled.span`
     max-width: 40px;
     max-height: 40px;
   }
-`
+`;

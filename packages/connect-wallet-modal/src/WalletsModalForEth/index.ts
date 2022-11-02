@@ -1,1 +1,1 @@
-export * from './WalletsModalForEth'
+export * from './WalletsModalForEth';

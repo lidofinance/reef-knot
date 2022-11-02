@@ -1,2 +1,2 @@
-export * from './WalletsModal'
-export * from './types'
+export * from './WalletsModal';
+export * from './types';

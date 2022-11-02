@@ -1,13 +1,13 @@
-import { FC, useCallback } from 'react'
-import { useConnectorTally } from '@lido-sdk/web3-react'
-import { TallyCircle } from '@lidofinance/lido-ui'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
-import { isMobileOrTablet } from '../helpers'
+import { FC, useCallback } from 'react';
+import { useConnectorTally } from '@lido-sdk/web3-react';
+import { TallyCircle } from '@lidofinance/lido-ui';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
+import { isMobileOrTablet } from '../helpers';
 
 const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props
-  const { connect } = useConnectorTally()
+  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
+  const { connect } = useConnectorTally();
 
   const handleConnect = useCallback(async () => {
     if (!connect || isMobileOrTablet) {
@@ -15,13 +15,13 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
         icon: <TallyCircle />,
         title: "Tally Ho wallet couldn't connect",
         text: 'At the current moment, it is only available as extension for Chrome, Brave, and Firefox.',
-      })
-      return
+      });
+      return;
     }
 
-    onConnect?.()
-    connect()
-  }, [connect, onConnect, setRequirements])
+    onConnect?.();
+    connect();
+  }, [connect, onConnect, setRequirements]);
 
   return (
     <ConnectButton
@@ -31,7 +31,7 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     >
       Tally
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectTally
+export default ConnectTally;

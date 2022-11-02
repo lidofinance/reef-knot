@@ -1,19 +1,19 @@
-import { FC, useCallback } from 'react'
-import { useConnectorXdefi } from '@lido-sdk/web3-react'
-import { XdefiWallet } from '@lidofinance/lido-ui'
-import { CONFLICTS } from '../constants/conflictChecks'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
-import checkConflicts from './checkConflicts'
+import { FC, useCallback } from 'react';
+import { useConnectorXdefi } from '@lido-sdk/web3-react';
+import { XdefiWallet } from '@lidofinance/lido-ui';
+import { CONFLICTS } from '../constants/conflictChecks';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
+import checkConflicts from './checkConflicts';
 
 const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, setRequirements, ...rest } = props
-  const { connect } = useConnectorXdefi()
-  const WalletIcon = XdefiWallet
+  const { onConnect, setRequirements, ...rest } = props;
+  const { connect } = useConnectorXdefi();
+  const WalletIcon = XdefiWallet;
 
   const handleConnect = useCallback(async () => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
-      checkConflicts([CONFLICTS.Exodus, CONFLICTS.Tally])
+      checkConflicts([CONFLICTS.Exodus, CONFLICTS.Tally]);
 
     if (hasConflicts) {
       setRequirements(true, {
@@ -30,13 +30,13 @@ const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
             `Your browser has a turned-on “${conflictingApps}” extension.` +
             ' Please, turn off this extension and reload the page to enable XDEFI.'
           ),
-      })
-      return
+      });
+      return;
     }
 
-    onConnect?.()
-    await connect()
-  }, [onConnect, connect, setRequirements, WalletIcon])
+    onConnect?.();
+    await connect();
+  }, [onConnect, connect, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton
@@ -46,7 +46,7 @@ const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     >
       XDEFI
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectXdefi
+export default ConnectXdefi;

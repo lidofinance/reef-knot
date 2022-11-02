@@ -1,5 +1,5 @@
-import React from 'react'
-import { helpers } from '@lido-sdk/web3-react'
+import React from 'react';
+import { helpers } from '@lido-sdk/web3-react';
 import {
   ConnectCoin98,
   ConnectCoinbase,
@@ -18,10 +18,10 @@ import {
   ConnectExodus,
   ConnectGamestop,
   ConnectXdefi,
-} from '../connectButtons'
-import { ButtonsCommonProps, WalletsModal } from '../WalletsModal'
-import { WalletsModalForEthProps } from './types'
-import { WALLET_IDS, WalletId } from '../constants'
+} from '../connectButtons';
+import { ButtonsCommonProps, WalletsModal } from '../WalletsModal';
+import { WalletsModalForEthProps } from './types';
+import { WALLET_IDS, WalletId } from '../constants';
 
 const walletsButtons: { [K in WalletId]: React.ComponentType } = {
   [WALLET_IDS.METAMASK]: ConnectMetamask,
@@ -41,18 +41,18 @@ const walletsButtons: { [K in WalletId]: React.ComponentType } = {
   [WALLET_IDS.EXODUS]: ConnectExodus,
   [WALLET_IDS.GAMESTOP]: ConnectGamestop,
   [WALLET_IDS.XDEFI]: ConnectXdefi,
-}
+};
 
 function getWalletButton(name: WalletId, props: ButtonsCommonProps) {
   return React.createElement(walletsButtons[name], {
     key: name,
     ...props,
-  })
+  });
 }
 
 function getWalletsButtons(
   commonProps: ButtonsCommonProps,
-  hiddenWallets: WalletsModalForEthProps['hiddenWallets'] = []
+  hiddenWallets: WalletsModalForEthProps['hiddenWallets'] = [],
 ) {
   let wallets: WalletId[] = [
     WALLET_IDS.METAMASK,
@@ -64,36 +64,36 @@ function getWalletsButtons(
     WALLET_IDS.AMBIRE,
     WALLET_IDS.BLOCKCHAINCOM,
     WALLET_IDS.ZENGO,
-  ]
+  ];
 
   const addWalletTo = (
     wallets: WalletId[],
     walletId: WalletId,
-    condition: boolean
+    condition: boolean,
   ) => {
-    condition ? wallets.unshift(walletId) : wallets.push(walletId)
-  }
+    condition ? wallets.unshift(walletId) : wallets.push(walletId);
+  };
 
-  addWalletTo(wallets, WALLET_IDS.EXODUS, helpers.isExodusProvider())
-  addWalletTo(wallets, WALLET_IDS.BRAVE, helpers.isBraveWalletProvider())
-  addWalletTo(wallets, WALLET_IDS.OPERA, helpers.isOperaWalletProvider())
-  addWalletTo(wallets, WALLET_IDS.COIN98, helpers.isCoin98Provider())
-  addWalletTo(wallets, WALLET_IDS.MATH_WALLET, helpers.isMathWalletProvider())
-  addWalletTo(wallets, WALLET_IDS.TALLY, helpers.isTallyProvider())
-  addWalletTo(wallets, WALLET_IDS.GAMESTOP, helpers.isGamestopProvider())
-  addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider())
+  addWalletTo(wallets, WALLET_IDS.EXODUS, helpers.isExodusProvider());
+  addWalletTo(wallets, WALLET_IDS.BRAVE, helpers.isBraveWalletProvider());
+  addWalletTo(wallets, WALLET_IDS.OPERA, helpers.isOperaWalletProvider());
+  addWalletTo(wallets, WALLET_IDS.COIN98, helpers.isCoin98Provider());
+  addWalletTo(wallets, WALLET_IDS.MATH_WALLET, helpers.isMathWalletProvider());
+  addWalletTo(wallets, WALLET_IDS.TALLY, helpers.isTallyProvider());
+  addWalletTo(wallets, WALLET_IDS.GAMESTOP, helpers.isGamestopProvider());
+  addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
 
-  wallets = wallets.filter((wallet) => !hiddenWallets.includes(wallet))
+  wallets = wallets.filter((wallet) => !hiddenWallets.includes(wallet));
 
-  return wallets.map((wallet) => getWalletButton(wallet, commonProps))
+  return wallets.map((wallet) => getWalletButton(wallet, commonProps));
 }
 
 export function WalletsModalForEth(
-  props: WalletsModalForEthProps
+  props: WalletsModalForEthProps,
 ): JSX.Element {
   return (
     <WalletsModal {...props}>
       {(commonProps) => getWalletsButtons(commonProps, props.hiddenWallets)}
     </WalletsModal>
-  )
+  );
 }

@@ -1,20 +1,20 @@
-import { FC, useCallback } from 'react'
-import { useConnectorWalletConnectNoLinks } from '@lido-sdk/web3-react'
-import { Blochainwallet, BlochainwalletInversion } from '@lidofinance/lido-ui'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
+import { FC, useCallback } from 'react';
+import { useConnectorWalletConnectNoLinks } from '@lido-sdk/web3-react';
+import { Blochainwallet, BlochainwalletInversion } from '@lidofinance/lido-ui';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
 
 const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, shouldInvertWalletIcon, ...rest } = props
-  const { connect } = useConnectorWalletConnectNoLinks()
+  const { onConnect, shouldInvertWalletIcon, ...rest } = props;
+  const { connect } = useConnectorWalletConnectNoLinks();
   const WalletIcon = shouldInvertWalletIcon
     ? BlochainwalletInversion
-    : Blochainwallet
+    : Blochainwallet;
 
   const handleConnect = useCallback(async () => {
-    onConnect?.()
-    await connect()
-  }, [onConnect, connect])
+    onConnect?.();
+    await connect();
+  }, [onConnect, connect]);
 
   return (
     <ConnectButton
@@ -24,7 +24,7 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
     >
       Blockchain.com
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectBlockchaincom
+export default ConnectBlockchaincom;

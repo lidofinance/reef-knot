@@ -16,6 +16,6 @@ export const WALLET_IDS = {
   EXODUS: 'Exodus',
   GAMESTOP: 'Gamestop',
   XDEFI: 'Xdefi',
-} as const
+} as const;
 
-export type WalletId = typeof WALLET_IDS[keyof typeof WALLET_IDS]
+export type WalletId = typeof WALLET_IDS[keyof typeof WALLET_IDS];

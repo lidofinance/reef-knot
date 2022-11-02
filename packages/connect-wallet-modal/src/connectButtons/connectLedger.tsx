@@ -1,27 +1,27 @@
-import { FC, useCallback } from 'react'
-import { useConnectorLedger } from '@lido-sdk/web3-react'
-import { LedgerCircle, LedgerCircleInversion } from '@lidofinance/lido-ui'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
+import { FC, useCallback } from 'react';
+import { useConnectorLedger } from '@lido-sdk/web3-react';
+import { LedgerCircle, LedgerCircleInversion } from '@lidofinance/lido-ui';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
 
 const ConnectLedger: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, setRequirements, shouldInvertWalletIcon, ...rest } = props
-  const { connect, connector } = useConnectorLedger()
+  const { onConnect, setRequirements, shouldInvertWalletIcon, ...rest } = props;
+  const { connect, connector } = useConnectorLedger();
   const WalletIcon = shouldInvertWalletIcon
     ? LedgerCircleInversion
-    : LedgerCircle
+    : LedgerCircle;
 
   const handleConnect = useCallback(async () => {
     if (!connect || !connector?.isSupported()) {
       setRequirements(true, {
         icon: <WalletIcon />,
         title: "Ledger couldn't connect",
-      })
-      return
+      });
+      return;
     }
-    onConnect?.()
-    connect()
-  }, [connect, connector, onConnect, setRequirements, WalletIcon])
+    onConnect?.();
+    connect();
+  }, [connect, connector, onConnect, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton
@@ -31,7 +31,7 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
     >
       Ledger
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectLedger
+export default ConnectLedger;

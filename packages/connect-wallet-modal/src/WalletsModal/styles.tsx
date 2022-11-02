@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
 export const WalletsButtonsContainer = styled.div<{
-  $buttonsFullWidth: boolean
+  $buttonsFullWidth: boolean;
 }>`
   ${({ theme: { mediaQueries }, $buttonsFullWidth }) => css`
     display: grid;
@@ -16,4 +16,4 @@ export const WalletsButtonsContainer = styled.div<{
         : 'repeat(auto-fill, 93px)'};
     }
   `}
-`
+`;

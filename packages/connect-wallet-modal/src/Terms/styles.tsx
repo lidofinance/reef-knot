@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
 export const TermsStyle = styled.label`
   ${({ theme: { fontSizesMap, spaceMap, borderRadiusesMap, colors } }) => css`
@@ -13,9 +13,9 @@ export const TermsStyle = styled.label`
     background: ${colors.background};
     cursor: pointer;
   `}
-`
+`;
 
 export const TermsTextStyle = styled.span`
   margin-left: ${({ theme }) => theme.spaceMap.lg}px;
   text-align: left;
-`
+`;

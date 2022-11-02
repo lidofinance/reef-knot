@@ -1,3 +1,11 @@
-import { ReactChild, ReactFragment, ReactPortal } from "react";
+import { ReactChild, ReactFragment, ReactPortal } from 'react';
 
-export type ReactProps = { children: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }
+export type ReactProps = {
+  children:
+    | boolean
+    | ReactChild
+    | ReactFragment
+    | ReactPortal
+    | null
+    | undefined;
+};

@@ -1,13 +1,13 @@
-import { FC, useCallback } from 'react'
-import { useConnectorImToken } from '@lido-sdk/web3-react'
-import { ImtokenCircle } from '@lidofinance/lido-ui'
-import { ConnectWalletProps } from './types'
-import ConnectButton from './connectButton'
-import { isIOS, isAndroid } from '../helpers'
+import { FC, useCallback } from 'react';
+import { useConnectorImToken } from '@lido-sdk/web3-react';
+import { ImtokenCircle } from '@lidofinance/lido-ui';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
+import { isIOS, isAndroid } from '../helpers';
 
 const ConnectImToken: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, setRequirements, ...rest } = props
-  const { connect } = useConnectorImToken()
+  const { onConnect, setRequirements, ...rest } = props;
+  const { connect } = useConnectorImToken();
 
   const handleConnect = useCallback(async () => {
     if (!connect || !(isIOS || isAndroid)) {
@@ -15,12 +15,12 @@ const ConnectImToken: FC<ConnectWalletProps> = (props) => {
         icon: <ImtokenCircle />,
         title: "imToken couldn't connect",
         text: 'It is available only on iOS and Android devices.',
-      })
-      return
+      });
+      return;
     }
-    onConnect?.()
-    await connect()
-  }, [onConnect, connect, setRequirements])
+    onConnect?.();
+    await connect();
+  }, [onConnect, connect, setRequirements]);
 
   return (
     <ConnectButton
@@ -30,7 +30,7 @@ const ConnectImToken: FC<ConnectWalletProps> = (props) => {
     >
       imToken
     </ConnectButton>
-  )
-}
+  );
+};
 
-export default ConnectImToken
+export default ConnectImToken;

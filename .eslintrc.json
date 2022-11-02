@@ -37,7 +37,6 @@
     ],
     "jsx-a11y/no-autofocus": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "func-style": ["error", "expression"],
     "@next/next/no-html-link-for-pages": "off"
   },
   "settings": {
