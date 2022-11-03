@@ -1937,7 +1937,7 @@
   dependencies:
     "@ethersproject/logger" "^5.7.0"
 
-"@ethersproject/providers@5.7.2", "@ethersproject/providers@^5.5.2":
+"@ethersproject/providers@5.7.2", "@ethersproject/providers@^5.4.5", "@ethersproject/providers@^5.5.2":
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.7.2.tgz#f8b1a4f275d7ce58cf0a2eec222269a08beb18cb"
   integrity sha512-g34EWZ1WWAVgr4aptGlVBF8mhl3VWjv+8hoAnzStu8Ah22VHBsuGzP17eb6xDVRzw895G4W7vvx60lFFur/1Rg==
@@ -2351,7 +2351,7 @@
     "@lido-sdk/constants" "1.6.0"
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/helpers@1.4.3":
+"@lido-sdk/helpers@1.4.3", "@lido-sdk/helpers@^1.4.3":
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/@lido-sdk/helpers/-/helpers-1.4.3.tgz#148f54340ce1cf605473b49c0c1d58d23dfaa5fb"
   integrity sha512-TDhqvXebrli4SbE/nzvWg/b7BC6TtWJrkvOLXdobAtEoiumaB4e75vc8FwudXv/0tgR++KVORi9A3TqHP/rvQQ==
@@ -2359,7 +2359,7 @@
     "@lido-sdk/constants" "1.6.0"
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/providers@1.4.4":
+"@lido-sdk/providers@1.4.4", "@lido-sdk/providers@^1.4.4":
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/@lido-sdk/providers/-/providers-1.4.4.tgz#ffb73dffe33d0262cb1c0d1712f09692ed1062fc"
   integrity sha512-RSmmgLTZAAnbqo5Ts2ehXt703Dm1eiJivXdflS+4FZFCu70e7ariwEHg4eDDYiy5w+6ffqyLPBPKxcY5YtiL+A==
