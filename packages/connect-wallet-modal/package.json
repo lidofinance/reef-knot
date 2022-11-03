@@ -1,18 +1,19 @@
 {
-  "name": "@lidofinance/reef-knot_connect-wallet-modal",
-  "version": "0.0.0",
+  "name": "@reef-knot/connect-wallet-modal",
+  "version": "0.0.1",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "license": "MIT",
-  "keywords": [
-    "lido",
-    "lidofinance",
-    "styled-components",
-    "component",
-    "react-component",
-    "react"
-  ],
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/connect-wallet-modal"
+  },
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w"
