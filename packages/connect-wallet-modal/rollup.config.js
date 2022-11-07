@@ -36,7 +36,7 @@ export default {
   ],
   plugins: [
     del({ targets: 'dist/*', runOnce: true }),
-    resolve({ extensions }),
+    resolve({ extensions, preferBuiltins: true }),
     typescript({
       tslib,
       typescript: ts,
@@ -49,7 +49,7 @@ export default {
           rootDir: './src',
         },
         exclude: ['node_modules', 'dist', '**/*.stories.*', '**/*.test.*'],
-        include: ['**/src/*.ts', '**/src/*.tsx'],
+        include: ['**/src/**/*.ts', '**/src/**/*.tsx'],
       },
     }),
     commonjs(),
