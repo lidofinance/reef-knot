@@ -1,6 +1,5 @@
 # Connect Wallet Modal
 
-React components for Lido Finance projects.  
 Provides a modal window with buttons for connection with various crypto wallets.
 
 ### Custom
@@ -11,7 +10,7 @@ You can use them, or you can make your own.
 
 Import the basic WalletsModal component with required wallet connection buttons:
 ```ts
-import { WalletsModal, ConnectMetamask, ConnectWalletConnect } from '@lidofinance/blocks-connect-wallet-modal'
+import { WalletsModal, ConnectMetamask, ConnectWalletConnect } from '@reef-knot/connect-wallet-modal'
 ```
 
 Use it like this:
@@ -36,7 +35,7 @@ The package provides the modal variant with the predefined list of wallets, whic
 
 Import the component:
 ```ts
-import { WalletsModalForEth } from '@lidofinance/blocks-connect-wallet-modal'
+import { WalletsModalForEth } from '@reef-knot/connect-wallet-modal'
 ```
 
 Use it like this:
