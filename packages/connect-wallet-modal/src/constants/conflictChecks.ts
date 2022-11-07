@@ -1,4 +1,4 @@
-import { helpers } from '@lido-sdk/web3-react';
+import { helpers } from '@reef-knot/web3-react';
 
 export type ConflictCheck = [checkerFn: () => boolean, walletName: string];
 

@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useState } from 'react';
 import { CHAINS } from '@lido-sdk/constants';
-import { ProviderWeb3 } from '@lido-sdk/web3-react';
+import { ProviderWeb3 } from '@reef-knot/web3-react';
 import { Story, Meta } from '@storybook/react';
 import { Button } from '@lidofinance/lido-ui';
 import { WalletsModalForEth } from './WalletsModalForEth';

@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorExodus, helpers } from '@lido-sdk/web3-react';
+import { useConnectorExodus, helpers } from '@reef-knot/web3-react';
 import { Link, Exodus as WalletIcon } from '@lidofinance/lido-ui';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';

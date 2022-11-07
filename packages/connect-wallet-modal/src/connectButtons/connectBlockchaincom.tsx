@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorWalletConnectNoLinks } from '@lido-sdk/web3-react';
+import { useConnectorWalletConnectNoLinks } from '@reef-knot/web3-react';
 import { Blochainwallet, BlochainwalletInversion } from '@lidofinance/lido-ui';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';

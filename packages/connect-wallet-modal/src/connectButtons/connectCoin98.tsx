@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorCoin98 } from '@lido-sdk/web3-react';
+import { useConnectorCoin98 } from '@reef-knot/web3-react';
 import { Coin98Circle } from '@lidofinance/lido-ui';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';

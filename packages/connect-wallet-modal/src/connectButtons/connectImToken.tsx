@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorImToken } from '@lido-sdk/web3-react';
+import { useConnectorImToken } from '@reef-knot/web3-react';
 import { ImtokenCircle } from '@lidofinance/lido-ui';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';

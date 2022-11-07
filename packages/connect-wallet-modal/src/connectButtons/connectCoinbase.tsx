@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorCoinbase } from '@lido-sdk/web3-react';
+import { useConnectorCoinbase } from '@reef-knot/web3-react';
 import { Coinbase } from '@lidofinance/lido-ui';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';

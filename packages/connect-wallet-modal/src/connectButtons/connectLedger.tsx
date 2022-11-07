@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorLedger } from '@lido-sdk/web3-react';
+import { useConnectorLedger } from '@reef-knot/web3-react';
 import { LedgerCircle, LedgerCircleInversion } from '@lidofinance/lido-ui';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';

@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorXdefi } from '@lido-sdk/web3-react';
+import { useConnectorXdefi } from '@reef-knot/web3-react';
 import { XdefiWallet } from '@lidofinance/lido-ui';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';

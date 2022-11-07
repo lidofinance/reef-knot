@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect } from 'react';
 import {
   useConnectorWalletConnectNoLinks,
   useConnectorWalletConnectUri,
-} from '@lido-sdk/web3-react';
+} from '@reef-knot/web3-react';
 import { Zengo as WalletIcon } from '@lidofinance/lido-ui';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';

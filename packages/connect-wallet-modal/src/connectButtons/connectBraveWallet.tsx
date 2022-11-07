@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorBraveWallet, helpers } from '@lido-sdk/web3-react';
+import { useConnectorBraveWallet, helpers } from '@reef-knot/web3-react';
 import { Brave } from '@lidofinance/lido-ui';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';

@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorMetamask } from '@lido-sdk/web3-react';
+import { useConnectorMetamask } from '@reef-knot/web3-react';
 import { MetaMaskCircle, MetaMaskCircleInversion } from '@lidofinance/lido-ui';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';

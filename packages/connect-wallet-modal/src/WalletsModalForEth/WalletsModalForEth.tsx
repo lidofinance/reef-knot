@@ -1,5 +1,5 @@
 import React from 'react';
-import { helpers } from '@lido-sdk/web3-react';
+import { helpers } from '@reef-knot/web3-react';
 import {
   ConnectCoin98,
   ConnectCoinbase,

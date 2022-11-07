@@ -5,7 +5,7 @@ import {
   MathWalletCircle,
   MathWalletCircleInversion,
 } from '@lidofinance/lido-ui';
-import { useConnectorMathWallet } from '@lido-sdk/web3-react';
+import { useConnectorMathWallet } from '@reef-knot/web3-react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import checkConflicts from './checkConflicts';
 
