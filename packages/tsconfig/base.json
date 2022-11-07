@@ -20,7 +20,7 @@
     "strictNullChecks": true,
     "noEmit": true,
     "baseUrl": ".",
-    "allowJs": true,
+    "allowJs": false,
     "resolveJsonModule": true
   },
   "exclude": ["node_modules"]

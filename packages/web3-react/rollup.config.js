@@ -47,7 +47,7 @@ export default {
           noEmit: false,
           rootDir: './src',
         },
-        exclude: ['node_modules', 'dist', '**/*.stories.*', '**/*.test.*'],
+        exclude: ['node_modules', 'dist', '**/*.test.*'],
         include: ['**/src/**/*.ts', '**/src/**/*.tsx'],
       },
     }),

@@ -5,7 +5,8 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
+    "airbnb",
+    "@lidofinance",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
@@ -19,14 +20,22 @@
       "jsx": true
     },
     "ecmaVersion": 12,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
   },
-  "plugins": ["@typescript-eslint", "react"],
+  "plugins": ["@typescript-eslint", "react", "@next/next"],
   "rules": {
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
     "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
-    "react/display-name": "off",
+    "react/destructuring-assignment": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-no-duplicate-props": ["error", { "ignoreCase": false }],
+    "react/jsx-no-bind": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
@@ -35,9 +44,22 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "jsx-a11y/no-autofocus": "off",
+    "@next/next/no-html-link-for-pages": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "import/no-mutable-exports": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "@next/next/no-html-link-for-pages": "off"
+    "func-names": "off",
+    "no-console": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "consistent-return": "off",
+    "no-use-before-define": "off",
+    "no-underscore-dangle": "off",
+    "no-bitwise": "off",
+    "no-return-await": "off",
+    "no-nested-ternary": "off",
+    "no-restricted-syntax": "off",
+    "no-case-declarations": "off"
   },
   "settings": {
     "react": {
@@ -45,14 +67,10 @@
     },
     "next": {
       "rootDir": ["apps/*/"]
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   },
-  "overrides": [
-    {
-      "files": ["*.js"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off"
-      }
-    }
-  ]
+  "ignorePatterns": ["*.js", "dist", "node_modules"]
 }

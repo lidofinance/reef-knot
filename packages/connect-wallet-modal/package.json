@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "dev": "rollup -c -w",
+    "lint": "eslint"
   },
   "peerDependencies": {
     "@lido-sdk/constants": ">=1.6",
