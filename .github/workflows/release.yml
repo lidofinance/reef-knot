@@ -1,0 +1,37 @@
+name: Publish to registry
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  check-all:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build packages
+        run: yarn build-packages
+
+      - name: Run checks
+        run: yarn check-packages
+
+      - name: Authenticate in npm registry
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+        env: 
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to npm registry
+        run: yarn release
