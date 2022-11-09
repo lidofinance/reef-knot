@@ -1,12 +1,9 @@
-name: Publish to registry
+name: Check packages
 on:
-  push:
-    branches:
-      - "main"
+  pull_request:
 jobs:
   check-all:
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -27,11 +24,3 @@ jobs:
 
       - name: Run checks
         run: yarn check-packages
-
-      - name: Authenticate in npm registry
-        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-        env: 
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish to npm registry
-        run: yarn release
