@@ -14,7 +14,8 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publish-packages": "turbo run build lint test --filter=./packages/* && changeset version && changeset publish"
+    "check-packages": "turbo run lint test --filter=./packages/*",
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@babel/cli": "7.14.8",
