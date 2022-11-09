@@ -4,7 +4,7 @@ on:
     branches:
       - "main"
 jobs:
-  check-all:
+  release:
     runs-on: ubuntu-latest
     environment: production
     steps:
