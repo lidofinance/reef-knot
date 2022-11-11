@@ -21,7 +21,7 @@
     },
     "ecmaVersion": 12,
     "sourceType": "module",
-    "project": ["./tsconfig.json"]
+    "project": ["./packages/**/tsconfig.json", "./apps/**/tsconfig.json"]
   },
   "plugins": ["@typescript-eslint", "react", "@next/next"],
   "rules": {
