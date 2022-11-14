@@ -16,6 +16,7 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
       setRequirements(true, {
         icon: <WalletIcon />,
         title: "Ledger couldn't connect",
+        text: "Your browser doesn't support direct connection with Ledger. Please, try another browser.",
       });
       return;
     }
