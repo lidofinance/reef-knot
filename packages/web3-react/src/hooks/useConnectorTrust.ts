@@ -13,7 +13,8 @@ type ConnectorHookResult = {
   connector: InjectedConnector;
 };
 
-const WALLET_URL_MOBILE = 'https://link.trustwallet.com/open_url?url=';
+const WALLET_URL_MOBILE =
+  'https://link.trustwallet.com/open_url?coin_id=60&url=';
 const WALLET_URL_BROWSER = 'https://trustwallet.com/browser-extension';
 
 export const useConnectorTrust = (): ConnectorHookResult => {
