@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorXdefi } from '@reef-knot/web3-react';
-import { XdefiWallet } from '@lidofinance/lido-ui';
+import { XdefiWallet as WalletIcon } from '@lidofinance/lido-ui';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
@@ -9,11 +9,10 @@ import checkConflicts from './checkConflicts';
 const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   const { onConnect, setRequirements, ...rest } = props;
   const { connect } = useConnectorXdefi();
-  const WalletIcon = XdefiWallet;
 
   const handleConnect = useCallback(async () => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
-      checkConflicts([CONFLICTS.Exodus, CONFLICTS.Tally]);
+      checkConflicts([CONFLICTS.Exodus, CONFLICTS.Tally, CONFLICTS.Trust]);
 
     if (hasConflicts) {
       setRequirements(true, {
@@ -36,7 +35,7 @@ const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
 
     onConnect?.();
     await connect();
-  }, [onConnect, connect, setRequirements, WalletIcon]);
+  }, [onConnect, connect, setRequirements]);
 
   return (
     <ConnectButton

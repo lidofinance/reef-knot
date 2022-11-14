@@ -1,11 +1,11 @@
 import { FC, useCallback } from 'react';
-import { ConnectWalletProps } from './types';
-import ConnectButton from './connectButton';
 import {
   MathWalletCircle,
   MathWalletCircleInversion,
 } from '@lidofinance/lido-ui';
 import { useConnectorMathWallet } from '@reef-knot/web3-react';
+import { ConnectWalletProps } from './types';
+import ConnectButton from './connectButton';
 import { CONFLICTS } from '../constants/conflictChecks';
 import checkConflicts from './checkConflicts';
 
@@ -25,6 +25,7 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
         CONFLICTS.Gamestop,
         CONFLICTS.Tally,
         CONFLICTS.Exodus,
+        CONFLICTS.Trust,
       ]);
 
     if (hasConflicts) {
