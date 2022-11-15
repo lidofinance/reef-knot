@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorBraveWallet, helpers } from '@reef-knot/web3-react';
-import { Brave } from '@lidofinance/lido-ui';
+import { Brave as WalletIcon } from '@lidofinance/lido-ui';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
@@ -13,7 +13,6 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
   const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
   const { isBraveWalletProvider, isMetamaskProvider } = helpers;
   const { connect } = useConnectorBraveWallet();
-  const WalletIcon = Brave;
 
   const handleConflicts = useCallback(async () => {
     // Since the Brave Wallet is built into the Brave Browser and available only there,
@@ -26,6 +25,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
         CONFLICTS.Exodus,
         CONFLICTS.Gamestop,
         CONFLICTS.Xdefi,
+        CONFLICTS.Trust,
       ]);
 
       // If no other conflicts were found, then also check for a conflict with MetaMask
@@ -59,7 +59,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
       }
     }
     return false;
-  }, [WalletIcon, isBraveWalletProvider, isMetamaskProvider, setRequirements]);
+  }, [isBraveWalletProvider, isMetamaskProvider, setRequirements]);
 
   const handleConnect = useCallback(async () => {
     const hasConflicts = await handleConflicts();

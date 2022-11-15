@@ -22,6 +22,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
         CONFLICTS.Coin98,
         CONFLICTS.MathWallet,
         CONFLICTS.Tally,
+        CONFLICTS.Trust,
       ]);
 
     if (hasConflicts) {

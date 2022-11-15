@@ -10,6 +10,7 @@ export type ConflictChecks = {
   Gamestop: ConflictCheck;
   Coinbase: ConflictCheck;
   Xdefi: ConflictCheck;
+  Trust: ConflictCheck;
 };
 
 export const CONFLICTS: ConflictChecks = {
@@ -20,4 +21,5 @@ export const CONFLICTS: ConflictChecks = {
   Gamestop: [helpers.isGamestopProvider, 'GameStop'],
   Coinbase: [helpers.isCoinbaseProvider, 'Coinbase'],
   Xdefi: [helpers.isXdefiProvider, 'XDEFI'],
+  Trust: [helpers.isTrustProvider, 'Trust'],
 };
