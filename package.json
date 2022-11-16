@@ -10,7 +10,7 @@
     "build": "turbo run build",
     "build-packages": "turbo run build --filter=./packages/*",
     "build-apps": "turbo run build --filter=./apps/*",
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo run dev --parallel --filter=./apps/*",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
