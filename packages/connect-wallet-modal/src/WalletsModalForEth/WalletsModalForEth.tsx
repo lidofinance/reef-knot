@@ -67,11 +67,15 @@ function getWalletsButtons(
   ];
 
   const addWalletTo = (
-    wallets: WalletId[],
+    walletsList: WalletId[],
     walletId: WalletId,
     condition: boolean,
   ) => {
-    condition ? wallets.unshift(walletId) : wallets.push(walletId);
+    if (condition) {
+      walletsList.unshift(walletId);
+    } else {
+      walletsList.push(walletId);
+    }
   };
 
   addWalletTo(wallets, WALLET_IDS.EXODUS, helpers.isExodusProvider());

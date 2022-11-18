@@ -11,7 +11,6 @@ export type WalletsModalProps = ModalProps & {
   children: (props: ButtonsCommonProps) => ReactNode;
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
-  onClose: () => void;
 };
 
 export type ButtonsCommonProps = {
