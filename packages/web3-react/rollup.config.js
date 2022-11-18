@@ -1,3 +1,4 @@
+import * as process from 'process';
 import fs from 'fs';
 import ts from 'typescript';
 import tslib from 'tslib';
@@ -16,6 +17,7 @@ const external = [
   ...commonExternal,
   ...Object.keys({ ...dependencies, ...peerDependencies }),
 ];
+const isDevMode = process.env.dev === 'on';
 
 export default {
   input: './src/index',
@@ -34,7 +36,7 @@ export default {
     },
   ],
   plugins: [
-    del({ targets: 'dist/*', runOnce: true }),
+    isDevMode ? null : del({ targets: 'dist/*', runOnce: true }),
     resolve({ extensions, preferBuiltins: true }),
     typescript({
       tslib,

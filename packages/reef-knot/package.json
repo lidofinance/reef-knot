@@ -6,11 +6,12 @@
   "types": "dist/esm/index.d.ts",
   "license": "MIT",
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "dev": "dev=on rollup -c -w"
   },
   "dependencies": {
     "@reef-knot/connect-wallet-modal": "0.1.1",
