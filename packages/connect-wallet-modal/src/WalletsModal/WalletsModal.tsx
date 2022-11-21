@@ -15,6 +15,7 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     onClose,
     shouldInvertWalletIcon = false,
     buttonsFullWidth = false,
+    metrics,
   } = props;
 
   const [termsChecked, setTermsChecked] = useLocalStorage(
@@ -41,9 +42,10 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
 
   const buttonsCommonProps: ButtonsCommonProps = {
     disabled: !termsChecked,
-    onConnect: onClose || NOOP,
+    onConnect: onClose,
     shouldInvertWalletIcon,
     setRequirements,
+    metrics,
   };
 
   // pass-into function is cheap, so we're losing performance on useCallback here

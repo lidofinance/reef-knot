@@ -7,8 +7,16 @@ import ConnectButton from './connectButton';
 import checkConflicts from './checkConflicts';
 
 const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
+  const {
+    onConnect,
+    shouldInvertWalletIcon,
+    setRequirements,
+    metrics,
+    ...rest
+  } = props;
   const { connect } = useConnectorMetamask();
+  const onConnectMetamask =
+    metrics?.events?.connect?.handlers.onConnectMetamask;
   const WalletIcon = shouldInvertWalletIcon
     ? MetaMaskCircleInversion
     : MetaMaskCircle;
@@ -44,9 +52,10 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
       return;
     }
 
-    onConnect?.();
     await connect();
-  }, [onConnect, connect, setRequirements, WalletIcon]);
+    onConnect?.();
+    onConnectMetamask?.();
+  }, [connect, onConnect, onConnectMetamask, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton

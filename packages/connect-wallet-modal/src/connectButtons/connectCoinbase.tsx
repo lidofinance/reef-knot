@@ -5,13 +5,17 @@ import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
 const ConnectCoinbase: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, ...rest } = props;
+  const { onConnect, onBeforeConnect, metrics, ...rest } = props;
   const { connect } = useConnectorCoinbase();
+  const onConnectCoinbase =
+    metrics?.events?.connect?.handlers.onConnectCoinbase;
 
   const handleConnect = useCallback(async () => {
-    onConnect?.();
+    onBeforeConnect?.();
     await connect();
-  }, [onConnect, connect]);
+    onConnect?.();
+    onConnectCoinbase?.();
+  }, [connect, onBeforeConnect, onConnect, onConnectCoinbase]);
 
   return (
     <ConnectButton

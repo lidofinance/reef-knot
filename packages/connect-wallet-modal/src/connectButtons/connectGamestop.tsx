@@ -7,8 +7,10 @@ import ConnectButton from './connectButton';
 import checkConflicts from './checkConflicts';
 
 const ConnectGamestop: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, setRequirements, ...rest } = props;
+  const { onConnect, setRequirements, metrics, ...rest } = props;
   const { connect } = useConnectorGamestop();
+  const onConnectGamestop =
+    metrics?.events?.connect?.handlers.onConnectGamestop;
 
   const handleNonDefaultSetting = useCallback(() => {
     const { isGamestopInstalled, hasInjected } = helpers;
@@ -64,9 +66,16 @@ const ConnectGamestop: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     const hasConflicts = handleConflicts();
     if (hasConflicts) return;
 
-    onConnect?.();
     await connect();
-  }, [connect, handleConflicts, handleNonDefaultSetting, onConnect]);
+    onConnect?.();
+    onConnectGamestop?.();
+  }, [
+    connect,
+    handleConflicts,
+    handleNonDefaultSetting,
+    onConnect,
+    onConnectGamestop,
+  ]);
 
   return (
     <ConnectButton

@@ -5,13 +5,15 @@ import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
 const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, ...rest } = props;
+  const { onConnect, metrics, ...rest } = props;
   const { connect } = useConnectorWalletConnect();
+  const onConnectWC = metrics?.events?.connect?.handlers.onConnectWC;
 
   const handleConnect = useCallback(async () => {
-    onConnect?.();
     await connect();
-  }, [onConnect, connect]);
+    onConnect?.();
+    onConnectWC?.();
+  }, [connect, onConnect, onConnectWC]);
 
   return (
     <ConnectButton

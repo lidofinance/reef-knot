@@ -7,16 +7,25 @@ import ConnectButton from './connectButton';
 const ConnectOperaWallet: FC<ConnectWalletProps> = (
   props: ConnectWalletProps,
 ) => {
-  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
+  const {
+    onConnect,
+    shouldInvertWalletIcon,
+    setRequirements,
+    metrics,
+    ...rest
+  } = props;
   const { connect } = useConnectorOperaWallet();
+  const onConnectOperaWallet =
+    metrics?.events?.connect?.handlers.onConnectOperaWallet;
 
   // As of August 2022, Opera Crypto Browser has very few wallets in their extensions store.
   // It allows to install wallets from Chrome extensions store, but doesn't allow them to modify `window.ethereum`.
   // Looks like no need to handle wallets conflicts right now.
   const handleConnect = useCallback(async () => {
-    onConnect?.();
     await connect();
-  }, [onConnect, connect]);
+    onConnect?.();
+    onConnectOperaWallet?.();
+  }, [connect, onConnect, onConnectOperaWallet]);
 
   return (
     <ConnectButton
