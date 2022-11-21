@@ -4,6 +4,7 @@ import { themeLight, ThemeProvider } from '@lidofinance/lido-ui';
 import Header from '../components/Header';
 import ProviderWeb3WithProps from '../components/ProviderWeb3WithProps';
 import useModal from '../hooks/useModal';
+import metrics from '../util/metrics';
 
 export default function Web() {
   const { state, handleOpen, handleClose } = useModal();
@@ -24,7 +25,11 @@ export default function Web() {
             <Button size="md" onClick={handleOpen}>
               Connect wallet
             </Button>
-            <WalletsModalForEth open={state} onClose={handleClose} />
+            <WalletsModalForEth
+              open={state}
+              onClose={handleClose}
+              metrics={metrics}
+            />
           </div>
         </ProviderWeb3WithProps>
       </ThemeProvider>
