@@ -7,8 +7,13 @@ import { isIOS, isAndroid } from '../helpers';
 
 const ConnectImToken: FC<ConnectWalletProps> = (props) => {
   const { onConnect, setRequirements, metrics, ...rest } = props;
-  const { connect } = useConnectorImToken();
   const onConnectImToken = metrics?.events?.connect?.handlers.onConnectImToken;
+  const { connect } = useConnectorImToken({
+    onConnect: () => {
+      onConnect?.();
+      onConnectImToken?.();
+    },
+  });
 
   const handleConnect = useCallback(async () => {
     if (!connect || !(isIOS || isAndroid)) {
@@ -20,9 +25,7 @@ const ConnectImToken: FC<ConnectWalletProps> = (props) => {
       return;
     }
     await connect();
-    onConnect?.();
-    onConnectImToken?.();
-  }, [connect, onConnect, onConnectImToken, setRequirements]);
+  }, [connect, setRequirements]);
 
   return (
     <ConnectButton

@@ -18,8 +18,13 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
     ...rest
   } = props;
   const { isBraveWalletProvider, isMetamaskProvider } = helpers;
-  const { connect } = useConnectorBraveWallet();
   const onConnectBrave = metrics?.events?.connect?.handlers.onConnectBrave;
+  const { connect } = useConnectorBraveWallet({
+    onConnect: () => {
+      onConnect?.();
+      onConnectBrave?.();
+    },
+  });
 
   const handleConflicts = useCallback(async () => {
     // Since the Brave Wallet is built into the Brave Browser and available only there,
@@ -73,9 +78,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
     if (hasConflicts) return;
 
     await connect();
-    onConnect?.();
-    onConnectBrave?.();
-  }, [handleConflicts, connect, onConnect, onConnectBrave]);
+  }, [handleConflicts, connect]);
 
   return (
     <ConnectButton

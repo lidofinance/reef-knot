@@ -22,10 +22,16 @@ const openDeeplink = (uri: string | undefined) => {
 
 const ConnectZenGo: FC<ConnectWalletProps> = (props) => {
   const { onConnect, metrics, ...rest } = props;
-  const { connect } = useConnectorWalletConnectNoLinks();
-  const { connect: connectWCUri, connector: connectorWCUri } =
-    useConnectorWalletConnectUri();
   const onConnectZenGo = metrics?.events?.connect?.handlers.onConnectZenGo;
+  const onConnectHandler = () => {
+    onConnect?.();
+    onConnectZenGo?.();
+  };
+  const { connect } = useConnectorWalletConnectNoLinks({
+    onConnect: onConnectHandler,
+  });
+  const { connect: connectWCUri, connector: connectorWCUri } =
+    useConnectorWalletConnectUri({ onConnect: onConnectHandler });
 
   useEffect(() => {
     if (isMobileOrTablet) {
@@ -51,9 +57,7 @@ const ConnectZenGo: FC<ConnectWalletProps> = (props) => {
     } else {
       await connect();
     }
-    onConnect?.();
-    onConnectZenGo?.();
-  }, [onConnect, onConnectZenGo, connectWCUri, connect]);
+  }, [connectWCUri, connect]);
 
   return (
     <ConnectButton

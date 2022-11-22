@@ -7,6 +7,7 @@ import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
 import { hasInjected, isTrustProvider, isMobileOrTablet } from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
+import { ConnectorHookArgs } from './types';
 
 type ConnectorHookResult = {
   connect: () => Promise<void>;
@@ -17,10 +18,13 @@ const WALLET_URL_MOBILE =
   'https://link.trustwallet.com/open_url?coin_id=60&url=';
 const WALLET_URL_BROWSER = 'https://trustwallet.com/browser-extension';
 
-export const useConnectorTrust = (): ConnectorHookResult => {
+export const useConnectorTrust = (
+  args?: ConnectorHookArgs,
+): ConnectorHookResult => {
   const { injected } = useConnectors();
   const { activate } = useWeb3();
   const { disconnect } = useForceDisconnect();
+  const onConnect = args?.onConnect;
 
   const openInWallet = useCallback(() => {
     try {
@@ -40,11 +44,12 @@ export const useConnectorTrust = (): ConnectorHookResult => {
 
     if (hasInjected() && isTrustProvider()) {
       await disconnect();
-      activate(injected);
+      await activate(injected);
+      onConnect?.();
     } else {
       openInWallet();
     }
-  }, [activate, disconnect, openInWallet, injected]);
+  }, [injected, disconnect, activate, onConnect, openInWallet]);
 
   return {
     connect,

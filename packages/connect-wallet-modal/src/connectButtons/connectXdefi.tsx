@@ -8,8 +8,13 @@ import checkConflicts from './checkConflicts';
 
 const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   const { onConnect, setRequirements, metrics, ...rest } = props;
-  const { connect } = useConnectorXdefi();
   const onConnectXdefi = metrics?.events?.connect?.handlers.onConnectXdefi;
+  const { connect } = useConnectorXdefi({
+    onConnect: () => {
+      onConnect?.();
+      onConnectXdefi?.();
+    },
+  });
 
   const handleConnect = useCallback(async () => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =

@@ -2,11 +2,12 @@ import invariant from 'tiny-invariant';
 import warning from 'tiny-warning';
 import { useCallback } from 'react';
 import { openWindow } from '@lido-sdk/helpers';
+import { InjectedConnector } from '@web3-react/injected-connector';
 import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
 import { hasInjected, isExodusProvider } from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
-import { InjectedConnector } from '@web3-react/injected-connector';
+import { ConnectorHookArgs } from './types';
 
 type ConnectorHookResult = {
   connect: () => Promise<void>;
@@ -15,10 +16,13 @@ type ConnectorHookResult = {
 
 const WALLET_URL = 'https://www.exodus.com/browser-extension/';
 
-export const useConnectorExodus = (): ConnectorHookResult => {
+export const useConnectorExodus = (
+  args?: ConnectorHookArgs,
+): ConnectorHookResult => {
   const { injected } = useConnectors();
   const { activate } = useWeb3();
   const { disconnect } = useForceDisconnect();
+  const onConnect = args?.onConnect;
 
   const suggestApp = useCallback(() => {
     try {
@@ -33,11 +37,12 @@ export const useConnectorExodus = (): ConnectorHookResult => {
 
     if (hasInjected() && isExodusProvider()) {
       await disconnect();
-      activate(injected);
+      await activate(injected);
+      onConnect?.();
     } else {
       suggestApp();
     }
-  }, [activate, disconnect, suggestApp, injected]);
+  }, [injected, disconnect, activate, onConnect, suggestApp]);
 
   return { connect, connector: injected };
 };

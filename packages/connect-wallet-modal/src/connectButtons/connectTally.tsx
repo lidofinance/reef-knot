@@ -13,8 +13,13 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     metrics,
     ...rest
   } = props;
-  const { connect } = useConnectorTally();
   const onConnectTally = metrics?.events?.connect?.handlers.onConnectTally;
+  const { connect } = useConnectorTally({
+    onConnect: () => {
+      onConnect?.();
+      onConnectTally?.();
+    },
+  });
 
   const handleConnect = useCallback(async () => {
     if (!connect || isMobileOrTablet) {
@@ -27,9 +32,7 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     }
 
     await connect();
-    onConnect?.();
-    onConnectTally?.();
-  }, [connect, onConnect, onConnectTally, setRequirements]);
+  }, [connect, setRequirements]);
 
   return (
     <ConnectButton

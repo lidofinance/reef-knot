@@ -75,7 +75,11 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
       center={false}
       onClose={handleClose}
     >
-      <Terms onChange={handleTermsToggle} checked={termsChecked} />
+      <Terms
+        onChange={handleTermsToggle}
+        checked={termsChecked}
+        metrics={metrics}
+      />
       <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
         {props.children(buttonsCommonProps)}
       </WalletsButtonsContainer>

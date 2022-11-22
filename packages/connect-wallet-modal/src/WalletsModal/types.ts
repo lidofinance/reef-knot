@@ -10,6 +10,7 @@ export type RequirementsData = {
 export type Metrics = {
   events?: {
     connect?: { handlers: Record<`onConnect${string}`, () => void> };
+    click?: { handlers: Record<`onClick${string}`, () => void> };
   };
 };
 

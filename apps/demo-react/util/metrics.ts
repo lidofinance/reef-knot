@@ -2,6 +2,13 @@ import { Metrics } from 'reef-knot';
 
 const metrics: Metrics = {
   events: {
+    click: {
+      handlers: {
+        onClickTermsAccept: () => {
+          console.log('metrics: Terms clicked');
+        },
+      },
+    },
     connect: {
       handlers: {
         onConnectAmbire: () => {

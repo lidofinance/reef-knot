@@ -24,8 +24,13 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
     metrics,
     ...rest
   } = props;
-  const { connect, connector } = useConnectorWalletConnectUri();
   const onConnectAmbire = metrics?.events?.connect?.handlers.onConnectAmbire;
+  const { connect, connector } = useConnectorWalletConnectUri({
+    onConnect: () => {
+      onConnect?.();
+      onConnectAmbire?.();
+    },
+  });
 
   useEffect(() => {
     connector.on('URI_AVAILABLE', openAmbireWindow);
@@ -43,9 +48,7 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
     newWindow?.document.write(newWindowHtml);
 
     await connect();
-    onConnect?.();
-    onConnectAmbire?.();
-  }, [onBeforeConnect, connect, onConnectAmbire, onConnect]);
+  }, [onBeforeConnect, connect]);
 
   return (
     <ConnectButton

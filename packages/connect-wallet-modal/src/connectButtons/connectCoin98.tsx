@@ -8,8 +8,14 @@ import checkConflicts from './checkConflicts';
 
 const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   const { onConnect, setRequirements, metrics, ...rest } = props;
-  const { connect } = useConnectorCoin98();
   const onConnectCoin98 = metrics?.events?.connect?.handlers.onConnectCoin98;
+
+  const { connect } = useConnectorCoin98({
+    onConnect: () => {
+      onConnect?.();
+      onConnectCoin98?.();
+    },
+  });
 
   const handleConnect = useCallback(async () => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
@@ -42,9 +48,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     }
 
     await connect();
-    onConnect?.();
-    onConnectCoin98?.();
-  }, [connect, onConnect, onConnectCoin98, setRequirements]);
+  }, [connect, setRequirements]);
 
   return (
     <ConnectButton

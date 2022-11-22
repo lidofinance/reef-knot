@@ -14,9 +14,14 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     metrics,
     ...rest
   } = props;
-  const { connect } = useConnectorMetamask();
   const onConnectMetamask =
     metrics?.events?.connect?.handlers.onConnectMetamask;
+  const { connect } = useConnectorMetamask({
+    onConnect: () => {
+      onConnect?.();
+      onConnectMetamask?.();
+    },
+  });
   const WalletIcon = shouldInvertWalletIcon
     ? MetaMaskCircleInversion
     : MetaMaskCircle;
@@ -53,9 +58,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     }
 
     await connect();
-    onConnect?.();
-    onConnectMetamask?.();
-  }, [connect, onConnect, onConnectMetamask, setRequirements, WalletIcon]);
+  }, [connect, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton
