@@ -1,5 +1,11 @@
 # reef-knot
 
+## 0.1.2
+
+### Patch Changes
+
+- Fix subpackages versions in dependencies
+
 ## 0.1.1
 
 ### Patch Changes
