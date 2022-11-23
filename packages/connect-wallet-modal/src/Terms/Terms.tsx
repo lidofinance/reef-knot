@@ -15,7 +15,9 @@ export const Terms: FC<WalletModalConnectTermsProps> = (props) => {
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e);
-    onClickTermsAccept?.();
+    if (e.target.checked) {
+      onClickTermsAccept?.();
+    }
   };
 
   return (
