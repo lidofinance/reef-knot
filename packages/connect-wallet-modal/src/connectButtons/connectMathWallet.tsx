@@ -12,8 +12,21 @@ import checkConflicts from './checkConflicts';
 const ConnectMathWallet: FC<ConnectWalletProps> = (
   props: ConnectWalletProps,
 ) => {
-  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
-  const { connect } = useConnectorMathWallet();
+  const {
+    onConnect,
+    shouldInvertWalletIcon,
+    setRequirements,
+    metrics,
+    ...rest
+  } = props;
+  const onConnectMathWallet =
+    metrics?.events?.connect?.handlers.onConnectMathWallet;
+  const { connect } = useConnectorMathWallet({
+    onConnect: () => {
+      onConnect?.();
+      onConnectMathWallet?.();
+    },
+  });
   const WalletIcon = shouldInvertWalletIcon
     ? MathWalletCircleInversion
     : MathWalletCircle;
@@ -47,9 +60,8 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
       return;
     }
 
-    onConnect?.();
     await connect();
-  }, [onConnect, connect, setRequirements, WalletIcon]);
+  }, [connect, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton

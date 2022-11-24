@@ -7,8 +7,14 @@ import ConnectButton from './connectButton';
 import checkConflicts from './checkConflicts';
 
 const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, setRequirements, ...rest } = props;
-  const { connect } = useConnectorXdefi();
+  const { onConnect, setRequirements, metrics, ...rest } = props;
+  const onConnectXdefi = metrics?.events?.connect?.handlers.onConnectXdefi;
+  const { connect } = useConnectorXdefi({
+    onConnect: () => {
+      onConnect?.();
+      onConnectXdefi?.();
+    },
+  });
 
   const handleConnect = useCallback(async () => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
@@ -33,9 +39,10 @@ const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
       return;
     }
 
-    onConnect?.();
     await connect();
-  }, [onConnect, connect, setRequirements]);
+    onConnect?.();
+    onConnectXdefi?.();
+  }, [connect, onConnect, onConnectXdefi, setRequirements]);
 
   return (
     <ConnectButton

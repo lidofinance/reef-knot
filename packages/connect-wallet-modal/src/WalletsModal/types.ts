@@ -7,16 +7,25 @@ export type RequirementsData = {
   text?: ReactNode;
 };
 
+export type Metrics = {
+  events?: {
+    connect?: { handlers: Record<`onConnect${string}`, () => void> };
+    click?: { handlers: Record<`onClick${string}`, () => void> };
+  };
+};
+
 export type WalletsModalProps = ModalProps & {
   children: (props: ButtonsCommonProps) => ReactNode;
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
-  onClose: () => void;
+  metrics?: Metrics;
 };
 
 export type ButtonsCommonProps = {
   disabled: boolean;
-  onConnect: () => void;
+  onBeforeConnect?: () => void;
+  onConnect?: () => void;
   shouldInvertWalletIcon: boolean;
   setRequirements(isVisible: boolean, requirementsData: RequirementsData): void;
+  metrics?: Metrics;
 };

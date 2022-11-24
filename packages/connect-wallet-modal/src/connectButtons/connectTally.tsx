@@ -6,8 +6,20 @@ import ConnectButton from './connectButton';
 import { isMobileOrTablet } from '../helpers';
 
 const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
-  const { connect } = useConnectorTally();
+  const {
+    onConnect,
+    shouldInvertWalletIcon,
+    setRequirements,
+    metrics,
+    ...rest
+  } = props;
+  const onConnectTally = metrics?.events?.connect?.handlers.onConnectTally;
+  const { connect } = useConnectorTally({
+    onConnect: () => {
+      onConnect?.();
+      onConnectTally?.();
+    },
+  });
 
   const handleConnect = useCallback(async () => {
     if (!connect || isMobileOrTablet) {
@@ -19,9 +31,8 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
       return;
     }
 
-    onConnect?.();
-    connect();
-  }, [connect, onConnect, setRequirements]);
+    await connect();
+  }, [connect, setRequirements]);
 
   return (
     <ConnectButton

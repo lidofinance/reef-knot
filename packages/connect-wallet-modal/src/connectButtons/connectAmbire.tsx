@@ -1,8 +1,8 @@
 import { FC, useCallback, useEffect } from 'react';
 import { useConnectorWalletConnectUri } from '@reef-knot/web3-react';
+import { Ambire } from '@lidofinance/lido-ui';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
-import { Ambire } from '@lidofinance/lido-ui';
 
 let newWindow: Window | undefined | null;
 // Storing html as a string here to not overcomplicate build config
@@ -17,8 +17,20 @@ const openAmbireWindow = (uri: string | undefined) => {
 };
 
 const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, shouldInvertWalletIcon, ...rest } = props;
-  const { connect, connector } = useConnectorWalletConnectUri();
+  const {
+    onConnect,
+    onBeforeConnect,
+    shouldInvertWalletIcon,
+    metrics,
+    ...rest
+  } = props;
+  const onConnectAmbire = metrics?.events?.connect?.handlers.onConnectAmbire;
+  const { connect, connector } = useConnectorWalletConnectUri({
+    onConnect: () => {
+      onConnect?.();
+      onConnectAmbire?.();
+    },
+  });
 
   useEffect(() => {
     connector.on('URI_AVAILABLE', openAmbireWindow);
@@ -29,14 +41,14 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
   }, [connector]);
 
   const handleConnect = useCallback(async () => {
-    onConnect?.();
+    onBeforeConnect?.();
 
     // because of popup blockers, window.open must be called directly from onclick handler
     newWindow = window.open('', '_blank');
     newWindow?.document.write(newWindowHtml);
 
     await connect();
-  }, [onConnect, connect]);
+  }, [onBeforeConnect, connect]);
 
   return (
     <ConnectButton

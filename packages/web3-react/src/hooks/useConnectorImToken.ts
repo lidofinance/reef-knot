@@ -2,11 +2,12 @@ import invariant from 'tiny-invariant';
 import warning from 'tiny-warning';
 import { useCallback } from 'react';
 import { openWindow } from '@lido-sdk/helpers';
+import { InjectedConnector } from '@web3-react/injected-connector';
 import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
 import { hasInjected, isImTokenProvider } from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
-import { InjectedConnector } from '@web3-react/injected-connector';
+import { ConnectorHookArgs } from './types';
 
 type ConnectorHookResult = {
   connect: () => Promise<void>;
@@ -15,10 +16,13 @@ type ConnectorHookResult = {
 
 const WALLET_URL = 'imtokenv2://navigate/DappView?url=';
 
-export const useConnectorImToken = (): ConnectorHookResult => {
+export const useConnectorImToken = (
+  args?: ConnectorHookArgs,
+): ConnectorHookResult => {
   const { injected } = useConnectors();
   const { activate } = useWeb3();
   const { disconnect } = useForceDisconnect();
+  const onConnect = args?.onConnect;
 
   const openInWallet = useCallback(() => {
     try {
@@ -34,11 +38,12 @@ export const useConnectorImToken = (): ConnectorHookResult => {
 
     if (hasInjected() && isImTokenProvider()) {
       await disconnect();
-      activate(injected);
+      await activate(injected);
+      onConnect?.();
     } else {
       openInWallet();
     }
-  }, [activate, disconnect, openInWallet, injected]);
+  }, [injected, disconnect, activate, onConnect, openInWallet]);
 
   return {
     connect,

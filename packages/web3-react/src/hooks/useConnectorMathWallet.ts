@@ -1,6 +1,7 @@
 import invariant from 'tiny-invariant';
 import { useCallback } from 'react';
 import { openWindow } from '@lido-sdk/helpers';
+import { InjectedConnector } from '@web3-react/injected-connector';
 import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
 import {
@@ -12,7 +13,7 @@ import {
   isMathWalletProvider,
 } from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
-import { InjectedConnector } from '@web3-react/injected-connector';
+import { ConnectorHookArgs } from './types';
 
 type ConnectorHookResult = {
   connect: () => Promise<void>;
@@ -28,10 +29,13 @@ const WALLET_URL_EDGE =
   'https://microsoftedge.microsoft.com/addons/detail/math-wallet/dfeccadlilpndjjohbjdblepmjeahlmm';
 const WALLET_URL_FIREFOX = 'https://mathwallet.org/en-us/#extension';
 
-export const useConnectorMathWallet = (): ConnectorHookResult => {
+export const useConnectorMathWallet = (
+  args?: ConnectorHookArgs,
+): ConnectorHookResult => {
   const { injected } = useConnectors();
   const { activate } = useWeb3();
   const { disconnect } = useForceDisconnect();
+  const onConnect = args?.onConnect;
 
   const suggestApp = useCallback(() => {
     if (isAndroid) {
@@ -52,11 +56,12 @@ export const useConnectorMathWallet = (): ConnectorHookResult => {
 
     if (hasInjected() && isMathWalletProvider()) {
       await disconnect();
-      activate(injected);
+      await activate(injected);
+      onConnect?.();
     } else {
       suggestApp();
     }
-  }, [activate, disconnect, suggestApp, injected]);
+  }, [injected, disconnect, activate, onConnect, suggestApp]);
 
   return { connect, connector: injected };
 };

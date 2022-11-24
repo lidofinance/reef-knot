@@ -6,6 +6,7 @@ import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
 import { hasInjected, isTallyProvider } from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
+import { ConnectorHookArgs } from './types';
 
 type ConnectorHookResult = {
   connect: () => Promise<void>;
@@ -14,10 +15,13 @@ type ConnectorHookResult = {
 
 const WALLET_URL = 'https://tally.cash/download';
 
-export const useConnectorTally = (): ConnectorHookResult => {
+export const useConnectorTally = (
+  args?: ConnectorHookArgs,
+): ConnectorHookResult => {
   const { injected } = useConnectors();
   const { activate } = useWeb3();
   const { disconnect } = useForceDisconnect();
+  const onConnect = args?.onConnect;
 
   const suggestApp = useCallback(() => {
     openWindow(WALLET_URL);
@@ -28,11 +32,12 @@ export const useConnectorTally = (): ConnectorHookResult => {
 
     if (hasInjected() && isTallyProvider()) {
       await disconnect();
-      activate(injected);
+      await activate(injected);
+      onConnect?.();
     } else {
       suggestApp();
     }
-  }, [activate, disconnect, suggestApp, injected]);
+  }, [injected, disconnect, activate, onConnect, suggestApp]);
 
   return {
     connect,

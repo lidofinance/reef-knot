@@ -10,9 +10,21 @@ import { checkIfBraveBrowser } from '../helpers';
 const ConnectBraveWallet: FC<ConnectWalletProps> = (
   props: ConnectWalletProps,
 ) => {
-  const { onConnect, shouldInvertWalletIcon, setRequirements, ...rest } = props;
+  const {
+    onConnect,
+    shouldInvertWalletIcon,
+    setRequirements,
+    metrics,
+    ...rest
+  } = props;
   const { isBraveWalletProvider, isMetamaskProvider } = helpers;
-  const { connect } = useConnectorBraveWallet();
+  const onConnectBrave = metrics?.events?.connect?.handlers.onConnectBrave;
+  const { connect } = useConnectorBraveWallet({
+    onConnect: () => {
+      onConnect?.();
+      onConnectBrave?.();
+    },
+  });
 
   const handleConflicts = useCallback(async () => {
     // Since the Brave Wallet is built into the Brave Browser and available only there,
@@ -65,9 +77,8 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
     const hasConflicts = await handleConflicts();
     if (hasConflicts) return;
 
-    onConnect?.();
     await connect();
-  }, [handleConflicts, onConnect, connect]);
+  }, [handleConflicts, connect]);
 
   return (
     <ConnectButton

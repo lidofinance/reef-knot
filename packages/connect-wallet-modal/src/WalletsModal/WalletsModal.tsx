@@ -15,6 +15,7 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     onClose,
     shouldInvertWalletIcon = false,
     buttonsFullWidth = false,
+    metrics,
   } = props;
 
   const [termsChecked, setTermsChecked] = useLocalStorage(
@@ -32,9 +33,9 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
   );
 
   const setRequirements = useCallback(
-    (isVisible: boolean, requirementsData: RequirementsData = {}) => {
+    (isVisible: boolean, reqData: RequirementsData = {}) => {
       setRequirementsVisible(isVisible);
-      setRequirementsData(requirementsData);
+      setRequirementsData(reqData);
     },
     [],
   );
@@ -44,6 +45,7 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     onConnect: onClose,
     shouldInvertWalletIcon,
     setRequirements,
+    metrics,
   };
 
   // pass-into function is cheap, so we're losing performance on useCallback here
@@ -55,34 +57,32 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
 
   const { icon: reqIcon, title: reqTitle, text: reqText } = requirementsData;
 
-  return (
-    <>
-      {requirementsVisible ? (
-        <Modal
-          {...props} // the props are overridden here on purpose
-          onClose={handleClose}
-          onBack={hideRequirements}
-          onExited={hideRequirements}
-          center={true}
-          title={reqTitle}
-          subtitle={reqText}
-          titleIcon={reqIcon}
-        >
-          <></>
-        </Modal>
-      ) : (
-        <Modal
-          title={'Connect wallet'}
-          {...props} // the props can be overridden by a library user
-          center={false}
-          onClose={handleClose}
-        >
-          <Terms onChange={handleTermsToggle} checked={termsChecked} />
-          <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
-            {props.children(buttonsCommonProps)}
-          </WalletsButtonsContainer>
-        </Modal>
-      )}
-    </>
+  return requirementsVisible ? (
+    <Modal
+      {...props} // the props are overridden here on purpose
+      onClose={handleClose}
+      onBack={hideRequirements}
+      onExited={hideRequirements}
+      center
+      title={reqTitle}
+      subtitle={reqText}
+      titleIcon={reqIcon}
+    />
+  ) : (
+    <Modal
+      title="Connect wallet"
+      {...props} // the props can be overridden by a library user
+      center={false}
+      onClose={handleClose}
+    >
+      <Terms
+        onChange={handleTermsToggle}
+        checked={termsChecked}
+        metrics={metrics}
+      />
+      <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
+        {props.children(buttonsCommonProps)}
+      </WalletsButtonsContainer>
+    </Modal>
   );
 }

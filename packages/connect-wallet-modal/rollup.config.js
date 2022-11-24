@@ -1,3 +1,4 @@
+import * as process from 'process';
 import fs from 'fs';
 import ts from 'typescript';
 import tslib from 'tslib';
@@ -9,7 +10,6 @@ import { babel } from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
-
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 const { dependencies, peerDependencies } = packageJson;
 const commonExternal = ['react/jsx-runtime'];
@@ -17,6 +17,7 @@ const external = [
   ...commonExternal,
   ...Object.keys({ ...dependencies, ...peerDependencies }),
 ];
+const isDevMode = process.env.dev === 'on';
 
 export default {
   input: './src/index',
@@ -35,7 +36,7 @@ export default {
     },
   ],
   plugins: [
-    del({ targets: 'dist/*', runOnce: true }),
+    isDevMode ? null : del({ targets: 'dist/*', runOnce: true }),
     resolve({ extensions, preferBuiltins: true }),
     typescript({
       tslib,

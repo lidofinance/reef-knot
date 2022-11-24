@@ -5,8 +5,20 @@ import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
 const ConnectLedger: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, setRequirements, shouldInvertWalletIcon, ...rest } = props;
-  const { connect, connector } = useConnectorLedger();
+  const {
+    onConnect,
+    setRequirements,
+    shouldInvertWalletIcon,
+    metrics,
+    ...rest
+  } = props;
+  const onConnectLedger = metrics?.events?.connect?.handlers.onConnectLedger;
+  const { connect, connector } = useConnectorLedger({
+    onConnect: () => {
+      onConnect?.();
+      onConnectLedger?.();
+    },
+  });
   const WalletIcon = shouldInvertWalletIcon
     ? LedgerCircleInversion
     : LedgerCircle;
@@ -20,9 +32,8 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
       });
       return;
     }
-    onConnect?.();
-    connect();
-  }, [connect, connector, onConnect, setRequirements, WalletIcon]);
+    await connect();
+  }, [connect, connector, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton

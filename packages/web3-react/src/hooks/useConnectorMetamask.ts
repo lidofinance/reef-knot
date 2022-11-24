@@ -2,6 +2,7 @@ import invariant from 'tiny-invariant';
 import warning from 'tiny-warning';
 import { useCallback } from 'react';
 import { openWindow } from '@lido-sdk/helpers';
+import { InjectedConnector } from '@web3-react/injected-connector';
 import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
 import {
@@ -10,7 +11,7 @@ import {
   checkIfBraveBrowser,
 } from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
-import { InjectedConnector } from '@web3-react/injected-connector';
+import { ConnectorHookArgs } from './types';
 
 type ConnectorHookResult = {
   connect: () => Promise<void>;
@@ -19,10 +20,13 @@ type ConnectorHookResult = {
 
 const WALLET_URL = 'https://metamask.app.link/dapp/';
 
-export const useConnectorMetamask = (): ConnectorHookResult => {
+export const useConnectorMetamask = (
+  args?: ConnectorHookArgs,
+): ConnectorHookResult => {
   const { injected } = useConnectors();
   const { activate } = useWeb3();
   const { disconnect } = useForceDisconnect();
+  const onConnect = args?.onConnect;
 
   const openInWallet = useCallback(() => {
     try {
@@ -52,11 +56,12 @@ export const useConnectorMetamask = (): ConnectorHookResult => {
     // and recommend to click on MetaMask button in such case.
     if (hasInjected()) {
       await disconnect();
-      activate(injected);
+      await activate(injected);
+      onConnect?.();
     } else {
       openInWallet();
     }
-  }, [activate, disconnect, openInWallet, injected]);
+  }, [injected, openInWallet, disconnect, activate, onConnect]);
 
   return { connect, connector: injected };
 };

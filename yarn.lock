@@ -2364,14 +2364,14 @@
     "@lido-sdk/constants" "1.6.0"
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/providers@^1.4.4":
+"@lido-sdk/providers@1.4.4", "@lido-sdk/providers@^1.4.4":
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/@lido-sdk/providers/-/providers-1.4.4.tgz#ffb73dffe33d0262cb1c0d1712f09692ed1062fc"
   integrity sha512-RSmmgLTZAAnbqo5Ts2ehXt703Dm1eiJivXdflS+4FZFCu70e7ariwEHg4eDDYiy5w+6ffqyLPBPKxcY5YtiL+A==
   dependencies:
     "@lido-sdk/constants" "1.6.0"
 
-"@lido-sdk/react@^1.18.1":
+"@lido-sdk/react@1.18.1", "@lido-sdk/react@^1.18.1":
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/@lido-sdk/react/-/react-1.18.1.tgz#6d283f691f8526f9b9dae8e96c6038b43e127246"
   integrity sha512-WHbam35vAmeOyUFAvK4itD1NOi5k0/We5M6koq/xCcp3jRkxijcYQbh3kfVplsDkJzBISwcckpDi5TiZxRXPdg==
@@ -2382,6 +2382,28 @@
     swr "^1.0.1"
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
+
+"@lido-sdk/web3-react@^1.27.0":
+  version "1.27.3"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/web3-react/-/web3-react-1.27.3.tgz#332c2ae3b33e801b1c7d6bf13dfca1fef7047c23"
+  integrity sha512-zPGSvnYDivZ/KAqq3SdalT00EmayK7u7ciTSXTWQJ89HAc7LmAprp8v+KOSe96OHgy6t2kAaU7x0Cs20JZlysg==
+  dependencies:
+    "@gnosis.pm/safe-apps-web3-react" "0.6.8"
+    "@ledgerhq/iframe-provider" "0.4.2"
+    "@lido-sdk/constants" "1.6.0"
+    "@lido-sdk/helpers" "1.4.3"
+    "@lido-sdk/providers" "1.4.4"
+    "@lido-sdk/react" "1.18.1"
+    "@web3-react/abstract-connector" "6.0.7"
+    "@web3-react/core" "6.1.9"
+    "@web3-react/injected-connector" "6.0.7"
+    "@web3-react/walletconnect-connector" "6.2.13"
+    "@web3-react/walletlink-connector" "6.2.14"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+    ua-parser-js "1.0.2"
+    web3-ledgerhq-connector "^1.2.3"
+    web3-ledgerhq-frame-connector "^1.0.1"
 
 "@lidofinance/accordion@2.12.0":
   version "2.12.0"
@@ -2526,6 +2548,22 @@
   dependencies:
     "@lidofinance/theme" "2.7.0"
     "@lidofinance/utils" "1.3.2"
+
+"@lidofinance/lido-ui@3.0.0-next.16":
+  version "3.0.0-next.16"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.0.0-next.16.tgz#cc23555a744a135310178d04183b46f6bb597795"
+  integrity sha512-iRgCnPzFTQrtL9rXnSngwhTFBQD+gLnnH3sXMx2IowuAqLlP5Z03IHzIo1r4LaaIb246mRKIyTQUjco90ETvlw==
+  dependencies:
+    "@styled-system/should-forward-prop" "5.1.5"
+    "@swc/helpers" "^0.4.11"
+    "@swc/plugin-styled-components" "^1.2.10"
+    react-collapsed "3.0.2"
+    react-jazzicon "^1.0.4"
+    react-toastify "7.0.4"
+    react-transition-group "4"
+    styled-system "5.1.5"
+    ua-parser-js "^1.0.2"
+    use-callback-ref "1.2.5"
 
 "@lidofinance/lido-ui@^2.16.1":
   version "2.16.2"
@@ -3694,6 +3732,18 @@
   integrity sha512-rEUrBSGIoSFuYxwBYtlUFMlE2CwGhmW+w9355/5oduSw8e5h2+Tj4UrAGNNgP9915++wj5vkQo0UuOBqOAq4nw==
   dependencies:
     tslib "^2.4.0"
+
+"@swc/helpers@^0.4.11":
+  version "0.4.13"
+  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.13.tgz#321376f6ee5f63f69828656ab93dfeb826e1f95a"
+  integrity sha512-WOoZMSqpmUgL72xOeaWcU9IG7C6t5Wh1e8NGpSyBvmN5BSCXleK4/PLS6Oko1i/Lvn/yGYOv62bxlfsDvmRurg==
+  dependencies:
+    tslib "^2.4.0"
+
+"@swc/plugin-styled-components@^1.2.10":
+  version "1.5.25"
+  resolved "https://registry.yarnpkg.com/@swc/plugin-styled-components/-/plugin-styled-components-1.5.25.tgz#0cff4313122428c1847053bfe8c3c57d15fcd4f8"
+  integrity sha512-ifoKW+VOL3ndLis/8qzyu4P95+7hhwylQhURY7CkT5lYJ1gobyEsRel9ZHnsorSwYHJyAJXuc/yLWk4qbAQCwg==
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14":
   version "7.1.19"
@@ -11604,14 +11654,6 @@ react-dom@17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react-dom@18.2.0:
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
-  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
-  dependencies:
-    loose-envify "^1.1.0"
-    scheduler "^0.23.0"
-
 react-draggable@^4.4.3:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.4.5.tgz#9e37fe7ce1a4cf843030f521a0a4cc41886d7e7c"
@@ -11659,6 +11701,13 @@ react-jazzicon@0.1.3:
     color "^0.11.0"
     mersenne-twister "^1.1.0"
     prop-types "^15.5.10"
+
+react-jazzicon@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-jazzicon/-/react-jazzicon-1.0.4.tgz#31e5f6908e042786ba93a9093b852dea1870e7a0"
+  integrity sha512-/3kWv5vtAhI18GBFoqjpxRTtL+EImuB73PAC02r/zJQ6E+PAUmoBx8edYvTCIYHwS01uFf6N3elTDqSrVPwg4w==
+  dependencies:
+    mersenne-twister "^1.1.0"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
@@ -11748,13 +11797,6 @@ react@17.0.2:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-
-react@18.2.0:
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
-  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
-  dependencies:
-    loose-envify "^1.1.0"
 
 read-pkg-up@^7.0.1:
   version "7.0.1"
@@ -12228,13 +12270,6 @@ scheduler@^0.20.2:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-
-scheduler@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
-  integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
-  dependencies:
-    loose-envify "^1.1.0"
 
 schema-utils@2.7.0:
   version "2.7.0"
@@ -13235,10 +13270,10 @@ tsconfig-paths@^3.14.1:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
-  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
+tslib@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
+  integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
@@ -13383,6 +13418,11 @@ ua-parser-js@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.2.tgz#e2976c34dbfb30b15d2c300b2a53eac87c57a775"
   integrity sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==
+
+ua-parser-js@^1.0.2:
+  version "1.0.32"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.32.tgz#786bf17df97de159d5b1c9d5e8e9e89806f8a030"
+  integrity sha512-dXVsz3M4j+5tTiovFVyVqssXBu5HM47//YSOeZ9fQkdDKkfzv2v3PP1jmH6FUyPW+yCSn7aBVK1fGGKNhowdDA==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
