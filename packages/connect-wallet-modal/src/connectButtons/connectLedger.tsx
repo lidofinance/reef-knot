@@ -7,12 +7,14 @@ import ConnectButton from './connectButton';
 const ConnectLedger: FC<ConnectWalletProps> = (props) => {
   const {
     onConnect,
+    onBeforeConnect,
     setRequirements,
     shouldInvertWalletIcon,
     metrics,
     ...rest
   } = props;
   const onConnectLedger = metrics?.events?.connect?.handlers.onConnectLedger;
+  const onClickLedger = metrics?.events?.click?.handlers.onClickLedger;
   const { connect, connector } = useConnectorLedger({
     onConnect: () => {
       onConnect?.();
@@ -24,6 +26,9 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
     : LedgerCircle;
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickLedger?.();
+
     if (!connect || !connector?.isSupported()) {
       setRequirements(true, {
         icon: <WalletIcon />,
@@ -33,7 +38,14 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
       return;
     }
     await connect();
-  }, [connect, connector, setRequirements, WalletIcon]);
+  }, [
+    onBeforeConnect,
+    onClickLedger,
+    connect,
+    connector,
+    setRequirements,
+    WalletIcon,
+  ]);
 
   return (
     <ConnectButton

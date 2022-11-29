@@ -7,8 +7,10 @@ import ConnectButton from './connectButton';
 import checkConflicts from './checkConflicts';
 
 const ConnectExodus: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, setRequirements, metrics, ...rest } = props;
+  const { onConnect, onBeforeConnect, setRequirements, metrics, ...rest } =
+    props;
   const onConnectExodus = metrics?.events?.connect?.handlers.onConnectExodus;
+  const onClickExodus = metrics?.events?.click?.handlers.onClickExodus;
   const { connect } = useConnectorExodus({
     onConnect: () => {
       onConnect?.();
@@ -67,6 +69,9 @@ const ConnectExodus: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   }, [setRequirements]);
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickExodus?.();
+
     const calledOnMobile = await handleMobile();
     if (calledOnMobile) return;
 
@@ -74,7 +79,7 @@ const ConnectExodus: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     if (hasConflicts) return;
 
     await connect();
-  }, [connect, handleConflicts, handleMobile]);
+  }, [connect, handleConflicts, handleMobile, onBeforeConnect, onClickExodus]);
 
   return (
     <ConnectButton

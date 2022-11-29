@@ -8,6 +8,7 @@ const ConnectCoinbase: FC<ConnectWalletProps> = (props) => {
   const { onConnect, onBeforeConnect, metrics, ...rest } = props;
   const onConnectCoinbase =
     metrics?.events?.connect?.handlers.onConnectCoinbase;
+  const onClickCoinbase = metrics?.events?.click?.handlers.onClickCoinbase;
   const { connect } = useConnectorCoinbase({
     onConnect: () => {
       onConnect?.();
@@ -17,8 +18,10 @@ const ConnectCoinbase: FC<ConnectWalletProps> = (props) => {
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
+    onClickCoinbase?.();
+
     await connect();
-  }, [connect, onBeforeConnect]);
+  }, [connect, onBeforeConnect, onClickCoinbase]);
 
   return (
     <ConnectButton

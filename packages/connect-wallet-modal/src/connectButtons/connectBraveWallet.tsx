@@ -12,6 +12,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
 ) => {
   const {
     onConnect,
+    onBeforeConnect,
     shouldInvertWalletIcon,
     setRequirements,
     metrics,
@@ -19,6 +20,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
   } = props;
   const { isBraveWalletProvider, isMetamaskProvider } = helpers;
   const onConnectBrave = metrics?.events?.connect?.handlers.onConnectBrave;
+  const onClickBrave = metrics?.events?.click?.handlers.onClickBrave;
   const { connect } = useConnectorBraveWallet({
     onConnect: () => {
       onConnect?.();
@@ -74,11 +76,14 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
   }, [isBraveWalletProvider, isMetamaskProvider, setRequirements]);
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickBrave?.();
+
     const hasConflicts = await handleConflicts();
     if (hasConflicts) return;
 
     await connect();
-  }, [handleConflicts, connect]);
+  }, [onBeforeConnect, onClickBrave, handleConflicts, connect]);
 
   return (
     <ConnectButton

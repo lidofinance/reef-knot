@@ -14,6 +14,7 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
 ) => {
   const {
     onConnect,
+    onBeforeConnect,
     shouldInvertWalletIcon,
     setRequirements,
     metrics,
@@ -21,6 +22,7 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
   } = props;
   const onConnectMathWallet =
     metrics?.events?.connect?.handlers.onConnectMathWallet;
+  const onClickMathWallet = metrics?.events?.click?.handlers.onClickMathWallet;
   const { connect } = useConnectorMathWallet({
     onConnect: () => {
       onConnect?.();
@@ -32,6 +34,9 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
     : MathWalletCircle;
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickMathWallet?.();
+
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
       checkConflicts([
         CONFLICTS.Xdefi,
@@ -61,7 +66,13 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
     }
 
     await connect();
-  }, [connect, setRequirements, WalletIcon]);
+  }, [
+    onBeforeConnect,
+    onClickMathWallet,
+    connect,
+    setRequirements,
+    WalletIcon,
+  ]);
 
   return (
     <ConnectButton

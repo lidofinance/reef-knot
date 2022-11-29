@@ -9,6 +9,7 @@ const ConnectOperaWallet: FC<ConnectWalletProps> = (
 ) => {
   const {
     onConnect,
+    onBeforeConnect,
     shouldInvertWalletIcon,
     setRequirements,
     metrics,
@@ -16,6 +17,8 @@ const ConnectOperaWallet: FC<ConnectWalletProps> = (
   } = props;
   const onConnectOperaWallet =
     metrics?.events?.connect?.handlers.onConnectOperaWallet;
+  const onClickOperaWallet =
+    metrics?.events?.click?.handlers.onClickOperaWallet;
   const { connect } = useConnectorOperaWallet({
     onConnect: () => {
       onConnect?.();
@@ -27,8 +30,11 @@ const ConnectOperaWallet: FC<ConnectWalletProps> = (
   // It allows to install wallets from Chrome extensions store, but doesn't allow them to modify `window.ethereum`.
   // Looks like no need to handle wallets conflicts right now.
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickOperaWallet?.();
+
     await connect();
-  }, [connect]);
+  }, [onBeforeConnect, onClickOperaWallet, connect]);
 
   return (
     <ConnectButton
