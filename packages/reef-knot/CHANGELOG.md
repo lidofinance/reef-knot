@@ -1,5 +1,16 @@
 # reef-knot
 
+## 0.3.0
+
+### Minor Changes
+
+- Add Metrics Events for clicks on wallets connection buttons
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
