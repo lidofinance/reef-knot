@@ -5,9 +5,17 @@ import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
 const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, shouldInvertWalletIcon, metrics, ...rest } = props;
+  const {
+    onConnect,
+    onBeforeConnect,
+    shouldInvertWalletIcon,
+    metrics,
+    ...rest
+  } = props;
   const onConnectBlockchaincom =
     metrics?.events?.connect?.handlers.onConnectBlockchaincom;
+  const onClickBlockchaincom =
+    metrics?.events?.click?.handlers.onClickBlockchaincom;
   const { connect } = useConnectorWalletConnectNoLinks({
     onConnect: () => {
       onConnect?.();
@@ -19,8 +27,11 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
     : Blochainwallet;
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickBlockchaincom?.();
+
     await connect();
-  }, [connect]);
+  }, [connect, onBeforeConnect, onClickBlockchaincom]);
 
   return (
     <ConnectButton

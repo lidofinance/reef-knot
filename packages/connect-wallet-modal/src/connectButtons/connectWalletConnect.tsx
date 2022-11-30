@@ -5,8 +5,9 @@ import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
 const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, metrics, ...rest } = props;
+  const { onConnect, onBeforeConnect, metrics, ...rest } = props;
   const onConnectWC = metrics?.events?.connect?.handlers.onConnectWC;
+  const onClickWC = metrics?.events?.click?.handlers.onClickWC;
   const { connect } = useConnectorWalletConnect({
     onConnect: () => {
       onConnect?.();
@@ -15,8 +16,11 @@ const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
   });
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickWC?.();
+
     await connect();
-  }, [connect]);
+  }, [connect, onBeforeConnect, onClickWC]);
 
   return (
     <ConnectButton

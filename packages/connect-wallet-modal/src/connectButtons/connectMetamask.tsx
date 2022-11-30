@@ -9,6 +9,7 @@ import checkConflicts from './checkConflicts';
 const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   const {
     onConnect,
+    onBeforeConnect,
     shouldInvertWalletIcon,
     setRequirements,
     metrics,
@@ -16,6 +17,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   } = props;
   const onConnectMetamask =
     metrics?.events?.connect?.handlers.onConnectMetamask;
+  const onClickMetamask = metrics?.events?.click?.handlers.onClickMetamask;
   const { connect } = useConnectorMetamask({
     onConnect: () => {
       onConnect?.();
@@ -27,6 +29,9 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     : MetaMaskCircle;
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickMetamask?.();
+
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
       checkConflicts([
         CONFLICTS.Xdefi,
@@ -58,7 +63,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     }
 
     await connect();
-  }, [connect, setRequirements, WalletIcon]);
+  }, [connect, onBeforeConnect, onClickMetamask, setRequirements, WalletIcon]);
 
   return (
     <ConnectButton

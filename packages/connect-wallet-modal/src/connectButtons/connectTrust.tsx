@@ -7,8 +7,10 @@ import checkConflicts from './checkConflicts';
 import { CONFLICTS } from '../constants/conflictChecks';
 
 const ConnectTrust: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, setRequirements, metrics, ...rest } = props;
+  const { onConnect, onBeforeConnect, setRequirements, metrics, ...rest } =
+    props;
   const onConnectTrust = metrics?.events?.connect?.handlers.onConnectTrust;
+  const onClickTrust = metrics?.events?.click?.handlers.onClickTrust;
   const { connect } = useConnectorTrust({
     onConnect: () => {
       onConnect?.();
@@ -17,6 +19,9 @@ const ConnectTrust: FC<ConnectWalletProps> = (props) => {
   });
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickTrust?.();
+
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
       checkConflicts([CONFLICTS.Tally, CONFLICTS.Exodus]);
 
@@ -48,7 +53,7 @@ const ConnectTrust: FC<ConnectWalletProps> = (props) => {
     }
 
     await connect();
-  }, [connect, setRequirements]);
+  }, [connect, onBeforeConnect, onClickTrust, setRequirements]);
 
   return (
     <ConnectButton

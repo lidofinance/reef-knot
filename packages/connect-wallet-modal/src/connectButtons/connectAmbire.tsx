@@ -25,6 +25,7 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
     ...rest
   } = props;
   const onConnectAmbire = metrics?.events?.connect?.handlers.onConnectAmbire;
+  const onClickAmbire = metrics?.events?.click?.handlers.onClickAmbire;
   const { connect, connector } = useConnectorWalletConnectUri({
     onConnect: () => {
       onConnect?.();
@@ -42,13 +43,14 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
+    onClickAmbire?.();
 
     // because of popup blockers, window.open must be called directly from onclick handler
     newWindow = window.open('', '_blank');
     newWindow?.document.write(newWindowHtml);
 
     await connect();
-  }, [onBeforeConnect, connect]);
+  }, [onBeforeConnect, onClickAmbire, connect]);
 
   return (
     <ConnectButton

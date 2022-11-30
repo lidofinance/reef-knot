@@ -7,8 +7,10 @@ import ConnectButton from './connectButton';
 import checkConflicts from './checkConflicts';
 
 const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
-  const { onConnect, setRequirements, metrics, ...rest } = props;
+  const { onConnect, onBeforeConnect, setRequirements, metrics, ...rest } =
+    props;
   const onConnectCoin98 = metrics?.events?.connect?.handlers.onConnectCoin98;
+  const onClickCoin98 = metrics?.events?.click?.handlers.onClickCoin98;
 
   const { connect } = useConnectorCoin98({
     onConnect: () => {
@@ -18,6 +20,9 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   });
 
   const handleConnect = useCallback(async () => {
+    onBeforeConnect?.();
+    onClickCoin98?.();
+
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
       checkConflicts([
         CONFLICTS.MathWallet,
@@ -48,7 +53,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     }
 
     await connect();
-  }, [connect, setRequirements]);
+  }, [connect, onBeforeConnect, onClickCoin98, setRequirements]);
 
   return (
     <ConnectButton
