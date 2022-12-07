@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorGamestop, helpers } from '@reef-knot/web3-react';
-import { Gamestop as WalletIcon } from '@lidofinance/lido-ui';
+import { Gamestop as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';

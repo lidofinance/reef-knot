@@ -1,10 +1,12 @@
-import { Button } from '@lidofinance/lido-ui';
+import { uiReact } from 'reef-knot';
 import { WalletsModalForEth } from 'reef-knot';
 import { themeLight, ThemeProvider } from '@lidofinance/lido-ui';
 import Header from '../components/Header';
 import ProviderWeb3WithProps from '../components/ProviderWeb3WithProps';
 import useModal from '../hooks/useModal';
 import metrics from '../util/metrics';
+
+const { Button } = uiReact;
 
 export default function Web() {
   const { state, handleOpen, handleClose } = useModal();

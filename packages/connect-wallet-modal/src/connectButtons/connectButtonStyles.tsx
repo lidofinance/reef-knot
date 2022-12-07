@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Button } from '@lidofinance/lido-ui';
+import { Button } from '@reef-knot/ui-react';
 
 export const ConnectButtonStyle = styled(Button).attrs({
   variant: 'ghost',

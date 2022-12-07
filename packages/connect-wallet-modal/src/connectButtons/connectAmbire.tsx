@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect } from 'react';
 import { useConnectorWalletConnectUri } from '@reef-knot/web3-react';
-import { Ambire } from '@lidofinance/lido-ui';
+import { Ambire } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
