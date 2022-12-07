@@ -1,0 +1,50 @@
+{
+  "name": "@reef-knot/wallets-icons",
+  "version": "0.1.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./react": {
+      "require": "./dist/cjs/react/index.js",
+      "import": "./dist/esm/react/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "react": ["dist/esm/react/index.d.ts"]
+    }
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/connect-wallet-modal"
+  },
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "dev=on rollup -c -w",
+    "lint": "eslint"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "devDependencies": {
+    "@svgr/rollup": "^6.5.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  }
+}
