@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ModalProps } from '@lidofinance/lido-ui';
+import { ModalProps } from '@reef-knot/ui-react';
 
 export type RequirementsData = {
   icon?: ReactNode;

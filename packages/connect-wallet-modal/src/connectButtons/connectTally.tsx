@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorTally } from '@reef-knot/web3-react';
-import { TallyCircle } from '@lidofinance/lido-ui';
+import { Tally } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 import { isMobileOrTablet } from '../helpers';
@@ -29,7 +29,7 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
 
     if (!connect || isMobileOrTablet) {
       setRequirements(true, {
-        icon: <TallyCircle />,
+        icon: <Tally />,
         title: "Tally Ho wallet couldn't connect",
         text: 'At the current moment, it is only available as extension for Chrome, Brave, and Firefox.',
       });
@@ -42,7 +42,7 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   return (
     <ConnectButton
       {...rest}
-      iconSrcOrReactElement={<TallyCircle />}
+      iconSrcOrReactElement={<Tally />}
       onClick={handleConnect}
     >
       Tally

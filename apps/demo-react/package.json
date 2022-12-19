@@ -15,7 +15,8 @@
     "@lido-sdk/web3-react": "^1.27.0",
     "@lido-sdk/constants": "^1.6.0",
     "@lidofinance/lido-ui": "3.0.0-next.16",
-    "reef-knot": "*"
+    "reef-knot": "*",
+    "@reef-knot/ui-react": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

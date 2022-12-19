@@ -1,6 +1,9 @@
 import { FC, useCallback } from 'react';
 import { useConnectorMetamask } from '@reef-knot/web3-react';
-import { MetaMaskCircle, MetaMaskCircleInversion } from '@lidofinance/lido-ui';
+import {
+  MetaMaskCircle,
+  MetaMaskCircleInversion,
+} from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';

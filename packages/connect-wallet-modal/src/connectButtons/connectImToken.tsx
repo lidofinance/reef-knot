@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorImToken } from '@reef-knot/web3-react';
-import { ImtokenCircle } from '@lidofinance/lido-ui';
+import { ImToken as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 import { isIOS, isAndroid } from '../helpers';
@@ -23,7 +23,7 @@ const ConnectImToken: FC<ConnectWalletProps> = (props) => {
 
     if (!connect || !(isIOS || isAndroid)) {
       setRequirements(true, {
-        icon: <ImtokenCircle />,
+        icon: <WalletIcon />,
         title: "imToken couldn't connect",
         text: 'It is available only on iOS and Android devices.',
       });
@@ -35,7 +35,7 @@ const ConnectImToken: FC<ConnectWalletProps> = (props) => {
   return (
     <ConnectButton
       {...rest}
-      iconSrcOrReactElement={<ImtokenCircle />}
+      iconSrcOrReactElement={<WalletIcon />}
       onClick={handleConnect}
     >
       imToken

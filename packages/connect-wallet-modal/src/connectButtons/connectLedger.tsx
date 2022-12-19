@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorLedger } from '@reef-knot/web3-react';
-import { LedgerCircle, LedgerCircleInversion } from '@lidofinance/lido-ui';
+import { Ledger, LedgerInversion } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
@@ -21,9 +21,7 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
       onConnectLedger?.();
     },
   });
-  const WalletIcon = shouldInvertWalletIcon
-    ? LedgerCircleInversion
-    : LedgerCircle;
+  const WalletIcon = shouldInvertWalletIcon ? LedgerInversion : Ledger;
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();

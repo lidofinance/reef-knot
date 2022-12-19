@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorCoin98 } from '@reef-knot/web3-react';
-import { Coin98Circle } from '@lidofinance/lido-ui';
+import { Coin98 } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
@@ -35,7 +35,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
 
     if (hasConflicts) {
       setRequirements(true, {
-        icon: <Coin98Circle />,
+        icon: <Coin98 />,
         title: "Coin98 couldn't connect",
         text:
           conflictingAppsArray.length > 1 ? (
@@ -58,7 +58,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   return (
     <ConnectButton
       {...rest}
-      iconSrcOrReactElement={<Coin98Circle />}
+      iconSrcOrReactElement={<Coin98 />}
       onClick={handleConnect}
     >
       Coin98

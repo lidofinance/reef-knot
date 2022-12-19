@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useLocalStorage } from '@lido-sdk/react';
-import { Modal } from '@lidofinance/lido-ui';
+import { Modal } from '@reef-knot/ui-react';
 import {
   WalletsModalProps,
   ButtonsCommonProps,

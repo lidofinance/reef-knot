@@ -3,7 +3,7 @@ import {
   useConnectorWalletConnectNoLinks,
   useConnectorWalletConnectUri,
 } from '@reef-knot/web3-react';
-import { Zengo as WalletIcon } from '@lidofinance/lido-ui';
+import { ZenGo as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 import { isMobileOrTablet } from '../helpers';

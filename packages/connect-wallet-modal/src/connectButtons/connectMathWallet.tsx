@@ -1,8 +1,8 @@
 import { FC, useCallback } from 'react';
 import {
-  MathWalletCircle,
-  MathWalletCircleInversion,
-} from '@lidofinance/lido-ui';
+  MathWallet,
+  MathWalletInversion,
+} from '@reef-knot/wallets-icons/react';
 import { useConnectorMathWallet } from '@reef-knot/web3-react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
@@ -29,9 +29,7 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
       onConnectMathWallet?.();
     },
   });
-  const WalletIcon = shouldInvertWalletIcon
-    ? MathWalletCircleInversion
-    : MathWalletCircle;
+  const WalletIcon = shouldInvertWalletIcon ? MathWalletInversion : MathWallet;
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();

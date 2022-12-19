@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorOperaWallet } from '@reef-knot/web3-react';
-import { OperaWallet as WalletIcon } from '@lidofinance/lido-ui';
+import { OperaWallet as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 

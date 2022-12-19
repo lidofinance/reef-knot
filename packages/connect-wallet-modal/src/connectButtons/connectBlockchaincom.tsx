@@ -1,6 +1,9 @@
 import { FC, useCallback } from 'react';
 import { useConnectorWalletConnectNoLinks } from '@reef-knot/web3-react';
-import { Blochainwallet, BlochainwalletInversion } from '@lidofinance/lido-ui';
+import {
+  Blockchaincom,
+  BlockchaincomInversion,
+} from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
@@ -23,8 +26,8 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
     },
   });
   const WalletIcon = shouldInvertWalletIcon
-    ? BlochainwalletInversion
-    : Blochainwallet;
+    ? BlockchaincomInversion
+    : Blockchaincom;
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();

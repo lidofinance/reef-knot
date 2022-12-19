@@ -1,4 +1,4 @@
-import { Button } from '@lidofinance/lido-ui';
+import { Button } from '@reef-knot/ui-react';
 import { WalletsModalForEth } from 'reef-knot';
 import { themeLight, ThemeProvider } from '@lidofinance/lido-ui';
 import Header from '../components/Header';

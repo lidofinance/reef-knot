@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorWalletConnect } from '@reef-knot/web3-react';
-import { WalletConnectCircle } from '@lidofinance/lido-ui';
+import { WalletConnect } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 
@@ -25,7 +25,7 @@ const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
   return (
     <ConnectButton
       {...rest}
-      iconSrcOrReactElement={<WalletConnectCircle />}
+      iconSrcOrReactElement={<WalletConnect />}
       onClick={handleConnect}
     >
       WalletConnect

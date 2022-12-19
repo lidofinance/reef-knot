@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useConnectorTrust } from '@reef-knot/web3-react';
-import { TrustCircle as WalletIcon } from '@lidofinance/lido-ui';
+import { Trust as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
 import ConnectButton from './connectButton';
 import checkConflicts from './checkConflicts';

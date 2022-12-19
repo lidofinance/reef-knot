@@ -97,7 +97,9 @@ export function WalletsModalForEth(
 ): JSX.Element {
   return (
     <WalletsModal {...props}>
-      {(commonProps) => getWalletsButtons(commonProps, props.hiddenWallets)}
+      {(commonProps: ButtonsCommonProps) =>
+        getWalletsButtons(commonProps, props.hiddenWallets)
+      }
     </WalletsModal>
   );
 }
