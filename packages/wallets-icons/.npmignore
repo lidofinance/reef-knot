@@ -1,6 +1,0 @@
-tsconfig.json
-rollup.config.js
-*.test.js
-*.story.js
-src
-.turbo

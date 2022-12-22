@@ -19,6 +19,9 @@
       "react": ["dist/esm/react/index.d.ts"]
     }
   },
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/lidofinance/reef-knot",
   "repository": {
