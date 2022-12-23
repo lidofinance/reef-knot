@@ -24,3 +24,4 @@ export { default as Trust } from '../svg/trust-circle.svg';
 export { default as WalletConnect } from '../svg/wallet-connect-circle.svg';
 export { default as XDEFI } from '../svg/xdefi-wallet.svg';
 export { default as ZenGo } from '../svg/zengo.svg';
+export { default as Zerion } from '../svg/zerion.svg';
