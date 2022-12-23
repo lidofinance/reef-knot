@@ -1,4 +1,5 @@
-export { default as default } from './connectButton';
+// eslint-disable-next-line no-restricted-exports
+export { default } from './connectButton';
 export { default as ConnectButton } from './connectButton';
 
 export { default as ConnectCoinbase } from './connectCoinbase';
@@ -18,3 +19,4 @@ export { default as ConnectOperaWallet } from './connectOperaWallet';
 export { default as ConnectExodus } from './connectExodus';
 export { default as ConnectGamestop } from './connectGamestop';
 export { default as ConnectXdefi } from './connectXdefi';
+export { default as ConnectZerion } from './connectZerion';
