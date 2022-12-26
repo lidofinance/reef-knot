@@ -17,6 +17,7 @@ export enum PROVIDER_NAMES {
   OPERA = 'Opera Crypto Wallet',
   GAMESTOP = 'GameStop Wallet',
   XDEFI = 'XDEFI',
+  ZERION = 'Zerion',
 }
 
 export enum CONNECTOR_NAMES {
