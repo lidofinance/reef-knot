@@ -1,5 +1,13 @@
 # reef-knot
 
+## 0.4.1
+
+### Patch Changes
+
+- Add Zerion wallet detection
+- Updated dependencies
+  - @reef-knot/web3-react@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

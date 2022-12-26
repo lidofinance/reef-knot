@@ -18,6 +18,7 @@ declare global {
       isOpera?: boolean;
       isGamestop?: boolean;
       isXDEFI?: boolean;
+      isZerion?: boolean;
       providers?: { isCoinbaseWallet?: boolean }[];
     };
   }
@@ -166,6 +167,14 @@ export const isXdefiProvider = (): boolean => {
       );
     }
     return false;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const isZerionProvider = (): boolean => {
+  try {
+    return !!window.ethereum?.isZerion;
   } catch (error) {
     return false;
   }

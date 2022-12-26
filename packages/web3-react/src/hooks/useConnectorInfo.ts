@@ -21,6 +21,7 @@ import {
   isTallyProvider,
   isTrustProvider,
   isXdefiProvider,
+  isZerionProvider,
 } from '../helpers';
 
 type ConnectorInfo = {
@@ -74,6 +75,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isExodus = isInjected && isExodusProvider();
   const isGamestop = isInjected && isGamestopProvider();
   const isXdefi = isInjected && isXdefiProvider();
+  const isZerion = isInjected && isZerionProvider();
 
   const providerName = (() => {
     if (isGnosis) return PROVIDER_NAMES.GNOSIS;
@@ -95,6 +97,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
     if (isCoinbase) return PROVIDER_NAMES.COINBASE;
     if (isOperaWallet) return PROVIDER_NAMES.OPERA;
     if (isBraveWallet) return PROVIDER_NAMES.BRAVE;
+    if (isZerion) return PROVIDER_NAMES.ZERION;
     // Metamask should be last in this list because almost all EIP-1193 wallets
     // are trying to mimic Metamask by setting isMetamask = true
     if (isMetamask) return PROVIDER_NAMES.METAMASK;
