@@ -7,8 +7,8 @@ export const ModalStyle = styled.div<{ $center: boolean }>`
     theme: { fontSizesMap, borderRadiusesMap, colors, boxShadows },
     $center,
   }) => css`
-    width: 432px;
-    max-width: 100%;
+    width: 100%;
+    min-width: 280px;
     font-weight: 400;
     font-size: ${fontSizesMap.xs}px;
     line-height: 1.5em;
@@ -109,10 +109,10 @@ export const ModalSubtitleStyle = styled.div`
 
 export const ModalContentStyle = styled.div`
   ${({ theme: { spaceMap, mediaQueries } }) => css`
-    padding: 0 ${spaceMap.xxl}px ${spaceMap.xxl}px;
+    padding: 0 ${spaceMap.xxl}px 0;
 
     ${mediaQueries.md} {
-      padding: 0 ${spaceMap.lg}px ${spaceMap.lg}px;
+      padding: 0 ${spaceMap.lg}px 0;
     }
   `}
 `;
