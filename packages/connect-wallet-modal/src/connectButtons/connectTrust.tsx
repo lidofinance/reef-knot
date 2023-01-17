@@ -2,8 +2,8 @@ import { FC, useCallback } from 'react';
 import { useConnectorTrust } from '@reef-knot/web3-react';
 import { Trust as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import ConnectButton from './connectButton';
-import checkConflicts from './checkConflicts';
+import { ConnectButton } from '../components';
+import checkConflicts from '../helpers/checkConflicts';
 import { CONFLICTS } from '../constants/conflictChecks';
 
 const ConnectTrust: FC<ConnectWalletProps> = (props) => {

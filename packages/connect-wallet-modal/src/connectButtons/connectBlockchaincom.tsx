@@ -5,7 +5,7 @@ import {
   BlockchaincomInversion,
 } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import ConnectButton from './connectButton';
+import { ConnectButton } from '../components';
 
 const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
   const {

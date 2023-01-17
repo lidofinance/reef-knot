@@ -3,8 +3,8 @@ import { useConnectorGamestop, helpers } from '@reef-knot/web3-react';
 import { Gamestop as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
-import ConnectButton from './connectButton';
-import checkConflicts from './checkConflicts';
+import { ConnectButton } from '../components';
+import checkConflicts from '../helpers/checkConflicts';
 
 const ConnectGamestop: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   const { onConnect, onBeforeConnect, setRequirements, metrics, ...rest } =

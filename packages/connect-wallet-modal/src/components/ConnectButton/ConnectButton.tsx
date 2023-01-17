@@ -4,8 +4,8 @@ import {
   ConnectButtonContentStyle,
   ConnectButtonIconStyle,
   ConnectButtonTitleStyle,
-} from './connectButtonStyles';
-import { ConnectButtonProps } from './types';
+} from './styles';
+import { ConnectButtonProps } from '../../connectButtons/types';
 
 const ConnectButton: FC<ConnectButtonProps> = (props: ConnectButtonProps) => {
   const { iconSrcOrReactElement, children, ...rest } = props;

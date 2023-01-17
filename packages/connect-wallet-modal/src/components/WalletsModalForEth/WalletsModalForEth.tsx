@@ -19,10 +19,10 @@ import {
   ConnectGamestop,
   ConnectXdefi,
   ConnectZerion,
-} from '../connectButtons';
+} from '../../connectButtons';
 import { ButtonsCommonProps, WalletsModal } from '../WalletsModal';
 import { WalletsModalForEthProps } from './types';
-import { WALLET_IDS, WalletId } from '../constants';
+import { WALLET_IDS, WalletId } from '../../constants';
 
 const walletsButtons: { [K in WalletId]: React.ComponentType } = {
   [WALLET_IDS.METAMASK]: ConnectMetamask,

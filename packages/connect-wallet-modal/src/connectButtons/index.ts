@@ -1,7 +1,3 @@
-// eslint-disable-next-line no-restricted-exports
-export { default } from './connectButton';
-export { default as ConnectButton } from './connectButton';
-
 export { default as ConnectCoinbase } from './connectCoinbase';
 export { default as ConnectImToken } from './connectImToken';
 export { default as ConnectLedger } from './connectLedger';
