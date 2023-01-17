@@ -1,5 +1,17 @@
 # reef-knot
 
+## 0.5.0
+
+### Minor Changes
+
+- Improve the modal's styles, rework scroll behavior
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@0.5.0
+  - @reef-knot/ui-react@0.2.0
+
 ## 0.4.1
 
 ### Patch Changes
