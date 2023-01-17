@@ -1,6 +1,6 @@
 import React from 'react';
 import { ButtonProps } from '@reef-knot/ui-react';
-import { ButtonsCommonProps } from '../WalletsModal';
+import { ButtonsCommonProps } from '../components';
 
 export type ConnectButtonProps = {
   iconSrcOrReactElement: string | React.ReactElement;

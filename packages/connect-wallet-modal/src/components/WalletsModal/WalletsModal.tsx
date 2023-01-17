@@ -8,7 +8,7 @@ import {
 } from './types';
 import { Terms } from '../Terms';
 import { WalletsButtonsContainer } from './styles';
-import { NOOP } from '../helpers';
+import { NOOP } from '../../helpers';
 
 export function WalletsModal(props: WalletsModalProps): JSX.Element {
   const {

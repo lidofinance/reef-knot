@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect } from 'react';
 import { useConnectorWalletConnectUri } from '@reef-knot/web3-react';
 import { Ambire } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import ConnectButton from './connectButton';
+import { ConnectButton } from '../components';
 
 let newWindow: Window | undefined | null;
 // Storing html as a string here to not overcomplicate build config

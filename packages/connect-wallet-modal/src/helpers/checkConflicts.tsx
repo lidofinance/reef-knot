@@ -11,7 +11,7 @@ const checkConflicts = (checks: ConflictCheck[]): ConflictsCheckResult => {
     .filter(([checkerFn]) => checkerFn())
     .map(([, appName]) => appName);
   const conflictingApps = conflictingAppsArray.join(', ');
-  const hasConflicts = !!conflictingAppsArray.length;
+  const hasConflicts = conflictingAppsArray.length > 0;
 
   return { hasConflicts, conflictingApps, conflictingAppsArray };
 };

@@ -5,13 +5,12 @@ export const ConnectButtonStyle = styled(Button).attrs({
   variant: 'ghost',
   square: true,
 })`
-  ${({ theme: { fontSizesMap, spaceMap, colors } }) => css`
-    height: 116px;
+  ${({ theme: { fontSizesMap, colors } }) => css`
     text-align: center;
     font-weight: 400;
     font-size: ${fontSizesMap.xxs}px;
     padding: 0;
-    margin-bottom: ${spaceMap.md}px;
+    margin: 0;
     background: ${colors.background};
   `}
 `;
@@ -21,12 +20,16 @@ export const ConnectButtonContentStyle = styled.span`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 5px;
     color: ${colors.text};
   `}
 `;
 
 export const ConnectButtonTitleStyle = styled.div`
   ${({ theme: { colors } }) => css`
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
     color: ${colors.text};
     line-height: 20px;
   `}
