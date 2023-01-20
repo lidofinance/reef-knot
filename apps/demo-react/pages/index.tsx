@@ -1,4 +1,4 @@
-import { Button } from '@reef-knot/ui-react';
+import dynamic from 'next/dynamic';
 import { WalletsModalForEth } from 'reef-knot';
 import { themeLight, ThemeProvider } from '@lidofinance/lido-ui';
 import Header from '../components/Header';
@@ -6,7 +6,7 @@ import ProviderWeb3WithProps from '../components/ProviderWeb3WithProps';
 import useModal from '../hooks/useModal';
 import metrics from '../util/metrics';
 
-export default function Web() {
+export function Web() {
   const { state, handleOpen, handleClose } = useModal();
 
   return (
@@ -36,3 +36,6 @@ export default function Web() {
     </>
   );
 }
+
+const WebNoSSR = dynamic(() => Promise.resolve(Web), { ssr: false });
+export default WebNoSSR;
