@@ -3,8 +3,11 @@ import { WalletsModalForEth } from 'reef-knot';
 import { themeLight, ThemeProvider } from '@lidofinance/lido-ui';
 import Header from '../components/Header';
 import ProviderWeb3WithProps from '../components/ProviderWeb3WithProps';
+import WalletInfo from '../components/WalletInfo';
 import useModal from '../hooks/useModal';
 import metrics from '../util/metrics';
+import MainContainer from '../components/MainContainer';
+import ConnectDisconnect from '../components/ConnectDisconnect';
 
 export function Web() {
   const { state, handleOpen, handleClose } = useModal();
@@ -14,23 +17,17 @@ export function Web() {
       <Header />
       <ThemeProvider theme={themeLight}>
         <ProviderWeb3WithProps>
-          <div
-            style={{
-              display: 'flex',
-              height: '300px',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Button size="md" onClick={handleOpen}>
-              Connect wallet
-            </Button>
+          <MainContainer>
+            <ConnectDisconnect handleOpen={handleOpen} />
+
+            <WalletInfo />
+
             <WalletsModalForEth
               open={state}
               onClose={handleClose}
               metrics={metrics}
             />
-          </div>
+          </MainContainer>
         </ProviderWeb3WithProps>
       </ThemeProvider>
     </>

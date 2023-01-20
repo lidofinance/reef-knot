@@ -1,17 +1,15 @@
 import { ReactNode } from 'react';
 import { CHAINS } from '@lido-sdk/constants';
-import { ProviderWeb3 } from 'reef-knot';
-
-const rpc = {
-  [CHAINS.Mainnet]: `/api/rpc?chainId=${CHAINS.Mainnet}`,
-  [CHAINS.Goerli]: `/api/rpc?chainId=${CHAINS.Goerli}`,
-};
+import { ProviderWeb3 } from '@reef-knot/web3-react';
 
 const ProviderWeb3WithProps = (props: { children: ReactNode }) => (
   <ProviderWeb3
     defaultChainId={CHAINS.Mainnet}
     supportedChainIds={[CHAINS.Mainnet]}
-    rpc={rpc}
+    rpc={{
+      [CHAINS.Mainnet]: `/rpc-stub?chainId=${CHAINS.Mainnet}`,
+      [CHAINS.Goerli]: `/rpc-stub?chainId=${CHAINS.Goerli}`,
+    }}
   >
     {props.children}
   </ProviderWeb3>
