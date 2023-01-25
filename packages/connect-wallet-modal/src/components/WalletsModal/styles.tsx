@@ -5,7 +5,7 @@ const GAP_BOTTOM = '32px';
 export const WalletsButtonsContainer = styled.div<{
   $buttonsFullWidth: boolean;
 }>`
-  ${({ $buttonsFullWidth }) => css`
+  ${({ theme, $buttonsFullWidth }) => css`
     box-sizing: content-box;
     max-height: 370px;
     display: grid;
@@ -24,9 +24,9 @@ export const WalletsButtonsContainer = styled.div<{
 
     @supports (scrollbar-width: thin) {
       scrollbar-width: thin;
-      scrollbar-color: #000a3d3d transparent;
-      padding-right: 10px;
-      margin-right: -10px;
+      scrollbar-color: ${theme.colors.border} transparent;
+      padding-right: 12px;
+      margin-right: -12px;
     }
 
     @supports selector(::-webkit-scrollbar) {
@@ -50,7 +50,7 @@ export const WalletsButtonsContainer = styled.div<{
         border-width: 2px;
         border-radius: 30px;
         background-clip: content-box;
-        background-color: #000a3d3d;
+        background-color: ${theme.colors.border};
 
         &:hover {
           border-width: 0;
