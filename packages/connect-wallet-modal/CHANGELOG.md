@@ -1,5 +1,13 @@
 # @reef-knot/connect-wallet-modal
 
+## 0.5.2
+
+### Patch Changes
+
+- Fix scrollbar padding and margin
+- Support dark color theme
+- ua-parser-js 1.0.33
+
 ## 0.5.1
 
 ### Patch Changes
