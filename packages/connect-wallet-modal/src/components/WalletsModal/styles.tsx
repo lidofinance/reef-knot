@@ -25,13 +25,13 @@ export const WalletsButtonsContainer = styled.div<{
     @supports (scrollbar-width: thin) {
       scrollbar-width: thin;
       scrollbar-color: #000a3d3d transparent;
-      padding-right: 6px;
-      margin-right: -16px;
+      padding-right: 10px;
+      margin-right: -10px;
     }
 
     @supports selector(::-webkit-scrollbar) {
-      padding-right: 10px;
-      margin-right: -10px;
+      padding-right: 6px;
+      margin-right: -16px;
 
       &::-webkit-scrollbar-track {
         margin-bottom: ${GAP_BOTTOM};
