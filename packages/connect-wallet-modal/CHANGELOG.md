@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 0.5.1
+
+### Patch Changes
+
+- Improve the modal's scrollbar
+
 ## 0.5.0
 
 ### Minor Changes

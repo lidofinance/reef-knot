@@ -6,6 +6,7 @@ export const ConnectButtonStyle = styled(Button).attrs({
   square: true,
 })`
   ${({ theme: { fontSizesMap, colors } }) => css`
+    box-sizing: content-box;
     text-align: center;
     font-weight: 400;
     font-size: ${fontSizesMap.xxs}px;
