@@ -2657,10 +2657,10 @@
   dependencies:
     typescript "4.6"
 
-"@lidofinance/lido-ui@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.1.0.tgz#b180221356c8eb36c0882e6e5307f9a10999e3eb"
-  integrity sha512-i70O0bwDPBE35gVg1xrwsHmvTYE4Rgdmi+lqnOzT2xA1KOtaWMnUyuURLn6UxvpfppNOoXxZLZJpv1DU6qr4MA==
+"@lidofinance/lido-ui@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.2.0.tgz#f46f5103268e3324a48589f6ffc9edee04cb6cf7"
+  integrity sha512-tNeePz3CyxIqLrRs2n++Dt9pBcCzsdSieUTuqAe1Tan8Oe5pzNUcqSodP2i+X8ohUbelcccEI5SkyoD9tKPuHg==
   dependencies:
     "@styled-system/should-forward-prop" "5.1.5"
     "@swc/helpers" "^0.4.11"

@@ -7,24 +7,13 @@ const WalletInfo = () => {
 
   return (
     <div>
-      <div
-        style={{
-          display: 'inline-block',
-          minWidth: '300px',
-          marginTop: '80px',
-          padding: '10px',
-          background: 'antiquewhite',
-          borderRadius: '10px',
-        }}
-      >
-        <h4>Info:</h4>
-        <div>
-          <code>
-            <p>providerName: {connectorInfo.providerName}</p>
-            <p>connectorName: {connectorInfo.connectorName}</p>
-            <p>account: {account}</p>
-          </code>
-        </div>
+      <h4>Info:</h4>
+      <div>
+        <code>
+          <p>providerName: {connectorInfo.providerName}</p>
+          <p>connectorName: {connectorInfo.connectorName}</p>
+          <p>account: {account}</p>
+        </code>
       </div>
     </div>
   );

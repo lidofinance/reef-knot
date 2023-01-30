@@ -13,7 +13,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "@lido-sdk/constants": "^1.6.0",
-    "@lidofinance/lido-ui": "3.1.0",
+    "@lidofinance/lido-ui": "3.2.0",
     "reef-knot": "*",
     "@reef-knot/ui-react": "*",
     "@reef-knot/web3-react": "*"
