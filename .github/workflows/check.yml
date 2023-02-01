@@ -1,9 +1,20 @@
-name: Check packages
+name: Check packages and publish demo app
+
 on:
   pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write   # to verify the deployment originates from an appropriate source
+
 jobs:
   check-all:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -24,3 +35,18 @@ jobs:
 
       - name: Run checks
         run: yarn check-packages
+
+      - name: Publish demo app
+        working-directory: apps/demo-react
+        run: yarn run next build && yarn run next export
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'apps/demo-react/out'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
