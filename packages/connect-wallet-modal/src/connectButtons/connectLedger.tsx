@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 import { useConnectorLedger } from '@reef-knot/web3-react';
 import { Ledger, LedgerInversion } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 
 const ConnectLedger: FC<ConnectWalletProps> = (props) => {
   const {

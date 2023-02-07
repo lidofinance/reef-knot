@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import { WalletConnect } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 
 const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
   const { onConnect, onBeforeConnect, metrics, ...rest } = props;

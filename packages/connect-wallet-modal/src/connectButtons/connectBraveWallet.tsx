@@ -3,7 +3,7 @@ import { useConnectorBraveWallet, helpers } from '@reef-knot/web3-react';
 import { Brave as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 import checkConflicts from '../helpers/checkConflicts';
 import { checkIfBraveBrowser } from '../helpers';
 

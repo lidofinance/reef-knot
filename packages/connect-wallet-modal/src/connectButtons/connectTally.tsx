@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 import { useConnectorTally } from '@reef-knot/web3-react';
 import { Tally } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 import { isMobileOrTablet } from '../helpers';
 
 const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {

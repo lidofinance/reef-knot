@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 import { useConnectorTrust } from '@reef-knot/web3-react';
 import { Trust as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 import checkConflicts from '../helpers/checkConflicts';
 import { CONFLICTS } from '../constants/conflictChecks';
 

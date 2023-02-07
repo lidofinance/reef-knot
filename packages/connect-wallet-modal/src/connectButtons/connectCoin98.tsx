@@ -3,7 +3,7 @@ import { useConnectorCoin98 } from '@reef-knot/web3-react';
 import { Coin98 } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 import checkConflicts from '../helpers/checkConflicts';
 
 const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
