@@ -52,9 +52,9 @@
     "rollup-plugin-delete": "2.0.0",
     "rollup-plugin-svg-import": "1.6.0",
     "rollup-plugin-typescript2": "0.34.1",
-    "tslib": "2.4.1",
+    "tslib": "2.5.0",
     "turbo": "latest",
-    "typescript": "4.6"
+    "typescript": "^4.9.5"
   },
   "engines": {
     "node": ">=16.0.0"
