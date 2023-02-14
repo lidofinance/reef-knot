@@ -1,10 +1,8 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import ts from 'typescript';
-import tslib from 'tslib';
 import del from 'rollup-plugin-delete';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
-import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
 import process from 'process';
 
@@ -22,15 +20,8 @@ export default {
   input: './src/index',
   output: [
     {
-      format: 'cjs',
-      dir: 'dist/cjs',
-      preserveModules: true,
-      preserveModulesRoot: 'src',
-      exports: 'named',
-    },
-    {
       format: 'es',
-      dir: 'dist/esm',
+      dir: 'dist',
       preserveModules: true,
       preserveModulesRoot: 'src',
       exports: 'named',
@@ -40,12 +31,10 @@ export default {
     isDevMode ? null : del({ targets: 'dist/*', runOnce: true }),
     resolve({ extensions }),
     typescript({
-      tslib,
       typescript: ts,
       tsconfig: 'tsconfig.json',
       tsconfigOverride: {
         compilerOptions: {
-          paths: { tslib: [require.resolve('tslib/tslib.d.ts')] },
           emitDeclarationOnly: false,
           noEmit: false,
           rootDir: 'src',
@@ -54,7 +43,6 @@ export default {
         include: ['src/**/*'],
       },
     }),
-    commonjs(),
     babel({
       exclude: 'node_modules/**',
       babelHelpers: 'bundled',

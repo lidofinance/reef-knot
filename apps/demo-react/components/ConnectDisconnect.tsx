@@ -1,5 +1,5 @@
-import { Button } from '@reef-knot/ui-react';
-import { useForceDisconnect } from '@reef-knot/web3-react';
+import { Button } from 'reef-knot/ui-react';
+import { useForceDisconnect } from 'reef-knot/web3-react';
 
 const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   const { handleOpen } = props;

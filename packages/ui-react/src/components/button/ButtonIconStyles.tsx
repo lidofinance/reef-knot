@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '../../utils/styledWrapper.js';
 
 export const ButtonWrapperStyle = styled.span`
   display: flex;

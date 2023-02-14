@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
 
 const GAP_BOTTOM = '32px';
 

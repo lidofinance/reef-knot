@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from '../../utils/styledWrapper.js';
 import { Close, ArrowBack } from '../../icons';
 import { ButtonIcon } from '../button';
 

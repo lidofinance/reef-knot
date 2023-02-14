@@ -1,5 +1,4 @@
-import { useConnectorInfo } from 'reef-knot';
-import { useWeb3 } from '@reef-knot/web3-react';
+import { useWeb3, useConnectorInfo } from 'reef-knot/web3-react';
 
 const WalletInfo = () => {
   const connectorInfo = useConnectorInfo();

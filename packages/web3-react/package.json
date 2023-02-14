@@ -1,9 +1,17 @@
 {
   "name": "@reef-knot/web3-react",
   "version": "0.3.0",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": ["dist/index.d.ts"]
+    }
+  },
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -40,6 +48,7 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^29.2.4",
+    "@types/react": "17.0.2",
     "@types/ua-parser-js": "^0.7.36",
     "babel-core": "6.26.3",
     "babel-jest": "^29.3.1",

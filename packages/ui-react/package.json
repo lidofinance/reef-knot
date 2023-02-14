@@ -1,9 +1,19 @@
 {
   "name": "@reef-knot/ui-react",
   "version": "0.2.0",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./styled-wrapper": "./dist/utils/styledWrapper.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": ["dist/index.d.ts"],
+      "styled-wrapper": ["dist/utils/styledWrapper.d.ts"]
+    }
+  },
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -33,12 +43,14 @@
   "peerDependencies": {
     "react": ">=17",
     "react-dom": ">=17",
+    "react-is": ">=17",
     "styled-components": "5"
   },
   "devDependencies": {
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "styled-components": "5.3.0",
+    "react-is": "17.0.2",
+    "styled-components": "^5.3.6",
     "@types/react-transition-group": "4.4.2"
   }
 }

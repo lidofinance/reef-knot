@@ -1,26 +1,23 @@
 {
   "name": "@reef-knot/wallets-icons",
   "version": "0.2.0",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
-    ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js"
-    },
-    "./react": {
-      "require": "./dist/cjs/react/index.js",
-      "import": "./dist/esm/react/index.js"
-    }
+    ".": "./dist/index.js",
+    "./react": "./dist/react/index.js",
+    "./svg/*": "./dist/svg/*"
   },
   "typesVersions": {
     "*": {
+      ".": ["dist/index.d.ts"],
       "react": [
-        "dist/esm/react/index.d.ts"
-      ]
+        "dist/react/index.d.ts"
+      ],
+      "svg/*": ["dist/svg/*"]
     }
   },
+  "type": "module",
   "files": [
     "dist"
   ],
