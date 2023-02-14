@@ -1,4 +1,4 @@
-import { Metrics } from 'reef-knot';
+import { Metrics } from 'reef-knot/connect-wallet-modal';
 
 const metrics: Metrics = {
   events: {
