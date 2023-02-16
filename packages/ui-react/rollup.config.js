@@ -26,15 +26,13 @@ const isDevMode = process.env.dev === 'on';
 
 export default {
   input: './src/index',
-  output: [
-    {
-      format: 'es',
-      dir: 'dist',
-      preserveModules: true,
-      preserveModulesRoot: 'src',
-      exports: 'named',
-    },
-  ],
+  output: {
+    format: 'es',
+    dir: 'dist',
+    preserveModules: true,
+    preserveModulesRoot: 'src',
+    generatedCode: 'es2015'
+  },
   plugins: [
     isDevMode ? null : del({ targets: 'dist/*', runOnce: true }),
     resolve({ extensions, preferBuiltins: true }),
