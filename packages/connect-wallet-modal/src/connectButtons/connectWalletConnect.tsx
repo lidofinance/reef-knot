@@ -1,16 +1,41 @@
-import { FC, useCallback } from 'react';
-import { useConnectorWalletConnect } from '@reef-knot/web3-react';
+import { FC, useCallback, useMemo } from 'react';
 import { WalletConnect } from '@reef-knot/wallets-icons/react';
+import { useConnect } from 'wagmi';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { ConnectWalletProps } from './types';
 import { ConnectButton } from '../components/ConnectButton';
 
 const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
-  const { onConnect, onBeforeConnect, metrics, ...rest } = props;
+  const {
+    onConnect,
+    onBeforeConnect,
+    metrics,
+    walletConnectProjectId,
+    wagmiChains,
+    ...rest
+  } = props;
   const onConnectWC = metrics?.events?.connect?.handlers.onConnectWC;
   const onClickWC = metrics?.events?.click?.handlers.onClickWC;
-  const { connect } = useConnectorWalletConnect({
-    onConnect: () => {
+
+  const connector = useMemo(
+    () =>
+      new WalletConnectConnector({
+        chains: wagmiChains,
+        options: {
+          qrcode: true,
+          version: '2',
+          projectId: walletConnectProjectId,
+        },
+      }),
+    [wagmiChains, walletConnectProjectId],
+  );
+
+  const { connect } = useConnect({
+    connector,
+    onMutate() {
       onConnect?.();
+    },
+    onSuccess() {
       onConnectWC?.();
     },
   });
