@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { WalletsModalForEth } from 'reef-knot/connect-wallet-modal';
 import {
   themeLight,
   themeDark,
@@ -8,7 +7,6 @@ import {
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
 import useModal from '../hooks/useModal';
-import metrics from '../util/metrics';
 import {
   Wagmi,
   ProviderWeb3WithProps,
@@ -18,10 +16,11 @@ import {
   ConnectDisconnect,
   ThemeSelect,
   SettingsWrapper,
+  WalletsModal,
 } from '../components';
 
 export function Web() {
-  const { state, handleOpen, handleClose } = useModal();
+  const { state, handleClose, handleOpen } = useModal();
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
   return (
@@ -43,11 +42,7 @@ export function Web() {
                 <WalletInfo />
               </SettingsWrapper>
 
-              <WalletsModalForEth
-                open={state}
-                onClose={handleClose}
-                metrics={metrics}
-              />
+              <WalletsModal open={state} handleClose={handleClose} />
             </MainContainer>
           </Wagmi>
         </ProviderWeb3WithProps>
