@@ -15,6 +15,7 @@ const commonExternal = ['react/jsx-runtime'];
 const external = [
   ...commonExternal,
   ...Object.keys({ ...dependencies, ...peerDependencies }),
+  /node_modules/
 ];
 const isDevMode = process.env.dev === 'on';
 
