@@ -10,7 +10,12 @@ import json from '@rollup/plugin-json';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 const { dependencies, peerDependencies } = packageJson;
-const commonExternal = ['react/jsx-runtime'];
+const commonExternal = [
+  'react/jsx-runtime',
+  // Do not include in the bundle subpath exports like:
+  /^@reef-knot\/.*/, // e.g. @reef-knot/<package>/<exports-field-entry>
+  /^reef-knot\/.*/, // e.g. reef-knot/wallets-icons/react
+];
 const external = [
   ...commonExternal,
   ...Object.keys({ ...dependencies, ...peerDependencies }),
