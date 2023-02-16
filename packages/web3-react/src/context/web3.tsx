@@ -1,4 +1,4 @@
-import { ReactNode, memo, FC } from 'react';
+import { memo, FC } from 'react';
 import invariant from 'tiny-invariant';
 import {
   Web3Provider,
@@ -19,7 +19,6 @@ export interface ProviderWeb3Props extends ConnectorsContextProps {
   swrConfig?: SWRConfiguration;
   pollingInterval?: number;
   onError?: (error: unknown) => void;
-  children: ReactNode;
 }
 
 function getLibrary(provider: ExternalProvider | JsonRpcFetchFunc) {
