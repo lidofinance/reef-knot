@@ -1,6 +1,6 @@
 import { createContext, FC, memo, useMemo } from 'react';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { CHAINS } from '@lido-sdk/constants';
@@ -20,15 +20,20 @@ export interface ConnectorsContextProps {
 
 export type ConnectorsContextValue = {
   injected: InjectedConnector;
+  walletlink: WalletLinkConnector;
   walletconnect: WalletConnectConnector;
   WalletConnectUri: WalletConnectConnector;
   WalletConnectNoLinks: WalletConnectConnector;
-  walletlink: WalletLinkConnector;
   coinbase: WalletLinkConnector;
   ledgerlive: LedgerHQFrameConnector;
   ledger: LedgerHQConnector;
   gnosis?: SafeAppConnector;
 };
+
+export type ConnectorsContextValueNoWagmi = Omit<
+  ConnectorsContextValue,
+  'walletconnect' | 'WalletConnectUri' | 'WalletConnectNoLinks'
+>;
 
 export type Connector = keyof ConnectorsContextValue;
 
@@ -48,6 +53,8 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
   } = props;
 
   const { supportedChainIds } = useSDK();
+
+  // adds BASE_URL to `rpc` object's string values
   const walletConnectRPC = useMemo(
     () =>
       Object.entries(rpc).reduce(
@@ -67,43 +74,42 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
       }),
 
       [CONNECTOR_NAMES.WALLET_CONNECT]: new WalletConnectConnector({
-        // bridge: 'https://walletconnect-relay.lido.fi',
-        storageId: 'lido-walletconnect',
-        supportedChainIds,
-        rpc: walletConnectRPC,
-        qrcodeModalOptions: {
-          mobileLinks: [
-            'metamask',
-            'trust',
-            'gnosis safe multisig',
-            'imtoken',
-            'mathwallet',
-            'coin98',
-            'bitpay',
-            'ledger',
-            '1inch',
-            'huobi',
-            'unstoppable',
-          ],
-          desktopLinks: [],
+        options: {
+          rpc: walletConnectRPC,
+          qrcodeModalOptions: {
+            mobileLinks: [
+              'metamask',
+              'trust',
+              'gnosis safe multisig',
+              'imtoken',
+              'mathwallet',
+              'coin98',
+              'bitpay',
+              'ledger',
+              '1inch',
+              'huobi',
+              'unstoppable',
+            ],
+            desktopLinks: [],
+          },
         },
       }),
 
       [CONNECTOR_NAMES.WALLET_CONNECT_NOLINKS]: new WalletConnectConnector({
-        storageId: 'lido-walletconnect',
-        supportedChainIds,
-        rpc: walletConnectRPC,
-        qrcodeModalOptions: {
-          mobileLinks: [],
-          desktopLinks: [],
+        options: {
+          rpc: walletConnectRPC,
+          qrcodeModalOptions: {
+            mobileLinks: [],
+            desktopLinks: [],
+          },
         },
       }),
 
       [CONNECTOR_NAMES.WALLET_CONNECT_URI]: new WalletConnectConnector({
-        storageId: 'lido-walletconnect',
-        supportedChainIds,
-        rpc: walletConnectRPC,
-        qrcode: false,
+        options: {
+          rpc: walletConnectRPC,
+          qrcode: false,
+        },
       }),
 
       [CONNECTOR_NAMES.GNOSIS]: (() => {
@@ -147,7 +153,16 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
     ],
   );
 
-  useAutoConnect(connectors);
+  // Temporary code to filter wagmi connectors from web3-react connectors,
+  // because we don't want to pass them to useAutoConnect.
+  // Had to use the { key: value } syntax here.
+  const {
+    [CONNECTOR_NAMES.WALLET_CONNECT]: _walletconnect,
+    [CONNECTOR_NAMES.WALLET_CONNECT_NOLINKS]: _walletconnectNoLinks,
+    [CONNECTOR_NAMES.WALLET_CONNECT_URI]: _walletconnectURI,
+    ...connectorsForAutoConnect
+  } = connectors;
+  useAutoConnect(connectorsForAutoConnect as ConnectorsContextValueNoWagmi);
 
   return (
     <ConnectorsContext.Provider value={connectors}>

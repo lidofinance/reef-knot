@@ -1,28 +1,40 @@
-import { useCallback } from 'react';
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
+import { useConnect, useDisconnect } from 'wagmi';
 import { useConnectors } from './useConnectors';
-import { useForceDisconnect } from './useDisconnect';
-import { useWeb3 } from './useWeb3';
 import { ConnectorHookArgs } from './types';
 
-type ConnectorHookResult = {
-  connect: () => Promise<void>;
-  connector: WalletConnectConnector;
-};
-
 export const useConnectorWalletConnect = (
-  args?: ConnectorHookArgs,
-): ConnectorHookResult => {
-  const { walletconnect } = useConnectors();
-  const { activate } = useWeb3();
-  const { disconnect } = useForceDisconnect();
-  const onConnect = args?.onConnect;
+  args: ConnectorHookArgs & {
+    noWalletsLinks?: boolean;
+    isUriOnly?: boolean;
+  } = {},
+) => {
+  const { walletconnect, WalletConnectUri, WalletConnectNoLinks } =
+    useConnectors();
 
-  const connect = useCallback(async () => {
-    await disconnect();
-    await activate(walletconnect);
-    onConnect?.();
-  }, [activate, disconnect, onConnect, walletconnect]);
+  let connector = walletconnect;
+  connector = args.isUriOnly ? WalletConnectUri : connector;
+  connector = args.noWalletsLinks ? WalletConnectNoLinks : connector;
 
-  return { connect, connector: walletconnect };
+  const { connect, connectAsync } = useConnect({
+    connector,
+    onSuccess() {
+      args.onConnect?.();
+    },
+  });
+
+  const { disconnect, disconnectAsync } = useDisconnect();
+
+  const reconnect = async () => {
+    await disconnectAsync();
+    await connectAsync();
+  };
+
+  return {
+    reconnect,
+    connect,
+    connectAsync,
+    disconnect,
+    disconnectAsync,
+    connector,
+  };
 };

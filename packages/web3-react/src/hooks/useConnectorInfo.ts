@@ -1,6 +1,7 @@
+import { useAccount } from 'wagmi';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { LedgerHQFrameConnector } from 'web3-ledgerhq-frame-connector';
 import { LedgerHQConnector } from 'web3-ledgerhq-connector';
@@ -51,8 +52,17 @@ type ConnectorInfo = {
 export const useConnectorInfo = (): ConnectorInfo => {
   const { active, connector } = useWeb3();
 
+  // === WAGMI connectors BEGIN
+  const { isConnected, connector: wagmiConnector } = useAccount();
+
+  const isWalletConnect =
+    isConnected &&
+    !!wagmiConnector &&
+    wagmiConnector instanceof WalletConnectConnector;
+
+  // === WAGMI connectors END
+  // === WEB3-REACT connectors BEGIN
   const isGnosis = active && connector instanceof SafeAppConnector;
-  const isWalletConnect = active && connector instanceof WalletConnectConnector;
   const isLedgerLive = active && connector instanceof LedgerHQFrameConnector;
   const isLedger = connector instanceof LedgerHQConnector;
 
@@ -110,20 +120,21 @@ export const useConnectorInfo = (): ConnectorInfo => {
     return undefined;
   })();
 
-  const connectorName: Connector | undefined = (() => {
-    if (isCoinbase) return CONNECTOR_NAMES.COINBASE;
-    if (isGnosis) return CONNECTOR_NAMES.GNOSIS;
-    if (isLedger) return CONNECTOR_NAMES.LEDGER;
-    if (isLedgerLive) return CONNECTOR_NAMES.LEDGER_HQ_LIVE;
-    if (isWalletConnect) return CONNECTOR_NAMES.WALLET_CONNECT;
+  const connectorName: Connector | CONNECTOR_NAMES.WALLET_CONNECT | undefined =
+    (() => {
+      if (isCoinbase) return CONNECTOR_NAMES.COINBASE;
+      if (isGnosis) return CONNECTOR_NAMES.GNOSIS;
+      if (isLedger) return CONNECTOR_NAMES.LEDGER;
+      if (isLedgerLive) return CONNECTOR_NAMES.LEDGER_HQ_LIVE;
+      if (isWalletConnect) return CONNECTOR_NAMES.WALLET_CONNECT;
 
-    // General providers which doesn't specify what exact wallet is being used.
-    // Works as a fallback.
-    if (isWalletLink) return CONNECTOR_NAMES.WALLET_LINK;
-    if (isInjected) return CONNECTOR_NAMES.INJECTED;
+      // General providers which doesn't specify what exact wallet is being used.
+      // Works as a fallback.
+      if (isWalletLink) return CONNECTOR_NAMES.WALLET_LINK;
+      if (isInjected) return CONNECTOR_NAMES.INJECTED;
 
-    return undefined;
-  })();
+      return undefined;
+    })();
 
   return {
     connectorName,

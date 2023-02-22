@@ -5,6 +5,7 @@ declare global {
     coin98?: boolean;
     gamestop?: Record<string, unknown>;
     xfi?: Record<string, unknown>;
+    // @ts-expect-error wagmi also declares window.ethereum type
     ethereum?: {
       isMetaMask?: boolean;
       isTrust?: boolean;
@@ -42,6 +43,7 @@ export const isMetamaskProvider = (): boolean => {
 
 export const isCoin98Provider = (): boolean => {
   try {
+    // @ts-expect-error wagmi redeclares window.ethereum type
     return !!window.ethereum?.isCoin98;
   } catch (error) {
     return false;
@@ -58,6 +60,7 @@ export const isMathWalletProvider = (): boolean => {
 
 export const isImTokenProvider = (): boolean => {
   try {
+    // @ts-expect-error wagmi redeclares window.ethereum type
     return !!window.ethereum?.isImToken;
   } catch (error) {
     return false;
@@ -136,6 +139,7 @@ export const isGamestopInstalled = (): boolean => {
 
 export const isGamestopProvider = (): boolean => {
   try {
+    // @ts-expect-error wagmi redeclares window.ethereum type
     return !!window.ethereum?.isGamestop;
   } catch (error) {
     return false;
@@ -174,6 +178,7 @@ export const isXdefiProvider = (): boolean => {
 
 export const isZerionProvider = (): boolean => {
   try {
+    // @ts-expect-error wagmi redeclares window.ethereum type
     return !!window.ethereum?.isZerion;
   } catch (error) {
     return false;
