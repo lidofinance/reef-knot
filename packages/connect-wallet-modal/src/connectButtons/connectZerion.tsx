@@ -1,9 +1,7 @@
 import { FC, useCallback, useEffect } from 'react';
-import {
-  useConnectorWalletConnectNoLinks,
-  useConnectorWalletConnectUri,
-} from '@reef-knot/web3-react';
+import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import { Zerion as WalletIcon } from '@reef-knot/wallets-icons/react';
+import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { ConnectWalletProps } from './types';
 import { ConnectButton } from '../components/ConnectButton';
 import { isMobileOrTablet } from '../helpers';
@@ -24,25 +22,34 @@ const ConnectZerion: FC<ConnectWalletProps> = (props) => {
   const { onConnect, onBeforeConnect, metrics, ...rest } = props;
   const onConnectZerion = metrics?.events?.connect?.handlers.onConnectZerion;
   const onClickZerion = metrics?.events?.click?.handlers.onClickZerion;
+
   const onConnectHandler = () => {
     onConnect?.();
     onConnectZerion?.();
   };
-  const { connect } = useConnectorWalletConnectNoLinks({
+
+  const { reconnect } = useConnectorWalletConnect({
     onConnect: onConnectHandler,
+    noWalletsLinks: true,
   });
-  const { connect: connectWCUri, connector: connectorWCUri } =
-    useConnectorWalletConnectUri({ onConnect: onConnectHandler });
+
+  const { reconnect: reconnectWCUri, connector: connectorWCUri } =
+    useConnectorWalletConnect({ onConnect: onConnectHandler, isUriOnly: true });
 
   useEffect(() => {
-    if (isMobileOrTablet) {
-      connectorWCUri.on('URI_AVAILABLE', openDeeplink);
+    const getUri = async () => {
+      const provider =
+        (await connectorWCUri.getProvider()) as WalletConnectProvider;
+      const { uri } = provider.connector;
+      return uri;
+    };
 
-      return () => {
-        connectorWCUri.off('URI_AVAILABLE', openDeeplink);
-      };
+    if (isMobileOrTablet) {
+      connectorWCUri.once('message', async () => {
+        const uri = await getUri();
+        openDeeplink(uri);
+      });
     }
-    return undefined;
   }, [connectorWCUri]);
 
   const handleConnect = useCallback(async () => {
@@ -54,14 +61,14 @@ const ConnectZerion: FC<ConnectWalletProps> = (props) => {
       newWindow = window.open('', '_blank');
       newWindow?.document.write(newWindowHtml);
 
-      await connectWCUri();
+      await reconnectWCUri();
 
       // the code below is reached only in case of successful connection
       newWindow?.close();
     } else {
-      await connect();
+      await reconnect();
     }
-  }, [onBeforeConnect, onClickZerion, connectWCUri, connect]);
+  }, [onBeforeConnect, onClickZerion, reconnectWCUri, reconnect]);
 
   return (
     <ConnectButton
