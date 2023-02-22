@@ -29,8 +29,8 @@ export function Web() {
       <ThemeProvider
         theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
       >
-        <ProviderWeb3WithProps>
-          <Wagmi>
+        <Wagmi>
+          <ProviderWeb3WithProps>
             <MainContainer>
               <ConnectDisconnect handleOpen={handleOpen} />
 
@@ -44,8 +44,8 @@ export function Web() {
 
               <WalletsModal open={state} handleClose={handleClose} />
             </MainContainer>
-          </Wagmi>
-        </ProviderWeb3WithProps>
+          </ProviderWeb3WithProps>
+        </Wagmi>
       </ThemeProvider>
     </>
   );

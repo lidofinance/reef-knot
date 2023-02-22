@@ -1,11 +1,14 @@
 import { Button } from 'reef-knot/ui-react';
 import { useForceDisconnect } from 'reef-knot/web3-react';
+import { useDisconnect } from 'wagmi';
 
 const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   const { handleOpen } = props;
   const { disconnect } = useForceDisconnect();
+  const { disconnect: wagmiDisconnect } = useDisconnect();
   const handleDisconnect = () => {
     disconnect?.();
+    wagmiDisconnect();
   };
 
   return (
