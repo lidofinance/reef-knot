@@ -19,6 +19,7 @@ import {
   ConnectGamestop,
   ConnectXdefi,
   ConnectZerion,
+  connectFrontier,
 } from '../../connectButtons';
 import { ButtonsCommonProps, WalletsModal } from '../WalletsModal';
 import { WalletsModalForEthProps } from './types';
@@ -43,6 +44,7 @@ const walletsButtons: { [K in WalletId]: React.ComponentType } = {
   [WALLET_IDS.GAMESTOP]: ConnectGamestop,
   [WALLET_IDS.XDEFI]: ConnectXdefi,
   [WALLET_IDS.ZERION]: ConnectZerion,
+  [WALLET_IDS.FRONTIER]: connectFrontier,
 };
 
 function getWalletButton(name: WalletId, props: ButtonsCommonProps) {
@@ -67,6 +69,7 @@ function getWalletsButtons(
     WALLET_IDS.BLOCKCHAINCOM,
     WALLET_IDS.ZENGO,
     WALLET_IDS.ZERION,
+    WALLET_IDS.FRONTIER,
   ];
 
   const addWalletTo = (

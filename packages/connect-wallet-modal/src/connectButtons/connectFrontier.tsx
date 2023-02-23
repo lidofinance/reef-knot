@@ -9,7 +9,8 @@ import { CONFLICTS } from '../constants/conflictChecks';
 const connectFrontier: FC<ConnectWalletProps> = (props) => {
   const { onConnect, onBeforeConnect, setRequirements, metrics, ...rest } =
     props;
-  const onConnectFrontier = metrics?.events?.connect?.handlers.onConnectFrontier;
+  const onConnectFrontier =
+    metrics?.events?.connect?.handlers.onConnectFrontier;
   const onClickFrontier = metrics?.events?.click?.handlers.onClickFrontier;
   const { connect } = useConnectorFrontier({
     onConnect: () => {
@@ -23,7 +24,13 @@ const connectFrontier: FC<ConnectWalletProps> = (props) => {
     onClickFrontier?.();
 
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
-      checkConflicts([CONFLICTS.Tally, CONFLICTS.Exodus, CONFLICTS.Trust]);
+      checkConflicts([
+        CONFLICTS.Tally,
+        CONFLICTS.Exodus,
+        CONFLICTS.Trust,
+        CONFLICTS.MathWallet,
+        CONFLICTS.Xdefi,
+      ]);
 
     if (hasConflicts) {
       setRequirements(true, {
@@ -34,7 +41,8 @@ const connectFrontier: FC<ConnectWalletProps> = (props) => {
             <div>
               Your browser has these extensions turned-on: <br />
               {conflictingApps} <br />
-              Please, turn them off and reload the page to enable Frontier Wallet.
+              Please, turn them off and reload the page to enable Frontier
+              Wallet.
             </div>
           ) : (
             `Your browser has a turned-on “${conflictingApps}” extension.` +

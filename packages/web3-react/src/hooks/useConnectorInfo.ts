@@ -22,6 +22,7 @@ import {
   isTrustProvider,
   isXdefiProvider,
   isZerionProvider,
+  isFrontierProvider,
 } from '../helpers';
 
 type ConnectorInfo = {
@@ -38,6 +39,7 @@ type ConnectorInfo = {
   isMathWallet: boolean;
   isImToken: boolean;
   isTrust: boolean;
+  isFrontier: boolean;
   isTally: boolean;
   isBraveWallet: boolean;
   isOperaWallet: boolean;
@@ -76,6 +78,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isGamestop = isInjected && isGamestopProvider();
   const isXdefi = isInjected && isXdefiProvider();
   const isZerion = isInjected && isZerionProvider();
+  const isFrontier = isInjected && isFrontierProvider();
 
   const providerName = (() => {
     if (isGnosis) return PROVIDER_NAMES.GNOSIS;
@@ -84,7 +87,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
     if (isWalletConnect) return PROVIDER_NAMES.WALLET_CONNECT;
     if (isImToken) return PROVIDER_NAMES.IM_TOKEN;
     if (isTrust) return PROVIDER_NAMES.TRUST;
-
+    if (isFrontier) return PROVIDER_NAMES.FRONTIER;
     // Wallets which has conflicts with each other.
     // The order of wallets checks here is important.
     // Most "aggressive" wallet, which overrides other wallets, goes first.
@@ -142,6 +145,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isMathWallet,
     isImToken,
     isTrust,
+    isFrontier,
     isTally,
     isBraveWallet,
     isOperaWallet,
