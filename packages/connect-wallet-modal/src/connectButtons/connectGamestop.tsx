@@ -43,6 +43,7 @@ const ConnectGamestop: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
         CONFLICTS.Coinbase,
         CONFLICTS.Xdefi,
         CONFLICTS.Trust,
+        CONFLICTS.Frontier,
       ]);
 
     if (hasConflicts) {

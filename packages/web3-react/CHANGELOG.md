@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 0.4.0
+
+### Minor Changes
+
+- Add Frontier wallet detection
+
 ## 0.3.0
 
 ### Minor Changes

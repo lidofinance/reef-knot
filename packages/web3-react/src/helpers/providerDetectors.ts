@@ -8,6 +8,7 @@ declare global {
     ethereum?: {
       isMetaMask?: boolean;
       isTrust?: boolean;
+      isFrontier?: boolean;
       isImToken?: boolean;
       isCoin98?: boolean;
       isMathWallet?: boolean;
@@ -67,6 +68,14 @@ export const isImTokenProvider = (): boolean => {
 export const isTrustProvider = (): boolean => {
   try {
     return !!window.ethereum?.isTrust;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const isFrontierProvider = (): boolean => {
+  try {
+    return !!window.ethereum?.isFrontier;
   } catch (error) {
     return false;
   }

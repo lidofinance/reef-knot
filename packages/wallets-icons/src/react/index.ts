@@ -5,6 +5,7 @@ export { default as Brave } from '../svg/brave.svg';
 export { default as Coin98 } from '../svg/coin98.svg';
 export { default as Coinbase } from '../svg/coinbase.svg';
 export { default as Exodus } from '../svg/exodus.svg';
+export { default as Frontier } from '../svg/frontier.svg';
 export { default as Gamestop } from '../svg/gamestop.svg';
 export { default as ImToken } from '../svg/imtoken.svg';
 export { default as Ledger } from '../svg/ledger.svg';

@@ -11,6 +11,7 @@ export type ConflictChecks = {
   Coinbase: ConflictCheck;
   Xdefi: ConflictCheck;
   Trust: ConflictCheck;
+  Frontier: ConflictCheck;
 };
 
 export const CONFLICTS: ConflictChecks = {
@@ -22,4 +23,5 @@ export const CONFLICTS: ConflictChecks = {
   Coinbase: [helpers.isCoinbaseProvider, 'Coinbase'],
   Xdefi: [helpers.isXdefiProvider, 'XDEFI'],
   Trust: [helpers.isTrustProvider, 'Trust'],
+  Frontier: [helpers.isFrontierProvider, 'Frontier'],
 };

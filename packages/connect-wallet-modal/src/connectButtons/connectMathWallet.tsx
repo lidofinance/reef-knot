@@ -42,6 +42,7 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
         CONFLICTS.Tally,
         CONFLICTS.Exodus,
         CONFLICTS.Trust,
+        CONFLICTS.Frontier,
       ]);
 
     if (hasConflicts) {

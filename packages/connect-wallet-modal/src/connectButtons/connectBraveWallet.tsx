@@ -40,6 +40,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
         CONFLICTS.Gamestop,
         CONFLICTS.Xdefi,
         CONFLICTS.Trust,
+        CONFLICTS.Frontier,
       ]);
 
       // If no other conflicts were found, then also check for a conflict with MetaMask

@@ -1,7 +1,7 @@
 # @reef-knot/wallets-icons
 
-## 0.2.0
+## 0.3.0
 
 ### Minor Changes
 
-- Add Zerion wallet
+- Add Frontier wallet

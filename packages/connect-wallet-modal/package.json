@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/connect-wallet-modal",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",

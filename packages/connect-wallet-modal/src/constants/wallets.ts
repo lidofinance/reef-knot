@@ -14,6 +14,7 @@ export const WALLET_IDS = {
   BRAVE: 'Brave Wallet',
   OPERA: 'Opera Wallet',
   EXODUS: 'Exodus',
+  FRONTIER: 'Frontier Wallet',
   GAMESTOP: 'Gamestop',
   XDEFI: 'Xdefi',
   ZERION: 'Zerion',

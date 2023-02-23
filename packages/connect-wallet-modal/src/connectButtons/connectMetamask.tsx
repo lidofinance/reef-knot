@@ -44,6 +44,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
         CONFLICTS.MathWallet,
         CONFLICTS.Tally,
         CONFLICTS.Trust,
+        CONFLICTS.Frontier,
       ]);
 
     if (hasConflicts) {
