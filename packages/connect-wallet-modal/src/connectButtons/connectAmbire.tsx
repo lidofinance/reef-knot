@@ -33,6 +33,7 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
       onConnect?.();
       onConnectAmbire?.();
     },
+    isUriOnly: true,
   });
 
   useEffect(() => {
