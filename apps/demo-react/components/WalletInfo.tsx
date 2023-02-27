@@ -6,8 +6,6 @@ const WalletInfo = () => {
   const web3Info = useWeb3();
   const { address: wagmiAddress, status: wagmiStatus } = useAccount();
 
-  console.log(web3Info);
-
   return (
     <div>
       <h4>web3-react data:</h4>

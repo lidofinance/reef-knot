@@ -7,7 +7,9 @@ const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   const { disconnect } = useForceDisconnect();
   const { disconnect: wagmiDisconnect } = useDisconnect();
   const handleDisconnect = () => {
+    // disconnect wallets connected through web3-react connectors
     disconnect?.();
+    // disconnect wallets connected through wagmi connectors
     wagmiDisconnect();
   };
 
