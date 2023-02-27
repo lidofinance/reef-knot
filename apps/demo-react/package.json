@@ -12,16 +12,12 @@
   "dependencies": {
     "@lido-sdk/constants": "^1.6.0",
     "@lidofinance/lido-ui": "3.2.0",
-    "buffer": "^6.0.3",
     "ethers": "^5.7.2",
-    "module": "^1.2.5",
     "next": "12.3.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "reef-knot": "*",
     "styled-components": "^5.3.6",
-    "url": "^0.11.0",
-    "util": "^0.12.5",
     "wagmi": "^0.11.5"
   },
   "devDependencies": {
