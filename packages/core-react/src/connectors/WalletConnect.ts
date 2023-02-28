@@ -69,12 +69,10 @@ export const createConnectorsWalletConnect = ({
   // TODO: rework with custom connector classes extending original connector
   (connectors.WalletConnect as RKConnectorWalletConnect)._reefknot_id =
     'WalletConnect';
-  (
-    connectors.WalletConnectNoLinks as RKConnectorWalletConnect
-  )._reefknot_id = 'WalletConnectNoLinks';
-  (
-    connectors.WalletConnectURI as RKConnectorWalletConnect
-  )._reefknot_id = 'WalletConnectURI';
+  (connectors.WalletConnectNoLinks as RKConnectorWalletConnect)._reefknot_id =
+    'WalletConnectNoLinks';
+  (connectors.WalletConnectURI as RKConnectorWalletConnect)._reefknot_id =
+    'WalletConnectURI';
 
   return Object.values(connectors);
 };
