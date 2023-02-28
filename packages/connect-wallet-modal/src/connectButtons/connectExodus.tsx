@@ -4,7 +4,7 @@ import { Link } from '@reef-knot/ui-react';
 import { Exodus as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButton } from '../components';
 import checkConflicts from '../helpers/checkConflicts';
 
 const ConnectExodus: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {

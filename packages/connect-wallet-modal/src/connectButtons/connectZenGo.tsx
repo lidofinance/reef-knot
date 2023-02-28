@@ -3,7 +3,7 @@ import { ZenGo as WalletIcon } from '@reef-knot/wallets-icons/react';
 import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButton } from '../components';
 import { isMobileOrTablet } from '../helpers';
 
 let newWindow: Window | null = null;

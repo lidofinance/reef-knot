@@ -3,7 +3,7 @@ import { useConnectorXdefi } from '@reef-knot/web3-react';
 import { XDEFI as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButton } from '../components';
 import checkConflicts from '../helpers/checkConflicts';
 
 const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {

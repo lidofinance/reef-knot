@@ -5,7 +5,7 @@ import {
 } from '@reef-knot/wallets-icons/react';
 import { useConnectorMathWallet } from '@reef-knot/web3-react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButton } from '../components';
 import { CONFLICTS } from '../constants/conflictChecks';
 import checkConflicts from '../helpers/checkConflicts';
 

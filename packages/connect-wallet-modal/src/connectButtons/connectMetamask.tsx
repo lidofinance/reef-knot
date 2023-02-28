@@ -6,7 +6,7 @@ import {
 } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButton } from '../components';
 import checkConflicts from '../helpers/checkConflicts';
 
 const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {

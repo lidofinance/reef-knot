@@ -3,7 +3,7 @@ import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { Ambire } from '@reef-knot/wallets-icons/react';
 import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButton } from '../components';
 
 let newWindow: Window | undefined | null;
 // Storing html as a string here to not overcomplicate build config
