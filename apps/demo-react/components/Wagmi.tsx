@@ -1,23 +1,30 @@
 import { WagmiConfig, createClient, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { mainnet, goerli } from 'wagmi/chains';
+import { createConnectors } from 'reef-knot/core-react';
 
 const { provider, webSocketProvider } = configureChains(
   [mainnet, goerli],
-  [
-    publicProvider(),
-  ],
+  [publicProvider()],
 );
 
-const client = createClient({
-  autoConnect: true,
-  provider,
-  webSocketProvider,
-});
+const Wagmi = (props: { children: ReactNode; rpc: Record<number, string> }) => {
+  const { children, rpc } = props;
+  const connectors = useMemo(() => createConnectors({ rpc }), [rpc]);
 
-const Wagmi = (props: { children: ReactNode }) => (
-  <WagmiConfig client={client}>{props.children}</WagmiConfig>
-);
+  const client = useMemo(
+    () =>
+      createClient({
+        connectors,
+        autoConnect: true,
+        provider,
+        webSocketProvider,
+      }),
+    [connectors],
+  );
+
+  return <WagmiConfig client={client}>{children}</WagmiConfig>;
+};
 
 export default Wagmi;
