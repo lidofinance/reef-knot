@@ -1,0 +1,37 @@
+{
+  "name": "@reef-knot/core-react",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "dev=on rollup -c -w"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "wagmi": "^0.11.5"
+  },
+  "devDependencies": {
+    "react": "17.0.2",
+    "wagmi": "^0.11.5"
+  }
+}

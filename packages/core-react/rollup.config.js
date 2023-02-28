@@ -1,10 +1,11 @@
+import * as process from 'node:process';
 import fs from 'node:fs';
 import ts from 'typescript';
 import del from 'rollup-plugin-delete';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import { babel } from '@rollup/plugin-babel';
-import process from 'process';
+import json from '@rollup/plugin-json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
@@ -18,6 +19,7 @@ const commonExternal = [
 const external = [
   ...commonExternal,
   ...Object.keys({ ...dependencies, ...peerDependencies }),
+  /node_modules/
 ];
 const isDevMode = process.env.dev === 'on';
 
@@ -51,6 +53,7 @@ export default {
       babelHelpers: 'bundled',
       extensions,
     }),
+    json(),
   ],
   external,
 };
