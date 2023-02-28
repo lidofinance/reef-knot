@@ -26,7 +26,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lidofinance/reef-knot.git",
-    "directory": "packages/connect-wallet-modal"
+    "directory": "packages/wallets-icons"
   },
   "bugs": {
     "url": "https://github.com/lidofinance/reef-knot/issues"

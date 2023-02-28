@@ -18,6 +18,15 @@
     "dist"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/core-react"
+  },
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
