@@ -1,9 +1,10 @@
 import { FC, useCallback } from 'react';
-import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import {
   Blockchaincom,
   BlockchaincomInversion,
 } from '@reef-knot/wallets-icons/react';
+import { useConnect, useDisconnect } from 'wagmi';
+import { RKConnectorWalletConnect } from '@reef-knot/core-react';
 import { ConnectWalletProps } from './types';
 import { ConnectButton } from '../components';
 
@@ -15,29 +16,39 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
     metrics,
     ...rest
   } = props;
+  const WalletIcon = shouldInvertWalletIcon
+    ? BlockchaincomInversion
+    : Blockchaincom;
   const onConnectBlockchaincom =
     metrics?.events?.connect?.handlers.onConnectBlockchaincom;
   const onClickBlockchaincom =
     metrics?.events?.click?.handlers.onClickBlockchaincom;
 
-  const { reconnect } = useConnectorWalletConnect({
-    onConnect: () => {
+  const { connectAsync, connectors } = useConnect({
+    onSuccess() {
       onConnect?.();
       onConnectBlockchaincom?.();
     },
-    noWalletsLinks: true,
   });
+  const { disconnectAsync } = useDisconnect();
 
-  const WalletIcon = shouldInvertWalletIcon
-    ? BlockchaincomInversion
-    : Blockchaincom;
+  const connector = connectors.find(
+    (c: RKConnectorWalletConnect) => c._reefknot_id === 'WalletConnect',
+  );
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
     onClickBlockchaincom?.();
 
-    await reconnect();
-  }, [reconnect, onBeforeConnect, onClickBlockchaincom]);
+    await disconnectAsync;
+    await connectAsync({ connector });
+  }, [
+    onBeforeConnect,
+    onClickBlockchaincom,
+    disconnectAsync,
+    connectAsync,
+    connector,
+  ]);
 
   return (
     <ConnectButton

@@ -1,7 +1,8 @@
 import { FC, useCallback, useEffect } from 'react';
 import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { Ambire } from '@reef-knot/wallets-icons/react';
-import { useConnectorWalletConnect } from '@reef-knot/web3-react';
+import { useConnect, useDisconnect } from 'wagmi';
+import { RKConnectorWalletConnect } from '@reef-knot/core-react';
 import { ConnectWalletProps } from './types';
 import { ConnectButton } from '../components';
 
@@ -28,25 +29,32 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
   const onConnectAmbire = metrics?.events?.connect?.handlers.onConnectAmbire;
   const onClickAmbire = metrics?.events?.click?.handlers.onClickAmbire;
 
-  const { reconnect, connector } = useConnectorWalletConnect({
-    onConnect: () => {
+  const { connectAsync, connectors } = useConnect({
+    onSuccess() {
       onConnect?.();
       onConnectAmbire?.();
     },
-    isUriOnly: true,
   });
+  const { disconnectAsync } = useDisconnect();
+
+  const connector = connectors.find(
+    (c: RKConnectorWalletConnect) => c._reefknot_id === 'WalletConnectURI',
+  );
 
   useEffect(() => {
-    const getUri = async () => {
-      const provider = (await connector.getProvider()) as WalletConnectProvider;
-      const { uri } = provider.connector;
-      return uri;
-    };
+    if (connector) {
+      const getUri = async () => {
+        const provider =
+          (await connector.getProvider()) as WalletConnectProvider;
+        const { uri } = provider.connector;
+        return uri;
+      };
 
-    connector.once('message', async () => {
-      const uri = await getUri();
-      openAmbireWindow(uri);
-    });
+      connector.once('message', async () => {
+        const uri = await getUri();
+        openAmbireWindow(uri);
+      });
+    }
   }, [connector]);
 
   const handleConnect = useCallback(async () => {
@@ -57,8 +65,15 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
     newWindow = window.open('', '_blank');
     newWindow?.document.write(newWindowHtml);
 
-    reconnect();
-  }, [reconnect, onBeforeConnect, onClickAmbire]);
+    await disconnectAsync;
+    await connectAsync({ connector });
+  }, [
+    onBeforeConnect,
+    onClickAmbire,
+    disconnectAsync,
+    connectAsync,
+    connector,
+  ]);
 
   return (
     <ConnectButton
