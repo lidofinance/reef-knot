@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
 import { Button } from '@reef-knot/ui-react';
 
 export const ConnectButtonStyle = styled(Button).attrs({

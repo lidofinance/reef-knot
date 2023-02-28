@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
-import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import { WalletConnect } from '@reef-knot/wallets-icons/react';
+import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import { ConnectWalletProps } from './types';
 import { ConnectButton } from '../components';
 
@@ -8,7 +8,7 @@ const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
   const { onConnect, onBeforeConnect, metrics, ...rest } = props;
   const onConnectWC = metrics?.events?.connect?.handlers.onConnectWC;
   const onClickWC = metrics?.events?.click?.handlers.onClickWC;
-  const { connect } = useConnectorWalletConnect({
+  const { reconnect } = useConnectorWalletConnect({
     onConnect: () => {
       onConnect?.();
       onConnectWC?.();
@@ -19,8 +19,8 @@ const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
     onBeforeConnect?.();
     onClickWC?.();
 
-    await connect();
-  }, [connect, onBeforeConnect, onClickWC]);
+    await reconnect();
+  }, [reconnect, onBeforeConnect, onClickWC]);
 
   return (
     <ConnectButton

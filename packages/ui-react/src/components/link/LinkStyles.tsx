@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from '../../utils/styledWrapper.js';
 import { LinkProps } from './types';
 
 export const LinkStyle = styled.a`

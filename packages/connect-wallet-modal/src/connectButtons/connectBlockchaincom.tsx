@@ -1,5 +1,5 @@
 import { FC, useCallback } from 'react';
-import { useConnectorWalletConnectNoLinks } from '@reef-knot/web3-react';
+import { useConnectorWalletConnect } from '@reef-knot/web3-react';
 import {
   Blockchaincom,
   BlockchaincomInversion,
@@ -19,12 +19,15 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
     metrics?.events?.connect?.handlers.onConnectBlockchaincom;
   const onClickBlockchaincom =
     metrics?.events?.click?.handlers.onClickBlockchaincom;
-  const { connect } = useConnectorWalletConnectNoLinks({
+
+  const { reconnect } = useConnectorWalletConnect({
     onConnect: () => {
       onConnect?.();
       onConnectBlockchaincom?.();
     },
+    noWalletsLinks: true,
   });
+
   const WalletIcon = shouldInvertWalletIcon
     ? BlockchaincomInversion
     : Blockchaincom;
@@ -33,8 +36,8 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
     onBeforeConnect?.();
     onClickBlockchaincom?.();
 
-    await connect();
-  }, [connect, onBeforeConnect, onClickBlockchaincom]);
+    await reconnect();
+  }, [reconnect, onBeforeConnect, onClickBlockchaincom]);
 
   return (
     <ConnectButton

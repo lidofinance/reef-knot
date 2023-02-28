@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css, keyframes } from '../../utils/styledWrapper.js';
 import { ButtonColors, ButtonSizes, ButtonVariants } from './types';
 
 type InjectedProps = {

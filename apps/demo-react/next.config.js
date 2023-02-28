@@ -1,7 +1,9 @@
-module.exports = {
+export default {
   reactStrictMode: true,
   basePath: process.env.BASE_PATH || '',
   compiler: {
-    styledComponents: true
-  }
+    styledComponents: {
+      ssr: true
+    }
+  },
 }

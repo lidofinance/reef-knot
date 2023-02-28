@@ -5,17 +5,21 @@ import { useWeb3 } from './useWeb3';
 import { useConnectorStorage } from './useConnectorStorage';
 import { useConnectorInfo } from './useConnectorInfo';
 import { useDisconnect } from './useDisconnect';
-import { ConnectorsContextValue } from '../context';
+import { ConnectorsContextValueNoWagmi } from '../context';
 import { isDappBrowserProvider } from '../helpers';
 
-export const useAutoConnect = (connectors: ConnectorsContextValue): void => {
+export const useAutoConnect = (
+  connectors: ConnectorsContextValueNoWagmi,
+): void => {
   useEagerConnector(connectors);
   useSaveConnectorToLS();
   useDeleteConnectorFromLS();
   useWatchConnectorInLS();
 };
 
-export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
+export const useEagerConnector = (
+  connectors: ConnectorsContextValueNoWagmi,
+): void => {
   const { active, activate } = useWeb3();
   const [savedConnector] = useConnectorStorage();
   const tried = useRef(false);
@@ -61,22 +65,14 @@ export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
 
 export const useSaveConnectorToLS = (): void => {
   const [, saveConnector] = useConnectorStorage();
-  const { isInjected, isDappBrowser, isWalletConnect, isCoinbase, isLedger } =
+  const { isInjected, isDappBrowser, isCoinbase, isLedger } =
     useConnectorInfo();
 
   useEffect(() => {
     if (isInjected && !isDappBrowser) return saveConnector('injected');
-    if (isWalletConnect) return saveConnector('walletconnect');
     if (isCoinbase) return saveConnector('coinbase');
     if (isLedger) return saveConnector('ledger');
-  }, [
-    isLedger,
-    isCoinbase,
-    isInjected,
-    isDappBrowser,
-    isWalletConnect,
-    saveConnector,
-  ]);
+  }, [isLedger, isCoinbase, isInjected, isDappBrowser, saveConnector]);
 };
 
 export const useDeleteConnectorFromLS = (): void => {

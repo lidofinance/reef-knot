@@ -56,7 +56,6 @@ export default function withTransition<
     return (
       <Transition {...transitionProps} nodeRef={ref}>
         {(status) => (
-          // @ts-expect-error 'Component' cannot be used as a JSX component
           <Component
             {...(rest as P)}
             duration={timeout}

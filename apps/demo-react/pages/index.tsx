@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { WalletsModalForEth } from 'reef-knot';
 import {
   themeLight,
   themeDark,
@@ -7,18 +6,21 @@ import {
   ThemeName,
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
-import Header from '../components/Header';
-import ProviderWeb3WithProps from '../components/ProviderWeb3WithProps';
-import WalletInfo from '../components/WalletInfo';
 import useModal from '../hooks/useModal';
-import metrics from '../util/metrics';
-import MainContainer from '../components/MainContainer';
-import ConnectDisconnect from '../components/ConnectDisconnect';
-import ThemeSelect from '../components/ThemeSelect';
-import SettingsWrapper from '../components/SettingsWrapper';
+import {
+  Wagmi,
+  ProviderWeb3WithProps,
+  Header,
+  WalletInfo,
+  MainContainer,
+  ConnectDisconnect,
+  ThemeSelect,
+  SettingsWrapper,
+  WalletsModal,
+} from '../components';
 
 export function Web() {
-  const { state, handleOpen, handleClose } = useModal();
+  const { state, handleClose, handleOpen } = useModal();
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
   return (
@@ -27,25 +29,23 @@ export function Web() {
       <ThemeProvider
         theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
       >
-        <ProviderWeb3WithProps>
-          <MainContainer>
-            <ConnectDisconnect handleOpen={handleOpen} />
+        <Wagmi>
+          <ProviderWeb3WithProps>
+            <MainContainer>
+              <ConnectDisconnect handleOpen={handleOpen} />
 
-            <SettingsWrapper>
-              <ThemeSelect
-                selectedTheme={selectedTheme}
-                handleSelect={setSelectedTheme}
-              />
-              <WalletInfo />
-            </SettingsWrapper>
+              <SettingsWrapper>
+                <ThemeSelect
+                  selectedTheme={selectedTheme}
+                  handleSelect={setSelectedTheme}
+                />
+                <WalletInfo />
+              </SettingsWrapper>
 
-            <WalletsModalForEth
-              open={state}
-              onClose={handleClose}
-              metrics={metrics}
-            />
-          </MainContainer>
-        </ProviderWeb3WithProps>
+              <WalletsModal open={state} handleClose={handleClose} />
+            </MainContainer>
+          </ProviderWeb3WithProps>
+        </Wagmi>
       </ThemeProvider>
     </>
   );

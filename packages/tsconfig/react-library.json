@@ -3,16 +3,17 @@
   "display": "React Library",
   "extends": "./base.json",
   "compilerOptions": {
+    "target": "ES6",
+    "module": "ES2020",
     "jsx": "react-jsx",
-    "module": "ESNext",
-    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "strictFunctionTypes": false
+    "strictFunctionTypes": false,
+    "baseUrl": "."
   },
   "include": ["src/*"]
 }

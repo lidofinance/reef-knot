@@ -2,6 +2,7 @@
   "name": "demo-react",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,21 +10,22 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "next": "12.3.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
     "@lido-sdk/constants": "^1.6.0",
     "@lidofinance/lido-ui": "3.2.0",
+    "ethers": "^5.7.2",
+    "next": "12.3.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "reef-knot": "*",
-    "@reef-knot/ui-react": "*",
-    "@reef-knot/web3-react": "*"
+    "styled-components": "^5.3.6",
+    "wagmi": "^0.11.5"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@types/node": "^17.0.12",
+    "@types/react": "17.0.53",
     "next-transpile-modules": "9.0.0",
     "tsconfig": "*",
-    "@types/node": "^17.0.12",
-    "@types/react": "18.0.17",
-    "typescript": "4.7.4"
+    "typescript": "4.9.5"
   }
 }

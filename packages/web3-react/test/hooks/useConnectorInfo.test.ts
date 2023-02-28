@@ -1,22 +1,26 @@
 jest.mock('../../src/hooks/useWeb3');
+jest.mock('wagmi');
 
 import { renderHook } from '@testing-library/react-hooks';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { LedgerHQFrameConnector } from 'web3-ledgerhq-frame-connector';
 import { LedgerHQConnector } from 'web3-ledgerhq-connector';
 import { useConnectorInfo } from '../../src/hooks/useConnectorInfo';
 import { useWeb3 } from '../../src/hooks/useWeb3';
+import { useAccount } from 'wagmi';
 
 const mockUseWeb3 = useWeb3 as jest.MockedFunction<typeof useWeb3>;
+const mockUseAccount= useAccount as jest.MockedFunction<typeof useAccount>;
 
 const mockConnector = (Connector: any) => {
   class EmptyConnector {}
   const connector = new EmptyConnector();
   Object.setPrototypeOf(connector, Connector.prototype);
   mockUseWeb3.mockReturnValue({ active: true, connector } as any);
+  mockUseAccount.mockReturnValue({ isConnected: true, connector } as any);
 };
 
 beforeEach(() => {

@@ -170,17 +170,6 @@ describe('useSaveConnectorToLS', () => {
     expect(mockSaveConnector).toHaveBeenCalledWith('injected');
   });
 
-  test('should save walletconnect connector to LS', async () => {
-    const mockSaveConnector = jest.fn(() => void 0);
-    mockUseConnectorInfo.mockReturnValue({ isWalletConnect: true } as any);
-    mockUseConnectorStorage.mockReturnValue([null, mockSaveConnector]);
-
-    const { waitFor } = renderHook(() => useSaveConnectorToLS());
-
-    await waitFor(() => expect(mockSaveConnector).toHaveBeenCalledTimes(1));
-    expect(mockSaveConnector).toHaveBeenCalledWith('walletconnect');
-  });
-
   test('should save coinbase connector to LS', async () => {
     const mockSaveConnector = jest.fn(() => void 0);
     mockUseConnectorInfo.mockReturnValue({ isCoinbase: true } as any);

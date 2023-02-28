@@ -1,3 +1,4 @@
+import { memo, FC } from 'react';
 import invariant from 'tiny-invariant';
 import {
   Web3Provider,
@@ -8,7 +9,6 @@ import { CHAINS } from '@lido-sdk/constants';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { ProviderSDK as ProviderSDKBase } from '@lido-sdk/react';
 import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
-import { memo, FC } from 'react';
 import { SWRConfiguration } from 'swr';
 import { POLLING_INTERVAL } from '../constants';
 import ProviderConnectors, { ConnectorsContextProps } from './connectors';

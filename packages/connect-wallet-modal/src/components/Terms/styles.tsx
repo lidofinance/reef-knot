@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
 
 export const TermsStyle = styled.label`
   ${({ theme: { fontSizesMap, spaceMap, borderRadiusesMap, colors } }) => css`

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   cacheDirectory: '.jest/cache',
   coverageDirectory: '.jest/coverage',
   coverageThreshold: {
@@ -13,5 +13,6 @@ module.exports = {
   transform: {
     '^.+\\.[t|j]sx?$': 'babel-jest',
   },
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
   testEnvironment: 'jsdom',
 };

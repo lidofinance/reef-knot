@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '../../utils/styledWrapper.js';
 import Check from '../../icons/Check';
 
 export const CheckboxWrapperStyle = styled.label`

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '../../utils/styledWrapper.js';
 
 import { Button } from '../button';
 

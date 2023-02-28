@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { CHAINS } from '@lido-sdk/constants';
-import { ProviderWeb3 } from '@reef-knot/web3-react';
+import { ProviderWeb3 } from 'reef-knot/web3-react';
 
 const ProviderWeb3WithProps = (props: { children: ReactNode }) => (
   <ProviderWeb3
