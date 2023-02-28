@@ -9,7 +9,6 @@ export * from './useConnectorMathWallet';
 export * from './useConnectors';
 export * from './useConnectorStorage';
 export * from './useConnectorTrust';
-export * from './useConnectorWalletConnect';
 export * from './useConnectorTally';
 export * from './useConnectorBraveWallet';
 export * from './useConnectorOperaWallet';

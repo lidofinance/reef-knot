@@ -27,7 +27,7 @@ import {
 
 type ConnectorInfo = {
   providerName?: string;
-  connectorName?: Connector;
+  connectorName?: Connector | CONNECTOR_NAMES.WALLET_CONNECT;
   isGnosis: boolean;
   isLedger: boolean;
   isLedgerLive: boolean;
