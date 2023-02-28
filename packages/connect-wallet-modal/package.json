@@ -37,6 +37,7 @@
     "lint": "eslint"
   },
   "devDependencies": {
+    "@reef-knot/core-react": "^0.0.0",
     "@lido-sdk/react": "^1.18.5",
     "@reef-knot/ui-react": "^0.2.0",
     "@reef-knot/wallets-icons": "^0.2.0",
@@ -49,6 +50,7 @@
     "wagmi": "^0.11.5"
   },
   "peerDependencies": {
+    "@reef-knot/core-react": "^0.0.0",
     "@lido-sdk/react": ">=1.18",
     "@reef-knot/ui-react": "^0.2.0",
     "@reef-knot/wallets-icons": "^0.2.0",
