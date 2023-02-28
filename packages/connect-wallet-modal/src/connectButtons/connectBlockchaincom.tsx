@@ -33,7 +33,7 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
   const { disconnectAsync } = useDisconnect();
 
   const connector = connectors.find(
-    (c: RKConnectorWalletConnect) => c._reefknot_id === 'WalletConnect',
+    (c: RKConnectorWalletConnect) => c._reefknot_id === 'WalletConnectNoLinks',
   );
 
   const handleConnect = useCallback(async () => {
