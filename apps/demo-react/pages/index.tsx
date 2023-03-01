@@ -6,7 +6,6 @@ import {
   ThemeName,
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
-import { CHAINS } from '@lido-sdk/constants';
 import useModal from '../hooks/useModal';
 import {
   Wagmi,
@@ -24,19 +23,14 @@ export function Web() {
   const { state, handleClose, handleOpen } = useModal();
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
-  const legacyRpc = {
-    [CHAINS.Mainnet]: `/rpc-stub?chainId=${CHAINS.Mainnet}`,
-    [CHAINS.Goerli]: `/rpc-stub?chainId=${CHAINS.Goerli}`,
-  };
-
   return (
     <>
       <Header />
       <ThemeProvider
         theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
       >
-        <Wagmi rpc={legacyRpc}>
-          <ProviderWeb3WithProps rpc={legacyRpc}>
+        <Wagmi>
+          <ProviderWeb3WithProps>
             <MainContainer>
               <ConnectDisconnect handleOpen={handleOpen} />
 

@@ -1,15 +1,13 @@
 import { ReactNode } from 'react';
 import { CHAINS } from '@lido-sdk/constants';
 import { ProviderWeb3 } from 'reef-knot/web3-react';
+import { rpc } from '../util/rpc';
 
-const ProviderWeb3WithProps = (props: {
-  rpc: Record<number, string>;
-  children: ReactNode;
-}) => (
+const ProviderWeb3WithProps = (props: { children: ReactNode }) => (
   <ProviderWeb3
     defaultChainId={CHAINS.Mainnet}
     supportedChainIds={[CHAINS.Mainnet]}
-    rpc={props.rpc}
+    rpc={rpc}
   >
     {props.children}
   </ProviderWeb3>
