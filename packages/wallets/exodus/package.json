@@ -32,7 +32,8 @@
     "lint": "eslint"
   },
   "devDependencies": {
-    "@reef-knot/core-react": "^0.0.0"
+    "@reef-knot/core-react": "^0.0.0",
+    "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
     "@reef-knot/core-react": "^0.0.0"

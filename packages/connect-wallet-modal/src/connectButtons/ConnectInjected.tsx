@@ -1,4 +1,4 @@
-import { FC, isValidElement, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useConnect, useDisconnect } from 'wagmi';
 import { ConnectButton } from '../components';
 import { capitalize } from '../helpers';
@@ -48,11 +48,11 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     onBeforeConnect,
   ]);
 
-  const IconReactNode = (isValidElement(icon) && icon) || <span />;
+  const IconReactNode = icon;
   return (
     <ConnectButton
       {...rest}
-      iconSrcOrReactElement={IconReactNode}
+      iconSrcOrReactElement={<IconReactNode />}
       onClick={handleConnect}
     >
       {walletName}

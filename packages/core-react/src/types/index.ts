@@ -1,9 +1,9 @@
-import { ReactElement } from 'react';
+import { ElementType } from 'react';
 
 export type WalletAdapterData = {
   walletId: string;
   walletName: string;
-  icon?: ReactElement;
+  icon: ElementType;
   detector: () => boolean;
 };
 
