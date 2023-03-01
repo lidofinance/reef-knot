@@ -55,10 +55,10 @@ export const useConnectorInfo = (): ConnectorInfo => {
   // === WAGMI connectors BEGIN
   const { isConnected, connector: wagmiConnector } = useAccount();
 
+  const isConnectedViaWagmi = isConnected && !!wagmiConnector;
+
   const isWalletConnect =
-    isConnected &&
-    !!wagmiConnector &&
-    wagmiConnector instanceof WalletConnectConnector;
+    isConnectedViaWagmi && wagmiConnector instanceof WalletConnectConnector;
 
   // === WAGMI connectors END
   // === WEB3-REACT connectors BEGIN
@@ -72,7 +72,11 @@ export const useConnectorInfo = (): ConnectorInfo => {
   // This detection doesn't work for the connection via QR code scanning.
   const isCoinbase = active && isCoinbaseProvider();
 
-  const isInjected = active && connector instanceof InjectedConnector;
+  const isInjected =
+    // check for web3-react
+    (active && connector instanceof InjectedConnector) ||
+    // check for wagmi
+    (isConnectedViaWagmi && wagmiConnector.id === 'injected');
   const isDappBrowser = isInjected && isDappBrowserProvider();
   const isMetamask = isInjected && isMetamaskProvider();
   const isCoin98 = isInjected && isCoin98Provider();
