@@ -18,11 +18,11 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     ...rest
   } = props;
 
-  const walletIdCapitilized = capitalize(walletId);
+  const walletIdCapitalized = capitalize(walletId);
   const metricsOnConnect =
-    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitilized}`];
+    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
   const metricsOnClick =
-    metrics?.events?.click?.handlers[`onClick${walletIdCapitilized}`];
+    metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
 
   const { connectAsync, connectors } = useConnect({
     onSuccess() {
