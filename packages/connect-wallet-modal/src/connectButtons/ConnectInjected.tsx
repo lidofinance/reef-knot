@@ -11,10 +11,11 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     onConnect,
     onBeforeConnect,
     setRequirements,
+    shouldInvertWalletIcon,
     metrics,
     walletId,
     walletName,
-    icon,
+    icons,
     ...rest
   } = props;
 
@@ -48,11 +49,11 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     onBeforeConnect,
   ]);
 
-  const IconReactNode = icon;
+  const WalletIcon = shouldInvertWalletIcon ? icons.dark : icons.light;
   return (
     <ConnectButton
       {...rest}
-      iconSrcOrReactElement={<IconReactNode />}
+      iconSrcOrReactElement={<WalletIcon />}
       onClick={handleConnect}
     >
       {walletName}

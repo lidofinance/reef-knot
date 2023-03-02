@@ -4,6 +4,12 @@ import WalletIcon from './icons/exodus.svg';
 export const Exodus: WalletAdapterType = () => ({
   walletName: 'Exodus',
   walletId: 'exodus',
-  icon: WalletIcon,
+  icons: {
+    light: WalletIcon,
+    dark: WalletIcon,
+  },
   detector: () => true,
+  downloadURLs: {
+    default: '',
+  },
 });
