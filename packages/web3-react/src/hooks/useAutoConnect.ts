@@ -5,21 +5,17 @@ import { useWeb3 } from './useWeb3';
 import { useConnectorStorage } from './useConnectorStorage';
 import { useConnectorInfo } from './useConnectorInfo';
 import { useDisconnect } from './useDisconnect';
-import { ConnectorsContextValueNoWagmi } from '../context';
+import { ConnectorsContextValue } from '../context';
 import { isDappBrowserProvider } from '../helpers';
 
-export const useAutoConnect = (
-  connectors: ConnectorsContextValueNoWagmi,
-): void => {
+export const useAutoConnect = (connectors: ConnectorsContextValue): void => {
   useEagerConnector(connectors);
   useSaveConnectorToLS();
   useDeleteConnectorFromLS();
   useWatchConnectorInLS();
 };
 
-export const useEagerConnector = (
-  connectors: ConnectorsContextValueNoWagmi,
-): void => {
+export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
   const { active, activate } = useWeb3();
   const [savedConnector] = useConnectorStorage();
   const tried = useRef(false);

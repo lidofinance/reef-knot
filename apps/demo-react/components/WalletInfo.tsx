@@ -4,7 +4,11 @@ import { useAccount } from 'wagmi';
 const WalletInfo = () => {
   const connectorInfo = useConnectorInfo();
   const web3Info = useWeb3();
-  const { address: wagmiAddress, status: wagmiStatus } = useAccount();
+  const {
+    address: wagmiAddress,
+    status: wagmiStatus,
+    connector,
+  } = useAccount();
 
   return (
     <div>
@@ -19,8 +23,10 @@ const WalletInfo = () => {
       <h4>wagmi data:</h4>
       <div>
         <code>
-          <p>status(useAccount): {wagmiStatus}</p>
-          <p>address(useAccount): {wagmiAddress}</p>
+          <p>status: {wagmiStatus}</p>
+          <p>address: {wagmiAddress}</p>
+          <p>Connector ID: {connector?.id}</p>
+          <p>Connector name: {connector?.name}</p>
         </code>
       </div>
     </div>

@@ -1,5 +1,9 @@
-# ReefKnot
+# Reef Knot
 Web3 Wallets Connection Library
+
+## WIP
+The project is being seriously reworked at the moment.  
+A migration from `web3-react` to `wagmi` and some big architectural changes are in process. It is going to be more stable after v2.
 
 ## Developing
 

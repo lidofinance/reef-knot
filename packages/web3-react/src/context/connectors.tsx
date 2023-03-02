@@ -1,6 +1,5 @@
 import { createContext, FC, memo, useMemo } from 'react';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { CHAINS } from '@lido-sdk/constants';
@@ -21,19 +20,11 @@ export interface ConnectorsContextProps {
 export type ConnectorsContextValue = {
   injected: InjectedConnector;
   walletlink: WalletLinkConnector;
-  walletconnect: WalletConnectConnector;
-  WalletConnectUri: WalletConnectConnector;
-  WalletConnectNoLinks: WalletConnectConnector;
   coinbase: WalletLinkConnector;
   ledgerlive: LedgerHQFrameConnector;
   ledger: LedgerHQConnector;
   gnosis?: SafeAppConnector;
 };
-
-export type ConnectorsContextValueNoWagmi = Omit<
-  ConnectorsContextValue,
-  'walletconnect' | 'WalletConnectUri' | 'WalletConnectNoLinks'
->;
 
 export type Connector = keyof ConnectorsContextValue;
 
@@ -73,45 +64,6 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
         supportedChainIds,
       }),
 
-      [CONNECTOR_NAMES.WALLET_CONNECT]: new WalletConnectConnector({
-        options: {
-          rpc: walletConnectRPC,
-          qrcodeModalOptions: {
-            mobileLinks: [
-              'metamask',
-              'trust',
-              'gnosis safe multisig',
-              'imtoken',
-              'mathwallet',
-              'coin98',
-              'bitpay',
-              'ledger',
-              '1inch',
-              'huobi',
-              'unstoppable',
-            ],
-            desktopLinks: [],
-          },
-        },
-      }),
-
-      [CONNECTOR_NAMES.WALLET_CONNECT_NOLINKS]: new WalletConnectConnector({
-        options: {
-          rpc: walletConnectRPC,
-          qrcodeModalOptions: {
-            mobileLinks: [],
-            desktopLinks: [],
-          },
-        },
-      }),
-
-      [CONNECTOR_NAMES.WALLET_CONNECT_URI]: new WalletConnectConnector({
-        options: {
-          rpc: walletConnectRPC,
-          qrcode: false,
-        },
-      }),
-
       [CONNECTOR_NAMES.GNOSIS]: (() => {
         try {
           return new SafeAppConnector({ supportedChainIds });
@@ -143,26 +95,10 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
         appLogoUrl,
       }),
     }),
-    [
-      appLogoUrl,
-      appName,
-      rpc,
-      defaultChainId,
-      supportedChainIds,
-      walletConnectRPC,
-    ],
+    [appLogoUrl, appName, rpc, defaultChainId, supportedChainIds],
   );
 
-  // Temporary code to filter wagmi connectors from web3-react connectors,
-  // because we don't want to pass them to useAutoConnect.
-  // Had to use the { key: value } syntax here.
-  const {
-    [CONNECTOR_NAMES.WALLET_CONNECT]: _walletconnect,
-    [CONNECTOR_NAMES.WALLET_CONNECT_NOLINKS]: _walletconnectNoLinks,
-    [CONNECTOR_NAMES.WALLET_CONNECT_URI]: _walletconnectURI,
-    ...connectorsForAutoConnect
-  } = connectors;
-  useAutoConnect(connectorsForAutoConnect as ConnectorsContextValueNoWagmi);
+  useAutoConnect(connectors);
 
   return (
     <ConnectorsContext.Provider value={connectors}>

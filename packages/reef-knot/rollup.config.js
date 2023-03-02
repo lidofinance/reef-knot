@@ -32,7 +32,7 @@ export default {
   },
   plugins: [
     isDevMode ? null : del({ targets: 'dist/*', runOnce: true }),
-    resolve({ extensions }),
+    resolve({ extensions, preferBuiltins: true }),
     typescript({
       typescript: ts,
       tsconfig: 'tsconfig.json',
