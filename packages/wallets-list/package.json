@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -36,13 +36,13 @@
     "dev": "dev=on rollup -c -w"
   },
   "dependencies": {
-    "@reef-knot/wallet-adapter-exodus": "0.0.0"
+    "@reef-knot/wallet-adapter-exodus": "1.0.0"
   },
   "devDependencies": {
-    "@reef-knot/core-react": "^0.0.0"
+    "@reef-knot/core-react": "^1.0.0"
   },
   "peerDependencies": {
-    "@reef-knot/core-react": "^0.0.0",
+    "@reef-knot/core-react": "^1.0.0",
     "react": ">=17"
   }
 }

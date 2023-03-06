@@ -1,4 +1,4 @@
-# @reef-knot/web3-react
+# @reef-knot/wallets-list
 
 ## 1.0.0
 
@@ -15,20 +15,8 @@
   - Remove most of @lido-sdk dependencies
   - Cleanup and other minor changes
 
-## 0.3.0
+### Patch Changes
 
-### Minor Changes
-
-- Add Zerion wallet detection
-
-## 0.2.0
-
-### Minor Changes
-
-- Add Metrics Events support
-
-## 0.1.0
-
-### Minor Changes
-
-- Support Trust Wallet browser extension
+- Updated dependencies
+  - @reef-knot/core-react@1.0.0
+  - @reef-knot/wallet-adapter-exodus@1.0.0

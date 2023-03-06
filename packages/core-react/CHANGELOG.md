@@ -1,4 +1,4 @@
-# @reef-knot/web3-react
+# @reef-knot/core-react
 
 ## 1.0.0
 
@@ -14,21 +14,3 @@
   - Use a wallet adapter API with wagmi injected controller for Exodus wallet
   - Remove most of @lido-sdk dependencies
   - Cleanup and other minor changes
-
-## 0.3.0
-
-### Minor Changes
-
-- Add Zerion wallet detection
-
-## 0.2.0
-
-### Minor Changes
-
-- Add Metrics Events support
-
-## 0.1.0
-
-### Minor Changes
-
-- Support Trust Wallet browser extension

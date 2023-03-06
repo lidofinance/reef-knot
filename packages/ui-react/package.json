@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/ui-react",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -9,8 +9,12 @@
   },
   "typesVersions": {
     "*": {
-      ".": ["dist/index.d.ts"],
-      "styled-wrapper": ["dist/utils/styledWrapper.d.ts"]
+      ".": [
+        "dist/index.d.ts"
+      ],
+      "styled-wrapper": [
+        "dist/utils/styledWrapper.d.ts"
+      ]
     }
   },
   "type": "module",
