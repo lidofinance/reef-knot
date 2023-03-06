@@ -1,9 +1,9 @@
-jest.mock('@lido-sdk/helpers');
+jest.mock('../../src/helpers/openWindow');
 jest.mock('../../src/hooks/useWeb3');
 jest.mock('../../src/hooks/useConnectors');
 
 import { renderHook, act } from '@testing-library/react-hooks';
-import { openWindow } from '@lido-sdk/helpers';
+import { openWindow } from '../../src/helpers/openWindow';
 import { useConnectorOperaWallet, useWeb3, useConnectors } from '../../src';
 
 const mockUseWeb3 = useWeb3 as jest.MockedFunction<typeof useWeb3>;

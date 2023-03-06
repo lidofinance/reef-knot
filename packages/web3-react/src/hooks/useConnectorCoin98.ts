@@ -1,10 +1,15 @@
 import invariant from 'tiny-invariant';
 import { useCallback } from 'react';
-import { openWindow } from '@lido-sdk/helpers';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
-import { hasInjected, isAndroid, isIOS, isCoin98Provider } from '../helpers';
+import {
+  hasInjected,
+  isAndroid,
+  isIOS,
+  isCoin98Provider,
+  openWindow,
+} from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
 import { ConnectorHookArgs } from './types';
 

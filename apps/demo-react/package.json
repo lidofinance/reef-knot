@@ -10,7 +10,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@lido-sdk/constants": "^1.6.0",
     "@lidofinance/lido-ui": "3.2.0",
     "ethers": "^5.7.2",
     "next": "12.3.4",

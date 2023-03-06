@@ -8,8 +8,9 @@ export const Exodus: WalletAdapterType = () => ({
     light: WalletIcon,
     dark: WalletIcon,
   },
-  detector: () => true,
+  detector: () => !!window.ethereum?.isExodus,
   downloadURLs: {
-    default: '',
+    default: 'https://www.exodus.com/download/',
   },
+  // TODO: handle wallet conflicts and custom connectors
 });

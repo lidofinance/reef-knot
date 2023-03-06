@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { useLocalStorage } from '@lido-sdk/react';
 import { Modal } from '@reef-knot/ui-react';
 import {
   WalletsModalProps,
@@ -8,7 +7,7 @@ import {
 } from './types';
 import { Terms } from '../Terms';
 import { WalletsButtonsContainer } from './styles';
-import { NOOP } from '../../helpers';
+import { NOOP, useLocalStorage } from '../../helpers';
 
 export function WalletsModal(props: WalletsModalProps): JSX.Element {
   const {
@@ -21,7 +20,7 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
   } = props;
 
   const [termsChecked, setTermsChecked] = useLocalStorage(
-    'lido-terms-agree',
+    'reef-knot_terms-agree',
     false,
   );
 

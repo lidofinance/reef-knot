@@ -1,6 +1,6 @@
-import { CHAINS } from '@lido-sdk/constants';
+import { mainnet, goerli } from 'wagmi/chains';
 
 export const rpc = {
-  [CHAINS.Mainnet]: `/rpc-stub?chainId=${CHAINS.Mainnet}`,
-  [CHAINS.Goerli]: `/rpc-stub?chainId=${CHAINS.Goerli}`,
+  [mainnet.id]: `/rpc-stub?chainId=${mainnet.id}`,
+  [goerli.id]: `/rpc-stub?chainId=${goerli.id}`,
 };

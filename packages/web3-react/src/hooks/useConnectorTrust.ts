@@ -1,11 +1,15 @@
 import invariant from 'tiny-invariant';
 import warning from 'tiny-warning';
 import { useCallback } from 'react';
-import { openWindow } from '@lido-sdk/helpers';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { useConnectors } from './useConnectors';
 import { useWeb3 } from './useWeb3';
-import { hasInjected, isTrustProvider, isMobileOrTablet } from '../helpers';
+import {
+  hasInjected,
+  isTrustProvider,
+  isMobileOrTablet,
+  openWindow,
+} from '../helpers';
 import { useForceDisconnect } from './useDisconnect';
 import { ConnectorHookArgs } from './types';
 

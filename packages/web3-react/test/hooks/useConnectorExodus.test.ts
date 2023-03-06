@@ -1,11 +1,11 @@
-jest.mock('@lido-sdk/helpers');
 jest.mock('tiny-warning');
+jest.mock('../../src/helpers/openWindow');
 jest.mock('../../src/hooks/useWeb3');
 jest.mock('../../src/hooks/useConnectors');
 
 import warning from 'tiny-warning';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { openWindow } from '@lido-sdk/helpers';
+import { openWindow } from '../../src/helpers/openWindow';
 import { useConnectorExodus } from '../../src/hooks/useConnectorExodus';
 import { useWeb3 } from '../../src/hooks/useWeb3';
 import { useConnectors } from '../../src/hooks/useConnectors';
