@@ -6,16 +6,8 @@ export function useLocalStorage(key: string, initialValue: any) {
   const [storedValue, setStoredValue] = useState(() => {
     if (window?.localStorage?.hasItem(key)) {
       const item = window.localStorage.getItem(key);
-      try {
-        // Parse stored json or if none return initialValue
-        return item ? JSON.parse(item) : initialValue;
-      } catch (error) {
-        console.error(
-          `Reef Knot tried to parse a localStorage value using key: "${key}" and got the error:`,
-          error,
-        );
-        return initialValue;
-      }
+      // Parse stored json or if none return initialValue
+      return item ? JSON.parse(item) : initialValue;
     }
     return initialValue;
   });
