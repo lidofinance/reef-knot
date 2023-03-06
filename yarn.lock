@@ -2384,13 +2384,6 @@
   dependencies:
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/constants@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@lido-sdk/constants/-/constants-1.6.0.tgz#e7a9a231c4ee26d3cef6b48a4d92d64d56d6a9a5"
-  integrity sha512-7QAk1LmB5HlstxDMbZak9qWl4jh+HGbNRXTiG6difwCFEDLI3a36NnoWc9Ry9f2e6MpM1QKGOl6gg1IEmoF1PA==
-  dependencies:
-    tiny-invariant "^1.1.0"
-
 "@lido-sdk/contracts@2.0.4":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@lido-sdk/contracts/-/contracts-2.0.4.tgz#dbb56b2d92334d507675889f7938d464961e15b6"
@@ -2399,7 +2392,7 @@
     "@lido-sdk/constants" "1.8.1"
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/helpers@1.4.7", "@lido-sdk/helpers@^1.4.7":
+"@lido-sdk/helpers@1.4.7":
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/@lido-sdk/helpers/-/helpers-1.4.7.tgz#43f17ba9e24f3052e17d392fa925bc13d62f52da"
   integrity sha512-6SKk+Q73hF167XsI2rq3Dc/LTq8BobmdPxwce626ra7buvS8ZKp1NGp8jOPHHPTdF5/5Jo4KY9gxWjSukbq3+g==
