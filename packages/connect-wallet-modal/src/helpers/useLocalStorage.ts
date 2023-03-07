@@ -7,7 +7,6 @@ export function useLocalStorage(key: string, initialValue: any) {
     const item = window?.localStorage?.getItem(key);
     // Parse stored json or if none return initialValue
     return item ? JSON.parse(item) : initialValue;
-    return initialValue;
   });
 
   // Return a wrapped version of useState's setter function that persists the new value to localStorage.
