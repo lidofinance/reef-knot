@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.0.1
+
+### Patch Changes
+
+- Fix error with useLocalStorage hook
+
 ## 1.0.0
 
 ### Major Changes
