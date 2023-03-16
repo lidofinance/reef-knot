@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
-import { mainnet } from 'wagmi/chains';
+import { mainnet, goerli } from 'wagmi/chains';
 import { ProviderWeb3 } from 'reef-knot/web3-react';
 import { rpc } from '../util/rpc';
 
 const ProviderWeb3WithProps = (props: { children: ReactNode }) => (
   <ProviderWeb3
     defaultChainId={mainnet.id}
-    supportedChainIds={[mainnet.id]}
+    supportedChainIds={[mainnet.id, goerli.id]}
     rpc={rpc}
   >
     {props.children}
