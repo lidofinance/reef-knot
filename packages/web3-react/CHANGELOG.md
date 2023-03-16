@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.0.1
+
+### Patch Changes
+
+- Shim useWeb3, useSupportedChains to also support wagmi data
+
 ## 1.0.0
 
 ### Major Changes
