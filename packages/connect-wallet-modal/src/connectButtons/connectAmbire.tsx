@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { Ambire } from '@reef-knot/wallets-icons/react';
 import { useConnect, useDisconnect } from 'wagmi';

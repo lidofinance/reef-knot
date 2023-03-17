@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorMetamask } from '@reef-knot/web3-react';
 import {
   MetaMaskCircle,

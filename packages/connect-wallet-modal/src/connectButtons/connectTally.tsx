@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorTally } from '@reef-knot/web3-react';
 import { Tally } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';

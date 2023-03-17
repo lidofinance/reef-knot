@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { ZenGo as WalletIcon } from '@reef-knot/wallets-icons/react';
 import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { useConnect, useDisconnect } from 'wagmi';

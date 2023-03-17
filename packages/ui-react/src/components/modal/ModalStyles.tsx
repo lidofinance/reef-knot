@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { css } from '../../utils/styledWrapper.js';
 import { Close, ArrowBack } from '../../icons';
 import { ButtonIcon } from '../button';

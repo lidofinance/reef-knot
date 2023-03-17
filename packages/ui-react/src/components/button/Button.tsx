@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import { ButtonStyle, ButtonContentStyle } from './ButtonStyles';
 import { ButtonProps } from './types';
 import { useRipple } from './useRipple';

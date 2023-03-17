@@ -1,4 +1,4 @@
-import { memo, FC } from 'react';
+import React, { memo, FC } from 'react';
 import invariant from 'tiny-invariant';
 import {
   Web3Provider,
