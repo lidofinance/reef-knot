@@ -1,4 +1,4 @@
-import { createContext, FC, memo, useMemo } from 'react';
+import React, { createContext, FC, memo, useMemo } from 'react';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';

@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorLedger } from '@reef-knot/web3-react';
 import { Ledger, LedgerInversion } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';

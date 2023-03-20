@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import { Checkbox, CheckboxProps, Link } from '@reef-knot/ui-react';
 import { TermsStyle, TermsTextStyle } from './styles';
 import { Metrics } from '../WalletsModal';

@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import styled from '../../utils/styledWrapper.js';
 import { CheckboxProps } from './types';
 import {

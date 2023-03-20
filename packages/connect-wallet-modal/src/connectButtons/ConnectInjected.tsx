@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnect, useDisconnect } from 'wagmi';
 import { ConnectButton } from '../components';
 import { capitalize } from '../helpers';

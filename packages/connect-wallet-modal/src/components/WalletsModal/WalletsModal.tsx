@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal } from '@reef-knot/ui-react';
 import {
   WalletsModalProps,
