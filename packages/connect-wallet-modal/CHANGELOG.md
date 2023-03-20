@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.0.3
+
+### Patch Changes
+
+- Add checks that `window` is defined
+
 ## 1.0.2
 
 ### Patch Changes
