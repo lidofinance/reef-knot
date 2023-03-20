@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 1.0.1
+
+### Patch Changes
+
+- Set typescript compilerOptions.jsx = "react"
+
 ## 1.0.0
 
 ### Major Changes
