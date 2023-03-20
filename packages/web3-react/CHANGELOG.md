@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.0.2
+
+### Patch Changes
+
+- Set typescript compilerOptions.jsx = "react"
+
 ## 1.0.1
 
 ### Patch Changes

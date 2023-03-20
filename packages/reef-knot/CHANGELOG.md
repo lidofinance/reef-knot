@@ -1,5 +1,15 @@
 # reef-knot
 
+## 1.0.3
+
+### Patch Changes
+
+- Set typescript compilerOptions.jsx = "react"
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@1.0.2
+  - @reef-knot/ui-react@1.0.1
+  - @reef-knot/web3-react@1.0.2
+
 ## 1.0.2
 
 ### Patch Changes
