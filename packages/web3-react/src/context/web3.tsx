@@ -8,8 +8,9 @@ import {
 import { CHAINS } from '@lido-sdk/constants';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { ProviderSDK as ProviderSDKBase } from '@lido-sdk/react';
-import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
+import { Web3ReactProvider } from '@web3-react/core';
 import { SWRConfiguration } from 'swr';
+import { useWeb3 } from '../hooks/index';
 import { POLLING_INTERVAL } from '../constants';
 import ProviderConnectors, { ConnectorsContextProps } from './connectors';
 
@@ -36,7 +37,7 @@ const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
     pollingInterval = POLLING_INTERVAL,
     ...rest
   } = props;
-  const { chainId = defaultChainId, library, account } = useWeb3React();
+  const { chainId = defaultChainId, library, account } = useWeb3();
 
   invariant(rpc[chainId], `RPC url for chain ${chainId} is not provided`);
   invariant(rpc[CHAINS.Mainnet], 'RPC url for mainnet is not provided');
