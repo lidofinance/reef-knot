@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { ModalProps } from '@reef-knot/ui-react';
-import { Chain } from 'wagmi/chains';
 
 export type RequirementsData = {
   icon?: ReactNode;
@@ -21,7 +20,6 @@ export type WalletsModalProps = ModalProps & {
   buttonsFullWidth?: boolean;
   metrics?: Metrics;
   walletConnectProjectId?: string;
-  wagmiChains: Chain[];
 };
 
 export type ButtonsCommonProps = {
@@ -32,5 +30,4 @@ export type ButtonsCommonProps = {
   setRequirements(isVisible: boolean, requirementsData: RequirementsData): void;
   metrics?: Metrics;
   walletConnectProjectId?: string;
-  wagmiChains: Chain[];
 };
