@@ -1,5 +1,13 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.0.4
+
+### Patch Changes
+
+- Remove wagmiChains props, make walletConnectProjectId optional
+- Updated dependencies
+  - @reef-knot/web3-react@1.0.3
+
 ## 1.0.3
 
 ### Patch Changes

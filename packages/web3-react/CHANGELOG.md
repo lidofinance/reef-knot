@@ -1,5 +1,12 @@
 # @reef-knot/web3-react
 
+## 1.0.3
+
+### Patch Changes
+
+- - Get account address from the shimmed `useWeb3` hook
+  - Fix setting `providerWeb3` when a wallet is connected via wagmi
+
 ## 1.0.2
 
 ### Patch Changes
