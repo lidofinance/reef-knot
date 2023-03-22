@@ -16,7 +16,6 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     buttonsFullWidth = false,
     metrics,
     walletConnectProjectId,
-    wagmiChains,
   } = props;
 
   const [termsChecked, setTermsChecked] = useLocalStorage(
@@ -42,7 +41,6 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
   );
 
   const buttonsCommonProps: ButtonsCommonProps = {
-    wagmiChains,
     walletConnectProjectId,
     disabled: !termsChecked,
     onConnect: onClose,

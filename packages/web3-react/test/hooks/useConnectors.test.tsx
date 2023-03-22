@@ -10,7 +10,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import { renderHook as renderHookOnServer } from '@testing-library/react-hooks/server';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { CHAINS } from '@lido-sdk/constants';
-import { useConnect } from "wagmi";
+import { useAccount, useConnect } from 'wagmi';
 import { useAutoConnect, useConnectors, useWeb3 } from '../../src';
 import { ProviderWeb3 } from '../../src/context';
 
@@ -24,14 +24,18 @@ const mockUseAutoConnect = useAutoConnect as jest.MockedFunction<
   typeof useAutoConnect
 >;
 const mockUseConnect = useConnect as jest.MockedFunction<typeof useConnect>;
+const mockUseAccount = useAccount as jest.MockedFunction<typeof useAccount>;
 
 beforeEach(() => {
   mockUseAutoConnect.mockImplementation(() => true);
   mockUseConnect.mockReturnValue({ error: null } as any);
+  mockUseAccount.mockReturnValue({ connector: {}, isConnected: false } as any);
 });
 
 afterEach(() => {
   mockUseAutoConnect.mockReset();
+  mockUseConnect.mockReset();
+  mockUseAccount.mockReset();
   mockSafeAppConnector.mockReset();
   mockWeb3Provider.mockReset();
 });
