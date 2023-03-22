@@ -20,7 +20,7 @@ export type WalletsModalProps = ModalProps & {
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
   metrics?: Metrics;
-  walletConnectProjectId: string;
+  walletConnectProjectId?: string;
   wagmiChains: Chain[];
 };
 
@@ -31,6 +31,6 @@ export type ButtonsCommonProps = {
   shouldInvertWalletIcon: boolean;
   setRequirements(isVisible: boolean, requirementsData: RequirementsData): void;
   metrics?: Metrics;
-  walletConnectProjectId: string;
+  walletConnectProjectId?: string;
   wagmiChains: Chain[];
 };
