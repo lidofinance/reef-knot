@@ -10,7 +10,6 @@ import {
   isTallyProvider,
   isBraveWalletProvider,
   isOperaWalletProvider,
-  isExodusProvider,
   isGamestopProvider,
   isGamestopInstalled,
   isXdefiProvider,
@@ -167,18 +166,6 @@ describe('isOperaProvider', () => {
   test('should not detect Opera Crypto wallet', async () => {
     expect(() => isOperaWalletProvider()).not.toThrowError();
     expect(isOperaWalletProvider()).toBe(false);
-  });
-});
-
-describe('isExodusProvider', () => {
-  test('should detect Exodus wallet', async () => {
-    windowSpy.mockReturnValue({ ethereum: { isExodus: true } } as any);
-    expect(isExodusProvider()).toBe(true);
-  });
-
-  test('should not detect Exodus wallet', async () => {
-    expect(() => isExodusProvider()).not.toThrowError();
-    expect(isExodusProvider()).toBe(false);
   });
 });
 

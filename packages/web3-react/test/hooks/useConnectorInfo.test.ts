@@ -192,19 +192,6 @@ describe('useConnectorInfo', () => {
     expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 
-  test('should detect Exodus', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isExodus: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isExodus, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isExodus).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
   test('should detect Gamestop', async () => {
     mockConnector(InjectedConnector);
     window.ethereum = { isGamestop: true };

@@ -12,7 +12,6 @@ export { default as ConnectBlockchaincom } from './connectBlockchaincom';
 export { default as ConnectZenGo } from './connectZenGo';
 export { default as ConnectBraveWallet } from './connectBraveWallet';
 export { default as ConnectOperaWallet } from './connectOperaWallet';
-export { default as ConnectExodus } from './connectExodus';
 export { default as ConnectGamestop } from './connectGamestop';
 export { default as ConnectXdefi } from './connectXdefi';
 export { default as ConnectZerion } from './connectZerion';
