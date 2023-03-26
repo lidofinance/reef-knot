@@ -19,6 +19,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     icons,
     downloadURLs,
     detector,
+    connector,
     ...rest
   } = props;
 
@@ -29,15 +30,13 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
   const metricsOnClick =
     metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
 
-  const { connectAsync, connectors } = useConnect({
+  const { connectAsync } = useConnect({
     onSuccess() {
       onConnect?.();
       metricsOnConnect?.();
     },
   });
   const { disconnect } = useDisconnect();
-
-  const connector = connectors.find((c) => c.id === 'injected');
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
