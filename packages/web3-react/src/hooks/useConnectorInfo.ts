@@ -89,6 +89,8 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isZerion = isInjected && isZerionProvider();
 
   const providerName = (() => {
+    if (isConnectedViaWagmi && wagmiConnector.name) return wagmiConnector.name;
+
     if (isGnosis) return PROVIDER_NAMES.GNOSIS;
     if (isLedger) return PROVIDER_NAMES.LEDGER;
     if (isLedgerLive) return PROVIDER_NAMES.LEDGER_HQ_LIVE;
@@ -120,24 +122,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
     return undefined;
   })();
 
-  const connectorName: Connector | CONNECTOR_NAMES.WALLET_CONNECT | undefined =
-    (() => {
-      if (isCoinbase) return CONNECTOR_NAMES.COINBASE;
-      if (isGnosis) return CONNECTOR_NAMES.GNOSIS;
-      if (isLedger) return CONNECTOR_NAMES.LEDGER;
-      if (isLedgerLive) return CONNECTOR_NAMES.LEDGER_HQ_LIVE;
-      if (isWalletConnect) return CONNECTOR_NAMES.WALLET_CONNECT;
-
-      // General providers which doesn't specify what exact wallet is being used.
-      // Works as a fallback.
-      if (isWalletLink) return CONNECTOR_NAMES.WALLET_LINK;
-      if (isInjected) return CONNECTOR_NAMES.INJECTED;
-
-      return undefined;
-    })();
-
   return {
-    connectorName,
     providerName,
 
     isGnosis,
