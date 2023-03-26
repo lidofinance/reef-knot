@@ -61,6 +61,12 @@
     "no-restricted-syntax": "off",
     "no-case-declarations": "off"
   },
+  "overrides": [{
+    "files": [ "./packages/wallets/**/src/**/*" ],
+    "rules": {
+      "import/no-extraneous-dependencies": "warn"
+    }
+  }],
   "settings": {
     "react": {
       "version": "detect"
