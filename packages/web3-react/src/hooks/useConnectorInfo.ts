@@ -6,8 +6,7 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { LedgerHQFrameConnector } from 'web3-ledgerhq-frame-connector';
 import { LedgerHQConnector } from 'web3-ledgerhq-connector';
 import { useWeb3 } from './useWeb3';
-import { CONNECTOR_NAMES, PROVIDER_NAMES } from '../constants';
-import { Connector } from '../context';
+import { PROVIDER_NAMES } from '../constants';
 import {
   isBraveWalletProvider,
   isCoin98Provider,
@@ -26,7 +25,7 @@ import {
 
 type ConnectorInfo = {
   providerName?: string;
-  connectorName?: Connector | CONNECTOR_NAMES.WALLET_CONNECT;
+  isConnectedViaWagmi: boolean;
   isGnosis: boolean;
   isLedger: boolean;
   isLedgerLive: boolean;
@@ -125,14 +124,14 @@ export const useConnectorInfo = (): ConnectorInfo => {
   return {
     providerName,
 
+    isConnectedViaWagmi,
+
     isGnosis,
     isLedger,
     isLedgerLive,
     isWalletConnect,
-
     isWalletLink,
     isCoinbase,
-
     isMetamask,
     isCoin98,
     isMathWallet,
