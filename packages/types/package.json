@@ -1,18 +1,8 @@
 {
-  "name": "@reef-knot/wallets-list",
+  "name": "@reef-knot/types",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": "./dist/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "dist/index.d.ts"
-      ]
-    }
-  },
   "type": "module",
   "files": [
     "dist"
@@ -22,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lidofinance/reef-knot.git",
-    "directory": "packages/wallets-list"
+    "directory": "packages/reef-knot"
   },
   "bugs": {
     "url": "https://github.com/lidofinance/reef-knot/issues"
@@ -35,14 +25,12 @@
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w"
   },
-  "dependencies": {
-    "@reef-knot/wallet-adapter-exodus": "1.0.0"
-  },
   "devDependencies": {
-    "@reef-knot/types": "^1.0.0"
+    "react": "17.0.2",
+    "wagmi": "^0.11.5"
   },
   "peerDependencies": {
-    "@reef-knot/types": "^1.0.0",
-    "react": ">=17"
+    "react": ">=17",
+    "wagmi": "^0.11.5"
   }
 }

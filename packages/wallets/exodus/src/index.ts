@@ -1,4 +1,4 @@
-import { WalletAdapterType } from '@reef-knot/core-react';
+import { WalletAdapterType } from '@reef-knot/types';
 import { Ethereum } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import WalletIcon from './icons/exodus.svg';
