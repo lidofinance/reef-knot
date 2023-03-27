@@ -27,10 +27,10 @@
   },
   "devDependencies": {
     "react": "17.0.2",
-    "wagmi": "^0.11.5"
+    "wagmi": "^0.11.7"
   },
   "peerDependencies": {
     "react": ">=17",
-    "wagmi": "^0.11.5"
+    "wagmi": "^0.11.7"
   }
 }
