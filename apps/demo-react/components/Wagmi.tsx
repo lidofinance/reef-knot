@@ -2,7 +2,7 @@ import { WagmiConfig, createClient, configureChains } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { ReactNode } from 'react';
 import { mainnet, goerli } from 'wagmi/chains';
-import { createConnectors } from 'reef-knot/core-react';
+import { getConnectors } from 'reef-knot/core-react';
 import { rpc } from '../util/rpc';
 
 const { provider, webSocketProvider } = configureChains(
@@ -10,7 +10,7 @@ const { provider, webSocketProvider } = configureChains(
   [publicProvider()],
 );
 
-const connectors = createConnectors({
+const connectors = getConnectors({
   rpc,
 });
 

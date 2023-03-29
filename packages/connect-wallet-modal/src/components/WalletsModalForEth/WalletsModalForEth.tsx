@@ -1,14 +1,12 @@
 import React from 'react';
 import { helpers } from '@reef-knot/web3-react';
-import { WalletsListEthereum } from '@reef-knot/wallets-list';
-import { WalletAdapterData } from '@reef-knot/core-react';
+import { walletDataList } from '@reef-knot/core-react';
 import {
   ConnectAmbire,
   ConnectBlockchaincom,
   ConnectBraveWallet,
   ConnectCoin98,
   ConnectCoinbase,
-  ConnectExodus,
   ConnectGamestop,
   ConnectImToken,
   ConnectInjected,
@@ -43,7 +41,6 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   [WALLET_IDS.ZENGO]: ConnectZenGo,
   [WALLET_IDS.BRAVE]: ConnectBraveWallet,
   [WALLET_IDS.OPERA]: ConnectOperaWallet,
-  [WALLET_IDS.EXODUS]: ConnectExodus,
   [WALLET_IDS.GAMESTOP]: ConnectGamestop,
   [WALLET_IDS.XDEFI]: ConnectXdefi,
   [WALLET_IDS.ZERION]: ConnectZerion,
@@ -97,14 +94,10 @@ function getWalletsButtons(
   addWalletTo(wallets, WALLET_IDS.GAMESTOP, helpers.isGamestopProvider());
   addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
 
-  // Adding wallets using wallet adapters list from @reef-knot/wallets-list
+  // Adding wallets using a new wallet adapters API
   // TODO: migrate all wallets to use this API
-  const walletAdapters = Object.values(WalletsListEthereum);
-  const walletAdaptersData: Record<string, WalletAdapterData> = {};
-  walletAdapters.forEach((walletAdapter) => {
-    const walletAdapterProps = walletAdapter();
-    const { walletId, detector } = walletAdapterProps;
-    walletAdaptersData[walletId] = walletAdapterProps;
+  walletDataList.forEach((walletData) => {
+    const { walletId, detector } = walletData;
     addWalletTo(wallets, walletId, detector());
   });
 
@@ -113,11 +106,13 @@ function getWalletsButtons(
 
   return wallets.map((walletId) => {
     // Handle new wallet adapters
-    if (Object.keys(walletAdaptersData).includes(walletId)) {
-      const walletAdapterData = walletAdaptersData[walletId];
+    const walletData = walletDataList.find(
+      (data) => data.walletId === walletId,
+    );
+    if (walletData) {
       return getWalletButton('Injected', {
         ...commonProps,
-        ...walletAdapterData,
+        ...walletData,
       });
     }
     // Handle legacy wallets

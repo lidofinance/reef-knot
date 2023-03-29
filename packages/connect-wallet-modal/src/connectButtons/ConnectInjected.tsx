@@ -1,7 +1,8 @@
 import React, { FC, useCallback } from 'react';
-import { useConnect, useDisconnect } from 'wagmi';
+import { useConnect } from 'wagmi';
+import { useDisconnect } from '@reef-knot/web3-react';
 import { ConnectButton } from '../components';
-import { capitalize } from '../helpers';
+import { capitalize, suggestApp } from '../helpers';
 import { ConnectInjectedProps } from './types';
 
 export const ConnectInjected: FC<ConnectInjectedProps> = (
@@ -16,37 +17,45 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     walletId,
     walletName,
     icons,
+    downloadURLs,
+    detector,
+    connector,
     ...rest
   } = props;
 
+  const walletIsDetected = detector();
   const walletIdCapitalized = capitalize(walletId);
   const metricsOnConnect =
     metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
   const metricsOnClick =
     metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
 
-  const { connectAsync, connectors } = useConnect({
+  const { connectAsync } = useConnect({
     onSuccess() {
       onConnect?.();
       metricsOnConnect?.();
     },
   });
-  const { disconnectAsync } = useDisconnect();
-
-  const connector = connectors.find((c) => c.id === 'injected');
+  const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
     metricsOnClick?.();
 
-    await disconnectAsync;
-    await connectAsync({ connector });
+    if (walletIsDetected) {
+      await disconnect?.();
+      await connectAsync({ connector });
+    } else {
+      suggestApp(downloadURLs);
+    }
   }, [
     connectAsync,
     connector,
-    disconnectAsync,
+    disconnect,
+    downloadURLs,
     metricsOnClick,
     onBeforeConnect,
+    walletIsDetected,
   ]);
 
   const WalletIcon = shouldInvertWalletIcon ? icons.dark : icons.light;

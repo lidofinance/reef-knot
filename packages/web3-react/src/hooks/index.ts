@@ -12,7 +12,6 @@ export * from './useConnectorTrust';
 export * from './useConnectorTally';
 export * from './useConnectorBraveWallet';
 export * from './useConnectorOperaWallet';
-export * from './useConnectorExodus';
 export * from './useConnectorGamestop';
 export * from './useConnectorXdefi';
 export * from './useDisconnect';

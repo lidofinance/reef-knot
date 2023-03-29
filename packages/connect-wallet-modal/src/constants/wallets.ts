@@ -13,7 +13,6 @@ export const WALLET_IDS = {
   ZENGO: 'ZenGo',
   BRAVE: 'Brave Wallet',
   OPERA: 'Opera Wallet',
-  EXODUS: 'Exodus',
   GAMESTOP: 'Gamestop',
   XDEFI: 'Xdefi',
   ZERION: 'Zerion',

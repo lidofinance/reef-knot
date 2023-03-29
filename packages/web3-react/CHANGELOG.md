@@ -1,5 +1,15 @@
 # @reef-knot/web3-react
 
+## 1.0.4
+
+### Patch Changes
+
+- 1. Call wagmi disconnect into useForceDisconnect.
+  2. Remove old Exodus code and other unused code.
+  3. Use custom wagmi connectors to get providerName.
+  4. Export isConnectedViaWagmi from useConnectorInfo.
+  5. Check for isConnectedViaWagmi in useAutoConnect.
+
 ## 1.0.3
 
 ### Patch Changes

@@ -8,7 +8,6 @@ import { LedgerHQFrameConnector } from 'web3-ledgerhq-frame-connector';
 import { LedgerHQConnector } from 'web3-ledgerhq-connector';
 import { useAutoConnect } from '../hooks/useAutoConnect';
 import { CONNECTOR_NAMES } from '../constants';
-import { isUrl } from '../helpers';
 
 export interface ConnectorsContextProps {
   defaultChainId: CHAINS;
@@ -44,19 +43,6 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
   } = props;
 
   const { supportedChainIds } = useSDK();
-
-  // adds BASE_URL to `rpc` object's string values
-  const walletConnectRPC = useMemo(
-    () =>
-      Object.entries(rpc).reduce(
-        (result, [key, value]) => ({
-          ...result,
-          [key]: isUrl(value) ? value : BASE_URL + value,
-        }),
-        {} as ConnectorsContextProps['rpc'],
-      ),
-    [rpc, BASE_URL],
-  );
 
   const connectors = useMemo(
     () => ({

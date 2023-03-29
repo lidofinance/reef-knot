@@ -1,24 +1,19 @@
 {
-  "name": "@reef-knot/wallet-adapter-exodus",
-  "version": "1.0.1",
-  "main": "dist/index.js",
+  "name": "@reef-knot/types",
+  "version": "1.0.0",
+  "main": "",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": "./dist/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "dist/index.d.ts"
-      ]
-    }
-  },
   "type": "module",
   "files": [
     "dist"
   ],
   "license": "MIT",
   "homepage": "https://github.com/lidofinance/reef-knot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/reef-knot"
+  },
   "bugs": {
     "url": "https://github.com/lidofinance/reef-knot/issues"
   },
@@ -28,15 +23,14 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "dev": "dev=on rollup -c -w"
   },
   "devDependencies": {
-    "@reef-knot/types": "^1.0.0",
-    "@svgr/rollup": "^6.5.1"
+    "react": "17.0.2",
+    "wagmi": "^0.11.7"
   },
   "peerDependencies": {
-    "wagmi": "^0.11.7",
-    "@reef-knot/types": "^1.0.0"
+    "react": ">=17",
+    "wagmi": "^0.11.7"
   }
 }

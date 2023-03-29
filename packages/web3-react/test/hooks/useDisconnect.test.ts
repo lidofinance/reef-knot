@@ -1,6 +1,8 @@
 jest.mock('../../src/hooks/useWeb3');
 jest.mock('../../src/hooks/useConnectorInfo');
+jest.mock('wagmi');
 
+import { useDisconnect as useDisconnectWagmi } from 'wagmi';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useWeb3 } from '../../src/hooks/useWeb3';
 import { useConnectorInfo } from '../../src/hooks/useConnectorInfo';
@@ -10,10 +12,13 @@ const mockUseWeb3 = useWeb3 as jest.MockedFunction<typeof useWeb3>;
 const mockUseConnectorInfo = useConnectorInfo as jest.MockedFunction<
   typeof useConnectorInfo
 >;
+const mockUseDisconnectWagmi = useDisconnectWagmi as jest.MockedFunction<any>;
 
 beforeEach(() => {
+  const mockDisconnect = jest.fn(async () => true);
   mockUseWeb3.mockReturnValue({} as any);
   mockUseConnectorInfo.mockReturnValue({} as any);
+  mockUseDisconnectWagmi.mockReturnValue({ disconnectAsync: mockDisconnect });
 });
 
 afterEach(() => {

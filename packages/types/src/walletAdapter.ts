@@ -1,4 +1,5 @@
 import { ElementType } from 'react';
+import { Connector } from 'wagmi';
 
 export type WalletAdapterData = {
   walletId: string;
@@ -22,6 +23,8 @@ export type WalletAdapterData = {
     android?: string;
     ios?: string;
   };
+
+  connector: Connector;
 };
 
 export type WalletAdapterType = () => WalletAdapterData;

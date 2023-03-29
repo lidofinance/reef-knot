@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 1.0.2
+
+### Patch Changes
+
+- Fix modal width.
+
 ## 1.0.1
 
 ### Patch Changes

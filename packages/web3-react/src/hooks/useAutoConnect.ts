@@ -19,6 +19,7 @@ export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
   const { active, activate } = useWeb3();
   const [savedConnector] = useConnectorStorage();
   const tried = useRef(false);
+  const { isConnectedViaWagmi } = useConnectorInfo();
 
   const getEagerConnector =
     useCallback(async (): Promise<AbstractConnector | null> => {
@@ -42,7 +43,7 @@ export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
     }, [connectors, savedConnector]);
 
   useEffect(() => {
-    if (tried.current || active) return;
+    if (isConnectedViaWagmi || tried.current || active) return;
 
     (async () => {
       tried.current = true;
@@ -56,19 +57,33 @@ export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
         warning(false, 'Connector is not activated');
       }
     })();
-  }, [activate, getEagerConnector, active]);
+  }, [activate, getEagerConnector, active, isConnectedViaWagmi]);
 };
 
 export const useSaveConnectorToLS = (): void => {
   const [, saveConnector] = useConnectorStorage();
-  const { isInjected, isDappBrowser, isCoinbase, isLedger } =
-    useConnectorInfo();
+  const {
+    isInjected,
+    isDappBrowser,
+    isCoinbase,
+    isLedger,
+    isConnectedViaWagmi,
+  } = useConnectorInfo();
 
   useEffect(() => {
-    if (isInjected && !isDappBrowser) return saveConnector('injected');
-    if (isCoinbase) return saveConnector('coinbase');
-    if (isLedger) return saveConnector('ledger');
-  }, [isLedger, isCoinbase, isInjected, isDappBrowser, saveConnector]);
+    if (!isConnectedViaWagmi) {
+      if (isInjected && !isDappBrowser) return saveConnector('injected');
+      if (isCoinbase) return saveConnector('coinbase');
+      if (isLedger) return saveConnector('ledger');
+    }
+  }, [
+    isLedger,
+    isCoinbase,
+    isInjected,
+    isDappBrowser,
+    saveConnector,
+    isConnectedViaWagmi,
+  ]);
 };
 
 export const useDeleteConnectorFromLS = (): void => {

@@ -31,7 +31,6 @@ const WalletInfo = () => {
       <div>
         <code>
           <p>providerName: {connectorInfo.providerName}</p>
-          <p>connectorName: {connectorInfo.connectorName}</p>
           <p>
             <b>shimmed useWeb3() data below</b>
           </p>
