@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@reef-knot/wallet-adapter-exodus": "1.0.1",
-    "@reef-knot/wallet-adapter-phantom": "0.0.0"
+    "@reef-knot/wallet-adapter-phantom": "1.0.0"
   },
   "devDependencies": {
     "@reef-knot/types": "^1.0.0"
