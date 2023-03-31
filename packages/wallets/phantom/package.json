@@ -1,6 +1,6 @@
 {
-  "name": "@reef-knot/wallets-list",
-  "version": "1.0.1",
+  "name": "@reef-knot/wallet-adapter-phantom",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -19,11 +19,6 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/lidofinance/reef-knot",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lidofinance/reef-knot.git",
-    "directory": "packages/wallets-list"
-  },
   "bugs": {
     "url": "https://github.com/lidofinance/reef-knot/issues"
   },
@@ -33,17 +28,14 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "dev=on rollup -c -w"
-  },
-  "dependencies": {
-    "@reef-knot/wallet-adapter-exodus": "1.0.1",
-    "@reef-knot/wallet-adapter-phantom": "0.0.0"
+    "dev": "dev=on rollup -c -w",
+    "lint": "eslint"
   },
   "devDependencies": {
-    "@reef-knot/types": "^1.0.0"
+    "@reef-knot/types": "^1.0.0",
+    "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
-    "@reef-knot/types": "^1.0.0",
-    "react": ">=17"
+    "@reef-knot/types": "^1.0.0"
   }
 }
