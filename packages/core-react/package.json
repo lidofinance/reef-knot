@@ -33,7 +33,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "dev=on rollup -c -w"
+    "dev": "dev=on rollup -c -w",
+    "lint": "eslint"
   },
   "devDependencies": {
     "react": "17.0.2",
