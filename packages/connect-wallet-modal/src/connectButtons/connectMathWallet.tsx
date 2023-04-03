@@ -73,11 +73,7 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
   ]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       MathWallet
     </ConnectButton>
   );

@@ -10,10 +10,9 @@ export const walletDataList = walletAdapters.map((walletAdapter) =>
 );
 
 export const getConnectors = ({ rpc }: { rpc: Record<number, string> }) => {
-  const connectors: Connector[] = [];
-  walletDataList.forEach((walletData) => {
-    connectors.push(walletData.connector);
-  });
+  const connectors: Connector[] = [...walletDataList].map(
+    (walletData) => walletData.connector,
+  );
 
   const connectorsWC = createConnectorsWalletConnect({ rpc });
   return [...connectorsWC, ...connectors];

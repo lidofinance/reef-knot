@@ -24,11 +24,7 @@ const ConnectCoinbase: FC<ConnectWalletProps> = (props) => {
   }, [connect, onBeforeConnect, onClickCoinbase]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<Coinbase />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={Coinbase} onClick={handleConnect}>
       Coinbase
     </ConnectButton>
   );

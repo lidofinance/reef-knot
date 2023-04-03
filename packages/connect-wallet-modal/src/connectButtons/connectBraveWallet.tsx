@@ -86,11 +86,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
   }, [onBeforeConnect, onClickBrave, handleConflicts, connect]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Brave
     </ConnectButton>
   );

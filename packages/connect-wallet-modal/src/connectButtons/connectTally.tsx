@@ -40,11 +40,7 @@ const ConnectTally: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   }, [connect, onBeforeConnect, onClickTally, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<Tally />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={Tally} onClick={handleConnect}>
       Tally
     </ConnectButton>
   );

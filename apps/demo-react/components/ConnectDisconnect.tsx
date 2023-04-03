@@ -19,9 +19,7 @@ const ConnectDisconnect = (props: { handleOpen: () => void }) => {
       <Button
         style={{ width: '200px', marginTop: '10px', alignSelf: 'center' }}
         variant="text"
-        onClick={() => {
-          handleDisconnect();
-        }}
+        onClick={handleDisconnect}
       >
         Disconnect
       </Button>

@@ -85,11 +85,7 @@ const ConnectZerion: FC<ConnectWalletProps> = (props) => {
   ]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Zerion
     </ConnectButton>
   );
