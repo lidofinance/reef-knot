@@ -51,11 +51,7 @@ const ConnectBlockchaincom: FC<ConnectWalletProps> = (props) => {
   ]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Blockchain.com
     </ConnectButton>
   );

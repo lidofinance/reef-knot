@@ -48,11 +48,7 @@ const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   }, [connect, onBeforeConnect, onClickXdefi, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       XDEFI
     </ConnectButton>
   );

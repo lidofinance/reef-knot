@@ -56,11 +56,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   }, [connect, onBeforeConnect, onClickCoin98, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<Coin98 />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={Coin98} onClick={handleConnect}>
       Coin98
     </ConnectButton>
   );

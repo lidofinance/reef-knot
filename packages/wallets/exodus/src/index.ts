@@ -14,10 +14,7 @@ declare global {
 export const Exodus: WalletAdapterType = () => ({
   walletName: 'Exodus',
   walletId: 'exodus',
-  icons: {
-    light: WalletIcon,
-    dark: WalletIcon,
-  },
+  icon: WalletIcon,
   detector: () =>
     typeof window !== 'undefined'
       ? !!window.exodus?.ethereum?.isExodus || !!window.ethereum?.isExodus

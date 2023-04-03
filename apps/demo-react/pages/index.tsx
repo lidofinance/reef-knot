@@ -42,7 +42,11 @@ export function Web() {
                 <WalletInfo />
               </SettingsWrapper>
 
-              <WalletsModal open={state} handleClose={handleClose} />
+              <WalletsModal
+                open={state}
+                handleClose={handleClose}
+                isDarkTheme={selectedTheme === ThemeName.dark}
+              />
             </MainContainer>
           </ProviderWeb3WithProps>
         </Wagmi>
