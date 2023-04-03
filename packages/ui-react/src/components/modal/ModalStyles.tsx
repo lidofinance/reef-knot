@@ -3,7 +3,7 @@ import styled, { css } from '../../utils/styledWrapper.js';
 import { Close, ArrowBack } from '../../icons';
 import { ButtonIcon } from '../button';
 
-const MaxInnerWidth = 600;
+const MAX_INNER_WIDTH = 600;
 
 export const ModalStyle = styled.div<{ $center: boolean }>`
   ${({
@@ -35,7 +35,7 @@ export const ModalHeaderStyle = styled.div<{
   $short: boolean;
 }>`
   ${({ theme: { spaceMap, fontSizesMap, mediaQueries }, $short }) => css`
-    max-width: ${MaxInnerWidth}px;
+    max-width: ${MAX_INNER_WIDTH}px;
     min-height: 32px;
     display: flex;
     align-items: flex-start;
@@ -103,7 +103,7 @@ export const ModalSubtitleStyle = styled.div`
     line-height: 24px;
     margin-top: -${spaceMap.xl}px;
     padding: 0 ${spaceMap.xxl}px ${spaceMap.sm}px;
-    max-width: ${MaxInnerWidth}px;
+    max-width: ${MAX_INNER_WIDTH}px;
 
     ${mediaQueries.md} {
       padding-left: ${spaceMap.xl}px;
@@ -114,7 +114,7 @@ export const ModalSubtitleStyle = styled.div`
 
 export const ModalContentStyle = styled.div`
   ${({ theme: { spaceMap, mediaQueries } }) => css`
-    max-width: ${MaxInnerWidth}px;
+    max-width: ${MAX_INNER_WIDTH}px;
     padding: 0 ${spaceMap.xxl}px 0;
 
     ${mediaQueries.md} {
