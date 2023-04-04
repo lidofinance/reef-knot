@@ -153,19 +153,6 @@ describe('useConnectorInfo', () => {
     expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 
-  test('should detect Tally', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isTally: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { providerName, isInjected, isTally, isConnectedViaWagmi, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isTally).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
   test('should detect Brave', async () => {
     mockConnector(InjectedConnector);
     window.ethereum = { isBraveWallet: true };
