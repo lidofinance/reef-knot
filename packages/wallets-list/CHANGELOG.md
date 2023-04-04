@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.0.2
+
+### Patch Changes
+
+- Add Taho wallet
+
 ## 1.0.1
 
 ### Patch Changes

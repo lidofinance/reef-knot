@@ -6,7 +6,6 @@ export { default as ConnectTrust } from './connectTrust';
 export { default as ConnectWalletConnect } from './connectWalletConnect';
 export { default as ConnectCoin98 } from './connectCoin98';
 export { default as ConnectMathWallet } from './connectMathWallet';
-export { default as ConnectTally } from './connectTally';
 export { default as ConnectAmbire } from './connectAmbire';
 export { default as ConnectBlockchaincom } from './connectBlockchaincom';
 export { default as ConnectZenGo } from './connectZenGo';

@@ -1,5 +1,14 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.0.6
+
+### Patch Changes
+
+- Replace Tally legacy connector with Taho wallet adapter
+- Fix: duplicated "Injected" react element key for wallet connection buttons 
+- Updated dependencies
+  - @reef-knot/web3-react@1.0.5
+
 ## 1.0.5
 
 ### Patch Changes

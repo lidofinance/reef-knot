@@ -14,7 +14,6 @@ import {
   ConnectMathWallet,
   ConnectMetamask,
   ConnectOperaWallet,
-  ConnectTally,
   ConnectTrust,
   ConnectWalletConnect,
   ConnectXdefi,
@@ -35,7 +34,6 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   [WALLET_IDS.IM_TOKEN]: ConnectImToken,
   [WALLET_IDS.COIN98]: ConnectCoin98,
   [WALLET_IDS.MATH_WALLET]: ConnectMathWallet,
-  [WALLET_IDS.TALLY]: ConnectTally,
   [WALLET_IDS.AMBIRE]: ConnectAmbire,
   [WALLET_IDS.BLOCKCHAINCOM]: ConnectBlockchaincom,
   [WALLET_IDS.ZENGO]: ConnectZenGo,
@@ -47,11 +45,12 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
 };
 
 function getWalletButton(
-  name: keyof typeof walletsButtons,
+  walletId: keyof typeof walletsButtons,
+  reactKey: string,
   props: ButtonsCommonProps,
 ) {
-  return React.createElement(walletsButtons[name], {
-    key: name,
+  return React.createElement(walletsButtons[walletId], {
+    key: reactKey,
     ...props,
   });
 }
@@ -90,7 +89,6 @@ function getWalletsButtons(
   addWalletTo(wallets, WALLET_IDS.OPERA, helpers.isOperaWalletProvider());
   addWalletTo(wallets, WALLET_IDS.COIN98, helpers.isCoin98Provider());
   addWalletTo(wallets, WALLET_IDS.MATH_WALLET, helpers.isMathWalletProvider());
-  addWalletTo(wallets, WALLET_IDS.TALLY, helpers.isTallyProvider());
   addWalletTo(wallets, WALLET_IDS.GAMESTOP, helpers.isGamestopProvider());
   addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
 
@@ -110,13 +108,13 @@ function getWalletsButtons(
       (data) => data.walletId === walletId,
     );
     if (walletData) {
-      return getWalletButton('Injected', {
+      return getWalletButton('Injected', walletId, {
         ...commonProps,
         ...walletData,
       });
     }
     // Handle legacy wallets
-    return getWalletButton(walletId, commonProps);
+    return getWalletButton(walletId, walletId, commonProps);
   });
 }
 
