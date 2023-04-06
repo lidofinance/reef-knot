@@ -18,6 +18,7 @@ export const ModalStyle = styled.div<{ $center: boolean }>`
     text-align: ${$center ? 'center' : 'left'};
     border-radius: ${borderRadiusesMap.xl}px;
     box-shadow: ${boxShadows.xxl} ${colors.shadowDark};
+    box-sizing: content-box;
   `}
 `;
 
@@ -43,6 +44,7 @@ export const ModalHeaderStyle = styled.div<{
     padding: ${spaceMap.xl}px ${spaceMap.xxl}px;
     font-size: ${fontSizesMap.md}px;
     line-height: 1.5em;
+    box-sizing: content-box;
 
     ${mediaQueries.md} {
       padding: ${spaceMap.lg}px;
@@ -104,6 +106,7 @@ export const ModalSubtitleStyle = styled.div`
     margin-top: -${spaceMap.xl}px;
     padding: 0 ${spaceMap.xxl}px ${spaceMap.sm}px;
     max-width: ${MAX_INNER_WIDTH}px;
+    box-sizing: content-box;
 
     ${mediaQueries.md} {
       padding-left: ${spaceMap.xl}px;
@@ -116,6 +119,7 @@ export const ModalContentStyle = styled.div`
   ${({ theme: { spaceMap, mediaQueries } }) => css`
     max-width: ${MAX_INNER_WIDTH}px;
     padding: 0 ${spaceMap.xxl}px 0;
+    box-sizing: content-box;
 
     ${mediaQueries.md} {
       padding: 0 ${spaceMap.lg}px 0;
