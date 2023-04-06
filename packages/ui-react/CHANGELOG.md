@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 1.0.3
+
+### Patch Changes
+
+- Explicitly set `box-sizing: content-box` for Modal
+
 ## 1.0.2
 
 ### Patch Changes
