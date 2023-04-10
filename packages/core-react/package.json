@@ -38,8 +38,8 @@
   },
   "devDependencies": {
     "react": "17.0.2",
-    "wagmi": "^0.11.7",
-    "@reef-knot/wallets-list": "^1.2.0"
+    "wagmi": "^0.12.12",
+    "@reef-knot/wallets-list": "^1.1.0"
   },
   "peerDependencies": {
     "react": ">=17",
