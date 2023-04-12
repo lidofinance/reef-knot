@@ -14,7 +14,7 @@ export type ConflictChecks = {
 };
 
 export const CONFLICTS: ConflictChecks = {
-  Tally: [helpers.isTallyProvider, 'Tally'],
+  Tally: [helpers.isTallyProvider, 'Taho'],
   Exodus: [helpers.isExodusProvider, 'Exodus'],
   Coin98: [helpers.isCoin98Provider, 'Coin98'],
   MathWallet: [helpers.isMathWalletProvider, 'MathWallet'],
