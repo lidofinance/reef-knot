@@ -39,18 +39,23 @@ const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
     ...rest
   } = props;
   const { chainId = defaultChainId, library, account } = useWeb3();
-  const [providerWeb3, setProviderWeb3] = useState(library);
+  const [providerWeb3, setProviderWeb3] = useState<Web3Provider>();
 
   // attempt to get providerWeb3 from wagmi
   const { connector: connectorWagmi, isConnected } = useAccount();
   useEffect(() => {
     (async () => {
       if (isConnected && !providerWeb3 && connectorWagmi) {
+        // Set wagmi provider
         const p = await connectorWagmi.getProvider();
         setProviderWeb3(getLibrary(p));
+      } else if (!providerWeb3) {
+        // Set web3-react provider
+        // Passing `library` as init value for useState does not work, but works like this:
+        setProviderWeb3(library);
       }
     })();
-  }, [connectorWagmi, isConnected, providerWeb3]);
+  }, [connectorWagmi, isConnected, library, providerWeb3]);
 
   invariant(rpc[chainId], `RPC url for chain ${chainId} is not provided`);
   invariant(rpc[CHAINS.Mainnet], 'RPC url for mainnet is not provided');

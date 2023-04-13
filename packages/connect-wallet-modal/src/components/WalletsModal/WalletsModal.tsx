@@ -18,8 +18,12 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     walletConnectProjectId,
   } = props;
 
+  // This key can be changed to enforce all users to accept the Terms again,
+  // for example if the Terms were significantly updated
+  const TERMS_ACCEPTANCE_LS_KEY = 'reef-knot_accept-terms_n2';
+
   const [termsChecked, setTermsChecked] = useLocalStorage(
-    'reef-knot_terms-agree',
+    TERMS_ACCEPTANCE_LS_KEY,
     false,
   );
 

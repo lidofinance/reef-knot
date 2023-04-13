@@ -1,5 +1,14 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.0.8
+
+### Patch Changes
+
+- Tally => Taho in conflict checks
+- Reset the Terms acceptance for all users
+- Updated dependencies
+  - @reef-knot/web3-react@1.0.6
+
 ## 1.0.7
 
 ### Patch Changes
