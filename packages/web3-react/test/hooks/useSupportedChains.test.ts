@@ -1,13 +1,13 @@
 jest.mock('wagmi');
-jest.mock('../../src/hooks/useWeb3');
+jest.mock('@web3-react/core');
 jest.mock('../../src/hooks/useConnectors');
 
 import { renderHook } from '@testing-library/react-hooks';
 import { useNetwork } from "wagmi";
-import { useWeb3, UnsupportedChainIdError } from '../../src/hooks/useWeb3';
+import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
 import { useSupportedChains } from '../../src/hooks/useSupportedChains';
 
-const mockUseWeb3 = useWeb3 as jest.MockedFunction<typeof useWeb3>;
+const mockUseWeb3 = useWeb3React as jest.MockedFunction<typeof useWeb3React>;
 const mockUseNetwork = useNetwork as jest.MockedFunction<typeof useNetwork>;
 
 describe('useSupportedChains', () => {
