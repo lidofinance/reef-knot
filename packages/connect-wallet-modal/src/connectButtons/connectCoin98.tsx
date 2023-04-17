@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorCoin98 } from '@reef-knot/web3-react';
 import { Coin98 } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
@@ -56,11 +56,7 @@ const ConnectCoin98: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   }, [connect, onBeforeConnect, onClickCoin98, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<Coin98 />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={Coin98} onClick={handleConnect}>
       Coin98
     </ConnectButton>
   );

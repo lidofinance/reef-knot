@@ -1,5 +1,13 @@
 # @reef-knot/core-react
 
+## 1.0.1
+
+### Patch Changes
+
+- Support custom connectors for wallet adapters. Reorganize code.
+- Updated dependencies
+  - @reef-knot/wallets-list@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

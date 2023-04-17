@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { WalletConnect } from '@reef-knot/wallets-icons/react';
 import { useConnect, useDisconnect } from 'wagmi';
 import { RKConnectorWalletConnect } from '@reef-knot/core-react';
@@ -31,11 +31,7 @@ const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
   }, [onBeforeConnect, onClickWC, disconnectAsync, connectAsync, connector]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletConnect />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletConnect} onClick={handleConnect}>
       WalletConnect
     </ConnectButton>
   );

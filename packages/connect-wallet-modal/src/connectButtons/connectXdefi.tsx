@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorXdefi } from '@reef-knot/web3-react';
 import { XDEFI as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
@@ -48,11 +48,7 @@ const ConnectXdefi: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   }, [connect, onBeforeConnect, onClickXdefi, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       XDEFI
     </ConnectButton>
   );

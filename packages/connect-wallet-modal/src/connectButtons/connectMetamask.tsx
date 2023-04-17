@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorMetamask } from '@reef-knot/web3-react';
 import {
   MetaMaskCircle,
@@ -69,11 +69,7 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   }, [connect, onBeforeConnect, onClickMetamask, setRequirements, WalletIcon]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       MetaMask
     </ConnectButton>
   );

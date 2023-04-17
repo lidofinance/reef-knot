@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorBraveWallet, helpers } from '@reef-knot/web3-react';
 import { Brave as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { CONFLICTS } from '../constants/conflictChecks';
@@ -86,11 +86,7 @@ const ConnectBraveWallet: FC<ConnectWalletProps> = (
   }, [onBeforeConnect, onClickBrave, handleConflicts, connect]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Brave
     </ConnectButton>
   );

@@ -1,3 +1,2 @@
-export * from './connectors';
+export * from './walletData';
 export * from './utils';
-export * from './types';

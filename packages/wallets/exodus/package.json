@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-exodus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -32,10 +32,11 @@
     "lint": "eslint"
   },
   "devDependencies": {
-    "@reef-knot/core-react": "^1.0.0",
+    "@reef-knot/types": "^1.0.0",
     "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
-    "@reef-knot/core-react": "^1.0.0"
+    "wagmi": "^0.11.7",
+    "@reef-knot/types": "^1.0.0"
   }
 }

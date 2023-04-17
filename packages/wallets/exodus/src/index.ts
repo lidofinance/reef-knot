@@ -1,16 +1,31 @@
-import { WalletAdapterType } from '@reef-knot/core-react';
+import { WalletAdapterType } from '@reef-knot/types';
+import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { InjectedConnector } from 'wagmi/connectors/injected';
 import WalletIcon from './icons/exodus.svg';
+
+declare global {
+  interface Ethereum extends EthereumTypeWagmi {
+    isExodus?: true;
+  }
+  interface Window {
+    exodus?: { ethereum?: Ethereum };
+  }
+}
 
 export const Exodus: WalletAdapterType = () => ({
   walletName: 'Exodus',
   walletId: 'exodus',
-  icons: {
-    light: WalletIcon,
-    dark: WalletIcon,
-  },
-  detector: () => !!window.ethereum?.isExodus,
+  icon: WalletIcon,
+  detector: () =>
+    !!globalThis.window?.exodus || !!globalThis.window?.ethereum?.isExodus,
   downloadURLs: {
     default: 'https://www.exodus.com/download/',
   },
-  // TODO: handle wallet conflicts and custom connectors
+  connector: new InjectedConnector({
+    options: {
+      name: 'Exodus',
+      getProvider: () =>
+        globalThis.window?.exodus?.ethereum || globalThis.window?.ethereum,
+    },
+  }),
 });

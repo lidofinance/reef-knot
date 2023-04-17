@@ -1,16 +1,11 @@
 import { Button } from 'reef-knot/ui-react';
-import { useForceDisconnect } from 'reef-knot/web3-react';
-import { useDisconnect } from 'wagmi';
+import { useDisconnect } from 'reef-knot/web3-react';
 
 const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   const { handleOpen } = props;
-  const { disconnect } = useForceDisconnect();
-  const { disconnect: wagmiDisconnect } = useDisconnect();
+  const { disconnect } = useDisconnect();
   const handleDisconnect = () => {
-    // disconnect wallets connected through web3-react connectors
     disconnect?.();
-    // disconnect wallets connected through wagmi connectors
-    wagmiDisconnect();
   };
 
   return (
@@ -24,9 +19,7 @@ const ConnectDisconnect = (props: { handleOpen: () => void }) => {
       <Button
         style={{ width: '200px', marginTop: '10px', alignSelf: 'center' }}
         variant="text"
-        onClick={() => {
-          handleDisconnect();
-        }}
+        onClick={handleDisconnect}
       >
         Disconnect
       </Button>

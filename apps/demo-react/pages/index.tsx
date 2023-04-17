@@ -18,6 +18,7 @@ import {
   SettingsWrapper,
   WalletsModal,
 } from '../components';
+import { GlobalStyle } from '../styles/global';
 
 export function Web() {
   const { state, handleClose, handleOpen } = useModal();
@@ -29,6 +30,7 @@ export function Web() {
       <ThemeProvider
         theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
       >
+        <GlobalStyle />
         <Wagmi>
           <ProviderWeb3WithProps>
             <MainContainer>
@@ -42,7 +44,11 @@ export function Web() {
                 <WalletInfo />
               </SettingsWrapper>
 
-              <WalletsModal open={state} handleClose={handleClose} />
+              <WalletsModal
+                open={state}
+                handleClose={handleClose}
+                isDarkTheme={selectedTheme === ThemeName.dark}
+              />
             </MainContainer>
           </ProviderWeb3WithProps>
         </Wagmi>

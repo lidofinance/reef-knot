@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorOperaWallet } from '@reef-knot/web3-react';
 import { OperaWallet as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
@@ -37,11 +37,7 @@ const ConnectOperaWallet: FC<ConnectWalletProps> = (
   }, [onBeforeConnect, onClickOperaWallet, connect]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Opera
     </ConnectButton>
   );

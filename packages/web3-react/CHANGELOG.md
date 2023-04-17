@@ -1,5 +1,47 @@
 # @reef-knot/web3-react
 
+## 1.0.6
+
+### Patch Changes
+
+- Fix setting a Web3Provider for web3-react
+- If the chain is unsupported and connected via wagmi, handle it the same way as web3-react does
+
+## 1.0.5
+
+### Patch Changes
+
+- Replace Tally legacy connector with Taho wallet adapter
+
+## 1.0.4
+
+### Patch Changes
+
+- 1. Call wagmi disconnect into useForceDisconnect.
+  2. Remove old Exodus code and other unused code.
+  3. Use custom wagmi connectors to get providerName.
+  4. Export isConnectedViaWagmi from useConnectorInfo.
+  5. Check for isConnectedViaWagmi in useAutoConnect.
+
+## 1.0.3
+
+### Patch Changes
+
+- - Get account address from the shimmed `useWeb3` hook
+  - Fix setting `providerWeb3` when a wallet is connected via wagmi
+
+## 1.0.2
+
+### Patch Changes
+
+- Set typescript compilerOptions.jsx = "react"
+
+## 1.0.1
+
+### Patch Changes
+
+- Shim useWeb3, useSupportedChains to also support wagmi data
+
 ## 1.0.0
 
 ### Major Changes

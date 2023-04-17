@@ -6,20 +6,17 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { LedgerHQFrameConnector } from 'web3-ledgerhq-frame-connector';
 import { LedgerHQConnector } from 'web3-ledgerhq-connector';
 import { useWeb3 } from './useWeb3';
-import { CONNECTOR_NAMES, PROVIDER_NAMES } from '../constants';
-import { Connector } from '../context';
+import { PROVIDER_NAMES } from '../constants';
 import {
   isBraveWalletProvider,
   isCoin98Provider,
   isCoinbaseProvider,
   isDappBrowserProvider,
-  isExodusProvider,
   isGamestopProvider,
   isImTokenProvider,
   isMathWalletProvider,
   isMetamaskProvider,
   isOperaWalletProvider,
-  isTallyProvider,
   isTrustProvider,
   isXdefiProvider,
   isZerionProvider,
@@ -27,7 +24,7 @@ import {
 
 type ConnectorInfo = {
   providerName?: string;
-  connectorName?: Connector | CONNECTOR_NAMES.WALLET_CONNECT;
+  isConnectedViaWagmi: boolean;
   isGnosis: boolean;
   isLedger: boolean;
   isLedgerLive: boolean;
@@ -39,10 +36,8 @@ type ConnectorInfo = {
   isMathWallet: boolean;
   isImToken: boolean;
   isTrust: boolean;
-  isTally: boolean;
   isBraveWallet: boolean;
   isOperaWallet: boolean;
-  isExodus: boolean;
   isGamestop: boolean;
   isXdefi: boolean;
   isDappBrowser: boolean;
@@ -83,15 +78,15 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isMathWallet = isInjected && isMathWalletProvider();
   const isImToken = isInjected && isImTokenProvider();
   const isTrust = isInjected && isTrustProvider();
-  const isTally = isInjected && isTallyProvider();
   const isBraveWallet = isInjected && isBraveWalletProvider();
   const isOperaWallet = isInjected && isOperaWalletProvider();
-  const isExodus = isInjected && isExodusProvider();
   const isGamestop = isInjected && isGamestopProvider();
   const isXdefi = isInjected && isXdefiProvider();
   const isZerion = isInjected && isZerionProvider();
 
   const providerName = (() => {
+    if (isConnectedViaWagmi && wagmiConnector.name) return wagmiConnector.name;
+
     if (isGnosis) return PROVIDER_NAMES.GNOSIS;
     if (isLedger) return PROVIDER_NAMES.LEDGER;
     if (isLedgerLive) return PROVIDER_NAMES.LEDGER_HQ_LIVE;
@@ -102,8 +97,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     // Wallets which has conflicts with each other.
     // The order of wallets checks here is important.
     // Most "aggressive" wallet, which overrides other wallets, goes first.
-    if (isTally) return PROVIDER_NAMES.TALLY;
-    if (isExodus) return PROVIDER_NAMES.EXODUS;
     if (isXdefi) return PROVIDER_NAMES.XDEFI;
     if (isGamestop) return PROVIDER_NAMES.GAMESTOP;
     if (isMathWallet) return PROVIDER_NAMES.MATH_WALLET;
@@ -124,43 +117,24 @@ export const useConnectorInfo = (): ConnectorInfo => {
     return undefined;
   })();
 
-  const connectorName: Connector | CONNECTOR_NAMES.WALLET_CONNECT | undefined =
-    (() => {
-      if (isCoinbase) return CONNECTOR_NAMES.COINBASE;
-      if (isGnosis) return CONNECTOR_NAMES.GNOSIS;
-      if (isLedger) return CONNECTOR_NAMES.LEDGER;
-      if (isLedgerLive) return CONNECTOR_NAMES.LEDGER_HQ_LIVE;
-      if (isWalletConnect) return CONNECTOR_NAMES.WALLET_CONNECT;
-
-      // General providers which doesn't specify what exact wallet is being used.
-      // Works as a fallback.
-      if (isWalletLink) return CONNECTOR_NAMES.WALLET_LINK;
-      if (isInjected) return CONNECTOR_NAMES.INJECTED;
-
-      return undefined;
-    })();
-
   return {
-    connectorName,
     providerName,
+
+    isConnectedViaWagmi,
 
     isGnosis,
     isLedger,
     isLedgerLive,
     isWalletConnect,
-
     isWalletLink,
     isCoinbase,
-
     isMetamask,
     isCoin98,
     isMathWallet,
     isImToken,
     isTrust,
-    isTally,
     isBraveWallet,
     isOperaWallet,
-    isExodus,
     isGamestop,
     isXdefi,
 

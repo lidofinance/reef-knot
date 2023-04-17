@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorTrust } from '@reef-knot/web3-react';
 import { Trust as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
@@ -56,11 +56,7 @@ const ConnectTrust: FC<ConnectWalletProps> = (props) => {
   }, [connect, onBeforeConnect, onClickTrust, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Trust Wallet
     </ConnectButton>
   );

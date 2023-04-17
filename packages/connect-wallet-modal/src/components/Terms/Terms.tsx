@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import { Checkbox, CheckboxProps, Link } from '@reef-knot/ui-react';
 import { TermsStyle, TermsTextStyle } from './styles';
 import { Metrics } from '../WalletsModal';
@@ -24,10 +24,8 @@ export const Terms: FC<WalletModalConnectTermsProps> = (props) => {
     <TermsStyle>
       <Checkbox onChange={handleCheckboxChange} checked={props.checked} />
       <TermsTextStyle>
-        I have read and accept{' '}
-        <Link href="https://lido.fi/terms-of-use">
-          Terms&nbsp;of&nbsp;Service
-        </Link>{' '}
+        I certify that I have read and accept the updated{' '}
+        <Link href="https://lido.fi/terms-of-use">Terms&nbsp;of&nbsp;Use</Link>{' '}
         and{' '}
         <Link href="https://lido.fi/privacy-notice">Privacy&nbsp;Notice</Link>.
       </TermsTextStyle>

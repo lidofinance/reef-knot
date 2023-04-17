@@ -32,7 +32,7 @@ describe('useConnectorInfo', () => {
   test('should detect gnosis', async () => {
     mockConnector(SafeAppConnector);
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isGnosis, ...rest } = result.current;
+    const { providerName, isGnosis, isConnectedViaWagmi, ...rest } = result.current;
 
     expect(isGnosis).toBe(true);
     expect(Object.values(rest).includes(true)).toBeFalsy();
@@ -41,7 +41,7 @@ describe('useConnectorInfo', () => {
   test('should detect ledger live', async () => {
     mockConnector(LedgerHQConnector);
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isLedger, ...rest } = result.current;
+    const { providerName, isLedger, isConnectedViaWagmi, ...rest } = result.current;
 
     expect(isLedger).toBe(true);
     expect(Object.values(rest).includes(true)).toBeFalsy();
@@ -50,7 +50,7 @@ describe('useConnectorInfo', () => {
   test('should detect ledger live', async () => {
     mockConnector(LedgerHQFrameConnector);
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isLedgerLive, ...rest } =
+    const { providerName, isLedgerLive, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isLedgerLive).toBe(true);
@@ -60,7 +60,7 @@ describe('useConnectorInfo', () => {
   test('should detect walletconnect', async () => {
     mockConnector(WalletConnectConnector);
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isWalletConnect, ...rest } =
+    const { providerName, isWalletConnect, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isWalletConnect).toBe(true);
@@ -72,7 +72,7 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isCoinbaseWallet: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isCoinbase, isWalletLink, ...rest } =
+    const { providerName, isCoinbase, isWalletLink, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isCoinbase).toBe(true);
@@ -82,7 +82,7 @@ describe('useConnectorInfo', () => {
   test('should detect injected', async () => {
     mockConnector(InjectedConnector);
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, ...rest } = result.current;
+    const { providerName, isInjected, isConnectedViaWagmi, ...rest } = result.current;
 
     expect(isInjected).toBe(true);
     expect(Object.values(rest).includes(true)).toBeFalsy();
@@ -93,7 +93,7 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isMetaMask: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isMetamask, ...rest } =
+    const { providerName, isInjected, isMetamask, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
@@ -106,7 +106,7 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isCoin98: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isCoin98, ...rest } =
+    const { providerName, isInjected, isCoin98, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
@@ -119,7 +119,7 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isMathWallet: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isMathWallet, ...rest } =
+    const { providerName, isInjected, isMathWallet, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
@@ -132,7 +132,7 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isImToken: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isImToken, ...rest } =
+    const { providerName, isInjected, isImToken, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
@@ -145,24 +145,11 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isTrust: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isTrust, ...rest } =
+    const { providerName, isInjected, isTrust, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
     expect(isTrust).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
-  test('should detect Tally', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isTally: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isTally, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isTally).toBe(true);
     expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 
@@ -171,7 +158,7 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isBraveWallet: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isBraveWallet, ...rest } =
+    const { providerName, isInjected, isBraveWallet, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
@@ -184,24 +171,11 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isOpera: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isOperaWallet, ...rest } =
+    const { providerName, isInjected, isOperaWallet, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
     expect(isOperaWallet).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
-  test('should detect Exodus', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isExodus: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isExodus, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isExodus).toBe(true);
     expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 
@@ -210,7 +184,7 @@ describe('useConnectorInfo', () => {
     window.ethereum = { isGamestop: true };
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isGamestop, ...rest } =
+    const { providerName, isInjected, isGamestop, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
@@ -224,7 +198,7 @@ describe('useConnectorInfo', () => {
     window.xfi = {};
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, isInjected, isXdefi, ...rest } =
+    const { providerName, isInjected, isXdefi, isConnectedViaWagmi, ...rest } =
       result.current;
 
     expect(isInjected).toBe(true);
@@ -236,10 +210,9 @@ describe('useConnectorInfo', () => {
     mockUseWeb3.mockReturnValue({ active: false } as any);
 
     const { result } = renderHook(() => useConnectorInfo());
-    const { connectorName, providerName, ...flags } = result.current;
+    const { providerName, isConnectedViaWagmi, ...flags } = result.current;
 
     expect(Object.values(flags).includes(true)).toBeFalsy();
-    expect(connectorName).toBeUndefined();
     expect(providerName).toBeUndefined();
   });
 });

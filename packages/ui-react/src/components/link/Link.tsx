@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import { LinkStyle } from './LinkStyles';
 import { LinkProps } from './types';
 

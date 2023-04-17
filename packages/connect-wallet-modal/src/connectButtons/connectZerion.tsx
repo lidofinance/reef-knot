@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { Zerion as WalletIcon } from '@reef-knot/wallets-icons/react';
 import WalletConnectProvider from '@walletconnect/ethereum-provider';
 import { useConnect, useDisconnect } from 'wagmi';
@@ -85,11 +85,7 @@ const ConnectZerion: FC<ConnectWalletProps> = (props) => {
   ]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Zerion
     </ConnectButton>
   );

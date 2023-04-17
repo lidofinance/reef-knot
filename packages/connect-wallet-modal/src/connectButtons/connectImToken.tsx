@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorImToken } from '@reef-knot/web3-react';
 import { ImToken as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
@@ -33,11 +33,7 @@ const ConnectImToken: FC<ConnectWalletProps> = (props) => {
   }, [onBeforeConnect, onClickImToken, connect, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       imToken
     </ConnectButton>
   );

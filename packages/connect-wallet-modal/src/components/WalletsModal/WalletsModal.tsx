@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal } from '@reef-knot/ui-react';
 import {
   WalletsModalProps,
@@ -16,11 +16,14 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     buttonsFullWidth = false,
     metrics,
     walletConnectProjectId,
-    wagmiChains,
   } = props;
 
+  // This key can be changed to enforce all users to accept the Terms again,
+  // for example if the Terms were significantly updated
+  const TERMS_ACCEPTANCE_LS_KEY = 'reef-knot_accept-terms_n2';
+
   const [termsChecked, setTermsChecked] = useLocalStorage(
-    'reef-knot_terms-agree',
+    TERMS_ACCEPTANCE_LS_KEY,
     false,
   );
 
@@ -42,7 +45,6 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
   );
 
   const buttonsCommonProps: ButtonsCommonProps = {
-    wagmiChains,
     walletConnectProjectId,
     disabled: !termsChecked,
     onConnect: onClose,
@@ -60,32 +62,37 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
 
   const { icon: reqIcon, title: reqTitle, text: reqText } = requirementsData;
 
-  return requirementsVisible ? (
-    <Modal
-      {...props} // the props are overridden here on purpose
-      onClose={handleClose}
-      onBack={hideRequirements}
-      onExited={hideRequirements}
-      center
-      title={reqTitle}
-      subtitle={reqText}
-      titleIcon={reqIcon}
-    />
-  ) : (
-    <Modal
-      title="Connect wallet"
-      {...props} // the props can be overridden by a library user
-      center={false}
-      onClose={handleClose}
-    >
-      <Terms
-        onChange={handleTermsToggle}
-        checked={termsChecked}
-        metrics={metrics}
+  // do not try to render the modal in case of SSR
+  if (typeof window !== 'undefined') {
+    return requirementsVisible ? (
+      <Modal
+        {...props} // the props are overridden here on purpose
+        onClose={handleClose}
+        onBack={hideRequirements}
+        onExited={hideRequirements}
+        center
+        title={reqTitle}
+        subtitle={reqText}
+        titleIcon={reqIcon}
       />
-      <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
-        {props.children(buttonsCommonProps)}
-      </WalletsButtonsContainer>
-    </Modal>
-  );
+    ) : (
+      <Modal
+        title="Connect wallet"
+        {...props} // the props can be overridden by a library user
+        center={false}
+        onClose={handleClose}
+      >
+        <Terms
+          onChange={handleTermsToggle}
+          checked={termsChecked}
+          metrics={metrics}
+        />
+        <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
+          {props.children(buttonsCommonProps)}
+        </WalletsButtonsContainer>
+      </Modal>
+    );
+  }
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <></>;
 }

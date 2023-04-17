@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnectorLedger } from '@reef-knot/web3-react';
 import { Ledger, LedgerInversion } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
@@ -46,11 +46,7 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
   ]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Ledger
     </ConnectButton>
   );

@@ -1,14 +1,12 @@
 import React from 'react';
 import { helpers } from '@reef-knot/web3-react';
-import { WalletsListEthereum } from '@reef-knot/wallets-list';
-import { WalletAdapterData } from '@reef-knot/core-react';
+import { walletDataList } from '@reef-knot/core-react';
 import {
   ConnectAmbire,
   ConnectBlockchaincom,
   ConnectBraveWallet,
   ConnectCoin98,
   ConnectCoinbase,
-  ConnectExodus,
   ConnectGamestop,
   ConnectImToken,
   ConnectInjected,
@@ -16,7 +14,6 @@ import {
   ConnectMathWallet,
   ConnectMetamask,
   ConnectOperaWallet,
-  ConnectTally,
   ConnectTrust,
   ConnectWalletConnect,
   ConnectXdefi,
@@ -37,24 +34,23 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   [WALLET_IDS.IM_TOKEN]: ConnectImToken,
   [WALLET_IDS.COIN98]: ConnectCoin98,
   [WALLET_IDS.MATH_WALLET]: ConnectMathWallet,
-  [WALLET_IDS.TALLY]: ConnectTally,
   [WALLET_IDS.AMBIRE]: ConnectAmbire,
   [WALLET_IDS.BLOCKCHAINCOM]: ConnectBlockchaincom,
   [WALLET_IDS.ZENGO]: ConnectZenGo,
   [WALLET_IDS.BRAVE]: ConnectBraveWallet,
   [WALLET_IDS.OPERA]: ConnectOperaWallet,
-  [WALLET_IDS.EXODUS]: ConnectExodus,
   [WALLET_IDS.GAMESTOP]: ConnectGamestop,
   [WALLET_IDS.XDEFI]: ConnectXdefi,
   [WALLET_IDS.ZERION]: ConnectZerion,
 };
 
 function getWalletButton(
-  name: keyof typeof walletsButtons,
+  walletId: keyof typeof walletsButtons,
+  reactKey: string,
   props: ButtonsCommonProps,
 ) {
-  return React.createElement(walletsButtons[name], {
-    key: name,
+  return React.createElement(walletsButtons[walletId], {
+    key: reactKey,
     ...props,
   });
 }
@@ -93,18 +89,13 @@ function getWalletsButtons(
   addWalletTo(wallets, WALLET_IDS.OPERA, helpers.isOperaWalletProvider());
   addWalletTo(wallets, WALLET_IDS.COIN98, helpers.isCoin98Provider());
   addWalletTo(wallets, WALLET_IDS.MATH_WALLET, helpers.isMathWalletProvider());
-  addWalletTo(wallets, WALLET_IDS.TALLY, helpers.isTallyProvider());
   addWalletTo(wallets, WALLET_IDS.GAMESTOP, helpers.isGamestopProvider());
   addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
 
-  // Adding wallets using wallet adapters list from @reef-knot/wallets-list
+  // Adding wallets using a new wallet adapters API
   // TODO: migrate all wallets to use this API
-  const walletAdapters = Object.values(WalletsListEthereum);
-  const walletAdaptersData: Record<string, WalletAdapterData> = {};
-  walletAdapters.forEach((walletAdapter) => {
-    const walletAdapterProps = walletAdapter();
-    const { walletId, detector } = walletAdapterProps;
-    walletAdaptersData[walletId] = walletAdapterProps;
+  walletDataList.forEach((walletData) => {
+    const { walletId, detector } = walletData;
     addWalletTo(wallets, walletId, detector());
   });
 
@@ -113,15 +104,17 @@ function getWalletsButtons(
 
   return wallets.map((walletId) => {
     // Handle new wallet adapters
-    if (Object.keys(walletAdaptersData).includes(walletId)) {
-      const walletAdapterData = walletAdaptersData[walletId];
-      return getWalletButton('Injected', {
+    const walletData = walletDataList.find(
+      (data) => data.walletId === walletId,
+    );
+    if (walletData) {
+      return getWalletButton('Injected', walletId, {
         ...commonProps,
-        ...walletAdapterData,
+        ...walletData,
       });
     }
     // Handle legacy wallets
-    return getWalletButton(walletId, commonProps);
+    return getWalletButton(walletId, walletId, commonProps);
   });
 }
 

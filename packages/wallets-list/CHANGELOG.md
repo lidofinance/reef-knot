@@ -1,5 +1,19 @@
 # @reef-knot/wallets-list
 
+## 1.0.2
+
+### Patch Changes
+
+- Add Taho wallet
+
+## 1.0.1
+
+### Patch Changes
+
+- Use @reef-knot/types.
+- Updated dependencies
+  - @reef-knot/wallet-adapter-exodus@1.0.1
+
 ## 1.0.0
 
 ### Major Changes

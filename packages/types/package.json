@@ -1,0 +1,36 @@
+{
+  "name": "@reef-knot/types",
+  "version": "1.0.0",
+  "main": "",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/reef-knot"
+  },
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "dev=on rollup -c -w"
+  },
+  "devDependencies": {
+    "react": "17.0.2",
+    "wagmi": "^0.11.7"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "wagmi": "^0.11.7"
+  }
+}

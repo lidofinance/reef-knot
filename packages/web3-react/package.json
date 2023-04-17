@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/web3-react",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -82,6 +82,6 @@
     "@walletconnect/ethereum-provider": "^1.8.0",
     "react": ">=17",
     "ua-parser-js": "^1.0.33",
-    "wagmi": "^0.11.5"
+    "wagmi": "^0.11.7"
   }
 }

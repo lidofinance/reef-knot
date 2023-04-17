@@ -8,8 +8,8 @@ import { babel } from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
-const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-const { dependencies, peerDependencies } = packageJson;
+const { dependencies = {}, peerDependencies = {} } =
+  JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 const commonExternal = [
   'react/jsx-runtime',
   // Do not include in the bundle subpath exports like:
@@ -37,16 +37,7 @@ export default {
     resolve({ extensions, preferBuiltins: true }),
     typescript({
       typescript: ts,
-      tsconfig: 'tsconfig.json',
-      tsconfigOverride: {
-        compilerOptions: {
-          emitDeclarationOnly: false,
-          noEmit: false,
-          rootDir: 'src',
-        },
-        exclude: ['node_modules', 'dist', '**/*.test.*'],
-        include: ['src/**/*'],
-      },
+      tsconfig: 'tsconfig.json'
     }),
     babel({
       exclude: 'node_modules/**',

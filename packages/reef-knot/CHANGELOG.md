@@ -1,5 +1,73 @@
 # reef-knot
 
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/web3-react@1.0.6
+  - @reef-knot/connect-wallet-modal@1.0.8
+
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@1.0.7
+  - @reef-knot/ui-react@1.0.3
+
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@1.0.2
+  - @reef-knot/connect-wallet-modal@1.0.6
+  - @reef-knot/web3-react@1.0.5
+
+## 1.0.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@1.0.1
+  - @reef-knot/wallets-list@1.0.1
+  - @reef-knot/web3-react@1.0.4
+  - @reef-knot/ui-react@1.0.2
+  - @reef-knot/connect-wallet-modal@1.0.5
+
+## 1.0.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@1.0.4
+  - @reef-knot/web3-react@1.0.3
+
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@1.0.3
+
+## 1.0.3
+
+### Patch Changes
+
+- Set typescript compilerOptions.jsx = "react"
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@1.0.2
+  - @reef-knot/ui-react@1.0.1
+  - @reef-knot/web3-react@1.0.2
+
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/web3-react@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes
