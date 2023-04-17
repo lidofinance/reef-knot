@@ -3,7 +3,7 @@ import styled, { css } from '../../utils/styledWrapper.js';
 import { Close, ArrowBack } from '../../icons';
 import { ButtonIcon } from '../button';
 
-const MaxInnerWidth = 600;
+const MAX_INNER_WIDTH = 600;
 
 export const ModalStyle = styled.div<{ $center: boolean }>`
   ${({
@@ -18,6 +18,7 @@ export const ModalStyle = styled.div<{ $center: boolean }>`
     text-align: ${$center ? 'center' : 'left'};
     border-radius: ${borderRadiusesMap.xl}px;
     box-shadow: ${boxShadows.xxl} ${colors.shadowDark};
+    box-sizing: content-box;
   `}
 `;
 
@@ -35,7 +36,7 @@ export const ModalHeaderStyle = styled.div<{
   $short: boolean;
 }>`
   ${({ theme: { spaceMap, fontSizesMap, mediaQueries }, $short }) => css`
-    max-width: ${MaxInnerWidth}px;
+    max-width: ${MAX_INNER_WIDTH}px;
     min-height: 32px;
     display: flex;
     align-items: flex-start;
@@ -43,6 +44,7 @@ export const ModalHeaderStyle = styled.div<{
     padding: ${spaceMap.xl}px ${spaceMap.xxl}px;
     font-size: ${fontSizesMap.md}px;
     line-height: 1.5em;
+    box-sizing: content-box;
 
     ${mediaQueries.md} {
       padding: ${spaceMap.lg}px;
@@ -103,7 +105,8 @@ export const ModalSubtitleStyle = styled.div`
     line-height: 24px;
     margin-top: -${spaceMap.xl}px;
     padding: 0 ${spaceMap.xxl}px ${spaceMap.sm}px;
-    max-width: ${MaxInnerWidth}px;
+    max-width: ${MAX_INNER_WIDTH}px;
+    box-sizing: content-box;
 
     ${mediaQueries.md} {
       padding-left: ${spaceMap.xl}px;
@@ -114,8 +117,9 @@ export const ModalSubtitleStyle = styled.div`
 
 export const ModalContentStyle = styled.div`
   ${({ theme: { spaceMap, mediaQueries } }) => css`
-    max-width: ${MaxInnerWidth}px;
+    max-width: ${MAX_INNER_WIDTH}px;
     padding: 0 ${spaceMap.xxl}px 0;
+    box-sizing: content-box;
 
     ${mediaQueries.md} {
       padding: 0 ${spaceMap.lg}px 0;

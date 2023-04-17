@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { getNetwork, Network } from '@ethersproject/providers';
 import { useNetwork } from 'wagmi';
-import { useWeb3, UnsupportedChainIdError } from './useWeb3';
+import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
 
 const STABLE_ARRAY: never[] = [];
 
@@ -13,7 +13,7 @@ export const useSupportedChains = (): {
   let isUnsupported: boolean;
 
   // legacy web3-react data
-  const { error, connector } = useWeb3();
+  const { error, connector } = useWeb3React();
   // wagmi data
   const { chain, chains } = useNetwork();
   const wagmiSupportedChainIds = useMemo(

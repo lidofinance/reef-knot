@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -33,10 +33,12 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "dev=on rollup -c -w"
+    "dev": "dev=on rollup -c -w",
+    "lint": "eslint"
   },
   "dependencies": {
     "@reef-knot/wallet-adapter-exodus": "1.0.1",
+    "@reef-knot/wallet-adapter-taho": "1.0.0",
     "@reef-knot/wallet-adapter-phantom": "1.0.0"
   },
   "devDependencies": {

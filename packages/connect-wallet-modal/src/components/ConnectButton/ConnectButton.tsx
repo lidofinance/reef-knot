@@ -1,4 +1,5 @@
-import React, { FC, isValidElement } from 'react';
+import React, { ElementType, FC, isValidElement } from 'react';
+import { WalletAdapterData, WalletAdapterIcons } from '@reef-knot/types';
 import {
   ConnectButtonStyle,
   ConnectButtonContentStyle,
@@ -7,17 +8,34 @@ import {
 } from './styles';
 import { ConnectButtonProps } from '../../connectButtons/types';
 
+// Check that icon's type is WalletAdapterIcons by looking at its "light" and "dark" fields
+function isWalletAdapterIcons(
+  icon: WalletAdapterData['icon'],
+): icon is WalletAdapterIcons {
+  return Boolean(
+    icon &&
+      (icon as WalletAdapterIcons).light &&
+      (icon as WalletAdapterIcons).dark,
+  );
+}
+
 const ConnectButton: FC<ConnectButtonProps> = (props: ConnectButtonProps) => {
-  const { iconSrcOrReactElement, children, ...rest } = props;
+  const { icon, shouldInvertWalletIcon, children, ...rest } = props;
+
+  let ButtonIcon: ElementType = React.Fragment;
+  if (icon) {
+    if (isWalletAdapterIcons(icon)) {
+      ButtonIcon = shouldInvertWalletIcon ? icon.dark : icon.light;
+    } else {
+      ButtonIcon = icon;
+    }
+  }
 
   return (
     <ConnectButtonStyle {...rest}>
       <ConnectButtonContentStyle>
         <ConnectButtonIconStyle>
-          {typeof iconSrcOrReactElement === 'string' && (
-            <img src={iconSrcOrReactElement} alt="" />
-          )}
-          {isValidElement(iconSrcOrReactElement) && iconSrcOrReactElement}
+          {isValidElement(<ButtonIcon />) && <ButtonIcon />}
         </ConnectButtonIconStyle>
         <ConnectButtonTitleStyle>{children}</ConnectButtonTitleStyle>
       </ConnectButtonContentStyle>

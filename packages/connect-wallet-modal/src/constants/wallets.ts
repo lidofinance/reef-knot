@@ -7,7 +7,6 @@ export const WALLET_IDS = {
   IM_TOKEN: 'ImToken',
   COIN98: 'Coin98',
   MATH_WALLET: 'MathWallet',
-  TALLY: 'Tally',
   AMBIRE: 'Ambire',
   BLOCKCHAINCOM: 'Blockchain.com Wallet',
   ZENGO: 'ZenGo',

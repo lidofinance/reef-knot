@@ -31,11 +31,7 @@ const ConnectWalletConnect: FC<ConnectWalletProps> = (props) => {
   }, [onBeforeConnect, onClickWC, disconnectAsync, connectAsync, connector]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletConnect />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletConnect} onClick={handleConnect}>
       WalletConnect
     </ConnectButton>
   );

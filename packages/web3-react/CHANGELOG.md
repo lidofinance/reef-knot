@@ -1,5 +1,18 @@
 # @reef-knot/web3-react
 
+## 1.0.6
+
+### Patch Changes
+
+- Fix setting a Web3Provider for web3-react
+- If the chain is unsupported and connected via wagmi, handle it the same way as web3-react does
+
+## 1.0.5
+
+### Patch Changes
+
+- Replace Tally legacy connector with Taho wallet adapter
+
 ## 1.0.4
 
 ### Patch Changes

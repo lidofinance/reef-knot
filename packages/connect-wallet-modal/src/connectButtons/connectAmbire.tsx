@@ -76,11 +76,7 @@ const ConnectAmbire: FC<ConnectWalletProps> = (props) => {
   ]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<Ambire />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={Ambire} onClick={handleConnect}>
       Ambire
     </ConnectButton>
   );

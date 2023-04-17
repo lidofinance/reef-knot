@@ -37,11 +37,7 @@ const ConnectOperaWallet: FC<ConnectWalletProps> = (
   }, [onBeforeConnect, onClickOperaWallet, connect]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       Opera
     </ConnectButton>
   );

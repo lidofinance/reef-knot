@@ -4,6 +4,14 @@ import {
   useSupportedChains,
 } from 'reef-knot/web3-react';
 import { useAccount, useNetwork } from 'wagmi';
+import styled from 'styled-components';
+
+const Line = styled.div`
+  margin: 8px 0;
+`;
+const Heading = styled.h4`
+  margin: 12px 0;
+`;
 
 const WalletInfo = () => {
   const connectorInfo = useConnectorInfo();
@@ -27,36 +35,36 @@ const WalletInfo = () => {
 
   return (
     <div>
-      <h4>web3-react data:</h4>
+      <Heading>web3-react data:</Heading>
       <div>
         <code>
-          <p>providerName: {connectorInfo.providerName}</p>
-          <p>
+          <Line>providerName: {connectorInfo.providerName}</Line>
+          <Line>
             <b>shimmed useWeb3() data below</b>
-          </p>
-          <p>account: {web3Info.account}</p>
-          <p>active: {String(web3Info.active)}</p>
-          <p>error: {web3Info.error?.message}</p>
-          <p>Chain ID: {web3Info.chainId}</p>
-          <p>
+          </Line>
+          <Line>account: {web3Info.account}</Line>
+          <Line>active: {String(web3Info.active)}</Line>
+          <Line>error: {web3Info.error?.message}</Line>
+          <Line>Chain ID: {web3Info.chainId}</Line>
+          <Line>
             <b>Supported Chains</b>
-          </p>
-          <p>
+          </Line>
+          <Line>
             Chain is unsupported: {String(supportedChainsData.isUnsupported)}
-          </p>
-          <p>Supported chain IDs: {supportedChainIds?.join(',')}</p>
+          </Line>
+          <Line>Supported chain IDs: {supportedChainIds?.join(',')}</Line>
         </code>
       </div>
-      <h4>wagmi data:</h4>
+      <Heading>wagmi data:</Heading>
       <div>
         <code>
-          <p>status: {wagmiStatus}</p>
-          <p>isConnected: {String(wagmiIsConnected)}</p>
-          <p>address: {wagmiAddress}</p>
-          <p>Connector ID: {connector?.id}</p>
-          <p>Connector name: {connector?.name}</p>
-          <p>Chain ID: {chain?.id}</p>
-          <p>Chain is unsupported: {String(chain?.unsupported)}</p>
+          <Line>status: {wagmiStatus}</Line>
+          <Line>isConnected: {String(wagmiIsConnected)}</Line>
+          <Line>address: {wagmiAddress}</Line>
+          <Line>Connector ID: {connector?.id}</Line>
+          <Line>Connector name: {connector?.name}</Line>
+          <Line>Chain ID: {chain?.id}</Line>
+          <Line>Chain is unsupported: {String(chain?.unsupported)}</Line>
         </code>
       </div>
     </div>

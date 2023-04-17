@@ -33,11 +33,7 @@ const ConnectImToken: FC<ConnectWalletProps> = (props) => {
   }, [onBeforeConnect, onClickImToken, connect, setRequirements]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       imToken
     </ConnectButton>
   );

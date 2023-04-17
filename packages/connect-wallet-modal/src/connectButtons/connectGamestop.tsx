@@ -86,11 +86,7 @@ const ConnectGamestop: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
   ]);
 
   return (
-    <ConnectButton
-      {...rest}
-      iconSrcOrReactElement={<WalletIcon />}
-      onClick={handleConnect}
-    >
+    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
       GameStop
     </ConnectButton>
   );
