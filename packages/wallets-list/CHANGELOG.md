@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- Add wallets: OKX, Phantom
+- Add OKX wallet
 
 ## 1.0.2
 

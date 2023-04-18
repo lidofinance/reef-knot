@@ -4,7 +4,9 @@
 
 ### Patch Changes
 
-- improve ConnectButtonIconStyle: height, radius
+- Improve ConnectButtonIconStyle: height, radius
+- Move OKX wallet to the second place in the wallet connection buttons list
+- Updated dependencies
   - @reef-knot/core-react@1.1.0
 
 ## 1.0.8

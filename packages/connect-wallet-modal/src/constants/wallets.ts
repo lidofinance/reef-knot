@@ -17,4 +17,4 @@ export const WALLET_IDS = {
   ZERION: 'Zerion',
 } as const;
 
-export type WalletId = typeof WALLET_IDS[keyof typeof WALLET_IDS];
+export type WalletId = typeof WALLET_IDS[keyof typeof WALLET_IDS] | string;

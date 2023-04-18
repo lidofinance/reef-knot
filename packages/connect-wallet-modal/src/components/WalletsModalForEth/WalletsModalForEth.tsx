@@ -92,8 +92,8 @@ function getWalletsButtons(
   addWalletTo(wallets, WALLET_IDS.GAMESTOP, helpers.isGamestopProvider());
   addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
 
-  // Adding wallets using a new wallet adapters API
-  // TODO: migrate all wallets to use this API
+  // Adding wallets using a new wallet adapter API
+  // TODO: migrate all wallets to use wallet adapter API
   walletDataList.forEach((walletData) => {
     const { walletId, detector } = walletData;
     addWalletTo(wallets, walletId, detector());
@@ -101,6 +101,15 @@ function getWalletsButtons(
 
   // Filtering wallets marked as hidden
   wallets = wallets.filter((wallet) => !hiddenWallets.includes(wallet));
+
+  // Move OKX wallet to the second place
+  // TODO: add better wallets ordering when all wallets migrated to wallet adapter API
+  const okxWalletId = 'okx';
+  const okxWalletIndex = wallets.indexOf(okxWalletId);
+  if (okxWalletIndex >= 0) {
+    wallets.splice(okxWalletIndex, 1);
+    wallets.splice(1, 0, okxWalletId);
+  }
 
   return wallets.map((walletId) => {
     // Handle new wallet adapters
