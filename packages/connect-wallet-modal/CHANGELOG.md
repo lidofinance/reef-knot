@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.1.1
+
+### Patch Changes
+
+- Improve the selection of the OKX wallet position
+
 ## 1.1.0
 
 ### Patch Changes
