@@ -58,8 +58,10 @@ function getWalletButton(
 function addWalletTo(
   walletsList: string[],
   walletId: string,
-  condition: boolean,
+  condition: boolean, // meant to be a wallet-detector function result
 ) {
+  // If condition is true (usually means that a wallet is detected),
+  // move it to the first place in the wallets list, so a user can see it right away
   if (condition) {
     walletsList.unshift(walletId);
   } else {
@@ -106,9 +108,11 @@ function getWalletsButtons(
   // TODO: add better wallets ordering when all wallets migrated to wallet adapter API
   const okxWalletId = 'okx';
   const okxWalletIndex = wallets.indexOf(okxWalletId);
-  if (okxWalletIndex >= 0) {
-    wallets.splice(okxWalletIndex, 1);
-    wallets.splice(1, 0, okxWalletId);
+  const metamaskIndex = wallets.indexOf(WALLET_IDS.METAMASK);
+  // If metamask is there and okx was initially placed more than one step away from metamask
+  if (metamaskIndex > -1 && okxWalletIndex > metamaskIndex + 1) {
+    wallets.splice(okxWalletIndex, 1); // remove okx from its place
+    wallets.splice(metamaskIndex + 1, 0, okxWalletId); // place okx right after metamask
   }
 
   return wallets.map((walletId) => {
