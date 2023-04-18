@@ -3,12 +3,15 @@ import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import WalletIcon from './icons/taho.svg';
 
-declare global {
-  interface Ethereum extends EthereumTypeWagmi {
+declare module '@wagmi/core' {
+  interface Ethereum {
     isTally?: true;
   }
+}
+
+declare global {
   interface Window {
-    tally?: Ethereum;
+    tally?: EthereumTypeWagmi;
   }
 }
 

@@ -42,14 +42,7 @@ export const ConnectButtonIconStyle = styled.span`
 
   svg {
     width: 40px;
-  }
-
-  img {
-    width: 40px;
-  }
-
-  img {
-    max-width: 40px;
-    max-height: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 `;
