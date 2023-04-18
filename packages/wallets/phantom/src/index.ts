@@ -1,13 +1,17 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum } from '@wagmi/core';
+import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import WalletIcon from './icons/phantom.svg';
 
+declare module '@wagmi/core' {
+  interface Ethereum {
+    isPhantom?: true;
+  }
+}
+
 declare global {
   interface Window {
-    // @ts-expect-error Subsequent property declarations must have the same type
-    ethereum?: Ethereum & { isPhantom?: boolean };
-    phantom?: { ethereum?: Ethereum & { isPhantom?: boolean } };
+    phantom?: { ethereum?: EthereumTypeWagmi };
   }
 }
 
@@ -19,9 +23,8 @@ export const Phantom: WalletAdapterType = () => ({
     dark: WalletIcon,
   },
   detector: () =>
-    typeof window !== 'undefined'
-      ? !!window.phantom?.ethereum?.isPhantom || !!window.ethereum?.isPhantom
-      : false,
+    !!globalThis.window?.phantom?.ethereum?.isPhantom ||
+    !!globalThis.window?.ethereum?.isPhantom,
   downloadURLs: {
     default: 'https://phantom.app/download',
   },
@@ -29,9 +32,7 @@ export const Phantom: WalletAdapterType = () => ({
     options: {
       name: 'Phantom',
       getProvider: () =>
-        typeof window !== 'undefined'
-          ? window.phantom?.ethereum || window.ethereum
-          : undefined,
+        globalThis.window?.phantom?.ethereum || globalThis.window?.ethereum,
     },
   }),
 });
