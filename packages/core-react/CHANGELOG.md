@@ -1,5 +1,12 @@
 # @reef-knot/core-react
 
+## 1.1.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes

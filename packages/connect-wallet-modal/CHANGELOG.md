@@ -1,5 +1,12 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.1.0
+
+### Patch Changes
+
+- improve ConnectButtonIconStyle: height, radius
+  - @reef-knot/core-react@1.1.0
+
 ## 1.0.8
 
 ### Patch Changes
