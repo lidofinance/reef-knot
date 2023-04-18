@@ -37,7 +37,7 @@
     "lint": "eslint"
   },
   "devDependencies": {
-    "@reef-knot/core-react": "^2.0.0",
+    "@reef-knot/core-react": "^1.1.0",
     "@reef-knot/types": "^1.0.0",
     "@reef-knot/ui-react": "^1.0.3",
     "@reef-knot/wallets-icons": "^1.0.0",
