@@ -39,6 +39,7 @@
   "dependencies": {
     "@reef-knot/wallet-adapter-exodus": "1.0.1",
     "@reef-knot/wallet-adapter-taho": "1.0.0",
+    "@reef-knot/wallet-adapter-okx": "1.0.0",
     "@reef-knot/wallet-adapter-phantom": "1.0.0"
   },
   "devDependencies": {
