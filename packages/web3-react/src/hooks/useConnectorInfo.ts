@@ -87,6 +87,14 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const providerName = (() => {
     if (isConnectedViaWagmi && wagmiConnector.name) return wagmiConnector.name;
 
+    // Do not try to detect providerName if the app is opened in a mobile wallet dapp browser,
+    // because such wallets often mimic other wallets which makes proper detection to be hard.
+    // Also, if the app is opened in a mobile wallet dapp browser,
+    // then we autoconnect the wallet via injected connector,
+    // and we don't allow to disconnect in such case.
+    // So it is easy for a user to understand which wallet app is being used for connection.
+    if (isDappBrowser) return undefined;
+
     if (isGnosis) return PROVIDER_NAMES.GNOSIS;
     if (isLedger) return PROVIDER_NAMES.LEDGER;
     if (isLedgerLive) return PROVIDER_NAMES.LEDGER_HQ_LIVE;
