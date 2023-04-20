@@ -4,16 +4,9 @@ import {
   useSupportedChains,
 } from 'reef-knot/web3-react';
 import { useAccount, useNetwork } from 'wagmi';
-import styled from 'styled-components';
+import { Line, Heading } from './styles';
 
-const Line = styled.div`
-  margin: 8px 0;
-`;
-const Heading = styled.h4`
-  margin: 12px 0;
-`;
-
-const WalletInfo = () => {
+export const WalletInfo = () => {
   const connectorInfo = useConnectorInfo();
   const supportedChainsData = useSupportedChains();
   const supportedChainIds = supportedChainsData.supportedChains.map(
@@ -70,5 +63,3 @@ const WalletInfo = () => {
     </div>
   );
 };
-
-export default WalletInfo;

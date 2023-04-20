@@ -1,13 +1,15 @@
 import { ReactNode } from 'react';
 
-const SettingsWrapper = (props: { children: ReactNode }) => (
+export const InfoWrapper = (props: { children: ReactNode }) => (
   <div
     style={{
+      overflow: 'auto',
       alignSelf: 'flex-start',
       display: 'flex',
       flexDirection: 'column',
       minWidth: '300px',
       marginTop: '80px',
+      marginRight: '20px',
       padding: '10px',
       background: 'antiquewhite',
       borderRadius: '10px',
@@ -16,5 +18,3 @@ const SettingsWrapper = (props: { children: ReactNode }) => (
     {props.children}
   </div>
 );
-
-export default SettingsWrapper;

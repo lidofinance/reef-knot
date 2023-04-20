@@ -6,6 +6,7 @@ import {
   ThemeName,
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
+import styled from 'styled-components';
 import useModal from '../hooks/useModal';
 import {
   Wagmi,
@@ -15,10 +16,15 @@ import {
   MainContainer,
   ConnectDisconnect,
   ThemeSelect,
-  SettingsWrapper,
+  InfoWrapper,
   WalletsModal,
+  Web3ProviderInfo,
 } from '../components';
 import { GlobalStyle } from '../styles/global';
+
+const InfoBlock = styled.div`
+  display: flex;
+`;
 
 export function Web() {
   const { state, handleClose, handleOpen } = useModal();
@@ -36,13 +42,19 @@ export function Web() {
             <MainContainer>
               <ConnectDisconnect handleOpen={handleOpen} />
 
-              <SettingsWrapper>
-                <ThemeSelect
-                  selectedTheme={selectedTheme}
-                  handleSelect={setSelectedTheme}
-                />
-                <WalletInfo />
-              </SettingsWrapper>
+              <InfoBlock>
+                <InfoWrapper>
+                  <ThemeSelect
+                    selectedTheme={selectedTheme}
+                    handleSelect={setSelectedTheme}
+                  />
+                  <WalletInfo />
+                </InfoWrapper>
+
+                <InfoWrapper>
+                  <Web3ProviderInfo />
+                </InfoWrapper>
+              </InfoBlock>
 
               <WalletsModal
                 open={state}
