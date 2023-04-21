@@ -15,6 +15,13 @@ import { useAccount } from 'wagmi';
 const mockUseWeb3 = useWeb3 as jest.MockedFunction<typeof useWeb3>;
 const mockUseAccount= useAccount as jest.MockedFunction<typeof useAccount>;
 
+const mockIsMobileOrTablet = jest.fn();
+jest.mock('../../src/helpers/ua', () => ({
+  get isMobileOrTablet() {
+    return mockIsMobileOrTablet();
+  },
+}));
+
 const mockConnector = (Connector: any) => {
   class EmptyConnector {}
   const connector = new EmptyConnector();
@@ -214,5 +221,20 @@ describe('useConnectorInfo', () => {
 
     expect(Object.values(flags).includes(true)).toBeFalsy();
     expect(providerName).toBeUndefined();
+  });
+
+  test('should detect mobile dapp browser', async () => {
+    mockIsMobileOrTablet.mockReturnValue(true);
+    mockConnector(InjectedConnector);
+    window.ethereum = {};
+
+    const { result } = renderHook(() => useConnectorInfo());
+    const { providerName, isInjected, isDappBrowser, isConnectedViaWagmi, ...rest } =
+      result.current;
+
+    expect(providerName).toBeUndefined();
+    expect(isInjected).toBe(true);
+    expect(isDappBrowser).toBe(true);
+    expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 });
