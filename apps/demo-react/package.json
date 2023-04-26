@@ -12,6 +12,7 @@
   "dependencies": {
     "@lidofinance/lido-ui": "3.2.0",
     "ethers": "^5.7.2",
+    "flatted": "^3.2.7",
     "next": "12.3.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
