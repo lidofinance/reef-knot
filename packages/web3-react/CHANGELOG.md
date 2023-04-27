@@ -1,5 +1,12 @@
 # @reef-knot/web3-react
 
+## 1.0.7
+
+### Patch Changes
+
+- Do not detect providerName if isDappBrowser;
+- Fix switching between web3 providers;
+
 ## 1.0.6
 
 ### Patch Changes

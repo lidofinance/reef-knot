@@ -8,7 +8,7 @@ import {
 import { CHAINS } from '@lido-sdk/constants';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { ProviderSDK as ProviderSDKBase } from '@lido-sdk/react';
-import { Web3ReactProvider } from '@web3-react/core';
+import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import { useAccount } from 'wagmi';
 import { SWRConfiguration } from 'swr';
 import { useWeb3 } from '../hooks/index';
@@ -38,24 +38,43 @@ const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
     pollingInterval = POLLING_INTERVAL,
     ...rest
   } = props;
-  const { chainId = defaultChainId, library, account } = useWeb3();
+  const { active: isConnectedViaWeb3React, library } = useWeb3React();
+  const { chainId = defaultChainId, account, active } = useWeb3();
+  const { connector: connectorWagmi, isConnected: isConnectedViaWagmi } =
+    useAccount();
+
   const [providerWeb3, setProviderWeb3] = useState<Web3Provider>();
 
-  // attempt to get providerWeb3 from wagmi
-  const { connector: connectorWagmi, isConnected } = useAccount();
+  // Reset web3 provider if the provider was set previously,
+  // and currently no wallet is connected via wagmi or web3-react.
+  // Gets triggered on a wallet disconnection, for example.
+  if (!active && providerWeb3) {
+    setProviderWeb3(undefined);
+  }
+
+  // Switching providers between wagmi and web3-react.
+  // This code is neither clean nor efficient, but it will be deprecated after transition to wagmi is complete.
+  // useEffect is needed here because we are calling getProvider async method from wagmi,
+  // which can be taken as an external API
   useEffect(() => {
     (async () => {
-      if (isConnected && !providerWeb3 && connectorWagmi) {
+      if (!providerWeb3 && connectorWagmi && isConnectedViaWagmi) {
         // Set wagmi provider
         const p = await connectorWagmi.getProvider();
         setProviderWeb3(getLibrary(p));
-      } else if (!providerWeb3) {
+      } else if (!providerWeb3 && library && isConnectedViaWeb3React) {
         // Set web3-react provider
         // Passing `library` as init value for useState does not work, but works like this:
         setProviderWeb3(library);
       }
     })();
-  }, [connectorWagmi, isConnected, library, providerWeb3]);
+  }, [
+    connectorWagmi,
+    isConnectedViaWagmi,
+    isConnectedViaWeb3React,
+    library,
+    providerWeb3,
+  ]);
 
   invariant(rpc[chainId], `RPC url for chain ${chainId} is not provided`);
   invariant(rpc[CHAINS.Mainnet], 'RPC url for mainnet is not provided');

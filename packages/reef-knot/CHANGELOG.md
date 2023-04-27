@@ -1,5 +1,12 @@
 # reef-knot
 
+## 1.1.2
+
+### Patch Changes
+
+- Updated dependencies [9da75b6]
+  - @reef-knot/web3-react@1.0.7
+
 ## 1.1.1
 
 ### Patch Changes
