@@ -50,8 +50,6 @@ export function useWeb3<T = any>(key?: string): Web3ReactContextInterface<T> {
     // NOT SHIMMED FIELDS:
     // library:
     //   Web3Provider from ethers.js, we pass it to Web3ReactProvider via getLibrary()
-    //   Will be the same for wagmi and web3-react since they both use ethers.js
-    //   Not used from this hook anywhere
     // connector:
     //   AbstractConnector from @web3-react, used by @reef-knot/web3-react only for
     //   useDisconnect, useConnectorInfo and useSupportedChains
