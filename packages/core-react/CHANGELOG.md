@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 1.1.1
+
+### Patch Changes
+
+- WalletConnect: actualize mobileLinks (wallets list on mobiles)
+
 ## 1.1.0
 
 ### Patch Changes
