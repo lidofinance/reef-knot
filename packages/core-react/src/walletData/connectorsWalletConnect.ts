@@ -1,5 +1,6 @@
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { isValidHttpUrl } from '../utils';
+import { walletConnectMobileLinks } from './walletConnectMobileLinks';
 
 // Temporary solution:
 // give connectors different ids, so we can choose between them later
@@ -28,19 +29,7 @@ export const createConnectorsWalletConnect = ({
       options: {
         rpc: walletConnectRPC,
         qrcodeModalOptions: {
-          mobileLinks: [
-            'metamask',
-            'trust',
-            'gnosis safe multisig',
-            'imtoken',
-            'mathwallet',
-            'coin98',
-            'bitpay',
-            'ledger',
-            '1inch',
-            'huobi',
-            'unstoppable',
-          ],
+          mobileLinks: walletConnectMobileLinks,
           desktopLinks: [],
         },
       },
