@@ -1,5 +1,12 @@
 # reef-knot
 
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@1.1.1
+
 ## 1.1.2
 
 ### Patch Changes

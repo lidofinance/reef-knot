@@ -24,6 +24,10 @@ import { GlobalStyle } from '../styles/global';
 
 const InfoBlock = styled.div`
   display: flex;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 export function Web() {
