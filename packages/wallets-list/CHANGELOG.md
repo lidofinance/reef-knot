@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.2.0
+
+### Minor Changes
+
+- Enable Phantom wallet
+
 ## 1.1.0
 
 ### Minor Changes

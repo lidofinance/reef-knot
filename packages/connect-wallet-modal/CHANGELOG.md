@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.2.0
+
+### Patch Changes
+
+- @reef-knot/core-react@1.2.0
+
 ## 1.1.1
 
 ### Patch Changes
