@@ -1,5 +1,15 @@
 # @reef-knot/core-react
 
+## 1.3.0
+
+### Minor Changes
+
+- faa8815: Add Reef Knot context, clean up, wagmi v0.12
+
+### Patch Changes
+
+- Updated dependencies [faa8815]
+
 ## 1.2.0
 
 ### Patch Changes

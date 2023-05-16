@@ -1,5 +1,16 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.3.0
+
+### Minor Changes
+
+- faa8815: Update wagmi to v0.12
+- faa8815: Update Wallet Adapter API for WalletConnect
+
+### Patch Changes
+
+- Updated dependencies [faa8815]
+
 ## 1.2.0
 
 ### Patch Changes
