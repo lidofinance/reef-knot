@@ -72,8 +72,6 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     onBeforeConnect?.();
     metricsOnClick?.();
 
-    console.log(WCURICloseRedirectionWindow);
-
     disconnect?.();
 
     if (WCURICondition) {
