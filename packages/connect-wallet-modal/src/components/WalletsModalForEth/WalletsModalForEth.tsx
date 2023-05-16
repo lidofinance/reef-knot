@@ -5,8 +5,6 @@ import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLega
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletAdapterData } from '@reef-knot/types';
 import {
-  ConnectAmbire,
-  ConnectBlockchaincom,
   ConnectBraveWallet,
   ConnectCoin98,
   ConnectCoinbase,
@@ -20,8 +18,6 @@ import {
   ConnectTrust,
   ConnectWC,
   ConnectXdefi,
-  ConnectZenGo,
-  ConnectZerion,
 } from '../../connectButtons';
 import { ButtonsCommonProps, WalletsModal } from '../WalletsModal';
 import { WalletsModalForEthProps } from './types';
@@ -37,14 +33,10 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   [WALLET_IDS.IM_TOKEN]: ConnectImToken,
   [WALLET_IDS.COIN98]: ConnectCoin98,
   [WALLET_IDS.MATH_WALLET]: ConnectMathWallet,
-  [WALLET_IDS.AMBIRE]: ConnectAmbire,
-  [WALLET_IDS.BLOCKCHAINCOM]: ConnectBlockchaincom,
-  [WALLET_IDS.ZENGO]: ConnectZenGo,
   [WALLET_IDS.BRAVE]: ConnectBraveWallet,
   [WALLET_IDS.OPERA]: ConnectOperaWallet,
   [WALLET_IDS.GAMESTOP]: ConnectGamestop,
   [WALLET_IDS.XDEFI]: ConnectXdefi,
-  [WALLET_IDS.ZERION]: ConnectZerion,
 };
 
 function getWalletButton(
@@ -92,10 +84,6 @@ function getWalletsButtons(
     WALLET_IDS.COINBASE,
     WALLET_IDS.TRUST,
     WALLET_IDS.IM_TOKEN,
-    // WALLET_IDS.AMBIRE,
-    // WALLET_IDS.BLOCKCHAINCOM,
-    // WALLET_IDS.ZENGO,
-    // WALLET_IDS.ZERION,
   ];
 
   // Deprecated way of adding wallets with additional detection
