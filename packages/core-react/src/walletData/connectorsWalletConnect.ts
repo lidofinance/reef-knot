@@ -1,11 +1,10 @@
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
 import { isValidHttpUrl } from '../utils';
-import { walletConnectMobileLinks } from './walletConnectMobileLinks';
 
 // Temporary solution:
 // give connectors different ids, so we can choose between them later
 // TODO: rework with custom connector classes extending original connector
-export type RKConnectorWalletConnect = WalletConnectConnector & {
+export type RKConnectorWalletConnect = WalletConnectLegacyConnector & {
   _reefknot_id: string;
 };
 
@@ -25,17 +24,17 @@ export const createConnectorsWalletConnect = ({
   );
 
   const connectors = {
-    WalletConnect: new WalletConnectConnector({
+    WalletConnect: new WalletConnectLegacyConnector({
       options: {
         rpc: walletConnectRPC,
         qrcodeModalOptions: {
-          mobileLinks: walletConnectMobileLinks,
+          mobileLinks: [], // walletConnectMobileLinks,
           desktopLinks: [],
         },
       },
     }),
 
-    WalletConnectNoLinks: new WalletConnectConnector({
+    WalletConnectNoLinks: new WalletConnectLegacyConnector({
       options: {
         rpc: walletConnectRPC,
         qrcodeModalOptions: {
@@ -45,7 +44,7 @@ export const createConnectorsWalletConnect = ({
       },
     }),
 
-    WalletConnectURI: new WalletConnectConnector({
+    WalletConnectURI: new WalletConnectLegacyConnector({
       options: {
         rpc: walletConnectRPC,
         qrcode: false,
