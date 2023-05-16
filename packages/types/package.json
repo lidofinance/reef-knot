@@ -31,6 +31,6 @@
   },
   "peerDependencies": {
     "react": ">=17",
-    "wagmi": "^0.11.7"
+    "wagmi": "^0.12.12"
   }
 }
