@@ -1,5 +1,6 @@
 import { useAccount } from 'wagmi';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
@@ -53,7 +54,9 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isConnectedViaWagmi = isConnected && !!wagmiConnector;
 
   const isWalletConnect =
-    isConnectedViaWagmi && wagmiConnector instanceof WalletConnectConnector;
+    isConnectedViaWagmi &&
+    (wagmiConnector instanceof WalletConnectConnector ||
+      wagmiConnector instanceof WalletConnectLegacyConnector);
 
   // === WAGMI connectors END
   // === WEB3-REACT connectors BEGIN

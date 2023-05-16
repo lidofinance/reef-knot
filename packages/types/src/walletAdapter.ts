@@ -18,19 +18,39 @@ export type WalletAdapterData = {
 
   // A function to check if the wallet is installed and injected.
   // For example: isMetaMaskProvider: () => !!window.ethereum?.isMetaMask
-  detector: () => boolean;
+  detector?: () => boolean;
 
   // URL to redirect a user if the Wallet Button was clicked,
   // but the wallet is not installed or active
-  downloadURLs: {
+  downloadURLs?: {
     default: string;
     android?: string;
     ios?: string;
   };
 
   connector: Connector;
+
+  // Additional options for wallets based on WalletConnect
+  walletconnectExtras?: {
+    // Option for direct connection via WalletConnect (WC) URI (without QR code modal)
+    connectionViaURI?: {
+      // Should be WC connector with disabled QR code
+      connector: Connector;
+      // In which case this connection type must be used instead the default connector
+      condition: boolean;
+      // Where to redirect when WC URI is ready
+      // WC URI will be added to then end of this link,
+      // so it should look similar to "https://<wallet-website-address>/wc?uri="
+      redirectLink: string;
+      // Close the new window, used for redirection, after successful connect
+      closeRedirectionWindow?: boolean;
+    };
+  };
 };
 
-export type WalletAdapterType = () => WalletAdapterData;
+export interface WalletAdapterArgs {
+  rpc: Record<number, string>;
+}
+export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
 
 export type WalletsListType = Record<string, WalletAdapterType>;

@@ -15,3 +15,4 @@ export { default as ConnectGamestop } from './connectGamestop';
 export { default as ConnectXdefi } from './connectXdefi';
 export { default as ConnectZerion } from './connectZerion';
 export * from './ConnectInjected';
+export * from './ConnectWC';

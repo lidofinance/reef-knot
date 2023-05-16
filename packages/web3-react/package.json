@@ -47,6 +47,7 @@
     "@babel/preset-react": "7.18.6",
     "@babel/preset-typescript": "7.18.6",
     "@ethersproject/providers": "^5.7.2",
+    "@reef-knot/core-react": "^1.1.1",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^29.4.0",
@@ -79,6 +80,7 @@
   },
   "peerDependencies": {
     "@ethersproject/providers": "5",
+    "@reef-knot/core-react": "^1.1.1",
     "@walletconnect/ethereum-provider": "^1.8.0",
     "react": ">=17",
     "ua-parser-js": "^1.0.33",
