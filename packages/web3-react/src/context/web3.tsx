@@ -9,6 +9,7 @@ import { CHAINS } from '@lido-sdk/constants';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { ProviderSDK as ProviderSDKBase } from '@lido-sdk/react';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
+import { ReefKnot } from '@reef-knot/core-react';
 import { useAccount } from 'wagmi';
 import { SWRConfiguration } from 'swr';
 import { useWeb3 } from '../hooks/index';
@@ -116,7 +117,9 @@ const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ProviderSDK rpc={rpc} {...sdkProps}>
-        <ProviderConnectors {...connectorsProps}>{children}</ProviderConnectors>
+        <ProviderConnectors {...connectorsProps}>
+          <ReefKnot rpc={rpc}>{children}</ReefKnot>
+        </ProviderConnectors>
       </ProviderSDK>
     </Web3ReactProvider>
   );

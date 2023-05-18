@@ -1,0 +1,44 @@
+{
+  "name": "@reef-knot/wallet-adapter-zerion",
+  "version": "1.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "dev=on rollup -c -w",
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "@reef-knot/types": "^1.1.0",
+    "@reef-knot/wallets-helpers": "^1.0.0",
+    "@svgr/rollup": "^6.5.1"
+  },
+  "peerDependencies": {
+    "wagmi": "^0.12.12",
+    "@reef-knot/wallets-helpers": "^1.0.0",
+    "@reef-knot/types": "^1.1.0"
+  }
+}

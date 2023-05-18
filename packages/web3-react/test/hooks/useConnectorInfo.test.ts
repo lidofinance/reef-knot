@@ -64,16 +64,6 @@ describe('useConnectorInfo', () => {
     expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 
-  test('should detect walletconnect', async () => {
-    mockConnector(WalletConnectConnector);
-    const { result } = renderHook(() => useConnectorInfo());
-    const { providerName, isWalletConnect, isConnectedViaWagmi, ...rest } =
-      result.current;
-
-    expect(isWalletConnect).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
   test('should detect coinbase', async () => {
     mockConnector(WalletLinkConnector);
     window.ethereum = { isCoinbaseWallet: true };

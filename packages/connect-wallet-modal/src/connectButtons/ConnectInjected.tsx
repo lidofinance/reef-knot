@@ -24,7 +24,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     ...rest
   } = props;
 
-  const walletIsDetected = detector();
+  const walletIsDetected = !!detector?.();
   const walletIdCapitalized = capitalize(walletId);
   const metricsOnConnect =
     metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
@@ -44,9 +44,9 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     metricsOnClick?.();
 
     if (walletIsDetected) {
-      await disconnect?.();
+      disconnect?.();
       await connectAsync({ connector });
-    } else {
+    } else if (downloadURLs) {
       suggestApp(downloadURLs);
     }
   }, [

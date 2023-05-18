@@ -1,5 +1,25 @@
 # @reef-knot/wallets-list
 
+## 1.3.0
+
+### Minor Changes
+
+- faa8815: Add adapters: Ambire, Blockchain.com, WalletConnect, ZenGo, Zerion
+
+### Patch Changes
+
+- Updated dependencies [faa8815]
+  - @reef-knot/types@1.1.0
+  - @reef-knot/wallet-adapter-exodus@1.1.0
+  - @reef-knot/wallet-adapter-okx@1.1.0
+  - @reef-knot/wallet-adapter-phantom@1.1.0
+  - @reef-knot/wallet-adapter-taho@1.1.0
+  - @reef-knot/wallet-adapter-ambire@1.1.0
+  - @reef-knot/wallet-adapter-blockchaincom@1.1.0
+  - @reef-knot/wallet-adapter-walletconnect@1.1.0
+  - @reef-knot/wallet-adapter-zengo@1.1.0
+  - @reef-knot/wallet-adapter-zerion@1.1.0
+
 ## 1.2.0
 
 ### Minor Changes

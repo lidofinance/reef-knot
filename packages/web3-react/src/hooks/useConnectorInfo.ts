@@ -1,5 +1,4 @@
 import { useAccount } from 'wagmi';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
@@ -28,7 +27,6 @@ type ConnectorInfo = {
   isGnosis: boolean;
   isLedger: boolean;
   isLedgerLive: boolean;
-  isWalletConnect: boolean;
   isWalletLink: boolean;
   isCoinbase: boolean;
   isMetamask: boolean;
@@ -51,9 +49,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const { isConnected, connector: wagmiConnector } = useAccount();
 
   const isConnectedViaWagmi = isConnected && !!wagmiConnector;
-
-  const isWalletConnect =
-    isConnectedViaWagmi && wagmiConnector instanceof WalletConnectConnector;
 
   // === WAGMI connectors END
   // === WEB3-REACT connectors BEGIN
@@ -98,7 +93,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     if (isGnosis) return PROVIDER_NAMES.GNOSIS;
     if (isLedger) return PROVIDER_NAMES.LEDGER;
     if (isLedgerLive) return PROVIDER_NAMES.LEDGER_HQ_LIVE;
-    if (isWalletConnect) return PROVIDER_NAMES.WALLET_CONNECT;
     if (isImToken) return PROVIDER_NAMES.IM_TOKEN;
     if (isTrust) return PROVIDER_NAMES.TRUST;
 
@@ -133,7 +127,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isGnosis,
     isLedger,
     isLedgerLive,
-    isWalletConnect,
     isWalletLink,
     isCoinbase,
     isMetamask,
