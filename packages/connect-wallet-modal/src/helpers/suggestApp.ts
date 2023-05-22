@@ -1,4 +1,5 @@
-import { openWindow, isIOS, isAndroid } from './index';
+import { openWindow } from './openWindow';
+import { isAndroid, isIOS } from './user-agents';
 
 export const suggestApp = (urls: {
   default: string;

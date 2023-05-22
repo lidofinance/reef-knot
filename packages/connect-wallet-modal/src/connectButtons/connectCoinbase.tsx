@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react';
 import { useConnectorCoinbase } from '@reef-knot/web3-react';
 import { Coinbase } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 
 const ConnectCoinbase: FC<ConnectWalletProps> = (props) => {
   const { onConnect, onBeforeConnect, metrics, ...rest } = props;

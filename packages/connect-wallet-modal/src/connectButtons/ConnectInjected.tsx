@@ -1,7 +1,7 @@
 import React, { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/web3-react';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 import { capitalize, suggestApp } from '../helpers';
 import { ConnectInjectedProps } from './types';
 
