@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react';
 import { useConnectorOperaWallet } from '@reef-knot/web3-react';
 import { OperaWallet as WalletIcon } from '@reef-knot/wallets-icons/react';
 import { ConnectWalletProps } from './types';
-import { ConnectButton } from '../components';
+import { ConnectButton } from '../components/ConnectButton';
 
 const ConnectOperaWallet: FC<ConnectWalletProps> = (
   props: ConnectWalletProps,

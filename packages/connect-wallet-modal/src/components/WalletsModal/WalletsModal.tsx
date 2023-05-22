@@ -15,7 +15,6 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     shouldInvertWalletIcon = false,
     buttonsFullWidth = false,
     metrics,
-    walletConnectProjectId,
   } = props;
 
   // This key can be changed to enforce all users to accept the Terms again,
@@ -45,7 +44,6 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
   );
 
   const buttonsCommonProps: ButtonsCommonProps = {
-    walletConnectProjectId,
     disabled: !termsChecked,
     onConnect: onClose,
     shouldInvertWalletIcon,

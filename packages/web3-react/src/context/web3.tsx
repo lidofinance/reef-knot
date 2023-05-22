@@ -21,6 +21,7 @@ export interface ProviderWeb3Props extends ConnectorsContextProps {
   supportedChainIds: CHAINS[];
   swrConfig?: SWRConfiguration;
   pollingInterval?: number;
+  walletconnectProjectId?: string;
   onError?: (error: unknown) => void;
 }
 
@@ -110,7 +111,14 @@ const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
 };
 
 const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
-  const { children, rpc, appName, appLogoUrl, ...sdkProps } = props;
+  const {
+    children,
+    rpc,
+    walletconnectProjectId,
+    appName,
+    appLogoUrl,
+    ...sdkProps
+  } = props;
   const { defaultChainId } = props;
   const connectorsProps = { rpc, appName, appLogoUrl, defaultChainId };
 
@@ -118,7 +126,9 @@ const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
     <Web3ReactProvider getLibrary={getLibrary}>
       <ProviderSDK rpc={rpc} {...sdkProps}>
         <ProviderConnectors {...connectorsProps}>
-          <ReefKnot rpc={rpc}>{children}</ReefKnot>
+          <ReefKnot rpc={rpc} walletconnectProjectId={walletconnectProjectId}>
+            {children}
+          </ReefKnot>
         </ProviderConnectors>
       </ProviderSDK>
     </Web3ReactProvider>

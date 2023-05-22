@@ -1,6 +1,7 @@
 import React from 'react';
 import { helpers } from '@reef-knot/web3-react';
 import { useReefKnotContext } from '@reef-knot/core-react';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletAdapterData } from '@reef-knot/types';
@@ -25,7 +26,7 @@ import { WALLET_IDS, WalletId } from '../../constants';
 
 const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   Injected: ConnectInjected,
-  WalletConnectV1: ConnectWC,
+  WalletConnect: ConnectWC,
   [WALLET_IDS.METAMASK]: ConnectMetamask,
   [WALLET_IDS.LEDGER]: ConnectLedger,
   [WALLET_IDS.COINBASE]: ConnectCoinbase,
@@ -104,8 +105,13 @@ function getWalletsButtons(
     );
     if (walletData) {
       let connectorId = '';
-      if (walletData.connector instanceof WalletConnectLegacyConnector) {
-        connectorId = 'WalletConnectV1';
+      // Multiple wagmi version can cause problems here (as objects will not directly equal)
+      // TODO: rework to a better solution
+      if (
+        walletData.connector instanceof WalletConnectLegacyConnector ||
+        walletData.connector instanceof WalletConnectConnector
+      ) {
+        connectorId = 'WalletConnect';
       }
       if (walletData.connector instanceof InjectedConnector) {
         connectorId = 'Injected';
