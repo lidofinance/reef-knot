@@ -1,2 +1,2 @@
-export * from './walletConnectLegacyConnector';
+export * from './walletConnectConnector';
 export * from './walletConnectMobileLinks';
