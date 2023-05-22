@@ -14,7 +14,6 @@ export default function WalletsModal(props: {
       onClose={handleClose}
       metrics={metrics}
       shouldInvertWalletIcon={isDarkTheme}
-      walletConnectProjectId="cbbbf9cd4c2a5581edd36dc8cabe664f"
     />
   );
 }
