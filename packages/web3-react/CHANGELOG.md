@@ -1,5 +1,14 @@
 # @reef-knot/web3-react
 
+## 1.1.1
+
+### Patch Changes
+
+- Remove circular deps
+- Pass through WalletConnect project ID to the ReefKnot context
+- Updated dependencies
+  - @reef-knot/core-react@1.3.1
+
 ## 1.1.0
 
 ### Minor Changes

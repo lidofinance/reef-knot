@@ -1,5 +1,15 @@
 # @reef-knot/core-react
 
+## 1.3.1
+
+### Patch Changes
+
+- Take WalletConnect project ID as a prop
+- Add and export getWalletDataList, use a single instance of walletDataList
+- Updated dependencies
+  - @reef-knot/types@1.1.1
+  - @reef-knot/wallets-list@1.3.1
+
 ## 1.3.0
 
 ### Minor Changes

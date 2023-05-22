@@ -1,5 +1,16 @@
 # reef-knot
 
+## 1.3.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@1.1.1
+  - @reef-knot/core-react@1.3.1
+  - @reef-knot/web3-react@1.1.1
+  - @reef-knot/connect-wallet-modal@1.3.1
+  - @reef-knot/wallets-list@1.3.1
+
 ## 1.3.0
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.3.1
+
+### Patch Changes
+
+- Remove walletConnectProjectId prop from WalletsModal; Add display_uri handler for WalletConnect v2 (connection without qr modal)
+- Remove circular deps
+- Updated dependencies
+  - @reef-knot/types@1.1.1
+  - @reef-knot/core-react@1.3.1
+  - @reef-knot/web3-react@1.1.1
+
 ## 1.3.0
 
 ### Minor Changes
