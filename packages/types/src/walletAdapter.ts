@@ -50,6 +50,7 @@ export type WalletAdapterData = {
 
 export interface WalletAdapterArgs {
   rpc: Record<number, string>;
+  walletconnectProjectId?: string;
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
 
