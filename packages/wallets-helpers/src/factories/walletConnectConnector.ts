@@ -20,7 +20,7 @@ export const getWalletConnectConnector = ({
   projectId = '',
   noMobileLinks = false,
   qrcode = true,
-  v2: _v2 = false, // TODO: switch back to FALSE
+  v2: _v2 = false,
 }: {
   rpc: Record<number, string>;
   projectId?: string;
