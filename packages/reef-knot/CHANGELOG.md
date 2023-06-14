@@ -1,5 +1,12 @@
 # reef-knot
 
+## 1.3.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-helpers@1.0.2
+
 ## 1.3.2
 
 ### Patch Changes
