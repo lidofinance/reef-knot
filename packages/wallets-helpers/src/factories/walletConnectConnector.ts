@@ -28,9 +28,14 @@ export const getWalletConnectConnector = ({
   qrcode?: boolean;
   v2?: boolean;
 }) => {
+  let v2EnabledByLS = false;
+  if (typeof window !== 'undefined') {
+    v2EnabledByLS =
+      window.localStorage.getItem('reefknot_wcv2_enable') === 'true';
+  }
   // WalletConnect v2 will automatically replace legacy v1 after this date:
-  const v2TransitionDate = new Date('2023-06-20T00:00:00Z');
-  const v2 = _v2 || new Date() > v2TransitionDate;
+  const v2TransitionDate = new Date('2023-06-24T00:00:00Z');
+  const v2 = _v2 || v2EnabledByLS || new Date() > v2TransitionDate;
   if (v2) {
     return new WalletConnectConnector({
       options: {
