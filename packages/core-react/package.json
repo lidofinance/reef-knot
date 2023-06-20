@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/core-react",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -39,13 +39,13 @@
   "devDependencies": {
     "react": "17.0.2",
     "wagmi": "^0.12.16",
-    "@reef-knot/wallets-list": "^1.3.1",
-    "@reef-knot/types": "^1.1.1"
+    "@reef-knot/wallets-list": "^1.4.0",
+    "@reef-knot/types": "^1.2.0"
   },
   "peerDependencies": {
     "react": ">=17",
     "wagmi": "^0.12.16",
-    "@reef-knot/wallets-list": "^1.3.1",
-    "@reef-knot/types": "^1.1.1"
+    "@reef-knot/wallets-list": "^1.4.0",
+    "@reef-knot/types": "^1.2.0"
   }
 }

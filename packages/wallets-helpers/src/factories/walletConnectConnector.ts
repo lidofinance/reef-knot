@@ -46,6 +46,8 @@ export const getWalletConnectConnector = ({
         projectId,
         showQrModal: qrcode,
         qrModalOptions: {
+          // @walletconnect library currently requires the "chainImages" option, looks like their mistake
+          chainImages: undefined,
           themeVariables: {
             '--w3m-z-index': '1000',
           },

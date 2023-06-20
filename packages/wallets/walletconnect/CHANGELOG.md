@@ -1,5 +1,17 @@
 # @reef-knot/wallet-adapter-walletconnect
 
+## 1.2.0
+
+### Minor Changes
+
+- Explicitly pass chains to wagmi connectors, update wagmi to v0.12.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@1.2.0
+  - @reef-knot/wallets-helpers@1.1.0
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-walletconnect",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -32,13 +32,13 @@
     "lint": "eslint"
   },
   "devDependencies": {
-    "@reef-knot/types": "^1.1.1",
-    "@reef-knot/wallets-helpers": "^1.0.1",
+    "@reef-knot/types": "^1.2.0",
+    "@reef-knot/wallets-helpers": "^1.1.0",
     "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
     "wagmi": "^0.12.16",
-    "@reef-knot/wallets-helpers": "^1.0.1",
-    "@reef-knot/types": "^1.1.1"
+    "@reef-knot/wallets-helpers": "^1.1.0",
+    "@reef-knot/types": "^1.2.0"
   }
 }

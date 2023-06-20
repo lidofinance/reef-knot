@@ -1,5 +1,15 @@
 # @reef-knot/web3-react
 
+## 1.2.0
+
+### Minor Changes
+
+- Explicitly pass chains to wagmi connectors, update wagmi to v0.12.16
+
+### Patch Changes
+
+- Updated dependencies
+
 ## 1.1.1
 
 ### Patch Changes
