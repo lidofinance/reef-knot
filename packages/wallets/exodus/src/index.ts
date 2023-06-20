@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-export const Exodus: WalletAdapterType = () => ({
+export const Exodus: WalletAdapterType = ({ chains }) => ({
   walletName: 'Exodus',
   walletId: 'exodus',
   icon: WalletIcon,
@@ -22,6 +22,7 @@ export const Exodus: WalletAdapterType = () => ({
     default: 'https://www.exodus.com/download/',
   },
   connector: new InjectedConnector({
+    chains,
     options: {
       name: 'Exodus',
       getProvider: () =>

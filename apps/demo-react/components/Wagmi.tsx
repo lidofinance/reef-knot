@@ -6,7 +6,7 @@ import { getConnectors } from 'reef-knot/core-react';
 import { rpc } from '../util/rpc';
 import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
 
-const { provider, webSocketProvider } = configureChains(
+const { chains, provider, webSocketProvider } = configureChains(
   [mainnet, goerli],
   [publicProvider()],
 );
@@ -14,6 +14,8 @@ const { provider, webSocketProvider } = configureChains(
 const connectors = getConnectors({
   rpc,
   walletconnectProjectId: WC_PROJECT_ID,
+  chains,
+  defaultChain: goerli,
 });
 
 const client = createClient({

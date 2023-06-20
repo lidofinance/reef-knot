@@ -16,7 +16,7 @@ declare global {
 }
 
 // The wallet was named "Tally Ho" previously, renamed to "Taho"
-export const Taho: WalletAdapterType = () => ({
+export const Taho: WalletAdapterType = ({ chains }) => ({
   walletName: 'Taho',
   // The current metrics implementation is based on walletId,
   // using previous "tally" name here not to break metrics
@@ -28,6 +28,7 @@ export const Taho: WalletAdapterType = () => ({
     default: 'https://taho.xyz/download/',
   },
   connector: new InjectedConnector({
+    chains,
     options: {
       name: 'Taho',
       getProvider: () =>

@@ -1,5 +1,11 @@
 # @reef-knot/types
 
+## 1.2.0
+
+### Minor Changes
+
+- Explicitly pass chains to wagmi connectors, update wagmi to v0.12.16
+
 ## 1.1.1
 
 ### Patch Changes

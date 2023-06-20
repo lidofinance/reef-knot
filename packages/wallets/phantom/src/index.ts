@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-export const Phantom: WalletAdapterType = () => ({
+export const Phantom: WalletAdapterType = ({ chains }) => ({
   walletName: 'Phantom',
   walletId: 'phantom',
   icons: {
@@ -29,6 +29,7 @@ export const Phantom: WalletAdapterType = () => ({
     default: 'https://phantom.app/download',
   },
   connector: new InjectedConnector({
+    chains,
     options: {
       name: 'Phantom',
       getProvider: () =>

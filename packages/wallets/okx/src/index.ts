@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-export const Okx: WalletAdapterType = () => ({
+export const Okx: WalletAdapterType = ({ chains }) => ({
   walletName: 'OKX Wallet',
   walletId: 'okx',
   icons: {
@@ -30,6 +30,7 @@ export const Okx: WalletAdapterType = () => ({
     default: 'https://www.okx.com/download',
   },
   connector: new InjectedConnector({
+    chains,
     options: {
       name: 'OKX Wallet',
       getProvider: () =>

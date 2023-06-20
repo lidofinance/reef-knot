@@ -1,5 +1,6 @@
 import { ElementType } from 'react';
 import { Connector } from 'wagmi';
+import type { Chain } from 'wagmi/chains';
 
 export type WalletAdapterIcons = {
   light: ElementType;
@@ -49,8 +50,9 @@ export type WalletAdapterData = {
 };
 
 export interface WalletAdapterArgs {
-  rpc: Record<number, string>;
+  rpc?: Record<number, string>;
   walletconnectProjectId?: string;
+  chains: Chain[];
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
 

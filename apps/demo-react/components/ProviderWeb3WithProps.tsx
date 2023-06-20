@@ -6,7 +6,7 @@ import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
 
 const ProviderWeb3WithProps = (props: { children: ReactNode }) => (
   <ProviderWeb3
-    defaultChainId={mainnet.id}
+    defaultChainId={goerli.id}
     supportedChainIds={[mainnet.id, goerli.id]}
     rpc={rpc}
     walletconnectProjectId={WC_PROJECT_ID}

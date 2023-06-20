@@ -1,9 +1,10 @@
 import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { Chain } from 'wagmi/chains';
 import { isValidHttpUrl } from '../utils';
 import { walletConnectMobileLinks } from './walletConnectMobileLinks';
 
-export const prepareWalletConnectRPC = (rpc: Record<number, string>) => {
+export const prepareWalletConnectRPC = (rpc: Record<number, string> = {}) => {
   const BASE_URL = typeof window === 'undefined' ? '' : window.location.origin;
   // adds BASE_URL to `rpc` object's string values
   return Object.entries(rpc).reduce(
@@ -21,12 +22,14 @@ export const getWalletConnectConnector = ({
   noMobileLinks = false,
   qrcode = true,
   v2: _v2 = false,
+  chains,
 }: {
-  rpc: Record<number, string>;
+  rpc?: Record<number, string>;
   projectId?: string;
   noMobileLinks?: boolean;
   qrcode?: boolean;
   v2?: boolean;
+  chains: Chain[];
 }) => {
   let v2EnabledByLS = false;
   if (typeof window !== 'undefined') {
@@ -38,12 +41,13 @@ export const getWalletConnectConnector = ({
   const v2 = _v2 || v2EnabledByLS || new Date() > v2TransitionDate;
   if (v2) {
     return new WalletConnectConnector({
+      chains,
       options: {
         projectId,
         showQrModal: qrcode,
         qrModalOptions: {
-          explorerAllowList: undefined,
-          explorerDenyList: undefined,
+          // @walletconnect library currently requires the "chainImages" option, looks like their mistake
+          chainImages: undefined,
           themeVariables: {
             '--w3m-z-index': '1000',
           },
@@ -52,6 +56,7 @@ export const getWalletConnectConnector = ({
     });
   }
   return new WalletConnectLegacyConnector({
+    chains,
     options: {
       rpc: prepareWalletConnectRPC(rpc),
       qrcode,
