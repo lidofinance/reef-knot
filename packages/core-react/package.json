@@ -38,13 +38,13 @@
   },
   "devDependencies": {
     "react": "17.0.2",
-    "wagmi": "^0.12.12",
+    "wagmi": "^0.12.16",
     "@reef-knot/wallets-list": "^1.3.1",
     "@reef-knot/types": "^1.1.1"
   },
   "peerDependencies": {
     "react": ">=17",
-    "wagmi": "^0.12.12",
+    "wagmi": "^0.12.16",
     "@reef-knot/wallets-list": "^1.3.1",
     "@reef-knot/types": "^1.1.1"
   }

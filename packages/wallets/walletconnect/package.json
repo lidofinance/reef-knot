@@ -37,7 +37,7 @@
     "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
-    "wagmi": "^0.12.12",
+    "wagmi": "^0.12.16",
     "@reef-knot/wallets-helpers": "^1.0.1",
     "@reef-knot/types": "^1.1.1"
   }

@@ -46,8 +46,6 @@ export const getWalletConnectConnector = ({
         projectId,
         showQrModal: qrcode,
         qrModalOptions: {
-          explorerAllowList: undefined,
-          explorerDenyList: undefined,
           themeVariables: {
             '--w3m-z-index': '1000',
           },

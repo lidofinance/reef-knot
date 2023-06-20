@@ -84,6 +84,6 @@
     "@walletconnect/ethereum-provider": "^1.8.0",
     "react": ">=17",
     "ua-parser-js": "^1.0.33",
-    "wagmi": "^0.12.12"
+    "wagmi": "^0.12.16"
   }
 }
