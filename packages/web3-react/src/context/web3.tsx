@@ -11,6 +11,7 @@ import { ProviderSDK as ProviderSDKBase } from '@lido-sdk/react';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
 import { ReefKnot } from '@reef-knot/core-react';
 import { useAccount } from 'wagmi';
+import * as wagmiChains from 'wagmi/chains';
 import { SWRConfiguration } from 'swr';
 import { useWeb3 } from '../hooks/index';
 import { POLLING_INTERVAL } from '../constants';
@@ -119,14 +120,26 @@ const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
     appLogoUrl,
     ...sdkProps
   } = props;
-  const { defaultChainId } = props;
+  const { defaultChainId, supportedChainIds } = props;
   const connectorsProps = { rpc, appName, appLogoUrl, defaultChainId };
+  const wagmiChainsArray = Object.values(wagmiChains);
+  const supportedWagmiChains = wagmiChainsArray.filter((chain) =>
+    supportedChainIds.includes(chain.id),
+  );
+  const defaultWagmiChain = wagmiChainsArray.find(
+    (chain) => chain.id === defaultChainId,
+  );
 
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ProviderSDK rpc={rpc} {...sdkProps}>
         <ProviderConnectors {...connectorsProps}>
-          <ReefKnot rpc={rpc} walletconnectProjectId={walletconnectProjectId}>
+          <ReefKnot
+            rpc={rpc}
+            walletconnectProjectId={walletconnectProjectId}
+            chains={supportedWagmiChains}
+            defaultChain={defaultWagmiChain}
+          >
             {children}
           </ReefKnot>
         </ProviderConnectors>

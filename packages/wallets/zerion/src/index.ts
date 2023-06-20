@@ -5,11 +5,16 @@ import {
 } from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/zerion.svg';
 
-export const Zerion: WalletAdapterType = ({ rpc, walletconnectProjectId }) => ({
+export const Zerion: WalletAdapterType = ({
+  rpc,
+  walletconnectProjectId,
+  chains,
+}) => ({
   walletName: 'Zerion',
   walletId: 'zerion',
   icon: WalletIcon,
   connector: getWalletConnectConnector({
+    chains,
     rpc,
     noMobileLinks: true,
     projectId: walletconnectProjectId,
@@ -17,6 +22,7 @@ export const Zerion: WalletAdapterType = ({ rpc, walletconnectProjectId }) => ({
   walletconnectExtras: {
     connectionViaURI: {
       connector: getWalletConnectConnector({
+        chains,
         rpc,
         qrcode: false,
         projectId: walletconnectProjectId,
