@@ -1,5 +1,21 @@
 # @reef-knot/wallets-list
 
+## 1.4.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@1.2.1
+  - @reef-knot/wallet-adapter-ambire@1.2.1
+  - @reef-knot/wallet-adapter-blockchaincom@1.2.1
+  - @reef-knot/wallet-adapter-exodus@1.2.1
+  - @reef-knot/wallet-adapter-okx@1.2.1
+  - @reef-knot/wallet-adapter-phantom@1.2.1
+  - @reef-knot/wallet-adapter-taho@1.2.1
+  - @reef-knot/wallet-adapter-walletconnect@1.2.1
+  - @reef-knot/wallet-adapter-zengo@1.2.1
+  - @reef-knot/wallet-adapter-zerion@1.2.1
+
 ## 1.4.0
 
 ### Patch Changes
