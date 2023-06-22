@@ -50,6 +50,7 @@ export const getWalletConnectConnector = ({
           chainImages: undefined,
           themeVariables: {
             '--w3m-z-index': '1000',
+            '--wcm-z-index': '1000',
           },
         },
       },
