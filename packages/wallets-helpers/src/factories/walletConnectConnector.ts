@@ -50,6 +50,8 @@ export const getWalletConnectConnector = ({
           chainImages: undefined,
           themeVariables: {
             '--w3m-z-index': '1000',
+            // @ts-expect-error walletconnect suddenly renamed w3m to wcm in @walletconnect/modal v2.5
+            // It is a breaking change in a minor version update. So now I have to support both options here
             '--wcm-z-index': '1000',
           },
         },
