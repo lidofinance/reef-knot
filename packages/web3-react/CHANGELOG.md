@@ -1,5 +1,13 @@
 # @reef-knot/web3-react
 
+## 1.2.1
+
+### Patch Changes
+
+- Update wagmi to v0.12.17
+- Updated dependencies
+  - @reef-knot/core-react@1.4.1
+
 ## 1.2.0
 
 ### Minor Changes

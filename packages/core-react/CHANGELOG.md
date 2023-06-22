@@ -1,5 +1,14 @@
 # @reef-knot/core-react
 
+## 1.4.1
+
+### Patch Changes
+
+- Update wagmi to v0.12.17
+- Updated dependencies
+  - @reef-knot/types@1.2.1
+  - @reef-knot/wallets-list@1.4.1
+
 ## 1.4.0
 
 ### Minor Changes
