@@ -34,8 +34,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint",
-    "test": "jest --coverage ."
+    "lint": "eslint"
   },
   "devDependencies": {
     "@babel/cli": "7.19.3",
