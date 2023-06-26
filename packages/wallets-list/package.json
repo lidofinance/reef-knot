@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -41,11 +41,11 @@
     "@reef-knot/wallet-adapter-taho": "1.2.1",
     "@reef-knot/wallet-adapter-okx": "1.2.1",
     "@reef-knot/wallet-adapter-phantom": "1.2.1",
-    "@reef-knot/wallet-adapter-walletconnect": "1.2.1",
-    "@reef-knot/wallet-adapter-blockchaincom": "1.2.1",
-    "@reef-knot/wallet-adapter-zerion": "1.2.1",
-    "@reef-knot/wallet-adapter-zengo": "1.2.1",
-    "@reef-knot/wallet-adapter-ambire": "1.2.1"
+    "@reef-knot/wallet-adapter-walletconnect": "1.2.2",
+    "@reef-knot/wallet-adapter-blockchaincom": "1.2.2",
+    "@reef-knot/wallet-adapter-zerion": "1.2.2",
+    "@reef-knot/wallet-adapter-zengo": "1.2.2",
+    "@reef-knot/wallet-adapter-ambire": "1.2.2"
   },
   "devDependencies": {
     "@reef-knot/types": "^1.2.1"

@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-ambire",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -33,12 +33,12 @@
   },
   "devDependencies": {
     "@reef-knot/types": "^1.2.1",
-    "@reef-knot/wallets-helpers": "^1.1.1",
+    "@reef-knot/wallets-helpers": "^1.1.2",
     "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
     "wagmi": "^0.12.17",
-    "@reef-knot/wallets-helpers": "^1.1.1",
+    "@reef-knot/wallets-helpers": "^1.1.2",
     "@reef-knot/types": "^1.2.1"
   }
 }

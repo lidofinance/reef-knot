@@ -1,5 +1,13 @@
 # @reef-knot/wallet-adapter-zengo
 
+## 1.2.2
+
+### Patch Changes
+
+- Fix: rework getWalletConnectConnector and its usage (reduce the amount of WC connectors), remove WC v1 imports and usage
+- Updated dependencies
+  - @reef-knot/wallets-helpers@1.1.2
+
 ## 1.2.1
 
 ### Patch Changes
