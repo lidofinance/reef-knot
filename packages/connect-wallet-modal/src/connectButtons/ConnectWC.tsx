@@ -49,28 +49,19 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
 
   useEffect(() => {
     // BEGIN Handle WalletConnect v2 redirection (connection without QR modal)
+    const redirect = (uri: string) => {
+      if (WCURIRedirectLink)
+        setRedirectionWindowLocation(WCURIRedirectLink, uri);
+    };
+    let provider: any;
     (async () => {
-      const provider = await WCURIConnector?.getProvider();
-      provider?.once('display_uri', (uri: string) => {
-        if (WCURIRedirectLink)
-          setRedirectionWindowLocation(WCURIRedirectLink, uri);
-      });
+      provider = await WCURIConnector?.getProvider();
+      provider?.on('display_uri', redirect);
     })();
     // END Handle WalletConnect v2 redirection (connection without QR modal)
 
-    // BEGIN Handle legacy WalletConnect v1 redirection (connection without QR modal)
-    // TODO: remove after migration to v2
-    const redirect = async () => {
-      if (WCURIConnector && WCURICondition && WCURIRedirectLink) {
-        const WCURI = (await WCURIConnector.getProvider())?.connector?.uri;
-        if (WCURI) setRedirectionWindowLocation(WCURIRedirectLink, WCURI);
-      }
-    };
-    WCURIConnector?.on('message', redirect);
-    // END Handle legacy WalletConnect v1 redirection (connection without QR modal)
-
     return () => {
-      WCURIConnector?.off('message', redirect);
+      provider?.off('display_uri', redirect);
     };
   }, [WCURICondition, WCURIConnector, WCURIRedirectLink]);
 

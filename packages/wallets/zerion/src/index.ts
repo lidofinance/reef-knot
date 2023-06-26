@@ -6,7 +6,6 @@ import {
 import WalletIcon from './icons/zerion.svg';
 
 export const Zerion: WalletAdapterType = ({
-  rpc,
   walletconnectProjectId,
   chains,
 }) => ({
@@ -15,15 +14,12 @@ export const Zerion: WalletAdapterType = ({
   icon: WalletIcon,
   connector: getWalletConnectConnector({
     chains,
-    rpc,
-    noMobileLinks: true,
     projectId: walletconnectProjectId,
   }),
   walletconnectExtras: {
     connectionViaURI: {
       connector: getWalletConnectConnector({
         chains,
-        rpc,
         qrcode: false,
         projectId: walletconnectProjectId,
       }),

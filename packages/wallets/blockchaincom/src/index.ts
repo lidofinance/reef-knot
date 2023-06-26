@@ -4,7 +4,6 @@ import WalletIcon from './icons/blockchaincom.svg';
 import WalletIconInverted from './icons/blockchaincom-inverted.svg';
 
 export const Blockchaincom: WalletAdapterType = ({
-  rpc,
   walletconnectProjectId,
   chains,
 }) => ({
@@ -16,8 +15,6 @@ export const Blockchaincom: WalletAdapterType = ({
   },
   connector: getWalletConnectConnector({
     chains,
-    rpc,
     projectId: walletconnectProjectId,
-    noMobileLinks: true,
   }),
 });

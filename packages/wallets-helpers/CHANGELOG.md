@@ -1,5 +1,11 @@
 # @reef-knot/wallets-helpers
 
+## 1.1.2
+
+### Patch Changes
+
+- Fix: rework getWalletConnectConnector and its usage (reduce the amount of WC connectors), remove WC v1 imports and usage
+
 ## 1.1.1
 
 ### Patch Changes
