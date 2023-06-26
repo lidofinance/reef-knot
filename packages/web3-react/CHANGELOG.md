@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.2.2
+
+### Patch Changes
+
+- remove walletconnect v1 leftovers
+
 ## 1.2.1
 
 ### Patch Changes
