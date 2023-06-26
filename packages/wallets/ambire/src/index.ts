@@ -3,7 +3,6 @@ import { getWalletConnectConnector } from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/ambire.svg';
 
 export const Ambire: WalletAdapterType = ({
-  rpc,
   walletconnectProjectId,
   chains,
 }) => ({
@@ -12,15 +11,12 @@ export const Ambire: WalletAdapterType = ({
   icon: WalletIcon,
   connector: getWalletConnectConnector({
     chains,
-    rpc,
-    noMobileLinks: true,
     projectId: walletconnectProjectId,
   }),
   walletconnectExtras: {
     connectionViaURI: {
       connector: getWalletConnectConnector({
         chains,
-        rpc,
         qrcode: false,
         projectId: walletconnectProjectId,
       }),
