@@ -1,5 +1,12 @@
 # reef-knot
 
+## 1.4.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ui-react@1.0.5
+
 ## 1.4.4
 
 ### Patch Changes
