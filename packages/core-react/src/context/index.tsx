@@ -1,6 +1,7 @@
 import React, { createContext, FC, useMemo } from 'react';
 import { WalletAdapterData } from '@reef-knot/types';
 import { Chain } from 'wagmi/chains';
+import { WCWarnBannerContextProvider } from '@reef-knot/ui-react';
 import { getWalletDataList } from '../walletData/index';
 
 export interface ReefKnotContextProps {
@@ -38,7 +39,7 @@ export const ReefKnot: FC<ReefKnotContextProps> = ({
 
   return (
     <ReefKnotContext.Provider value={contextValue}>
-      {children}
+      <WCWarnBannerContextProvider>{children}</WCWarnBannerContextProvider>
     </ReefKnotContext.Provider>
   );
 };

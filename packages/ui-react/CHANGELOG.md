@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 1.0.4
+
+### Patch Changes
+
+- Add a notification about WC v2 issues
+
 ## 1.0.3
 
 ### Patch Changes
