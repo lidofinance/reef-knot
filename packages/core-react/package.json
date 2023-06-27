@@ -40,12 +40,14 @@
     "react": "17.0.2",
     "wagmi": "^0.12.17",
     "@reef-knot/wallets-list": "^1.4.1",
-    "@reef-knot/types": "^1.2.1"
+    "@reef-knot/types": "^1.2.1",
+    "@reef-knot/ui-react": "^1.0.3"
   },
   "peerDependencies": {
     "react": ">=17",
     "wagmi": "^0.12.17",
     "@reef-knot/wallets-list": "^1.4.1",
-    "@reef-knot/types": "^1.2.1"
+    "@reef-knot/types": "^1.2.1",
+    "@reef-knot/ui-react": "^1.0.3"
   }
 }

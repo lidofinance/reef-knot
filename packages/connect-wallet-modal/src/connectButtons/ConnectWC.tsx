@@ -1,6 +1,7 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/web3-react';
+import { WCWarnBannerRequest } from '@reef-knot/ui-react';
 import { ConnectButton } from '../components/ConnectButton';
 import { capitalize } from '../helpers';
 import { ConnectWCProps } from './types';
@@ -73,22 +74,29 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   });
   const { disconnect } = useDisconnect();
 
+  const [isConnecting, setIsConnecting] = useState(false);
+
   const handleConnect = useCallback(async () => {
-    onBeforeConnect?.();
-    metricsOnClick?.();
+    setIsConnecting(true);
+    try {
+      onBeforeConnect?.();
+      metricsOnClick?.();
 
-    disconnect?.();
+      disconnect?.();
 
-    if (WCURICondition) {
-      // because of popup blockers, window.open must be called directly from onclick handler
-      redirectionWindow = window.open('', '_blank');
-      redirectionWindow?.document.write(getRedirectionLoadingHTML());
-      await connectAsync({ connector: WCURIConnector });
-      if (WCURICloseRedirectionWindow) {
-        redirectionWindow?.close();
+      if (WCURICondition) {
+        // because of popup blockers, window.open must be called directly from onclick handler
+        redirectionWindow = window.open('', '_blank');
+        redirectionWindow?.document.write(getRedirectionLoadingHTML());
+        await connectAsync({ connector: WCURIConnector });
+        if (WCURICloseRedirectionWindow) {
+          redirectionWindow?.close();
+        }
+      } else {
+        await connectAsync({ connector });
       }
-    } else {
-      await connectAsync({ connector });
+    } finally {
+      setIsConnecting(false);
     }
   }, [
     WCURICloseRedirectionWindow,
@@ -104,13 +112,16 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const WalletIcon = icon || icons;
 
   return (
-    <ConnectButton
-      {...rest}
-      icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
-      onClick={handleConnect}
-    >
-      {walletName}
-    </ConnectButton>
+    <>
+      {isConnecting ? <WCWarnBannerRequest /> : null}
+      <ConnectButton
+        {...rest}
+        icon={WalletIcon}
+        shouldInvertWalletIcon={shouldInvertWalletIcon}
+        onClick={handleConnect}
+      >
+        {walletName}
+      </ConnectButton>
+    </>
   );
 };
