@@ -1,5 +1,13 @@
 # @reef-knot/core-react
 
+## 1.4.2
+
+### Patch Changes
+
+- Add a notification about WC v2 issues
+- Updated dependencies
+  - @reef-knot/ui-react@1.0.4
+
 ## 1.4.1
 
 ### Patch Changes

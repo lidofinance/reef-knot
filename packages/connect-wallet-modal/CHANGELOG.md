@@ -1,5 +1,14 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.4.3
+
+### Patch Changes
+
+- Add a notification about WC v2 issues
+- Updated dependencies
+  - @reef-knot/core-react@1.4.2
+  - @reef-knot/ui-react@1.0.4
+
 ## 1.4.2
 
 ### Patch Changes
