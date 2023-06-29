@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { LedgerHQConnector } from 'web3-ledgerhq-connector';
+import { LedgerHQConnector } from '@reef-knot/ledger-connector';
 import { useConnectors } from './useConnectors';
 import { useForceDisconnect } from './useDisconnect';
 import { useWeb3 } from './useWeb3';

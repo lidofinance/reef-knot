@@ -1,0 +1,1 @@
+export { LedgerHQConnector } from './connector';
