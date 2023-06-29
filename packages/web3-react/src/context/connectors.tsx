@@ -60,7 +60,9 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
         }
       })(),
 
-      [CONNECTOR_NAMES.LEDGER_HQ_LIVE]: new LedgerHQFrameConnector(),
+      [CONNECTOR_NAMES.LEDGER_HQ_LIVE]: new LedgerHQFrameConnector({
+        supportedChainIds,
+      }),
 
       [CONNECTOR_NAMES.LEDGER]: new LedgerHQConnector({
         chainId: defaultChainId,
