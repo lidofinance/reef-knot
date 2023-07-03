@@ -21,7 +21,7 @@
     "release": "changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.25.0",
+    "@changesets/cli": "^2.26.2",
     "@lidofinance/eslint-config": "0.0.2",
     "@next/eslint-plugin-next": "12.1.6",
     "@rollup/plugin-babel": "5.3.1",
