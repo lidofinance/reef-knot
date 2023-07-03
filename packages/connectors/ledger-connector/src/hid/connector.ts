@@ -38,9 +38,7 @@ export class LedgerHQConnector extends AbstractConnector {
   public async getProviderInstance(): Promise<LedgerHQProvider> {
     // eslint-disable-next-line no-shadow
     const { LedgerHQProvider } = await import('./provider');
-    const Provider = new LedgerHQProvider(this.url, this.chainId);
-
-    return Provider;
+    return new LedgerHQProvider(this.url, this.chainId);
   }
 
   public async activate(): Promise<ConnectorUpdate> {
