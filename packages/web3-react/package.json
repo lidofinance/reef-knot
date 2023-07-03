@@ -64,9 +64,9 @@
   "dependencies": {
     "@gnosis.pm/safe-apps-web3-react": "0.6.8",
     "@ledgerhq/iframe-provider": "0.4.2",
-    "@lido-sdk/constants": "^1.8.1",
-    "@lido-sdk/providers": "^1.4.8",
-    "@lido-sdk/react": "^1.18.5",
+    "@lido-sdk/constants": "^3.1.0",
+    "@lido-sdk/providers": "^1.4.12",
+    "@lido-sdk/react": "^2.0.0",
     "@web3-react/abstract-connector": "6.0.7",
     "@web3-react/core": "6.1.9",
     "@web3-react/injected-connector": "6.0.7",
