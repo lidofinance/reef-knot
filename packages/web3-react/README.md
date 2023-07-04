@@ -1,13 +1,6 @@
 # Web3 react helpers
 
 Web3 react helpers for Lido Finance projects.
-Part of [Lido JS SDK](https://github.com/lidofinance/lido-js-sdk/#readme)
-
-## Install
-
-```bash
-yarn add @lido-sdk/web3-react
-```
 
 ## Provider
 
@@ -36,18 +29,6 @@ const Provider = () => {
   );
 };
 ```
-
-## Connectors
-
-The `ProviderWeb3` creates several connectors and stores them in context. To access them directly use `useConnectors` hook.
-
-Used connectors:
-
-- [InjectedConnector](https://www.npmjs.com/package/@web3-react/injected-connector)
-- [WalletConnectConnector](https://www.npmjs.com/package/@web3-react/walletconnect-connector)
-- [WalletLinkConnector](https://www.npmjs.com/package/@web3-react/walletlink-connector)
-- [SafeAppConnector](https://www.npmjs.com/package/@gnosis.pm/safe-apps-web3-react)
-- [LedgerHQConnector](https://www.npmjs.com/package/web3-ledgerhq-connector)
 
 ## Auto connect
 

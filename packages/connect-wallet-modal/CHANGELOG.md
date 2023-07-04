@@ -1,5 +1,12 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.5.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/web3-react@1.3.0
+
 ## 1.4.3
 
 ### Patch Changes

@@ -1,0 +1,53 @@
+{
+  "name": "@reef-knot/ledger-connector",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "dev=on rollup -c -w",
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "@types/w3c-web-hid": "^1.0.2"
+  },
+  "dependencies": {
+    "@ethersproject/abstract-signer": "^5.5.0",
+    "@ethersproject/bignumber": "^5.5.0",
+    "@ethersproject/bytes": "^5.5.0",
+    "@ethersproject/properties": "^5.5.0",
+    "@ethersproject/providers": "^5.5.2",
+    "@ethersproject/strings": "^5.5.0",
+    "@ethersproject/transactions": "^5.5.0",
+    "@ledgerhq/hw-app-eth": "^6.33.1",
+    "@ledgerhq/hw-transport": "^6.28.2",
+    "@ledgerhq/hw-transport-webhid": "^6.27.13",
+    "@ledgerhq/iframe-provider": "0",
+    "@web3-react/abstract-connector": "^6.0.7",
+    "@web3-react/types": "^6.0.7",
+    "tiny-invariant": "^1.2.0"
+  }
+}

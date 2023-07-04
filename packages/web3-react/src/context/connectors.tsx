@@ -4,8 +4,10 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { CHAINS } from '@lido-sdk/constants';
 import { useSDK } from '@lido-sdk/react';
-import { LedgerHQFrameConnector } from 'web3-ledgerhq-frame-connector';
-import { LedgerHQConnector } from 'web3-ledgerhq-connector';
+import {
+  LedgerHQConnector,
+  LedgerHQFrameConnector,
+} from '@reef-knot/ledger-connector';
 import { useAutoConnect } from '../hooks/useAutoConnect';
 import { CONNECTOR_NAMES } from '../constants';
 
@@ -58,7 +60,9 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
         }
       })(),
 
-      [CONNECTOR_NAMES.LEDGER_HQ_LIVE]: new LedgerHQFrameConnector(),
+      [CONNECTOR_NAMES.LEDGER_HQ_LIVE]: new LedgerHQFrameConnector({
+        supportedChainIds,
+      }),
 
       [CONNECTOR_NAMES.LEDGER]: new LedgerHQConnector({
         chainId: defaultChainId,

@@ -1,5 +1,16 @@
 # @reef-knot/web3-react
 
+## 1.3.0
+
+### Minor Changes
+
+- Use ledger connectors from reef-knot, pass supportedChainsId in LedgerHQFrameConnector
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@1.0.0
+
 ## 1.2.2
 
 ### Patch Changes

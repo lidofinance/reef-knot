@@ -2,12 +2,10 @@ jest.mock('../../src/hooks/useWeb3');
 jest.mock('wagmi');
 
 import { renderHook } from '@testing-library/react-hooks';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { LedgerHQFrameConnector } from 'web3-ledgerhq-frame-connector';
-import { LedgerHQConnector } from 'web3-ledgerhq-connector';
+import { LedgerHQConnector, LedgerHQFrameConnector } from '@reef-knot/ledger-connector';
 import { useConnectorInfo } from '../../src/hooks/useConnectorInfo';
 import { useWeb3 } from '../../src/hooks/useWeb3';
 import { useAccount } from 'wagmi';
