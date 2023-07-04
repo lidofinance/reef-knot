@@ -1,5 +1,11 @@
 # reef-knot
 
+## 1.5.1
+
+### Patch Changes
+
+- Add `reef-knot/connectors` path
+
 ## 1.5.0
 
 ### Patch Changes
