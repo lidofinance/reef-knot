@@ -8,6 +8,7 @@ import { Zerion } from '@reef-knot/wallet-adapter-zerion';
 import { Zengo } from '@reef-knot/wallet-adapter-zengo';
 import { Ambire } from '@reef-knot/wallet-adapter-ambire';
 import { Phantom } from '@reef-knot/wallet-adapter-phantom';
+import { BitKeep } from '@reef-knot/wallet-adapter-bitkeep';
 
 export const WalletsListEthereum: WalletsListType = {
   okx: Okx,
@@ -19,4 +20,5 @@ export const WalletsListEthereum: WalletsListType = {
   zengo: Zengo,
   ambire: Ambire,
   phantom: Phantom,
+  bitkeep: BitKeep,
 };
