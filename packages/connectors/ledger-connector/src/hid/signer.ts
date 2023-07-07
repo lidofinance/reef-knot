@@ -1,5 +1,4 @@
-import Eth from '@ledgerhq/hw-app-eth';
-import ledgerService from '@ledgerhq/hw-app-eth/lib/services/ledger';
+import Eth, { ledgerService } from '@ledgerhq/hw-app-eth';
 import {
   LoadConfig,
   ResolutionConfig,
