@@ -21,7 +21,7 @@
     "release": "changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.25.0",
+    "@changesets/cli": "^2.26.2",
     "@lidofinance/eslint-config": "0.0.2",
     "@next/eslint-plugin-next": "12.1.6",
     "@rollup/plugin-babel": "5.3.1",
@@ -54,14 +54,12 @@
     "rollup-plugin-svg-import": "1.6.0",
     "rollup-plugin-typescript2": "0.34.1",
     "tslib": "2.5.0",
-    "turbo": "^1.9.6",
+    "turbo": "^1.10.7",
     "typescript": "^4.9.5"
   },
   "dependencies": {},
   "resolutions": {
-    "@types/react": "17.0.53",
-    "@walletconnect/core": "^2.8.3",
-    "@walletconnect/ethereum-provider": "^2.8.3"
+    "@types/react": "17.0.53"
   },
   "engines": {
     "node": ">=16.0.0"

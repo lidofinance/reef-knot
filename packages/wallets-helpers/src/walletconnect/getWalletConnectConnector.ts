@@ -13,6 +13,12 @@ export const getWalletConnectConnector = ({
   qrcode?: boolean;
   chains: Chain[];
 }) => {
+  if (!projectId) {
+    throw new Error(
+      'No WalletConnect Project ID found, it is required by WalletConnect v2: https://docs.walletconnect.com/2.0/cloud/relay#project-id',
+    );
+  }
+
   const params = {
     chains,
     options: {

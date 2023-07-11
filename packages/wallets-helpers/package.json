@@ -37,12 +37,12 @@
     "lint": "eslint"
   },
   "devDependencies": {
-    "wagmi": "^0.12.17",
+    "wagmi": "^0.12.18",
     "ua-parser-js": "1.0.33"
   },
   "peerDependencies": {
     "react": ">=17",
-    "wagmi": "^0.12.17",
+    "wagmi": "^0.12.18",
     "ua-parser-js": "1.0.33"
   }
 }

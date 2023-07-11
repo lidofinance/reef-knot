@@ -1,2 +1,2 @@
-export * from './factories';
+export * from './walletconnect';
 export * from './utils';

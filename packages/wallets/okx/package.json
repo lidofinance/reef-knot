@@ -36,7 +36,7 @@
     "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
-    "wagmi": "^0.12.17",
+    "wagmi": "^0.12.18",
     "@reef-knot/types": "^1.2.1"
   }
 }
