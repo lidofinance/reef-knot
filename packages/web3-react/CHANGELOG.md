@@ -1,5 +1,12 @@
 # @reef-knot/web3-react
 
+## 1.3.1
+
+### Patch Changes
+
+- e6e579e: wagmi 0.12.18
+- e6e579e: Update lido-sdk packages
+
 ## 1.3.0
 
 ### Minor Changes

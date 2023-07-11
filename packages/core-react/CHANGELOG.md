@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 1.4.3
+
+### Patch Changes
+
+- e6e579e: wagmi 0.12.18
+
 ## 1.4.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-zengo
 
+## 1.2.3
+
+### Patch Changes
+
+- e6e579e: Update ZenGo logo, wagmi 0.12.18
+
 ## 1.2.2
 
 ### Patch Changes

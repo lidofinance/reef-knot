@@ -1,5 +1,12 @@
 # @reef-knot/wallet-adapter-phantom
 
+## 1.2.2
+
+### Patch Changes
+
+- b8258de: Updated Icon for phantom wallet
+- e6e579e: wagmi 0.12.18
+
 ## 1.2.1
 
 ### Patch Changes
