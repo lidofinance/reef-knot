@@ -1,5 +1,12 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.5.1
+
+### Patch Changes
+
+- e6e579e: wagmi 0.12.18
+- e6e579e: Rework and fix WalletConnect connection via pairing URI
+
 ## 1.5.0
 
 ### Patch Changes

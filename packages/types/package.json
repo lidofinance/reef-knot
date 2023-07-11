@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/types",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "",
   "types": "dist/index.d.ts",
   "type": "module",

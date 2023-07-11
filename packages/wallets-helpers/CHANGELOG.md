@@ -1,5 +1,12 @@
 # @reef-knot/wallets-helpers
 
+## 1.1.3
+
+### Patch Changes
+
+- e6e579e: wagmi 0.12.18
+- e6e579e: Rework and fix WalletConnect connection via pairing URI
+
 ## 1.1.2
 
 ### Patch Changes
