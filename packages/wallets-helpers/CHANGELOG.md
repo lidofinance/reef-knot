@@ -1,5 +1,11 @@
 # @reef-knot/wallets-helpers
 
+## 1.1.4
+
+### Patch Changes
+
+- fix: warn instead of throw when WC project id is empty
+
 ## 1.1.3
 
 ### Patch Changes

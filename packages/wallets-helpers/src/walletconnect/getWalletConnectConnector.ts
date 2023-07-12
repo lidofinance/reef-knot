@@ -14,7 +14,7 @@ export const getWalletConnectConnector = ({
   chains: Chain[];
 }) => {
   if (!projectId) {
-    throw new Error(
+    console.warn(
       'No WalletConnect Project ID found, it is required by WalletConnect v2: https://docs.walletconnect.com/2.0/cloud/relay#project-id',
     );
   }
