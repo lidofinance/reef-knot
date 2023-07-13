@@ -6,10 +6,15 @@ import { Metrics } from '../WalletsModal';
 type WalletModalConnectTermsProps = Pick<
   CheckboxProps,
   'checked' | 'onChange'
-> & { metrics?: Metrics };
+> & { metrics?: Metrics; termsLink: string; privacyNoticeLink: string };
 
-export const Terms: FC<WalletModalConnectTermsProps> = (props) => {
-  const { onChange, metrics } = props;
+export const Terms: FC<WalletModalConnectTermsProps> = ({
+  onChange,
+  metrics,
+  checked,
+  termsLink,
+  privacyNoticeLink,
+}) => {
   const onClickTermsAccept =
     metrics?.events?.click?.handlers.onClickTermsAccept;
 
@@ -22,12 +27,11 @@ export const Terms: FC<WalletModalConnectTermsProps> = (props) => {
 
   return (
     <TermsStyle>
-      <Checkbox onChange={handleCheckboxChange} checked={props.checked} />
+      <Checkbox onChange={handleCheckboxChange} checked={checked} />
       <TermsTextStyle>
         I certify that I have read and accept the updated{' '}
-        <Link href="https://lido.fi/terms-of-use">Terms&nbsp;of&nbsp;Use</Link>{' '}
-        and{' '}
-        <Link href="https://lido.fi/privacy-notice">Privacy&nbsp;Notice</Link>.
+        <Link href={termsLink}>Terms&nbsp;of&nbsp;Use</Link> and{' '}
+        <Link href={privacyNoticeLink}>Privacy&nbsp;Notice</Link>.
       </TermsTextStyle>
     </TermsStyle>
   );

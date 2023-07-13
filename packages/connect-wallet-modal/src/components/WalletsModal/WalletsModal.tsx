@@ -16,6 +16,8 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     shouldInvertWalletIcon = false,
     buttonsFullWidth = false,
     metrics,
+    termsLink,
+    privacyNoticeLink,
   } = props;
 
   // This key can be changed to enforce all users to accept the Terms again,
@@ -34,6 +36,8 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
   const termsProps = {
     onChange: handleTermsToggle,
     checked: termsChecked,
+    termsLink: termsLink || 'https://lido.fi/terms-of-use',
+    privacyNoticeLink: privacyNoticeLink || 'https://lido.fi/privacy-notice',
     metrics,
   };
 
