@@ -133,16 +133,16 @@ const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ProviderSDK rpc={rpc} {...sdkProps}>
-        <ProviderConnectors {...connectorsProps}>
-          <ReefKnot
-            rpc={rpc}
-            walletconnectProjectId={walletconnectProjectId}
-            chains={supportedWagmiChains}
-            defaultChain={defaultWagmiChain}
-          >
+        <ReefKnot
+          rpc={rpc}
+          walletconnectProjectId={walletconnectProjectId}
+          chains={supportedWagmiChains}
+          defaultChain={defaultWagmiChain}
+        >
+          <ProviderConnectors {...connectorsProps}>
             {children}
-          </ReefKnot>
-        </ProviderConnectors>
+          </ProviderConnectors>
+        </ReefKnot>
       </ProviderSDK>
     </Web3ReactProvider>
   );

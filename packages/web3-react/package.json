@@ -77,7 +77,7 @@
   },
   "peerDependencies": {
     "@ethersproject/providers": "5",
-    "@reef-knot/core-react": "^1.4.1",
+    "@reef-knot/core-react": "^1.4.3",
     "@reef-knot/ledger-connector": "^1.0.0",
     "react": ">=17",
     "ua-parser-js": "^1.0.33",

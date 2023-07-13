@@ -1,6 +1,5 @@
-import warning from 'tiny-warning';
-import { useCallback, useEffect, useRef } from 'react';
-import { AbstractConnector } from '@web3-react/abstract-connector';
+import { useEffect, useRef } from 'react';
+import { useReefKnotContext } from '@reef-knot/core-react';
 import { useWeb3 } from './useWeb3';
 import { useConnectorStorage } from './useConnectorStorage';
 import { useConnectorInfo } from './useConnectorInfo';
@@ -8,39 +7,21 @@ import { useDisconnect } from './useDisconnect';
 import { ConnectorsContextValue } from '../context';
 import { isDappBrowserProvider } from '../helpers';
 
-export const useAutoConnect = (connectors: ConnectorsContextValue): void => {
+export const useAutoConnect = (connectors: ConnectorsContextValue) => {
   useEagerConnector(connectors);
   useSaveConnectorToLS();
   useDeleteConnectorFromLS();
   useWatchConnectorInLS();
 };
 
-export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
+export const useEagerConnector = (connectors: ConnectorsContextValue) => {
   const { active, activate } = useWeb3();
   const [savedConnector] = useConnectorStorage();
   const tried = useRef(false);
   const { isConnectedViaWagmi } = useConnectorInfo();
-
-  const getEagerConnector =
-    useCallback(async (): Promise<AbstractConnector | null> => {
-      const { gnosis, ledgerlive, injected } = connectors;
-
-      // Ledger Live iframe
-      if (ledgerlive?.isLedgerApp()) return ledgerlive;
-
-      // Gnosis iframe
-      const isSaveApp = await gnosis?.isSafeApp();
-      if (isSaveApp && gnosis) return gnosis;
-
-      // Dapp browsers
-      if (isDappBrowserProvider()) return injected;
-
-      // Saved in LS
-      const saved = savedConnector && connectors[savedConnector];
-      if (saved) return saved;
-
-      return null;
-    }, [connectors, savedConnector]);
+  const { gnosis, ledgerlive, injected } = connectors;
+  const { ui } = useReefKnotContext();
+  const acceptTermsModal = ui?.acceptTermsModal;
 
   useEffect(() => {
     if (isConnectedViaWagmi || tried.current || active) return;
@@ -48,16 +29,48 @@ export const useEagerConnector = (connectors: ConnectorsContextValue): void => {
     (async () => {
       tried.current = true;
 
-      const connector = await getEagerConnector();
+      const isLedgerApp = ledgerlive?.isLedgerApp(); // Ledger Live iframe
+      const isSafeApp = await gnosis?.isSafeApp(); // Gnosis iframe
+      const isDappBrowser = isDappBrowserProvider();
+      const shouldAutoConnectApp = isLedgerApp || isSafeApp || isDappBrowser;
+
+      const connector = (() => {
+        if (shouldAutoConnectApp) {
+          if (isLedgerApp) return ledgerlive;
+          if (isSafeApp && gnosis) return gnosis;
+          if (isDappBrowser) return injected;
+        }
+
+        // Saved in LS
+        const saved = savedConnector && connectors[savedConnector];
+        if (saved) return saved;
+
+        return null;
+      })();
       if (!connector) return;
 
-      try {
-        await activate(connector, undefined, true);
-      } catch (error) {
-        warning(false, 'Connector is not activated');
+      if (shouldAutoConnectApp) {
+        const onContinue = () => {
+          activate(connector, undefined, true);
+        };
+        acceptTermsModal?.setOnContinue(() => onContinue);
+        acceptTermsModal?.setVisible(true);
+        return;
       }
+
+      await activate(connector, undefined, true);
     })();
-  }, [activate, getEagerConnector, active, isConnectedViaWagmi]);
+  }, [
+    activate,
+    active,
+    isConnectedViaWagmi,
+    ledgerlive,
+    gnosis,
+    savedConnector,
+    connectors,
+    injected,
+    acceptTermsModal,
+  ]);
 };
 
 export const useSaveConnectorToLS = (): void => {

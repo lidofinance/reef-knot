@@ -1,12 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { Modal } from '@reef-knot/ui-react';
+import { Button, Modal } from '@reef-knot/ui-react';
+import { useReefKnotContext } from '@reef-knot/core-react';
 import {
   WalletsModalProps,
   ButtonsCommonProps,
   RequirementsData,
 } from './types';
 import { Terms } from '../Terms';
-import { WalletsButtonsContainer } from './styles';
+import { WalletsButtonsContainer, CommonButtonsContainer } from './styles';
 import { NOOP, useLocalStorage } from '../../helpers';
 
 export function WalletsModal(props: WalletsModalProps): JSX.Element {
@@ -29,6 +30,12 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
   const handleTermsToggle = useCallback(() => {
     setTermsChecked((currentValue: boolean) => !currentValue);
   }, [setTermsChecked]);
+
+  const termsProps = {
+    onChange: handleTermsToggle,
+    checked: termsChecked,
+    metrics,
+  };
 
   const [requirementsVisible, setRequirementsVisible] = useState(false);
   const [requirementsData, setRequirementsData] = useState<RequirementsData>(
@@ -60,36 +67,67 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
 
   const { icon: reqIcon, title: reqTitle, text: reqText } = requirementsData;
 
+  const { ui } = useReefKnotContext();
+
   // do not try to render the modal in case of SSR
   if (typeof window !== 'undefined') {
-    return requirementsVisible ? (
-      <Modal
-        {...props} // the props are overridden here on purpose
-        onClose={handleClose}
-        onBack={hideRequirements}
-        onExited={hideRequirements}
-        center
-        title={reqTitle}
-        subtitle={reqText}
-        titleIcon={reqIcon}
-      />
-    ) : (
-      <Modal
-        title="Connect wallet"
-        {...props} // the props can be overridden by a library user
-        center={false}
-        onClose={handleClose}
-      >
-        <Terms
-          onChange={handleTermsToggle}
-          checked={termsChecked}
-          metrics={metrics}
+    // A conflict is detected or some other requirement must be fulfilled to connect
+    if (requirementsVisible) {
+      return (
+        <Modal
+          {...props} // the props are overridden here on purpose
+          onClose={handleClose}
+          onBack={hideRequirements}
+          onExited={hideRequirements}
+          center
+          title={reqTitle}
+          subtitle={reqText}
+          titleIcon={reqIcon}
         />
-        <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
-          {props.children(buttonsCommonProps)}
-        </WalletsButtonsContainer>
-      </Modal>
-    );
+      );
+    }
+
+    if (ui?.acceptTermsModal?.isVisible) {
+      return (
+        <Modal
+          {...props} // the props are overridden here on purpose
+          open
+          onClose={undefined} // the modal should not be closable
+          title="Confirm connection"
+        >
+          <Terms {...termsProps} />
+          <CommonButtonsContainer>
+            <Button
+              fullwidth
+              disabled={!termsChecked}
+              onClick={() => {
+                ui?.acceptTermsModal?.onContinue?.();
+                ui?.acceptTermsModal?.setVisible(false);
+              }}
+            >
+              Connect
+            </Button>
+          </CommonButtonsContainer>
+        </Modal>
+      );
+    }
+
+    // this check prevents modal blinking
+    if (props.open) {
+      return (
+        <Modal
+          title="Connect wallet"
+          {...props} // the props can be overridden by a library user
+          center={false}
+          onClose={handleClose}
+        >
+          <Terms {...termsProps} />
+          <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
+            {props.children(buttonsCommonProps)}
+          </WalletsButtonsContainer>
+        </Modal>
+      );
+    }
   }
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <></>;
