@@ -14,8 +14,6 @@ export type WalletAdapterData = {
   // Icons for the light and dark color themes.
   // You can use different icons or the same icon for both cases.
   icon?: ElementType | WalletAdapterIcons;
-  // Deprecated, use "icon" instead, TODO: remove
-  icons?: WalletAdapterIcons;
 
   // A function to check if the wallet is installed and injected.
   // For example: isMetaMaskProvider: () => !!window.ethereum?.isMetaMask

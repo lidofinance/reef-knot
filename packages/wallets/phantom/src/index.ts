@@ -18,7 +18,7 @@ declare global {
 export const Phantom: WalletAdapterType = ({ chains }) => ({
   walletName: 'Phantom',
   walletId: 'phantom',
-  icons: {
+  icon: {
     light: WalletIcon,
     dark: WalletIcon,
   },
