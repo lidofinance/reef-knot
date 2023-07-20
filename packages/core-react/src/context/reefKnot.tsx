@@ -1,8 +1,9 @@
-import React, { createContext, FC, useMemo, useState } from 'react';
+import React, { createContext, FC, useMemo } from 'react';
 import { WalletAdapterData } from '@reef-knot/types';
 import { Chain } from 'wagmi/chains';
 import { WCWarnBannerContextProvider } from '@reef-knot/ui-react';
 import { getWalletDataList } from '../walletData/index';
+import { AcceptTermsModalContextProvider } from './acceptTermsModal';
 
 export interface ReefKnotContextProps {
   rpc: Record<number, string>;
@@ -14,14 +15,6 @@ export interface ReefKnotContextProps {
 export type ReefKnotContextValue = {
   rpc: Record<number, string>;
   walletDataList: WalletAdapterData[];
-  ui: {
-    acceptTermsModal: {
-      isVisible: boolean;
-      setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-      onContinue: () => void;
-      setOnContinue: React.Dispatch<React.SetStateAction<() => void>>;
-    };
-  };
 };
 
 export const ReefKnotContext = createContext({} as ReefKnotContextValue);
@@ -40,37 +33,19 @@ export const ReefKnot: FC<ReefKnotContextProps> = ({
     defaultChain,
   });
 
-  const [isAcceptTermsModalVisible, setIsAcceptTermsModalVisible] =
-    useState(false);
-
-  const [onAcceptTermsModalContinue, setOnAcceptTermsModalContinue] = useState(
-    () => () => void 0,
-  );
-
   const contextValue = useMemo(
     () => ({
       rpc,
       walletDataList,
-      ui: {
-        acceptTermsModal: {
-          isVisible: isAcceptTermsModalVisible,
-          setVisible: setIsAcceptTermsModalVisible,
-          onContinue: onAcceptTermsModalContinue,
-          setOnContinue: setOnAcceptTermsModalContinue,
-        },
-      },
     }),
-    [
-      isAcceptTermsModalVisible,
-      onAcceptTermsModalContinue,
-      rpc,
-      walletDataList,
-    ],
+    [rpc, walletDataList],
   );
 
   return (
     <ReefKnotContext.Provider value={contextValue}>
-      <WCWarnBannerContextProvider>{children}</WCWarnBannerContextProvider>
+      <AcceptTermsModalContextProvider>
+        <WCWarnBannerContextProvider>{children}</WCWarnBannerContextProvider>
+      </AcceptTermsModalContextProvider>
     </ReefKnotContext.Provider>
   );
 };

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { useReefKnotContext } from '@reef-knot/core-react';
+import { useEffect, useRef, useContext } from 'react';
+import { AcceptTermsModalContext } from '@reef-knot/core-react';
 import { useWeb3 } from './useWeb3';
 import { useConnectorStorage } from './useConnectorStorage';
 import { useConnectorInfo } from './useConnectorInfo';
@@ -20,8 +20,7 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
   const tried = useRef(false);
   const { isConnectedViaWagmi } = useConnectorInfo();
   const { gnosis, ledgerlive, injected } = connectors;
-  const { ui } = useReefKnotContext();
-  const acceptTermsModal = ui?.acceptTermsModal;
+  const { acceptTermsModal } = useContext(AcceptTermsModalContext);
 
   useEffect(() => {
     if (isConnectedViaWagmi || tried.current || active) return;
@@ -53,8 +52,8 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
         const onContinue = () => {
           activate(connector, undefined, true);
         };
-        acceptTermsModal?.setOnContinue(() => onContinue);
-        acceptTermsModal?.setVisible(true);
+        acceptTermsModal.setOnContinue?.(() => onContinue);
+        acceptTermsModal.setVisible?.(true);
         return;
       }
 

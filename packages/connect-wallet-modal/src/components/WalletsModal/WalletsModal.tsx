@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Button, Modal } from '@reef-knot/ui-react';
-import { useReefKnotContext } from '@reef-knot/core-react';
+import { AcceptTermsModalContext } from '@reef-knot/core-react';
 import {
   WalletsModalProps,
   ButtonsCommonProps,
@@ -71,7 +71,7 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
 
   const { icon: reqIcon, title: reqTitle, text: reqText } = requirementsData;
 
-  const { ui } = useReefKnotContext();
+  const { acceptTermsModal } = useContext(AcceptTermsModalContext);
 
   // do not try to render the modal in case of SSR
   if (typeof window !== 'undefined') {
@@ -91,7 +91,7 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
       );
     }
 
-    if (ui?.acceptTermsModal?.isVisible) {
+    if (acceptTermsModal?.isVisible) {
       return (
         <Modal
           {...props} // the props are overridden here on purpose
@@ -105,8 +105,8 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
               fullwidth
               disabled={!termsChecked}
               onClick={() => {
-                ui?.acceptTermsModal?.onContinue?.();
-                ui?.acceptTermsModal?.setVisible(false);
+                acceptTermsModal?.onContinue?.();
+                acceptTermsModal?.setVisible(false);
               }}
             >
               Connect
