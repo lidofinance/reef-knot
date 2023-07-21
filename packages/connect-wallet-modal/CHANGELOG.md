@@ -1,5 +1,16 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.6.0
+
+### Minor Changes
+
+- e654dc5: Remove deprecated "icons" field from Wallet Adapater API
+- 217c144: Show "Accept Terms" Modal for Ledger Live, Safe, dapp browsers
+
+### Patch Changes
+
+- 48d8c4b: Update wagmi to 0.12.19
+
 ## 1.5.1
 
 ### Patch Changes
