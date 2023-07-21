@@ -60,3 +60,7 @@ export const WalletsButtonsContainer = styled.div<{
     }
   `}
 `;
+
+export const CommonButtonsContainer = styled.div`
+  padding-bottom: 12px;
+`;

@@ -19,6 +19,8 @@ export type WalletsModalProps = ModalProps & {
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
   metrics?: Metrics;
+  termsLink?: string;
+  privacyNoticeLink?: string;
 };
 
 export type ButtonsCommonProps = {

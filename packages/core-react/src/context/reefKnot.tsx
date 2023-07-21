@@ -3,6 +3,7 @@ import { WalletAdapterData } from '@reef-knot/types';
 import { Chain } from 'wagmi/chains';
 import { WCWarnBannerContextProvider } from '@reef-knot/ui-react';
 import { getWalletDataList } from '../walletData/index';
+import { AcceptTermsModalContextProvider } from './acceptTermsModal';
 
 export interface ReefKnotContextProps {
   rpc: Record<number, string>;
@@ -33,13 +34,18 @@ export const ReefKnot: FC<ReefKnotContextProps> = ({
   });
 
   const contextValue = useMemo(
-    () => ({ rpc, walletDataList }),
+    () => ({
+      rpc,
+      walletDataList,
+    }),
     [rpc, walletDataList],
   );
 
   return (
     <ReefKnotContext.Provider value={contextValue}>
-      <WCWarnBannerContextProvider>{children}</WCWarnBannerContextProvider>
+      <AcceptTermsModalContextProvider>
+        <WCWarnBannerContextProvider>{children}</WCWarnBannerContextProvider>
+      </AcceptTermsModalContextProvider>
     </ReefKnotContext.Provider>
   );
 };
