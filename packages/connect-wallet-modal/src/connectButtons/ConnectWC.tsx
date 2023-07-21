@@ -29,8 +29,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     metrics,
     walletId,
     walletName,
-    icons,
-    icon,
+    icon: WalletIcon,
     downloadURLs,
     connector,
     walletconnectExtras,
@@ -107,8 +106,6 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     walletconnectExtras?.connectionViaURI?.connector,
     walletconnectExtras?.connectionViaURI?.redirectLink,
   ]);
-
-  const WalletIcon = icon || icons;
 
   return (
     <>

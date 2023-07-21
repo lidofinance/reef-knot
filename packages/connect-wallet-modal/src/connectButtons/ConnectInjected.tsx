@@ -16,8 +16,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     metrics,
     walletId,
     walletName,
-    icons,
-    icon,
+    icon: WalletIcon,
     downloadURLs,
     detector,
     connector,
@@ -58,8 +57,6 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     onBeforeConnect,
     walletIsDetected,
   ]);
-
-  const WalletIcon = icon || icons;
 
   return (
     <ConnectButton

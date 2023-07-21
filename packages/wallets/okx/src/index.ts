@@ -19,7 +19,7 @@ declare global {
 export const Okx: WalletAdapterType = ({ chains }) => ({
   walletName: 'OKX Wallet',
   walletId: 'okx',
-  icons: {
+  icon: {
     light: WalletIcon,
     dark: WalletIconInverted,
   },
