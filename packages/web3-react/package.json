@@ -81,6 +81,6 @@
     "@reef-knot/ledger-connector": "^1.0.0",
     "react": ">=17",
     "ua-parser-js": "^1.0.33",
-    "wagmi": "^0.12.18"
+    "wagmi": "^0.12.19"
   }
 }
