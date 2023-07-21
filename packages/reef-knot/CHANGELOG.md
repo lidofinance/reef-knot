@@ -1,5 +1,20 @@
 # reef-knot
 
+## 1.6.2
+
+### Patch Changes
+
+- Updated dependencies [e654dc5]
+- Updated dependencies [48d8c4b]
+- Updated dependencies [217c144]
+  - @reef-knot/connect-wallet-modal@1.6.0
+  - @reef-knot/types@1.3.0
+  - @reef-knot/wallets-helpers@1.1.5
+  - @reef-knot/core-react@1.5.0
+  - @reef-knot/web3-react@1.4.0
+  - @reef-knot/ui-react@1.0.7
+  - @reef-knot/wallets-list@1.4.4
+
 ## 1.6.1
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @reef-knot/wallet-adapter-phantom
 
+## 1.3.0
+
+### Minor Changes
+
+- e654dc5: Remove deprecated "icons" field from Wallet Adapater API
+
+### Patch Changes
+
+- 48d8c4b: Update wagmi to 0.12.19
+
 ## 1.2.2
 
 ### Patch Changes

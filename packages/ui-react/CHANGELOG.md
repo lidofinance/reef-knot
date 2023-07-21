@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 1.0.7
+
+### Patch Changes
+
+- 48d8c4b: Update wagmi to 0.12.19
+
 ## 1.0.6
 
 ### Patch Changes

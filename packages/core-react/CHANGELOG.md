@@ -1,5 +1,15 @@
 # @reef-knot/core-react
 
+## 1.5.0
+
+### Minor Changes
+
+- 217c144: Show "Accept Terms" Modal for Ledger Live, Safe, dapp browsers
+
+### Patch Changes
+
+- 48d8c4b: Update wagmi to 0.12.19
+
 ## 1.4.3
 
 ### Patch Changes
