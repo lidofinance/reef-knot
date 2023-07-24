@@ -4,9 +4,10 @@ import {
   themeDark,
   ThemeProvider,
   ThemeName,
+  OptionValue,
+  Container,
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
-import styled from 'styled-components';
 import useModal from '../hooks/useModal';
 import {
   Wagmi,
@@ -16,50 +17,35 @@ import {
   MainContainer,
   ConnectDisconnect,
   ThemeSelect,
-  InfoWrapper,
   WalletsModal,
-  Web3ProviderInfo,
+  ContractTesting,
+  MainSection,
 } from '../components';
 import { GlobalStyle } from '../styles/global';
-
-const InfoBlock = styled.div`
-  display: flex;
-
-  @media (max-width: 500px) {
-    flex-direction: column;
-  }
-`;
 
 export function Web() {
   const { state, handleClose, handleOpen } = useModal();
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
   return (
-    <>
-      <Header />
-      <ThemeProvider
-        theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
-      >
+    <ThemeProvider
+      theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
+    >
+      <Container>
+        <Header />
         <GlobalStyle />
         <Wagmi>
           <ProviderWeb3WithProps>
             <MainContainer>
               <ConnectDisconnect handleOpen={handleOpen} />
-
-              <InfoBlock>
-                <InfoWrapper>
-                  <ThemeSelect
-                    selectedTheme={selectedTheme}
-                    handleSelect={setSelectedTheme}
-                  />
-                  <WalletInfo />
-                </InfoWrapper>
-
-                <InfoWrapper>
-                  <Web3ProviderInfo />
-                </InfoWrapper>
-              </InfoBlock>
-
+              <ThemeSelect
+                selectedTheme={selectedTheme}
+                handleSelect={setSelectedTheme as (e: OptionValue) => void}
+              />
+              <MainSection>
+                <WalletInfo />
+                <ContractTesting />
+              </MainSection>
               <WalletsModal
                 open={state}
                 handleClose={handleClose}
@@ -68,8 +54,8 @@ export function Web() {
             </MainContainer>
           </ProviderWeb3WithProps>
         </Wagmi>
-      </ThemeProvider>
-    </>
+      </Container>
+    </ThemeProvider>
   );
 }
 

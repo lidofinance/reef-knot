@@ -8,7 +8,7 @@ export const Web3ProviderInfo = () => {
   const [web3ProviderDataShown, setWeb3ProviderDataShown] = useState(false);
 
   return (
-    <div>
+    <>
       <Heading>
         window.ethereum –{' '}
         <button
@@ -29,6 +29,6 @@ export const Web3ProviderInfo = () => {
           </Line>
         </code>
       )}
-    </div>
+    </>
   );
 };
