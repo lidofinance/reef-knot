@@ -11,6 +11,7 @@
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated ./abi/*.json"
   },
   "dependencies": {
+    "@ethersproject/constants": "^5.7.0",
     "@lido-sdk/providers": "^1.4.12",
     "@lido-sdk/react": "^2.0.1",
     "@lidofinance/lido-ui": "^3.8.1",

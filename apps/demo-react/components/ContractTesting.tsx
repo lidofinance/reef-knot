@@ -139,7 +139,7 @@ const ContractTesting = () => {
           .getBalance(account || '')
           .then((data) => setWalletBalance(formatBalance(data, 4)));
       };
-      balance();
+      balance().catch((e) => console.log(e));
     }
   }, []);
 
