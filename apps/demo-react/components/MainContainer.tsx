@@ -6,7 +6,7 @@ const MainContainer = (props: { children: ReactNode }) => (
       display: 'flex',
       padding: '50px 20px 20px',
       flexDirection: 'column',
-      justifyContent: 'center'
+      justifyContent: 'center',
     }}
   >
     {props.children}

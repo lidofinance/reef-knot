@@ -30,5 +30,5 @@ export const Web3ProviderInfo = () => {
         </code>
       )}
     </>
-  )
-}
+  );
+};

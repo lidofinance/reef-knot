@@ -23,42 +23,39 @@ import {
 } from '../components';
 import { GlobalStyle } from '../styles/global';
 
-
 export function Web() {
   const { state, handleClose, handleOpen } = useModal();
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
   return (
-    <>
-      <ThemeProvider
-        theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
-      >
-        <Container>
+    <ThemeProvider
+      theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
+    >
+      <Container>
         <Header />
         <GlobalStyle />
         <Wagmi>
           <ProviderWeb3WithProps>
-              <MainContainer>
-                <ConnectDisconnect handleOpen={handleOpen} />
-                <ThemeSelect
-                  selectedTheme={selectedTheme}
-                  handleSelect={setSelectedTheme as (e: OptionValue) => void}
-                />
-                <MainSection>
-                  <WalletInfo />
-                  <ContractTesting />
-                </MainSection>
-                <WalletsModal
-                  open={state}
-                  handleClose={handleClose}
-                  isDarkTheme={selectedTheme === ThemeName.dark}
-                />
-              </MainContainer>
+            <MainContainer>
+              <ConnectDisconnect handleOpen={handleOpen} />
+              <ThemeSelect
+                selectedTheme={selectedTheme}
+                handleSelect={setSelectedTheme as (e: OptionValue) => void}
+              />
+              <MainSection>
+                <WalletInfo />
+                <ContractTesting />
+              </MainSection>
+              <WalletsModal
+                open={state}
+                handleClose={handleClose}
+                isDarkTheme={selectedTheme === ThemeName.dark}
+              />
+            </MainContainer>
           </ProviderWeb3WithProps>
         </Wagmi>
-        </Container>
-      </ThemeProvider>
-    </>
+      </Container>
+    </ThemeProvider>
   );
 }
 

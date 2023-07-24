@@ -4,9 +4,9 @@ import {
   useSupportedChains,
 } from 'reef-knot/web3-react';
 import { useAccount, useNetwork } from 'wagmi';
+import { Section } from '@lidofinance/lido-ui';
 import { Line, Heading } from './styles';
 import { BlueWrapper } from './BlueWrapper';
-import { Section } from '@lidofinance/lido-ui';
 import { Web3ProviderInfo } from './Web3ProviderInfo';
 
 export const WalletInfo: React.FC = (props) => {
@@ -35,7 +35,7 @@ export const WalletInfo: React.FC = (props) => {
         <div>
           <div>
             <code>
-            <Web3ProviderInfo />
+              <Web3ProviderInfo />
               <Line>providerName: {connectorInfo.providerName}</Line>
               <Line>
                 <b>shimmed useWeb3() data below</b>
@@ -48,7 +48,8 @@ export const WalletInfo: React.FC = (props) => {
                 <b>Supported Chains</b>
               </Line>
               <Line>
-                Chain is unsupported: {String(supportedChainsData.isUnsupported)}
+                Chain is unsupported:{' '}
+                {String(supportedChainsData.isUnsupported)}
               </Line>
               <Line>Supported chain IDs: {supportedChainIds?.join(',')}</Line>
             </code>

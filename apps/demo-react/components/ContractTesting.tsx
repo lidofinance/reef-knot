@@ -1,15 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { BlueWrapper } from "./info";
-import { Input, Button, Text, Eth, Option, Select, Loader, Section } from "@lidofinance/lido-ui";
-import { useContractSWR, useSDK, useSTETHBalance, useSTETHContractRPC, useSTETHContractWeb3 } from "@lido-sdk/react";
-import { useWeb3 } from "reef-knot/web3-react";
-import { formatBalance } from '../util/contractTestingUtils'
-import { parseEther } from "ethers/lib/utils.js";
+import React, { useEffect, useState } from 'react';
+import {
+  Input,
+  Button,
+  Text,
+  Eth,
+  Option,
+  Select,
+  Loader,
+  Section,
+} from '@lidofinance/lido-ui';
+import {
+  useContractSWR,
+  useSDK,
+  useSTETHBalance,
+  useSTETHContractRPC,
+  useSTETHContractWeb3,
+} from '@lido-sdk/react';
+import { useWeb3 } from 'reef-knot/web3-react';
+import { parseEther } from 'ethers/lib/utils.js';
 import { AddressZero } from '@ethersproject/constants';
-import { BigNumber } from "ethers";
-import { STETH_SUBMIT_GAS_LIMIT_DEFAULT, useStethSubmitGasLimit } from "../hooks/useStethSubmitGasLimit";
-import { useTxCostInUsd } from "../hooks/txCost";
-
+import { BigNumber } from 'ethers';
+import { formatBalance } from '../util/contractTestingUtils';
+import { BlueWrapper } from './info';
+import {
+  STETH_SUBMIT_GAS_LIMIT_DEFAULT,
+  useStethSubmitGasLimit,
+} from '../hooks/useStethSubmitGasLimit';
+import { useTxCostInUsd } from '../hooks/txCost';
 
 const SUBMIT_EXTRA_GAS_TRANSACTION_RATIO = 1.05;
 
@@ -26,7 +43,7 @@ const ContractTesting = () => {
   const [gasError, setGasError] = useState('');
 
   const submitGasLimit = useStethSubmitGasLimit();
-  const txCostInUsd = useTxCostInUsd({ gasLimit: submitGasLimit })
+  const txCostInUsd = useTxCostInUsd({ gasLimit: submitGasLimit });
   const stethBalance = useSTETHBalance();
   const stethContractWeb3 = useSTETHContractWeb3();
 
@@ -44,7 +61,7 @@ const ContractTesting = () => {
     try {
       const feeData = await providerWeb3?.getFeeData();
       const maxPriorityFeePerGas = feeData?.maxPriorityFeePerGas ?? undefined;
-    
+
       const maxFeePerGas = feeData?.maxFeePerGas ?? undefined;
       const overrides = {
         value: parseEther(inputValue),
@@ -57,12 +74,11 @@ const ContractTesting = () => {
       );
       setEstimateGas(originalGasLimit as any);
       setGasLoading(false);
-
     } catch (e: any) {
       setEstimateGas(STETH_SUBMIT_GAS_LIMIT_DEFAULT);
-      setGasError(e?.message)
+      setGasError(e?.message);
     }
-  }
+  };
 
   const stake = async () => {
     setTxError('');
@@ -88,8 +104,8 @@ const ContractTesting = () => {
 
       const gasLimit = originalGasLimit
         ? Math.ceil(
-          originalGasLimit.toNumber() * SUBMIT_EXTRA_GAS_TRANSACTION_RATIO,
-        )
+            originalGasLimit.toNumber() * SUBMIT_EXTRA_GAS_TRANSACTION_RATIO,
+          )
         : null;
 
       const callback = async () => {
@@ -97,31 +113,32 @@ const ContractTesting = () => {
           ...overrides,
           gasLimit: gasLimit ? BigNumber.from(gasLimit) : undefined,
         });
-      }
+      };
 
       const transaction = await callback();
 
       setIsLoading(true);
 
       if (typeof transaction === 'object') {
-
         await transaction.wait().then((data) => {
           setIsLoading(false);
           setStakeData(data);
-        })
+        });
       }
     } catch (error: any) {
       console.log({
         error,
-      })
-      setTxError(error?.reason)
-    };
-  }
+      });
+      setTxError(error?.reason);
+    }
+  };
   useEffect(() => {
     if (providerWeb3) {
       const balance = async () => {
-        await providerWeb3.getBalance(account || '').then((data) => setWalletBalance(formatBalance(data, 4)));
-      }
+        await providerWeb3
+          .getBalance(account || '')
+          .then((data) => setWalletBalance(formatBalance(data, 4)));
+      };
       balance();
     }
   }, []);
@@ -138,44 +155,70 @@ const ContractTesting = () => {
         >
           <Option value="stake">Stake</Option>
         </Select>
-        <Input placeholder="Amount" type="number" leftDecorator={<Eth />} value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-        <Input type="text" placeholder="Referral Address" value={referralAddress} onChange={(e) => setReferralAddress(e.target.value)} />
-        
-        <Input type="text" value={estimateGas} disabled label="Estimate GAS"/>
+        <Input
+          placeholder="Amount"
+          type="number"
+          leftDecorator={<Eth />}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <Input
+          type="text"
+          placeholder="Referral Address"
+          value={referralAddress}
+          onChange={(e) => setReferralAddress(e.target.value)}
+        />
+
+        <Input type="text" value={estimateGas} disabled label="Estimate GAS" />
         {gasError && <Text color="warning">{gasError}</Text>}
-        <Button onClick={calculateGas} loading={isGasLoading}>Calculate GAS</Button>
-        
+        <Button onClick={calculateGas} loading={isGasLoading}>
+          Calculate GAS
+        </Button>
+
+        <Text color="secondary">You will receive: {`${inputValue} stEth`}</Text>
         <Text color="secondary">
-          You will receive: {`${inputValue} stEth`}
+          Your Wallet Balance: {walletBalance} ETH
+          <br />
+          Your Stake Balance:{' '}
+          {stethBalance.data ? (
+            `${formatBalance(stethBalance.data, 4)} stEth`
+          ) : (
+            <Loader style={{ display: 'inline' }} />
+          )}{' '}
+          <br />
+          Max TX cost:{' '}
+          {txCostInUsd ? (
+            ` ${txCostInUsd?.toFixed(2)}$`
+          ) : (
+            <Loader style={{ display: 'inline' }} />
+          )}{' '}
+          <br />
+          Lido Reward Fee: &nbsp;
+          {lidoFee.data ? (
+            `${lidoFee.data / 100}%`
+          ) : (
+            <Loader style={{ display: 'inline' }} />
+          )}
         </Text>
-        <Text color="secondary">
-          Your Wallet Balance: {walletBalance} ETH<br />
-          Your Stake Balance: {stethBalance.data ? `${formatBalance(stethBalance.data, 4)} stEth` : <Loader style={{ display: 'inline' }} />} <br />
-          Max TX cost: {txCostInUsd ? ` ${txCostInUsd?.toFixed(2)}$` : <Loader style={{ display: 'inline' }} />} <br />
-          Lido Reward Fee: &nbsp;{lidoFee.data ? `${lidoFee.data / 100}%` : <Loader style={{ display: 'inline' }} />}
-        </Text>
-        {stakeData.blockHash && <>
-          <Text>
-            About transaction
-          </Text>
-          <Text color="secondary">
-            Gas used: {(stakeData.gasUsed).toNumber()} WEI
-          </Text>
-          <Text color="secondary">
-            Status: {stakeData.status && 'success'}
-          </Text>
-        </>
-        }
-        {!stakeData.blockHash && <Text color="error">
-            {txError}
-          </Text>}
+        {stakeData.blockHash && (
+          <>
+            <Text>About transaction</Text>
+            <Text color="secondary">
+              Gas used: {stakeData.gasUsed.toNumber()} WEI
+            </Text>
+            <Text color="secondary">
+              Status: {stakeData.status && 'success'}
+            </Text>
+          </>
+        )}
+        {!stakeData.blockHash && <Text color="error">{txError}</Text>}
 
         <Button loading={isLoading || isGasLoading} onClick={stake}>
           Stake
         </Button>
       </BlueWrapper>
     </Section>
-  )
-}
+  );
+};
 
 export default ContractTesting;

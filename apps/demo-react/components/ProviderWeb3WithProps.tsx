@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
 import { goerli } from 'wagmi/chains';
 import { ProviderWeb3, useWeb3 } from 'reef-knot/web3-react';
+import { ProviderSDK } from '@lido-sdk/react';
 import { rpc } from '../util/rpc';
 import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
-import { ProviderSDK } from '@lido-sdk/react';
-
 
 const SDKProvider: React.FC = ({ children }) => {
   const web3 = useWeb3();
@@ -17,7 +16,7 @@ const SDKProvider: React.FC = ({ children }) => {
     >
       {children}
     </ProviderSDK>
-  )
+  );
 };
 
 const ProviderWeb3WithProps = (props: { children: ReactNode }) => {
@@ -28,10 +27,8 @@ const ProviderWeb3WithProps = (props: { children: ReactNode }) => {
       rpc={rpc}
       walletconnectProjectId={WC_PROJECT_ID}
     >
-      <SDKProvider>
-        {props.children}
-      </SDKProvider>
+      <SDKProvider>{props.children}</SDKProvider>
     </ProviderWeb3>
   );
-}
+};
 export default ProviderWeb3WithProps;
