@@ -7,6 +7,7 @@ import { useAccount, useNetwork } from 'wagmi';
 import { Line, Heading } from './styles';
 import { BlueWrapper } from './BlueWrapper';
 import { Section } from '@lidofinance/lido-ui';
+import { Web3ProviderInfo } from './Web3ProviderInfo';
 
 export const WalletInfo: React.FC = (props) => {
   const connectorInfo = useConnectorInfo();
@@ -34,6 +35,7 @@ export const WalletInfo: React.FC = (props) => {
         <div>
           <div>
             <code>
+            <Web3ProviderInfo />
               <Line>providerName: {connectorInfo.providerName}</Line>
               <Line>
                 <b>shimmed useWeb3() data below</b>
