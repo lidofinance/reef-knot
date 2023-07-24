@@ -1,5 +1,6 @@
 import { Button } from 'reef-knot/ui-react';
 import { useDisconnect } from 'reef-knot/web3-react';
+import { FlexContainer } from '../styles/global';
 
 const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   const { handleOpen } = props;
@@ -9,21 +10,21 @@ const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   };
 
   return (
-    <>
+    <FlexContainer>
       <Button
-        style={{ width: '300px', alignSelf: 'center' }}
+        style={{ maxWidth: '300px', alignSelf: 'center' }}
         onClick={handleOpen}
       >
         Connect wallet
       </Button>
       <Button
-        style={{ width: '200px', marginTop: '10px', alignSelf: 'center' }}
+        style={{ maxWidth: '200px', marginTop: '10px', alignSelf: 'center' }}
         variant="text"
         onClick={handleDisconnect}
       >
         Disconnect
       </Button>
-    </>
+    </FlexContainer>
   );
 };
 

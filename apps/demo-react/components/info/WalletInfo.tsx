@@ -5,8 +5,10 @@ import {
 } from 'reef-knot/web3-react';
 import { useAccount, useNetwork } from 'wagmi';
 import { Line, Heading } from './styles';
+import { BlueWrapper } from './BlueWrapper';
+import { Section } from '@lidofinance/lido-ui';
 
-export const WalletInfo = () => {
+export const WalletInfo: React.FC = (props) => {
   const connectorInfo = useConnectorInfo();
   const supportedChainsData = useSupportedChains();
   const supportedChainIds = supportedChainsData.supportedChains.map(
@@ -27,39 +29,43 @@ export const WalletInfo = () => {
   const { chain } = useNetwork();
 
   return (
-    <div>
-      <Heading>web3-react data:</Heading>
-      <div>
-        <code>
-          <Line>providerName: {connectorInfo.providerName}</Line>
-          <Line>
-            <b>shimmed useWeb3() data below</b>
-          </Line>
-          <Line>account: {web3Info.account}</Line>
-          <Line>active: {String(web3Info.active)}</Line>
-          <Line>error: {web3Info.error?.message}</Line>
-          <Line>Chain ID: {web3Info.chainId}</Line>
-          <Line>
-            <b>Supported Chains</b>
-          </Line>
-          <Line>
-            Chain is unsupported: {String(supportedChainsData.isUnsupported)}
-          </Line>
-          <Line>Supported chain IDs: {supportedChainIds?.join(',')}</Line>
-        </code>
-      </div>
-      <Heading>wagmi data:</Heading>
-      <div>
-        <code>
-          <Line>status: {wagmiStatus}</Line>
-          <Line>isConnected: {String(wagmiIsConnected)}</Line>
-          <Line>address: {wagmiAddress}</Line>
-          <Line>Connector ID: {connector?.id}</Line>
-          <Line>Connector name: {connector?.name}</Line>
-          <Line>Chain ID: {chain?.id}</Line>
-          <Line>Chain is unsupported: {String(chain?.unsupported)}</Line>
-        </code>
-      </div>
-    </div>
+    <Section title="web3-react data">
+      <BlueWrapper>
+        <div>
+          <div>
+            <code>
+              <Line>providerName: {connectorInfo.providerName}</Line>
+              <Line>
+                <b>shimmed useWeb3() data below</b>
+              </Line>
+              <Line>account: {web3Info.account}</Line>
+              <Line>active: {String(web3Info.active)}</Line>
+              <Line>error: {web3Info.error?.message}</Line>
+              <Line>Chain ID: {web3Info.chainId}</Line>
+              <Line>
+                <b>Supported Chains</b>
+              </Line>
+              <Line>
+                Chain is unsupported: {String(supportedChainsData.isUnsupported)}
+              </Line>
+              <Line>Supported chain IDs: {supportedChainIds?.join(',')}</Line>
+            </code>
+          </div>
+          <Heading>wagmi data:</Heading>
+          <div>
+            <code>
+              <Line>status: {wagmiStatus}</Line>
+              <Line>isConnected: {String(wagmiIsConnected)}</Line>
+              <Line>address: {wagmiAddress}</Line>
+              <Line>Connector ID: {connector?.id}</Line>
+              <Line>Connector name: {connector?.name}</Line>
+              <Line>Chain ID: {chain?.id}</Line>
+              <Line>Chain is unsupported: {String(chain?.unsupported)}</Line>
+            </code>
+          </div>
+          {props.children}
+        </div>
+      </BlueWrapper>
+    </Section>
   );
 };

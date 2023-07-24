@@ -4,6 +4,8 @@ import {
   themeDark,
   ThemeProvider,
   ThemeName,
+  OptionValue,
+  Container
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -16,19 +18,13 @@ import {
   MainContainer,
   ConnectDisconnect,
   ThemeSelect,
-  InfoWrapper,
   WalletsModal,
   Web3ProviderInfo,
+  ContractTesting,
+  MainSection,
 } from '../components';
 import { GlobalStyle } from '../styles/global';
 
-const InfoBlock = styled.div`
-  display: flex;
-
-  @media (max-width: 500px) {
-    flex-direction: column;
-  }
-`;
 
 export function Web() {
   const { state, handleClose, handleOpen } = useModal();
@@ -36,36 +32,32 @@ export function Web() {
 
   return (
     <>
-      <Header />
       <ThemeProvider
         theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
       >
+        <Header />
         <GlobalStyle />
         <Wagmi>
           <ProviderWeb3WithProps>
-            <MainContainer>
-              <ConnectDisconnect handleOpen={handleOpen} />
-
-              <InfoBlock>
-                <InfoWrapper>
-                  <ThemeSelect
-                    selectedTheme={selectedTheme}
-                    handleSelect={setSelectedTheme}
-                  />
+            <Container>
+              <MainContainer>
+                <ConnectDisconnect handleOpen={handleOpen} />
+                <ThemeSelect
+                  selectedTheme={selectedTheme}
+                  handleSelect={setSelectedTheme as (e: OptionValue) => void}
+                />
+                <MainSection>
                   <WalletInfo />
-                </InfoWrapper>
-
-                <InfoWrapper>
+                  <ContractTesting />
                   <Web3ProviderInfo />
-                </InfoWrapper>
-              </InfoBlock>
-
-              <WalletsModal
-                open={state}
-                handleClose={handleClose}
-                isDarkTheme={selectedTheme === ThemeName.dark}
-              />
-            </MainContainer>
+                </MainSection>
+                <WalletsModal
+                  open={state}
+                  handleClose={handleClose}
+                  isDarkTheme={selectedTheme === ThemeName.dark}
+                />
+              </MainContainer>
+            </Container>
           </ProviderWeb3WithProps>
         </Wagmi>
       </ThemeProvider>

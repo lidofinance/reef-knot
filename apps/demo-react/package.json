@@ -7,10 +7,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typechain": "typechain --target=ethers-v5 --out-dir ./generated ./abi/*.json"
   },
   "dependencies": {
-    "@lidofinance/lido-ui": "3.2.0",
+    "@lido-sdk/providers": "^1.4.12",
+    "@lido-sdk/react": "^2.0.1",
+    "@lidofinance/lido-ui": "^3.8.1",
+    "@typechain/ethers-v5": "^11.1.0",
     "ethers": "^5.7.2",
     "flatted": "^3.2.7",
     "next": "12.3.4",
@@ -24,8 +28,10 @@
     "@babel/core": "^7.0.0",
     "@types/node": "^17.0.12",
     "@types/react": "17.0.53",
+    "husky": "^8.0.3",
     "next-transpile-modules": "9.0.0",
     "tsconfig": "*",
+    "typechain": "^8.3.0",
     "typescript": "4.9.5"
   }
 }

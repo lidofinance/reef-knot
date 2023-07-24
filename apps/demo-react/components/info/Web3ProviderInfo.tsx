@@ -1,6 +1,8 @@
 import { stringify } from 'flatted';
 import { useState } from 'react';
 import { Line, Heading } from './styles';
+import { Section } from '@lidofinance/lido-ui';
+import { BlueWrapper } from './BlueWrapper';
 
 export const Web3ProviderInfo = () => {
   const windowEthereumData = Object.entries({ ...globalThis.window?.ethereum });
@@ -8,7 +10,8 @@ export const Web3ProviderInfo = () => {
   const [web3ProviderDataShown, setWeb3ProviderDataShown] = useState(false);
 
   return (
-    <div>
+    <Section title="window.ethereum">
+      <BlueWrapper>
       <Heading>
         window.ethereum –{' '}
         <button
@@ -29,6 +32,7 @@ export const Web3ProviderInfo = () => {
           </Line>
         </code>
       )}
-    </div>
+      </BlueWrapper>
+    </Section>
   );
 };

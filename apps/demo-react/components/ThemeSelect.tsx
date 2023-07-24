@@ -1,23 +1,21 @@
-import { ThemeName } from '@lidofinance/lido-ui';
+import { ThemeName, Select, Option, OptionValue } from '@lidofinance/lido-ui';
 
 const ThemeSelect = (props: {
   selectedTheme: ThemeName;
-  handleSelect: (value: ThemeName) => void;
+  handleSelect: (e: OptionValue) => void;
 }) => {
   const { selectedTheme, handleSelect } = props;
   return (
-    <div>
-      <label htmlFor="themeSwitcher">
-        Theme:&nbsp;
-        <select
-          name="themeSwitcher"
-          value={selectedTheme}
-          onChange={(e) => handleSelect?.(e.target.value as ThemeName)}
-        >
-          <option value={ThemeName.light}>Light</option>
-          <option value={ThemeName.dark}>Dark</option>
-        </select>
-      </label>
+    <div style={{ padding: '0 32px' }}>
+      <Select
+        label="Theme"
+        name="themeSwitcher"
+        value={selectedTheme}
+        onChange={handleSelect}
+      >
+        <Option value={ThemeName.light}>Light</Option>
+        <Option value={ThemeName.dark}>Dark</Option>
+      </Select>
     </div>
   );
 };
