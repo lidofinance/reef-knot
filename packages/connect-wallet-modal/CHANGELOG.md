@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.6.1
+
+### Patch Changes
+
+- Move TERMS_ACCEPTANCE_LS_K const into core-react package
+
 ## 1.6.0
 
 ### Minor Changes
