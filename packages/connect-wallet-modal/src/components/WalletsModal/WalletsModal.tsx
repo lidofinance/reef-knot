@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { Button, Modal } from '@reef-knot/ui-react';
-import { AcceptTermsModalContext } from '@reef-knot/core-react';
+import { AcceptTermsModalContext, LS_KEY_TERMS_ACCEPTANCE } from '@reef-knot/core-react';
 import {
   WalletsModalProps,
   ButtonsCommonProps,
@@ -20,12 +20,8 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
     privacyNoticeLink,
   } = props;
 
-  // This key can be changed to enforce all users to accept the Terms again,
-  // for example if the Terms were significantly updated
-  const TERMS_ACCEPTANCE_LS_KEY = 'reef-knot_accept-terms_n2';
-
   const [termsChecked, setTermsChecked] = useLocalStorage(
-    TERMS_ACCEPTANCE_LS_KEY,
+    LS_KEY_TERMS_ACCEPTANCE,
     false,
   );
 
