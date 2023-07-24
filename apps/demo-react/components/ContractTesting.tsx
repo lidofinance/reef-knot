@@ -46,8 +46,8 @@ const ContractTesting = () => {
 
       const feeData = await providerWeb3?.getFeeData();
 
-      const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;
-      const maxFeePerGas = feeData.maxFeePerGas ?? undefined;
+      const maxPriorityFeePerGas = feeData?.maxPriorityFeePerGas ?? undefined;
+      const maxFeePerGas = feeData?.maxFeePerGas ?? undefined;
 
       const overrides = {
         value: parseEther(inputValue),
