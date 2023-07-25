@@ -1,5 +1,5 @@
 import { useEffect, useRef, useContext } from 'react';
-import { AcceptTermsModalContext } from '@reef-knot/core-react';
+import { AcceptTermsModalContext, LS_KEY_TERMS_ACCEPTANCE } from '@reef-knot/core-react';
 import { useWeb3 } from './useWeb3';
 import { useConnectorStorage } from './useConnectorStorage';
 import { useConnectorInfo } from './useConnectorInfo';
@@ -48,16 +48,20 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
       })();
       if (!connector) return;
 
-      if (shouldAutoConnectApp) {
-        const onContinue = () => {
-          activate(connector, undefined, true);
-        };
-        acceptTermsModal.setOnContinue?.(() => onContinue);
+      const connectWallet = () => activate(connector, undefined, true);
+
+      let termsAccepted = false;
+      if (typeof window !== 'undefined') {
+        termsAccepted = window.localStorage?.getItem(LS_KEY_TERMS_ACCEPTANCE) === 'true';
+      }
+
+      if (shouldAutoConnectApp && !termsAccepted) {
+        acceptTermsModal.setOnContinue?.(() => connectWallet);
         acceptTermsModal.setVisible?.(true);
         return;
       }
 
-      await activate(connector, undefined, true);
+      await connectWallet();
     })();
   }, [
     activate,

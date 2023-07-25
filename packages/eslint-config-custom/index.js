@@ -17,5 +17,13 @@ module.exports = {
     "sourceType": "module",
     "project": ["tsconfig.json"]
   },
-  "ignorePatterns": ["*.js", "dist", "node_modules"]
+  "ignorePatterns": ["*.js", "dist", "node_modules"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
 }
