@@ -53,7 +53,7 @@ const WrapForm = () => {
   const wstETHBalance = useWSTETHBalance();
 
   const wrapGasLimit = useWrapGasLimit(true);
-  const wrapTxCostInUsd = useTxCostInUsd(wrapGasLimit);
+  const wrapTxCostInUsd = useTxCostInUsd({ gasLimit: wrapGasLimit });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -158,7 +158,7 @@ const WrapForm = () => {
           {`1 stETH = ${formatBalance(oneWstethConverted, 5)} wstETH`}
         </DataTableRow>
         <DataTableRow title="Max gas fee" loading={!wrapTxCostInUsd}>
-          {wrapTxCostInUsd}
+          {`${wrapTxCostInUsd?.toFixed(2)}$`}
         </DataTableRow>
       </DataTable>
       {wrapError && (

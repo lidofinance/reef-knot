@@ -199,7 +199,7 @@ const StakeForm = () => {
       {stakeGasError && <Text color="warning">{stakeGasError}</Text>}
       <DataTable>
         <DataTableRow title="You will receive">
-          {`${inputValue.eth} stEth`}
+          {`${inputValue.eth} stETH`}
         </DataTableRow>
         <DataTableRow title="Your Wallet Balance" loading={!stethBalance.data}>
           {`${walletBalance} ETH`}
