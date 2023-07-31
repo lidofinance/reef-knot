@@ -5,6 +5,7 @@ import {
   ThemeProvider,
   ThemeName,
   OptionValue,
+  Block,
   Container,
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
@@ -18,9 +19,10 @@ import {
   ConnectDisconnect,
   ThemeSelect,
   WalletsModal,
-  ContractTesting,
   MainSection,
+  ContractTesting,
 } from '../components';
+
 import { GlobalStyle } from '../styles/global';
 
 export function Web() {
@@ -31,7 +33,7 @@ export function Web() {
     <ThemeProvider
       theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
     >
-      <Container>
+      <Block style={{ borderRadius: 'unset' }}>
         <Header />
         <GlobalStyle />
         <Wagmi>
@@ -54,7 +56,7 @@ export function Web() {
             </MainContainer>
           </ProviderWeb3WithProps>
         </Wagmi>
-      </Container>
+      </Block>
     </ThemeProvider>
   );
 }

@@ -6,7 +6,7 @@ const ThemeSelect = (props: {
 }) => {
   const { selectedTheme, handleSelect } = props;
   return (
-    <div style={{ padding: '0 32px' }}>
+    <div>
       <Select
         label="Theme"
         name="themeSwitcher"

@@ -6,7 +6,7 @@ import { formatEther } from '@ethersproject/units';
 import { Zero } from '@ethersproject/constants';
 
 export const getBackendRPCPath = (chainId: string | number): string => {
-    const BASE_URL = 'https://ethereum-goerli.publicnode.com';
+    const BASE_URL = 'https://eth-goerli.public.blastapi.io/';
 
     return `${BASE_URL}/api/rpc?chainId=${chainId}`;
 };

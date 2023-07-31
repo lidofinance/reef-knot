@@ -1,3 +1,4 @@
+import { Block } from '@lidofinance/lido-ui';
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
@@ -24,4 +25,15 @@ export const FlexContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+`
+
+export const MainSection = styled(Block)`
+  display: flex;
+  gap: 40px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `

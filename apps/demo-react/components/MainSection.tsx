@@ -1,22 +1,12 @@
 import React from 'react';
-import { Section, Block } from '@lidofinance/lido-ui';
+import { Section } from '@lidofinance/lido-ui';
+import { MainSection } from '../styles/global';
 
-const MainSection: React.FC = ({ children }) => {
+const Main: React.FC = ({ children }) => {
   return (
     <Section>
-      <Block>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            gap: '40px',
-          }}
-        >
-          {children}
-        </div>
-      </Block>
+      <MainSection>{children}</MainSection>
     </Section>
   );
 };
-export default MainSection;
+export default Main;
