@@ -6,7 +6,7 @@ const BlueWrapperStyle = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 250px;
-  max-width: 340px;
+  max-width: 360px;
   padding: 24px;
   background-color: rgba(0, 163, 255, 0.1);
   border-radius: 20px;

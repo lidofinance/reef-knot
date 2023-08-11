@@ -70,7 +70,7 @@ const StakeForm = () => {
     method: 'getFee',
   });
 
-  const calculateStakeGas = async () => {
+  const calculateStakeGas = useCallback(async () => {
     setStakeGasError('');
     setStakeGasLoading(true);
     try {
@@ -92,7 +92,7 @@ const StakeForm = () => {
       setEstimateStakeGas(STETH_SUBMIT_GAS_LIMIT_DEFAULT);
       setStakeGasError(e?.message);
     }
-  };
+  }, [providerWeb3]);
 
   const stake = useCallback(async () => {
     setTxError('');
@@ -145,14 +145,9 @@ const StakeForm = () => {
   }, [providerWeb3, stethContractWeb3, walletBalance, stethBalance.update]);
 
   useEffect(() => {
-    if (providerWeb3) {
-      const balance = async () => {
-        await providerWeb3
-          .getBalance(account || '')
-          .then((data) => setWalletBalance(formatBalance(data, 5)));
-      };
-      balance().catch((e) => console.log(e));
-    }
+    void providerWeb3
+      ?.getBalance(account || '')
+      .then((data) => setWalletBalance(formatBalance(data, 5)), console.log);
   }, [providerWeb3]);
 
   return (
@@ -201,13 +196,13 @@ const StakeForm = () => {
         <DataTableRow title="You will receive">
           {`${inputValue.eth} stETH`}
         </DataTableRow>
-        <DataTableRow title="Your Wallet Balance" loading={!stethBalance.data}>
+        <DataTableRow title="Your wallet balance" loading={!stethBalance.data}>
           {`${walletBalance} ETH`}
         </DataTableRow>
         <DataTableRow title="Max TX cost" loading={!txCostInUsd}>
           {`${txCostInUsd?.toFixed(2)}$`}
         </DataTableRow>
-        <DataTableRow title="Lido Reward Fee" loading={!lidoFee.data}>
+        <DataTableRow title="Lido reward fee" loading={!lidoFee.data}>
           {`${(lidoFee.data as any) / 100} %`}
         </DataTableRow>
       </DataTable>

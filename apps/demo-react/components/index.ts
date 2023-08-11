@@ -7,4 +7,6 @@ export { default as Wagmi } from './Wagmi';
 export { default as WalletsModal } from './WalletsModal';
 export { default as ContractTesting } from './contractTesting/index';
 export { default as MainSection } from './MainSection';
+export { default as NetworkSelector } from './NetworkSelector';
+
 export * from './info';

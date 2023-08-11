@@ -1,12 +1,14 @@
 import React from 'react';
-import Stake from './stakeForm';
-import Wrap from './wrapForm';
+import Stake from './StakeForm';
+import Wrap from './WrapForm';
+import Withdrawals from './WithdrawalsForm';
 
 const ContractTesting = () => {
   return (
     <>
       <Stake />
       <Wrap />
+      <Withdrawals />
     </>
   );
 };

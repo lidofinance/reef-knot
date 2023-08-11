@@ -6,7 +6,6 @@ import {
   ThemeName,
   OptionValue,
   Block,
-  Container,
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
 import useModal from '../hooks/useModal';
@@ -21,6 +20,7 @@ import {
   WalletsModal,
   MainSection,
   ContractTesting,
+  NetworkSelector,
 } from '../components';
 
 import { GlobalStyle } from '../styles/global';
@@ -40,14 +40,16 @@ export function Web() {
           <ProviderWeb3WithProps>
             <MainContainer>
               <ConnectDisconnect handleOpen={handleOpen} />
+              <NetworkSelector />
               <ThemeSelect
                 selectedTheme={selectedTheme}
                 handleSelect={setSelectedTheme as (e: OptionValue) => void}
               />
               <MainSection>
-                <WalletInfo />
                 <ContractTesting />
               </MainSection>
+              <WalletInfo />
+
               <WalletsModal
                 open={state}
                 handleClose={handleClose}

@@ -30,6 +30,7 @@ export const FlexContainer = styled.div`
 export const MainSection = styled(Block)`
   display: flex;
   gap: 40px;
+  padding: 0;
 
   @media (max-width: 900px) {
     flex-direction: column;

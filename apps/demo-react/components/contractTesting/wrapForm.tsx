@@ -8,6 +8,10 @@ import {
   DataTableRow,
   DataTable,
   Divider,
+  Option,
+  Select,
+  OptionValue,
+  Wsteth,
 } from '@lidofinance/lido-ui';
 import {
   useEthereumBalance,
@@ -37,6 +41,7 @@ const WrapForm = () => {
   const [estimateWrapGas, setEstimateWrapGas] = useState(0);
   const [wrapSuccess, setWrapSuccess] = useState(false);
   const [isWrapLoading, setWrapLoading] = useState(false);
+  const [wrapSelect, setWrapSelect] = useState('wrap');
 
   const [wrapError, setWrapError] = useState('');
 
@@ -59,9 +64,14 @@ const WrapForm = () => {
     setInputValue(e.target.value);
   };
 
+  const handleWrapSelectChange = (value: OptionValue) => {
+    setWrapSelect(value);
+  };
   const setMaxInputValue = (e: any) => {
     console.log({ e });
-    setInputValue(formatBalance(stethBalance.data, 5));
+    setInputValue(
+      formatBalance(isWrapSelected ? stethBalance.data : wstETHBalance.data, 5),
+    );
   };
 
   const wrapGas = useWrapGasLimit(true);
@@ -74,7 +84,7 @@ const WrapForm = () => {
     setWrapSuccess(false);
     setWrapError('');
     setWrapLoading(true);
-    const tx = await wrapProcessingWithApprove(
+    await wrapProcessingWithApprove(
       chainId,
       providerWeb3,
       wstethContractWeb3,
@@ -116,19 +126,27 @@ const WrapForm = () => {
         setWrapLoading(false);
       });
   };
+  const isWrapSelected = wrapSelect === 'wrap';
 
   return (
     <BlueWrapper>
-      <H3>Wrap</H3>
+      <H3>Wrap/Unwrap</H3>
+      <Select value={wrapSelect} onChange={handleWrapSelectChange}>
+        <Option value="wrap">Wrap</Option>
+        <Option value="unwrap">Unwrap</Option>
+      </Select>
       <Input
         placeholder="Amount"
         type="number"
         name="wrapAmount"
-        leftDecorator={<Steth />}
+        leftDecorator={isWrapSelected ? <Steth /> : <Wsteth />}
         value={inputValue}
         onChange={handleInputChange}
         step={0.00001}
-        max={formatBalance(stethBalance.data, 5)}
+        max={formatBalance(
+          isWrapSelected ? stethBalance.data : wstETHBalance.data,
+          5,
+        )}
         rightDecorator={<InputDecoratorMaxButton onClick={setMaxInputValue} />}
       />
       <Input
@@ -148,11 +166,11 @@ const WrapForm = () => {
         }
       />
       <DataTable>
-        <DataTableRow title="Your stETH Balance" loading={!stethBalance.data}>
-          {formatBalance(stethBalance.data, 5)}
+        <DataTableRow title="Your stETH balance" loading={!stethBalance.data}>
+          {`${formatBalance(stethBalance.data, 5)} stETH`}
         </DataTableRow>
         <DataTableRow title="Your wstETH balance" loading={!wstETHBalance.data}>
-          {formatBalance(wstETHBalance.data, 5)}
+          {`${formatBalance(wstETHBalance.data, 5)} wstETH`}
         </DataTableRow>
         <DataTableRow title="Exchange rate" loading={!oneWstethConverted}>
           {`1 stETH = ${formatBalance(oneWstethConverted, 5)} wstETH`}
@@ -170,12 +188,15 @@ const WrapForm = () => {
         </>
       )}
       {wrapSuccess && <Text color="success">Success!</Text>}
-      <Button color="success" onClick={wrap} loading={isWrapLoading}>
-        Wrap
-      </Button>
-      <Button color="warning" onClick={unWrap} loading={isWrapLoading}>
-        Unwrap
-      </Button>
+      {wrapSelect === 'wrap' ? (
+        <Button color="success" onClick={wrap} loading={isWrapLoading}>
+          Wrap
+        </Button>
+      ) : (
+        <Button color="warning" onClick={unWrap} loading={isWrapLoading}>
+          Unwrap
+        </Button>
+      )}
     </BlueWrapper>
   );
 };

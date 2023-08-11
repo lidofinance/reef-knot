@@ -129,7 +129,7 @@ export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
           await transaction.wait();
         }
   
-        handleEnding();;
+        handleEnding();
       } else if (selectedToken === TOKENS.STETH) {
           const overrides = {
             maxPriorityFeePerGas,
