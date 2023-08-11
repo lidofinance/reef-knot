@@ -5,7 +5,7 @@ import { utils } from 'ethers';
 import { CHAINS } from '../config/chains';
 
 const NetworkSelector = () => {
-  const { chainId, library } = useWeb3();
+  const { chainId = CHAINS.Goerli, library } = useWeb3();
 
   const [network, setNetwork] = useState(CHAINS.Goerli);
 
@@ -14,7 +14,7 @@ const NetworkSelector = () => {
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: utils.hexValue(value) }],
     });
-    setNetwork(value);
+    setNetwork(value as CHAINS);
   };
 
   useEffect(() => {

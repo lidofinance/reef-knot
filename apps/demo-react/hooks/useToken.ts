@@ -7,7 +7,7 @@ import {
   useSTETHContractWeb3,
 } from '@lido-sdk/react';
 
-export const useToken = (selectedToken: string) => {
+export const useToken = (selectedToken: TOKENS) => {
 
   const wstethContractWeb3 = useWSTETHContractWeb3();
   const stethContractWeb3 = useSTETHContractWeb3();

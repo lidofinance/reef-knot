@@ -33,7 +33,7 @@ const WithdrawalsForm = () => {
   const { chainId } = useWeb3();
   const [inputValue, setInputValue] = useState('0.00001');
   const [selectedToken, setSelectedToken] = useState(TOKENS.STETH);
-  const [selectedRequests, setSelectedRequests] = useState([]);
+  const [selectedRequests, setSelectedRequests] = useState([] as string[]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
