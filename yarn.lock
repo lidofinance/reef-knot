@@ -2072,7 +2072,7 @@
     "@lido-sdk/constants" "3.1.0"
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/contracts@3.0.2", "@lido-sdk/contracts@^3.0.2":
+"@lido-sdk/contracts@3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@lido-sdk/contracts/-/contracts-3.0.2.tgz#2f7fa71816326a2b2aa1df31ccb8b2e3de62edad"
   integrity sha512-/fZRLPwxwlIut0T0T18GO/hRa7SMSHRaAm7C97V1YUjwW7oP54TakrorCLZ8rTjEprtFMjTrqnksSLDGlJYwXg==

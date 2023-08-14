@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.4.1
+
+### Patch Changes
+
+- Open Terms modal only if terms were not accepted earlier
+
 ## 1.4.0
 
 ### Minor Changes
