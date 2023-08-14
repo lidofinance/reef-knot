@@ -78,7 +78,7 @@ export const useWithdrawalRequest = ({
             BigNumber.from(0),
           );
           // get right method
-          const method = getRequestMethod(isApprovalFlow, token.toLowerCase());
+          const method = getRequestMethod(isApprovalFlow, token);
           // start flow
 
           // each flow switches needed signing stages

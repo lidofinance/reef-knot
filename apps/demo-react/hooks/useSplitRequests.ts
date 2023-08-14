@@ -11,7 +11,7 @@ import { useIsLedgerLive } from './useIsLedgerLive';
 import { useToken } from './useToken';
 import { useWithdrawalsBaseData } from './useWithdrawalsBaseData';
 
-export const useSplitRequest = (inputValue: string, selectedToken: string) => {
+export const useSplitRequest = (inputValue: string, selectedToken: TOKENS) => {
   const isLedgerLive = useIsLedgerLive();
   const maxRequestCount = isLedgerLive
     ? MAX_REQUESTS_COUNT_LEDGER_LIMIT

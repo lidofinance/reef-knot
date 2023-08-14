@@ -6,8 +6,8 @@ import { STRATEGY_CONSTANT } from './useWithdrawalsData';
 
 
 type useWithdrawalsBaseDataResult = {
-  maxAmount: BigNumber;
-  minAmount: BigNumber;
+  maxAmount: BigNumber | undefined;
+  minAmount: BigNumber | undefined;
   isPaused: boolean;
   isBunker: boolean;
   isTurbo: boolean;

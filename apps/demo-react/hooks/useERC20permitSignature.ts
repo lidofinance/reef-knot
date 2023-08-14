@@ -4,7 +4,6 @@ import { hexValue, splitSignature } from '@ethersproject/bytes';
 import { parseEther } from '@ethersproject/units';
 import { MaxUint256 } from '@ethersproject/constants';
 import { BigNumber, TypedDataDomain } from 'ethers';
-
 import { useSDK } from '@lido-sdk/react';
 
 import { Erc20Abi, StethAbi } from '@lido-sdk/contracts';
@@ -29,7 +28,7 @@ export type GatherPermitSignatureResult = {
 };
 
 type UseERC20PermitSignatureResult = {
-  gatherPermitSignature: () => Promise<GatherPermitSignatureResult | undefined>;
+  gatherPermitSignature: () => Promise<GatherPermitSignatureResult>;
 };
 
 type UseERC20PermitSignatureProps<
@@ -85,26 +84,25 @@ export const useERC20PermitSignature = <
         name: 'Wrapped liquid staked Ether 2.0',
         version: '1',
         chainId,
-        verifyingContract: tokenProvider.address,
+        verifyingContract: tokenProvider?.address,
       };
     }
-    const nonce = await tokenProvider.nonces(account);
+    const nonce = await tokenProvider?.nonces(account as string);
 
     const message = {
       owner: account,
       spender,
       value: parsedValue,
-      nonce: hexValue(nonce),
+      nonce: hexValue(nonce || 0),
       deadline: hexValue(deadline),
     };
     const types = {
       Permit: EIP2612_TYPE,
     };
 
-    const signer = providerWeb3.getSigner();
+    const signer = providerWeb3?.getSigner();
 
-    return signer
-      ._signTypedData(domain, types, message)
+    return signer?._signTypedData(domain, types, message)
       .then(splitSignature)
       .then((signature) => {
         return {
@@ -122,5 +120,5 @@ export const useERC20PermitSignature = <
       });
   }, [chainId, account, providerWeb3, tokenProvider, value, spender]);
 
-  return { gatherPermitSignature };
+  return { gatherPermitSignature } as UseERC20PermitSignatureResult;
 };

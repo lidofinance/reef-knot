@@ -65,7 +65,7 @@ const WrapForm = () => {
   };
 
   const handleWrapSelectChange = (value: OptionValue) => {
-    setWrapSelect(value);
+    setWrapSelect(value as string);
   };
   const setMaxInputValue = (e: any) => {
     console.log({ e });

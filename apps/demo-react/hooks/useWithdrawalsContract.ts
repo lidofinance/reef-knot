@@ -3,7 +3,7 @@ import {
     useWithdrawalQueueContractRPC,
   } from '@lido-sdk/react';
   import { useWeb3 } from 'reef-knot/web3-react';
-  
+
   export const useWithdrawalsContract = () => {
     const contractWeb3 = useWithdrawalQueueContractWeb3();
     const contractRpc = useWithdrawalQueueContractRPC();

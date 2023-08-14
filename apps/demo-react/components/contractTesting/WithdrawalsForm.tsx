@@ -12,6 +12,7 @@ import {
   Button,
   Checkbox,
   External,
+  OptionValue,
 } from '@lidofinance/lido-ui';
 import { useSTETHBalance, useWSTETHBalance } from '@lido-sdk/react';
 import { TOKENS } from '@lido-sdk/constants';
@@ -32,9 +33,13 @@ const WithdrawalsForm = () => {
   const wstethBalance = useWSTETHBalance();
   const { chainId } = useWeb3();
   const [inputValue, setInputValue] = useState('0.00001');
-  const [selectedToken, setSelectedToken] = useState(TOKENS.STETH);
+  const [selectedToken, setSelectedToken] = useState(
+    TOKENS.STETH || TOKENS.WSTETH,
+  );
   const [selectedRequests, setSelectedRequests] = useState([] as string[]);
-
+  console.log({
+    selectedRequests,
+  });
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -42,7 +47,7 @@ const WithdrawalsForm = () => {
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setSelectedRequests((prev) => [...prev, e.target.name]);
-    } else {
+    } else if (!e.target.checked) {
       setSelectedRequests((prev) =>
         prev.filter((val) => val !== e.target.name),
       );
@@ -70,14 +75,16 @@ const WithdrawalsForm = () => {
   const claimMutation = useClaim();
 
   const claim = async () => {
-    const sortedSelectedRequests = data?.sortedClaimableRequests.filter((req) =>
-      selectedRequests.includes(req.stringId),
-    );
-    await claimMutation(sortedSelectedRequests);
+    if (data) {
+      const sortedSelectedRequests = data.sortedClaimableRequests.filter(
+        (req) => selectedRequests.includes(req.stringId),
+      );
+      await claimMutation(sortedSelectedRequests);
+    }
   };
 
   const submit = useCallback(
-    async (_: string, resetForm: () => void) => {
+    async (_: string, resetForm: () => void): Promise<void> => {
       await request(requests, resetForm);
     },
     [request, requests],
@@ -108,7 +115,7 @@ const WithdrawalsForm = () => {
       </DataTable>
       <Select
         value={selectedToken}
-        onChange={(value) => setSelectedToken(value)}
+        onChange={(value: OptionValue) => setSelectedToken(value as TOKENS)}
       >
         <Option value={TOKENS.STETH}>stETH</Option>
         <Option value={TOKENS.WSTETH}>wstETH</Option>
@@ -129,7 +136,7 @@ const WithdrawalsForm = () => {
             : null
         }
       />
-      <Button onClick={submit} loading={isTxPending}>
+      <Button onClick={void submit} loading={isTxPending}>
         Request Withdrawal
       </Button>
       <Button onClick={claim} color="warning" disabled={!selectedRequests[0]}>
@@ -154,9 +161,11 @@ const WithdrawalsForm = () => {
                     <External />
                   </LinkStyled>
                   <Checkbox
-                    name={req.id.toString()}
+                    name={req.stringId}
                     label={`${formatBalance(req.amountOfStETH, 5)} ETH`}
-                    checked={selectedRequests[req.id.toString()]}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    checked={selectedRequests[req.stringId as any]}
                     onChange={handleSelect}
                   />
                 </RequestStyled>

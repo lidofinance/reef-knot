@@ -1,12 +1,13 @@
 import { useCallback } from 'react';
-import { BigNumber } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { useContractSWR, useLidoSWR, useSDK, useSTETHBalance, useWSTETHBalance } from '@lido-sdk/react';
 import type { WstethAbi, StethAbi } from '@lido-sdk/contracts'
 import { useWithdrawalsContract } from './useWithdrawalsContract';
-import type { TOKENS } from '@lido-sdk/constants'
+import { TOKENS } from '@lido-sdk/constants'
 import type { SWRConfiguration } from 'swr';
-import { useClaim } from './useClaim';
+import { useClaim, useClaimData } from './useClaim';
 import { useWithdrawalsBaseData } from './useWithdrawalsBaseData';
+import { AddressZero } from '@ethersproject/constants';
 
 export const MINUTE_MS = 1000 * 60;
 
@@ -75,7 +76,7 @@ export const useUnfinalizedStETH = () => {
 
 export const useWithdrawalRequestMethods = () => {
   const { providerWeb3 } = useSDK();
-  const { update: withdrawalRequestsDataUpdate } = useClaim();
+  const { update: withdrawalRequestsDataUpdate } = useClaimData();
   const stethBalance = useSTETHBalance();
   const wstethBalance = useWSTETHBalance();
   const unfinalizedStETH = useUnfinalizedStETH();
@@ -102,7 +103,7 @@ export const useWithdrawalRequestMethods = () => {
       requests,
     }: {
       signature?: any;
-      requests?: BigNumber[];
+      requests: BigNumberish[];
     }) => {
 
 
@@ -150,7 +151,7 @@ export const useWithdrawalRequestMethods = () => {
       requests,
     }: {
       signature?: any;
-      requests?: BigNumber[];
+      requests: BigNumber[];
     }) => {
 
       const params = [
@@ -196,9 +197,9 @@ export const useWithdrawalRequestMethods = () => {
   );
 
   const steth = useCallback(
-    async ({ requests }: { requests?: BigNumber[] }) => {
+    async ({ requests }) => {
 
-      const params = [requests, account] as const;
+      const params = [requests, account || ''] as const;
 
       const callback = async () => {
         const feeData = await contractWeb3?.provider.getFeeData();
@@ -237,10 +238,10 @@ export const useWithdrawalRequestMethods = () => {
   );
 
   const wstETH = useCallback(
-    async ({ requests }: { requests?: BigNumber[] }) => {
+    async ({ requests }: { requests: BigNumberish[] }) => {
 
 
-      const params = [requests, account] as const;
+      const params = [requests, account || ''] as const;
       const callback = async () => {
         const feeData = await contractWeb3?.provider.getFeeData();
         const maxFeePerGas = feeData?.maxFeePerGas ?? undefined;
@@ -277,8 +278,8 @@ export const useWithdrawalRequestMethods = () => {
   );
 
   return useCallback(
-    (isAllowance: boolean, token: 'steth' | 'wsteth') => {
-      return token == 'steth'
+    (isAllowance: boolean, token: keyof typeof TOKENS) => {
+      return token === TOKENS.STETH
         ? isAllowance
           ? steth
           : permitSteth
@@ -298,10 +299,10 @@ export const useWithdrawalRequests = () => {
     ['swr:withdrawals-requests', account, chainId],
     async (...args: unknown[]) => {
       const account = args[1] as string;
-
-      const [requestIds, lastCheckpointIndex] = await Promise.all([
-        contractWeb3?.getWithdrawalRequests(account),
-        contractWeb3?.getLastCheckpointIndex(),
+      if (contractWeb3) {
+      const [requestIds = [], lastCheckpointIndex] = await Promise.all([
+        contractWeb3.getWithdrawalRequests(account),
+        contractWeb3.getLastCheckpointIndex(),
       ]);
       const requestStatuses = await contractWeb3?.getWithdrawalStatus(requestIds);
 
@@ -379,17 +380,16 @@ export const useWithdrawalRequests = () => {
         claimableAmountOfETH,
         isClamped,
       };
+    }
     },
     STRATEGY_LAZY,
   );
 };
 
-export type TokensWithdrawable = TOKENS.STETH | TOKENS.WSTETH;
-
 export type useWithdrawalRequestOptions = {
   value: string;
   tokenContract: StethAbi | WstethAbi | null;
-  token: TokensWithdrawable;
+  token: keyof typeof TOKENS;
 };
 
 
