@@ -1,7 +1,7 @@
 import React from 'react';
-import StakeForm from './StakeForm';
-import WrapForm from './WrapForm';
-import WithdrawalsForm from './WithdrawalsForm';
+import StakeForm from './stakeForm';
+import WrapForm from './wrapForm';
+import WithdrawalsForm from './withdrawalsForm';
 
 const ContractTesting = () => {
   return (
