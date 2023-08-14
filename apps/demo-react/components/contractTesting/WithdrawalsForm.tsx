@@ -37,9 +37,7 @@ const WithdrawalsForm = () => {
     TOKENS.STETH || TOKENS.WSTETH,
   );
   const [selectedRequests, setSelectedRequests] = useState([] as string[]);
-  console.log({
-    selectedRequests,
-  });
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };

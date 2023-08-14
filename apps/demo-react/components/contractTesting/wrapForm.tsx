@@ -68,7 +68,6 @@ const WrapForm = () => {
     setWrapSelect(value as string);
   };
   const setMaxInputValue = (e: any) => {
-    console.log({ e });
     setInputValue(
       formatBalance(isWrapSelected ? stethBalance.data : wstETHBalance.data, 5),
     );
