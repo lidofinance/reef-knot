@@ -5,7 +5,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { formatEther } from '@ethersproject/units';
 import { Zero } from '@ethersproject/constants';
 
-export const BASE_URL = 'https://stake.testnet.fi/';
+export const BASE_URL = 'https://eth-goerli.public.blastapi.io/';
 
 export const getBackendRPCPath = (chainId: string | number): string => {
 
