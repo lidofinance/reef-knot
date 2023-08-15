@@ -1,4 +1,4 @@
-import { Select, Option, Section, OptionValue } from '@lidofinance/lido-ui';
+import { Select, Option, OptionValue } from '@lidofinance/lido-ui';
 import React, { useEffect, useState } from 'react';
 import { useWeb3 } from 'reef-knot/web3-react';
 import { utils } from 'ethers';
@@ -22,12 +22,10 @@ const NetworkSelector = () => {
   }, [chainId]);
 
   return (
-    <Section>
-      <Select label="Network" onChange={handleChange} value={network}>
-        <Option value={CHAINS.Mainnet}>Mainet</Option>
-        <Option value={CHAINS.Goerli}>Goerli</Option>
-      </Select>
-    </Section>
+    <Select label="Network" onChange={handleChange} value={network}>
+      <Option value={CHAINS.Mainnet}>Mainet</Option>
+      <Option value={CHAINS.Goerli}>Goerli</Option>
+    </Select>
   );
 };
 

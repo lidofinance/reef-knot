@@ -40,11 +40,13 @@ export function Web() {
           <ProviderWeb3WithProps>
             <MainContainer>
               <ConnectDisconnect handleOpen={handleOpen} />
-              <NetworkSelector />
-              <ThemeSelect
-                selectedTheme={selectedTheme}
-                handleSelect={setSelectedTheme as (e: OptionValue) => void}
-              />
+              <div style={{ display: 'flex', gap: '40px' }}>
+                <NetworkSelector />
+                <ThemeSelect
+                  selectedTheme={selectedTheme}
+                  handleSelect={setSelectedTheme as (e: OptionValue) => void}
+                />
+              </div>
               <MainSection>
                 <ContractTesting />
               </MainSection>
