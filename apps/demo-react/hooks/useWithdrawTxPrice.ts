@@ -67,9 +67,11 @@ export const useRequestTxPrice = ({
       ['swr:request-gas-limit', debouncedRequestCount, chainId],
       async () => {
         try {
+          const arr = [] as Array<BigNumber>;
+          arr.length = debouncedRequestCount;
           const gasLimit = (
             await contractRpc.estimateGas.requestWithdrawals(
-              Array(debouncedRequestCount).fill(BigNumber.from(100)),
+              arr.fill(BigNumber.from(100)),
               ESTIMATE_ACCOUNT,
               { from: ESTIMATE_ACCOUNT },
             )

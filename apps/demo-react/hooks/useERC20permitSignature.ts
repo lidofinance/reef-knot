@@ -42,10 +42,11 @@ type UseERC20PermitSignatureProps<
 const INFINITY_DEADLINE_VALUE = MaxUint256;
 
 const isStethPermit = (provider: unknown): provider is StethAbi => {
-  if (typeof provider !== 'object' || provider === null) return false;
-  if ('eip712Domain' in provider) return true;
-
-  return false;
+  return !!(
+    typeof provider === 'object' &&
+    provider !== null &&
+    'eip712Domain' in provider
+  );
 };
 
 const EIP2612_TYPE = [
@@ -111,7 +112,7 @@ export const useERC20PermitSignature = <
           s: signature.s,
           value: parseEther(value),
           deadline,
-          chainId: chainId,
+          chainId,
           nonce: message.nonce,
           owner: account,
           spender,

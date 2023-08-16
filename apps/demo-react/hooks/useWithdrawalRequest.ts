@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useWeb3 } from 'reef-knot/web3-react';
 import { useAccount } from 'wagmi';
-import { useWithdrawalsContract } from './useWithdrawalsContract';
 import { parseEther } from 'ethers/lib/utils.js';
 import { BigNumber } from 'ethers';
 import { useApprove } from '@lido-sdk/react';
 import { MaxUint256 } from '@ethersproject/constants';
+import { useWithdrawalsContract } from './useWithdrawalsContract';
 import { useERC20PermitSignature } from './useERC20permitSignature';
 import {
   useWithdrawals,
@@ -28,7 +28,7 @@ export const useWithdrawalRequest = ({
 
   const valueBN = useMemo(() => {
     try {
-      return parseEther(value ? value : '0');
+      return parseEther(value || '0');
     } catch {
       return BigNumber.from(0);
     }
@@ -102,8 +102,7 @@ export const useWithdrawalRequest = ({
           setIsTxPending(false);
         }
       };
-      if (isBunker) {
-      } else startCallback();
+      void startCallback();
     },
     [
       approve,

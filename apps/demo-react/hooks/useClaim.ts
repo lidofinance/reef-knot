@@ -1,10 +1,10 @@
+import { BigNumber } from 'ethers';
+import { useCallback, useMemo } from 'react';
 import { useWithdrawalsContract } from './useWithdrawalsContract';
 import {
   useWithdrawalRequests,
   type RequestStatusClaimable,
 } from './useWithdrawalsData';
-import { BigNumber } from 'ethers';
-import { useCallback, useMemo } from 'react';
 import { useClaimSelection } from './useClaimSelection';
 
 export const useClaimData = () => {

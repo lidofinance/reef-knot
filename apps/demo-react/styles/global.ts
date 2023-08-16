@@ -25,7 +25,7 @@ export const FlexContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-`
+`;
 
 export const MainSection = styled(Block)`
   display: flex;
@@ -37,4 +37,4 @@ export const MainSection = styled(Block)`
     justify-content: flex-start;
     align-items: center;
   }
-`
+`;

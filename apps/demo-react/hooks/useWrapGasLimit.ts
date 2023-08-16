@@ -3,30 +3,30 @@ import { CHAINS } from '@lido-sdk/constants';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { useLidoSWR, useWSTETHContractRPC } from '@lido-sdk/react';
 import { useWeb3 } from 'reef-knot/web3-react';
+import { BigNumber } from 'ethers';
 import {
   WRAP_FROM_ETH_GAS_LIMIT,
   WRAP_GAS_LIMIT,
   WRAP_GAS_LIMIT_GOERLI,
 } from '../config/constants';
 
-import { BigNumber } from 'ethers';
 import { getBackendRPCPath } from '../util/contractTestingUtils';
 import { ESTIMATE_ACCOUNT } from './useStethSubmitGasLimit';
 
-export const useWrapGasLimit = (fromEther: boolean) => {
+export const useWrapGasLimit = (fromEth: boolean) => {
   const wsteth = useWSTETHContractRPC();
   const { chainId } = useWeb3();
 
   const { data } = useLidoSWR(
-    ['swr:wrap-gas-limit', chainId, fromEther],
-    async (_key, chainId, fromEther) => {
-      if (!chainId) {
+    ['swr:wrap-gas-limit', chainId, fromEth],
+    async (_key, chainIdParam, fromEther) => {
+      if (!chainIdParam) {
         return;
       }
 
       const provider = getStaticRpcBatchProvider(
-        chainId as CHAINS,
-        getBackendRPCPath(chainId as CHAINS),
+        chainIdParam as CHAINS,
+        getBackendRPCPath(chainIdParam as CHAINS),
       );
 
       const feeData = await provider.getFeeData();
@@ -48,37 +48,34 @@ export const useWrapGasLimit = (fromEther: boolean) => {
           });
 
         return +gasLimit;
-      } else {
-        const gasLimit = await wsteth.estimateGas
-          .wrap(parseEther('0.0001'), {
-            from: ESTIMATE_ACCOUNT,
-            maxPriorityFeePerGas,
-            maxFeePerGas,
-          })
-          .catch((error) => {
-            console.warn(error);
-            return BigNumber.from(
-              chainId === CHAINS.Goerli
-                ? WRAP_GAS_LIMIT_GOERLI
-                : WRAP_GAS_LIMIT,
-            );
-          });
-
-        return +gasLimit;
       }
+      const gasLimit = await wsteth.estimateGas
+        .wrap(parseEther('0.0001'), {
+          from: ESTIMATE_ACCOUNT,
+          maxPriorityFeePerGas,
+          maxFeePerGas,
+        })
+        .catch((error) => {
+          console.warn(error);
+          return BigNumber.from(
+            chainIdParam === CHAINS.Goerli
+              ? WRAP_GAS_LIMIT_GOERLI
+              : WRAP_GAS_LIMIT,
+          );
+        });
+
+      return +gasLimit;
     },
   );
 
   if (!data) {
-    if (fromEther) {
+    if (fromEth) {
       return WRAP_FROM_ETH_GAS_LIMIT;
-    } else {
-      if (chainId === CHAINS.Goerli) {
-        return WRAP_GAS_LIMIT_GOERLI;
-      } else {
-        return WRAP_GAS_LIMIT;
-      }
     }
+    if (chainId === CHAINS.Goerli) {
+      return WRAP_GAS_LIMIT_GOERLI;
+    }
+    return WRAP_GAS_LIMIT;
   }
 
   return data;

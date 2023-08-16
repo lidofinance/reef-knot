@@ -4,8 +4,8 @@ import { getTokenAddress, TOKENS } from '@lido-sdk/constants';
 
 import invariant from 'tiny-invariant';
 import type { Web3Provider } from '@ethersproject/providers';
-import { getBackendRPCPath } from './contractTestingUtils';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
+import { getBackendRPCPath } from './contractTestingUtils';
 
 const ETH = 'ETH';
 

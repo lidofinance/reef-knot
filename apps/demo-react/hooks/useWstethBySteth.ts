@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 import debounce from 'lodash/debounce';
 
 export const useWstethBySteth = (
-  steth: BigNumber | undefined,
+  stEth: BigNumber | undefined,
 ): BigNumber | undefined => {
   const [wstethBalance, setWstethBalance] = useState<BigNumber>();
 
@@ -24,8 +24,8 @@ export const useWstethBySteth = (
   );
 
   useEffect(() => {
-    getWstethBalance(steth);
-  }, [getWstethBalance, steth]);
+    void getWstethBalance(stEth);
+  }, [getWstethBalance, stEth]);
 
   return wstethBalance;
 };

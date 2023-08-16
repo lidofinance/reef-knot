@@ -161,9 +161,7 @@ const WithdrawalsForm = () => {
                   <Checkbox
                     name={req.stringId}
                     label={`${formatBalance(req.amountOfStETH, 5)} ETH`}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    checked={selectedRequests[req.stringId as any]}
+                    checked={!!selectedRequests[Number(req.stringId)]}
                     onChange={handleSelect}
                   />
                 </RequestStyled>

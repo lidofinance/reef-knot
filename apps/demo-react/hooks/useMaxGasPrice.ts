@@ -7,13 +7,13 @@ import { ONE_GWEI, getBackendRPCPath } from '../util/contractTestingUtils';
 
 export const useMaxGasPrice = (): BigNumber | undefined => {
   const { chainId } = useSDK();
-  const { data: maxGasPrice } = useLidoSWR(
+  const { data: maxFeePerGasPrice } = useLidoSWR(
     ['swr:max-gas-price', chainId],
     async () => {
       try {
         const provider = getStaticRpcBatchProvider(
-          chainId as CHAINS,
-          getBackendRPCPath(chainId as CHAINS),
+          chainId,
+          getBackendRPCPath(chainId),
         );
         const feeData = await provider.getFeeData();
         const maxGasPrice = feeData.maxFeePerGas;
@@ -27,5 +27,5 @@ export const useMaxGasPrice = (): BigNumber | undefined => {
     { isPaused: () => !chainId },
   );
 
-  return maxGasPrice;
+  return maxFeePerGasPrice;
 };

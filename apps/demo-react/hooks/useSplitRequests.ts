@@ -36,7 +36,7 @@ export const useSplitRequest = (inputValue: string, selectedToken: TOKENS) => {
   const maxAmount = isWSteth ? maxAmountWsteth : maxAmountSteth;
 
   return useMemo(() => {
-    if (!maxAmount || !inputValue || isNaN(Number(inputValue)))
+    if (!maxAmount || !inputValue || Number.isNaN(Number(inputValue)))
       return { requests: [], requestCount: 0, areRequestsValid: false };
 
     const parsedInputValue = parseEther(inputValue);

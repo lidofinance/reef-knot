@@ -46,7 +46,7 @@ export const formatBalance: FormatBalance = (
   if (balanceString.includes('.')) {
     const parts = balanceString.split('.');
     if (maxDecimalDigits === 0) return parts[0];
-    return parts[0] + '.' + parts[1].slice(0, maxDecimalDigits);
+    return `${parts[0]}.${parts[1].slice(0, maxDecimalDigits)}`;
   }
 
   return balanceString;

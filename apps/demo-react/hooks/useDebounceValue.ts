@@ -6,9 +6,7 @@ export const useDebouncedValue = <T>(value: T, delay: number) => {
   const deb = useMemo(() => debounce((_v) => s(_v), delay), [delay]);
   deb(value);
   useEffect(() => {
-    () => {
-      deb.flush();
-    };
+    deb.flush();
   }, [delay]);
   return v;
 };

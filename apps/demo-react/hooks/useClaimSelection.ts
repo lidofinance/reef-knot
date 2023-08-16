@@ -7,6 +7,7 @@ import {
 } from './useWithdrawalsData';
 import type { RequestStatusClaimable } from './useWithdrawalsData';
 import { useIsLedgerLive } from './useIsLedgerLive';
+
 export const useClaimSelection = (
   claimableRequests: RequestStatusClaimable[] | null,
 ) => {
@@ -20,7 +21,8 @@ export const useClaimSelection = (
 
   const claimableIdToIndex = useMemo(() => {
     return (
-      claimableRequests?.reduce((map, cur, i) => {
+      claimableRequests?.reduce((mapParam, cur, i) => {
+        const map = mapParam;
         map[cur.stringId] = i;
         return map;
       }, {} as { [key: string]: number }) ?? {}

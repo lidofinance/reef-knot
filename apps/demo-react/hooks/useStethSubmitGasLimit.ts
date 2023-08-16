@@ -1,11 +1,11 @@
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { useLidoSWR, useSTETHContractRPC } from '@lido-sdk/react';
 import { useWeb3 } from 'reef-knot/web3-react';
-import { getBackendRPCPath } from '../util/contractTestingUtils';
-import { CHAINS } from '../config/chains';
 import { parseEther } from 'ethers/lib/utils.js';
 import { BigNumber } from 'ethers';
 import { AddressZero } from '@ethersproject/constants';
+import { CHAINS } from '../config/chains';
+import { getBackendRPCPath } from '../util/contractTestingUtils';
 
 type UseStethSubmitGasLimit = () => number | undefined;
 // account for gas estimation
@@ -28,8 +28,8 @@ export const useStethSubmitGasLimit: UseStethSubmitGasLimit = () => {
   const { chainId } = useWeb3();
   const { data } = useLidoSWR(
     ['swr:submit-gas-limit', chainId],
-    async (_key, chainId) => {
-      if (!chainId) {
+    async (_key, chainIdParam) => {
+      if (!chainIdParam) {
         return;
       }
 

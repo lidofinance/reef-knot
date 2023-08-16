@@ -8,9 +8,9 @@ import {
   useWSTETHBalance,
 } from '@lido-sdk/react';
 import type { WstethAbi, StethAbi } from '@lido-sdk/contracts';
-import { useWithdrawalsContract } from './useWithdrawalsContract';
 import { TOKENS } from '@lido-sdk/constants';
 import type { SWRConfiguration } from 'swr';
+import { useWithdrawalsContract } from './useWithdrawalsContract';
 import { useClaimData } from './useClaim';
 import { useWithdrawalsBaseData } from './useWithdrawalsBaseData';
 
@@ -86,11 +86,10 @@ export const useWithdrawalRequestMethods = () => {
   const unfinalizedStETH = useUnfinalizedStETH();
 
   const updateData = useCallback(() => {
-    // TODO
-    stethBalance.update();
-    wstethBalance.update();
-    withdrawalRequestsDataUpdate();
-    unfinalizedStETH.update();
+    void stethBalance.update();
+    void wstethBalance.update();
+    void withdrawalRequestsDataUpdate();
+    void unfinalizedStETH.update();
   }, [
     stethBalance,
     unfinalizedStETH,
@@ -282,10 +281,10 @@ export const useWithdrawalRequests = () => {
   return useLidoSWR(
     ['swr:withdrawals-requests', account, chainId],
     async (...args: unknown[]) => {
-      const account = args[1] as string;
+      const acc = args[1] as string;
       if (contractWeb3) {
         const [requestIds = [], lastCheckpointIndex] = await Promise.all([
-          contractWeb3.getWithdrawalRequests(account),
+          contractWeb3.getWithdrawalRequests(acc),
           contractWeb3.getLastCheckpointIndex(),
         ]);
         const requestStatuses = await contractWeb3?.getWithdrawalStatus(
