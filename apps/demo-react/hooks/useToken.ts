@@ -8,16 +8,14 @@ import {
 } from '@lido-sdk/react';
 
 export const useToken = (selectedToken: TOKENS) => {
-
   const wstethContractWeb3 = useWSTETHContractWeb3();
   const stethContractWeb3 = useSTETHContractWeb3();
-  // TODO conditional balance fetch
   const stethBalance = useSTETHBalance();
   const wstethBalance = useWSTETHBalance();
   const isSteth = selectedToken === TOKENS.STETH;
   const tokenContract = isSteth ? stethContractWeb3 : wstethContractWeb3;
   const tokenBalance = isSteth ? stethBalance.data : wstethBalance.data;
-  // we recalculate only on data change relevant to current token
+
   return useMemo(() => {
     return {
       token: selectedToken,

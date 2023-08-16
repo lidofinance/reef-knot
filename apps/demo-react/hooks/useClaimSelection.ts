@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { MAX_REQUESTS_COUNT, DEFAULT_CLAIM_REQUEST_SELECTED, MAX_REQUESTS_COUNT_LEDGER_LIMIT } from './useWithdrawalsData';
-import type {RequestStatusClaimable} from './useWithdrawalsData'
+import {
+  MAX_REQUESTS_COUNT,
+  DEFAULT_CLAIM_REQUEST_SELECTED,
+  MAX_REQUESTS_COUNT_LEDGER_LIMIT,
+} from './useWithdrawalsData';
+import type { RequestStatusClaimable } from './useWithdrawalsData';
 import { useIsLedgerLive } from './useIsLedgerLive';
 export const useClaimSelection = (
   claimableRequests: RequestStatusClaimable[] | null,

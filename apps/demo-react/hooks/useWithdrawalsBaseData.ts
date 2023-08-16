@@ -4,7 +4,6 @@ import { BigNumber } from 'ethers';
 import { useWithdrawalsContract } from './useWithdrawalsContract';
 import { STRATEGY_CONSTANT } from './useWithdrawalsData';
 
-
 type useWithdrawalsBaseDataResult = {
   maxAmount: BigNumber | undefined;
   minAmount: BigNumber | undefined;

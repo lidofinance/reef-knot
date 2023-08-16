@@ -2,7 +2,6 @@ import { parseEther } from '@ethersproject/units';
 import { WstethAbi } from '@lido-sdk/contracts';
 import { getTokenAddress, TOKENS } from '@lido-sdk/constants';
 
-
 import invariant from 'tiny-invariant';
 import type { Web3Provider } from '@ethersproject/providers';
 import { getBackendRPCPath } from './contractTestingUtils';
@@ -44,10 +43,10 @@ export const unwrapProcessing: UnwrapProcessingProps = async (
     const maxFeePerGas = feeData.maxFeePerGas ?? undefined;
 
     const callback = async () => {
-        return wstethContractWeb3.unwrap(parseEther(inputValue), {
-          maxPriorityFeePerGas,
-          maxFeePerGas,
-        });
+      return wstethContractWeb3.unwrap(parseEther(inputValue), {
+        maxPriorityFeePerGas,
+        maxFeePerGas,
+      });
     };
 
     const transaction = await callback();
@@ -62,9 +61,8 @@ export const unwrapProcessing: UnwrapProcessingProps = async (
     }
 
     handleEnding();
-
   } catch (error: any) {
-    throw new Error(error)
+    throw new Error(error);
   }
 };
 
@@ -78,78 +76,75 @@ type WrapProcessingWithApproveProps = (
   selectedToken: string,
 ) => Promise<void>;
 
-
 export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
-    chainId,
-    providerWeb3,
-    wstethContractWeb3,
-    ethBalanceUpdate,
-    stethBalanceUpdate,
-    inputValue,
-    selectedToken,
-  ) => {
-    if (!chainId || !wstethContractWeb3) {
-      return;
-    }
-  
-    invariant(providerWeb3, 'must have providerWeb3');
-  
-    const wstethTokenAddress = getTokenAddress(chainId, TOKENS.WSTETH);
-  
-    const provider = getStaticRpcBatchProvider(
-      chainId,
-      getBackendRPCPath(chainId),
-    );
-    const feeData = await provider.getFeeData();
-    const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;
-    const maxFeePerGas = feeData.maxFeePerGas ?? undefined;
-  
-    const handleEnding = () => {
-      ethBalanceUpdate();
-      stethBalanceUpdate();
-    };
-  
-    try {
-      if (selectedToken === ETH) {
-        const overrides = {
-          to: wstethTokenAddress,
-          value: parseEther(inputValue),
-          maxPriorityFeePerGas,
-          maxFeePerGas,
-        };
-  
-        const callback = async () => {
-            return wstethContractWeb3.signer.sendTransaction(overrides);
-          }
-  
-        const transaction = await callback();
+  chainId,
+  providerWeb3,
+  wstethContractWeb3,
+  ethBalanceUpdate,
+  stethBalanceUpdate,
+  inputValue,
+  selectedToken,
+) => {
+  if (!chainId || !wstethContractWeb3) {
+    return;
+  }
 
-  
-        if (typeof transaction === 'object') {
-          await transaction.wait();
-        }
-  
-        handleEnding();
-      } else if (selectedToken === TOKENS.STETH) {
-          const overrides = {
-            maxPriorityFeePerGas,
-            maxFeePerGas,
-          };
-  
-          const callback = async () => {
-              return wstethContractWeb3.wrap(parseEther(inputValue), overrides);
-            }
-  
-          const transaction = await callback();
-  
-          if (typeof transaction === 'object') {
-            await transaction.wait();
-          }
-  
-          handleEnding();
-      }
-    } catch (error: any) {
-      throw new Error(error)
-    }
+  invariant(providerWeb3, 'must have providerWeb3');
+
+  const wstethTokenAddress = getTokenAddress(chainId, TOKENS.WSTETH);
+
+  const provider = getStaticRpcBatchProvider(
+    chainId,
+    getBackendRPCPath(chainId),
+  );
+  const feeData = await provider.getFeeData();
+  const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;
+  const maxFeePerGas = feeData.maxFeePerGas ?? undefined;
+
+  const handleEnding = () => {
+    ethBalanceUpdate();
+    stethBalanceUpdate();
   };
-  
+
+  try {
+    if (selectedToken === ETH) {
+      const overrides = {
+        to: wstethTokenAddress,
+        value: parseEther(inputValue),
+        maxPriorityFeePerGas,
+        maxFeePerGas,
+      };
+
+      const callback = async () => {
+        return wstethContractWeb3.signer.sendTransaction(overrides);
+      };
+
+      const transaction = await callback();
+
+      if (typeof transaction === 'object') {
+        await transaction.wait();
+      }
+
+      handleEnding();
+    } else if (selectedToken === TOKENS.STETH) {
+      const overrides = {
+        maxPriorityFeePerGas,
+        maxFeePerGas,
+      };
+
+      const callback = async () => {
+        return wstethContractWeb3.wrap(parseEther(inputValue), overrides);
+      };
+
+      const transaction = await callback();
+
+      if (typeof transaction === 'object') {
+        await transaction.wait();
+      }
+
+      handleEnding();
+    }
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

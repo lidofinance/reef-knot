@@ -11,9 +11,15 @@ import { useWithdrawalsContract } from './useWithdrawalsContract';
 import { useTxCostInUsd } from './txCost';
 import { useClaimData } from './useClaim';
 import { useDebouncedValue } from './useDebounceValue';
-import { ESTIMATE_ACCOUNT, WITHDRAWAL_QUEUE_CLAIM_GAS_LIMIT_DEFAULT, WITHDRAWAL_QUEUE_REQUEST_STETH_APPROVED_GAS_LIMIT_DEFAULT, WITHDRAWAL_QUEUE_REQUEST_STETH_PERMIT_GAS_LIMIT_DEFAULT, WITHDRAWAL_QUEUE_REQUEST_WSTETH_APPROVED_GAS_LIMIT_DEFAULT, WITHDRAWAL_QUEUE_REQUEST_WSTETH_PERMIT_GAS_LIMIT_DEFAULT } from './useStethSubmitGasLimit';
+import {
+  ESTIMATE_ACCOUNT,
+  WITHDRAWAL_QUEUE_CLAIM_GAS_LIMIT_DEFAULT,
+  WITHDRAWAL_QUEUE_REQUEST_STETH_APPROVED_GAS_LIMIT_DEFAULT,
+  WITHDRAWAL_QUEUE_REQUEST_STETH_PERMIT_GAS_LIMIT_DEFAULT,
+  WITHDRAWAL_QUEUE_REQUEST_WSTETH_APPROVED_GAS_LIMIT_DEFAULT,
+  WITHDRAWAL_QUEUE_REQUEST_WSTETH_PERMIT_GAS_LIMIT_DEFAULT,
+} from './useStethSubmitGasLimit';
 import { encodeURLQuery, standardFetcher } from '../util/contractTestingUtils';
-
 
 type UseRequestTxPriceOptions = {
   requestCount?: number;
@@ -35,8 +41,8 @@ export const useRequestTxPrice = ({
         ? WITHDRAWAL_QUEUE_REQUEST_STETH_APPROVED_GAS_LIMIT_DEFAULT
         : WITHDRAWAL_QUEUE_REQUEST_STETH_PERMIT_GAS_LIMIT_DEFAULT
       : isApprovalFlow
-        ? WITHDRAWAL_QUEUE_REQUEST_WSTETH_APPROVED_GAS_LIMIT_DEFAULT
-        : WITHDRAWAL_QUEUE_REQUEST_WSTETH_PERMIT_GAS_LIMIT_DEFAULT;
+      ? WITHDRAWAL_QUEUE_REQUEST_WSTETH_APPROVED_GAS_LIMIT_DEFAULT
+      : WITHDRAWAL_QUEUE_REQUEST_WSTETH_PERMIT_GAS_LIMIT_DEFAULT;
 
   const cappedRequestCount = Math.min(requestCount || 1, MAX_REQUESTS_COUNT);
   const debouncedRequestCount = useDebouncedValue(cappedRequestCount, 2000);
@@ -150,7 +156,7 @@ export const useClaimTxPrice = () => {
   const gasLimit = isEstimateLoading
     ? undefined
     : gasLimitResult?.toNumber() ??
-    WITHDRAWAL_QUEUE_CLAIM_GAS_LIMIT_DEFAULT * requestCount;
+      WITHDRAWAL_QUEUE_CLAIM_GAS_LIMIT_DEFAULT * requestCount;
 
   const price = useTxCostInUsd({ gasLimit });
 

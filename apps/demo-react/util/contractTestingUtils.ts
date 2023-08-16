@@ -1,6 +1,6 @@
-import { isAddress } from "ethers/lib/utils.js";
+import { isAddress } from 'ethers/lib/utils.js';
 import { getWithdrawalQueueAddress, CHAINS } from '@lido-sdk/constants';
-import { getStaticRpcBatchProvider } from "@lido-sdk/providers";
+import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { formatEther } from '@ethersproject/units';
 import { Zero } from '@ethersproject/constants';
@@ -8,7 +8,6 @@ import { Zero } from '@ethersproject/constants';
 export const BASE_URL = 'https://eth-goerli.public.blastapi.io/';
 
 export const getBackendRPCPath = (chainId: string | number): string => {
-
   return `${BASE_URL}/api/rpc?chainId=${chainId}`;
 };
 
@@ -35,7 +34,6 @@ export const getAddress = async (
 };
 
 export const ONE_GWEI = BigNumber.from(10 ** 9);
-
 
 type FormatBalance = (balance?: BigNumber, maxDecimalDigits?: number) => string;
 
@@ -71,7 +69,6 @@ const DEFAULT_PARAMS = {
   },
 };
 
-
 type StandardFetcher = <T>(url: string, params?: RequestInit) => Promise<T>;
 
 export const standardFetcher: StandardFetcher = async (url, params) => {
@@ -81,12 +78,11 @@ export const standardFetcher: StandardFetcher = async (url, params) => {
   });
 
   if (!response.ok) {
-    console.log('error in fetcher')
+    console.log('error in fetcher');
   }
 
   return await response.json();
 };
-
 
 export const NFT_URL_PREFIX_BY_NETWORK: {
   [key in CHAINS]?: (nftId: string, contract: string) => string;

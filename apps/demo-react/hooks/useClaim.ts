@@ -1,9 +1,11 @@
 import { useWithdrawalsContract } from './useWithdrawalsContract';
-import { useWithdrawalRequests, type RequestStatusClaimable } from './useWithdrawalsData'
+import {
+  useWithdrawalRequests,
+  type RequestStatusClaimable,
+} from './useWithdrawalsData';
 import { BigNumber } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { useClaimSelection } from './useClaimSelection';
-
 
 export const useClaimData = () => {
   const withdrawRequests = useWithdrawalRequests();
@@ -39,12 +41,10 @@ export const useClaimData = () => {
       requests,
       ethToClaim,
     };
-
   }, [claimSelection, withdrawRequests, ethToClaim, requests]);
-}
+};
 
 export const useClaim = () => {
-
   const { contractWeb3 } = useWithdrawalsContract();
 
   const { update } = useClaimData();
@@ -52,7 +52,6 @@ export const useClaim = () => {
   return useCallback(
     async (sortedRequests: RequestStatusClaimable[]) => {
       try {
-
         const ethToClaim = sortedRequests.reduce(
           (s, r) => s.add(r.claimableEth),
           BigNumber.from(0),
@@ -89,7 +88,7 @@ export const useClaim = () => {
         }
         await update();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     [contractWeb3, update],

@@ -2,11 +2,14 @@ import { useMemo } from 'react';
 import { parseEther } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 
-
 import { useContractSWR, useWSTETHContractRPC } from '@lido-sdk/react';
 import { TOKENS } from '@lido-sdk/constants';
 
-import { MAX_REQUESTS_COUNT, MAX_REQUESTS_COUNT_LEDGER_LIMIT, STRATEGY_LAZY } from './useWithdrawalsData';
+import {
+  MAX_REQUESTS_COUNT,
+  MAX_REQUESTS_COUNT_LEDGER_LIMIT,
+  STRATEGY_LAZY,
+} from './useWithdrawalsData';
 import { useIsLedgerLive } from './useIsLedgerLive';
 import { useToken } from './useToken';
 import { useWithdrawalsBaseData } from './useWithdrawalsBaseData';
@@ -33,11 +36,7 @@ export const useSplitRequest = (inputValue: string, selectedToken: TOKENS) => {
   const maxAmount = isWSteth ? maxAmountWsteth : maxAmountSteth;
 
   return useMemo(() => {
-    if (
-      !maxAmount ||
-      !inputValue ||
-      isNaN(Number(inputValue))
-    )
+    if (!maxAmount || !inputValue || isNaN(Number(inputValue)))
       return { requests: [], requestCount: 0, areRequestsValid: false };
 
     const parsedInputValue = parseEther(inputValue);
@@ -67,6 +66,5 @@ export const useSplitRequest = (inputValue: string, selectedToken: TOKENS) => {
       requestCount: requestCount + (hasRest ? 1 : 0),
       areRequestsValid: requests.length > 0,
     };
-
   }, [inputValue, maxAmount, maxRequestCount, selectedToken]);
 };

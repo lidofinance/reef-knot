@@ -67,7 +67,6 @@ export const useERC20PermitSignature = <
   const { providerWeb3 } = useSDK();
 
   const gatherPermitSignature = useCallback(async () => {
-
     const deadline = INFINITY_DEADLINE_VALUE;
     const parsedValue = parseEther(value).toString();
     let domain: TypedDataDomain;
@@ -102,7 +101,8 @@ export const useERC20PermitSignature = <
 
     const signer = providerWeb3?.getSigner();
 
-    return signer?._signTypedData(domain, types, message)
+    return signer
+      ?._signTypedData(domain, types, message)
       .then(splitSignature)
       .then((signature) => {
         return {

@@ -1,13 +1,17 @@
-import { useCallback, useMemo, useState } from "react";
-import { useWeb3 } from "reef-knot/web3-react";
-import { useAccount } from "wagmi";
-import { useWithdrawalsContract } from "./useWithdrawalsContract";
-import { parseEther } from "ethers/lib/utils.js";
-import { BigNumber } from "ethers";
-import { useApprove } from "@lido-sdk/react";
-import { MaxUint256 } from "@ethersproject/constants";
-import { useERC20PermitSignature } from "./useERC20permitSignature";
-import { useWithdrawals, type useWithdrawalRequestOptions, useWithdrawalRequestMethods } from './useWithdrawalsData'
+import { useCallback, useMemo, useState } from 'react';
+import { useWeb3 } from 'reef-knot/web3-react';
+import { useAccount } from 'wagmi';
+import { useWithdrawalsContract } from './useWithdrawalsContract';
+import { parseEther } from 'ethers/lib/utils.js';
+import { BigNumber } from 'ethers';
+import { useApprove } from '@lido-sdk/react';
+import { MaxUint256 } from '@ethersproject/constants';
+import { useERC20PermitSignature } from './useERC20permitSignature';
+import {
+  useWithdrawals,
+  type useWithdrawalRequestOptions,
+  useWithdrawalRequestMethods,
+} from './useWithdrawalsData';
 
 export const useWithdrawalRequest = ({
   value,
@@ -21,7 +25,6 @@ export const useWithdrawalRequest = ({
   const { contractWeb3: withdrawalContractWeb3 } = useWithdrawalsContract();
 
   const getRequestMethod = useWithdrawalRequestMethods();
-
 
   const valueBN = useMemo(() => {
     try {
@@ -59,8 +62,7 @@ export const useWithdrawalRequest = ({
     connector?.id === 'walletConnect' ||
     (allowance.gt(BigNumber.from(0)) && !needsApprove);
 
-  const isApprovalFlowLoading =
-    isApprovalFlow && loadingUseApprove;
+  const isApprovalFlowLoading = isApprovalFlow && loadingUseApprove;
 
   const isTokenLocked = isApprovalFlow && needsApprove;
 
@@ -95,7 +97,7 @@ export const useWithdrawalRequest = ({
           // end flow
           resetForm();
         } catch (error) {
-          console.log(error)
+          console.log(error);
         } finally {
           setIsTxPending(false);
         }

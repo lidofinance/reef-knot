@@ -5,25 +5,25 @@ import { weiToEth } from '../util/weiToEth';
 import { useMaxGasPrice } from './useMaxGasPrice';
 
 type Props = {
-    gasLimit?: number;
-}
+  gasLimit?: number;
+};
 
 type UseTxCostInUsd = (props: Props) => number | undefined;
 
 export const useTxCostInUsd: UseTxCostInUsd = ({ gasLimit }) => {
-    const gasPrice = useMaxGasPrice();
+  const gasPrice = useMaxGasPrice();
 
-    // useEthPrice hook works via mainnet chain!
-    const { data: ethInUsd } = useEthPrice();
+  // useEthPrice hook works via mainnet chain!
+  const { data: ethInUsd } = useEthPrice();
 
-    return useMemo(() => {
-        if (!ethInUsd || !gasPrice) return undefined;
-        try {
-            const gasLimitBN = BigNumber.from(gasLimit).mul(gasPrice);
-            const txCostInEth = weiToEth(gasLimitBN);
-            return txCostInEth * ethInUsd;
-        } catch {
-            return undefined;
-        }
-    }, [ethInUsd, gasPrice, gasLimit]);
+  return useMemo(() => {
+    if (!ethInUsd || !gasPrice) return undefined;
+    try {
+      const gasLimitBN = BigNumber.from(gasLimit).mul(gasPrice);
+      const txCostInEth = weiToEth(gasLimitBN);
+      return txCostInEth * ethInUsd;
+    } catch {
+      return undefined;
+    }
+  }, [ethInUsd, gasPrice, gasLimit]);
 };
