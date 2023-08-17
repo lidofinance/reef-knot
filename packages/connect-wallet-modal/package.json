@@ -34,7 +34,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "lint": "eslint"
   },
   "dependencies": {
     "@types/react": "17.0.53",

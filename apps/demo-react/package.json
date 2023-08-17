@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "lint": "next lint",
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated ./abi/*.json"
   },
   "dependencies": {
