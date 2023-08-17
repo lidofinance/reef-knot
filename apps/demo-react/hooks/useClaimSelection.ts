@@ -92,6 +92,7 @@ export const useClaimSelection = (
           .map((r) => r.stringId),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEmptyData]);
 
   return {

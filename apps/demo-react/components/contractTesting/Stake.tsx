@@ -92,7 +92,12 @@ const StakeForm = () => {
       setEstimateStakeGas(STETH_SUBMIT_GAS_LIMIT_DEFAULT);
       setStakeGasError(e?.message);
     }
-  }, [providerWeb3]);
+  }, [
+    inputValue.eth,
+    providerWeb3,
+    referralAddress,
+    stethContractWeb3?.estimateGas,
+  ]);
 
   const stake = useCallback(async () => {
     setTxError('');
@@ -142,13 +147,19 @@ const StakeForm = () => {
     } catch (error: any) {
       setTxError(error?.reason);
     }
-  }, [providerWeb3, stethContractWeb3, walletBalance, stethBalance.update]);
+  }, [
+    stethContractWeb3,
+    chainId,
+    providerWeb3,
+    inputValue.eth,
+    referralAddress,
+  ]);
 
   useEffect(() => {
     void providerWeb3
       ?.getBalance(account || '')
       .then((data) => setWalletBalance(formatBalance(data, 5)), console.log);
-  }, [providerWeb3]);
+  }, [account, providerWeb3]);
 
   return (
     <BlueWrapper>

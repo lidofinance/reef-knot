@@ -143,7 +143,7 @@ export const useWithdrawalRequestMethods = () => {
       const transaction = await callback();
 
       await transaction?.wait();
-      await updateData();
+      updateData();
     },
     [account, chainId, contractWeb3, updateData],
   );
@@ -192,7 +192,7 @@ export const useWithdrawalRequestMethods = () => {
       const transaction = await callback();
 
       await transaction?.wait();
-      await updateData();
+      updateData();
     },
     [account, chainId, contractWeb3, updateData],
   );
@@ -225,7 +225,7 @@ export const useWithdrawalRequestMethods = () => {
       if (isTransaction) {
         await transaction?.wait();
       }
-      await updateData();
+      updateData();
     },
     [account, chainId, contractWeb3, providerWeb3, updateData],
   );
@@ -256,7 +256,7 @@ export const useWithdrawalRequestMethods = () => {
       if (isTransaction) {
         await transaction?.wait();
       }
-      await updateData();
+      updateData();
     },
     [account, chainId, contractWeb3, providerWeb3, updateData],
   );
