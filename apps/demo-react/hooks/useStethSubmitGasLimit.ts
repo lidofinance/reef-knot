@@ -1,11 +1,11 @@
-import { getStaticRpcBatchProvider } from "@lido-sdk/providers";
-import { useLidoSWR, useSTETHContractRPC } from "@lido-sdk/react";
-import { useWeb3 } from "reef-knot/web3-react";
-import { getBackendRPCPath } from "../util/contractTestingUtils";
-import { CHAINS } from "../config/chains";
-import { parseEther } from "ethers/lib/utils.js";
-import { BigNumber } from "ethers";
+import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
+import { useLidoSWR, useSTETHContractRPC } from '@lido-sdk/react';
+import { useWeb3 } from 'reef-knot/web3-react';
+import { parseEther } from 'ethers/lib/utils.js';
+import { BigNumber } from 'ethers';
 import { AddressZero } from '@ethersproject/constants';
+import { CHAINS } from '../config/chains';
+import { getBackendRPCPath } from '../util/contractTestingUtils';
 
 type UseStethSubmitGasLimit = () => number | undefined;
 // account for gas estimation
@@ -23,41 +23,41 @@ export const WITHDRAWAL_QUEUE_CLAIM_GAS_LIMIT_DEFAULT = 89818;
 export const STETH_SUBMIT_GAS_LIMIT_DEFAULT = 90000;
 
 export const useStethSubmitGasLimit: UseStethSubmitGasLimit = () => {
-    const stethContractRPC = useSTETHContractRPC();
+  const stethContractRPC = useSTETHContractRPC();
 
-    const { chainId } = useWeb3();
-    const { data } = useLidoSWR(
-        ['swr:submit-gas-limit', chainId],
-        async (_key, chainId) => {
-            if (!chainId) {
-                return;
-            }
+  const { chainId } = useWeb3();
+  const { data } = useLidoSWR(
+    ['swr:submit-gas-limit', chainId],
+    async (_key, chainIdParam) => {
+      if (!chainIdParam) {
+        return;
+      }
 
-            const provider = getStaticRpcBatchProvider(
-                chainId as CHAINS,
-                // TODO: add a way to type useWeb3 hook
-                getBackendRPCPath(chainId as CHAINS),
-            );
+      const provider = getStaticRpcBatchProvider(
+        chainId as CHAINS,
+        // TODO: add a way to type useWeb3 hook
+        getBackendRPCPath(chainId as CHAINS),
+      );
 
-            const feeData = await provider.getFeeData();
-            const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;
-            const maxFeePerGas = feeData.maxFeePerGas ?? undefined;
+      const feeData = await provider.getFeeData();
+      const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;
+      const maxFeePerGas = feeData.maxFeePerGas ?? undefined;
 
-            const gasLimit = await stethContractRPC.estimateGas
-                .submit(AddressZero, {
-                    from: ESTIMATE_ACCOUNT,
-                    value: parseEther('0.001'),
-                    maxPriorityFeePerGas,
-                    maxFeePerGas,
-                })
-                .catch((error) => {
-                    console.warn(error);
-                    return BigNumber.from(STETH_SUBMIT_GAS_LIMIT_DEFAULT);
-                });
+      const gasLimit = await stethContractRPC.estimateGas
+        .submit(AddressZero, {
+          from: ESTIMATE_ACCOUNT,
+          value: parseEther('0.001'),
+          maxPriorityFeePerGas,
+          maxFeePerGas,
+        })
+        .catch((error) => {
+          console.warn(error);
+          return BigNumber.from(STETH_SUBMIT_GAS_LIMIT_DEFAULT);
+        });
 
-            return +gasLimit;
-        },
-    );
+      return +gasLimit;
+    },
+  );
 
-    return data ?? STETH_SUBMIT_GAS_LIMIT_DEFAULT;
+  return data ?? STETH_SUBMIT_GAS_LIMIT_DEFAULT;
 };

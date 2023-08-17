@@ -2127,9 +2127,9 @@
     typescript "4.6"
 
 "@lidofinance/lido-ui@^3.8.1":
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.8.1.tgz#21af8db3e27d12f08d032fcbedf00ea8904f9199"
-  integrity sha512-RalApHbilFGOePeRtRrcokMUQyH/YDcWu8njlZizNPxEDLJxMW8Y7i/rWtO05UESjEyvto2azTCDuPVuIhZHCw==
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.9.0.tgz#83b2ddb4253ae0c178ef3df742f831e2a258094d"
+  integrity sha512-IwY2yZIa3bDyb7g94611wb6cc082pwTf9HLWXiTrCMazLsf13QWQoFAbo6i1iXHdKq7Ovme6R8loRcYLWZkjlA==
   dependencies:
     "@styled-system/should-forward-prop" "5.1.5"
     "@swc/helpers" "^0.4.11"
@@ -3109,6 +3109,11 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
+
+"@types/lodash@^4.14.196":
+  version "4.14.197"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.197.tgz#e95c5ddcc814ec3e84c891910a01e0c8a378c54b"
+  integrity sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==
 
 "@types/minimatch@*":
   version "5.1.2"
