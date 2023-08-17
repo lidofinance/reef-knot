@@ -29,7 +29,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
     "@reef-knot/types": "^1.3.0",
