@@ -10,7 +10,6 @@ import {
 import { useState } from 'react';
 import useModal from '../hooks/useModal';
 import {
-  Wagmi,
   ProviderWeb3WithProps,
   Header,
   WalletInfo,
@@ -36,30 +35,28 @@ export function Web() {
       <Block style={{ borderRadius: 'unset' }}>
         <Header />
         <GlobalStyle />
-        <Wagmi>
-          <ProviderWeb3WithProps>
-            <MainContainer>
-              <ConnectDisconnect handleOpen={handleOpen} />
-              <div style={{ display: 'flex', gap: '40px' }}>
-                <NetworkSelector />
-                <ThemeSelect
-                  selectedTheme={selectedTheme}
-                  handleSelect={setSelectedTheme as (e: OptionValue) => void}
-                />
-              </div>
-              <MainSection>
-                <ContractTesting />
-              </MainSection>
-              <WalletInfo />
-
-              <WalletsModal
-                open={state}
-                handleClose={handleClose}
-                isDarkTheme={selectedTheme === ThemeName.dark}
+        <ProviderWeb3WithProps>
+          <MainContainer>
+            <ConnectDisconnect handleOpen={handleOpen} />
+            <div style={{ display: 'flex', gap: '40px' }}>
+              <NetworkSelector />
+              <ThemeSelect
+                selectedTheme={selectedTheme}
+                handleSelect={setSelectedTheme as (e: OptionValue) => void}
               />
-            </MainContainer>
-          </ProviderWeb3WithProps>
-        </Wagmi>
+            </div>
+            <MainSection>
+              <ContractTesting />
+            </MainSection>
+            <WalletInfo />
+
+            <WalletsModal
+              open={state}
+              handleClose={handleClose}
+              isDarkTheme={selectedTheme === ThemeName.dark}
+            />
+          </MainContainer>
+        </ProviderWeb3WithProps>
       </Block>
     </ThemeProvider>
   );

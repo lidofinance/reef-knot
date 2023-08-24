@@ -5,7 +5,7 @@ import { getTokenAddress, TOKENS } from '@lido-sdk/constants';
 import invariant from 'tiny-invariant';
 import type { Web3Provider } from '@ethersproject/providers';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
-import { getBackendRPCPath } from './contractTestingUtils';
+import { getRPCPath } from './contractTestingUtils';
 
 const ETH = 'ETH';
 
@@ -34,7 +34,7 @@ export const unwrapProcessing: UnwrapProcessingProps = async (
 
   const provider = getStaticRpcBatchProvider(
     chainId as any,
-    getBackendRPCPath(chainId),
+    getRPCPath(chainId),
   );
 
   try {
@@ -95,7 +95,7 @@ export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
 
   const provider = getStaticRpcBatchProvider(
     chainId,
-    getBackendRPCPath(chainId),
+    getRPCPath(chainId),
   );
   const feeData = await provider.getFeeData();
   const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;

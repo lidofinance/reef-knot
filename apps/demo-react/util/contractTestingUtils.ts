@@ -4,11 +4,10 @@ import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { formatEther } from '@ethersproject/units';
 import { Zero } from '@ethersproject/constants';
+import { rpcUrlsString } from './rpc';
 
-export const BASE_URL = 'https://eth-goerli.public.blastapi.io/';
-
-export const getBackendRPCPath = (chainId: string | number): string => {
-  return `${BASE_URL}/api/rpc?chainId=${chainId}`;
+export const getRPCPath = (chainId: CHAINS): string => {
+  return rpcUrlsString[chainId];
 };
 
 export const getAddress = async (
@@ -19,10 +18,7 @@ export const getAddress = async (
   if (isAddress(input)) return input;
 
   try {
-    const provider = getStaticRpcBatchProvider(
-      chainId,
-      getBackendRPCPath(chainId),
-    );
+    const provider = getStaticRpcBatchProvider(chainId, getRPCPath(chainId));
     const address = await provider.resolveName(input);
 
     if (address) return address;

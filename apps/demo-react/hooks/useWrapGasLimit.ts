@@ -10,7 +10,7 @@ import {
   WRAP_GAS_LIMIT_GOERLI,
 } from '../config/constants';
 
-import { getBackendRPCPath } from '../util/contractTestingUtils';
+import { getRPCPath } from '../util/contractTestingUtils';
 import { ESTIMATE_ACCOUNT } from './useStethSubmitGasLimit';
 
 export const useWrapGasLimit = (fromEth: boolean) => {
@@ -26,7 +26,7 @@ export const useWrapGasLimit = (fromEth: boolean) => {
 
       const provider = getStaticRpcBatchProvider(
         chainIdParam as CHAINS,
-        getBackendRPCPath(chainIdParam as CHAINS),
+        getRPCPath(chainIdParam as CHAINS),
       );
 
       const feeData = await provider.getFeeData();
