@@ -48,7 +48,13 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
       })();
       if (!connector) return;
 
-      const connectWallet = () => activate(connector, undefined, true);
+      const connectWallet = async () => {
+        await activate(connector, undefined, true);
+        // Hide the modal if a user approved the connection in a wallet's UI.
+        // If a user rejects the connection, then an error is thrown
+        // and the following code is not being reached, the modal stays visible.
+        acceptTermsModal.setVisible?.(false);
+      }
 
       let termsAccepted = false;
       if (typeof window !== 'undefined') {

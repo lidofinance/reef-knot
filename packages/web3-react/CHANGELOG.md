@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.4.2
+
+### Patch Changes
+
+- fix: connection rejection logic during mobile browser autoconnect
+
 ## 1.4.1
 
 ### Patch Changes

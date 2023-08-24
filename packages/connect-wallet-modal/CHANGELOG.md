@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.6.2
+
+### Patch Changes
+
+- fix: connection rejection logic during mobile browser autoconnect
+
 ## 1.6.1
 
 ### Patch Changes
