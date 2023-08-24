@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useState, ReactElement } from 'react';
 import { Button, Modal } from '@reef-knot/ui-react';
 import { AcceptTermsModalContext, LS_KEY_TERMS_ACCEPTANCE } from '@reef-knot/core-react';
 import {
@@ -10,7 +10,7 @@ import { Terms } from '../Terms';
 import { WalletsButtonsContainer, CommonButtonsContainer } from './styles';
 import { NOOP, useLocalStorage } from '../../helpers';
 
-export function WalletsModal(props: WalletsModalProps): JSX.Element {
+export function WalletsModal(props: WalletsModalProps): ReactElement {
   const {
     onClose,
     shouldInvertWalletIcon = false,
@@ -102,7 +102,6 @@ export function WalletsModal(props: WalletsModalProps): JSX.Element {
               disabled={!termsChecked}
               onClick={() => {
                 acceptTermsModal?.onContinue?.();
-                acceptTermsModal?.setVisible(false);
               }}
             >
               Connect
