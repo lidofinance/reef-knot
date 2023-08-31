@@ -23,7 +23,7 @@ const ContractTesting = () => {
   const stethBalance = useSTETHBalance();
   const stethContractWeb3 = useSTETHContractWeb3();
 
-  const { chainId, account } = useWeb3();
+  const { chainId = 5, account } = useWeb3();
   const { providerWeb3 } = useSDK();
   const ethBalance = useEthereumBalance();
   const wstethBalance = useWSTETHBalance();

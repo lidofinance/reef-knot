@@ -1,6 +1,6 @@
 import { parseEther } from '@ethersproject/units';
 import { WstethAbi } from '@lido-sdk/contracts';
-import { getTokenAddress, TOKENS } from '@lido-sdk/constants';
+import { CHAINS, getTokenAddress, TOKENS } from '@lido-sdk/constants';
 
 import invariant from 'tiny-invariant';
 import type { Web3Provider } from '@ethersproject/providers';
@@ -14,9 +14,9 @@ type UnwrapProcessingProps = (
   wstethContractWeb3: WstethAbi | null,
   wstethBalanceUpdate: () => void,
   stethBalanceUpdate: () => void,
-  chainId: string | number | undefined,
+  chainId: CHAINS,
   inputValue: string,
-) => Promise<void>;
+) => Promise<any>;
 
 export const unwrapProcessing: UnwrapProcessingProps = async (
   providerWeb3,
@@ -32,10 +32,7 @@ export const unwrapProcessing: UnwrapProcessingProps = async (
 
   invariant(providerWeb3, 'must have providerWeb3');
 
-  const provider = getStaticRpcBatchProvider(
-    chainId as any,
-    getRPCPath(chainId),
-  );
+  const provider = getStaticRpcBatchProvider(chainId, getRPCPath(chainId));
 
   try {
     const feeData = await provider.getFeeData();
@@ -58,6 +55,7 @@ export const unwrapProcessing: UnwrapProcessingProps = async (
 
     if (typeof transaction === 'object') {
       await transaction.wait();
+      return transaction;
     }
 
     handleEnding();
@@ -67,14 +65,14 @@ export const unwrapProcessing: UnwrapProcessingProps = async (
 };
 
 type WrapProcessingWithApproveProps = (
-  chainId: number | undefined,
+  chainId: CHAINS,
   providerWeb3: Web3Provider | undefined,
   stethContractWeb3: WstethAbi | null,
   ethBalanceUpdate: () => void,
   stethBalanceUpdate: () => void,
   inputValue: string,
   selectedToken: string,
-) => Promise<void>;
+) => Promise<any>;
 
 export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
   chainId,

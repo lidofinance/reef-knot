@@ -33,12 +33,13 @@ import {
   wrapProcessingWithApprove,
 } from '../../util/wrapProcessingWithApprove';
 import { LinkStyled } from './styles';
+import { CHAINS } from '../../config/chains';
 
 export interface WrapFormProps {
   ethBalance: SWRResponse<BigNumber>;
   stethBalance: SWRResponse<BigNumber>;
   wstethContractWeb3: WstethAbi | null;
-  chainId: number | undefined;
+  chainId: CHAINS;
   account: string | null | undefined;
   providerWeb3: Web3Provider | undefined;
   wstethBalance: SWRResponse<BigNumber>;
@@ -165,7 +166,7 @@ const WrapForm = ({
       <InputGroup>
         {isWrapSelected && (
           <SelectIcon
-            icon={wrapCoinsIcons[wrapCoin]}
+            icon={wrapCoin === 'ETH' ? <Eth /> : <Steth />}
             onChange={handleWrapCoinChange}
             value={wrapCoin}
           >

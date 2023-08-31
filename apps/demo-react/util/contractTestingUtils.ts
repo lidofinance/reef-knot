@@ -100,6 +100,6 @@ export const getTxUrl = (txHash: string, chaindId?: CHAINS) => {
   if (!chaindId) return '';
 
   return chaindId === CHAINS.Mainnet
-    ? `https://etherscan.io/tx/${txId}`
+    ? `https://etherscan.io/tx/${txHash}`
     : `https://goerli.etherscan.io/tx/${txHash}`;
 };
