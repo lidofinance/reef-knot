@@ -5,8 +5,8 @@ const { publicRuntimeConfig } = getConfig();
 const { alchemyApiKey } = publicRuntimeConfig;
 
 export const rpcUrlsArray: Record<number, [string, ...string[]]> = {
-  [mainnet.id]: [`https://eth-mainnet.alchemyapi.io/v2/${alchemyApiKey}`],
-  [goerli.id]: [`https://eth-goerli.alchemyapi.io/v2/${alchemyApiKey}`],
+  [mainnet.id]: [`https://eth-mainnet.g.alchemy.com/v2/${alchemyApiKey}`],
+  [goerli.id]: [`https://eth-goerli.g.alchemy.com/v2/${alchemyApiKey}`],
 };
 
 export const rpcUrlsString = Object.fromEntries(

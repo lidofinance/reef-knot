@@ -93,10 +93,7 @@ export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
 
   const wstethTokenAddress = getTokenAddress(chainId, TOKENS.WSTETH);
 
-  const provider = getStaticRpcBatchProvider(
-    chainId,
-    getRPCPath(chainId),
-  );
+  const provider = getStaticRpcBatchProvider(chainId, getRPCPath(chainId));
   const feeData = await provider.getFeeData();
   const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas ?? undefined;
   const maxFeePerGas = feeData.maxFeePerGas ?? undefined;
@@ -123,6 +120,7 @@ export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
 
       if (typeof transaction === 'object') {
         await transaction.wait();
+        return transaction;
       }
 
       handleEnding();

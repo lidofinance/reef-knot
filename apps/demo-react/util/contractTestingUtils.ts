@@ -95,3 +95,11 @@ export const getNFTUrl = (tokenId: string, chainId?: CHAINS) => {
 
   return NFT_URL_PREFIX_BY_NETWORK[chainId]?.(tokenId, contractAddress) || '';
 };
+
+export const getTxUrl = (txHash: string, chaindId?: CHAINS) => {
+  if (!chaindId) return '';
+
+  return chaindId === CHAINS.Mainnet
+    ? `https://etherscan.io/tx/${txId}`
+    : `https://goerli.etherscan.io/tx/${txHash}`;
+};

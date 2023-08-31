@@ -49,7 +49,6 @@ export function Web() {
               <ContractTesting />
             </MainSection>
             <WalletInfo />
-
             <WalletsModal
               open={state}
               handleClose={handleClose}
