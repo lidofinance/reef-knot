@@ -183,7 +183,7 @@ const WithdrawalsForm = ({
                   <Checkbox
                     name={req.stringId}
                     label={`${formatBalance(req.amountOfStETH, 5)} ETH`}
-                    checked={selectedRequests[req.stringId]}
+                    checked={selectedRequests.includes(req.stringId)}
                     onChange={handleSelect}
                   />
                 </RequestStyled>
