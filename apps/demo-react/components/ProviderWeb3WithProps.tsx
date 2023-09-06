@@ -61,7 +61,7 @@ const ProviderWeb3WithProps: React.FC = ({ children }) => {
         rpc={rpcUrlsString}
         walletconnectProjectId={WC_PROJECT_ID}
       >
-        <SDKProvider>{children}</SDKProvider>
+        {children}
       </ProviderWeb3>
     </WagmiConfig>
   );
