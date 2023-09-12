@@ -15,6 +15,8 @@ import WithdrawalsForm from './Withdrawals';
 import { useStethSubmitGasLimit } from '../../hooks/useStethSubmitGasLimit';
 import { useTxCostInUsd } from '../../hooks/txCost';
 import { useWrapGasLimit } from '../../hooks/useWrapGasLimit';
+import { useWstethBySteth } from '../../hooks/useWstethBySteth';
+import { parseEther } from '@ethersproject/units';
 
 const ContractTesting = () => {
   const stethContractRpc = useSTETHContractRPC();
@@ -31,6 +33,8 @@ const ContractTesting = () => {
   const wstethContractWeb3 = useWSTETHContractWeb3();
   const wrapGasLimit = useWrapGasLimit(true);
   const wrapCostInUsd = useTxCostInUsd({ gasLimit: wrapGasLimit });
+  const oneSteth = parseEther('1');
+  const oneWstethConverted = useWstethBySteth(oneSteth);
 
   const stakeFormProps = {
     stakeCostInUsd,
@@ -51,6 +55,7 @@ const ContractTesting = () => {
     wstethBalance,
     wrapCostInUsd,
     wrapGasLimit,
+    oneWstethConverted,
   };
   const withdrawalsFormProps = {
     stethBalance,

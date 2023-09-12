@@ -45,6 +45,7 @@ export interface WrapFormProps {
   wstethBalance: SWRResponse<BigNumber>;
   wrapCostInUsd: number | undefined;
   wrapGasLimit: number;
+  oneWstethConverted: BigNumber | undefined;
 }
 
 const WrapForm = ({
@@ -57,6 +58,7 @@ const WrapForm = ({
   wstethBalance,
   wrapCostInUsd,
   wrapGasLimit,
+  oneWstethConverted,
 }: WrapFormProps) => {
   const [inputValue, setInputValue] = useState('0.00001');
 
@@ -67,9 +69,6 @@ const WrapForm = ({
   const [wrapCoin, setWrapCoin] = useState('ETH');
 
   const [wrapError, setWrapError] = useState('');
-
-  const oneSteth = parseEther('1');
-  const oneWstethConverted = useWstethBySteth(oneSteth);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -151,10 +150,6 @@ const WrapForm = ({
       });
   };
   const isWrapSelected = wrapSelect === 'wrap';
-  const wrapCoinsIcons = {
-    ETH: <Eth />,
-    stETH: <Steth />,
-  };
 
   return (
     <BlueWrapper>

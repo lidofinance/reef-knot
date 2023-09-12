@@ -16,9 +16,10 @@ export const useWstethBySteth = (
         if (!steth) {
           return;
         }
-
-        const wsteth = await wstethContractRPC.getWstETHByStETH(steth);
-        setWstethBalance(wsteth);
+        if (!wstethBalance) {
+          const wsteth = await wstethContractRPC.getWstETHByStETH(steth);
+          setWstethBalance(wsteth);
+        }
       }, 500),
     [wstethContractRPC],
   );
