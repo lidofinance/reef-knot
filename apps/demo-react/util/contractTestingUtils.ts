@@ -4,11 +4,10 @@ import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { formatEther } from '@ethersproject/units';
 import { Zero } from '@ethersproject/constants';
+import { rpcUrlsString } from './rpc';
 
-export const BASE_URL = 'https://eth-goerli.public.blastapi.io/';
-
-export const getBackendRPCPath = (chainId: string | number): string => {
-  return `${BASE_URL}/api/rpc?chainId=${chainId}`;
+export const getRPCPath = (chainId: CHAINS): string => {
+  return rpcUrlsString[chainId];
 };
 
 export const getAddress = async (
@@ -19,10 +18,7 @@ export const getAddress = async (
   if (isAddress(input)) return input;
 
   try {
-    const provider = getStaticRpcBatchProvider(
-      chainId,
-      getBackendRPCPath(chainId),
-    );
+    const provider = getStaticRpcBatchProvider(chainId, getRPCPath(chainId));
     const address = await provider.resolveName(input);
 
     if (address) return address;
@@ -98,4 +94,12 @@ export const getNFTUrl = (tokenId: string, chainId?: CHAINS) => {
   const contractAddress = getWithdrawalQueueAddress(chainId);
 
   return NFT_URL_PREFIX_BY_NETWORK[chainId]?.(tokenId, contractAddress) || '';
+};
+
+export const getTxUrl = (txHash: string, chaindId?: CHAINS) => {
+  if (!chaindId) return '';
+
+  return chaindId === CHAINS.Mainnet
+    ? `https://etherscan.io/tx/${txHash}`
+    : `https://goerli.etherscan.io/tx/${txHash}`;
 };

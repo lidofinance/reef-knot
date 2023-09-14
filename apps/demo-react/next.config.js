@@ -1,3 +1,5 @@
+const alchemyApiKey = process.env.ALCHEMY_API_KEY;
+
 export default {
   reactStrictMode: true,
   basePath: process.env.BASE_PATH || '',
@@ -5,5 +7,8 @@ export default {
     styledComponents: {
       ssr: true
     }
+  },
+  publicRuntimeConfig: {
+    alchemyApiKey,
   },
 }

@@ -8,31 +8,42 @@ import {
   H3,
   DataTableRow,
   DataTable,
+  External,
 } from '@lidofinance/lido-ui';
-import {
-  useContractSWR,
-  useSDK,
-  useSTETHBalance,
-  useSTETHContractRPC,
-  useSTETHContractWeb3,
-} from '@lido-sdk/react';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { SWRResponse, useContractSWR } from '@lido-sdk/react';
 import { parseEther } from 'ethers/lib/utils.js';
 import { AddressZero } from '@ethersproject/constants';
 import { BigNumber } from 'ethers';
 
-import { formatBalance } from '../../util/contractTestingUtils';
+import { StethAbi } from '@lido-sdk/contracts';
+import { Web3Provider } from '@ethersproject/providers';
+import { formatBalance, getTxUrl } from '../../util/contractTestingUtils';
 import { BlueWrapper } from '../info';
-import {
-  STETH_SUBMIT_GAS_LIMIT_DEFAULT,
-  useStethSubmitGasLimit,
-} from '../../hooks/useStethSubmitGasLimit';
-import { useTxCostInUsd } from '../../hooks/txCost';
+import { STETH_SUBMIT_GAS_LIMIT_DEFAULT } from '../../hooks/useStethSubmitGasLimit';
 import { InputDecoratorMaxButton } from '../input-decorator-max-button';
+import { LinkStyled } from './styles';
 
 const SUBMIT_EXTRA_GAS_TRANSACTION_RATIO = 1.05;
 
-const StakeForm = () => {
+export interface StakeFormProps {
+  stakeCostInUsd: number | undefined;
+  stethBalance: SWRResponse<BigNumber>;
+  stethContractWeb3: StethAbi | null;
+  chainId: number | undefined;
+  account: string | null | undefined;
+  providerWeb3: Web3Provider | undefined;
+  stethContractRpc: StethAbi;
+}
+
+const StakeForm = ({
+  stakeCostInUsd,
+  stethBalance,
+  stethContractWeb3,
+  chainId,
+  account,
+  providerWeb3,
+  stethContractRpc,
+}: StakeFormProps) => {
   const defaultWrapInputValue = {
     eth: '0.00001',
     steth: '0.00001',
@@ -49,15 +60,6 @@ const StakeForm = () => {
   const [txError, setTxError] = useState('');
   const [stakeGasError, setStakeGasError] = useState('');
 
-  const submitGasLimit = useStethSubmitGasLimit();
-  const txCostInUsd = useTxCostInUsd({ gasLimit: submitGasLimit });
-  const stethBalance = useSTETHBalance();
-  const stethContractWeb3 = useSTETHContractWeb3();
-
-  const { chainId, account } = useWeb3();
-  const { providerWeb3 } = useSDK();
-  const contractRpc = useSTETHContractRPC();
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue({
       ...inputValue,
@@ -66,7 +68,7 @@ const StakeForm = () => {
   };
 
   const lidoFee = useContractSWR({
-    contract: contractRpc,
+    contract: stethContractRpc,
     method: 'getFee',
   });
 
@@ -159,7 +161,7 @@ const StakeForm = () => {
     void providerWeb3
       ?.getBalance(account || '')
       .then((data) => setWalletBalance(formatBalance(data, 5)), console.log);
-  }, [account, providerWeb3]);
+  }, [account]);
 
   return (
     <BlueWrapper>
@@ -184,7 +186,6 @@ const StakeForm = () => {
         value={referralAddress}
         onChange={(e) => setReferralAddress(e.target.value)}
       />
-
       <Input
         type="number"
         max={STETH_SUBMIT_GAS_LIMIT_DEFAULT}
@@ -210,8 +211,8 @@ const StakeForm = () => {
         <DataTableRow title="Your wallet balance" loading={!stethBalance.data}>
           {`${walletBalance} ETH`}
         </DataTableRow>
-        <DataTableRow title="Max TX cost" loading={!txCostInUsd}>
-          {`${txCostInUsd?.toFixed(2)}$`}
+        <DataTableRow title="Max TX cost" loading={!stakeCostInUsd}>
+          {`${stakeCostInUsd?.toFixed(2)}$`}
         </DataTableRow>
         <DataTableRow title="Lido reward fee" loading={!lidoFee.data}>
           {`${(lidoFee.data as any) / 100} %`}
@@ -226,14 +227,20 @@ const StakeForm = () => {
               {stakeData.gasUsed.toNumber()} WEI
             </DataTableRow>
             <DataTableRow title="Transaction status">
-              {stakeData.status ? 'success' : 'failed'}
+              <LinkStyled href={getTxUrl(stakeData.transactionHash, chainId)}>
+                <External />
+              </LinkStyled>
             </DataTableRow>
           </DataTable>
           <Divider />
         </>
       )}
       {!stakeData.blockHash && <Text color="error">{txError}</Text>}
-      <Button loading={isLoading || isStakeGasLoading} onClick={stake}>
+      <Button
+        loading={isLoading || isStakeGasLoading}
+        onClick={stake}
+        disabled={!account}
+      >
         Stake
       </Button>
     </BlueWrapper>

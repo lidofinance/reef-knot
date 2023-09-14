@@ -2,7 +2,7 @@ import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { useLidoSWR, useSDK } from '@lido-sdk/react';
 
 import { BigNumber } from 'ethers';
-import { ONE_GWEI, getBackendRPCPath } from '../util/contractTestingUtils';
+import { ONE_GWEI, getRPCPath } from '../util/contractTestingUtils';
 
 export const useMaxGasPrice = (): BigNumber | undefined => {
   const { chainId } = useSDK();
@@ -12,7 +12,7 @@ export const useMaxGasPrice = (): BigNumber | undefined => {
       try {
         const provider = getStaticRpcBatchProvider(
           chainId,
-          getBackendRPCPath(chainId),
+          getRPCPath(chainId),
         );
         const feeData = await provider.getFeeData();
         const maxGasPrice = feeData.maxFeePerGas;

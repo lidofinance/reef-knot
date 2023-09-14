@@ -5,7 +5,7 @@ import { parseEther } from 'ethers/lib/utils.js';
 import { BigNumber } from 'ethers';
 import { AddressZero } from '@ethersproject/constants';
 import { CHAINS } from '../config/chains';
-import { getBackendRPCPath } from '../util/contractTestingUtils';
+import { getRPCPath } from '../util/contractTestingUtils';
 
 type UseStethSubmitGasLimit = () => number | undefined;
 // account for gas estimation
@@ -36,7 +36,7 @@ export const useStethSubmitGasLimit: UseStethSubmitGasLimit = () => {
       const provider = getStaticRpcBatchProvider(
         chainId as CHAINS,
         // TODO: add a way to type useWeb3 hook
-        getBackendRPCPath(chainId as CHAINS),
+        getRPCPath(chainId as CHAINS),
       );
 
       const feeData = await provider.getFeeData();

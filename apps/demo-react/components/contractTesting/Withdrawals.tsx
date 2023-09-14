@@ -13,12 +13,17 @@ import {
   Checkbox,
   External,
   OptionValue,
+  Divider,
 } from '@lidofinance/lido-ui';
-import { useSTETHBalance, useWSTETHBalance } from '@lido-sdk/react';
+import { SWRResponse } from '@lido-sdk/react';
 import { TOKENS } from '@lido-sdk/constants';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { BigNumber } from 'ethers';
 import { BlueWrapper } from '../info';
-import { formatBalance, getNFTUrl } from '../../util/contractTestingUtils';
+import {
+  formatBalance,
+  getNFTUrl,
+  getTxUrl,
+} from '../../util/contractTestingUtils';
 import { LinkStyled, RequestCounterStyled, RequestStyled } from './styles';
 
 import { useToken } from '../../hooks/useToken';
@@ -28,10 +33,19 @@ import { useRequestTxPrice } from '../../hooks/useWithdrawTxPrice';
 import { useWithdrawalRequests } from '../../hooks/useWithdrawalsData';
 import { useClaim } from '../../hooks/useClaim';
 
-const WithdrawalsForm = () => {
-  const stethBalance = useSTETHBalance();
-  const wstethBalance = useWSTETHBalance();
-  const { chainId } = useWeb3();
+export interface WithdrawalsFormProps {
+  stethBalance: SWRResponse<BigNumber>;
+  wstethBalance: SWRResponse<BigNumber>;
+  chainId: number | undefined;
+  account: string | null | undefined;
+}
+
+const WithdrawalsForm = ({
+  stethBalance,
+  wstethBalance,
+  chainId,
+  account,
+}: WithdrawalsFormProps) => {
   const [inputValue, setInputValue] = useState('0.00001');
   const [selectedToken, setSelectedToken] = useState(
     TOKENS.STETH || TOKENS.WSTETH,
@@ -46,9 +60,10 @@ const WithdrawalsForm = () => {
     if (e.target.checked) {
       setSelectedRequests((prev) => [...prev, e.target.name]);
     } else if (!e.target.checked) {
-      setSelectedRequests((prev) =>
-        prev.filter((val) => val !== e.target.name),
+      const filteredRequests = selectedRequests.filter(
+        (r) => r !== e.target.name,
       );
+      setSelectedRequests(filteredRequests);
     }
   };
 
@@ -81,12 +96,9 @@ const WithdrawalsForm = () => {
     }
   };
 
-  const submit = useCallback(
-    async (_: string, resetForm: () => void): Promise<void> => {
-      await request(requests, resetForm);
-    },
-    [request, requests],
-  );
+  const submit = useCallback(async (): Promise<void> => {
+    await request(requests, () => null);
+  }, [request, requests]);
 
   return (
     <BlueWrapper>
@@ -128,21 +140,31 @@ const WithdrawalsForm = () => {
             ? wstethBalance.data?.toString()
             : stethBalance.data?.toString()
         }
-        error={
-          selectedToken === TOKENS.WSTETH && +inputValue < 1
-            ? 'Min value is 1 wstETH'
-            : null
-        }
       />
-      <Button onClick={void submit} loading={isTxPending}>
+      <Button onClick={submit} loading={isTxPending} disabled={!account}>
         Request Withdrawal
       </Button>
       <Button onClick={claim} color="warning" disabled={!selectedRequests[0]}>
         Claim
       </Button>
       <DataTable>
+        <DataTableRow title="Pending requests" loading={!data?.pendingCount} />
+        {data?.pendingRequests.map((req) => (
+          <DataTableRow
+            loading={loading}
+            title={`ID ${req.stringId}`}
+            key={req.stringId}
+          >
+            <RequestStyled>
+              <LinkStyled href={getTxUrl(req.stringId, chainId)}>
+                <External />
+              </LinkStyled>
+            </RequestStyled>
+          </DataTableRow>
+        ))}
+        <Divider />
         {data?.claimableAmountOfETH && (
-          <DataTableRow title="Claimable amount">
+          <DataTableRow title="Ready to claim">
             {`${formatBalance(data.claimableAmountOfETH, 5)} ETH`}
           </DataTableRow>
         )}
@@ -161,7 +183,7 @@ const WithdrawalsForm = () => {
                   <Checkbox
                     name={req.stringId}
                     label={`${formatBalance(req.amountOfStETH, 5)} ETH`}
-                    checked={!!selectedRequests[Number(req.stringId)]}
+                    checked={selectedRequests.includes(req.stringId)}
                     onChange={handleSelect}
                   />
                 </RequestStyled>
@@ -169,6 +191,7 @@ const WithdrawalsForm = () => {
             ))}
           </div>
         )}
+        <Divider />
         <DataTableRow title="Your stETH balance" loading={!stethBalance.data}>
           {`${formatBalance(stethBalance.data, 5)} stETH`}
         </DataTableRow>

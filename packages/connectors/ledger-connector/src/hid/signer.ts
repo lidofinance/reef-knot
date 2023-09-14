@@ -6,7 +6,7 @@ import {
 import {
   EIP712MessageTypes,
   EIP712Message,
-} from '@ledgerhq/hw-app-eth/lib/modules/EIP712/EIP712.types';
+} from '@ledgerhq/types-live';
 import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import {

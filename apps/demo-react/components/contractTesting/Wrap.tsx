@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Input,
   Button,
@@ -12,53 +12,63 @@ import {
   Select,
   OptionValue,
   Wsteth,
+  External,
+  SelectIcon,
+  Eth,
+  InputGroup,
 } from '@lidofinance/lido-ui';
-import {
-  useEthereumBalance,
-  useSDK,
-  useSTETHBalance,
-  useWSTETHBalance,
-  useWSTETHContractWeb3,
-} from '@lido-sdk/react';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { SWRResponse } from '@lido-sdk/react';
 import { parseEther } from 'ethers/lib/utils.js';
 
-import { formatBalance } from '../../util/contractTestingUtils';
+import { WstethAbi } from '@lido-sdk/contracts';
+import { BigNumber } from 'ethers';
+import { Web3Provider } from '@ethersproject/providers';
+import { formatBalance, getTxUrl } from '../../util/contractTestingUtils';
 import { BlueWrapper } from '../info';
 import { STETH_SUBMIT_GAS_LIMIT_DEFAULT } from '../../hooks/useStethSubmitGasLimit';
-import { useTxCostInUsd } from '../../hooks/txCost';
 import { useWstethBySteth } from '../../hooks/useWstethBySteth';
-import { useWrapGasLimit } from '../../hooks/useWrapGasLimit';
 import { InputDecoratorMaxButton } from '../input-decorator-max-button';
 import {
   unwrapProcessing,
   wrapProcessingWithApprove,
 } from '../../util/wrapProcessingWithApprove';
+import { LinkStyled } from './styles';
+import { CHAINS } from '../../config/chains';
 
-const WrapForm = () => {
+export interface WrapFormProps {
+  ethBalance: SWRResponse<BigNumber>;
+  stethBalance: SWRResponse<BigNumber>;
+  wstethContractWeb3: WstethAbi | null;
+  chainId: CHAINS;
+  account: string | null | undefined;
+  providerWeb3: Web3Provider | undefined;
+  wstethBalance: SWRResponse<BigNumber>;
+  wrapCostInUsd: number | undefined;
+  wrapGasLimit: number;
+  oneWstethConverted: BigNumber | undefined;
+}
+
+const WrapForm = ({
+  ethBalance,
+  stethBalance,
+  wstethContractWeb3,
+  chainId,
+  account,
+  providerWeb3,
+  wstethBalance,
+  wrapCostInUsd,
+  wrapGasLimit,
+  oneWstethConverted,
+}: WrapFormProps) => {
   const [inputValue, setInputValue] = useState('0.00001');
 
   const [estimateWrapGas, setEstimateWrapGas] = useState(0);
-  const [wrapSuccess, setWrapSuccess] = useState(false);
+  const [wrapTxHash, setWrapTxHash] = useState('');
   const [isWrapLoading, setWrapLoading] = useState(false);
   const [wrapSelect, setWrapSelect] = useState('wrap');
+  const [wrapCoin, setWrapCoin] = useState('ETH');
 
   const [wrapError, setWrapError] = useState('');
-
-  const ethBalance = useEthereumBalance();
-  const stethBalance = useSTETHBalance();
-  const wstethContractWeb3 = useWSTETHContractWeb3();
-
-  const { chainId } = useWeb3();
-  const { providerWeb3 } = useSDK();
-
-  const oneSteth = useMemo(() => parseEther('1'), []);
-  const oneWstethConverted = useWstethBySteth(oneSteth);
-
-  const wstETHBalance = useWSTETHBalance();
-
-  const wrapGasLimit = useWrapGasLimit(true);
-  const wrapTxCostInUsd = useTxCostInUsd({ gasLimit: wrapGasLimit });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -67,20 +77,34 @@ const WrapForm = () => {
   const handleWrapSelectChange = (value: OptionValue) => {
     setWrapSelect(value as string);
   };
+  const handleWrapCoinChange = (value: string) => {
+    setWrapCoin(value);
+    setInputValue('0.00001');
+  };
   const setMaxInputValue = () => {
-    setInputValue(
-      formatBalance(isWrapSelected ? stethBalance.data : wstETHBalance.data, 5),
-    );
+    let choosenCoinBalance;
+    switch (wrapCoin) {
+      case 'ETH':
+        choosenCoinBalance = ethBalance.data;
+        break;
+      case 'stETH':
+        choosenCoinBalance = stethBalance.data;
+        break;
+      case 'wstETH':
+        choosenCoinBalance = wstethBalance.data;
+        break;
+      default:
+        return choosenCoinBalance;
+    }
+    setInputValue(formatBalance(choosenCoinBalance, 5));
   };
 
-  const wrapGas = useWrapGasLimit(true);
-
   const calculateWrapGas = () => {
-    setEstimateWrapGas(wrapGas);
+    setEstimateWrapGas(wrapGasLimit);
   };
 
   const wrap = async () => {
-    setWrapSuccess(false);
+    setWrapTxHash('');
     setWrapError('');
     setWrapLoading(true);
     await wrapProcessingWithApprove(
@@ -90,14 +114,14 @@ const WrapForm = () => {
       ethBalance.update,
       stethBalance.update,
       inputValue,
-      'ETH',
+      wrapCoin,
     )
-      .then(() => {
+      .then((data) => {
         setWrapLoading(false);
-        setWrapSuccess(true);
+        setWrapTxHash(data.hash);
       })
       .catch((e) => {
-        setWrapSuccess(false);
+        setWrapTxHash('');
         setWrapLoading(false);
         setWrapError(e?.message.slice(0, 85));
       });
@@ -105,22 +129,22 @@ const WrapForm = () => {
 
   const unWrap = async () => {
     setWrapError('');
-    setWrapSuccess(false);
+    setWrapTxHash('');
     setWrapLoading(true);
     await unwrapProcessing(
       providerWeb3,
       wstethContractWeb3,
-      wstETHBalance.update,
+      wstethBalance.update,
       stethBalance.update,
       chainId,
       inputValue,
     )
-      .then(() => {
+      .then((data) => {
         setWrapLoading(false);
-        setWrapSuccess(true);
+        setWrapTxHash(data.hash);
       })
       .catch((e) => {
-        setWrapSuccess(false);
+        setWrapTxHash('');
         setWrapError(e?.message);
         setWrapLoading(false);
       });
@@ -134,20 +158,38 @@ const WrapForm = () => {
         <Option value="wrap">Wrap</Option>
         <Option value="unwrap">Unwrap</Option>
       </Select>
-      <Input
-        placeholder="Amount"
-        type="number"
-        name="wrapAmount"
-        leftDecorator={isWrapSelected ? <Steth /> : <Wsteth />}
-        value={inputValue}
-        onChange={handleInputChange}
-        step={0.00001}
-        max={formatBalance(
-          isWrapSelected ? stethBalance.data : wstETHBalance.data,
-          5,
+      <InputGroup>
+        {isWrapSelected && (
+          <SelectIcon
+            icon={wrapCoin === 'ETH' ? <Eth /> : <Steth />}
+            onChange={handleWrapCoinChange}
+            value={wrapCoin}
+          >
+            <Option value="ETH" leftDecorator={<Eth />}>
+              ETH
+            </Option>
+            <Option value="stETH" leftDecorator={<Steth />}>
+              stETH
+            </Option>
+          </SelectIcon>
         )}
-        rightDecorator={<InputDecoratorMaxButton onClick={setMaxInputValue} />}
-      />
+        <Input
+          placeholder="Amount"
+          type="number"
+          name="wrapAmount"
+          leftDecorator={!isWrapSelected && <Wsteth />}
+          value={inputValue}
+          onChange={handleInputChange}
+          step={0.00001}
+          max={formatBalance(
+            isWrapSelected ? stethBalance.data : wstethBalance.data,
+            5,
+          )}
+          rightDecorator={
+            <InputDecoratorMaxButton onClick={setMaxInputValue} />
+          }
+        />
+      </InputGroup>
       <Input
         type="number"
         max={STETH_SUBMIT_GAS_LIMIT_DEFAULT}
@@ -168,14 +210,14 @@ const WrapForm = () => {
         <DataTableRow title="Your stETH balance" loading={!stethBalance.data}>
           {`${formatBalance(stethBalance.data, 5)} stETH`}
         </DataTableRow>
-        <DataTableRow title="Your wstETH balance" loading={!wstETHBalance.data}>
-          {`${formatBalance(wstETHBalance.data, 5)} wstETH`}
+        <DataTableRow title="Your wstETH balance" loading={!wstethBalance.data}>
+          {`${formatBalance(wstethBalance.data, 5)} wstETH`}
         </DataTableRow>
         <DataTableRow title="Exchange rate" loading={!oneWstethConverted}>
           {`1 stETH = ${formatBalance(oneWstethConverted, 5)} wstETH`}
         </DataTableRow>
-        <DataTableRow title="Max gas fee" loading={!wrapTxCostInUsd}>
-          {`${wrapTxCostInUsd?.toFixed(2)}$`}
+        <DataTableRow title="Max gas fee" loading={!wrapCostInUsd}>
+          {`${wrapCostInUsd?.toFixed(2)}$`}
         </DataTableRow>
       </DataTable>
       {wrapError && (
@@ -186,13 +228,37 @@ const WrapForm = () => {
           </Text>
         </>
       )}
-      {wrapSuccess && <Text color="success">Success!</Text>}
+      {wrapTxHash && (
+        <>
+          <Divider />
+          <Text>About transaction</Text>
+          <DataTable>
+            <DataTableRow title="Transaction status">
+              <LinkStyled href={getTxUrl(wrapTxHash, chainId)}>
+                <External />
+              </LinkStyled>
+            </DataTableRow>
+          </DataTable>
+          <Divider />
+        </>
+      )}
+
       {wrapSelect === 'wrap' ? (
-        <Button color="success" onClick={wrap} loading={isWrapLoading}>
+        <Button
+          color="success"
+          onClick={wrap}
+          loading={isWrapLoading}
+          disabled={!account}
+        >
           Wrap
         </Button>
       ) : (
-        <Button color="warning" onClick={unWrap} loading={isWrapLoading}>
+        <Button
+          color="warning"
+          onClick={unWrap}
+          loading={isWrapLoading}
+          disabled={!account}
+        >
           Unwrap
         </Button>
       )}
