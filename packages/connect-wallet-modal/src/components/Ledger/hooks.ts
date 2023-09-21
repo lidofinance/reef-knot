@@ -59,7 +59,7 @@ export const useLedgerAccounts = ({
       };
 
       // iterate over derivation paths for the given page
-      for await (const [index, path] of Object.entries(derivationPaths)) {
+      for (const [index, path] of Object.entries(derivationPaths)) {
         // Ledger may become busy during these iterations.
         // For example, if a user quickly changes pages, there will be several conflicting getAccountRecords requests,
         // each calling its own cycle of getAddress requests, each of them makes a ledger device busy for a short amount of time.
@@ -68,18 +68,13 @@ export const useLedgerAccounts = ({
         } else {
           // Device is busy, make a set of attempts with a timeout, waiting for the device to release
           const MAX_ATTEMPTS = 10;
-          const ATTEMPT_TIMEOUT = 400;
+          const ATTEMPT_TIMEOUT = 200;
           for (let attempts = 0; attempts < MAX_ATTEMPTS; attempts++) {
-            await new Promise<void>((resolve) => {
-              setTimeout(async () => {
-                if (!isDeviceBusy(transport)) {
-                  await getAndPushAccount(index, path);
-                  // no more attempts required, stop the cycle
-                  attempts = MAX_ATTEMPTS;
-                }
-                resolve();
-              }, ATTEMPT_TIMEOUT);
-            });
+            await new Promise(resolve => setTimeout(resolve, ATTEMPT_TIMEOUT));
+            if (!isDeviceBusy(transport)) {
+              await getAndPushAccount(index, path);
+              break;
+            }
           }
         }
       }

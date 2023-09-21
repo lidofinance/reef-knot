@@ -2,9 +2,8 @@ import { LS_KEY_DERIVATION_PATH } from '@reef-knot/ledger-connector';
 import { LedgerContextValue } from './LedgerContext';
 import { DERIVATION_PATHS } from './constants';
 
-export async function getTransport() {
-  return await (await import('@ledgerhq/hw-transport-webhid')).default.create();
-}
+export const getTransport = async () =>
+  (await import('@ledgerhq/hw-transport-webhid')).default.create();
 
 export const saveLedgerDerivationPath = (path: string) => {
   window?.localStorage.setItem(LS_KEY_DERIVATION_PATH, JSON.stringify(path));
@@ -38,19 +37,19 @@ export const isDeviceBusy = (transport: LedgerContextValue['transport']) => {
 export const getFirstIndexOnPage = (page: number, accountsPerPage: number) =>
   accountsPerPage * (page - 1);
 
-export const interceptLedgerError = (error: Error) => {
-  const errorDict: { [k: string]: string | undefined } = {
-    TransportOpenUserCancelled: 'The connection attempt has been rejected.',
-    TransportStatusError:
-      'Make sure the device is connected and the Ethereum app is open on the device.',
-    InvalidStateError:
-      'Make sure the device is connected and the Ethereum app is open on the device.',
-    LockedDeviceError: 'The device is locked. Please, unlock it and try again.',
-    TransportError: undefined,
-  };
+export const LedgerErrorsDict: Record<string, string | undefined> = {
+  TransportOpenUserCancelled: 'The connection attempt has been rejected.',
+  TransportStatusError:
+    'Make sure the device is connected and the Ethereum app is open on the device.',
+  InvalidStateError:
+    'Make sure the device is connected and the Ethereum app is open on the device.',
+  LockedDeviceError: 'The device is locked. Please, unlock it and try again.',
+  TransportError: undefined,
+};
 
-  if (error.name in errorDict) {
-    return new Error(errorDict[error.name]);
+export const interceptLedgerError = (error: Error) => {
+  if (Object.hasOwn(LedgerErrorsDict, error.name)) {
+    return new Error(LedgerErrorsDict[error.name]);
   }
 
   return error;

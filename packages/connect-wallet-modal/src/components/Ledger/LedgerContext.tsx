@@ -41,11 +41,15 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
     useState(0);
 
   const disconnectTransport = useCallback(async (goingToReconnect = false) => {
-    await transport?.current?.close();
-    transport.current = null;
-    ledgerAppEth.current = null;
-    if (!goingToReconnect) {
-      setIsTransportConnected(false);
+    try {
+      await transport?.current?.close();
+      transport.current = null;
+      ledgerAppEth.current = null;
+      if (!goingToReconnect) {
+        setIsTransportConnected(false);
+      }
+    } catch (e: any) {
+      setError(interceptLedgerError(e));
     }
   }, []);
 
@@ -69,15 +73,10 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
   }, [disconnectTransport, connectTransport]);
 
   useEffect(() => {
-    if (isActive) {
-      void connectTransport();
-    }
+    if (!isActive) return;
+    void connectTransport();
 
-    return () => {
-      if (isActive) {
-        void transport?.current?.close();
-      }
-    };
+    return () => void transport?.current?.close();
   }, [connectTransport, disconnectTransport, isActive]);
 
   const value = useMemo(

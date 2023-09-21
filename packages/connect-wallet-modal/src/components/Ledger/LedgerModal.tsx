@@ -24,11 +24,7 @@ export const LedgerModal = (props: LedgerModalProps) => {
   );
 
   return (
-    <Modal
-      title="Ledger connect"
-      {...props}
-      onClose={handleClose}
-    >
+    <Modal title="Ledger connect" {...props} onClose={handleClose}>
       <LedgerContextProvider isActive={!!props.open}>
         <LedgerScreen {...props} />
       </LedgerContextProvider>
@@ -42,16 +38,16 @@ export const LedgerScreen = ({ metrics, onClose }: LedgerModalProps) => {
 
   return (
     <LedgerModalInnerContainer>
-      {error ? (
+      {error && (
         <LedgerErrorScreen
           message={error.message}
           retry={() => void reconnectTransport()}
         />
-      ) : isTransportConnected ? (
-        <LedgerAccountScreen metrics={metrics} closeScreen={onClose} />
-      ) : (
-        <LedgerConnectionScreen />
       )}
+      {!error && isTransportConnected && (
+        <LedgerAccountScreen metrics={metrics} closeScreen={onClose} />
+      )}
+      {!error && !isTransportConnected && <LedgerConnectionScreen />}
     </LedgerModalInnerContainer>
   );
 };

@@ -4,7 +4,7 @@ import styled from '@reef-knot/ui-react/styled-wrapper';
 import { DERIVATION_PATHS } from './constants';
 
 const TextStyled = styled.p`
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: var(--lido-color-textSecondary);
   font-size: ${({ theme }) => theme.fontSizesMap.xs}px;
   line-height: 1.7;
   text-align: left;

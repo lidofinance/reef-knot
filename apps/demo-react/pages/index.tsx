@@ -29,11 +29,9 @@ export function Web() {
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
   const isSelectedThemeLight = selectedTheme === ThemeName.light;
-  if (isSelectedThemeLight) {
-    document.documentElement.dataset.lidoTheme = 'light';
-  } else {
-    document.documentElement.dataset.lidoTheme = 'dark';
-  }
+  document.documentElement.dataset.lidoTheme = isSelectedThemeLight
+    ? 'light'
+    : 'dark';
 
   return (
     <ThemeProvider theme={isSelectedThemeLight ? themeLight : themeDark}>

@@ -6,7 +6,7 @@ import { AccountRecord } from './types';
 
 const ButtonStyled = styled.div`
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.backgroundSecondary};
+  background-color: var(--lido-color-backgroundSecondary);
   border-radius: 10px;
   display: flex;
   padding: 16px 20px;
@@ -21,7 +21,7 @@ const ButtonStyled = styled.div`
 
   :hover {
     cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.backgroundDarken};
+    background-color: var(--lido-color-backgroundDarken);
   }
 `;
 
@@ -48,10 +48,10 @@ const gradientKeyframes = keyframes`
 const SkeletonWrapper = styled(ButtonStyled)`
   background: linear-gradient(
       270deg,
-      ${({ theme }) => theme.colors.backgroundSecondary} 0%,
-      ${({ theme }) => theme.colors.backgroundSecondary} 0.01%,
-      ${({ theme }) => theme.colors.foreground} 34.14%,
-      ${({ theme }) => theme.colors.backgroundSecondary} 100%
+      var(--lido-color-backgroundSecondary) 0%,
+      var(--lido-color-backgroundSecondary) 0.01%,
+      var(--lido-color-foreground) 34.14%,
+      var(--lido-color-backgroundSecondary) 100%
     )
     0 0;
   animation: ${gradientKeyframes} 2s ease infinite;

@@ -59,18 +59,18 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
 
   const onConnectLedger = metrics?.events?.connect?.handlers.onConnectLedger;
   const { connect, connector } = useConnectorLedger({
-    onConnect: () => {
-      onConnectLedger?.();
-    },
+    onConnect: onConnectLedger,
   });
 
-  if (!connect || !connector?.isSupported()) {
-    setError(
-      new Error(
-        "Your browser doesn't support direct connection with Ledger. Please, try another browser.",
-      ),
-    );
-  }
+  useEffect(() => {
+    if (!connect || !connector?.isSupported()) {
+      setError(
+        new Error(
+          "Your browser doesn't support direct connection with Ledger. Please, try another browser.",
+        ),
+      );
+    }
+  }, [connect, connector, setError]);
 
   const handleAccountButtonClick = useCallback(
     async (account) => {
@@ -92,34 +92,33 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
       <StackItem>
         <LedgerDerivationPathSelect
           value={derivationPathTemplate}
-          onChange={(value) => {
-            handleDerivationPathSelect(value);
-          }}
+          onChange={handleDerivationPathSelect}
         />
       </StackItem>
       <StackItem>
         {/* If accounts storage contains the first account for the current page, we can assume that others are loaded too */}
-        {accountsStorage?.[derivationPathTemplate]?.[
-          getFirstIndexOnPage(currentPage, ACCOUNTS_PER_PAGE)
-        ]
-          ? Array.from({ length: ACCOUNTS_PER_PAGE }).map((_, i) => {
-              const accountIndex =
-                i + getFirstIndexOnPage(currentPage, ACCOUNTS_PER_PAGE);
-              const account =
-                accountsStorage[derivationPathTemplate][accountIndex];
-              return (
-                <AccountButton
-                  key={account.address}
-                  {...account}
-                  onClick={() => {
-                    void handleAccountButtonClick(account);
-                  }}
-                />
-              );
-            })
-          : Array.from({ length: ACCOUNTS_PER_PAGE }).map((_, i) => (
-              <AccountButtonSkeleton key={i} />
-            ))}
+        {Array.from({ length: ACCOUNTS_PER_PAGE }).map(
+          accountsStorage?.[derivationPathTemplate]?.[
+            getFirstIndexOnPage(currentPage, ACCOUNTS_PER_PAGE)
+          ]
+            ? (_, i) => {
+                const accountIndex =
+                  i + getFirstIndexOnPage(currentPage, ACCOUNTS_PER_PAGE);
+                const account =
+                  accountsStorage[derivationPathTemplate][accountIndex];
+                return (
+                  <AccountButton
+                    key={account.address}
+                    {...account}
+                    onClick={() => {
+                      void handleAccountButtonClick(account);
+                    }}
+                  />
+                );
+              }
+            : (_, i) => <AccountButtonSkeleton key={i} />,
+        )}
+
         <BoxWrapper>
           <Pagination
             activePage={currentPage}
