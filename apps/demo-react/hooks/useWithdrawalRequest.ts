@@ -109,7 +109,6 @@ export const useWithdrawalRequest = ({
       gatherPermitSignature,
       getRequestMethod,
       isApprovalFlow,
-      isBunker,
       needsApprove,
       setIsTxPending,
       token,

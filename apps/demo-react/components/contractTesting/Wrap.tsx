@@ -18,15 +18,12 @@ import {
   InputGroup,
 } from '@lidofinance/lido-ui';
 import { SWRResponse } from '@lido-sdk/react';
-import { parseEther } from 'ethers/lib/utils.js';
-
 import { WstethAbi } from '@lido-sdk/contracts';
 import { BigNumber } from 'ethers';
 import { Web3Provider } from '@ethersproject/providers';
 import { formatBalance, getTxUrl } from '../../util/contractTestingUtils';
 import { BlueWrapper } from '../info';
 import { STETH_SUBMIT_GAS_LIMIT_DEFAULT } from '../../hooks/useStethSubmitGasLimit';
-import { useWstethBySteth } from '../../hooks/useWstethBySteth';
 import { InputDecoratorMaxButton } from '../input-decorator-max-button';
 import {
   unwrapProcessing,

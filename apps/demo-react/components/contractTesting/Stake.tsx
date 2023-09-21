@@ -161,7 +161,7 @@ const StakeForm = ({
     void providerWeb3
       ?.getBalance(account || '')
       .then((data) => setWalletBalance(formatBalance(data, 5)), console.log);
-  }, [account]);
+  }, [account, providerWeb3]);
 
   return (
     <BlueWrapper>

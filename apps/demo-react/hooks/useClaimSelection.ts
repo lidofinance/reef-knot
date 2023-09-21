@@ -21,11 +21,14 @@ export const useClaimSelection = (
 
   const claimableIdToIndex = useMemo(() => {
     return (
-      claimableRequests?.reduce((mapParam, cur, i) => {
-        const map = mapParam;
-        map[cur.stringId] = i;
-        return map;
-      }, {} as { [key: string]: number }) ?? {}
+      claimableRequests?.reduce(
+        (mapParam, cur, i) => {
+          const map = mapParam;
+          map[cur.stringId] = i;
+          return map;
+        },
+        {} as { [key: string]: number },
+      ) ?? {}
     );
   }, [claimableRequests]);
 

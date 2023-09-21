@@ -9,6 +9,7 @@ import {
   useWSTETHContractWeb3,
 } from '@lido-sdk/react';
 import { useWeb3 } from 'reef-knot/web3-react';
+import { parseEther } from '@ethersproject/units';
 import StakeForm from './Stake';
 import WrapForm from './Wrap';
 import WithdrawalsForm from './Withdrawals';
@@ -16,7 +17,6 @@ import { useStethSubmitGasLimit } from '../../hooks/useStethSubmitGasLimit';
 import { useTxCostInUsd } from '../../hooks/txCost';
 import { useWrapGasLimit } from '../../hooks/useWrapGasLimit';
 import { useWstethBySteth } from '../../hooks/useWstethBySteth';
-import { parseEther } from '@ethersproject/units';
 
 const ContractTesting = () => {
   const stethContractRpc = useSTETHContractRPC();
