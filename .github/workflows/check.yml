@@ -1,7 +1,7 @@
 name: Check packages and publish demo app
 
 on:
-  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
