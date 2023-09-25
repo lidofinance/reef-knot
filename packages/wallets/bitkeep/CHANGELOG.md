@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-bitkeep
 
+## 1.1.0
+
+### Minor Changes
+
+- Update Bitkeep logo and name (Bitget)
+
 ## 1.0.1
 
 ### Patch Changes
