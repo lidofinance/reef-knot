@@ -1,5 +1,12 @@
 # @reef-knot/wallets-list
 
+## 1.4.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-bitkeep@1.1.0
+
 ## 1.4.4
 
 ### Patch Changes
