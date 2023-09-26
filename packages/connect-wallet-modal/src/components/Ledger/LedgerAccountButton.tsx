@@ -49,7 +49,6 @@ const SkeletonWrapper = styled(ButtonStyled)`
   background: linear-gradient(
       270deg,
       var(--lido-color-backgroundSecondary) 0%,
-      var(--lido-color-backgroundSecondary) 0.01%,
       var(--lido-color-foreground) 34.14%,
       var(--lido-color-backgroundSecondary) 100%
     )
