@@ -7,6 +7,7 @@ import {
   getFirstIndexOnPage,
   isDeviceBusy,
 } from './helpers';
+import { TransportError } from '@ledgerhq/hw-transport';
 
 export const useLedgerContext = () => useContext(LedgerContext);
 
@@ -63,18 +64,31 @@ export const useLedgerAccounts = ({
         // Ledger may become busy during these iterations.
         // For example, if a user quickly changes pages, there will be several conflicting getAccountRecords requests,
         // each calling its own cycle of getAddress requests, each of them makes a ledger device busy for a short amount of time.
-        if (!isDeviceBusy(transport)) {
+        try {
           await getAndPushAccount(index, path);
-        } else {
-          // Device is busy, make a set of attempts with a timeout, waiting for the device to release
-          const MAX_ATTEMPTS = 10;
-          const ATTEMPT_TIMEOUT = 200;
-          for (let attempts = 0; attempts < MAX_ATTEMPTS; attempts++) {
-            await new Promise(resolve => setTimeout(resolve, ATTEMPT_TIMEOUT));
-            if (!isDeviceBusy(transport)) {
-              await getAndPushAccount(index, path);
-              break;
+        } catch (e) {
+          if ((e as TransportError).id === 'TransportLocked') {
+            // Ledger device is busy answering another getAddress request
+            // Make a set of attempts with a timeout, waiting for the device to release
+            const MAX_ATTEMPTS = 10;
+            const ATTEMPT_TIMEOUT = 200;
+            for (let attempts = 0; attempts < MAX_ATTEMPTS; attempts++) {
+              await new Promise((resolve) =>
+                setTimeout(resolve, ATTEMPT_TIMEOUT),
+              );
+              try {
+                await getAndPushAccount(index, path);
+                break;
+              } catch (e) {
+                if (attempts === MAX_ATTEMPTS - 1) {
+                  // last attempt and still got an error
+                  throw e;
+                }
+                // else, just moving on to the next attempt
+              }
             }
+          } else {
+            throw e;
           }
         }
       }
@@ -113,7 +127,11 @@ export const useLedgerAccounts = ({
         }
       } catch (e) {
         console.error(e);
-        setError(new Error('An error occurred while loading accounts data. Please, try again.'));
+        setError(
+          new Error(
+            'An error occurred while loading accounts data. Please, try again.',
+          ),
+        );
       }
     })();
   }, [

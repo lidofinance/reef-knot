@@ -2,8 +2,13 @@ import { LS_KEY_DERIVATION_PATH } from '@reef-knot/ledger-connector';
 import { LedgerContextValue } from './LedgerContext';
 import { DERIVATION_PATHS } from './constants';
 
-export const getTransport = async () =>
-  (await import('@ledgerhq/hw-transport-webhid')).default.create();
+export const getTransport = async () => {
+  try {
+    return (await import('@ledgerhq/hw-transport-webhid')).default.create();
+  } catch (e) {
+    throw new Error('Connection error');
+  }
+};
 
 export const saveLedgerDerivationPath = (path: string) => {
   window?.localStorage.setItem(LS_KEY_DERIVATION_PATH, JSON.stringify(path));
@@ -30,7 +35,8 @@ export const getDerivationPathsForPage = (
 };
 
 export const isDeviceBusy = (transport: LedgerContextValue['transport']) => {
-  // _appAPIlock indicates if a Ledger device is busy and returns the currently processed request's name
+  // _appAPIlock is a flag, used in the @ledgerhq/hw-transport library for indication if a Ledger device is busy
+  // returns the name of the request, which was being processed, or null or undefined
   return transport.current?._appAPIlock;
 };
 
