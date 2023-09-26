@@ -1,5 +1,18 @@
 # reef-knot
 
+## 1.7.4
+
+### Patch Changes
+
+- @reef-knot/wallets-list@1.4.5
+
+## 1.7.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@1.6.0
+
 ## 1.7.2
 
 ### Patch Changes
