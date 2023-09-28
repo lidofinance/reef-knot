@@ -1,5 +1,8 @@
 import { useEffect, useRef, useContext } from 'react';
-import { AcceptTermsModalContext, LS_KEY_TERMS_ACCEPTANCE } from '@reef-knot/core-react';
+import {
+  AcceptTermsModalContext,
+  LS_KEY_TERMS_ACCEPTANCE,
+} from '@reef-knot/core-react';
 import { useWeb3 } from './useWeb3';
 import { useConnectorStorage } from './useConnectorStorage';
 import { useConnectorInfo } from './useConnectorInfo';
@@ -25,7 +28,7 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
   useEffect(() => {
     if (isConnectedViaWagmi || tried.current || active) return;
 
-    (async () => {
+    void (async () => {
       tried.current = true;
 
       const isLedgerApp = ledgerlive?.isLedgerApp(); // Ledger Live iframe
@@ -54,11 +57,12 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
         // If a user rejects the connection, then an error is thrown
         // and the following code is not being reached, the modal stays visible.
         acceptTermsModal.setVisible?.(false);
-      }
+      };
 
       let termsAccepted = false;
       if (typeof window !== 'undefined') {
-        termsAccepted = window.localStorage?.getItem(LS_KEY_TERMS_ACCEPTANCE) === 'true';
+        termsAccepted =
+          window.localStorage?.getItem(LS_KEY_TERMS_ACCEPTANCE) === 'true';
       }
 
       if (shouldAutoConnectApp && !termsAccepted) {

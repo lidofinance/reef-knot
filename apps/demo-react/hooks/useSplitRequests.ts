@@ -66,5 +66,5 @@ export const useSplitRequest = (inputValue: string, selectedToken: TOKENS) => {
       requestCount: requestCount + (hasRest ? 1 : 0),
       areRequestsValid: requests.length > 0,
     };
-  }, [inputValue, maxAmount, maxRequestCount, selectedToken]);
+  }, [inputValue, maxAmount, maxRequestCount]);
 };

@@ -1,2 +1,2 @@
-export * from './reefKnot'
-export * from './acceptTermsModal'
+export * from './reefKnot';
+export * from './acceptTermsModal';

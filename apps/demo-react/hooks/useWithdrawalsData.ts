@@ -287,9 +287,8 @@ export const useWithdrawalRequests = () => {
           contractWeb3.getWithdrawalRequests(acc),
           contractWeb3.getLastCheckpointIndex(),
         ]);
-        const requestStatuses = await contractWeb3?.getWithdrawalStatus(
-          requestIds,
-        );
+        const requestStatuses =
+          await contractWeb3?.getWithdrawalStatus(requestIds);
 
         const claimableRequests: RequestStatus[] = [];
         const pendingRequests: RequestStatusPending[] = [];

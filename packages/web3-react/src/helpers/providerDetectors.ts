@@ -161,11 +161,10 @@ export const isXdefiProvider = (): boolean => {
       // then `isXDEFI` option becomes unexpectedly set to `false`.
       // So, we can just check if this option is in `ethereum` provider object.
       // `__XDEFI` option is used as a fallback.
-      const { hasOwnProperty } = Object.prototype;
       return (
         isXdefiInstalled() &&
-        (hasOwnProperty.call(ethereum, 'isXDEFI') ||
-          hasOwnProperty.call(ethereum, '__XDEFI'))
+        (Object.hasOwn(ethereum, 'isXDEFI') ||
+          Object.hasOwn(ethereum, '__XDEFI'))
       );
     }
     return false;
