@@ -34,9 +34,10 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
+    "eslint-config-custom": "*",
     "wagmi": "^0.12.19",
     "ua-parser-js": "1.0.33"
   },

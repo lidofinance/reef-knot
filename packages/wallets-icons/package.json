@@ -42,13 +42,14 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "peerDependencies": {
     "react": ">=17"
   },
   "devDependencies": {
     "@svgr/rollup": "^6.5.1",
+    "eslint-config-custom": "*",
     "react": "17.0.2"
   }
 }
