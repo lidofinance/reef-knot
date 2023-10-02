@@ -12,7 +12,7 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx', '.svg'];
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
 const { dependencies, peerDependencies } = packageJson;
 const commonExternal = [
-  'react/jsx-runtime',
+  /^react\/.*/,
   // Do not include in the bundle subpath exports like:
   /^@reef-knot\/.*/, // e.g. @reef-knot/<package>/<exports-field-entry>
   /^reef-knot\/.*/, // e.g. reef-knot/wallets-icons/react
