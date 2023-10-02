@@ -29,11 +29,12 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
     "@reef-knot/types": "^1.3.0",
-    "@svgr/rollup": "^6.5.1"
+    "@svgr/rollup": "^6.5.1",
+    "eslint-config-custom": "*"
   },
   "peerDependencies": {
     "wagmi": "^0.12.19",

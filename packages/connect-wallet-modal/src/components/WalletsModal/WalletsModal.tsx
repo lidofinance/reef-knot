@@ -1,6 +1,9 @@
 import React, { useCallback, useContext, useState, ReactElement } from 'react';
 import { Button, Modal } from '@reef-knot/ui-react';
-import { AcceptTermsModalContext, LS_KEY_TERMS_ACCEPTANCE } from '@reef-knot/core-react';
+import {
+  AcceptTermsModalContext,
+  LS_KEY_TERMS_ACCEPTANCE,
+} from '@reef-knot/core-react';
 import {
   WalletsModalProps,
   ButtonsCommonProps,

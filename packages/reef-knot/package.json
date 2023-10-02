@@ -38,7 +38,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
     "@reef-knot/connect-wallet-modal": "1.6.2",
@@ -50,5 +50,8 @@
     "@reef-knot/wallets-helpers": "1.1.5",
     "@reef-knot/types": "1.3.0",
     "@reef-knot/ledger-connector": "1.0.1"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "*"
   }
 }

@@ -10,7 +10,7 @@ import { ConnectWCProps } from './types';
 let redirectionWindow: Window | null = null;
 
 const getRedirectionLoadingHTML = () => {
-  return `<!DOCTYPE html><html lang="en"><head><title>Wallet loading</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="display: flex;justify-content: center"><h1 style="font-family: sans-serif">Wallet loading</h1></body></html>`;
+  return `<!DOCTYPE html><html lang='en'><head><title>Wallet loading</title><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'></head><body style='display: flex;justify-content: center'><h1 style='font-family: sans-serif'>Wallet loading</h1></body></html>`;
 };
 
 const setRedirectionWindowLocation = (redirectLink: string, WCURI: string) => {
@@ -77,7 +77,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
         // Initiate a connection, but do not block the further execution
-        connectAsync({ connector: WCURIConnector }).then(() => {
+        connectAsync({ connector: WCURIConnector }).finally(() => {
           // We got a connection result
           if (WCURICloseRedirectionWindow) {
             // Close the previously opened window if necessary

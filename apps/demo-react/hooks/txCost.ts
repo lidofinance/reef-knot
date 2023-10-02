@@ -25,5 +25,5 @@ export const useTxCostInUsd: UseTxCostInUsd = ({ gasLimit }) => {
     } catch {
       return undefined;
     }
-  }, [gasPrice, gasLimit]);
+  }, [ethInUsd, gasPrice, gasLimit]);
 };

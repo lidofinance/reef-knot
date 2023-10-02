@@ -38,7 +38,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
     "react-transition-group": "4",
@@ -52,11 +52,12 @@
     "wagmi": "^0.12.19"
   },
   "devDependencies": {
+    "@types/react-transition-group": "4.4.2",
+    "eslint-config-custom": "*",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-is": "17.0.2",
     "styled-components": "^5.3.6",
-    "@types/react-transition-group": "4.4.2",
     "wagmi": "^0.12.19"
   }
 }

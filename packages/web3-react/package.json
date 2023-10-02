@@ -34,7 +34,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "dev=on rollup -c -w",
-    "lint": "eslint"
+    "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
     "@babel/cli": "7.19.3",
@@ -56,6 +56,7 @@
     "babel-jest": "^29.3.1",
     "babel-loader": "8.2.2",
     "babel-plugin-styled-components": "1.13.2",
+    "eslint-config-custom": "*",
     "jest": "^29.4.3",
     "jest-environment-jsdom": "^29.4.3",
     "react": "17.0.2",

@@ -6,7 +6,9 @@ import debounce from 'lodash/debounce';
 export const useWstethBySteth = (
   stEth: BigNumber | undefined,
 ): BigNumber | undefined => {
-  const [wstethBalance, setWstethBalance] = useState<BigNumber>(BigNumber.from(0));
+  const [wstethBalance, setWstethBalance] = useState<BigNumber>(
+    BigNumber.from(0),
+  );
 
   const wstethContractRPC = useWSTETHContractRPC();
 
@@ -21,7 +23,7 @@ export const useWstethBySteth = (
           setWstethBalance(wsteth);
         }
       }, 500),
-    [wstethContractRPC],
+    [wstethBalance, wstethContractRPC],
   );
 
   useEffect(() => {
