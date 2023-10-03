@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.5.0
+
+### Minor Changes
+
+- Update lido-js-sdk deps and move them to peer deps
+
 ## 1.4.2
 
 ### Patch Changes
