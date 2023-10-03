@@ -2,13 +2,13 @@ import React from 'react';
 import { WagmiConfig, createClient, configureChains, Chain } from 'wagmi';
 import { goerli, mainnet } from 'wagmi/chains';
 import { ProviderWeb3 } from 'reef-knot/web3-react';
-import { getConnectors } from 'reef-knot/core-react';
+import { getConnectors, holesky } from 'reef-knot/core-react';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
 import { getRPCPath } from '../util/contractTestingUtils';
 import { rpcUrlsString } from '../util/rpc';
 import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
 
-const supportedChains = [goerli, mainnet];
+const supportedChains = [goerli, mainnet, holesky];
 const supportedChainsIds = supportedChains.map((chain) => chain.id);
 const defaultChainId = goerli.id;
 
