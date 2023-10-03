@@ -2419,44 +2419,44 @@
     bignumber.js "^9.1.1"
     rxjs "6"
 
-"@lido-sdk/constants@3.1.0", "@lido-sdk/constants@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@lido-sdk/constants/-/constants-3.1.0.tgz#04527c31ffce4b60b35b5d1cc10560ed96597a14"
-  integrity sha512-/UkhD2JtVb6yn6e8JT2spEG7AVgBdkkH7LUttu1+Ih5LlVmtdrCjuwdxUhTK+55lVPKaPb1lg8dNiJqMZ5XWVw==
+"@lido-sdk/constants@3.2.0", "@lido-sdk/constants@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/constants/-/constants-3.2.0.tgz#776bfb6f404cda951c3771e3e104349dc8c205d7"
+  integrity sha512-V/RgtHqve9klpHDSd6njnqhVPj64Hyqhs3jM8snlWPoIP6Lq3LQCEyiF1/0W9RtbqqdZRhyuGvg/qyOUVznw4Q==
   dependencies:
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/contracts@3.0.2", "@lido-sdk/contracts@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@lido-sdk/contracts/-/contracts-3.0.2.tgz#2f7fa71816326a2b2aa1df31ccb8b2e3de62edad"
-  integrity sha512-/fZRLPwxwlIut0T0T18GO/hRa7SMSHRaAm7C97V1YUjwW7oP54TakrorCLZ8rTjEprtFMjTrqnksSLDGlJYwXg==
+"@lido-sdk/contracts@3.0.3", "@lido-sdk/contracts@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/contracts/-/contracts-3.0.3.tgz#53245bfadf4592718090adf943754182c56a1f60"
+  integrity sha512-XQg2gA7Cd2dNv2QCwJHC6fIzpNDJ3o6glsItqNqQ3ChioqiCXSxqjruXln0tcamlp3MRfFKYMkt0HJLdhyW6mw==
   dependencies:
-    "@lido-sdk/constants" "3.1.0"
+    "@lido-sdk/constants" "3.2.0"
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/helpers@1.4.11":
-  version "1.4.11"
-  resolved "https://registry.yarnpkg.com/@lido-sdk/helpers/-/helpers-1.4.11.tgz#e6502ce8a5e1f60dd5a1cf946b8a57fe7169e565"
-  integrity sha512-lyswvegMmzOatJ6yB/PrBi/XCMAz+uN3/ljiPKM99l1surPnrkJ/qSKaD3wVxToML4QaaHkbFG/Je/UDVJyNcA==
+"@lido-sdk/helpers@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/helpers/-/helpers-1.5.0.tgz#4eedec11c99509b22f5cf550ad01190753d010c7"
+  integrity sha512-KxpdrItlUuBVn4GjdC5LU5VMftgrnr+ndV0MTLpWCm+p80VchsI+5XQImJUsIeDMu6PJMMz4xxIgUCu27en9HQ==
   dependencies:
-    "@lido-sdk/constants" "3.1.0"
+    "@lido-sdk/constants" "3.2.0"
     tiny-invariant "^1.1.0"
 
-"@lido-sdk/providers@^1.4.12":
-  version "1.4.12"
-  resolved "https://registry.yarnpkg.com/@lido-sdk/providers/-/providers-1.4.12.tgz#38d47870be8919c81ff24a3b263978d7ed265698"
-  integrity sha512-78DflF/ZL6/qdqAeKqDRcAJFiOAIg8Mel2+w8RYy/e1JSHmkeFttx9mIVVt0WcNEPWX93AfyiYAlb5HAug0a7g==
+"@lido-sdk/providers@^1.4.13":
+  version "1.4.13"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/providers/-/providers-1.4.13.tgz#9670ce0bf4bf66541156a52aa0a5d81fa17d2e8f"
+  integrity sha512-ipz9/o8fD2GE5wpJFrzIIbp/X/6jeXSBCJJZXdwIpZEaHxVEdj7cdjtLJ4vBVaX16IS+I0qGSUhTYCHLnzWRrA==
   dependencies:
-    "@lido-sdk/constants" "3.1.0"
+    "@lido-sdk/constants" "3.2.0"
 
-"@lido-sdk/react@^2.0.0":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lido-sdk/react/-/react-2.0.1.tgz#6fcdf60b4d15fd626e400fbb3d959068a2872df8"
-  integrity sha512-BEyqlOaB4t1y1085oX9dQkObq3QEHASS5EF9PFENTIEdLpvgW3Iy6RnthIlMYMQnsJfkrZuL1IB844AR6dfr3Q==
+"@lido-sdk/react@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/react/-/react-2.0.2.tgz#03dc39c7f86b69314210ac17b47f9b02e14f3ae5"
+  integrity sha512-eMzozrYkDysxw84P+dcmrcTr1A6qKtbiu6sRs4k3wvU4DoQ41P4knoUqECNE1dixXHmIOdrMCVkzJewlhspKug==
   dependencies:
-    "@lido-sdk/constants" "3.1.0"
-    "@lido-sdk/contracts" "3.0.2"
-    "@lido-sdk/helpers" "1.4.11"
+    "@lido-sdk/constants" "3.2.0"
+    "@lido-sdk/contracts" "3.0.3"
+    "@lido-sdk/helpers" "1.5.0"
     swr "^1.0.1"
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
