@@ -25,7 +25,7 @@ export const Coin98: WalletAdapterType = ({ chains }) => ({
     !!globalThis.window?.coin98?.provider ||
     !!globalThis.window?.ethereum?.isCoin98,
   downloadURLs: {
-    default: 'https://download.coin98.com',
+    default: 'https://coin98.com/wallet',
     ios: 'https://ios.coin98.com',
     android: 'https://android.coin98.com',
   },
