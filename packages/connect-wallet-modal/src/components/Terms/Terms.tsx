@@ -3,7 +3,7 @@ import { Checkbox, CheckboxProps, Link } from '@reef-knot/ui-react';
 import { TermsStyle, TermsTextStyle } from './styles';
 import { Metrics } from '../WalletsModal';
 
-type WalletModalConnectTermsProps = Pick<
+export type WalletModalConnectTermsProps = Pick<
   CheckboxProps,
   'checked' | 'onChange'
 > & { metrics?: Metrics; termsLink: string; privacyNoticeLink: string };

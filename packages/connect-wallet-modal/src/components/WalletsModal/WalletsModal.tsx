@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useState, ReactElement } from 'react';
-import { Button, Modal } from '@reef-knot/ui-react';
+import React, { useCallback, useContext, useState } from 'react';
+import { Modal } from '@reef-knot/ui-react';
 import {
   AcceptTermsModalContext,
   LS_KEY_TERMS_ACCEPTANCE,
@@ -9,12 +9,13 @@ import {
   ButtonsCommonProps,
   RequirementsData,
 } from './types';
-import { Terms } from '../Terms';
-import { WalletsButtonsContainer, CommonButtonsContainer } from './styles';
+import { Terms, WalletModalConnectTermsProps } from '../Terms';
+import { WalletsButtonsContainer } from './styles';
 import { NOOP, useLocalStorage } from '../../helpers';
 import { LedgerModal } from '../Ledger';
+import { AcceptTermsModal } from './components';
 
-export function WalletsModal(props: WalletsModalProps): ReactElement {
+export function WalletsModal(props: WalletsModalProps) {
   const {
     onClose,
     shouldInvertWalletIcon = false,
@@ -33,7 +34,7 @@ export function WalletsModal(props: WalletsModalProps): ReactElement {
     setTermsChecked((currentValue: boolean) => !currentValue);
   }, [setTermsChecked]);
 
-  const termsProps = {
+  const termsProps: WalletModalConnectTermsProps = {
     onChange: handleTermsToggle,
     checked: termsChecked,
     termsLink: termsLink || 'https://lido.fi/terms-of-use',
@@ -111,25 +112,13 @@ export function WalletsModal(props: WalletsModalProps): ReactElement {
 
     if (acceptTermsModal?.isVisible) {
       return (
-        <Modal
-          {...props} // the props are overridden here on purpose
+        <AcceptTermsModal
           open
-          onClose={undefined} // the modal should not be closable
-          title="Confirm connection"
-        >
-          <Terms {...termsProps} />
-          <CommonButtonsContainer>
-            <Button
-              fullwidth
-              disabled={!termsChecked}
-              onClick={() => {
-                acceptTermsModal?.onContinue?.();
-              }}
-            >
-              Connect
-            </Button>
-          </CommonButtonsContainer>
-        </Modal>
+          termsProps={termsProps}
+          termsChecked={termsChecked}
+          onContinue={acceptTermsModal.onContinue}
+          error={acceptTermsModal.error}
+        />
       );
     }
 
