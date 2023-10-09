@@ -104,7 +104,7 @@ export const useLedgerAccounts = ({
       setAccounts({});
       try {
         const accountIndex = getFirstIndexOnPage(currentPage, accountsPerPage);
-        if (!accountsStorage?.[accountIndex]) {
+        if (!accountsStorage?.[derivationPathTemplate]?.[accountIndex]) {
           // Accounts Storage has no record for the first account on the current page,
           // so we can assume, that accounts for the page were not loaded and cached before, and we need to load them.
           const accountRecords = await getAccountRecords({
