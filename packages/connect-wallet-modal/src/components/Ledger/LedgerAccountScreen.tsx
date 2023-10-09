@@ -62,16 +62,6 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
     onConnect: onConnectLedger,
   });
 
-  useEffect(() => {
-    if (!connect || !connector?.isSupported()) {
-      setError(
-        new Error(
-          "Your browser doesn't support direct connection with Ledger. Please, try another browser.",
-        ),
-      );
-    }
-  }, [connect, connector, setError]);
-
   const handleAccountButtonClick = useCallback(
     async (account) => {
       saveLedgerDerivationPath(account.path);
