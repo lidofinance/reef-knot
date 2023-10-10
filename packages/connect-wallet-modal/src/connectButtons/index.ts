@@ -3,7 +3,6 @@ export { default as ConnectImToken } from './connectImToken';
 export { default as ConnectLedger } from './connectLedger';
 export { default as ConnectMetamask } from './connectMetamask';
 export { default as ConnectTrust } from './connectTrust';
-export { default as ConnectCoin98 } from './connectCoin98';
 export { default as ConnectMathWallet } from './connectMathWallet';
 export { default as ConnectBraveWallet } from './connectBraveWallet';
 export { default as ConnectOperaWallet } from './connectOperaWallet';

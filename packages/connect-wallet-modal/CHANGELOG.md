@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.7.0
+
+### Minor Changes
+
+- e2074ed: Make Coin98 wallet to use Wallet Adapter API
+
 ## 1.6.2
 
 ### Patch Changes
