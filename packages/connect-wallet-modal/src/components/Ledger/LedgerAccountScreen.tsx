@@ -3,7 +3,7 @@ import styled from '@reef-knot/ui-react/styled-wrapper';
 import { Pagination, Stack, StackItem } from '@lidofinance/lido-ui';
 import { AccountButton, AccountButtonSkeleton } from './LedgerAccountButton';
 import { useLedgerAccounts, useLedgerContext } from './hooks';
-import { getFirstIndexOnPage, saveLedgerDerivationPath } from './helpers';
+import { getFirstIndexOnPage, interceptLedgerError, saveLedgerDerivationPath } from './helpers';
 import { Metrics } from '../WalletsModal';
 import { useConnectorLedger } from '@reef-knot/web3-react';
 import { LedgerDerivationPathSelect } from './LedgerDerivationPathSelect';
@@ -66,8 +66,12 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
     async (account) => {
       saveLedgerDerivationPath(account.path);
       await disconnectTransport();
-      closeScreen?.();
-      await connect();
+      try {
+        await connect();
+        closeScreen?.();
+      } catch (e) {
+        setError(interceptLedgerError(e as Error));
+      }
     },
     [closeScreen, connect, disconnectTransport],
   );
