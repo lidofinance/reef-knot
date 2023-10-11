@@ -65,7 +65,7 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
   const handleAccountButtonClick = useCallback(
     async (account) => {
       saveLedgerDerivationPath(account.path);
-      await disconnectTransport();
+      await disconnectTransport(true);
       try {
         await connect();
         closeScreen?.();

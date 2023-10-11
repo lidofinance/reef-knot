@@ -24,7 +24,7 @@ export type LedgerContextValue = {
   error: Error | null;
   setError: (e: Error | null) => void;
   connectTransport: () => Promise<void>;
-  disconnectTransport: () => Promise<void>;
+  disconnectTransport: (goingToReconnect?: boolean) => Promise<void>;
   reconnectTransport: () => Promise<void>;
 };
 
