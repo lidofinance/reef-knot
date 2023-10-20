@@ -7,7 +7,7 @@ export const useConnectorError = (): Error | undefined => {
   const { isLedger } = useConnectorInfo();
 
   if (!error) {
-    return error;
+    return;
   }
 
   if (isLedger) {

@@ -10,8 +10,8 @@ import React, {
 } from 'react';
 import type Transport from '@ledgerhq/hw-transport';
 import Eth from '@ledgerhq/hw-app-eth';
-import { useConnectorLedger } from '@reef-knot/web3-react';
-import { getTransport, interceptLedgerError } from './helpers';
+import { useConnectorLedger, helpers } from '@reef-knot/web3-react';
+import { getTransport } from './helpers';
 
 export interface LedgerContextProps {
   isActive: boolean;
@@ -51,7 +51,7 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
         setIsTransportConnected(false);
       }
     } catch (e: any) {
-      setError(interceptLedgerError(e));
+      setError(helpers.interceptLedgerError(e));
     }
   }, []);
 
@@ -75,7 +75,7 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
       setIsTransportConnected(true);
     } catch (e: any) {
       await disconnectTransport(true);
-      setError(interceptLedgerError(e));
+      setError(helpers.interceptLedgerError(e));
     }
   }, [disconnectTransport]);
 
