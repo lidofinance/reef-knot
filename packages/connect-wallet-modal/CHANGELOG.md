@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.8.0
+
+### Minor Changes
+
+- Rework direct Ledger hardware connection UI
+
 ## 1.7.0
 
 ### Minor Changes
