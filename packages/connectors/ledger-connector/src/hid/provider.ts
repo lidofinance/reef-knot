@@ -22,6 +22,7 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
     throw new Error('method is not implemented');
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async detectNetwork(): Promise<Network> {
     return this._network;
   }
@@ -82,23 +83,25 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
   }): Promise<unknown> {
     invariant(this.signer, 'Signer is not defined');
     switch (method) {
-      case 'eth_sendTransaction':
+      case 'eth_sendTransaction': {
         const sourceTx = params[0] as TransactionRequestExtended;
         const unsignedTx = await convertToUnsigned(sourceTx);
         const signedTx = await this.signer.signTransaction(unsignedTx);
         return this.send('eth_sendRawTransaction', [signedTx]);
+      }
       case 'eth_accounts':
         return [await this.getAddress()];
-      case 'eth_signTypedData_v4':
+      case 'eth_signTypedData_v4': {
         if (typeof params[1] !== 'string')
           throw new Error('eth_signTypedData_v4 arg 1 is not a string');
-        const payload = JSON.parse(params[1] as string);
+        const payload = JSON.parse(params[1]);
         return await this.signer.__signEIP712Message({
           domain: payload.domain,
           types: payload.types,
           primaryType: payload.primaryType,
           message: payload.message,
         });
+      }
       default:
         return this.send(method, params);
     }

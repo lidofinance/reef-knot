@@ -28,7 +28,11 @@ export type ButtonsCommonProps = {
   onBeforeConnect?: () => void;
   onConnect?: () => void;
   shouldInvertWalletIcon: boolean;
-  setRequirements(isVisible: boolean, requirementsData: RequirementsData): void;
+  setRequirements(
+    this: void,
+    isVisible: boolean,
+    requirementsData: RequirementsData,
+  ): void;
   setLedgerScreenVisible(isVisible: boolean): void;
   metrics?: Metrics;
 };

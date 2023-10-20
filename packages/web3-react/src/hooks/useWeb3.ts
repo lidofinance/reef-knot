@@ -6,7 +6,7 @@ import { useSupportedChains } from './useSupportedChains';
 export { UnsupportedChainIdError } from '@web3-react/core';
 
 // Shimming useWeb3React hook to also use data returned from wagmi
-export function useWeb3<T = any>(key?: string): Web3ReactContextInterface<T> {
+export function useWeb3<T = any>(_key?: string): Web3ReactContextInterface<T> {
   const web3ReactData = useWeb3React();
   const wagmiAccount = useAccount();
   const wagmiNetwork = useNetwork();

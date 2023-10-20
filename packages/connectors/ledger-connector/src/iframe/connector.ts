@@ -5,6 +5,8 @@ import type { ConnectorUpdate } from '@web3-react/types';
 import type { IFrameEthereumProvider } from '@ledgerhq/iframe-provider';
 import { isLedgerDappBrowserProvider } from './helpers';
 
+/* eslint-disable @typescript-eslint/unbound-method */
+
 type IFrameEthereumProviderOptions = ConstructorParameters<
   typeof IFrameEthereumProvider
 >[0] & { supportedChainIds?: number[] };
@@ -76,6 +78,7 @@ export class LedgerHQFrameConnector extends AbstractConnector {
     return { provider: this.provider, account };
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async getProvider(): Promise<IFrameEthereumProvider | undefined> {
     return this.provider;
   }

@@ -1,5 +1,16 @@
 # @reef-knot/wallets-list
 
+## 1.5.0
+
+### Minor Changes
+
+- e2074ed: Make Coin98 wallet to use Wallet Adapter API
+
+### Patch Changes
+
+- Updated dependencies [e2074ed]
+  - @reef-knot/wallet-adapter-coin98@1.0.0
+
 ## 1.4.5
 
 ### Patch Changes

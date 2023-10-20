@@ -143,13 +143,13 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
     throw new Error('method is not implemented');
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/require-await
   async unlock(): Promise<boolean> {
     throw new Error('method is not implemented');
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  async _legacySignMessage(message: Bytes | string): Promise<string> {
+  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/require-await
+  async _legacySignMessage(_message: Bytes | string): Promise<string> {
     throw new Error('method is not implemented');
   }
 

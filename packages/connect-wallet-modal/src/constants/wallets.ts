@@ -12,4 +12,4 @@ export const WALLET_IDS = {
   XDEFI: 'Xdefi',
 } as const;
 
-export type WalletId = typeof WALLET_IDS[keyof typeof WALLET_IDS] | string;
+export type WalletId = (typeof WALLET_IDS)[keyof typeof WALLET_IDS] | string;

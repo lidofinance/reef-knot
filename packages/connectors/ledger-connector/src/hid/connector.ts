@@ -44,6 +44,8 @@ export class LedgerHQConnector extends AbstractConnector {
   public async activate(): Promise<ConnectorUpdate> {
     try {
       this.provider = await this.getProviderInstance();
+
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this.provider.on('disconnect', this.handleDisconnect);
       const account = await this.provider.enable();
 
@@ -53,10 +55,12 @@ export class LedgerHQConnector extends AbstractConnector {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async getProvider(): Promise<LedgerHQProvider | undefined> {
     return this.provider;
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async getChainId(): Promise<number> {
     return this.chainId;
   }
@@ -68,6 +72,7 @@ export class LedgerHQConnector extends AbstractConnector {
 
   public deactivate(): void {
     invariant(this.provider, 'Provider is not defined');
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     this.provider.removeListener('disconnect', this.handleDisconnect);
   }
 }

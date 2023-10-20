@@ -60,7 +60,7 @@ const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
   // useEffect is needed here because we are calling getProvider async method from wagmi,
   // which can be taken as an external API
   useEffect(() => {
-    (async () => {
+    void (async () => {
       if (!providerWeb3 && connectorWagmi && isConnectedViaWagmi) {
         // Set wagmi provider
         const p = await connectorWagmi.getProvider();
