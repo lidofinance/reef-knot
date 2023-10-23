@@ -145,7 +145,7 @@ export const useWithdrawalRequestMethods = () => {
       await transaction?.wait();
       updateData();
     },
-    [account, chainId, contractWeb3, updateData],
+    [contractWeb3, updateData],
   );
 
   const permitWsteth = useCallback(
@@ -194,7 +194,7 @@ export const useWithdrawalRequestMethods = () => {
       await transaction?.wait();
       updateData();
     },
-    [account, chainId, contractWeb3, updateData],
+    [contractWeb3, updateData],
   );
 
   const steth = useCallback(
@@ -227,7 +227,7 @@ export const useWithdrawalRequestMethods = () => {
       }
       updateData();
     },
-    [account, chainId, contractWeb3, providerWeb3, updateData],
+    [account, contractWeb3, updateData],
   );
 
   const wstETH = useCallback(
@@ -258,7 +258,7 @@ export const useWithdrawalRequestMethods = () => {
       }
       updateData();
     },
-    [account, chainId, contractWeb3, providerWeb3, updateData],
+    [account, contractWeb3, updateData],
   );
 
   return useCallback(

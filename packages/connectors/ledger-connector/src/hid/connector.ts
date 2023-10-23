@@ -43,9 +43,7 @@ export class LedgerHQConnector extends AbstractConnector {
 
   public async activate(): Promise<ConnectorUpdate> {
     try {
-      if (!this.provider) {
-        this.provider = await this.getProviderInstance();
-      }
+      this.provider = await this.getProviderInstance();
 
       // eslint-disable-next-line @typescript-eslint/unbound-method
       this.provider.on('disconnect', this.handleDisconnect);

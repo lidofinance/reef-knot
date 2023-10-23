@@ -12,6 +12,7 @@ import {
 import { Terms } from '../Terms';
 import { WalletsButtonsContainer, CommonButtonsContainer } from './styles';
 import { NOOP, useLocalStorage } from '../../helpers';
+import { LedgerModal } from '../Ledger';
 
 export function WalletsModal(props: WalletsModalProps): ReactElement {
   const {
@@ -53,17 +54,23 @@ export function WalletsModal(props: WalletsModalProps): ReactElement {
     [],
   );
 
+  // pass-into function is cheap, so we're losing performance on useCallback here
+  const hideRequirements = () => {
+    setRequirements(false);
+  };
+
+  const [ledgerScreenVisible, setLedgerScreenVisible] = useState(false);
+  const hideLedgerScreen = () => {
+    setLedgerScreenVisible(false);
+  }
+
   const buttonsCommonProps: ButtonsCommonProps = {
     disabled: !termsChecked,
     onConnect: onClose,
     shouldInvertWalletIcon,
     setRequirements,
+    setLedgerScreenVisible,
     metrics,
-  };
-
-  // pass-into function is cheap, so we're losing performance on useCallback here
-  const hideRequirements = () => {
-    setRequirements(false);
   };
 
   const handleClose = onClose || NOOP;
@@ -88,6 +95,16 @@ export function WalletsModal(props: WalletsModalProps): ReactElement {
           titleIcon={reqIcon}
         />
       );
+    }
+
+    if (ledgerScreenVisible) {
+      return <LedgerModal
+        {...props} // the props are overridden here on purpose
+        onClose={handleClose}
+        onBack={hideLedgerScreen}
+        onExited={hideLedgerScreen}
+        metrics={buttonsCommonProps.metrics}
+      />
     }
 
     if (acceptTermsModal?.isVisible) {

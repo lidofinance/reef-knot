@@ -28,10 +28,13 @@ export function Web() {
   const { state, handleClose, handleOpen } = useModal();
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
+  const isSelectedThemeLight = selectedTheme === ThemeName.light;
+  document.documentElement.dataset.lidoTheme = isSelectedThemeLight
+    ? 'light'
+    : 'dark';
+
   return (
-    <ThemeProvider
-      theme={selectedTheme === ThemeName.light ? themeLight : themeDark}
-    >
+    <ThemeProvider theme={isSelectedThemeLight ? themeLight : themeDark}>
       <Block style={{ borderRadius: 'unset' }}>
         <Header />
         <GlobalStyle />

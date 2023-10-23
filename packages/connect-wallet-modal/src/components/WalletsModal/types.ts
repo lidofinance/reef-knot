@@ -33,5 +33,6 @@ export type ButtonsCommonProps = {
     isVisible: boolean,
     requirementsData: RequirementsData,
   ): void;
+  setLedgerScreenVisible(isVisible: boolean): void;
   metrics?: Metrics;
 };

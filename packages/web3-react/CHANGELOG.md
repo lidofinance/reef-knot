@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.6.0
+
+### Minor Changes
+
+- Rework direct Ledger hardware connection UI
+
 ## 1.5.0
 
 ### Minor Changes

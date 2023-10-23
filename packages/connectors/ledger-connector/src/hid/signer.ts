@@ -21,6 +21,7 @@ import { LedgerHQProvider } from './provider';
 import { checkError, convertToUnsigned, toNumber } from './helpers';
 import { UnsignedTransactionStrict } from './types';
 
+export const LS_KEY_DERIVATION_PATH = 'reef-knot_ledger-derivation-path';
 const defaultPath = "m/44'/60'/0'/0/0";
 
 export class LedgerHQSigner extends Signer implements TypedDataSigner {
@@ -32,10 +33,14 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
 
   _address = '';
 
-  constructor(provider: LedgerHQProvider, path: string = defaultPath) {
+  constructor(provider: LedgerHQProvider, path: string = '') {
     super();
 
-    this.path = path;
+    let pathFromLS
+    if (typeof window !== 'undefined') {
+      pathFromLS = window.localStorage.getItem(LS_KEY_DERIVATION_PATH);
+    }
+    this.path = path || pathFromLS || defaultPath;
     this.provider = provider;
   }
 
