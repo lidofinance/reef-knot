@@ -77,7 +77,7 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
       await disconnectTransport(true);
       setError(helpers.interceptLedgerError(e));
     }
-  }, [disconnectTransport]);
+  }, [connector, disconnectTransport]);
 
   const reconnectTransport = useCallback(async () => {
     await disconnectTransport(true);

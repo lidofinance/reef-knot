@@ -66,8 +66,8 @@ export const useLedgerAccounts = ({
         // each calling its own cycle of getAddress requests, each of them makes a ledger device busy for a short amount of time.
         try {
           await getAndPushAccount(index, path);
-        } catch (e) {
-          if ((e as TransportError).id === 'TransportLocked') {
+        } catch (transportErr) {
+          if ((transportErr as TransportError).id === 'TransportLocked') {
             // Ledger device is busy answering another getAddress request
             // Make a set of attempts with a timeout, waiting for the device to release
             const MAX_ATTEMPTS = 10;
@@ -88,7 +88,7 @@ export const useLedgerAccounts = ({
               }
             }
           } else {
-            throw e;
+            throw transportErr;
           }
         }
       }
@@ -99,7 +99,7 @@ export const useLedgerAccounts = ({
   );
 
   useEffect(() => {
-    (async () => {
+    void (async () => {
       await connectTransport();
       setAccounts({});
       try {

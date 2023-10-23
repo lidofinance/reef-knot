@@ -3,7 +3,8 @@ import {
   LoadConfig,
   ResolutionConfig,
 } from '@ledgerhq/hw-app-eth/lib/services/types';
-import { EIP712MessageTypes, EIP712Message } from '@ledgerhq/types-live';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { EIP712Message, EIP712MessageTypes } from '@ledgerhq/types-live';
 import { JsonRpcSigner, TransactionRequest } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber';
 import {
@@ -12,7 +13,7 @@ import {
   TypedDataField,
   TypedDataSigner,
 } from '@ethersproject/abstract-signer';
-import { UnsignedTransaction, serialize } from '@ethersproject/transactions';
+import { serialize, UnsignedTransaction } from '@ethersproject/transactions';
 import { toUtf8Bytes } from '@ethersproject/strings';
 import { Bytes, hexlify, joinSignature } from '@ethersproject/bytes';
 import { _TypedDataEncoder } from '@ethersproject/hash';
@@ -33,10 +34,10 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
 
   _address = '';
 
-  constructor(provider: LedgerHQProvider, path: string = '') {
+  constructor(provider: LedgerHQProvider, path = '') {
     super();
 
-    let pathFromLS
+    let pathFromLS;
     if (typeof window !== 'undefined') {
       pathFromLS = window.localStorage.getItem(LS_KEY_DERIVATION_PATH);
     }
@@ -51,6 +52,7 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
       const eth = new Eth(transport);
       await eth.getAppConfiguration();
 
+      // eslint-disable-next-line @typescript-eslint/await-thenable
       return await callback(eth);
     } catch (error) {
       return checkError(error);
@@ -62,9 +64,7 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
   async getAddress(): Promise<string> {
     if (!this._address) {
       const account = await this.withEthApp((eth) => eth.getAddress(this.path));
-
-      const address = this.provider.formatter.address(account.address);
-      this._address = address;
+      this._address = this.provider.formatter.address(account.address);
     }
 
     return this._address;
