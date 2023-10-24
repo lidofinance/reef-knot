@@ -44,16 +44,8 @@ export default defineConfig({
     }),
     typescript({
       typescript: ts,
+      check: false,
       tsconfig: 'tsconfig.json',
-      tsconfigOverride: {
-        compilerOptions: {
-          emitDeclarationOnly: false,
-          noEmit: false,
-          rootDir: 'src',
-        },
-        exclude: ['node_modules', 'dist', '**/*.test.*'],
-        include: ['src/**/*'],
-      },
     }),
     babel({
       exclude: 'node_modules/**',

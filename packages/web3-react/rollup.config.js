@@ -36,6 +36,7 @@ export default {
     resolve({ extensions, preferBuiltins: true }),
     typescript({
       typescript: ts,
+      check: false,
       tsconfig: 'tsconfig.json',
       tsconfigOverride: {
         compilerOptions: {

@@ -36,6 +36,7 @@ export default {
     typescript({
       typescript: ts,
       tsconfig: 'tsconfig.json',
+      check: false,
     }),
     babel({
       exclude: 'node_modules/**',

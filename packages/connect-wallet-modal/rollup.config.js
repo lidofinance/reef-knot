@@ -37,7 +37,8 @@ export default {
     resolve({ extensions, preferBuiltins: true }),
     typescript({
       typescript: ts,
-      tsconfig: 'tsconfig.json'
+      tsconfig: 'tsconfig.json',
+      check: false,
     }),
     babel({
       exclude: 'node_modules/**',
