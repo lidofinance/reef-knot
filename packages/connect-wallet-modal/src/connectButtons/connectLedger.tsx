@@ -16,7 +16,7 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
   const onClickLedger = metrics?.events?.click?.handlers.onClickLedger;
   const WalletIcon = shouldInvertWalletIcon ? LedgerInversion : Ledger;
 
-  const handleConnect = useCallback(async () => {
+  const handleConnect = useCallback(() => {
     onBeforeConnect?.();
     onClickLedger?.();
 

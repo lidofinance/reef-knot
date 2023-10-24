@@ -33,7 +33,7 @@ const AddressContainerStyled = styled.div`
 
 const IconContainerStyled = styled.div`
   margin-right: 20px;
-  
+
   ${({ theme }) => theme.mediaQueries.md} {
     margin-right: 10px;
   }
@@ -93,7 +93,7 @@ export const AccountButton: FC<Props> = ({
         <IconContainerStyled>
           <LedgerWalletIcon />
         </IconContainerStyled>
-        <Address address={address} symbols={ useBreakpoint('md') ? 6 : 8} />
+        <Address address={address} symbols={useBreakpoint('md') ? 6 : 8} />
       </AddressContainerStyled>
       <Text size="xs" strong as={'div'}>
         <BalanceWrapper>

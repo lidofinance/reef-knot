@@ -19,13 +19,8 @@ export const useConnectorLedger = (
   const onConnect = args?.onConnect;
 
   const connect = useCallback(async () => {
-    try {
-      disconnect();
-      await activate(ledger, () => {
-      }, true);
-    } catch (e) {
-      throw e;
-    }
+    disconnect();
+    await activate(ledger, () => {}, true);
     onConnect?.();
   }, [activate, disconnect, ledger, onConnect]);
 

@@ -43,6 +43,7 @@
     "@ethersproject/providers": "^5.5.2",
     "@ethersproject/strings": "^5.5.0",
     "@ethersproject/transactions": "^5.5.0",
+    "@ethersproject/hash": "^5.5.0",
     "@ledgerhq/hw-app-eth": "^6.34.3",
     "@ledgerhq/hw-transport": "^6.28.8",
     "@ledgerhq/hw-transport-webhid": "^6.27.19",

@@ -19,7 +19,9 @@ export const LedgerDerivationPathSelect: FC<{
     <TextStyled color="secondary">Select HD derivation path</TextStyled>
     <Select onChange={onChange} value={value} fullwidth themeOverride="light">
       {DERIVATION_PATHS.map((path) => (
-        <Option value={path.template} key={path.template}>{path.title}</Option>
+        <Option value={path.template} key={path.template}>
+          {path.title}
+        </Option>
       ))}
     </Select>
   </Box>

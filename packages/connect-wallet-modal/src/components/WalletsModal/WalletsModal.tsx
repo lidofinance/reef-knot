@@ -62,7 +62,7 @@ export function WalletsModal(props: WalletsModalProps): ReactElement {
   const [ledgerScreenVisible, setLedgerScreenVisible] = useState(false);
   const hideLedgerScreen = () => {
     setLedgerScreenVisible(false);
-  }
+  };
 
   const buttonsCommonProps: ButtonsCommonProps = {
     disabled: !termsChecked,
@@ -98,13 +98,15 @@ export function WalletsModal(props: WalletsModalProps): ReactElement {
     }
 
     if (ledgerScreenVisible) {
-      return <LedgerModal
-        {...props} // the props are overridden here on purpose
-        onClose={handleClose}
-        onBack={hideLedgerScreen}
-        onExited={hideLedgerScreen}
-        metrics={buttonsCommonProps.metrics}
-      />
+      return (
+        <LedgerModal
+          {...props} // the props are overridden here on purpose
+          onClose={handleClose}
+          onBack={hideLedgerScreen}
+          onExited={hideLedgerScreen}
+          metrics={buttonsCommonProps.metrics}
+        />
+      );
     }
 
     if (acceptTermsModal?.isVisible) {

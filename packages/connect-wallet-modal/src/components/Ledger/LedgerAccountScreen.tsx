@@ -58,7 +58,7 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
   }, [accountsForPage, accountsStorage, derivationPathTemplate]);
 
   const onConnectLedger = metrics?.events?.connect?.handlers.onConnectLedger;
-  const { connect, connector } = useConnectorLedger({
+  const { connect } = useConnectorLedger({
     onConnect: onConnectLedger,
   });
 
@@ -73,7 +73,7 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
         setError(helpers.interceptLedgerError(e as Error));
       }
     },
-    [closeScreen, connect, disconnectTransport],
+    [closeScreen, connect, disconnectTransport, setError],
   );
 
   const handleDerivationPathSelect = useCallback((value) => {
