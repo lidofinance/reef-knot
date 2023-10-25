@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ErrorBlock = styled.div`
-  ${({ theme: { fontSizesMap, spaceMap, borderRadiusesMap, colors } }) => css`
+  ${({ theme: { fontSizesMap, spaceMap, borderRadiusesMap } }) => css`
     background: var(--lido-color-error);
     color: var(--lido-color-text);
     font-size: ${fontSizesMap.xxs}px;
@@ -43,7 +43,7 @@ export const AcceptTermsModal = ({
   return (
     <Modal title="Confirm connection" open={open}>
       <Terms {...termsProps} />
-      { error && <ErrorBlock> {errorMessage} </ErrorBlock> }
+      {error && <ErrorBlock> {errorMessage} </ErrorBlock>}
       <CommonButtonsContainer>
         <Button
           fullwidth

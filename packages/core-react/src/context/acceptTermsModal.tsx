@@ -6,7 +6,7 @@ export type AcceptTermsModalContextValue = {
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
     onContinue: () => void;
     setOnContinue: React.Dispatch<React.SetStateAction<() => void>>;
-    error?: Error,
+    error?: Error;
     setError: React.Dispatch<React.SetStateAction<Error | undefined>>;
   };
 };
@@ -40,10 +40,10 @@ export const AcceptTermsModalContextProvider: FC = ({ children }) => {
         onContinue: onAcceptTermsModalContinue,
         setOnContinue: setOnAcceptTermsModalContinue,
         error,
-        setError
+        setError,
       },
     }),
-    [isAcceptTermsModalVisible, onAcceptTermsModalContinue],
+    [error, isAcceptTermsModalVisible, onAcceptTermsModalContinue],
   );
 
   return (
