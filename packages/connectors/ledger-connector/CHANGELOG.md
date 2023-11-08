@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 1.1.1
+
+### Patch Changes
+
+- Update ledgerhq/hw-app-eth. Needed to bump `crypto-js` to 4.2.0 to fix dependabot security alert.
+
 ## 1.1.0
 
 ### Minor Changes
