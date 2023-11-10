@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.8.1
+
+### Patch Changes
+
+- Depend on @lidofinance/lido-ui v3.14.1 strictly. 3.14.1 has required "type: module" field, in 3.14.2 the field is removed.
+
 ## 1.8.0
 
 ### Minor Changes
