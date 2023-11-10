@@ -1,5 +1,11 @@
 # @reef-knot/wallets-icons
 
+## 1.1.0
+
+### Minor Changes
+
+- Update XDEFI and Trust logo, remove not used logos
+
 ## 1.0.0
 
 ### Major Changes
