@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
   pages: write
-  id-token: write   # to verify the deployment originates from an appropriate source
+  id-token: write # to verify the deployment originates from an appropriate source
 
 jobs:
   check-all:
@@ -41,6 +41,7 @@ jobs:
         run: yarn run next build && yarn run next export
         env:
           BASE_PATH: /${{ github.event.repository.name }}
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
