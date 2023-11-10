@@ -6,7 +6,7 @@ import { Terms, WalletModalConnectTermsProps } from '../../Terms';
 import { CommonButtonsContainer } from '../styles';
 import { useReefKnotContext } from '@reef-knot/core-react';
 
-interface Props {
+export interface AcceptTermsModalProps {
   open: boolean;
   termsProps: WalletModalConnectTermsProps;
   termsChecked: boolean;
@@ -33,7 +33,7 @@ export const AcceptTermsModal = ({
   termsChecked,
   onContinue,
   error,
-}: Props) => {
+}: AcceptTermsModalProps) => {
   const { chains: supportedChains } = useReefKnotContext();
   let errorMessage = error?.message;
   if (error && error.name == 'UnsupportedChainIdError') {
