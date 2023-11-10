@@ -2510,10 +2510,26 @@
   dependencies:
     typescript "^4.7"
 
-"@lidofinance/lido-ui@^3.8.1":
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.11.0.tgz#6caf89a287913cf7f32afe294146b13fbcc3faae"
-  integrity sha512-2VdGbWHkU1Eslo9Svkf6owH1gc10TOSmq4IY5WZMUjg/ELQsQ+LqugLw2ovAJ+qOpcdFEnOMDgZiJ0w0A2lOxQ==
+"@lidofinance/lido-ui@3.14.1":
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.14.1.tgz#780d32c3321295a40d44c352a307029a2b574e43"
+  integrity sha512-8vqv1E9ldPAIAceANPrh1alLPFWbYzz8AO6RhNbtFms+yPd5P2nSh5OopBLB1G2HE4lGFF0c3OXbMgyEcq9pEQ==
+  dependencies:
+    "@styled-system/should-forward-prop" "5.1.5"
+    "@swc/helpers" "^0.4.11"
+    "@swc/plugin-styled-components" "^1.2.10"
+    react-collapsed "3.0.2"
+    react-jazzicon "^1.0.4"
+    react-toastify "7.0.4"
+    react-transition-group "4"
+    styled-system "5.1.5"
+    ua-parser-js "^1.0.35"
+    use-callback-ref "1.2.5"
+
+"@lidofinance/lido-ui@^3.14.2":
+  version "3.14.2"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.14.2.tgz#ad53a9fd12c188dc16f9bb584187a9500b677c4b"
+  integrity sha512-dBa0NDZCYfIduozBQ9Io8VaEr22K6hjWa4ZsqTTbEpcrT9GwR1DhTesE9LdWXo7IhKN/niwQrO+siAaV7KlROw==
   dependencies:
     "@styled-system/should-forward-prop" "5.1.5"
     "@swc/helpers" "^0.4.11"
