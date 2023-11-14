@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.6.1
+
+### Patch Changes
+
+- Add workaround: await timeout before ledger connector "activate"
+
 ## 1.6.0
 
 ### Minor Changes

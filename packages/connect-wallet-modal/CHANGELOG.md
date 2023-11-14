@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.8.3
+
+### Patch Changes
+
+- Remove 'themeOverride' deprecated prop from Select
+
 ## 1.8.2
 
 ### Patch Changes
