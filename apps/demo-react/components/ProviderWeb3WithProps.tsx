@@ -8,9 +8,9 @@ import { getRPCPath } from '../util/contractTestingUtils';
 import { rpcUrlsString } from '../util/rpc';
 import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
 
-const supportedChains = [goerli, mainnet, holesky];
+const supportedChains = [holesky, mainnet, goerli];
 const supportedChainsIds = supportedChains.map((chain) => chain.id);
-const defaultChainId = goerli.id;
+const defaultChainId = holesky.id;
 
 const jsonRcpBatchProvider = (chain: Chain) => ({
   provider: () =>
