@@ -17,7 +17,7 @@ export interface AcceptTermsModalProps {
 const ErrorBlock = styled.div`
   ${({ theme: { fontSizesMap, spaceMap, borderRadiusesMap } }) => css`
     background: var(--lido-color-error);
-    color: var(--lido-color-text);
+    color: var(--lido-color-errorContrast);
     font-size: ${fontSizesMap.xxs}px;
     line-height: 1.6em;
     padding: ${spaceMap.lg}px;
