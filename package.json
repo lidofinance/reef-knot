@@ -18,7 +18,8 @@
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-packages": "turbo run lint test --filter=./packages/*",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "new-wallet": "turbo gen wallet"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
