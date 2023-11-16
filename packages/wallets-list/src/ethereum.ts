@@ -10,6 +10,7 @@ import { Ambire } from '@reef-knot/wallet-adapter-ambire';
 import { Phantom } from '@reef-knot/wallet-adapter-phantom';
 import { BitKeep } from '@reef-knot/wallet-adapter-bitkeep';
 import { Coin98 } from '@reef-knot/wallet-adapter-coin98';
+import { Brave } from '@reef-knot/wallet-adapter-brave';
 
 export const WalletsListEthereum: WalletsListType = {
   okx: Okx,
@@ -23,4 +24,5 @@ export const WalletsListEthereum: WalletsListType = {
   phantom: Phantom,
   bitkeep: BitKeep,
   coin98: Coin98,
+  brave: Brave,
 };
