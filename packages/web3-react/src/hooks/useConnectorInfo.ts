@@ -11,7 +11,6 @@ import { PROVIDER_NAMES } from '../constants';
 import {
   isCoinbaseProvider,
   isDappBrowserProvider,
-  isGamestopProvider,
   isImTokenProvider,
   isMathWalletProvider,
   isMetamaskProvider,
@@ -32,7 +31,6 @@ type ConnectorInfo = {
   isMathWallet: boolean;
   isImToken: boolean;
   isTrust: boolean;
-  isGamestop: boolean;
   isXdefi: boolean;
   isDappBrowser: boolean;
   isInjected: boolean;
@@ -68,7 +66,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isMathWallet = isInjected && isMathWalletProvider();
   const isImToken = isInjected && isImTokenProvider();
   const isTrust = isInjected && isTrustProvider();
-  const isGamestop = isInjected && isGamestopProvider();
   const isXdefi = isInjected && isXdefiProvider();
   const isZerion = isInjected && isZerionProvider();
 
@@ -93,7 +90,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     // The order of wallets checks here is important.
     // Most "aggressive" wallet, which overrides other wallets, goes first.
     if (isXdefi) return PROVIDER_NAMES.XDEFI;
-    if (isGamestop) return PROVIDER_NAMES.GAMESTOP;
     if (isMathWallet) return PROVIDER_NAMES.MATH_WALLET;
     if (isCoinbase) return PROVIDER_NAMES.COINBASE;
     if (isZerion) return PROVIDER_NAMES.ZERION;
@@ -123,7 +119,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isMathWallet,
     isImToken,
     isTrust,
-    isGamestop,
     isXdefi,
 
     isDappBrowser,

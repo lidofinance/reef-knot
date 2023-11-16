@@ -38,7 +38,6 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
       checkConflicts([
         CONFLICTS.Xdefi,
-        CONFLICTS.Gamestop,
         CONFLICTS.Exodus,
         CONFLICTS.Coin98,
         CONFLICTS.MathWallet,

@@ -1,5 +1,4 @@
 export { default as Coinbase } from '../svg/coinbase.svg';
-export { default as Gamestop } from '../svg/gamestop.svg';
 export { default as ImToken } from '../svg/imtoken.svg';
 export { default as Ledger } from '../svg/ledger.svg';
 export { default as LedgerInversion } from '../svg/ledger-inversion.svg';
