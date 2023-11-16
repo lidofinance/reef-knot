@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.6.0
+
+### Minor Changes
+
+- Add Brave wallet
+
 ## 1.5.0
 
 ### Minor Changes
