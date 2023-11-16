@@ -9,7 +9,6 @@ import {
 import { useWeb3 } from './useWeb3';
 import { PROVIDER_NAMES } from '../constants';
 import {
-  isBraveWalletProvider,
   isCoin98Provider,
   isCoinbaseProvider,
   isDappBrowserProvider,
@@ -36,7 +35,6 @@ type ConnectorInfo = {
   isMathWallet: boolean;
   isImToken: boolean;
   isTrust: boolean;
-  isBraveWallet: boolean;
   isOperaWallet: boolean;
   isGamestop: boolean;
   isXdefi: boolean;
@@ -75,7 +73,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isMathWallet = isInjected && isMathWalletProvider();
   const isImToken = isInjected && isImTokenProvider();
   const isTrust = isInjected && isTrustProvider();
-  const isBraveWallet = isInjected && isBraveWalletProvider();
   const isOperaWallet = isInjected && isOperaWalletProvider();
   const isGamestop = isInjected && isGamestopProvider();
   const isXdefi = isInjected && isXdefiProvider();
@@ -107,7 +104,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     if (isCoin98) return PROVIDER_NAMES.COIN98;
     if (isCoinbase) return PROVIDER_NAMES.COINBASE;
     if (isOperaWallet) return PROVIDER_NAMES.OPERA;
-    if (isBraveWallet) return PROVIDER_NAMES.BRAVE;
     if (isZerion) return PROVIDER_NAMES.ZERION;
     // Metamask should be last in this list because almost all EIP-1193 wallets
     // are trying to mimic Metamask by setting isMetamask = true
@@ -136,7 +132,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isMathWallet,
     isImToken,
     isTrust,
-    isBraveWallet,
     isOperaWallet,
     isGamestop,
     isXdefi,

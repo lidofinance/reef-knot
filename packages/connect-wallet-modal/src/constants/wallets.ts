@@ -6,7 +6,6 @@ export const WALLET_IDS = {
   IM_TOKEN: 'ImToken',
   COIN98: 'Coin98',
   MATH_WALLET: 'MathWallet',
-  BRAVE: 'Brave Wallet',
   OPERA: 'Opera Wallet',
   GAMESTOP: 'Gamestop',
   XDEFI: 'Xdefi',

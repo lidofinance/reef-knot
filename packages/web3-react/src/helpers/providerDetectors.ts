@@ -14,7 +14,6 @@ declare global {
       isMathWallet?: boolean;
       isCoinbaseWallet?: boolean;
       isTally?: boolean;
-      isBraveWallet?: boolean;
       isExodus?: boolean;
       isOpera?: boolean;
       isGamestop?: boolean;

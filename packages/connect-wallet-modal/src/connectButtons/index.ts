@@ -4,7 +4,6 @@ export { default as ConnectLedger } from './connectLedger';
 export { default as ConnectMetamask } from './connectMetamask';
 export { default as ConnectTrust } from './connectTrust';
 export { default as ConnectMathWallet } from './connectMathWallet';
-export { default as ConnectBraveWallet } from './connectBraveWallet';
 export { default as ConnectOperaWallet } from './connectOperaWallet';
 export { default as ConnectGamestop } from './connectGamestop';
 export { default as ConnectXdefi } from './connectXdefi';

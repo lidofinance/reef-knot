@@ -10,7 +10,6 @@ export enum PROVIDER_NAMES {
   LEDGER = 'Ledger',
   COIN98 = 'Coin98',
   MATH_WALLET = 'MathWallet',
-  BRAVE = 'Brave Wallet',
   OPERA = 'Opera Crypto Wallet',
   GAMESTOP = 'GameStop Wallet',
   XDEFI = 'XDEFI',

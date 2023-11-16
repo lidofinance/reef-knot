@@ -1,4 +1,3 @@
-export { default as Brave } from '../svg/brave.svg';
 export { default as Coinbase } from '../svg/coinbase.svg';
 export { default as Gamestop } from '../svg/gamestop.svg';
 export { default as ImToken } from '../svg/imtoken.svg';
