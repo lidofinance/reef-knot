@@ -13,7 +13,6 @@ declare global {
       isCoinbaseWallet?: boolean;
       isTally?: boolean;
       isExodus?: boolean;
-      isOpera?: boolean;
       isGamestop?: boolean;
       isXDEFI?: boolean;
       isZerion?: boolean;
@@ -104,14 +103,6 @@ export const isTallyProvider = (): boolean => {
 export const isBraveWalletProvider = (): boolean => {
   try {
     return !!window.ethereum?.isBraveWallet;
-  } catch (error) {
-    return false;
-  }
-};
-
-export const isOperaWalletProvider = (): boolean => {
-  try {
-    return !!window.ethereum?.isOpera;
   } catch (error) {
     return false;
   }

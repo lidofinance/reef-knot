@@ -8,7 +8,6 @@ export * from './useConnectorMathWallet';
 export * from './useConnectors';
 export * from './useConnectorStorage';
 export * from './useConnectorTrust';
-export * from './useConnectorOperaWallet';
 export * from './useConnectorGamestop';
 export * from './useConnectorXdefi';
 export * from './useDisconnect';

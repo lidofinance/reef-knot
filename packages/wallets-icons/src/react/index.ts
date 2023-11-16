@@ -12,6 +12,5 @@ export { default as MathWalletInversion } from '../svg/mathwallet-inversion.svg'
 export { default as MetaMask } from '../svg/metamask.svg';
 export { default as MetaMaskCircle } from '../svg/metamask-circle.svg';
 export { default as MetaMaskCircleInversion } from '../svg/metamask-circle-inversion.svg';
-export { default as OperaWallet } from '../svg/opera-wallet.svg';
 export { default as Trust } from '../svg/trust-circle.svg';
 export { default as XDEFI } from '../svg/xdefi-wallet.svg';

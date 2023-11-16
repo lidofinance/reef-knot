@@ -9,7 +9,6 @@ export enum PROVIDER_NAMES {
   LEDGER_HQ_LIVE = 'Ledger Live',
   LEDGER = 'Ledger',
   MATH_WALLET = 'MathWallet',
-  OPERA = 'Opera Crypto Wallet',
   GAMESTOP = 'GameStop Wallet',
   XDEFI = 'XDEFI',
   ZERION = 'Zerion',
