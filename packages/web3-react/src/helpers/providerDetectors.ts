@@ -2,7 +2,6 @@ import { isMobileOrTablet } from './ua';
 
 declare global {
   interface Window {
-    coin98?: boolean;
     gamestop?: Record<string, unknown>;
     xfi?: Record<string, unknown>;
     // @ts-expect-error wagmi also declares window.ethereum type
@@ -10,7 +9,6 @@ declare global {
       isMetaMask?: boolean;
       isTrust?: boolean;
       isImToken?: boolean;
-      isCoin98?: boolean;
       isMathWallet?: boolean;
       isCoinbaseWallet?: boolean;
       isTally?: boolean;

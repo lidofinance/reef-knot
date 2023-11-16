@@ -8,7 +8,6 @@ export enum PROVIDER_NAMES {
   INJECTED = 'Injected',
   LEDGER_HQ_LIVE = 'Ledger Live',
   LEDGER = 'Ledger',
-  COIN98 = 'Coin98',
   MATH_WALLET = 'MathWallet',
   OPERA = 'Opera Crypto Wallet',
   GAMESTOP = 'GameStop Wallet',

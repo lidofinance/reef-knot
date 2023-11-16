@@ -9,7 +9,6 @@ import {
 import { useWeb3 } from './useWeb3';
 import { PROVIDER_NAMES } from '../constants';
 import {
-  isCoin98Provider,
   isCoinbaseProvider,
   isDappBrowserProvider,
   isGamestopProvider,
@@ -31,7 +30,6 @@ type ConnectorInfo = {
   isWalletLink: boolean;
   isCoinbase: boolean;
   isMetamask: boolean;
-  isCoin98: boolean;
   isMathWallet: boolean;
   isImToken: boolean;
   isTrust: boolean;
@@ -69,7 +67,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     (isConnectedViaWagmi && wagmiConnector.id === 'injected');
   const isDappBrowser = isInjected && isDappBrowserProvider();
   const isMetamask = isInjected && isMetamaskProvider();
-  const isCoin98 = isInjected && isCoin98Provider();
   const isMathWallet = isInjected && isMathWalletProvider();
   const isImToken = isInjected && isImTokenProvider();
   const isTrust = isInjected && isTrustProvider();
@@ -101,7 +98,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     if (isXdefi) return PROVIDER_NAMES.XDEFI;
     if (isGamestop) return PROVIDER_NAMES.GAMESTOP;
     if (isMathWallet) return PROVIDER_NAMES.MATH_WALLET;
-    if (isCoin98) return PROVIDER_NAMES.COIN98;
     if (isCoinbase) return PROVIDER_NAMES.COINBASE;
     if (isOperaWallet) return PROVIDER_NAMES.OPERA;
     if (isZerion) return PROVIDER_NAMES.ZERION;
@@ -128,7 +124,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isWalletLink,
     isCoinbase,
     isMetamask,
-    isCoin98,
     isMathWallet,
     isImToken,
     isTrust,
