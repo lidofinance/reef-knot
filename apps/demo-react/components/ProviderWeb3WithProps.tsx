@@ -12,7 +12,7 @@ const supportedChains = [holesky, mainnet, goerli];
 const supportedChainsIds = supportedChains.map((chain) => chain.id);
 const defaultChainId = holesky.id;
 
-const jsonRcpBatchProvider = (chain: Chain) => ({
+const jsonRpcBatchProvider = (chain: Chain) => ({
   provider: () =>
     getStaticRpcBatchProvider(chain.id, getRPCPath(chain.id), undefined, 12000),
   chain,
@@ -20,7 +20,7 @@ const jsonRcpBatchProvider = (chain: Chain) => ({
 
 const { chains, provider, webSocketProvider } = configureChains(
   supportedChains,
-  [jsonRcpBatchProvider],
+  [jsonRpcBatchProvider],
 );
 
 const connectors = getConnectors({

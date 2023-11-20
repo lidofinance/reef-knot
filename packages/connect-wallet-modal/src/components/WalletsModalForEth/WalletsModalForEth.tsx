@@ -100,9 +100,7 @@ function getWalletsButtons(
   });
 }
 
-export function WalletsModalForEth(
-  props: WalletsModalForEthProps,
-): JSX.Element {
+export function WalletsModalForEth(props: WalletsModalForEthProps) {
   const { walletDataList } = useReefKnotContext();
 
   return (

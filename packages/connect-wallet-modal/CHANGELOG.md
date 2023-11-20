@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.10.0
+
+### Minor Changes
+
+- Handle connection errors in AcceptTermsModal
+
 ## 1.9.0
 
 ### Minor Changes

@@ -15,6 +15,7 @@ export interface ReefKnotContextProps {
 export type ReefKnotContextValue = {
   rpc: Record<number, string>;
   walletDataList: WalletAdapterData[];
+  chains: Chain[];
 };
 
 export const ReefKnotContext = createContext({} as ReefKnotContextValue);
@@ -37,8 +38,9 @@ export const ReefKnot: FC<ReefKnotContextProps> = ({
     () => ({
       rpc,
       walletDataList,
+      chains,
     }),
-    [rpc, walletDataList],
+    [rpc, walletDataList, chains],
   );
 
   return (

@@ -6,6 +6,8 @@ export type AcceptTermsModalContextValue = {
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
     onContinue: () => void;
     setOnContinue: React.Dispatch<React.SetStateAction<() => void>>;
+    error?: Error;
+    setError: React.Dispatch<React.SetStateAction<Error | undefined>>;
   };
 };
 
@@ -28,6 +30,8 @@ export const AcceptTermsModalContextProvider: FC = ({ children }) => {
     () => onContinueDefaultValue,
   );
 
+  const [error, setError] = useState(undefined);
+
   const contextValue = useMemo(
     () => ({
       acceptTermsModal: {
@@ -35,9 +39,11 @@ export const AcceptTermsModalContextProvider: FC = ({ children }) => {
         setVisible: setIsAcceptTermsModalVisible,
         onContinue: onAcceptTermsModalContinue,
         setOnContinue: setOnAcceptTermsModalContinue,
+        error,
+        setError,
       },
     }),
-    [isAcceptTermsModalVisible, onAcceptTermsModalContinue],
+    [error, isAcceptTermsModalVisible, onAcceptTermsModalContinue],
   );
 
   return (
