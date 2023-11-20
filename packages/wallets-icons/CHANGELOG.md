@@ -1,5 +1,11 @@
 # @reef-knot/wallets-icons
 
+## 1.2.0
+
+### Minor Changes
+
+- Remove Brave, Coin98, Opera, Gamestop wallets unneeded legacy code
+
 ## 1.1.0
 
 ### Minor Changes

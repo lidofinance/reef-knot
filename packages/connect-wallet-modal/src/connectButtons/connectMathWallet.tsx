@@ -38,7 +38,6 @@ const ConnectMathWallet: FC<ConnectWalletProps> = (
     const { hasConflicts, conflictingApps, conflictingAppsArray } =
       checkConflicts([
         CONFLICTS.Xdefi,
-        CONFLICTS.Gamestop,
         CONFLICTS.Tally,
         CONFLICTS.Exodus,
         CONFLICTS.Trust,

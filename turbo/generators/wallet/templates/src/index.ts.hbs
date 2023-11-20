@@ -1,0 +1,34 @@
+import { WalletAdapterType } from '@reef-knot/types';
+import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { WalletIcon } from './icons/index.js';
+
+declare module '@wagmi/core' {
+  interface Ethereum {
+    // _isWalletName_?: true;
+  }
+}
+
+declare global {
+  interface Window {
+    // _walletWeb3Provider_?: EthereumTypeWagmi;
+  }
+}
+
+export const {{properCase walletName}}: WalletAdapterType = ({ chains }) => ({
+  walletName: '{{properCase walletName}}',
+  walletId: '{{camelCase walletId}}',
+  icon: WalletIcon,
+  // detector: () => !!globalThis.window?.ethereum?._isWalletName_,
+  downloadURLs: {
+    default: 'https://',
+  },
+  connector: new InjectedConnector({
+    chains,
+    options: {
+      name: '{{properCase walletName}}',
+      getProvider: () =>
+        globalThis.window?._walletWeb3Provider_ || globalThis.window?.ethereum,
+    },
+  }),
+});

@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.7.0
+
+### Minor Changes
+
+- Remove Brave, Coin98, Opera, Gamestop wallets unneeded legacy code
+
 ## 1.6.1
 
 ### Patch Changes

@@ -9,15 +9,11 @@ import {
 import { useWeb3 } from './useWeb3';
 import { PROVIDER_NAMES } from '../constants';
 import {
-  isBraveWalletProvider,
-  isCoin98Provider,
   isCoinbaseProvider,
   isDappBrowserProvider,
-  isGamestopProvider,
   isImTokenProvider,
   isMathWalletProvider,
   isMetamaskProvider,
-  isOperaWalletProvider,
   isTrustProvider,
   isXdefiProvider,
   isZerionProvider,
@@ -32,13 +28,9 @@ type ConnectorInfo = {
   isWalletLink: boolean;
   isCoinbase: boolean;
   isMetamask: boolean;
-  isCoin98: boolean;
   isMathWallet: boolean;
   isImToken: boolean;
   isTrust: boolean;
-  isBraveWallet: boolean;
-  isOperaWallet: boolean;
-  isGamestop: boolean;
   isXdefi: boolean;
   isDappBrowser: boolean;
   isInjected: boolean;
@@ -71,13 +63,9 @@ export const useConnectorInfo = (): ConnectorInfo => {
     (isConnectedViaWagmi && wagmiConnector.id === 'injected');
   const isDappBrowser = isInjected && isDappBrowserProvider();
   const isMetamask = isInjected && isMetamaskProvider();
-  const isCoin98 = isInjected && isCoin98Provider();
   const isMathWallet = isInjected && isMathWalletProvider();
   const isImToken = isInjected && isImTokenProvider();
   const isTrust = isInjected && isTrustProvider();
-  const isBraveWallet = isInjected && isBraveWalletProvider();
-  const isOperaWallet = isInjected && isOperaWalletProvider();
-  const isGamestop = isInjected && isGamestopProvider();
   const isXdefi = isInjected && isXdefiProvider();
   const isZerion = isInjected && isZerionProvider();
 
@@ -102,12 +90,8 @@ export const useConnectorInfo = (): ConnectorInfo => {
     // The order of wallets checks here is important.
     // Most "aggressive" wallet, which overrides other wallets, goes first.
     if (isXdefi) return PROVIDER_NAMES.XDEFI;
-    if (isGamestop) return PROVIDER_NAMES.GAMESTOP;
     if (isMathWallet) return PROVIDER_NAMES.MATH_WALLET;
-    if (isCoin98) return PROVIDER_NAMES.COIN98;
     if (isCoinbase) return PROVIDER_NAMES.COINBASE;
-    if (isOperaWallet) return PROVIDER_NAMES.OPERA;
-    if (isBraveWallet) return PROVIDER_NAMES.BRAVE;
     if (isZerion) return PROVIDER_NAMES.ZERION;
     // Metamask should be last in this list because almost all EIP-1193 wallets
     // are trying to mimic Metamask by setting isMetamask = true
@@ -132,13 +116,9 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isWalletLink,
     isCoinbase,
     isMetamask,
-    isCoin98,
     isMathWallet,
     isImToken,
     isTrust,
-    isBraveWallet,
-    isOperaWallet,
-    isGamestop,
     isXdefi,
 
     isDappBrowser,

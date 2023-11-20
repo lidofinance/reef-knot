@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.9.0
+
+### Minor Changes
+
+- Remove Brave, Coin98, Opera, Gamestop wallets unneeded legacy code
+
 ## 1.8.3
 
 ### Patch Changes

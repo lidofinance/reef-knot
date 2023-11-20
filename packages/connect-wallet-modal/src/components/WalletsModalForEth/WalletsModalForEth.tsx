@@ -3,15 +3,12 @@ import { helpers } from '@reef-knot/web3-react';
 import { useReefKnotContext } from '@reef-knot/core-react';
 import { WalletAdapterData } from '@reef-knot/types';
 import {
-  ConnectBraveWallet,
   ConnectCoinbase,
-  ConnectGamestop,
   ConnectImToken,
   ConnectInjected,
   ConnectLedger,
   ConnectMathWallet,
   ConnectMetamask,
-  ConnectOperaWallet,
   ConnectTrust,
   ConnectWC,
   ConnectXdefi,
@@ -29,9 +26,6 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   [WALLET_IDS.TRUST]: ConnectTrust,
   [WALLET_IDS.IM_TOKEN]: ConnectImToken,
   [WALLET_IDS.MATH_WALLET]: ConnectMathWallet,
-  [WALLET_IDS.BRAVE]: ConnectBraveWallet,
-  [WALLET_IDS.OPERA]: ConnectOperaWallet,
-  [WALLET_IDS.GAMESTOP]: ConnectGamestop,
   [WALLET_IDS.XDEFI]: ConnectXdefi,
 };
 
@@ -83,10 +77,7 @@ function getWalletsButtons(
   ];
 
   // Deprecated way of adding wallets with additional detection
-  addWalletTo(wallets, WALLET_IDS.BRAVE, helpers.isBraveWalletProvider());
-  addWalletTo(wallets, WALLET_IDS.OPERA, helpers.isOperaWalletProvider());
   addWalletTo(wallets, WALLET_IDS.MATH_WALLET, helpers.isMathWalletProvider());
-  addWalletTo(wallets, WALLET_IDS.GAMESTOP, helpers.isGamestopProvider());
   addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
 
   // Filtering wallets marked as hidden

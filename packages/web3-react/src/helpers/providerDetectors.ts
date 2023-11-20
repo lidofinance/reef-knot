@@ -2,22 +2,16 @@ import { isMobileOrTablet } from './ua';
 
 declare global {
   interface Window {
-    coin98?: boolean;
-    gamestop?: Record<string, unknown>;
     xfi?: Record<string, unknown>;
     // @ts-expect-error wagmi also declares window.ethereum type
     ethereum?: {
       isMetaMask?: boolean;
       isTrust?: boolean;
       isImToken?: boolean;
-      isCoin98?: boolean;
       isMathWallet?: boolean;
       isCoinbaseWallet?: boolean;
       isTally?: boolean;
-      isBraveWallet?: boolean;
       isExodus?: boolean;
-      isOpera?: boolean;
-      isGamestop?: boolean;
       isXDEFI?: boolean;
       isZerion?: boolean;
       providers?: { isCoinbaseWallet?: boolean }[];
@@ -112,33 +106,9 @@ export const isBraveWalletProvider = (): boolean => {
   }
 };
 
-export const isOperaWalletProvider = (): boolean => {
-  try {
-    return !!window.ethereum?.isOpera;
-  } catch (error) {
-    return false;
-  }
-};
-
 export const isExodusProvider = (): boolean => {
   try {
     return !!window.ethereum?.isExodus;
-  } catch (error) {
-    return false;
-  }
-};
-
-export const isGamestopInstalled = (): boolean => {
-  try {
-    return !!window.gamestop;
-  } catch (error) {
-    return false;
-  }
-};
-
-export const isGamestopProvider = (): boolean => {
-  try {
-    return !!window.ethereum?.isGamestop;
   } catch (error) {
     return false;
   }
