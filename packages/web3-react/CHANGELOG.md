@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.8.0
+
+### Minor Changes
+
+- Add holesky to wagmiChainsArray, handle connection errors in AcceptTermsModal
+
 ## 1.7.0
 
 ### Minor Changes

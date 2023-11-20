@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 1.7.0
+
+### Minor Changes
+
+- Handle connection errors in AcceptTermsModal
+
 ## 1.6.0
 
 ### Minor Changes
