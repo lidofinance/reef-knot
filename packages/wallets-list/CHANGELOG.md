@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.7.0
+
+### Minor Changes
+
+- Remove zerion, blockchain.com, phantom, taho, zengo imports
+
 ## 1.6.0
 
 ### Minor Changes

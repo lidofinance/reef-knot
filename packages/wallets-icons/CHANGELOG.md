@@ -1,5 +1,11 @@
 # @reef-knot/wallets-icons
 
+## 1.3.0
+
+### Minor Changes
+
+- Remove MathWallet related code
+
 ## 1.2.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.9.0
+
+### Minor Changes
+
+- Remove MathWallet related code
+
 ## 1.8.0
 
 ### Minor Changes

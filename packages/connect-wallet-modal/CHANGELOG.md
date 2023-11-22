@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.11.0
+
+### Minor Changes
+
+- Remove MathWallet related code
+
 ## 1.10.0
 
 ### Minor Changes
