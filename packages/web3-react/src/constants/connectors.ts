@@ -8,7 +8,6 @@ export enum PROVIDER_NAMES {
   INJECTED = 'Injected',
   LEDGER_HQ_LIVE = 'Ledger Live',
   LEDGER = 'Ledger',
-  MATH_WALLET = 'MathWallet',
   XDEFI = 'XDEFI',
   ZERION = 'Zerion',
 }

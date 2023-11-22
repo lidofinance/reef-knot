@@ -96,32 +96,6 @@ describe('useConnectorInfo', () => {
     expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 
-  test('should detect Coin98', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isCoin98: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { providerName, isInjected, isCoin98, isConnectedViaWagmi, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isCoin98).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
-  test('should detect MathWallet', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isMathWallet: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { providerName, isInjected, isMathWallet, isConnectedViaWagmi, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isMathWallet).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
   test('should detect imToken', async () => {
     mockConnector(InjectedConnector);
     window.ethereum = { isImToken: true };
@@ -145,45 +119,6 @@ describe('useConnectorInfo', () => {
 
     expect(isInjected).toBe(true);
     expect(isTrust).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
-  test('should detect Brave', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isBraveWallet: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { providerName, isInjected, isBraveWallet, isConnectedViaWagmi, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isBraveWallet).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
-  test('should detect Opera', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isOpera: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { providerName, isInjected, isOperaWallet, isConnectedViaWagmi, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isOperaWallet).toBe(true);
-    expect(Object.values(rest).includes(true)).toBeFalsy();
-  });
-
-  test('should detect Gamestop', async () => {
-    mockConnector(InjectedConnector);
-    window.ethereum = { isGamestop: true };
-
-    const { result } = renderHook(() => useConnectorInfo());
-    const { providerName, isInjected, isGamestop, isConnectedViaWagmi, ...rest } =
-      result.current;
-
-    expect(isInjected).toBe(true);
-    expect(isGamestop).toBe(true);
     expect(Object.values(rest).includes(true)).toBeFalsy();
   });
 

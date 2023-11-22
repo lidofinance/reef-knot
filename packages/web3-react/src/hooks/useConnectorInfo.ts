@@ -12,7 +12,6 @@ import {
   isCoinbaseProvider,
   isDappBrowserProvider,
   isImTokenProvider,
-  isMathWalletProvider,
   isMetamaskProvider,
   isTrustProvider,
   isXdefiProvider,
@@ -28,7 +27,6 @@ type ConnectorInfo = {
   isWalletLink: boolean;
   isCoinbase: boolean;
   isMetamask: boolean;
-  isMathWallet: boolean;
   isImToken: boolean;
   isTrust: boolean;
   isXdefi: boolean;
@@ -63,7 +61,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     (isConnectedViaWagmi && wagmiConnector.id === 'injected');
   const isDappBrowser = isInjected && isDappBrowserProvider();
   const isMetamask = isInjected && isMetamaskProvider();
-  const isMathWallet = isInjected && isMathWalletProvider();
   const isImToken = isInjected && isImTokenProvider();
   const isTrust = isInjected && isTrustProvider();
   const isXdefi = isInjected && isXdefiProvider();
@@ -90,7 +87,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     // The order of wallets checks here is important.
     // Most "aggressive" wallet, which overrides other wallets, goes first.
     if (isXdefi) return PROVIDER_NAMES.XDEFI;
-    if (isMathWallet) return PROVIDER_NAMES.MATH_WALLET;
     if (isCoinbase) return PROVIDER_NAMES.COINBASE;
     if (isZerion) return PROVIDER_NAMES.ZERION;
     // Metamask should be last in this list because almost all EIP-1193 wallets
@@ -116,7 +112,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isWalletLink,
     isCoinbase,
     isMetamask,
-    isMathWallet,
     isImToken,
     isTrust,
     isXdefi,

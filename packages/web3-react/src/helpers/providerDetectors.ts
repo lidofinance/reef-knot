@@ -8,7 +8,6 @@ declare global {
       isMetaMask?: boolean;
       isTrust?: boolean;
       isImToken?: boolean;
-      isMathWallet?: boolean;
       isCoinbaseWallet?: boolean;
       isTally?: boolean;
       isExodus?: boolean;
@@ -39,14 +38,6 @@ export const isCoin98Provider = (): boolean => {
   try {
     // @ts-expect-error wagmi redeclares window.ethereum type
     return !!window.ethereum?.isCoin98;
-  } catch (error) {
-    return false;
-  }
-};
-
-export const isMathWalletProvider = (): boolean => {
-  try {
-    return !!window.ethereum?.isMathWallet;
   } catch (error) {
     return false;
   }

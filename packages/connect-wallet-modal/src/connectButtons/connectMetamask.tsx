@@ -40,7 +40,6 @@ const ConnectMetamask: FC<ConnectWalletProps> = (props: ConnectWalletProps) => {
         CONFLICTS.Xdefi,
         CONFLICTS.Exodus,
         CONFLICTS.Coin98,
-        CONFLICTS.MathWallet,
         CONFLICTS.Tally,
         CONFLICTS.Trust,
       ]);

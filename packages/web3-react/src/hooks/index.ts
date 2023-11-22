@@ -4,7 +4,6 @@ export * from './useConnectorImToken';
 export * from './useConnectorInfo';
 export * from './useConnectorLedger';
 export * from './useConnectorMetamask';
-export * from './useConnectorMathWallet';
 export * from './useConnectors';
 export * from './useConnectorStorage';
 export * from './useConnectorTrust';
