@@ -5,7 +5,6 @@ export const WALLET_IDS = {
   TRUST: 'Trust',
   IM_TOKEN: 'ImToken',
   COIN98: 'Coin98',
-  MATH_WALLET: 'MathWallet',
   XDEFI: 'Xdefi',
 } as const;
 

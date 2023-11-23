@@ -48,18 +48,6 @@ You can hide one or several wallet connection buttons from the list of wallets i
 Use the `hiddenWallets` property like this:
 ```tsx
 <WalletsModalForEth
-  hiddenWallets={['Metamask', 'Mathwallet']}
+  hiddenWallets={['Metamask']}
 />
 ```
-
-Available values are:  
-- `'Metamask'`
-- `'WalletConnect'`
-- `'Ledger'`
-- `'Coinbase'`
-- `'Trust'`
-- `'ImToken'`
-- `'Coin98'`
-- `'MathWallet'`  
-
-This list will grow with the addition of new wallets. You can see the actual list by looking into the `WalletsModalForEth` component.

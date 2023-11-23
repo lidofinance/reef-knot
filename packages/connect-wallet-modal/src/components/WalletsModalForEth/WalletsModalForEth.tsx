@@ -7,7 +7,6 @@ import {
   ConnectImToken,
   ConnectInjected,
   ConnectLedger,
-  ConnectMathWallet,
   ConnectMetamask,
   ConnectTrust,
   ConnectWC,
@@ -25,7 +24,6 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   [WALLET_IDS.COINBASE]: ConnectCoinbase,
   [WALLET_IDS.TRUST]: ConnectTrust,
   [WALLET_IDS.IM_TOKEN]: ConnectImToken,
-  [WALLET_IDS.MATH_WALLET]: ConnectMathWallet,
   [WALLET_IDS.XDEFI]: ConnectXdefi,
 };
 
@@ -77,7 +75,6 @@ function getWalletsButtons(
   ];
 
   // Deprecated way of adding wallets with additional detection
-  addWalletTo(wallets, WALLET_IDS.MATH_WALLET, helpers.isMathWalletProvider());
   addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
 
   // Filtering wallets marked as hidden
