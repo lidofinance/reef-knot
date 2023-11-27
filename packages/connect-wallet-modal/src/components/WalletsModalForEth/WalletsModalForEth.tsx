@@ -4,13 +4,10 @@ import { useReefKnotContext } from '@reef-knot/core-react';
 import { WalletAdapterData } from '@reef-knot/types';
 import {
   ConnectCoinbase,
-  ConnectImToken,
   ConnectInjected,
   ConnectLedger,
   ConnectMetamask,
-  ConnectTrust,
   ConnectWC,
-  ConnectXdefi,
 } from '../../connectButtons';
 import { ButtonsCommonProps, WalletsModal } from '../WalletsModal';
 import { WalletsModalForEthProps } from './types';
@@ -23,9 +20,6 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   [WALLET_IDS.METAMASK]: ConnectMetamask,
   [WALLET_IDS.LEDGER]: ConnectLedger,
   [WALLET_IDS.COINBASE]: ConnectCoinbase,
-  [WALLET_IDS.TRUST]: ConnectTrust,
-  [WALLET_IDS.IM_TOKEN]: ConnectImToken,
-  [WALLET_IDS.XDEFI]: ConnectXdefi,
 };
 
 function getWalletButton(
@@ -61,26 +55,15 @@ function getWalletsButtons(
 ) {
   let wallets: WalletId[] = [WALLET_IDS.METAMASK];
 
-  // Adding wallets using a new wallet adapter API
-  // TODO: migrate all wallets to use wallet adapter API
   walletDataList.forEach((walletData) => {
     const { walletId, detector } = walletData;
     addWalletTo(wallets, walletId, !!detector?.());
   });
 
-  wallets = [
-    ...wallets,
-    WALLET_IDS.LEDGER,
-    WALLET_IDS.COINBASE,
-    WALLET_IDS.TRUST,
-    WALLET_IDS.IM_TOKEN,
-  ];
-
-  // Deprecated way of adding wallets with additional detection
-  addWalletTo(wallets, WALLET_IDS.XDEFI, helpers.isXdefiProvider());
-
-  // Filtering wallets marked as hidden
-  wallets = wallets.filter((wallet) => !hiddenWallets.includes(wallet));
+  wallets = [...wallets, WALLET_IDS.LEDGER, WALLET_IDS.COINBASE].filter(
+    // Filtering wallets marked as hidden
+    (wallet) => !hiddenWallets.includes(wallet),
+  );
 
   return wallets.map((walletId) => {
     // Handle new wallet adapters
