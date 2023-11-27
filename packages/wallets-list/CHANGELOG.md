@@ -1,5 +1,16 @@
 # @reef-knot/wallets-list
 
+## 1.7.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-bitkeep@1.1.1
+  - @reef-knot/wallet-adapter-coin98@1.0.1
+  - @reef-knot/wallet-adapter-exodus@1.2.4
+  - @reef-knot/wallet-adapter-brave@1.0.1
+  - @reef-knot/wallet-adapter-okx@1.3.1
+
 ## 1.7.0
 
 ### Minor Changes
