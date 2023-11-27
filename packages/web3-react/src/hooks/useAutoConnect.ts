@@ -10,6 +10,13 @@ import { useDisconnect } from './useDisconnect';
 import { ConnectorsContextValue } from '../context';
 import { isDappBrowserProvider } from '../helpers';
 
+const isTermsAccepted = () => {
+  if (typeof window !== 'undefined') {
+    return window.localStorage?.getItem(LS_KEY_TERMS_ACCEPTANCE) === 'true';
+  }
+  return false;
+};
+
 export const useAutoConnect = (connectors: ConnectorsContextValue) => {
   useEagerConnector(connectors);
   useSaveConnectorToLS();
@@ -59,7 +66,7 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
           error = e as Error;
         }
         if (shouldAutoConnectApp) {
-          if (!termsAccepted || error) {
+          if (!isTermsAccepted() || error) {
             acceptTermsModal.setError?.(error);
             acceptTermsModal.setVisible?.(true);
           } else {
@@ -69,13 +76,7 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
         }
       };
 
-      let termsAccepted = false;
-      if (typeof window !== 'undefined') {
-        termsAccepted =
-          window.localStorage?.getItem(LS_KEY_TERMS_ACCEPTANCE) === 'true';
-      }
-
-      if (shouldAutoConnectApp && !termsAccepted) {
+      if (shouldAutoConnectApp && !isTermsAccepted()) {
         acceptTermsModal.setOnContinue?.(() => connectWallet);
         acceptTermsModal.setVisible?.(true);
         return;
