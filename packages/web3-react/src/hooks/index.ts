@@ -1,5 +1,4 @@
 export * from './useAutoConnect';
-export * from './useConnectorCoinbase';
 export * from './useConnectorInfo';
 export * from './useConnectorLedger';
 export * from './useConnectorMetamask';

@@ -1,6 +1,5 @@
 import React, { createContext, FC, memo, useMemo } from 'react';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { CHAINS } from '@lido-sdk/constants';
 import { useSDK } from '@lido-sdk/react';
@@ -20,8 +19,6 @@ export interface ConnectorsContextProps {
 
 export type ConnectorsContextValue = {
   injected: InjectedConnector;
-  walletlink: WalletLinkConnector;
-  coinbase: WalletLinkConnector;
   ledgerlive: LedgerHQFrameConnector;
   ledger: LedgerHQConnector;
   gnosis?: SafeAppConnector;
@@ -67,22 +64,6 @@ const ProviderConnectors: FC<ConnectorsContextProps> = (props) => {
       [CONNECTOR_NAMES.LEDGER]: new LedgerHQConnector({
         chainId: defaultChainId,
         url: rpc[defaultChainId],
-      }),
-
-      [CONNECTOR_NAMES.COINBASE]: new WalletLinkConnector({
-        // only mainnet
-        url: rpc[CHAINS.Mainnet],
-        supportedChainIds,
-        appName,
-        appLogoUrl,
-      }),
-
-      [CONNECTOR_NAMES.WALLET_LINK]: new WalletLinkConnector({
-        // only mainnet
-        url: rpc[CHAINS.Mainnet],
-        supportedChainIds,
-        appName,
-        appLogoUrl,
       }),
     }),
     [appLogoUrl, appName, rpc, defaultChainId, supportedChainIds],

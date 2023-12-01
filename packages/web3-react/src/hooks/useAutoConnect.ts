@@ -99,28 +99,15 @@ export const useEagerConnector = (connectors: ConnectorsContextValue) => {
 
 export const useSaveConnectorToLS = (): void => {
   const [, saveConnector] = useConnectorStorage();
-  const {
-    isInjected,
-    isDappBrowser,
-    isCoinbase,
-    isLedger,
-    isConnectedViaWagmi,
-  } = useConnectorInfo();
+  const { isInjected, isDappBrowser, isLedger, isConnectedViaWagmi } =
+    useConnectorInfo();
 
   useEffect(() => {
     if (!isConnectedViaWagmi) {
       if (isInjected && !isDappBrowser) return saveConnector('injected');
-      if (isCoinbase) return saveConnector('coinbase');
       if (isLedger) return saveConnector('ledger');
     }
-  }, [
-    isLedger,
-    isCoinbase,
-    isInjected,
-    isDappBrowser,
-    saveConnector,
-    isConnectedViaWagmi,
-  ]);
+  }, [isLedger, isInjected, isDappBrowser, saveConnector, isConnectedViaWagmi]);
 };
 
 export const useDeleteConnectorFromLS = (): void => {
