@@ -2,11 +2,11 @@ import React from 'react';
 import { useReefKnotContext } from '@reef-knot/core-react';
 import { WalletAdapterData } from '@reef-knot/types';
 import {
-  ConnectCoinbase,
   ConnectInjected,
   ConnectLedger,
   ConnectMetamask,
   ConnectWC,
+  ConnectCoinbase,
 } from '../../connectButtons';
 import { ButtonsCommonProps, WalletsModal } from '../WalletsModal';
 import { WalletsModalForEthProps } from './types';
@@ -16,9 +16,9 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   default: ConnectInjected,
   injected: ConnectInjected,
   walletConnect: ConnectWC,
+  coinbaseWallet: ConnectCoinbase,
   [WALLET_IDS.METAMASK]: ConnectMetamask,
   [WALLET_IDS.LEDGER]: ConnectLedger,
-  [WALLET_IDS.COINBASE]: ConnectCoinbase,
 };
 
 function getWalletButton(
@@ -59,7 +59,7 @@ function getWalletsButtons(
     addWalletTo(wallets, walletId, !!detector?.());
   });
 
-  wallets = [...wallets, WALLET_IDS.LEDGER, WALLET_IDS.COINBASE].filter(
+  wallets = [...wallets, WALLET_IDS.LEDGER].filter(
     // Filtering wallets marked as hidden
     (wallet) => !hiddenWallets.includes(wallet),
   );
