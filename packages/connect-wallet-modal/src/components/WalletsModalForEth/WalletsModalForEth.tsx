@@ -1,5 +1,4 @@
 import React from 'react';
-import { helpers } from '@reef-knot/web3-react';
 import { useReefKnotContext } from '@reef-knot/core-react';
 import { WalletAdapterData } from '@reef-knot/types';
 import {
