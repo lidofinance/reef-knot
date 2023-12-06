@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.12.0
+
+### Minor Changes
+
+- Rework XDEFI, Trust, imToken to use Wallet Adapters and wagmi
+
 ## 1.11.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.10.0
+
+### Minor Changes
+
+- Remove XDEFI, Trust, imToken related code
+
 ## 1.9.1
 
 ### Patch Changes

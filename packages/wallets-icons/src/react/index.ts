@@ -1,5 +1,4 @@
 export { default as Coinbase } from '../svg/coinbase.svg';
-export { default as ImToken } from '../svg/imtoken.svg';
 export { default as Ledger } from '../svg/ledger.svg';
 export { default as LedgerInversion } from '../svg/ledger-inversion.svg';
 export { default as LedgerConfirm } from '../svg/ledger-confirm.svg';
@@ -9,5 +8,3 @@ export { default as LedgerSuccess } from '../svg/ledger-success.svg';
 export { default as MetaMask } from '../svg/metamask.svg';
 export { default as MetaMaskCircle } from '../svg/metamask-circle.svg';
 export { default as MetaMaskCircleInversion } from '../svg/metamask-circle-inversion.svg';
-export { default as Trust } from '../svg/trust-circle.svg';
-export { default as XDEFI } from '../svg/xdefi-wallet.svg';

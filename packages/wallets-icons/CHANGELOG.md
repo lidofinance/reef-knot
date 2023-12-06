@@ -1,5 +1,11 @@
 # @reef-knot/wallets-icons
 
+## 1.4.0
+
+### Minor Changes
+
+- Remove XDEFI, Trust, imToken icons
+
 ## 1.3.0
 
 ### Minor Changes
