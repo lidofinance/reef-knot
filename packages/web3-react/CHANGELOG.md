@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.11.0
+
+### Minor Changes
+
+- Remove Coinbase related code
+
 ## 1.10.0
 
 ### Minor Changes

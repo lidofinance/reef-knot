@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.13.0
+
+### Minor Changes
+
+- Rework Coinbase to use Wallet Adapter
+
 ## 1.12.0
 
 ### Minor Changes

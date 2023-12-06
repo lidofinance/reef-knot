@@ -1,5 +1,11 @@
 # @reef-knot/wallets-icons
 
+## 1.5.0
+
+### Minor Changes
+
+- Remove Coinbase related code
+
 ## 1.4.0
 
 ### Minor Changes
