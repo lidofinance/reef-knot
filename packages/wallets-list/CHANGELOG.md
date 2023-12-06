@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.8.0
+
+### Minor Changes
+
+- Rework XDEFI, Trust, imToken to use Wallet Adapters and wagmi
+
 ## 1.7.1
 
 ### Patch Changes
