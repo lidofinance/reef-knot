@@ -1,5 +1,5 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { Ethereum as EthereumTypeWagmi, Chain } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import WalletIcon from './icons/okx.svg';
 import WalletIconInverted from './icons/okx-inverted.svg';
@@ -16,6 +16,20 @@ declare global {
   }
 }
 
+export class OkxConnector extends InjectedConnector {
+  readonly id = 'okx';
+  readonly name = 'OKX Wallet';
+  constructor(chains: Chain[]) {
+    super({
+      chains,
+      options: {
+        getProvider: () =>
+          globalThis.window?.okxwallet || globalThis.window?.ethereum,
+      },
+    });
+  }
+}
+
 export const Okx: WalletAdapterType = ({ chains }) => ({
   walletName: 'OKX Wallet',
   walletId: 'okx',
@@ -29,12 +43,5 @@ export const Okx: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://www.okx.com/download',
   },
-  connector: new InjectedConnector({
-    chains,
-    options: {
-      name: 'OKX Wallet',
-      getProvider: () =>
-        globalThis.window?.okxwallet || globalThis.window?.ethereum,
-    },
-  }),
+  connector: new OkxConnector(chains),
 });

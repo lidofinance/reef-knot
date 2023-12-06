@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.11.1
+
+### Patch Changes
+
+- Add custom connectors for injected wallets, which fixes an issue with autoconnection after page reload.
+
 ## 1.11.0
 
 ### Minor Changes

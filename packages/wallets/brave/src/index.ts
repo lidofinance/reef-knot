@@ -1,11 +1,25 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { Ethereum as EthereumTypeWagmi, Chain } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletIcon } from './icons/index.js';
 
 declare global {
   interface Window {
     braveEthereum?: EthereumTypeWagmi;
+  }
+}
+
+export class BraveConnector extends InjectedConnector {
+  readonly id = 'brave';
+  readonly name = 'Brave';
+  constructor(chains: Chain[]) {
+    super({
+      chains,
+      options: {
+        getProvider: () =>
+          globalThis.window?.braveEthereum || globalThis.window?.ethereum,
+      },
+    });
   }
 }
 
@@ -19,12 +33,5 @@ export const Brave: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://brave.com/wallet/',
   },
-  connector: new InjectedConnector({
-    chains,
-    options: {
-      name: 'Brave',
-      getProvider: () =>
-        globalThis.window?.braveEthereum || globalThis.window?.ethereum,
-    },
-  }),
+  connector: new BraveConnector(chains),
 });

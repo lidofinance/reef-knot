@@ -17,6 +17,7 @@ import { WalletsModalForEthProps } from './types';
 import { WALLET_IDS, WalletId } from '../../constants';
 
 const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
+  default: ConnectInjected,
   injected: ConnectInjected,
   walletConnect: ConnectWC,
   [WALLET_IDS.METAMASK]: ConnectMetamask,
@@ -32,7 +33,8 @@ function getWalletButton(
   reactKey: string,
   props: ButtonsCommonProps,
 ) {
-  return React.createElement(walletsButtons[walletId], {
+  const component = walletsButtons[walletId] ?? walletsButtons.default;
+  return React.createElement(component, {
     key: reactKey,
     ...props,
   });

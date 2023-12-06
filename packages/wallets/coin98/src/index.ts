@@ -1,5 +1,5 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { Ethereum as EthereumTypeWagmi, Chain } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import WalletIcon from './icons/coin98.svg';
 
@@ -17,6 +17,20 @@ declare global {
   }
 }
 
+export class Coin98Connector extends InjectedConnector {
+  readonly id = 'coin98';
+  readonly name = 'Coin98';
+  constructor(chains: Chain[]) {
+    super({
+      chains,
+      options: {
+        getProvider: () =>
+          globalThis.window?.coin98?.provider || globalThis.window?.ethereum,
+      },
+    });
+  }
+}
+
 export const Coin98: WalletAdapterType = ({ chains }) => ({
   walletName: 'Coin98',
   walletId: 'coin98',
@@ -29,12 +43,5 @@ export const Coin98: WalletAdapterType = ({ chains }) => ({
     ios: 'https://ios.coin98.com',
     android: 'https://android.coin98.com',
   },
-  connector: new InjectedConnector({
-    chains,
-    options: {
-      name: 'Coin98',
-      getProvider: () =>
-        globalThis.window?.coin98?.provider || globalThis.window?.ethereum,
-    },
-  }),
+  connector: new Coin98Connector(chains),
 });
