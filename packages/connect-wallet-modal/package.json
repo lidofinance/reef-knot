@@ -40,7 +40,7 @@
     "@ledgerhq/hw-transport": "^6.28.8",
     "@ledgerhq/hw-app-eth": "^6.34.3",
     "@ledgerhq/hw-transport-webhid": "^6.27.19",
-    "@lidofinance/lido-ui": "3.14.1",
+    "@lidofinance/lido-ui": "^3.17.0",
     "@types/react": "17.0.53",
     "@types/react-dom": "17"
   },

@@ -2533,10 +2533,10 @@
   dependencies:
     typescript "^4.7"
 
-"@lidofinance/lido-ui@3.14.1":
-  version "3.14.1"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.14.1.tgz#780d32c3321295a40d44c352a307029a2b574e43"
-  integrity sha512-8vqv1E9ldPAIAceANPrh1alLPFWbYzz8AO6RhNbtFms+yPd5P2nSh5OopBLB1G2HE4lGFF0c3OXbMgyEcq9pEQ==
+"@lidofinance/lido-ui@3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.9.0.tgz#83b2ddb4253ae0c178ef3df742f831e2a258094d"
+  integrity sha512-IwY2yZIa3bDyb7g94611wb6cc082pwTf9HLWXiTrCMazLsf13QWQoFAbo6i1iXHdKq7Ovme6R8loRcYLWZkjlA==
   dependencies:
     "@styled-system/should-forward-prop" "5.1.5"
     "@swc/helpers" "^0.4.11"
@@ -2549,14 +2549,12 @@
     ua-parser-js "^1.0.35"
     use-callback-ref "1.2.5"
 
-"@lidofinance/lido-ui@3.9.0":
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.9.0.tgz#83b2ddb4253ae0c178ef3df742f831e2a258094d"
-  integrity sha512-IwY2yZIa3bDyb7g94611wb6cc082pwTf9HLWXiTrCMazLsf13QWQoFAbo6i1iXHdKq7Ovme6R8loRcYLWZkjlA==
+"@lidofinance/lido-ui@^3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-3.17.0.tgz#44021737d0c9441e7f08745288ebbffbfeed906a"
+  integrity sha512-QnwjeBJqzF9VJFLyx6u3A3Yc6oLIUvZA5ZEXNSlkaPTiZ+NsDxhQ4Zcd52E985RhHvfl83CW+2gxsGoeyTpYWA==
   dependencies:
     "@styled-system/should-forward-prop" "5.1.5"
-    "@swc/helpers" "^0.4.11"
-    "@swc/plugin-styled-components" "^1.2.10"
     react-collapsed "3.0.2"
     react-jazzicon "^1.0.4"
     react-toastify "7.0.4"
