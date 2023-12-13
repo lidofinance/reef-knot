@@ -9,6 +9,7 @@ import { Brave } from '@reef-knot/wallet-adapter-brave';
 import { ImToken } from '@reef-knot/wallet-adapter-imtoken';
 import { Trust } from '@reef-knot/wallet-adapter-trust';
 import { Xdefi } from '@reef-knot/wallet-adapter-xdefi';
+import { Coinbase } from '@reef-knot/wallet-adapter-coinbase';
 
 export const WalletsListEthereum: WalletsListType = {
   okx: Okx,
@@ -21,4 +22,5 @@ export const WalletsListEthereum: WalletsListType = {
   imtoken: ImToken,
   trust: Trust,
   xdefi: Xdefi,
+  coinbase: Coinbase,
 };

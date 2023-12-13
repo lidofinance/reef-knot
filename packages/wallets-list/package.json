@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -51,7 +51,8 @@
     "@reef-knot/wallet-adapter-brave": "1.0.1",
     "@reef-knot/wallet-adapter-imtoken": "1.0.0",
     "@reef-knot/wallet-adapter-trust": "1.0.0",
-    "@reef-knot/wallet-adapter-xdefi": "1.0.0"
+    "@reef-knot/wallet-adapter-xdefi": "1.0.0",
+    "@reef-knot/wallet-adapter-coinbase": "1.0.0"
   },
   "devDependencies": {
     "@reef-knot/types": "^1.3.0",

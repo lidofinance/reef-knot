@@ -1,4 +1,3 @@
-export { default as Coinbase } from '../svg/coinbase.svg';
 export { default as Ledger } from '../svg/ledger.svg';
 export { default as LedgerInversion } from '../svg/ledger-inversion.svg';
 export { default as LedgerConfirm } from '../svg/ledger-confirm.svg';

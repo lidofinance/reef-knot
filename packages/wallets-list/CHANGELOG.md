@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.9.0
+
+### Minor Changes
+
+- Rework Coinbase to use Wallet Adapter
+
 ## 1.8.0
 
 ### Minor Changes
