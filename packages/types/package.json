@@ -26,11 +26,11 @@
     "dev": "dev=on rollup -c -w"
   },
   "devDependencies": {
-    "react": "17.0.2",
+    "react": "18.2.0",
     "wagmi": "^0.12.19"
   },
   "peerDependencies": {
-    "react": ">=17",
+    "react": ">=18",
     "wagmi": "^0.12.19"
   }
 }

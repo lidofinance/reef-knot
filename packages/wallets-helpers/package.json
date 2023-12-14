@@ -42,7 +42,7 @@
     "ua-parser-js": "1.0.33"
   },
   "peerDependencies": {
-    "react": ">=17",
+    "react": ">=18",
     "wagmi": "^0.12.19",
     "ua-parser-js": "1.0.33"
   }

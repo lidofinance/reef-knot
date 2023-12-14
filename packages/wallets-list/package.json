@@ -60,6 +60,6 @@
   },
   "peerDependencies": {
     "@reef-knot/types": "^1.2.1",
-    "react": ">=17"
+    "react": ">=18"
   }
 }
