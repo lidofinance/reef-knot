@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/connect-wallet-modal",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -40,9 +40,9 @@
     "@ledgerhq/hw-transport": "^6.28.8",
     "@ledgerhq/hw-app-eth": "^6.34.3",
     "@ledgerhq/hw-transport-webhid": "^6.27.19",
-    "@lidofinance/lido-ui": "3.14.1",
-    "@types/react": "17.0.53",
-    "@types/react-dom": "17"
+    "@lidofinance/lido-ui": "^3.17.0",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.17"
   },
   "devDependencies": {
     "@reef-knot/core-react": "^1.7.0",
@@ -54,8 +54,8 @@
     "@reef-knot/ledger-connector": "^1.1.0",
     "@types/ua-parser-js": "^0.7.36",
     "eslint-config-custom": "*",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "ua-parser-js": "1.0.33",
     "wagmi": "^0.12.19"
   },
