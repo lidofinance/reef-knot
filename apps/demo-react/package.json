@@ -38,7 +38,7 @@
     "@babel/core": "^7.0.0",
     "@types/lodash": "^4.14.196",
     "@types/node": "^17.0.12",
-    "@types/react": "17.0.53",
+    "@types/react": "^18.2.45",
     "husky": "^8.0.3",
     "next-transpile-modules": "9.0.0",
     "tsconfig": "*",
