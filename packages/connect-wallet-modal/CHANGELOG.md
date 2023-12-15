@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.15.0
+
+### Minor Changes
+
+- lido-ui version as peer dependency
+
 ## 1.14.0
 
 ### Minor Changes
