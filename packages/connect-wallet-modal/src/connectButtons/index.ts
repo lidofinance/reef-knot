@@ -1,4 +1,4 @@
-export { default as ConnectLedger } from './connectLedger';
+export * from './ConnectLedger';
 export { default as ConnectMetamask } from './connectMetamask';
 export * from './ConnectInjected';
 export * from './ConnectWC';

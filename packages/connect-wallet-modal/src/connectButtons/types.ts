@@ -11,3 +11,4 @@ export type ConnectWalletProps = ButtonsCommonProps & ButtonProps;
 
 export type ConnectInjectedProps = WalletAdapterData & ConnectWalletProps;
 export type ConnectWCProps = WalletAdapterData & ConnectWalletProps;
+export type ConnectLedgerProps = WalletAdapterData & ConnectWalletProps;

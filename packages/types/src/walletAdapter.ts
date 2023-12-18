@@ -48,9 +48,10 @@ export type WalletAdapterData = {
 };
 
 export interface WalletAdapterArgs {
-  rpc?: Record<number, string>;
-  walletconnectProjectId?: string;
+  rpc: Record<number, string>;
   chains: Chain[];
+  defaultChain: Chain;
+  walletconnectProjectId?: string;
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
 

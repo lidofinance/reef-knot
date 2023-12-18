@@ -17,8 +17,8 @@ const walletsButtons: { [K in WalletId | string]: React.ComponentType } = {
   injected: ConnectInjected,
   walletConnect: ConnectWC,
   coinbaseWallet: ConnectCoinbase,
+  ledgerHID: ConnectLedger,
   [WALLET_IDS.METAMASK]: ConnectMetamask,
-  [WALLET_IDS.LEDGER]: ConnectLedger,
 };
 
 function getWalletButton(
@@ -59,7 +59,7 @@ function getWalletsButtons(
     addWalletTo(wallets, walletId, !!detector?.());
   });
 
-  wallets = [...wallets, WALLET_IDS.LEDGER].filter(
+  wallets = [...wallets].filter(
     // Filtering wallets marked as hidden
     (wallet) => !hiddenWallets.includes(wallet),
   );

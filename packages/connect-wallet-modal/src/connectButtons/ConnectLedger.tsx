@@ -1,20 +1,19 @@
 import React, { FC, useCallback } from 'react';
-import { Ledger, LedgerInversion } from '@reef-knot/wallets-icons/react';
-import { ConnectWalletProps } from './types';
+import { ConnectLedgerProps } from './types';
 import { ConnectButton } from '../components/ConnectButton';
 
-const ConnectLedger: FC<ConnectWalletProps> = (props) => {
+export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   const {
     onConnect,
     onBeforeConnect,
     setRequirements,
     setLedgerScreenVisible,
     shouldInvertWalletIcon,
+    icon: WalletIcon,
     metrics,
     ...rest
   } = props;
   const onClickLedger = metrics?.events?.click?.handlers.onClickLedger;
-  const WalletIcon = shouldInvertWalletIcon ? LedgerInversion : Ledger;
 
   const handleConnect = useCallback(() => {
     onBeforeConnect?.();
@@ -24,10 +23,13 @@ const ConnectLedger: FC<ConnectWalletProps> = (props) => {
   }, [onBeforeConnect, onClickLedger, setLedgerScreenVisible]);
 
   return (
-    <ConnectButton {...rest} icon={WalletIcon} onClick={handleConnect}>
+    <ConnectButton
+      {...rest}
+      icon={WalletIcon}
+      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      onClick={handleConnect}
+    >
       Ledger
     </ConnectButton>
   );
 };
-
-export default ConnectLedger;

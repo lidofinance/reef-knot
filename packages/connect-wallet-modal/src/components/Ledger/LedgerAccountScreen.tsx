@@ -1,11 +1,12 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import styled from '@reef-knot/ui-react/styled-wrapper';
+import { helpers } from '@reef-knot/web3-react';
+import { useConnect } from 'wagmi';
 import { Pagination, Stack, StackItem } from '@lidofinance/lido-ui';
 import { AccountButton, AccountButtonSkeleton } from './LedgerAccountButton';
 import { useLedgerAccounts, useLedgerContext } from './hooks';
 import { getFirstIndexOnPage, saveLedgerDerivationPath } from './helpers';
 import { Metrics } from '../WalletsModal';
-import { useConnectorLedger, helpers } from '@reef-knot/web3-react';
 import { LedgerDerivationPathSelect } from './LedgerDerivationPathSelect';
 import { AccountsStorage } from './types';
 import { DERIVATION_PATHS } from './constants';
@@ -57,23 +58,29 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
     }
   }, [accountsForPage, accountsStorage, derivationPathTemplate]);
 
-  const onConnectLedger = metrics?.events?.connect?.handlers.onConnectLedger;
-  const { connect } = useConnectorLedger({
-    onConnect: onConnectLedger,
+  const metricsOnConnect = metrics?.events?.connect?.handlers.onConnectLedger;
+
+  const { connect, connectors } = useConnect({
+    onSuccess() {
+      metricsOnConnect?.();
+    },
   });
+  const ledgerConnector = connectors.find(
+    (connector) => connector.id === 'ledgerHID',
+  );
 
   const handleAccountButtonClick = useCallback(
     async (account) => {
       saveLedgerDerivationPath(account.path);
       await disconnectTransport(true);
       try {
-        await connect();
+        connect({ connector: ledgerConnector });
         closeScreen?.();
       } catch (e) {
         setError(helpers.interceptLedgerError(e as Error));
       }
     },
-    [closeScreen, connect, disconnectTransport, setError],
+    [closeScreen, connect, disconnectTransport, ledgerConnector, setError],
   );
 
   const handleDerivationPathSelect = useCallback((value) => {
