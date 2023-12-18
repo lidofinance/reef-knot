@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@types/w3c-web-hid": "^1.0.2",
+    "wagmi": "^0.12.19",
     "eslint-config-custom": "*"
   },
   "dependencies": {
@@ -44,12 +45,15 @@
     "@ethersproject/strings": "^5.5.0",
     "@ethersproject/transactions": "^5.5.0",
     "@ethersproject/hash": "^5.5.0",
-    "@ledgerhq/hw-app-eth": "^6.34.8",
-    "@ledgerhq/hw-transport": "^6.28.8",
-    "@ledgerhq/hw-transport-webhid": "^6.27.19",
-    "@ledgerhq/iframe-provider": "0",
+    "@ledgerhq/hw-app-eth": "^6.35.0",
+    "@ledgerhq/hw-transport": "^6.30.0",
+    "@ledgerhq/hw-transport-webhid": "^6.28.0",
+    "@ledgerhq/iframe-provider": "^0.4.3",
     "@web3-react/abstract-connector": "^6.0.7",
     "@web3-react/types": "^6.0.7",
     "tiny-invariant": "^1.2.0"
+  },
+  "peerDependencies": {
+    "wagmi": "^0.12.19"
   }
 }

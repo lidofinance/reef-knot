@@ -1,80 +1,115 @@
-import invariant from 'tiny-invariant';
-import { AbstractConnector } from '@web3-react/abstract-connector';
-import type { ConnectorUpdate } from '@web3-react/types';
-import { checkError, isHIDSupported } from './helpers';
+import {
+  Address,
+  Chain,
+  Connector,
+  ConnectorData,
+  ConnectorNotFoundError,
+} from 'wagmi';
+import { checkError } from '../hid/helpers';
 
-import type { LedgerHQProvider } from './provider';
+export class LedgerHIDConnector<Options = any> extends Connector {
+  readonly id = 'ledgerHID';
+  readonly name = 'Ledger';
+  readonly #chain?: Chain;
+  ready = false;
+  #provider?: any;
+  #rpc: string;
 
-type LedgerHQConnectorArguments = {
-  chainId: number;
-  url: string;
-};
-
-export class LedgerHQConnector extends AbstractConnector {
-  public provider?: LedgerHQProvider;
-
-  public url: string;
-
-  public chainId: number;
-
-  constructor({ chainId, url }: LedgerHQConnectorArguments) {
-    super({ supportedChainIds: [chainId] });
-
-    this.chainId = chainId;
-    this.url = url;
-
-    this.handleDisconnect = this.handleDisconnect.bind(this);
+  constructor({
+    defaultChain,
+    chains,
+    rpc,
+    options,
+  }: {
+    defaultChain: Chain;
+    chains?: Chain[];
+    rpc: Record<number, string>;
+    options?: Options;
+  }) {
+    super({ chains, options });
+    this.#chain = defaultChain;
+    this.#rpc = rpc?.[defaultChain.id];
   }
 
-  private handleDisconnect(): void {
-    this.emitDeactivate();
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public isSupported(): boolean {
-    return isHIDSupported();
-  }
-
-  public async getProviderInstance(): Promise<LedgerHQProvider> {
-    // eslint-disable-next-line no-shadow
-    const { LedgerHQProvider } = await import('./provider');
-    return new LedgerHQProvider(this.url, this.chainId);
-  }
-
-  public async activate(): Promise<ConnectorUpdate> {
+  async connect(): Promise<Required<ConnectorData>> {
     try {
-      this.provider = await this.getProviderInstance();
+      this.#provider = await this.getProvider();
+      this.#provider.on('disconnect', this.onDisconnect);
+      const account = await this.#provider.enable();
+      const chainId = await this.getChainId();
+      const chainUnsupported = this.isChainUnsupported(chainId);
+      this.ready = !!this.#provider;
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      this.provider.on('disconnect', this.handleDisconnect);
-      const account = await this.provider.enable();
-
-      return { provider: this.provider, account };
+      return {
+        account,
+        provider: this.#provider,
+        chain: {
+          id: chainId,
+          unsupported: chainUnsupported,
+        },
+      };
     } catch (error) {
       return checkError(error);
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async getProvider(): Promise<LedgerHQProvider | undefined> {
-    return this.provider;
+  disconnect(): Promise<void> {
+    // Handles programmatic disconnect.
+    // We don't need to do anything specific for HID Ledger connection in this case.
+    this.#provider.removeListener('disconnect', this.onDisconnect);
+    return Promise.resolve();
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async getChainId(): Promise<number> {
-    return this.chainId;
+  getAccount(): Promise<Address> {
+    return this.#provider.getAddress();
   }
 
-  public async getAccount(): Promise<string> {
-    invariant(this.provider, 'Provider is not defined');
-    return this.provider.getAddress();
+  getChainId(): Promise<number> {
+    if (this.#chain) {
+      return Promise.resolve(this.#chain.id);
+    }
+    return Promise.reject('The chain must be set');
   }
 
-  public deactivate(): void {
-    invariant(this.provider, 'Provider is not defined');
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    this.provider.removeListener('disconnect', this.handleDisconnect);
+  async getProvider() {
+    const { LedgerHQProvider } = await import('./provider');
+    const chainId = await this.getChainId();
+    return new LedgerHQProvider(
+      {
+        url: this.#rpc,
+      },
+      chainId,
+    );
   }
+
+  getSigner() {
+    const signer = this.#provider.signer;
+    return Promise.resolve(signer);
+  }
+
+  async isAuthorized(): Promise<boolean> {
+    try {
+      const provider = await this.getProvider();
+      if (!provider) throw new ConnectorNotFoundError();
+      const account = await this.getAccount();
+      return !!account;
+    } catch {
+      return false;
+    }
+  }
+
+  protected onDisconnect = (): void => {
+    // Is called when HID API emits 'disconnect' event for some reason.
+    // For example, the device was manually unplugged.
+    // It is common to emit 'disconnect' from connector in this case.
+    this.emit('disconnect');
+  };
+
+  protected onAccountsChanged = (): void => {
+    // NOOP
+  };
+
+  protected onChainChanged = (): void => {
+    // NOOP
+  };
 }
-
-export default LedgerHQConnector;

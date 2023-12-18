@@ -3,7 +3,6 @@ import { JsonRpcBatchProvider, Network } from '@ethersproject/providers';
 import type TransportHID from '@ledgerhq/hw-transport-webhid';
 import { LedgerHQSigner } from './signer';
 import { checkError, convertToUnsigned } from './helpers';
-
 import { TransactionRequestExtended } from './types';
 
 export class LedgerHQProvider extends JsonRpcBatchProvider {
@@ -13,18 +12,21 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
 
   public transport?: typeof TransportHID;
 
+  constructor(...args: any[]) {
+    super(...args);
+    this.signer = this.getSigner();
+  }
+
   getSigner(): LedgerHQSigner {
     return new LedgerHQSigner(this);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   listAccounts(): Promise<Array<string>> {
     throw new Error('method is not implemented');
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async detectNetwork(): Promise<Network> {
-    return this._network;
+  detectNetwork(): Promise<Network> {
+    return Promise.resolve(this._network);
   }
 
   async getTransport(): Promise<TransportHID> {
@@ -42,7 +44,6 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
 
   async enable(): Promise<string> {
     try {
-      // eslint-disable-next-line no-shadow
       const { default: TransportHID } = await import(
         '@ledgerhq/hw-transport-webhid'
       );
