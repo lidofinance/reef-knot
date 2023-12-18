@@ -4,6 +4,8 @@ import { useWeb3 } from 'reef-knot/web3-react';
 import { utils } from 'ethers';
 import { CHAINS } from '../config/chains';
 
+// not working properly, or not working at all
+// TODO: rework NetworkSelector or remove completely
 const NetworkSelector = () => {
   const { chainId = CHAINS.Goerli, library } = useWeb3();
 
