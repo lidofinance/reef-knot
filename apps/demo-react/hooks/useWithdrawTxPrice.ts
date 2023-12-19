@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useLidoSWR, useSDK } from '@lido-sdk/react';
 
-import { useWeb3 } from '@reef-knot/web3-react';
+import { useWeb3 } from 'reef-knot/web3-react';
 import { TOKENS } from '@lido-sdk/constants';
 
 import { BigNumber } from 'ethers';
