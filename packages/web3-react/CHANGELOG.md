@@ -1,5 +1,16 @@
 # @reef-knot/web3-react
 
+## 1.12.0
+
+### Minor Changes
+
+- Use Ledger hid wallet adapter, based on wagmi
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@2.0.0
+
 ## 1.11.0
 
 ### Minor Changes

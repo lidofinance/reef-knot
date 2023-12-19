@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 2.0.0
+
+### Major Changes
+
+- Rework: use wagmi for hid connector instead of web3-react
+
 ## 1.1.1
 
 ### Patch Changes

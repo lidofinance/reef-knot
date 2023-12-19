@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.10.0
+
+### Minor Changes
+
+- Use Ledger hid wallet adapter, based on wagmi
+
 ## 1.9.0
 
 ### Minor Changes

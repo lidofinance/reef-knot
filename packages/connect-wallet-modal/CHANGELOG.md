@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.16.0
+
+### Minor Changes
+
+- Use Ledger hid wallet adapter, based on wagmi
+
 ## 1.15.0
 
 ### Minor Changes

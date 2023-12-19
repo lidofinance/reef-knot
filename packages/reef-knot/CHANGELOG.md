@@ -1,5 +1,17 @@
 # reef-knot
 
+## 1.14.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@2.0.0
+  - @reef-knot/connect-wallet-modal@1.16.0
+  - @reef-knot/wallets-list@1.10.0
+  - @reef-knot/core-react@1.8.0
+  - @reef-knot/web3-react@1.12.0
+  - @reef-knot/types@1.4.0
+
 ## 1.13.2
 
 ### Patch Changes
