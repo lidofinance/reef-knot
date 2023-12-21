@@ -1,5 +1,5 @@
-# Wallets Icons
+# Wallets Icons [Deprecated]
 
-Legacy package for storing icons for wallets.  
-It is planned to store such icons in wallet adapter packages.
-Therefore, try not to use this package if you are adding a new wallet.  
+## Deprecation notice
+The icons from this package is moved to wallet adapters. 
+Do not use this package.
