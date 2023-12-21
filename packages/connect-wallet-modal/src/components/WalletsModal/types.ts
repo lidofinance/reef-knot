@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { ModalProps } from '@reef-knot/ui-react';
+import { WalletAdapterData } from '@reef-knot/types';
 
 export type RequirementsData = {
   icon?: ReactNode;
@@ -14,8 +15,14 @@ export type Metrics = {
   };
 };
 
+export type ButtonComponentsByConnectorId = {
+  [K: string]: React.ComponentType;
+};
+
 export type WalletsModalProps = ModalProps & {
-  children: (props: ButtonsCommonProps) => ReactNode;
+  buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
+  walletDataList: WalletAdapterData[];
+  hiddenWallets?: string[];
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
   metrics?: Metrics;

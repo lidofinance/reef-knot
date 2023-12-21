@@ -14,6 +14,7 @@ import { WalletsButtonsContainer } from './styles';
 import { NOOP, useLocalStorage } from '../../helpers';
 import { LedgerModal } from '../Ledger';
 import { AcceptTermsModal } from './components';
+import { getWalletsButtons } from './getWalletsButtons';
 
 export function WalletsModal(props: WalletsModalProps) {
   const {
@@ -23,6 +24,9 @@ export function WalletsModal(props: WalletsModalProps) {
     metrics,
     termsLink,
     privacyNoticeLink,
+    buttonComponentsByConnectorId,
+    walletDataList,
+    hiddenWallets,
   } = props;
 
   const [termsChecked, setTermsChecked] = useLocalStorage(
@@ -133,12 +137,17 @@ export function WalletsModal(props: WalletsModalProps) {
         >
           <Terms {...termsProps} />
           <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
-            {props.children(buttonsCommonProps)}
+            {getWalletsButtons({
+              commonProps: buttonsCommonProps,
+              buttonComponentsByConnectorId,
+              hiddenWallets,
+              walletDataList,
+            })}
           </WalletsButtonsContainer>
         </Modal>
       );
     }
   }
-  // eslint-disable-next-line react/jsx-no-useless-fragment
+
   return <></>;
 }
