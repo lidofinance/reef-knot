@@ -1,4 +1,4 @@
-import React, { createContext, FC, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 
 export type AcceptTermsModalContextValue = {
   acceptTermsModal: {
@@ -21,7 +21,11 @@ export const AcceptTermsModalContext = createContext({
   },
 } as AcceptTermsModalContextValue);
 
-export const AcceptTermsModalContextProvider: FC = ({ children }) => {
+export const AcceptTermsModalContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [isAcceptTermsModalVisible, setIsAcceptTermsModalVisible] = useState(
     isVisibleDefaultValue,
   );

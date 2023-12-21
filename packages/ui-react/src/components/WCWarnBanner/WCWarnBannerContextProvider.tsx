@@ -1,10 +1,14 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { WCWarnBannerContext } from './WCWarnBannerContext';
 import { WCWarnBanner } from './WCWarnBanner';
 import { WCWarnBannerAutoRequest } from './WCWarnBannerAutoRequest';
 
-export const WCWarnBannerContextProvider: FC = ({ children }) => {
+export const WCWarnBannerContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [counter, setCounter] = useState(0);
   const [portalTarget, setPortalTarget] = useState<HTMLElement>();
   const providerValue = useMemo(
