@@ -15,7 +15,7 @@ const ConnectDisconnect = (props: { handleOpen: () => void }) => {
       {account ? (
         <>
           <Text color="success">Wallet connected</Text>
-          <AddressBadge address={account} color="success" />
+          <AddressBadge address={account} />
         </>
       ) : (
         <Button

@@ -74,8 +74,8 @@ const WrapForm = ({
   const handleWrapSelectChange = (value: OptionValue) => {
     setWrapSelect(value as string);
   };
-  const handleWrapCoinChange = (value: string) => {
-    setWrapCoin(value);
+  const handleWrapCoinChange = (value: any) => {
+    setWrapCoin(`${value}`);
     setInputValue('0.00001');
   };
   const setMaxInputValue = () => {

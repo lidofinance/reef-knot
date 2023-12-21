@@ -198,7 +198,7 @@ export const useWithdrawalRequestMethods = () => {
   );
 
   const steth = useCallback(
-    async ({ requests }) => {
+    async ({ requests }: { requests: any }) => {
       const params = [requests, account || ''] as const;
 
       const callback = async () => {

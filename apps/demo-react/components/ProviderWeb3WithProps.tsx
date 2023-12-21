@@ -39,7 +39,7 @@ const client = createClient({
   webSocketProvider,
 });
 
-const ProviderWeb3WithProps: React.FC = ({ children }) => {
+const ProviderWeb3WithProps = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiConfig client={client}>
       <ProviderWeb3
