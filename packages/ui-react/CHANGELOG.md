@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 1.0.8
+
+### Patch Changes
+
+- 253796d: Fix typings
+
 ## 1.0.7
 
 ### Patch Changes

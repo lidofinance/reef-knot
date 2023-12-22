@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.11.0
+
+### Minor Changes
+
+- 253796d: Add MetaMask and generic browser extension wallet adapters
+
 ## 1.10.0
 
 ### Minor Changes
