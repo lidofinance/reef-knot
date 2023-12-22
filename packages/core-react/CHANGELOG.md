@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 1.8.0
+
+### Minor Changes
+
+- Use Ledger hid wallet adapter, based on wagmi
+
 ## 1.7.0
 
 ### Minor Changes

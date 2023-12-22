@@ -10,10 +10,12 @@ import { ImToken } from '@reef-knot/wallet-adapter-imtoken';
 import { Trust } from '@reef-knot/wallet-adapter-trust';
 import { Xdefi } from '@reef-knot/wallet-adapter-xdefi';
 import { Coinbase } from '@reef-knot/wallet-adapter-coinbase';
+import { Ledger } from '@reef-knot/wallet-adapter-ledger-hid';
 
 export const WalletsListEthereum: WalletsListType = {
   okx: Okx,
   walletconnect: WalletConnect,
+  ledgerHID: Ledger,
   exodus: Exodus,
   ambire: Ambire,
   bitkeep: BitKeep,

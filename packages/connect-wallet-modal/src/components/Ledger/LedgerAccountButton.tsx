@@ -12,6 +12,7 @@ const ButtonStyled = styled.div`
   padding: 16px 20px;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 
   margin-top: 10px;
 

@@ -27,7 +27,9 @@ const connectors = getConnectors({
   rpc: rpcUrlsString,
   walletconnectProjectId: WC_PROJECT_ID,
   chains,
-  defaultChain: goerli,
+  defaultChain:
+    supportedChains.find((chain) => chain.id === defaultChainId) ||
+    supportedChains[0],
 });
 
 const client = createClient({

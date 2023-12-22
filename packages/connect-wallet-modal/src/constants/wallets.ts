@@ -1,6 +1,5 @@
 export const WALLET_IDS = {
   METAMASK: 'Metamask',
-  LEDGER: 'Ledger',
   COINBASE: 'Coinbase',
 } as const;
 

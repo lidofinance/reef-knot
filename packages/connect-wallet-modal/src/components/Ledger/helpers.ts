@@ -42,3 +42,11 @@ export const isDeviceBusy = (transport: LedgerContextValue['transport']) => {
 
 export const getFirstIndexOnPage = (page: number, accountsPerPage: number) =>
   accountsPerPage * (page - 1);
+
+export const isHIDSupported = () => {
+  try {
+    return 'hid' in window.navigator;
+  } catch (error) {
+    return false;
+  }
+};

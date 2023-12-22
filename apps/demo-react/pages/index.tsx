@@ -19,7 +19,6 @@ import {
   WalletsModal,
   MainSection,
   ContractTesting,
-  NetworkSelector,
 } from '../components';
 
 import { GlobalStyle } from '../styles/global';
@@ -42,7 +41,6 @@ export function Web() {
           <MainContainer>
             <ConnectDisconnect handleOpen={handleOpen} />
             <div style={{ display: 'flex', gap: '40px' }}>
-              <NetworkSelector />
               <ThemeSelect
                 selectedTheme={selectedTheme}
                 handleSelect={setSelectedTheme as (e: OptionValue) => void}

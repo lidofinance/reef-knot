@@ -10,8 +10,8 @@ import React, {
 } from 'react';
 import type Transport from '@ledgerhq/hw-transport';
 import Eth from '@ledgerhq/hw-app-eth';
-import { useConnectorLedger, helpers } from '@reef-knot/web3-react';
-import { getTransport } from './helpers';
+import { helpers } from '@reef-knot/web3-react';
+import { getTransport, isHIDSupported } from './helpers';
 
 export interface LedgerContextProps {
   isActive: boolean;
@@ -40,7 +40,6 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
   const [isTransportConnected, setIsTransportConnected] = useState(false);
   const [activeAccountsRequestsCounter, setActiveAccountsRequestsCounter] =
     useState(0);
-  const { connector } = useConnectorLedger();
 
   const disconnectTransport = useCallback(async (goingToReconnect = false) => {
     try {
@@ -59,7 +58,7 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
     if (transport.current) return;
     setError(null);
 
-    if (!connector.isSupported()) {
+    if (!isHIDSupported()) {
       setError(
         new Error(
           "Your browser doesn't support direct connection with Ledger. Please, try another browser.",
@@ -77,7 +76,7 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
       await disconnectTransport(true);
       setError(helpers.interceptLedgerError(e));
     }
-  }, [connector, disconnectTransport]);
+  }, [disconnectTransport]);
 
   const reconnectTransport = useCallback(async () => {
     await disconnectTransport(true);
