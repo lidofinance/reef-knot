@@ -18,7 +18,7 @@ import { POLLING_INTERVAL } from '../constants';
 import ProviderConnectors, { ConnectorsContextProps } from './connectors';
 
 export interface ProviderWeb3Props extends ConnectorsContextProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   defaultChainId: CHAINS;
   supportedChainIds: CHAINS[];
   swrConfig?: SWRConfiguration;

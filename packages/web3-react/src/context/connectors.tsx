@@ -8,7 +8,7 @@ import { useAutoConnect } from '../hooks/useAutoConnect';
 import { CONNECTOR_NAMES } from '../constants';
 
 export interface ConnectorsContextProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   defaultChainId: CHAINS;
   rpc: Record<number, string>;
   appName?: string;

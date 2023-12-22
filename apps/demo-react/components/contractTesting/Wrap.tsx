@@ -74,7 +74,7 @@ const WrapForm = ({
   const handleWrapSelectChange = (value: OptionValue) => {
     setWrapSelect(value as string);
   };
-  const handleWrapCoinChange = (value: any) => {
+  const handleWrapCoinChange = (value: string | number) => {
     setWrapCoin(`${value}`);
     setInputValue('0.00001');
   };

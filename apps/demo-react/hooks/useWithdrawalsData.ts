@@ -198,7 +198,7 @@ export const useWithdrawalRequestMethods = () => {
   );
 
   const steth = useCallback(
-    async ({ requests }: { requests: any }) => {
+    async ({ requests }: { requests: BigNumberish[] }) => {
       const params = [requests, account || ''] as const;
 
       const callback = async () => {

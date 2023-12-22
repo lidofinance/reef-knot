@@ -149,5 +149,5 @@ export function WalletsModal(props: WalletsModalProps) {
     }
   }
 
-  return <></>;
+  return null;
 }
