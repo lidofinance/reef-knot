@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:analyze": "ANALYZE_BUNDLE=true next build",
     "start": "next start",
     "lint": "eslint --ext ts,tsx,js,mjs .",
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated ./abi/*.json"
@@ -38,6 +39,7 @@
     "@types/lodash": "^4.14.196",
     "@types/node": "^17.0.12",
     "@types/react": "18.2.45",
+    "@next/bundle-analyzer": "^14.0.4",
     "husky": "^8.0.3",
     "next-transpile-modules": "9.0.0",
     "tsconfig": "*",
