@@ -1,21 +1,21 @@
 import React, {
   createContext,
-  FC,
   MutableRefObject,
+  ReactNode,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
+import type Eth from '@ledgerhq/hw-app-eth';
 import type Transport from '@ledgerhq/hw-transport';
-import Eth from '@ledgerhq/hw-app-eth';
 import { helpers } from '@reef-knot/web3-react';
 import { getTransport, isHIDSupported } from './helpers';
 
 export interface LedgerContextProps {
   isActive: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export type LedgerContextValue = {
@@ -31,10 +31,10 @@ export type LedgerContextValue = {
 
 export const LedgerContext = createContext({} as LedgerContextValue);
 
-export const LedgerContextProvider: FC<LedgerContextProps> = ({
+export const LedgerContextProvider = ({
   isActive,
   children,
-}) => {
+}: LedgerContextProps) => {
   const transport = useRef<Transport | null>(null);
   // isTransportConnecting flag helps with react v18 strict mode in the dev mode,
   // which re-runs effects extra time, which breaks ledger connection process
@@ -73,6 +73,7 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
     }
 
     try {
+      const { default: Eth } = await import('@ledgerhq/hw-app-eth');
       transport.current = await getTransport();
       isTransportConnecting.current = false;
       ledgerAppEth.current = new Eth(transport.current);

@@ -1,4 +1,4 @@
-import Eth, { ledgerService } from '@ledgerhq/hw-app-eth';
+import type Eth from '@ledgerhq/hw-app-eth';
 import {
   LoadConfig,
   ResolutionConfig,
@@ -18,7 +18,7 @@ import { toUtf8Bytes } from '@ethersproject/strings';
 import { Bytes, hexlify, joinSignature } from '@ethersproject/bytes';
 import { _TypedDataEncoder } from '@ethersproject/hash';
 
-import { LedgerHQProvider } from './provider';
+import type { LedgerHQProvider } from './provider';
 import { checkError, convertToUnsigned, toNumber } from './helpers';
 import { UnsignedTransactionStrict } from './types';
 
@@ -49,6 +49,7 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
     const transport = await this.provider.getTransport();
 
     try {
+      const { default: Eth } = await import('@ledgerhq/hw-app-eth');
       const eth = new Eth(transport);
       await eth.getAppConfiguration();
 
@@ -112,6 +113,7 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
     const populatedTx = await this.populateUnsigned(unsignedTx);
 
     const serializedTx = serialize(populatedTx).substring(2);
+    const { ledgerService } = await import('@ledgerhq/hw-app-eth');
     const resolution = await ledgerService.resolveTransaction(
       serializedTx,
       loadConfig,
