@@ -15,6 +15,7 @@ import { getTransport, isHIDSupported } from './helpers';
 
 export interface LedgerContextProps {
   isActive: boolean;
+  children?: React.ReactNode;
 }
 
 export type LedgerContextValue = {
@@ -35,6 +36,9 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
   children,
 }) => {
   const transport = useRef<Transport | null>(null);
+  // isTransportConnecting flag helps with react v18 strict mode in the dev mode,
+  // which re-runs effects extra time, which breaks ledger connection process
+  const isTransportConnecting = useRef(false);
   const ledgerAppEth = useRef<Eth | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isTransportConnected, setIsTransportConnected] = useState(false);
@@ -55,8 +59,9 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
   }, []);
 
   const connectTransport = useCallback(async () => {
-    if (transport.current) return;
+    if (isTransportConnecting.current || transport.current) return;
     setError(null);
+    isTransportConnecting.current = true;
 
     if (!isHIDSupported()) {
       setError(
@@ -69,6 +74,7 @@ export const LedgerContextProvider: FC<LedgerContextProps> = ({
 
     try {
       transport.current = await getTransport();
+      isTransportConnecting.current = false;
       ledgerAppEth.current = new Eth(transport.current);
       await ledgerAppEth.current.getAppConfiguration();
       setIsTransportConnected(true);
