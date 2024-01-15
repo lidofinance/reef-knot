@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 1.11.1
+
+### Patch Changes
+
+- Fix name of the 'wallet-adapter-browser-extension' package
+
 ## 1.11.0
 
 ### Minor Changes
