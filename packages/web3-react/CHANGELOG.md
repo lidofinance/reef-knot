@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 1.13.1
+
+### Patch Changes
+
+- fix: return isLedger to useConnectorInfo
+
 ## 1.13.0
 
 ### Minor Changes

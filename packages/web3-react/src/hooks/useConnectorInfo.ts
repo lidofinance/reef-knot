@@ -2,7 +2,10 @@ import { useAccount } from 'wagmi';
 import { SafeAppConnector } from '@gnosis.pm/safe-apps-web3-react';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
-import { LedgerHQFrameConnector } from '@reef-knot/ledger-connector';
+import {
+  LedgerHIDConnector,
+  LedgerHQFrameConnector,
+} from '@reef-knot/ledger-connector';
 import { useWeb3 } from './useWeb3';
 import { PROVIDER_NAMES } from '../constants';
 import {
@@ -19,6 +22,7 @@ type ConnectorInfo = {
   providerName?: string;
   isConnectedViaWagmi: boolean;
   isGnosis: boolean;
+  isLedger: boolean;
   isLedgerLive: boolean;
   isWalletLink: boolean;
   isCoinbase: boolean;
@@ -37,6 +41,8 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const { isConnected, connector: wagmiConnector } = useAccount();
 
   const isConnectedViaWagmi = isConnected && !!wagmiConnector;
+
+  const isLedger = wagmiConnector instanceof LedgerHIDConnector;
 
   // === WAGMI connectors END
   // === WEB3-REACT connectors BEGIN
@@ -73,6 +79,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
     if (isDappBrowser) return undefined;
 
     if (isGnosis) return PROVIDER_NAMES.GNOSIS;
+    if (isLedger) return PROVIDER_NAMES.LEDGER;
     if (isLedgerLive) return PROVIDER_NAMES.LEDGER_HQ_LIVE;
     if (isImToken) return PROVIDER_NAMES.IM_TOKEN;
     if (isTrust) return PROVIDER_NAMES.TRUST;
@@ -101,6 +108,7 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isConnectedViaWagmi,
 
     isGnosis,
+    isLedger,
     isLedgerLive,
     isWalletLink,
     isCoinbase,
