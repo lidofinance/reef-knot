@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   useWeb3,
   useConnectorInfo,
@@ -9,7 +10,7 @@ import { Line, Heading } from './styles';
 import { BlueWrapper } from './BlueWrapper';
 import { Web3ProviderInfo } from './Web3ProviderInfo';
 
-export const WalletInfo: React.FC = (props) => {
+export const WalletInfo = ({ children }: { children?: React.ReactNode }) => {
   const connectorInfo = useConnectorInfo();
   const supportedChainsData = useSupportedChains();
   const supportedChainIds = supportedChainsData.supportedChains.map(
@@ -65,7 +66,7 @@ export const WalletInfo: React.FC = (props) => {
             <Line>Chain is unsupported: {String(chain?.unsupported)}</Line>
           </code>
         </div>
-        {props.children}
+        {children}
       </div>
     </BlueWrapper>
   );

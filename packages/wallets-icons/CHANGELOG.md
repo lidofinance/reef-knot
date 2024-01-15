@@ -1,5 +1,11 @@
 # @reef-knot/wallets-icons
 
+## 1.6.0
+
+### Minor Changes
+
+- DEPRECATE
+
 ## 1.5.0
 
 ### Minor Changes

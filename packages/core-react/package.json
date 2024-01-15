@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/core-react",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -37,9 +37,9 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/wallets-list": "^1.10.0",
+    "@reef-knot/wallets-list": "^1.11.0",
     "@reef-knot/types": "^1.4.0",
-    "@reef-knot/ui-react": "^1.0.7",
+    "@reef-knot/ui-react": "^1.0.8",
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "wagmi": "^0.12.19"

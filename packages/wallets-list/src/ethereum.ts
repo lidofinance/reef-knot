@@ -1,6 +1,8 @@
 import { WalletsListType } from '@reef-knot/types';
-import { Exodus } from '@reef-knot/wallet-adapter-exodus';
+import { BrowserExtension } from '@reef-knot/wallet-adapter-browserExtension';
+import { MetaMask } from '@reef-knot/wallet-adapter-metamask';
 import { Okx } from '@reef-knot/wallet-adapter-okx';
+import { Exodus } from '@reef-knot/wallet-adapter-exodus';
 import { WalletConnect } from '@reef-knot/wallet-adapter-walletconnect';
 import { Ambire } from '@reef-knot/wallet-adapter-ambire';
 import { BitKeep } from '@reef-knot/wallet-adapter-bitkeep';
@@ -13,6 +15,8 @@ import { Coinbase } from '@reef-knot/wallet-adapter-coinbase';
 import { Ledger } from '@reef-knot/wallet-adapter-ledger-hid';
 
 export const WalletsListEthereum: WalletsListType = {
+  browserExtension: BrowserExtension,
+  metamask: MetaMask,
   okx: Okx,
   walletconnect: WalletConnect,
   ledgerHID: Ledger,

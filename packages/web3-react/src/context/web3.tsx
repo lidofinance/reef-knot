@@ -1,4 +1,4 @@
-import React, { memo, FC, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import invariant from 'tiny-invariant';
 import {
   Web3Provider,
@@ -18,6 +18,7 @@ import { POLLING_INTERVAL } from '../constants';
 import ProviderConnectors, { ConnectorsContextProps } from './connectors';
 
 export interface ProviderWeb3Props extends ConnectorsContextProps {
+  children?: React.ReactNode;
   defaultChainId: CHAINS;
   supportedChainIds: CHAINS[];
   swrConfig?: SWRConfiguration;
@@ -32,7 +33,7 @@ function getLibrary(provider: ExternalProvider | JsonRpcFetchFunc) {
   return library;
 }
 
-const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
+const ProviderSDK = (props: ProviderWeb3Props) => {
   const {
     rpc,
     defaultChainId,
@@ -97,6 +98,7 @@ const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
   );
 
   return (
+    // @ts-expect-error Property children does not exist on type IntrinsicAttributes & SDKContextProps
     <ProviderSDKBase
       chainId={chainId}
       supportedChainIds={supportedChainIds}
@@ -111,7 +113,7 @@ const ProviderSDK: FC<ProviderWeb3Props> = (props) => {
   );
 };
 
-const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
+const ProviderWeb3 = (props: ProviderWeb3Props) => {
   const {
     children,
     rpc,
@@ -126,9 +128,9 @@ const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
   const supportedWagmiChains = wagmiChainsArray.filter((chain) =>
     supportedChainIds.includes(chain.id),
   );
-  const defaultWagmiChain = wagmiChainsArray.find(
-    (chain) => chain.id === defaultChainId,
-  );
+  const defaultWagmiChain =
+    wagmiChainsArray.find((chain) => chain.id === defaultChainId) ||
+    wagmiChainsArray[0];
 
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
@@ -148,4 +150,4 @@ const ProviderWeb3: FC<ProviderWeb3Props> = (props) => {
   );
 };
 
-export default memo<FC<ProviderWeb3Props>>(ProviderWeb3);
+export default memo(ProviderWeb3);

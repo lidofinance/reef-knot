@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 1.8.1
+
+### Patch Changes
+
+- 253796d: Fix typings
+
 ## 1.8.0
 
 ### Minor Changes

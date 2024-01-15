@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.17.0
+
+### Minor Changes
+
+- 253796d: Use MetaMask and generic browser extension wallet adapters. Do some refactoring.
+
 ## 1.16.0
 
 ### Minor Changes

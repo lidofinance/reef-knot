@@ -72,6 +72,7 @@ export class LedgerHIDConnector<Options = any> extends Connector {
   }
 
   async getProvider() {
+    if (this.#provider) return this.#provider;
     const { LedgerHQProvider } = await import('./provider');
     const chainId = await this.getChainId();
     return new LedgerHQProvider(

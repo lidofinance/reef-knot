@@ -1,4 +1,4 @@
-import React, { createContext, FC, useMemo } from 'react';
+import React, { createContext, FC, ReactNode, useMemo } from 'react';
 import { WalletAdapterData } from '@reef-knot/types';
 import { Chain } from 'wagmi/chains';
 import { WCWarnBannerContextProvider } from '@reef-knot/ui-react';
@@ -9,7 +9,8 @@ export interface ReefKnotContextProps {
   rpc: Record<number, string>;
   walletconnectProjectId?: string;
   chains: Chain[];
-  defaultChain?: Chain;
+  defaultChain: Chain;
+  children?: ReactNode;
 }
 
 export type ReefKnotContextValue = {

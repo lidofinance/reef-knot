@@ -1,6 +1,5 @@
 export * from './useAutoConnect';
 export * from './useConnectorInfo';
-export * from './useConnectorMetamask';
 export * from './useConnectors';
 export * from './useConnectorStorage';
 export * from './useDisconnect';

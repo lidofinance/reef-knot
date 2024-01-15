@@ -1,6 +1,13 @@
-const alchemyApiKey = process.env.ALCHEMY_API_KEY;
+import NextBundleAnalyzer from '@next/bundle-analyzer';
 
-export default {
+const alchemyApiKey = process.env.ALCHEMY_API_KEY;
+const analyzeBundle = process.env.ANALYZE_BUNDLE ?? false;
+
+const withBundleAnalyzer = NextBundleAnalyzer({
+  enabled: analyzeBundle,
+});
+
+export default withBundleAnalyzer({
   reactStrictMode: true,
   basePath: process.env.BASE_PATH || '',
   compiler: {
@@ -11,4 +18,4 @@ export default {
   publicRuntimeConfig: {
     alchemyApiKey,
   },
-}
+})
