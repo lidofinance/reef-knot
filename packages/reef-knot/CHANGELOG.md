@@ -1,5 +1,12 @@
 # reef-knot
 
+## 1.15.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@1.11.1
+
 ## 1.14.1
 
 ### Patch Changes

@@ -1,5 +1,5 @@
 import { WalletsListType } from '@reef-knot/types';
-import { BrowserExtension } from '@reef-knot/wallet-adapter-browserExtension';
+import { BrowserExtension } from '@reef-knot/wallet-adapter-browser-extension';
 import { MetaMask } from '@reef-knot/wallet-adapter-metamask';
 import { Okx } from '@reef-knot/wallet-adapter-okx';
 import { Exodus } from '@reef-knot/wallet-adapter-exodus';

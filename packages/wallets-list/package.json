@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -37,7 +37,7 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
-    "@reef-knot/wallet-adapter-browserExtension": "1.0.0",
+    "@reef-knot/wallet-adapter-browser-extension": "1.0.0",
     "@reef-knot/wallet-adapter-metamask": "1.0.0",
     "@reef-knot/wallet-adapter-okx": "1.3.1",
     "@reef-knot/wallet-adapter-exodus": "1.2.4",
