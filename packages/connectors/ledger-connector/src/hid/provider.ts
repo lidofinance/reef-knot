@@ -33,10 +33,11 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
     invariant(this.transport, 'Transport is not defined');
 
     try {
-      const transport = (await this.transport?.create()) as TransportWebHID;
-      this.device = transport.device;
+      const transportInstance =
+        (await this.transport?.create()) as TransportWebHID;
+      this.device = transportInstance.device;
 
-      return transport;
+      return transportInstance;
     } catch (error) {
       return checkError(error);
     }
