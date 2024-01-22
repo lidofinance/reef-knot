@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 2.0.1
+
+### Patch Changes
+
+- Fix getProvider in LedgerHIDConnector; update ledgerhq packages;
+
 ## 2.0.0
 
 ### Major Changes

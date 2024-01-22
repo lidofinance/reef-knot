@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 1.17.1
+
+### Patch Changes
+
+- Update ledgerhq packages
+
 ## 1.17.0
 
 ### Minor Changes

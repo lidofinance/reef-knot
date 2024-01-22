@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/ledger-connector",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -45,9 +45,9 @@
     "@ethersproject/strings": "^5.5.0",
     "@ethersproject/transactions": "^5.5.0",
     "@ethersproject/hash": "^5.5.0",
-    "@ledgerhq/hw-app-eth": "^6.35.0",
-    "@ledgerhq/hw-transport": "^6.30.0",
-    "@ledgerhq/hw-transport-webhid": "^6.28.0",
+    "@ledgerhq/hw-app-eth": "^6.35.2",
+    "@ledgerhq/hw-transport": "^6.30.1",
+    "@ledgerhq/hw-transport-webhid": "^6.28.1",
     "@ledgerhq/iframe-provider": "^0.4.3",
     "@web3-react/abstract-connector": "^6.0.7",
     "@web3-react/types": "^6.0.7",
