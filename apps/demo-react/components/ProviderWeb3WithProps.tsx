@@ -34,7 +34,7 @@ const connectors = getConnectors({
 
 const client = createClient({
   connectors,
-  autoConnect: true,
+  autoConnect: false, // default wagmi autoConnect should be false
   provider,
   webSocketProvider,
 });
