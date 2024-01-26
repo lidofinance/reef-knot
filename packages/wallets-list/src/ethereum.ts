@@ -13,6 +13,7 @@ import { Trust } from '@reef-knot/wallet-adapter-trust';
 import { Xdefi } from '@reef-knot/wallet-adapter-xdefi';
 import { Coinbase } from '@reef-knot/wallet-adapter-coinbase';
 import { Ledger } from '@reef-knot/wallet-adapter-ledger-hid';
+import { LedgerLive } from '@reef-knot/wallet-adapter-ledger-live';
 
 export const WalletsListEthereum: WalletsListType = {
   browserExtension: BrowserExtension,
@@ -20,6 +21,7 @@ export const WalletsListEthereum: WalletsListType = {
   okx: Okx,
   walletconnect: WalletConnect,
   ledgerHID: Ledger,
+  ledgerLive: LedgerLive,
   exodus: Exodus,
   ambire: Ambire,
   bitkeep: BitKeep,

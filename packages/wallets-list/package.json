@@ -50,7 +50,8 @@
     "@reef-knot/wallet-adapter-trust": "1.0.0",
     "@reef-knot/wallet-adapter-xdefi": "1.0.0",
     "@reef-knot/wallet-adapter-coinbase": "1.0.0",
-    "@reef-knot/wallet-adapter-ledger-hid": "1.0.0"
+    "@reef-knot/wallet-adapter-ledger-hid": "1.0.0",
+    "@reef-knot/wallet-adapter-ledger-live": "1.0.0"
   },
   "devDependencies": {
     "@reef-knot/types": "^1.4.0",
