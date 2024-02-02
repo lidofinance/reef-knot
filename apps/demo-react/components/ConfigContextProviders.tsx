@@ -1,15 +1,14 @@
 import React from 'react';
 import { WagmiConfig, createClient, configureChains, Chain } from 'wagmi';
 import { goerli, mainnet } from 'wagmi/chains';
-import { ProviderWeb3 } from 'reef-knot/web3-react';
-import { getConnectors, holesky } from 'reef-knot/core-react';
+import { ReefKnot, getConnectors, holesky } from 'reef-knot/core-react';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
+import { ProviderSDKWithProps } from './ProviderSDKWithProps';
 import { getRPCPath } from '../util/contractTestingUtils';
 import { rpcUrlsString } from '../util/rpc';
 import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
 
 const supportedChains = [holesky, mainnet, goerli];
-const supportedChainsIds = supportedChains.map((chain) => chain.id);
 const defaultChainId = holesky.id;
 
 const jsonRpcBatchProvider = (chain: Chain) => ({
@@ -39,18 +38,33 @@ const client = createClient({
   webSocketProvider,
 });
 
-const ProviderWeb3WithProps = ({ children }: { children: React.ReactNode }) => {
+const ConfigContextProviders = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const defaultChain =
+    supportedChains.find((chain) => chain.id === defaultChainId) ||
+    supportedChains[0];
+
   return (
     <WagmiConfig client={client}>
-      <ProviderWeb3
-        defaultChainId={defaultChainId}
-        supportedChainIds={supportedChainsIds}
+      <ReefKnot
         rpc={rpcUrlsString}
+        chains={supportedChains}
+        defaultChain={defaultChain}
         walletconnectProjectId={WC_PROJECT_ID}
+        autoConnect
       >
-        {children}
-      </ProviderWeb3>
+        <ProviderSDKWithProps
+          defaultChainId={defaultChain.id}
+          supportedChains={supportedChains}
+          rpc={rpcUrlsString}
+        >
+          {children}
+        </ProviderSDKWithProps>
+      </ReefKnot>
     </WagmiConfig>
   );
 };
-export default ProviderWeb3WithProps;
+export default ConfigContextProviders;
