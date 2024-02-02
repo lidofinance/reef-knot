@@ -1,0 +1,18 @@
+{
+  "name": "ReefKnot Demo App",
+  "short_name": "ReefKnot",
+  "description": "Application for demonstrating how ReefKnot works and for development purposes.",
+  "iconPath": "reef-knot-logo.svg",
+  "icons": [
+    {
+      "src": "/reef-knot-logo-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/reef-knot-logo.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}
