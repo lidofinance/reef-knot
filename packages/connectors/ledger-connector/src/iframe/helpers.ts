@@ -1,26 +1,15 @@
-export const isIframe = (): boolean => {
+export const isIframe = () =>
+  globalThis.window && globalThis.window.parent !== globalThis.window;
+
+export const isLedgerLive = () => {
+  if (typeof window === 'undefined') return false;
+
   try {
-    return window.self !== window.top;
+    const params = new URLSearchParams(window.self.location.search);
+    const isEmbed = !!params.get('embed');
+
+    return isIframe() && isEmbed;
   } catch (error) {
     return false;
   }
 };
-
-export const isLedgerDappBrowserProvider = (() => {
-  let state: boolean | null = null;
-
-  return (): boolean => {
-    if (typeof state === 'boolean') return state;
-    if (typeof window === 'undefined') return false;
-
-    try {
-      const params = new URLSearchParams(window.self.location.search);
-      const isEmbed = !!params.get('embed');
-
-      state = isIframe() && isEmbed;
-    } catch (error) {
-      state = false;
-    }
-    return state;
-  };
-})();
