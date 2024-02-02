@@ -1,4 +1,4 @@
-export * from './user-agents';
+export * from './userAgents';
 export * from './noop';
 export * from './capitalize';
 export * from './useLocalStorage';
