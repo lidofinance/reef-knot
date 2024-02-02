@@ -36,10 +36,14 @@
     "dev": "dev=on rollup -c -w",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
+  "dependencies": {
+    "ua-parser-js": "1.0.33"
+  },
   "devDependencies": {
     "@reef-knot/wallets-list": "^1.11.0",
     "@reef-knot/types": "^1.4.0",
     "@reef-knot/ui-react": "^1.0.8",
+    "@types/ua-parser-js": "^0.7.36",
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "wagmi": "^0.12.19"
