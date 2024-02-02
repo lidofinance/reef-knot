@@ -14,6 +14,8 @@ import { Xdefi } from '@reef-knot/wallet-adapter-xdefi';
 import { Coinbase } from '@reef-knot/wallet-adapter-coinbase';
 import { Ledger } from '@reef-knot/wallet-adapter-ledger-hid';
 import { LedgerLive } from '@reef-knot/wallet-adapter-ledger-live';
+import { DAppBrowserInjected } from '@reef-knot/wallet-adapter-dapp-browser-injected';
+import { Safe } from '@reef-knot/wallet-adapter-safe';
 
 export const WalletsListEthereum: WalletsListType = {
   browserExtension: BrowserExtension,
@@ -31,4 +33,6 @@ export const WalletsListEthereum: WalletsListType = {
   trust: Trust,
   xdefi: Xdefi,
   coinbase: Coinbase,
+  dAppBrowserInjected: DAppBrowserInjected,
+  safe: Safe,
 };
