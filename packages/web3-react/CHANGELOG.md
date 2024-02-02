@@ -1,5 +1,17 @@
 # @reef-knot/web3-react
 
+## 2.0.0
+
+### Major Changes
+
+- 1046886: Remove legacy code, based on lido-sdk and web3-react
+
+### Patch Changes
+
+- Updated dependencies [1046886]
+  - @reef-knot/ledger-connector@3.0.0
+  - @reef-knot/core-react@2.0.0
+
 ## 1.13.1
 
 ### Patch Changes

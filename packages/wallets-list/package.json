@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "1.11.1",
+  "version": "1.12.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -50,13 +50,13 @@
     "@reef-knot/wallet-adapter-trust": "1.0.0",
     "@reef-knot/wallet-adapter-xdefi": "1.0.0",
     "@reef-knot/wallet-adapter-coinbase": "1.0.0",
-    "@reef-knot/wallet-adapter-ledger-hid": "1.0.0",
-    "@reef-knot/wallet-adapter-ledger-live": "1.0.0",
+    "@reef-knot/wallet-adapter-ledger-hid": "2.0.0",
+    "@reef-knot/wallet-adapter-ledger-live": "2.0.0",
     "@reef-knot/wallet-adapter-dapp-browser-injected": "1.0.0",
     "@reef-knot/wallet-adapter-safe": "1.0.0"
   },
   "devDependencies": {
-    "@reef-knot/types": "^1.4.0",
+    "@reef-knot/types": "^1.5.0",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {

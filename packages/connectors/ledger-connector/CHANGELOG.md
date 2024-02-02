@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 3.0.0
+
+### Major Changes
+
+- 1046886: Rework: use wagmi for Ledger Live connector instead of web3-react
+
 ## 2.0.1
 
 ### Patch Changes
