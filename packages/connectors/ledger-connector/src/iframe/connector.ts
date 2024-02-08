@@ -39,7 +39,6 @@ export class LedgerLiveConnector extends Connector<
   }
 
   async connect({ chainId }: { chainId?: number }) {
-    console.log(this.options);
     try {
       const provider = await this.getProvider();
 
