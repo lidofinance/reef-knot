@@ -11,6 +11,6 @@ export const getUnsupportedChainError = (supportedChains: Chain[]) => {
   })();
 
   return new Error(
-    `Unsupported chain. Please switch to ${supportedChainsNames} in your wallet and restart the page.`,
+    `Unsupported chain. Please switch to ${supportedChainsNames} in your wallet.`,
   );
 };
