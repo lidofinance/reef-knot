@@ -1,5 +1,18 @@
 # @reef-knot/connect-wallet-modal
 
+## 2.0.0
+
+### Minor Changes
+
+- 1046886: Support autoConnectOnly wallet adapters
+
+### Patch Changes
+
+- Updated dependencies [1046886]
+  - @reef-knot/ledger-connector@3.0.0
+  - @reef-knot/core-react@2.0.0
+  - @reef-knot/web3-react@2.0.0
+
 ## 1.17.1
 
 ### Patch Changes

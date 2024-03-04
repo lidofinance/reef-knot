@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 2.0.0
+
+### Major Changes
+
+- 1046886: Add auto-connect, based on wagmi and autoConnectOnly wallet adapters
+
 ## 1.8.1
 
 ### Patch Changes

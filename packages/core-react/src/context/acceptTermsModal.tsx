@@ -1,14 +1,16 @@
 import React, { createContext, useMemo, useState } from 'react';
 
+export type AcceptTermsModal = {
+  isVisible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  onContinue: () => void;
+  setOnContinue: React.Dispatch<React.SetStateAction<() => void>>;
+  error?: Error;
+  setError: React.Dispatch<React.SetStateAction<Error | undefined>>;
+};
+
 export type AcceptTermsModalContextValue = {
-  acceptTermsModal: {
-    isVisible: boolean;
-    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    onContinue: () => void;
-    setOnContinue: React.Dispatch<React.SetStateAction<() => void>>;
-    error?: Error;
-    setError: React.Dispatch<React.SetStateAction<Error | undefined>>;
-  };
+  acceptTermsModal: AcceptTermsModal;
 };
 
 const isVisibleDefaultValue = false;

@@ -1,18 +1,33 @@
-import { useWeb3React } from '@web3-react/core';
-import { Web3ReactContextInterface } from '@web3-react/core/dist/types';
 import { useAccount, useNetwork, useConnect } from 'wagmi';
 import { useSupportedChains } from './useSupportedChains';
 
-export { UnsupportedChainIdError } from '@web3-react/core';
+export interface Web3ReactManagerFunctions {
+  activate: (
+    connector: undefined, // AbstractConnector changed to undefined here
+    onError?: (error: Error) => void,
+    throwErrors?: boolean,
+  ) => Promise<void>;
+  setError: (error: Error) => void;
+  deactivate: () => void;
+}
 
-// Shimming useWeb3React hook to also use data returned from wagmi
+export interface Web3ReactContextInterface<T = any>
+  extends Web3ReactManagerFunctions {
+  connector?: undefined; // AbstractConnector changed to undefined here
+  library?: T;
+  chainId?: number;
+  account?: null | string;
+  active: boolean;
+  error?: Error;
+}
+
+// This is a legacy hook for getting data and methods from web3-react library.
+// Because of migration to wagmi library, this method now returns values from wagmi and is left here for backwards compatibility.
 export function useWeb3<T = any>(_key?: string): Web3ReactContextInterface<T> {
-  const web3ReactData = useWeb3React();
   const wagmiAccount = useAccount();
   const wagmiNetwork = useNetwork();
   const { error: wagmiError } = useConnect();
-
-  const account = web3ReactData.account || wagmiAccount?.address;
+  const account = wagmiAccount?.address;
 
   // web3-react and wagmi have different logic around unsupported chains.
   // If a chain is not supported:
@@ -29,29 +44,33 @@ export function useWeb3<T = any>(_key?: string): Web3ReactContextInterface<T> {
   // chainId to be unsupported, they expect chainId === undefined in that case.
   // Making wagmi's logic to be the same as web3-react here, except setting an error:
   const { isUnsupported } = useSupportedChains();
-  const chainId = isUnsupported
-    ? undefined
-    : web3ReactData.chainId || wagmiNetwork?.chain?.id;
-  const active = isUnsupported
-    ? false
-    : web3ReactData.active || wagmiAccount?.isConnected;
+  const chainId = isUnsupported ? undefined : wagmiNetwork?.chain?.id;
+  const active = isUnsupported ? false : wagmiAccount?.isConnected;
 
-  // wagmi and web3-react use the same Error type
-  // wagmi is first here because it can be null, but we need Error | undefined
-  const error = wagmiError || web3ReactData.error;
+  // wagmi error can be null, but historically we need `Error | undefined` here
+  const error: Error | undefined = wagmiError || undefined;
 
   return {
-    ...web3ReactData,
     chainId,
     account,
     active,
     error,
 
-    // NOT SHIMMED FIELDS:
-    // library:
-    //   Web3Provider from ethers.js, we pass it to Web3ReactProvider via getLibrary()
-    // connector:
-    //   AbstractConnector from @web3-react, used by @reef-knot/web3-react only for
-    //   useDisconnect, useConnectorInfo and useSupportedChains
+    // Web3Provider from ethers.js, we pass it to Web3ReactProvider via getLibrary()
+    library: undefined,
+
+    // AbstractConnector from @web3-react, used by @reef-knot/web3-react only for
+    // useDisconnect, useConnectorInfo and useSupportedChains
+    connector: undefined,
+    activate: () => {
+      console.error('"activate" method is deprecated and does nothing.');
+      return Promise.resolve();
+    },
+    setError: () => {
+      console.error('"setError" method is deprecated and does nothing.');
+    },
+    deactivate: () => {
+      console.error('"deactivate" method is deprecated and does nothing.');
+    },
   };
 }

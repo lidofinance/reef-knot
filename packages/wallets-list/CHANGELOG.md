@@ -1,5 +1,16 @@
 # @reef-knot/wallets-list
 
+## 1.12.0
+
+### Minor Changes
+
+- 1046886: Add wallet adapters: Ledger Live, dappBrowserInjected, Safe
+
+### Patch Changes
+
+- @reef-knot/wallet-adapter-ledger-hid@2.0.0
+- @reef-knot/wallet-adapter-ledger-live@2.0.0
+
 ## 1.11.1
 
 ### Patch Changes

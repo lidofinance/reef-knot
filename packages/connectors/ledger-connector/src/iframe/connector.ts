@@ -1,108 +1,163 @@
-import invariant from 'tiny-invariant';
-import { AbstractConnector } from '@web3-react/abstract-connector';
-
-import type { ConnectorUpdate } from '@web3-react/types';
-import type { IFrameEthereumProvider } from '@ledgerhq/iframe-provider';
-import { isLedgerDappBrowserProvider } from './helpers';
+import {
+  Address,
+  Chain,
+  Connector,
+  ProviderRpcError,
+  ResourceUnavailableError,
+  RpcError,
+  UserRejectedRequestError,
+  SwitchChainError,
+} from 'wagmi';
+import { normalizeChainId } from '@wagmi/core';
+import { IFrameEthereumProvider } from '@ledgerhq/iframe-provider';
+import type { IFrameEthereumProviderOptions } from '@ledgerhq/iframe-provider';
+import { getAddress } from '@ethersproject/address';
+import { hexValue } from '@ethersproject/bytes';
+import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 
 /* eslint-disable @typescript-eslint/unbound-method */
 
-type IFrameEthereumProviderOptions = ConstructorParameters<
-  typeof IFrameEthereumProvider
->[0] & { supportedChainIds?: number[] };
+export class LedgerLiveConnector extends Connector<
+  IFrameEthereumProvider,
+  IFrameEthereumProviderOptions
+> {
+  readonly id = 'ledgerLive';
+  readonly name = 'Ledger Live';
+  readonly ready: boolean = false;
+  #provider?: IFrameEthereumProvider;
 
-const MAINNET_CHAIN_ID = 1;
-
-export class LedgerHQFrameConnector extends AbstractConnector {
-  private config: IFrameEthereumProviderOptions;
-
-  public provider?: IFrameEthereumProvider;
-
-  constructor(config?: IFrameEthereumProviderOptions) {
-    super({
-      supportedChainIds: config?.supportedChainIds ?? [MAINNET_CHAIN_ID],
-    });
-
-    this.config = config ?? {};
-
-    this.handleNetworkChanged = this.handleNetworkChanged.bind(this);
-    this.handleChainChanged = this.handleChainChanged.bind(this);
-    this.handleAccountsChanged = this.handleAccountsChanged.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+  constructor({
+    chains,
+    options = {},
+  }: {
+    chains?: Chain[];
+    options?: IFrameEthereumProviderOptions;
+  }) {
+    super({ chains, options });
+    this.onAccountsChanged = this.onAccountsChanged.bind(this);
+    this.onChainChanged = this.onChainChanged.bind(this);
   }
 
-  private handleNetworkChanged(networkId: string): void {
-    this.emitUpdate({ provider: this.provider, chainId: networkId });
-  }
+  async connect({ chainId }: { chainId?: number }) {
+    try {
+      const provider = await this.getProvider();
 
-  private handleChainChanged(chainId: string): void {
-    this.emitUpdate({ chainId });
-  }
+      provider.on('accountsChanged', this.onAccountsChanged);
+      provider.on('chainChanged', this.onChainChanged);
 
-  private handleAccountsChanged(accounts: string[]): void {
-    this.emitUpdate({ account: accounts.length === 0 ? null : accounts[0] });
-  }
+      this.emit('message', { type: 'connecting' });
 
-  private handleClose(): void {
-    this.emitDeactivate();
-  }
+      const account = await this.getAccount();
+      let currentChainId = await this.getChainId();
+      let unsupported = this.isChainUnsupported(currentChainId);
+      if (chainId && currentChainId !== chainId) {
+        const chain = await this.switchChain(chainId);
+        currentChainId = chain.id;
+        unsupported = this.isChainUnsupported(currentChainId);
+      }
 
-  // eslint-disable-next-line class-methods-use-this
-  public isLedgerApp(): boolean {
-    return isLedgerDappBrowserProvider();
-  }
-
-  public async getProviderInstance(): Promise<IFrameEthereumProvider> {
-    if (this.provider) return this.provider;
-
-    // eslint-disable-next-line no-shadow
-    const { IFrameEthereumProvider } = await import(
-      '@ledgerhq/iframe-provider'
-    );
-    return new IFrameEthereumProvider(this.config);
-  }
-
-  public async activate(): Promise<ConnectorUpdate> {
-    if (!this.provider) {
-      this.provider = await this.getProviderInstance();
+      return { account, chain: { id: currentChainId, unsupported }, provider };
+    } catch (error) {
+      if (this.isUserRejectedRequestError(error))
+        throw new UserRejectedRequestError(error);
+      if ((error as RpcError).code === -32002)
+        throw new ResourceUnavailableError(error);
+      throw error;
     }
-
-    this.provider.on('networkChanged', this.handleNetworkChanged);
-    this.provider.on('chainChanged', this.handleChainChanged);
-    this.provider.on('accountsChanged', this.handleAccountsChanged);
-    this.provider.on('close', this.handleClose);
-
-    const accounts = await this.provider.enable();
-    const account = accounts[0];
-
-    return { provider: this.provider, account };
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async getProvider(): Promise<IFrameEthereumProvider | undefined> {
-    return this.provider;
+  async disconnect(): Promise<void> {
+    const provider = await this.getProvider();
+    provider.removeListener('accountsChanged', this.onAccountsChanged);
+    provider.removeListener('chainChanged', this.onChainChanged);
   }
 
-  public async getChainId(): Promise<number | string> {
-    invariant(this.provider, 'Provider is not defined');
-    return this.provider.send('eth_chainId');
+  async getAccount() {
+    const provider = await this.getProvider();
+    const accounts = await provider.send('eth_requestAccounts');
+    // return checksum address
+    return getAddress(accounts[0] as string);
   }
 
-  public async getAccount(): Promise<null | string> {
-    invariant(this.provider, 'Provider is not defined');
-
-    const accounts = await this.provider.send('eth_accounts');
-    const account = accounts[0];
-
-    return account;
+  async getChainId() {
+    const provider = await this.getProvider();
+    return provider.send('eth_chainId').then(normalizeChainId);
   }
 
-  public deactivate(): void {
-    invariant(this.provider, 'Provider is not defined');
+  getProvider() {
+    if (!this.#provider) {
+      this.#provider = new IFrameEthereumProvider(this.options);
+    }
+    return Promise.resolve(this.#provider);
+  }
 
-    this.provider.removeListener('networkChanged', this.handleNetworkChanged);
-    this.provider.removeListener('chainChanged', this.handleChainChanged);
-    this.provider.removeListener('accountsChanged', this.handleAccountsChanged);
-    this.provider.removeListener('close', this.handleClose);
+  async getSigner() {
+    const [provider, account] = await Promise.all([
+      this.getProvider(),
+      this.getAccount(),
+    ]);
+    return new Web3Provider(provider as unknown as ExternalProvider).getSigner(
+      account,
+    );
+  }
+
+  async isAuthorized() {
+    try {
+      const provider = await this.getProvider();
+      const accounts = await provider.send('eth_accounts');
+      const account = accounts[0];
+      return !!account;
+    } catch {
+      return false;
+    }
+  }
+
+  async switchChain(chainId: number): Promise<Chain> {
+    const provider = await this.getProvider();
+    const id = hexValue(chainId);
+
+    try {
+      await provider.send('wallet_switchEthereumChain', [{ chainId: id }]);
+
+      return (
+        this.chains.find((x) => x.id === chainId) ?? {
+          id: chainId,
+          name: `Chain ${id}`,
+          network: `${id}`,
+          nativeCurrency: { decimals: 18, name: 'Ether', symbol: 'ETH' },
+          rpcUrls: { default: { http: [''] }, public: { http: [''] } },
+        }
+      );
+    } catch (error) {
+      const message =
+        typeof error === 'string'
+          ? error
+          : (error as ProviderRpcError)?.message;
+      if (/user rejected request/i.test(message))
+        throw new UserRejectedRequestError(error);
+      throw new SwitchChainError(error);
+    }
+  }
+
+  protected onAccountsChanged(accounts: Address[]) {
+    if (accounts.length === 0 || !accounts[0]) {
+      this.emit('disconnect');
+    } else {
+      this.emit('change', { account: getAddress(accounts[0]) });
+    }
+  }
+
+  protected onChainChanged(chainId: number | string) {
+    const id = normalizeChainId(chainId);
+    const unsupported = this.isChainUnsupported(id);
+    this.emit('change', { chain: { id, unsupported } });
+  }
+
+  protected onDisconnect() {
+    this.emit('disconnect');
+  }
+
+  protected isUserRejectedRequestError(error: unknown) {
+    return (error as ProviderRpcError).code === 4001;
   }
 }
