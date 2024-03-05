@@ -1,6 +1,9 @@
 import { useWeb3 } from './useWeb3';
-import { useReefKnotContext } from '@reef-knot/core-react';
-import { interceptLedgerError, getUnsupportedChainError } from '../helpers';
+import {
+  useReefKnotContext,
+  getUnsupportedChainError,
+} from '@reef-knot/core-react';
+import { interceptLedgerError } from '../helpers';
 import { useConnectorInfo } from './useConnectorInfo';
 import { useSupportedChains } from './useSupportedChains';
 
