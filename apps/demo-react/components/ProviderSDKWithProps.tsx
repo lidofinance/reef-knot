@@ -35,7 +35,7 @@ export const ProviderSDKWithProps = (props: {
         wrappedProvider.pollingInterval = POLLING_INTERVAL;
         setProviderWeb3(wrappedProvider);
       }
-    });
+    })();
   }, [connector, isConnected, providerWeb3]);
 
   const supportedChainIds = supportedChains.map((chain) => chain.id);
