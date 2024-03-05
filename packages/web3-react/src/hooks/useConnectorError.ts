@@ -13,12 +13,12 @@ export const useConnectorError = (): Error | undefined => {
   const { isUnsupported } = useSupportedChains();
   const { chains: supportedChains } = useReefKnotContext();
 
-  if (!error) {
-    return;
-  }
-
   if (isUnsupported) {
     return getUnsupportedChainError(supportedChains);
+  }
+
+  if (!error) {
+    return;
   }
 
   if (isLedger) {
