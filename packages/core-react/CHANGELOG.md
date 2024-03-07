@@ -1,5 +1,16 @@
 # @reef-knot/core-react
 
+## 2.1.0
+
+### Minor Changes
+
+- 85b3f79:
+  - rework getUnsupportedChainError, hide mumbai network in the error
+  - (web3-react) fix logic of useConnectorError
+  - (web3-react) deprecate useConnectorInfo, useDisconnect
+  - (core-react) rework and add hooks: useConnectorInfo, useDisconnect, useEagerConnect
+  - (reef-knot) add connectors export as "Connectors"
+
 ## 2.0.0
 
 ### Major Changes
