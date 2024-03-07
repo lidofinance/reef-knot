@@ -16,6 +16,9 @@ type ConnectorInfo = {
   isInjected: boolean;
 };
 
+/**
+ * @deprecated use it from '@reef-knot/core-react'
+ */
 export const useConnectorInfo = (): ConnectorInfo => {
   const { isConnected, connector: wagmiConnector } = useAccount();
 

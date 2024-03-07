@@ -2,6 +2,9 @@ import { useCallback } from 'react';
 import { useAccount, useDisconnect as useDisconnectWagmi } from 'wagmi';
 import { useConnectorInfo } from './useConnectorInfo';
 
+/**
+ * @deprecated use it from '@reef-knot/core-react'
+ */
 export const useForceDisconnect = () => {
   const { disconnectAsync: wagmiDisconnect } = useDisconnectWagmi();
 
@@ -12,6 +15,9 @@ export const useForceDisconnect = () => {
   return { disconnect };
 };
 
+/**
+ * @deprecated use it from '@reef-knot/core-react'
+ */
 export const useDisconnect = (): {
   disconnect?: () => void;
 } => {
