@@ -24,14 +24,12 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isDappBrowser = !!globalThis.window?.ethereum && isMobileOrTablet;
   const isAutoConnectionSuitable = isLedgerLive || isGnosis || isDappBrowser;
 
-  const connectorName = (() => {
-    // Do not try to detect connector name if the app is opened in a mobile wallet dapp browser,
-    // because we use a generic injected connector for this case and proper detection is hard.
-    // Also, it will be easy for a user to understand which wallet app is being used for connection.
-    if (isDappBrowser) return undefined;
+  let connectorName = connector?.name;
 
-    return connector?.name;
-  })();
+  // Do not set connector's name if the app is opened in a mobile wallet dapp browser,
+  // because we use a generic injected connector for this case and proper detection is hard.
+  // Also, it will be easy for a user to understand which wallet app is being used for connection.
+  if (isDappBrowser) connectorName = undefined;
 
   return {
     connectorName,
