@@ -1,13 +1,29 @@
-import { useDisconnect, useWeb3 } from 'reef-knot/web3-react';
+import { useWeb3 } from 'reef-knot/web3-react';
+import {
+  useConnectorInfo,
+  useEagerConnect,
+  useForceDisconnect,
+} from 'reef-knot/core-react';
 import { Text, AddressBadge, Button } from '@lidofinance/lido-ui';
 import { FlexContainer } from '../styles/global';
 
 const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   const { handleOpen } = props;
-  const { disconnect } = useDisconnect();
+  const { forceDisconnect } = useForceDisconnect();
   const { account } = useWeb3();
+  const { isAutoConnectionSuitable } = useConnectorInfo();
+  const { eagerConnect } = useEagerConnect();
+
   const handleDisconnect = () => {
-    disconnect?.();
+    forceDisconnect?.();
+  };
+
+  const handleConnectStart = () => {
+    if (isAutoConnectionSuitable) {
+      void eagerConnect();
+    } else {
+      handleOpen();
+    }
   };
 
   return (
@@ -20,7 +36,7 @@ const ConnectDisconnect = (props: { handleOpen: () => void }) => {
       ) : (
         <Button
           style={{ maxWidth: '300px', alignSelf: 'center' }}
-          onClick={handleOpen}
+          onClick={handleConnectStart}
         >
           Connect Wallet
         </Button>

@@ -6,15 +6,13 @@ import { useAutoConnect } from '../hooks/useAutoConnect';
 export const AutoConnect = ({
   children,
   autoConnect,
-  walletDataList,
-  chains,
 }: {
   children: React.ReactNode;
   autoConnect: boolean;
   walletDataList: WalletAdapterData[];
   chains: Chain[];
 }) => {
-  useAutoConnect(autoConnect, walletDataList, chains);
+  useAutoConnect(autoConnect);
 
   return <>{children}</>;
 };

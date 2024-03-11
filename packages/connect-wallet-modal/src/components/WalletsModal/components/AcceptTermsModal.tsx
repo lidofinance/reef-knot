@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button, Modal } from '@reef-knot/ui-react';
 import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
-import { helpers } from '@reef-knot/web3-react';
 import { Terms, WalletModalConnectTermsProps } from '../../Terms';
 import { CommonButtonsContainer } from '../styles';
-import { useReefKnotContext } from '@reef-knot/core-react';
+import {
+  useReefKnotContext,
+  getUnsupportedChainError,
+} from '@reef-knot/core-react';
 
 export interface AcceptTermsModalProps {
   open: boolean;
@@ -37,7 +39,7 @@ export const AcceptTermsModal = ({
   const { chains: supportedChains } = useReefKnotContext();
   let errorMessage = error?.message;
   if (error && error.name == 'UnsupportedChainIdError') {
-    errorMessage = helpers.getUnsupportedChainError(supportedChains).message;
+    errorMessage = getUnsupportedChainError(supportedChains).message;
   }
 
   return (

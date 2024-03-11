@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/core-react",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -40,6 +40,7 @@
     "ua-parser-js": "1.0.33"
   },
   "devDependencies": {
+    "@reef-knot/ledger-connector": "^3.0.0",
     "@reef-knot/wallets-list": "^1.12.0",
     "@reef-knot/types": "^1.5.0",
     "@reef-knot/ui-react": "^1.0.8",
@@ -49,6 +50,7 @@
     "wagmi": "^0.12.19"
   },
   "peerDependencies": {
+    "@reef-knot/ledger-connector": "^3.0.0",
     "@reef-knot/wallets-list": "^1.4.1",
     "@reef-knot/types": "^1.2.1",
     "@reef-knot/ui-react": "^1.0.4",
