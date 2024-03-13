@@ -1,6 +1,6 @@
 import { useWeb3 } from 'reef-knot/web3-react';
 import {
-  useConnectorInfo,
+  useAutoConnectCheck,
   useEagerConnect,
   useForceDisconnect,
 } from 'reef-knot/core-react';
@@ -11,7 +11,7 @@ const ConnectDisconnect = (props: { handleOpen: () => void }) => {
   const { handleOpen } = props;
   const { forceDisconnect } = useForceDisconnect();
   const { account } = useWeb3();
-  const { isAutoConnectionSuitable } = useConnectorInfo();
+  const { isAutoConnectionSuitable } = useAutoConnectCheck();
   const { eagerConnect } = useEagerConnect();
 
   const handleDisconnect = () => {
