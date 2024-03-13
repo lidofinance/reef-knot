@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 2.1.1
+
+### Patch Changes
+
+- Fix isAutoConnectionSuitable, add a separate useAutoConnectCheck hook
+
 ## 2.1.0
 
 ### Minor Changes
