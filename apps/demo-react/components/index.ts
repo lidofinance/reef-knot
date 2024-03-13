@@ -1,11 +1,9 @@
-export { default as ConnectDisconnect } from './ConnectDisconnect';
-export { default as Header } from './Header';
-export { default as MainContainer } from './MainContainer';
-export { default as ProviderWeb3WithProps } from './ProviderWeb3WithProps';
-export { default as ThemeSelect } from './ThemeSelect';
-export { default as WalletsModal } from './WalletsModal';
-export { default as ContractTesting } from './contractTesting/index';
-export { default as MainSection } from './MainSection';
-export { default as NetworkSelector } from './NetworkSelector';
+export * from './content/content';
+export * from './layout';
 
-export * from './info';
+export * from './wallet-info';
+export * from './action';
+export * from './tokenInput';
+export * from './accordion';
+export * from './action-item';
+export * from './stats-item';

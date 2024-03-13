@@ -1,13 +1,20 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useContext } from 'react';
+import { MODAL, ModalContext } from 'providers';
 
-const useModal = () => {
-  const [state, setState] = useState(false);
-  const handleOpen = useCallback(() => setState(true), []);
-  const handleClose = useCallback(() => {
-    setState(false);
-  }, []);
-
-  return { state, handleOpen, handleClose };
+type UseModal = (modal: MODAL) => {
+  openModal: () => void;
+  closeModal: () => void;
 };
 
-export default useModal;
+export const useModal: UseModal = (modal) => {
+  const methods = useContext(ModalContext);
+
+  const openModal = useCallback(() => {
+    methods.openModal(modal);
+  }, [methods, modal]);
+
+  return {
+    openModal,
+    closeModal: methods.closeModal,
+  };
+};

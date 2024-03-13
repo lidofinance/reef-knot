@@ -1,40 +1,38 @@
-import { Block } from '@lidofinance/lido-ui';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
+  :root {
+    --header-size: 80px;
+  }
   * {
     margin: 0;
     padding: 0;
-  }
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box;
-  }
-  svg {
-    box-sizing: content-box;
   }
   html,
   body {
     width: 100%;
   }
-`;
+  body {
+    background: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+    position: relative;
+    box-sizing: border-box;
+    font-size: ${({ theme }) => theme.fontSizesMap.xs}px;
+    line-height: 1.5em;
+    font-weight: 500;
+    text-size-adjust: none;
+  }
+  a {
+    color: ${({ theme }) => theme.colors.primary};
 
-export const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-`;
+    &:hover {
+      color: ${({ theme }) => theme.colors.primaryHover};
+    }
 
-export const MainSection = styled(Block)`
-  display: flex;
-  gap: 40px;
-  padding: 0;
-
-  @media (max-width: 900px) {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    &:visited {
+      color: ${({ theme }) => theme.colors.primaryVisited};
+    }
   }
 `;
+
+export default GlobalStyle;

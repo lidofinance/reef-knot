@@ -1,64 +1,23 @@
-import dynamic from 'next/dynamic';
-import {
-  themeLight,
-  themeDark,
-  ThemeProvider,
-  ThemeName,
-  OptionValue,
-  Block,
-} from '@lidofinance/lido-ui';
-import { useState } from 'react';
-import useModal from '../hooks/useModal';
-import {
-  ProviderWeb3WithProps,
-  Header,
-  WalletInfo,
-  MainContainer,
-  ConnectDisconnect,
-  ThemeSelect,
-  WalletsModal,
-  MainSection,
-  ContractTesting,
-} from '../components';
+import Head from 'next/head';
 
-import { GlobalStyle } from '../styles/global';
+import dynamic from 'next/dynamic';
+import { WalletInfo, Content } from 'components';
+import Layout from 'components/layout';
+import { WalletTesting, Stats } from 'features';
 
 export function Web() {
-  const { state, handleClose, handleOpen } = useModal();
-  const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
-
-  const isSelectedThemeLight = selectedTheme === ThemeName.light;
-  document.documentElement.dataset.lidoTheme = isSelectedThemeLight
-    ? 'light'
-    : 'dark';
-
   return (
-    <ThemeProvider theme={isSelectedThemeLight ? themeLight : themeDark}>
-      <Block style={{ borderRadius: 'unset' }}>
-        <Header />
-        <GlobalStyle />
-        <ProviderWeb3WithProps>
-          <MainContainer>
-            <ConnectDisconnect handleOpen={handleOpen} />
-            <div style={{ display: 'flex', gap: '40px' }}>
-              <ThemeSelect
-                selectedTheme={selectedTheme}
-                handleSelect={setSelectedTheme as (e: OptionValue) => void}
-              />
-            </div>
-            <MainSection>
-              <ContractTesting />
-            </MainSection>
-            <WalletInfo />
-            <WalletsModal
-              open={state}
-              handleClose={handleClose}
-              isDarkTheme={selectedTheme === ThemeName.dark}
-            />
-          </MainContainer>
-        </ProviderWeb3WithProps>
-      </Block>
-    </ThemeProvider>
+    <>
+      <WalletInfo />
+
+      <Layout title="Reef Knot demo app" subtitle="Playground">
+        <Head>
+          <title>Lido | Reef Knot demo app</title>
+        </Head>
+        <Stats />
+        <WalletTesting />
+      </Layout>
+    </>
   );
 }
 
