@@ -1,22 +1,33 @@
+import buildDynamics from './scripts/build-dynamics.mjs';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 
-const alchemyApiKey = process.env.ALCHEMY_API_KEY;
-const analyzeBundle = process.env.ANALYZE_BUNDLE ?? false;
+buildDynamics();
+
+const ANALYZE_BUNDLE = process.env.ANALYZE_BUNDLE == 'true';
+const basePath = process.env.BASE_PATH || '';
 
 const withBundleAnalyzer = NextBundleAnalyzer({
-  enabled: analyzeBundle,
+  enabled: ANALYZE_BUNDLE,
 });
 
 export default withBundleAnalyzer({
   reactStrictMode: true,
-  basePath: process.env.BASE_PATH || '',
+  basePath,
   compiler: {
     styledComponents: {
-      ssr: true
-    }
+      ssr: true,
+    },
   },
-  publicRuntimeConfig: {
-    alchemyApiKey,
+  webpack(config) {
+    config.module.rules.push(
+      // Teach webpack to import svg and md files
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack', 'url-loader'],
+      },
+    );
+
+    return config;
   },
   async headers() {
     return [
@@ -39,5 +50,8 @@ export default withBundleAnalyzer({
         ],
       },
     ]
-  }
-})
+  },
+  serverRuntimeConfig: {
+    basePath,
+  },
+});

@@ -1,58 +1,23 @@
-import dynamic from 'next/dynamic';
-import {
-  themeLight,
-  themeDark,
-  ThemeProvider,
-  ThemeName,
-  OptionValue,
-  Block,
-} from '@lidofinance/lido-ui';
-import { useState } from 'react';
-import {
-  ConfigContextProviders,
-  Header,
-  WalletInfo,
-  MainContainer,
-  ConnectDisconnect,
-  ThemeSelect,
-  WalletsModal,
-  MainSection,
-  ContractTesting,
-} from '../components';
+import Head from 'next/head';
 
-import { GlobalStyle } from '../styles/global';
+import dynamic from 'next/dynamic';
+import { WalletInfo, Content } from 'components';
+import Layout from 'components/layout';
+import { WalletTesting, Stats } from 'features';
 
 export function Web() {
-  const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
-
-  const isSelectedThemeLight = selectedTheme === ThemeName.light;
-  document.documentElement.dataset.lidoTheme = isSelectedThemeLight
-    ? 'light'
-    : 'dark';
-
   return (
-    <ThemeProvider theme={isSelectedThemeLight ? themeLight : themeDark}>
-      <Block style={{ borderRadius: 'unset' }}>
-        <Header />
-        <GlobalStyle />
-        <ConfigContextProviders>
-          <MainContainer>
-            <ConnectDisconnect />
-            <div style={{ display: 'flex', gap: '40px' }}>
-              <ThemeSelect
-                selectedTheme={selectedTheme}
-                handleSelect={setSelectedTheme as (e: OptionValue) => void}
-              />
-            </div>
-            <MainSection>
-              <ContractTesting />
-            </MainSection>
-            <WalletInfo />
-            <WalletsModal isDarkTheme={selectedTheme === ThemeName.dark} />
-          </MainContainer>
-        </ConfigContextProviders>
-      </Block>
-    </ThemeProvider>
+    <>
+      <WalletInfo />
+
+      <Layout title="Reef Knot demo app" subtitle="Playground">
+        <Head>
+          <title>Lido | Reef Knot demo app</title>
+        </Head>
+        <Stats />
+        <WalletTesting />
+      </Layout>
+    </>
   );
 }
 
