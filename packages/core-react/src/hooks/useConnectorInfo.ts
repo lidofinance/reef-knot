@@ -12,17 +12,16 @@ type ConnectorInfo = {
   isLedger: boolean;
   isLedgerLive: boolean;
   isDappBrowser: boolean;
-  isAutoConnectionSuitable: boolean;
 };
 
 export const useConnectorInfo = (): ConnectorInfo => {
   const { connector } = useAccount();
 
+  // These checks are working only for connected wallets! There is no connector if a wallet is not connected yet.
   const isLedger = connector instanceof LedgerHIDConnector;
   const isLedgerLive = connector instanceof LedgerLiveConnector;
   const isGnosis = connector instanceof SafeConnector;
   const isDappBrowser = !!globalThis.window?.ethereum && isMobileOrTablet;
-  const isAutoConnectionSuitable = isLedgerLive || isGnosis || isDappBrowser;
 
   let connectorName = connector?.name;
 
@@ -37,6 +36,5 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isLedger,
     isLedgerLive,
     isDappBrowser,
-    isAutoConnectionSuitable,
   };
 };

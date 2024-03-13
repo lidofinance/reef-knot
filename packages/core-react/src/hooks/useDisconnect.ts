@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 import { useAccount, useDisconnect as useDisconnectWagmi } from 'wagmi';
-import { useConnectorInfo } from './useConnectorInfo';
 import { AcceptTermsModalContext } from '../context/acceptTermsModal';
+import { useAutoConnectCheck } from './useAutoConnectCheck';
 
 export const useForceDisconnect = () => {
   const { disconnect } = useDisconnectWagmi();
@@ -23,7 +23,7 @@ export const useDisconnect = (): {
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnectWagmi();
 
-  const { isAutoConnectionSuitable } = useConnectorInfo();
+  const { isAutoConnectionSuitable } = useAutoConnectCheck();
   const available = isConnected && !isAutoConnectionSuitable;
 
   return {
