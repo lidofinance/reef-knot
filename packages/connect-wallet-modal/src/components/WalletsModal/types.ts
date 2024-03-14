@@ -2,12 +2,6 @@ import React, { ReactNode } from 'react';
 import { ModalProps } from '@reef-knot/ui-react';
 import { WalletAdapterData } from '@reef-knot/types';
 
-export type RequirementsData = {
-  icon?: ReactNode;
-  title?: string;
-  text?: ReactNode;
-};
-
 export type Metrics = {
   events?: {
     connect?: { handlers: Record<`onConnect${string}`, () => void> };
@@ -35,11 +29,5 @@ export type ButtonsCommonProps = {
   onBeforeConnect?: () => void;
   onConnect?: () => void;
   shouldInvertWalletIcon: boolean;
-  setRequirements(
-    this: void,
-    isVisible: boolean,
-    requirementsData: RequirementsData,
-  ): void;
-  setLedgerScreenVisible(this: void, isVisible: boolean): void;
   metrics?: Metrics;
 };

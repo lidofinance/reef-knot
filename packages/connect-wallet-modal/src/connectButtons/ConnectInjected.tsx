@@ -11,7 +11,6 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
   const {
     onConnect,
     onBeforeConnect,
-    setRequirements,
     shouldInvertWalletIcon,
     metrics,
     walletId,
@@ -22,7 +21,6 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     connector,
     ...rest
   } = props;
-
   const walletIsDetected = !!detector?.();
   const walletIdCapitalized = capitalize(walletId);
   const metricsOnConnect =

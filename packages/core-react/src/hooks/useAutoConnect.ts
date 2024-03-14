@@ -19,11 +19,11 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
 
     // Try to eagerly connect wallets that are meant to be used only with auto-connection.
     // For example, wallets with dApp browsers, or using iframes to open dApps.
-    const { connectResult, connectError } = await eagerConnect();
+    const connectResult = await eagerConnect();
 
     // If still not connected and there were no errors and the terms of service are accepted,
     // call the default wagmi autoConnect method, which attempts to connect to the last used connector.
-    if (!connectResult && !connectError && checkTermsAccepted()) {
+    if (!connectResult && checkTermsAccepted()) {
       await client.autoConnect();
     }
   }, [autoConnectEnabled, client, eagerConnect, isConnected]);
