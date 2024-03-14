@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 3.0.0
+
+### Major Changes
+
+- Rework modals interface, add useConnect hook for connection
+
 ## 2.1.1
 
 ### Patch Changes

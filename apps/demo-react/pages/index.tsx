@@ -8,7 +8,6 @@ import {
   Block,
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
-import useModal from '../hooks/useModal';
 import {
   ProviderWeb3WithProps,
   Header,
@@ -24,7 +23,6 @@ import {
 import { GlobalStyle } from '../styles/global';
 
 export function Web() {
-  const { state, handleClose, handleOpen } = useModal();
   const [selectedTheme, setSelectedTheme] = useState('light' as ThemeName);
 
   const isSelectedThemeLight = selectedTheme === ThemeName.light;
@@ -39,7 +37,7 @@ export function Web() {
         <GlobalStyle />
         <ProviderWeb3WithProps>
           <MainContainer>
-            <ConnectDisconnect handleOpen={handleOpen} />
+            <ConnectDisconnect />
             <div style={{ display: 'flex', gap: '40px' }}>
               <ThemeSelect
                 selectedTheme={selectedTheme}
@@ -50,11 +48,7 @@ export function Web() {
               <ContractTesting />
             </MainSection>
             <WalletInfo />
-            <WalletsModal
-              open={state}
-              handleClose={handleClose}
-              isDarkTheme={selectedTheme === ThemeName.dark}
-            />
+            <WalletsModal isDarkTheme={selectedTheme === ThemeName.dark} />
           </MainContainer>
         </ProviderWeb3WithProps>
       </Block>

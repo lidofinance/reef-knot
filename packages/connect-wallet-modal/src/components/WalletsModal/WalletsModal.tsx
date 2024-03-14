@@ -1,24 +1,18 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React from 'react';
 import { Modal } from '@reef-knot/ui-react';
-import {
-  AcceptTermsModalContext,
-  LS_KEY_TERMS_ACCEPTANCE,
-} from '@reef-knot/core-react';
-import {
-  WalletsModalProps,
-  ButtonsCommonProps,
-  RequirementsData,
-} from './types';
+import { WalletsModalProps, ButtonsCommonProps } from './types';
 import { Terms, WalletModalConnectTermsProps } from '../Terms';
 import { WalletsButtonsContainer } from './styles';
-import { NOOP, useLocalStorage } from '../../helpers';
 import { LedgerModal } from '../Ledger';
-import { AcceptTermsModal } from './components';
+import { EagerConnectModal } from './components';
 import { getWalletsButtons } from './getWalletsButtons';
+import { useReefKnotModal } from '@reef-knot/core-react';
 
-export function WalletsModal(props: WalletsModalProps) {
+export function WalletsModal({
+  children,
+  ...passedDownProps
+}: React.PropsWithChildren<WalletsModalProps>) {
   const {
-    onClose,
     shouldInvertWalletIcon = false,
     buttonsFullWidth = false,
     metrics,
@@ -27,113 +21,36 @@ export function WalletsModal(props: WalletsModalProps) {
     buttonComponentsByConnectorId,
     walletDataList,
     hiddenWallets,
-  } = props;
+  } = passedDownProps;
 
-  const [termsChecked, setTermsChecked] = useLocalStorage(
-    LS_KEY_TERMS_ACCEPTANCE,
-    false,
-  );
-
-  const handleTermsToggle = useCallback(() => {
-    setTermsChecked((currentValue: boolean) => !currentValue);
-  }, [setTermsChecked]);
+  const { currentModal, closeModal, forceCloseAllModals, termsChecked } =
+    useReefKnotModal();
 
   const termsProps: WalletModalConnectTermsProps = {
-    onChange: handleTermsToggle,
-    checked: termsChecked,
     termsLink: termsLink || 'https://lido.fi/terms-of-use',
     privacyNoticeLink: privacyNoticeLink || 'https://lido.fi/privacy-notice',
     metrics,
   };
 
-  const [requirementsVisible, setRequirementsVisible] = useState(false);
-  const [requirementsData, setRequirementsData] = useState<RequirementsData>(
-    {},
-  );
+  const onCloseSuccess = () => closeModal({ success: true });
+  const onCloseReject = () => closeModal({ success: false });
+  const onExit = () => forceCloseAllModals();
 
-  const setRequirements = useCallback(
-    (isVisible: boolean, reqData: RequirementsData = {}) => {
-      setRequirementsVisible(isVisible);
-      setRequirementsData(reqData);
-    },
-    [],
-  );
-
-  // pass-into function is cheap, so we're losing performance on useCallback here
-  const hideRequirements = () => {
-    setRequirements(false);
-  };
-
-  const [ledgerScreenVisible, setLedgerScreenVisible] = useState(false);
-  const hideLedgerScreen = () => {
-    setLedgerScreenVisible(false);
-  };
-
-  const buttonsCommonProps: ButtonsCommonProps = {
-    disabled: !termsChecked,
-    onConnect: onClose,
-    shouldInvertWalletIcon,
-    setRequirements,
-    setLedgerScreenVisible,
-    metrics,
-  };
-
-  const handleClose = onClose || NOOP;
-
-  const { icon: reqIcon, title: reqTitle, text: reqText } = requirementsData;
-
-  const { acceptTermsModal } = useContext(AcceptTermsModalContext);
-
-  // do not try to render the modal in case of SSR
-  if (typeof window !== 'undefined') {
-    // A conflict is detected or some other requirement must be fulfilled to connect
-    if (requirementsVisible) {
+  switch (currentModal?.type) {
+    case 'wallet': {
+      const buttonsCommonProps: ButtonsCommonProps = {
+        disabled: !termsChecked,
+        onConnect: onCloseSuccess,
+        shouldInvertWalletIcon,
+        metrics,
+      };
       return (
         <Modal
-          {...props} // the props are overridden here on purpose
-          onClose={handleClose}
-          onBack={hideRequirements}
-          onExited={hideRequirements}
-          center
-          title={reqTitle}
-          subtitle={reqText}
-          titleIcon={reqIcon}
-        />
-      );
-    }
-
-    if (ledgerScreenVisible) {
-      return (
-        <LedgerModal
-          {...props} // the props are overridden here on purpose
-          onClose={handleClose}
-          onBack={hideLedgerScreen}
-          onExited={hideLedgerScreen}
-          metrics={buttonsCommonProps.metrics}
-        />
-      );
-    }
-
-    if (acceptTermsModal?.isVisible) {
-      return (
-        <AcceptTermsModal
+          {...passedDownProps}
           open
-          termsProps={termsProps}
-          termsChecked={termsChecked}
-          onContinue={acceptTermsModal.onContinue}
-          error={acceptTermsModal.error}
-        />
-      );
-    }
-
-    // this check prevents modal blinking
-    if (props.open) {
-      return (
-        <Modal
           title="Connect wallet"
-          {...props} // the props can be overridden by a library user
           center={false}
-          onClose={handleClose}
+          onClose={onCloseReject}
         >
           <Terms {...termsProps} />
           <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
@@ -147,7 +64,48 @@ export function WalletsModal(props: WalletsModalProps) {
         </Modal>
       );
     }
-  }
 
-  return null;
+    case 'ledger':
+      return (
+        <LedgerModal
+          {...passedDownProps} // the props are overridden here on purpose
+          open
+          onClose={onCloseSuccess}
+          onBack={onCloseReject}
+          onExited={onExit}
+          metrics={metrics}
+        />
+      );
+
+    case 'eager': {
+      const { tryConnection, initialError } = currentModal.props;
+      return (
+        <EagerConnectModal
+          tryConnection={tryConnection}
+          initialError={initialError}
+        >
+          <Terms {...termsProps} />
+        </EagerConnectModal>
+      );
+    }
+
+    case 'requirements': {
+      const { icon: titleIcon, title, text: subtitle } = currentModal.props;
+      return (
+        <Modal
+          {...passedDownProps} // the props are overridden here on purpose
+          open
+          center
+          title={title}
+          subtitle={subtitle}
+          titleIcon={titleIcon}
+          onClose={onCloseSuccess}
+          onBack={onCloseReject}
+          onExited={onExit}
+        />
+      );
+    }
+    default:
+      return null;
+  }
 }

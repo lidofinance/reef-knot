@@ -1,5 +1,18 @@
 # reef-knot
 
+## 3.0.0
+
+### Major Changes
+
+- Rework modals interface, add useConnect hook for connection
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@3.0.0
+  - @reef-knot/core-react@3.0.0
+  - @reef-knot/web3-react@3.0.0
+
 ## 2.1.1
 
 ### Patch Changes

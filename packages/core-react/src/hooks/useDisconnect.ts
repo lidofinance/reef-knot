@@ -1,18 +1,16 @@
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { useAccount, useDisconnect as useDisconnectWagmi } from 'wagmi';
-import { AcceptTermsModalContext } from '../context/acceptTermsModal';
 import { useAutoConnectCheck } from './useAutoConnectCheck';
+import { useReefKnotModal } from './useReefKnotModal';
 
 export const useForceDisconnect = () => {
   const { disconnect } = useDisconnectWagmi();
-  const {
-    acceptTermsModal: { setVisible },
-  } = useContext(AcceptTermsModalContext);
+  const { forceCloseAllModals } = useReefKnotModal();
 
   const forceDisconnect = useCallback(() => {
+    forceCloseAllModals();
     disconnect();
-    setVisible(false);
-  }, [disconnect, setVisible]);
+  }, [disconnect, forceCloseAllModals]);
 
   return { forceDisconnect };
 };

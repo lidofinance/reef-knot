@@ -10,7 +10,6 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
   const {
     onConnect,
     onBeforeConnect,
-    setRequirements,
     shouldInvertWalletIcon,
     metrics,
     walletId,

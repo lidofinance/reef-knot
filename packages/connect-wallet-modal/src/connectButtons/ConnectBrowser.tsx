@@ -5,6 +5,7 @@ import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButton } from '../components/ConnectButton';
 import { capitalize } from '../helpers';
 import { ConnectInjectedProps } from './types';
+import { useReefKnotModal } from '@reef-knot/core-react';
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -12,7 +13,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const {
     onConnect,
     onBeforeConnect,
-    setRequirements,
     shouldInvertWalletIcon,
     metrics,
     walletId,
@@ -21,6 +21,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     connector,
     ...rest
   } = props;
+  const { openModalAsync } = useReefKnotModal();
 
   const web3ProviderIsDetected = !!globalThis.window?.ethereum;
   const walletIdCapitalized = capitalize(walletId);
@@ -48,13 +49,16 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       disconnect?.();
       await connectAsync({ connector });
     } else {
-      setRequirements(true, {
-        icon: <ButtonIcon />,
-        title: 'No wallets have been detected',
-        text:
-          'This button is intended for generic connection of browser extension wallets,' +
-          ' but no default injected web3 provider has been detected.' +
-          ' Please install a suitable browser extension wallet or ensure that it is enabled, and reload the page.',
+      await openModalAsync({
+        type: 'requirements',
+        props: {
+          icon: <ButtonIcon />,
+          title: 'No wallets have been detected',
+          text:
+            'This button is intended for generic connection of browser extension wallets,' +
+            ' but no default injected web3 provider has been detected.' +
+            ' Please install a suitable browser extension wallet or ensure that it is enabled, and reload the page.',
+        },
       });
     }
   }, [
@@ -64,7 +68,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     disconnect,
     metricsOnClick,
     onBeforeConnect,
-    setRequirements,
+    openModalAsync,
     web3ProviderIsDetected,
   ]);
 

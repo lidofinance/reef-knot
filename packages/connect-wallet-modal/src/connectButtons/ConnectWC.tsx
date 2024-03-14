@@ -24,7 +24,6 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const {
     onConnect,
     onBeforeConnect,
-    setRequirements,
     shouldInvertWalletIcon,
     metrics,
     walletId,
