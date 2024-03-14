@@ -58,7 +58,7 @@ export const EagerConnectModal = ({
         <Button
           fullwidth
           disabled={!termsChecked}
-          onClick={() => handleClick()}
+          onClick={() => void handleClick()}
         >
           Connect
         </Button>
