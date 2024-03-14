@@ -9,7 +9,7 @@ import {
 import { useReefKnotModal } from '@reef-knot/core-react';
 
 export type AcceptTermsModalProps = React.PropsWithChildren<{
-  tryConnecting: () => Promise<any>;
+  tryConnection: () => Promise<any>;
   initialError: Error | undefined;
 }>;
 
@@ -27,7 +27,7 @@ const ErrorBlock = styled.div`
 `;
 
 export const EagerConnectModal = ({
-  tryConnecting,
+  tryConnection,
   initialError,
   children,
 }: AcceptTermsModalProps) => {
@@ -38,7 +38,7 @@ export const EagerConnectModal = ({
 
   const handleClick = async () => {
     try {
-      await tryConnecting();
+      await tryConnection();
       closeModal({ success: true });
     } catch (e) {
       setError(e as Error);
@@ -55,7 +55,7 @@ export const EagerConnectModal = ({
       {children}
       {error && <ErrorBlock> {errorMessage} </ErrorBlock>}
       <CommonButtonsContainer>
-        <Button fullwidth disabled={!termsChecked} onClick={handleClick}>
+        <Button fullwidth disabled={!termsChecked} onClick={() => handleClick}>
           Connect
         </Button>
       </CommonButtonsContainer>

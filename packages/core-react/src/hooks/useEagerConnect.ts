@@ -8,7 +8,7 @@ import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
 import { ReefKnotModalContextValue, useReefKnotModal } from '../context';
 
-const tryConnecting = async (
+const connectToAdapter = async (
   connector: Connector,
   supportedChains: Chain[],
 ) => {
@@ -49,7 +49,7 @@ export const connectEagerly = async (
       // wallet is detected
       let connectionResult: ConnectResult | null = null;
       const tryConnection = () =>
-        tryConnecting(adapter.connector, supportedChains).then((result) => {
+        connectToAdapter(adapter.connector, supportedChains).then((result) => {
           connectionResult = result;
           return result;
         });

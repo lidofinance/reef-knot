@@ -21,7 +21,7 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
     onClickLedger?.();
 
     return openModalAsync({ type: 'ledger' });
-  }, [onBeforeConnect, onClickLedger]);
+  }, [onBeforeConnect, onClickLedger, openModalAsync]);
 
   return (
     <ConnectButton

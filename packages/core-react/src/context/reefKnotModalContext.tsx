@@ -125,7 +125,7 @@ export const ReefKnotModalContextProvider = ({
       setTermsChecked,
       ...stableCallbacks,
     }),
-    [stableCallbacks, termsChecked, modalStack],
+    [stableCallbacks, termsChecked, modalStack, setTermsChecked],
   );
   return (
     <ReefKnotModalContext.Provider value={contextValue}>

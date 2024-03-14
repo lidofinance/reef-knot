@@ -32,25 +32,25 @@ export function WalletsModal({
     metrics,
   };
 
-  const handleCloseSuccess = () => closeModal({ success: true });
-  const handleCloseReject = () => closeModal({ success: false });
-  const handleExit = () => forceCloseAllModals();
+  const onCloseSuccess = () => closeModal({ success: true });
+  const onCloseReject = () => closeModal({ success: false });
+  const onExit = () => forceCloseAllModals();
 
   switch (currentModal?.type) {
     case 'wallet': {
       const buttonsCommonProps: ButtonsCommonProps = {
         disabled: !termsChecked,
-        onConnect: handleCloseSuccess,
+        onConnect: onCloseSuccess,
         shouldInvertWalletIcon,
         metrics,
       };
       return (
         <Modal
-          {...passedDownProps} // the props can be overridden by a library user
+          {...passedDownProps}
           open
           title="Connect wallet"
           center={false}
-          onClose={handleCloseReject}
+          onClose={onCloseReject}
         >
           <Terms {...termsProps} />
           <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
@@ -70,22 +70,24 @@ export function WalletsModal({
         <LedgerModal
           {...passedDownProps} // the props are overridden here on purpose
           open
-          onClose={handleCloseSuccess}
-          onBack={handleCloseReject}
-          onExited={handleExit}
+          onClose={onCloseSuccess}
+          onBack={onCloseReject}
+          onExited={onExit}
           metrics={metrics}
         />
       );
 
-    case 'eager':
+    case 'eager': {
+      const { tryConnection, initialError } = currentModal.props;
       return (
         <EagerConnectModal
-          tryConnecting={currentModal.props.tryConnection}
-          initialError={currentModal.props.initialError}
+          tryConnection={tryConnection}
+          initialError={initialError}
         >
           <Terms {...termsProps} />
         </EagerConnectModal>
       );
+    }
 
     case 'requirements': {
       const { icon: titleIcon, title, text: subtitle } = currentModal.props;
@@ -97,9 +99,9 @@ export function WalletsModal({
           title={title}
           subtitle={subtitle}
           titleIcon={titleIcon}
-          onClose={handleCloseSuccess}
-          onBack={handleCloseReject}
-          onExited={handleExit}
+          onClose={onCloseSuccess}
+          onBack={onCloseReject}
+          onExited={onExit}
         />
       );
     }

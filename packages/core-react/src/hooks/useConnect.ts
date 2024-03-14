@@ -10,11 +10,11 @@ export const useConnect = () => {
 
   const connect = useCallback(async () => {
     if (isAutoConnectionSuitable) {
-      const result = eagerConnect();
+      const result = await eagerConnect();
       return { success: !!result };
     } else {
       return openModalAsync({ type: 'wallet' });
     }
-  }, [eagerConnect, openModalAsync]);
+  }, [eagerConnect, openModalAsync, isAutoConnectionSuitable]);
   return { connect };
 };

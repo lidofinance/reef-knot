@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ComponentType } from 'react';
 import { ModalProps } from '@reef-knot/ui-react';
 import { WalletAdapterData } from '@reef-knot/types';
 
@@ -10,7 +10,7 @@ export type Metrics = {
 };
 
 export type ButtonComponentsByConnectorId = {
-  [K: string]: React.ComponentType;
+  [K: string]: ComponentType;
 };
 
 export type WalletsModalProps = ModalProps & {
