@@ -23,7 +23,8 @@ export function WalletsModal({
     hiddenWallets,
   } = passedDownProps;
 
-  const { currentModal, closeModal, termsChecked } = useReefKnotModal();
+  const { currentModal, closeModal, forceCloseAllModals, termsChecked } =
+    useReefKnotModal();
 
   const termsProps: WalletModalConnectTermsProps = {
     termsLink: termsLink || 'https://lido.fi/terms-of-use',
@@ -33,6 +34,7 @@ export function WalletsModal({
 
   const handleCloseSuccess = () => closeModal({ success: true });
   const handleCloseReject = () => closeModal({ success: false });
+  const handleExit = () => forceCloseAllModals();
 
   switch (currentModal?.type) {
     case 'wallet': {
@@ -70,7 +72,7 @@ export function WalletsModal({
           open
           onClose={handleCloseSuccess}
           onBack={handleCloseReject}
-          onExited={handleCloseReject}
+          onExited={handleExit}
           metrics={metrics}
         />
       );
@@ -97,7 +99,7 @@ export function WalletsModal({
           titleIcon={titleIcon}
           onClose={handleCloseSuccess}
           onBack={handleCloseReject}
-          onExited={handleCloseReject}
+          onExited={handleExit}
         />
       );
     }
