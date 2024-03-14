@@ -55,7 +55,11 @@ export const EagerConnectModal = ({
       {children}
       {error && <ErrorBlock> {errorMessage} </ErrorBlock>}
       <CommonButtonsContainer>
-        <Button fullwidth disabled={!termsChecked} onClick={() => handleClick}>
+        <Button
+          fullwidth
+          disabled={!termsChecked}
+          onClick={() => handleClick()}
+        >
           Connect
         </Button>
       </CommonButtonsContainer>
