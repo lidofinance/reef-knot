@@ -68,7 +68,7 @@ ReefKnotModalContext.displayName = 'ReefKnotModalContext';
 export const useReefKnotModal = () => {
   const value = useContext(ReefKnotModalContext);
   if (!value)
-    throw new Error('useReefKnotModal was called outside ReefKnotModalContext');
+    throw new Error('useReefKnotModal was called outside of the ReefKnotModalContext');
   return value;
 };
 
