@@ -6,7 +6,8 @@ import { WalletAdapterData } from '@reef-knot/types';
 import { getUnsupportedChainError } from '../helpers/getUnsupportedChainError';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
-import { ReefKnotModalContextValue, useReefKnotModal } from '../context';
+import { ReefKnotModalContextValue } from '../context';
+import { useReefKnotModal } from './useReefKnotModal';
 
 const connectToAdapter = async (
   connector: Connector,

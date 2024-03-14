@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
 import { useAccount, useDisconnect as useDisconnectWagmi } from 'wagmi';
 import { useAutoConnectCheck } from './useAutoConnectCheck';
-
-import { useReefKnotModal } from '../context';
+import { useReefKnotModal } from './useReefKnotModal';
 
 export const useForceDisconnect = () => {
   const { disconnect } = useDisconnectWagmi();

@@ -5,3 +5,4 @@ export * from './useEagerConnect';
 export * from './useDisconnect';
 export * from './useConnectorInfo';
 export * from './useConnect';
+export * from './useReefKnotModal';

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useReefKnotModal } from '../context';
 import { useAutoConnectCheck } from './useAutoConnectCheck';
 import { useEagerConnect } from './useEagerConnect';
+import { useReefKnotModal } from './useReefKnotModal';
 
 export const useConnect = () => {
   const { openModalAsync } = useReefKnotModal();

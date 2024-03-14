@@ -60,17 +60,9 @@ export type ReefKnotModalContextValue = {
 
 const NOOP = () => {};
 
-const ReefKnotModalContext = createContext<ReefKnotModalContextValue | null>(
-  null,
-);
+export const ReefKnotModalContext =
+  createContext<ReefKnotModalContextValue | null>(null);
 ReefKnotModalContext.displayName = 'ReefKnotModalContext';
-
-export const useReefKnotModal = () => {
-  const value = useContext(ReefKnotModalContext);
-  if (!value)
-    throw new Error('useReefKnotModal was called outside of the ReefKnotModalContext');
-  return value;
-};
 
 export const ReefKnotModalContextProvider = ({
   children,
