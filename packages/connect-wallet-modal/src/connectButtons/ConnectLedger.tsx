@@ -16,11 +16,11 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   const { openModalAsync } = useReefKnotModal();
   const onClickLedger = metrics?.events?.click?.handlers.onClickLedger;
 
-  const handleConnect = useCallback(() => {
+  const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
     onClickLedger?.();
-
-    return openModalAsync({ type: 'ledger' });
+    const result = await openModalAsync({ type: 'ledger' });
+    if (result.success) onConnect?.();
   }, [onBeforeConnect, onClickLedger, openModalAsync]);
 
   return (
