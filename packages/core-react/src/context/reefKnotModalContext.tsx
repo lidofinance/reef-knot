@@ -83,14 +83,14 @@ export const ReefKnotModalContextProvider = ({
   const stableCallbacks = useMemo(
     () => ({
       openModal: ({ onClose = NOOP, ...props }: ModalOpenParams) => {
-        updateModalStack((old) => [{ ...props, onClose }, ...old]);
+        updateModalStack((old) => [...old, { ...props, onClose }]);
       },
       openModalAsync: async ({ type, props }: AsyncModalOpenParams) => {
         return new Promise<ModalResult>((resolve) => {
           updateModalStack((old) => [
             // for some reason TS cannot match type and props here
-            { type, props: props as any, onClose: resolve },
             ...old,
+            { type, props: props as any, onClose: resolve },
           ]);
         });
       },
@@ -118,7 +118,9 @@ export const ReefKnotModalContextProvider = ({
   const contextValue = useMemo(
     () => ({
       modalStack,
-      currentModal: modalStack[0] as ModalStateEntry | undefined,
+      currentModal: modalStack[modalStack.length - 1] as
+        | ModalStateEntry
+        | undefined,
       termsChecked,
       setTermsChecked,
       ...stableCallbacks,
