@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 3.0.1
+
+### Patch Changes
+
+- fix Connect wallet button in EagerConnectModal
+
 ## 3.0.0
 
 ### Major Changes
