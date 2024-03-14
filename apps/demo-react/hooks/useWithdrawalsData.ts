@@ -268,8 +268,8 @@ export const useWithdrawalRequestMethods = () => {
           ? steth
           : permitSteth
         : isAllowance
-        ? wstETH
-        : permitWsteth;
+          ? wstETH
+          : permitWsteth;
     },
     [permitSteth, permitWsteth, steth, wstETH],
   );
@@ -386,10 +386,10 @@ export const useWithdrawals = () => {
   const withdrawalsStatus = isPaused
     ? 'error'
     : isBunker
-    ? 'warning'
-    : isTurbo
-    ? 'success'
-    : 'error';
+      ? 'warning'
+      : isTurbo
+        ? 'success'
+        : 'error';
   return {
     isClaimTab: true,
     withdrawalsStatus,

@@ -1,10 +1,4 @@
-import React, {
-  ReactNode,
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import React, { ReactNode, createContext, useMemo, useState } from 'react';
 import { useLocalStorage } from '../helpers/useLocalStorage';
 import { LS_KEY_TERMS_ACCEPTANCE } from '../constants';
 
