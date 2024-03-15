@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 3.0.2
+
+### Patch Changes
+
+- 8873ffb: fixed leger modal not closing main modal
+
 ## 3.0.1
 
 ### Patch Changes
