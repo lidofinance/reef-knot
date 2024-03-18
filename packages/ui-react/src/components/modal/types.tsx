@@ -25,6 +25,8 @@ export type ModalProps = {
   extra?: React.ReactNode;
   center?: boolean;
   open?: boolean;
+  omitContentStyle?: boolean;
+  widthClamp?: number;
 } & Omit<ModalOverlayProps, 'title' | 'in'>;
 
 export type ModalExtraProps = CommonComponentProps<'div'>;

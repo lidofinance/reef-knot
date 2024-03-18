@@ -5,6 +5,7 @@ import { ButtonsCommonProps } from '../components';
 export type ConnectButtonProps = {
   icon: WalletAdapterData['icon'];
   shouldInvertWalletIcon?: boolean;
+  isCompact?: boolean;
 } & ButtonProps;
 
 export type ConnectWalletProps = ButtonsCommonProps & ButtonProps;

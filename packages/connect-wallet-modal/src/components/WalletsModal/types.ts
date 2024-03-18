@@ -10,7 +10,7 @@ export type Metrics = {
 };
 
 export type ButtonComponentsByConnectorId = {
-  [K: string]: ComponentType;
+  [K: string]: ComponentType<ButtonsCommonProps>;
 };
 
 export type WalletsModalProps = ModalProps & {
@@ -30,4 +30,5 @@ export type ButtonsCommonProps = {
   onConnect?: () => void;
   shouldInvertWalletIcon: boolean;
   metrics?: Metrics;
+  isCompact?: boolean;
 };

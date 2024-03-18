@@ -5,13 +5,21 @@ import { ButtonIcon } from '../button';
 
 const MAX_INNER_WIDTH = 600;
 
-export const ModalStyle = styled.div<{ $center: boolean }>`
+export const ModalStyle = styled.div<{ $center: boolean; $width?: number }>`
   ${({
     theme: { fontSizesMap, borderRadiusesMap, colors, boxShadows },
     $center,
+    $width,
   }) => css`
-    width: 100%;
-    min-width: 280px;
+    ${$width
+      ? css`
+          width: ${$width}px;
+          max-width: 100%;
+        `
+      : css`
+          width: 100%;
+          min-width: 280px;
+        `}
     font-weight: 400;
     font-size: ${fontSizesMap.xs}px;
     line-height: 1.5em;

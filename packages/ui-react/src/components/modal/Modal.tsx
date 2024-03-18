@@ -24,6 +24,8 @@ function Modal(props: ModalProps, ref?: ForwardedRef<HTMLDivElement>) {
     center = false,
     extra,
     open,
+    widthClamp,
+    omitContentStyle,
     ...rest
   } = props;
   const { onClose, onBack } = props;
@@ -55,11 +57,15 @@ function Modal(props: ModalProps, ref?: ForwardedRef<HTMLDivElement>) {
 
   return (
     <ModalOverlay in={open} {...rest} ref={ref}>
-      <ModalStyle $center={center}>
+      <ModalStyle $center={center} $width={widthClamp}>
         <ModalBaseStyle>
           {modalHeader}
           {withSubtitle && <ModalSubtitleStyle>{subtitle}</ModalSubtitleStyle>}
-          <ModalContentStyle>{children}</ModalContentStyle>
+          {omitContentStyle ? (
+            children
+          ) : (
+            <ModalContentStyle>{children}</ModalContentStyle>
+          )}
         </ModalBaseStyle>
         {extra}
       </ModalStyle>
