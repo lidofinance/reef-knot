@@ -13,6 +13,11 @@ export type ButtonComponentsByConnectorId = {
   [K: string]: ComponentType<ButtonsCommonProps>;
 };
 
+export type WalletsDisplayPriorityConfig = {
+  promoted: string[];
+  default: string[];
+};
+
 export type WalletsModalProps = ModalProps & {
   buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
   walletDataList: WalletAdapterData[];
@@ -22,6 +27,8 @@ export type WalletsModalProps = ModalProps & {
   metrics?: Metrics;
   termsLink?: string;
   privacyNoticeLink?: string;
+  walletsDisplayPriority: WalletsDisplayPriorityConfig;
+  walletsDisplayInitialCount?: number;
 };
 
 export type ButtonsCommonProps = {

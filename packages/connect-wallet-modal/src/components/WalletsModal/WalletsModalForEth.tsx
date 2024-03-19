@@ -8,7 +8,11 @@ import {
   ConnectBrowser,
 } from '../../connectButtons';
 import { WalletsModal } from './WalletsModal';
-import type { ButtonComponentsByConnectorId, WalletsModalProps } from './types';
+import type {
+  ButtonComponentsByConnectorId,
+  WalletsDisplayPriorityConfig,
+  WalletsModalProps,
+} from './types';
 
 const buttonComponentsByConnectorId: ButtonComponentsByConnectorId = {
   default: ConnectInjected, // fallback
@@ -18,10 +22,33 @@ const buttonComponentsByConnectorId: ButtonComponentsByConnectorId = {
   ledgerHID: ConnectLedger,
 };
 
+const walletsDisplayPriorityDefault: WalletsDisplayPriorityConfig = {
+  promoted: ['okx', 'browserExtension'],
+  default: [
+    'metamask',
+    'ledgerHID',
+    'ledgerLive',
+    'walletconnect',
+    'coinbase',
+    'trust',
+    'exodus',
+    'brave',
+    'bitkeep',
+    'xdefi',
+    'imToken',
+    'coin98',
+    'ambire',
+    'safe',
+    'dAppBrowserInjected',
+  ],
+};
+
 type WalletsModalForEthProps = Omit<
   WalletsModalProps,
-  'buttonComponentsByConnectorId' | 'walletDataList'
->;
+  'buttonComponentsByConnectorId' | 'walletDataList' | 'walletsDisplayPriority'
+> & {
+  walletsDisplayPriority?: WalletsDisplayPriorityConfig;
+};
 
 export function WalletsModalForEth(props: WalletsModalForEthProps) {
   const { walletDataList } = useReefKnotContext();
@@ -30,6 +57,9 @@ export function WalletsModalForEth(props: WalletsModalForEthProps) {
     <WalletsModal
       {...props}
       walletDataList={walletDataList}
+      walletsDisplayPriority={
+        props.walletsDisplayPriority || walletsDisplayPriorityDefault
+      }
       buttonComponentsByConnectorId={buttonComponentsByConnectorId}
     />
   );

@@ -28,7 +28,7 @@ import {
   IconInputClear,
 } from './styles';
 
-import { getWalletsList } from './getWalletsList';
+import { sortWalletsList } from './sortWalletsList';
 
 type ConnectWalletModalProps = WalletsModalProps & {
   onCloseSuccess?: () => void;
@@ -49,6 +49,8 @@ export const ConnectWalletModal = ({
     buttonComponentsByConnectorId,
     walletDataList,
     hiddenWallets,
+    walletsDisplayPriority,
+    walletsDisplayInitialCount = 6,
   } = passedDownProps;
 
   const { termsChecked } = useReefKnotModal();
@@ -58,15 +60,16 @@ export const ConnectWalletModal = ({
   const [isShownOtherWallets, setShowOtherWallets] = useState(false);
 
   const walletsListFull = useMemo(() => {
-    return getWalletsList({
+    return sortWalletsList({
       hiddenWallets,
       walletDataList,
+      walletsDisplayPriority,
     });
-  }, [hiddenWallets, walletDataList]);
+  }, [hiddenWallets, walletDataList, walletsDisplayPriority]);
 
   const walletsList = useMemo(() => {
     if (!isShownOtherWallets) {
-      return walletsListFull.slice(0, 6);
+      return walletsListFull.slice(0, walletsDisplayInitialCount);
     }
 
     if (inputValue) {
@@ -76,7 +79,12 @@ export const ConnectWalletModal = ({
     }
 
     return walletsListFull;
-  }, [inputValue, walletsListFull, isShownOtherWallets]);
+  }, [
+    inputValue,
+    walletsListFull,
+    isShownOtherWallets,
+    walletsDisplayInitialCount,
+  ]);
 
   useEffect(() => {
     if (isShownOtherWallets) {
@@ -170,12 +178,14 @@ export const ConnectWalletModal = ({
         )}
       </WalletsButtonsScrollBox>
 
-      <MoreWalletsToggleButton onClick={handleToggleWalletsList}>
-        <IconMoreWallets />
-        <MoreWalletsText>
-          {isShownOtherWallets ? 'Hide wallets' : 'Other wallets'}
-        </MoreWalletsText>
-      </MoreWalletsToggleButton>
+      {(walletsListFull.length > walletsList.length || isShownOtherWallets) && (
+        <MoreWalletsToggleButton onClick={handleToggleWalletsList}>
+          <IconMoreWallets />
+          <MoreWalletsText>
+            {isShownOtherWallets ? 'Hide wallets' : 'Other wallets'}
+          </MoreWalletsText>
+        </MoreWalletsToggleButton>
+      )}
     </Modal>
   );
 };
