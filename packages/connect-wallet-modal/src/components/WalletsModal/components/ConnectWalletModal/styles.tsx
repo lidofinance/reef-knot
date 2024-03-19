@@ -111,8 +111,18 @@ export const MoreWalletsToggleButton = styled.button`
       display: block;
     }
 
-    &:focus,
     &:hover {
+      outline: none;
+      background-color: ${theme.colors.background};
+    }
+
+    /** prevents after-mouse-click focus */
+    &:focus:not(:focus-visible) {
+      outline: none;
+      background-color: none;
+    }
+
+    &:focus:focus-visible {
       outline: none;
       background-color: ${theme.colors.background};
     }
