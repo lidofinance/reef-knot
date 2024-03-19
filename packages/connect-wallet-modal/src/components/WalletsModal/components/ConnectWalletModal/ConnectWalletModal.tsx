@@ -51,6 +51,7 @@ export const ConnectWalletModal = ({
     hiddenWallets,
     walletsDisplayPriority,
     walletsDisplayInitialCount = 6,
+    linkDontHaveWallet,
   } = passedDownProps;
 
   const { termsChecked } = useReefKnotModal();
@@ -122,7 +123,10 @@ export const ConnectWalletModal = ({
       <ContentHeader>
         <Terms {...termsProps} />
         <Subtitle>
-          Choose wallet <Link href="#">I don't have a wallet</Link>
+          Choose wallet{' '}
+          {linkDontHaveWallet && (
+            <Link href={linkDontHaveWallet}>I don't have a wallet</Link>
+          )}
         </Subtitle>
         {isShownOtherWallets && (
           <WalletInput

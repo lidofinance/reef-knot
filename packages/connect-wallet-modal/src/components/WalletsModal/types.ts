@@ -29,6 +29,7 @@ export type WalletsModalProps = ModalProps & {
   privacyNoticeLink?: string;
   walletsDisplayPriority: WalletsDisplayPriorityConfig;
   walletsDisplayInitialCount?: number;
+  linkDontHaveWallet?: string;
 };
 
 export type ButtonsCommonProps = {
