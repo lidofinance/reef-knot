@@ -1,6 +1,6 @@
-import { ComponentType } from 'react';
-import { ModalProps } from '@reef-knot/ui-react';
-import { WalletAdapterData } from '@reef-knot/types';
+import type { ComponentType } from 'react';
+import type { ModalProps } from '@reef-knot/ui-react';
+import type { WalletAdapterData } from '@reef-knot/types';
 
 export type Metrics = {
   events?: {
@@ -9,25 +9,20 @@ export type Metrics = {
   };
 };
 
-export type ButtonComponentsByConnectorId = {
-  [K: string]: ComponentType<ButtonsCommonProps>;
+export type ButtonComponentsByConnectorId<I extends string> = {
+  [K in I | 'default']?: ComponentType<ButtonsCommonProps>;
 };
 
-export type WalletsDisplayPriorityConfig = {
-  promoted: string[];
-  default: string[];
-};
-
-export type WalletsModalProps = ModalProps & {
-  buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
+export type WalletsModalProps<I extends string = string> = ModalProps & {
+  buttonComponentsByConnectorId: ButtonComponentsByConnectorId<I>;
   walletDataList: WalletAdapterData[];
-  hiddenWallets?: string[];
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
   metrics?: Metrics;
   termsLink?: string;
   privacyNoticeLink?: string;
-  walletsDisplayPriority: WalletsDisplayPriorityConfig;
+  walletsDisplayConfig: I[];
+  walletsPinnedConfig: I[];
   walletsDisplayInitialCount?: number;
   linkDontHaveWallet?: string;
 };

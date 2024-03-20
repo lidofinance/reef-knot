@@ -12,9 +12,12 @@ declare global {
   }
 }
 
+export const id = 'exodus';
+export const name = 'Exodus';
+
 export class ExodusConnector extends InjectedConnector {
-  readonly id = 'exodus';
-  readonly name = 'Exodus';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -27,8 +30,8 @@ export class ExodusConnector extends InjectedConnector {
 }
 
 export const Exodus: WalletAdapterType = ({ chains }) => ({
-  walletName: 'Exodus',
-  walletId: 'exodus',
+  walletName: name,
+  walletId: id,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.exodus || !!globalThis.window?.ethereum?.isExodus,

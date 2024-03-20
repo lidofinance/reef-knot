@@ -12,6 +12,7 @@ export default function WalletsModal(props: { isDarkTheme: boolean }) {
       metrics={metrics}
       shouldInvertWalletIcon={isDarkTheme}
       linkDontHaveWallet={LINK_DONT_HAVE_WALLET_DEFAULT}
+      walletsPinnedConfig={['okx', 'browserExtension']}
     />
   );
 }

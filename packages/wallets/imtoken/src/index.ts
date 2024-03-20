@@ -9,9 +9,12 @@ declare module '@wagmi/core' {
   }
 }
 
+export const id = 'imToken';
+export const name = 'imToken';
+
 export class ImTokenConnector extends InjectedConnector {
-  readonly id = 'imToken';
-  readonly name = 'imToken';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -23,8 +26,8 @@ export class ImTokenConnector extends InjectedConnector {
 }
 
 export const ImToken: WalletAdapterType = ({ chains }) => ({
-  walletName: 'imToken',
-  walletId: 'imToken',
+  walletName: name,
+  walletId: id,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.ethereum?.isImToken,
   downloadURLs: {

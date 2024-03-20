@@ -17,9 +17,12 @@ declare global {
   }
 }
 
+export const id = 'coin98';
+export const name = 'Coin98';
+
 export class Coin98Connector extends InjectedConnector {
-  readonly id = 'coin98';
-  readonly name = 'Coin98';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -32,8 +35,8 @@ export class Coin98Connector extends InjectedConnector {
 }
 
 export const Coin98: WalletAdapterType = ({ chains }) => ({
-  walletName: 'Coin98',
-  walletId: 'coin98',
+  walletName: name,
+  walletId: id,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.coin98?.provider ||

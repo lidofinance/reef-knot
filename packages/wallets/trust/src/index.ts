@@ -9,9 +9,12 @@ declare module '@wagmi/core' {
   }
 }
 
+export const id = 'trust';
+export const name = 'Trust';
+
 export class TrustConnector extends InjectedConnector {
-  readonly id = 'trust';
-  readonly name = 'Trust';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -23,8 +26,8 @@ export class TrustConnector extends InjectedConnector {
 }
 
 export const Trust: WalletAdapterType = ({ chains }) => ({
-  walletName: 'Trust',
-  walletId: 'trust',
+  walletName: name,
+  walletId: id,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.ethereum?.isTrust,
   downloadURLs: {

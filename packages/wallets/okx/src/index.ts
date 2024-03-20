@@ -16,9 +16,12 @@ declare global {
   }
 }
 
+export const id = 'okx';
+export const name = 'OKX Wallet';
+
 export class OkxConnector extends InjectedConnector {
-  readonly id = 'okx';
-  readonly name = 'OKX Wallet';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -31,8 +34,8 @@ export class OkxConnector extends InjectedConnector {
 }
 
 export const Okx: WalletAdapterType = ({ chains }) => ({
-  walletName: 'OKX Wallet',
-  walletId: 'okx',
+  walletName: name,
+  walletId: id,
   icon: {
     light: WalletIcon,
     dark: WalletIconInverted,

@@ -43,11 +43,26 @@ Use it like this:
 <WalletsModalForEth {...props} />
 ```
 
-#### How to hide a wallet
-You can hide one or several wallet connection buttons from the list of wallets in the modal.  
-Use the `hiddenWallets` property like this:
+#### How to configure the wallets list
+You can control displayed wallet connection buttons from the list of wallets in the modal.
+Wallets will be displayed in the specified sequence.
+Use the `walletsDisplayConfig` property like this:
 ```tsx
 <WalletsModalForEth
-  hiddenWallets={['Metamask']}
+  walletsDisplayConfig={[
+    'metamask',
+    'walletconnect',
+    'brave',
+    'dappBrowserInjected',
+  ]}
+/>
+```
+
+#### How to pin certain wallet at top of the list
+You can pin certain wallets to display it at the top of the list.
+Use the `walletsPinnedConfig` property like this:
+```tsx
+<WalletsModalForEth
+  walletsPinnedConfig={['dappBrowserInjected']}
 />
 ```

@@ -8,46 +8,53 @@ import {
   ConnectBrowser,
 } from '../../connectButtons';
 import { WalletsModal } from './WalletsModal';
-import type {
-  ButtonComponentsByConnectorId,
-  WalletsDisplayPriorityConfig,
-  WalletsModalProps,
-} from './types';
+import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
+import type { WalletsModalProps } from './types';
 
-const buttonComponentsByConnectorId: ButtonComponentsByConnectorId = {
-  default: ConnectInjected, // fallback
-  browserExtension: ConnectBrowser,
-  walletConnect: ConnectWC,
-  coinbaseWallet: ConnectCoinbase,
-  ledgerHID: ConnectLedger,
-};
+type WalletsModalEthProps = WalletsModalProps<WalletIdsEthereum>;
 
-const walletsDisplayPriorityDefault: WalletsDisplayPriorityConfig = {
-  promoted: ['okx', 'browserExtension'],
-  default: [
+const buttonComponentsByConnectorId: WalletsModalEthProps['buttonComponentsByConnectorId'] =
+  {
+    default: ConnectInjected, // fallback
+    browserExtension: ConnectBrowser,
+    walletconnect: ConnectWC,
+    coinbase: ConnectCoinbase,
+    ledgerHID: ConnectLedger,
+  };
+
+const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsDisplayConfig'] =
+  [
+    'browserExtension',
     'metamask',
     'ledgerHID',
     'ledgerLive',
     'walletconnect',
     'coinbase',
     'trust',
+    'okx',
     'exodus',
     'brave',
-    'bitkeep',
+    'bitget',
     'xdefi',
     'imToken',
     'coin98',
     'ambire',
     'safe',
-    'dAppBrowserInjected',
-  ],
-};
+    'dappBrowserInjected',
+  ];
+
+const WALLETS_PINNED_CONFIG_DEFAULT: WalletsModalEthProps['walletsPinnedConfig'] =
+  ['browserExtension'];
 
 type WalletsModalForEthProps = Omit<
-  WalletsModalProps,
-  'buttonComponentsByConnectorId' | 'walletDataList' | 'walletsDisplayPriority'
+  WalletsModalEthProps,
+  | 'buttonComponentsByConnectorId'
+  | 'walletDataList'
+  | 'walletsDisplayConfig'
+  | 'walletsPinnedConfig'
 > & {
-  walletsDisplayPriority?: WalletsDisplayPriorityConfig;
+  walletsDisplayConfig?: WalletsModalEthProps['walletsDisplayConfig'];
+  walletsPinnedConfig?: WalletsModalEthProps['walletsPinnedConfig'];
 };
 
 export function WalletsModalForEth(props: WalletsModalForEthProps) {
@@ -57,8 +64,11 @@ export function WalletsModalForEth(props: WalletsModalForEthProps) {
     <WalletsModal
       {...props}
       walletDataList={walletDataList}
-      walletsDisplayPriority={
-        props.walletsDisplayPriority || walletsDisplayPriorityDefault
+      walletsDisplayConfig={
+        props.walletsDisplayConfig || WALLETS_DISPLAY_CONFIG_DEFAULT
+      }
+      walletsPinnedConfig={
+        props.walletsPinnedConfig || WALLETS_PINNED_CONFIG_DEFAULT
       }
       buttonComponentsByConnectorId={buttonComponentsByConnectorId}
     />
