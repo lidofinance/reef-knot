@@ -164,7 +164,7 @@ export const ConnectWalletModal = ({
           >
             {walletsList.map((walletData) => {
               const WalletComponent =
-                buttonComponentsByConnectorId[walletData.connector.id] ??
+                buttonComponentsByConnectorId[walletData.walletId] ??
                 buttonComponentsByConnectorId.default;
               if (!WalletComponent) return null;
               return (
