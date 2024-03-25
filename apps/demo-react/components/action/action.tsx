@@ -12,6 +12,7 @@ import {
   ErrorMessage,
   ResultCode,
   SuccessMessage,
+  ContentWrapper,
 } from './styles';
 
 const ReactJSON = dynamic(() => import('react-json-view'), {
@@ -155,19 +156,21 @@ export const Action = <TResult,>({
 
   return (
     <ActionBlock {...rest}>
-      {children && <Controls>{children}</Controls>}
-      <Controls>
-        <Button
-          disabled={walletAction && !active}
-          loading={loading}
-          onClick={startLoading}
-          fullwidth
-        >
-          {title}
-        </Button>
-        {result !== undefined && renderResult(result)}
-        {!!error && renderError(error)}
-      </Controls>
+      <ContentWrapper>
+        {children && <Controls>{children}</Controls>}
+        <Controls>
+          <Button
+            disabled={walletAction && !active}
+            loading={loading}
+            onClick={startLoading}
+            fullwidth
+          >
+            {title}
+          </Button>
+        </Controls>
+      </ContentWrapper>
+      {result !== undefined && renderResult(result)}
+      {!!error && renderError(error)}
     </ActionBlock>
   );
 };
