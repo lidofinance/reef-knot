@@ -11,23 +11,26 @@ export const ContainerStyle = styled.div`
 
 export const WrapperStyle = styled.div<{ $show: boolean }>`
   z-index: 200;
-  margin: var(--header-size) 0;
-  width: 360px;
-  padding: 24px;
+  width: 472px;
+  height: 100%;
+  padding: 22px 40px;
   background-color: ${({ theme }) =>
     theme.name === 'dark' ? '#1e2938' : '#dddfe2'};
-  border-radius: 20px;
   position: absolute;
   left: 100%;
-  top: 50%;
+  top: 0%;
   transform: ${({ $show }) =>
-    $show ? 'translate(-100%, -50%)' : 'translate(0%, -50%)'};
+    $show ? 'translate(-100%, 0%)' : 'translate(0%, 0%)'};
   transition: transform 0.15s ease-out;
   pointer-events: all;
 
   @media (max-width: 900px) {
     min-width: 200px;
   }
+
+  box-shadow: ${({ theme }) => theme.boxShadows.lg} rgba(39, 56, 82, 0.08);
+  background: var(--lido-color-background);
+  color: var(--lido-color-textSecondary);
 `;
 
 export const HeadingStyle = styled.h4`
