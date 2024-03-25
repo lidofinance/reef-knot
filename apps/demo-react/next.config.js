@@ -51,4 +51,7 @@ export default withBundleAnalyzer({
       },
     ];
   },
+  serverRuntimeConfig: {
+    basePath,
+  },
 });

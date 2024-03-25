@@ -1,13 +1,15 @@
 import { FC } from 'react';
 import { ButtonProps } from '@lidofinance/lido-ui';
+
+import { useModal } from 'hooks/useModal';
+import { MODAL } from 'providers';
+import { useWeb3 } from 'reef-knot/web3-react';
 import AddressBadge from 'components/layout/header/walletButton/addressBadge';
+
 import {
   WalledButtonStyle,
   WalledButtonWrapperStyle,
 } from './walletButtonStyles';
-import { useModal } from 'hooks/useModal';
-import { MODAL } from 'providers';
-import { useWeb3 } from '@reef-knot/web3-react';
 
 const WalletButton: FC<ButtonProps> = (props) => {
   const { onClick, ...rest } = props;

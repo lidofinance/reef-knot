@@ -1,12 +1,15 @@
+import { memo } from 'react';
 import { formatEther } from 'viem';
 import { ThemeProvider, themeLight } from '@lidofinance/lido-ui';
+import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnectorInfo } from 'reef-knot/core-react';
 
 import { StatsItem, TokenInput } from 'components';
 import { useETHBalance } from 'hooks/ethBalance';
 import { useStETHBalance } from 'hooks/stethBalance';
 import { useWstETHBalance } from 'hooks/wstethBalance';
+import { WalletFallback } from 'components/wallet-fallback';
 
-import { useConnectorInfo, useWeb3 } from 'reef-knot/web3-react';
 import { useInputValueSDK } from 'providers';
 import {
   StatsWrapperStyle,
@@ -19,13 +22,13 @@ import {
   WalletInfoValueStyle,
 } from './stats-styles';
 
-export const Stats = () => {
+const StatsComponent = () => {
   const { setInputValue, inputValue } = useInputValueSDK();
   const ethBalance = useETHBalance();
   const stethBalance = useStETHBalance();
   const wstethBalance = useWstETHBalance();
 
-  const connectorInfo = useConnectorInfo();
+  const { connectorName } = useConnectorInfo();
   const web3Info = useWeb3();
 
   const ethAmount = ethBalance.error
@@ -56,9 +59,7 @@ export const Stats = () => {
         <InfoWrapperStyle>
           <div>
             <WalletInfoTitleStyle>Provider:</WalletInfoTitleStyle>
-            <WalletInfoValueStyle>
-              {connectorInfo.providerName}
-            </WalletInfoValueStyle>
+            <WalletInfoValueStyle>{connectorName}</WalletInfoValueStyle>
           </div>
           <div>
             <WalletInfoTitleStyle>Network:</WalletInfoTitleStyle>
@@ -86,3 +87,9 @@ export const Stats = () => {
     </StatsWrapperStyle>
   );
 };
+
+export const Stats = memo((props) => {
+  const { active } = useWeb3();
+
+  return active ? <StatsComponent {...props} /> : <WalletFallback {...props} />;
+});

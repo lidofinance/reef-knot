@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import dynamic from 'next/dynamic';
-import { WalletInfo, Content } from 'components';
+import { WalletInfo } from 'components';
 import Layout from 'components/layout';
 import { WalletTesting, Stats } from 'features';
 
