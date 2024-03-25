@@ -34,8 +34,10 @@ export function getWalletsButtons({
   let wallets: string[] = [];
 
   walletDataList.forEach((walletData) => {
-    const { walletId, detector } = walletData;
-    addWalletTo(wallets, walletId, !!detector?.());
+    const { walletId, detector, autoConnectOnly } = walletData;
+    if (!autoConnectOnly) {
+      addWalletTo(wallets, walletId, !!detector?.());
+    }
   });
 
   wallets = [...wallets].filter(

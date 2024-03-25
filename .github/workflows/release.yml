@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           cache: 'yarn'
 
       - name: Install dependencies
@@ -30,7 +30,7 @@ jobs:
 
       - name: Authenticate in npm registry
         run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-        env: 
+        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm registry

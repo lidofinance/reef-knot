@@ -19,6 +19,11 @@ export type WalletAdapterData = {
   // For example: isMetaMaskProvider: () => !!window.ethereum?.isMetaMask
   detector?: () => boolean;
 
+  // The wallet can be connected via automatic connection only.
+  // The `detector` method will be called during auto connection, to decide if the wallet should be connected.
+  // The wallet will have no button in the wallet connection modal UI.
+  autoConnectOnly?: boolean;
+
   // URL to redirect a user if the Wallet Button was clicked,
   // but the wallet is not installed or active
   downloadURLs?: {

@@ -1,2 +1,3 @@
 export * from './reefKnot';
-export * from './acceptTermsModal';
+export { ReefKnotModalContextProvider } from './reefKnotModalContext';
+export type { ReefKnotModalContextValue } from './reefKnotModalContext';

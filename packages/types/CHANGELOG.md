@@ -1,5 +1,11 @@
 # @reef-knot/types
 
+## 1.5.0
+
+### Minor Changes
+
+- 1046886: Add autoConnectOnly field to WalletAdapterData
+
 ## 1.4.0
 
 ### Minor Changes

@@ -10,6 +10,7 @@ import {
 import { useThemeToggle } from '@lidofinance/lido-ui';
 import { WalletsModalForEth } from '@reef-knot/connect-wallet-modal';
 import WalletModal from 'components/walletModal';
+import metrics from 'utils/metrics';
 
 export type ModalContextValue = {
   openModal: (modal: MODAL) => void;
@@ -53,9 +54,9 @@ const ModalProvider: FC<PropsWithChildren> = ({ children }) => {
       {children}
       <WalletModal open={active === MODAL.wallet} {...common} />
       <WalletsModalForEth
-        open={active === MODAL.connect}
         hiddenWallets={['Opera Wallet']}
-        {...common}
+        shouldInvertWalletIcon={themeName === 'dark'}
+        metrics={metrics}
       />
     </ModalContext.Provider>
   );

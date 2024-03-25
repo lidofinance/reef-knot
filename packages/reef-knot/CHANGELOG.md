@@ -1,5 +1,77 @@
 # reef-knot
 
+## 3.0.2
+
+### Patch Changes
+
+- Updated dependencies [8873ffb]
+  - @reef-knot/connect-wallet-modal@3.0.2
+
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@3.0.1
+
+## 3.0.0
+
+### Major Changes
+
+- Rework modals interface, add useConnect hook for connection
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@3.0.0
+  - @reef-knot/core-react@3.0.0
+  - @reef-knot/web3-react@3.0.0
+
+## 2.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@2.1.1
+
+## 2.1.0
+
+### Minor Changes
+
+- 85b3f79:
+  - rework getUnsupportedChainError, hide mumbai network in the error
+  - (web3-react) fix logic of useConnectorError
+  - (web3-react) deprecate useConnectorInfo, useDisconnect
+  - (core-react) rework and add hooks: useConnectorInfo, useDisconnect, useEagerConnect
+  - (reef-knot) add connectors export as "Connectors"
+
+### Patch Changes
+
+- Updated dependencies [85b3f79]
+  - @reef-knot/connect-wallet-modal@2.1.0
+  - @reef-knot/core-react@2.1.0
+  - @reef-knot/web3-react@2.1.0
+
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [1046886]
+  - @reef-knot/ledger-connector@3.0.0
+  - @reef-knot/core-react@2.0.0
+  - @reef-knot/web3-react@2.0.0
+  - @reef-knot/connect-wallet-modal@2.0.0
+  - @reef-knot/wallets-list@1.12.0
+  - @reef-knot/types@1.5.0
+
+## 1.15.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@2.0.1
+  - @reef-knot/connect-wallet-modal@1.17.1
+
 ## 1.15.2
 
 ### Patch Changes

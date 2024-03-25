@@ -17,7 +17,7 @@ module.exports = {
     },
     ecmaVersion: 12,
     sourceType: 'module',
-    project,
+    project: project,
   },
   ignorePatterns: ['*.js', 'dist/', 'node_modules/'],
   settings: {

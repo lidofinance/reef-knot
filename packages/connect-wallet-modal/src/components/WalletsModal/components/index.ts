@@ -1,2 +1,2 @@
 export * from './LidoModalLogo';
-export * from './AcceptTermsModal';
+export * from './EagerConnectModal';

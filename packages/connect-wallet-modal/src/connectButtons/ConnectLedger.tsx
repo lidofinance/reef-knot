@@ -1,26 +1,27 @@
 import React, { FC, useCallback } from 'react';
 import { ConnectLedgerProps } from './types';
 import { ConnectButton } from '../components/ConnectButton';
+import { useReefKnotModal } from '@reef-knot/core-react';
 
 export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   const {
     onConnect,
     onBeforeConnect,
-    setRequirements,
-    setLedgerScreenVisible,
     shouldInvertWalletIcon,
     icon: WalletIcon,
     metrics,
     ...rest
   } = props;
+
+  const { openModalAsync } = useReefKnotModal();
   const onClickLedger = metrics?.events?.click?.handlers.onClickLedger;
 
-  const handleConnect = useCallback(() => {
+  const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
     onClickLedger?.();
-
-    setLedgerScreenVisible(true);
-  }, [onBeforeConnect, onClickLedger, setLedgerScreenVisible]);
+    const result = await openModalAsync({ type: 'ledger' });
+    if (result.success) onConnect?.();
+  }, [onBeforeConnect, onClickLedger, openModalAsync, onConnect]);
 
   return (
     <ConnectButton

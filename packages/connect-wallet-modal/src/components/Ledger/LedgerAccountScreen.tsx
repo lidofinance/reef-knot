@@ -8,7 +8,7 @@ import { useLedgerAccounts, useLedgerContext } from './hooks';
 import { getFirstIndexOnPage, saveLedgerDerivationPath } from './helpers';
 import { Metrics } from '../WalletsModal';
 import { LedgerDerivationPathSelect } from './LedgerDerivationPathSelect';
-import { AccountsStorage } from './types';
+import { AccountRecord, AccountsStorage } from './types';
 import { DERIVATION_PATHS } from './constants';
 
 const BoxWrapper = styled.div`
@@ -70,7 +70,7 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
   );
 
   const handleAccountButtonClick = useCallback(
-    async (account) => {
+    async (account: AccountRecord) => {
       saveLedgerDerivationPath(account.path);
       await disconnectTransport(true);
       try {
@@ -83,7 +83,7 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
     [closeScreen, connect, disconnectTransport, ledgerConnector, setError],
   );
 
-  const handleDerivationPathSelect = useCallback((value) => {
+  const handleDerivationPathSelect = useCallback((value: string) => {
     setCurrentPage(1);
     setDerivationPathTemplate(value);
   }, []);

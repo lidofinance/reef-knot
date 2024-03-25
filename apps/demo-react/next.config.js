@@ -32,13 +32,23 @@ export default withBundleAnalyzer({
   async headers() {
     return [
       {
-        // required for gnosis save apps
+        // required for Gnosis Safe apps
         source: '/manifest.json',
-        headers: [{ key: 'Access-Control-Allow-Origin', value: '*' }],
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-Requested-With, content-type, Authorization',
+          },
+        ],
       },
     ];
-  },
-  serverRuntimeConfig: {
-    basePath,
   },
 });

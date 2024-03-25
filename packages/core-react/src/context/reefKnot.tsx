@@ -3,13 +3,15 @@ import { WalletAdapterData } from '@reef-knot/types';
 import { Chain } from 'wagmi/chains';
 import { WCWarnBannerContextProvider } from '@reef-knot/ui-react';
 import { getWalletDataList } from '../walletData/index';
-import { AcceptTermsModalContextProvider } from './acceptTermsModal';
+import { AutoConnect } from '../components/AutoConnect';
+import { ReefKnotModalContextProvider } from './reefKnotModalContext';
 
 export interface ReefKnotContextProps {
   rpc: Record<number, string>;
   walletconnectProjectId?: string;
   chains: Chain[];
   defaultChain: Chain;
+  autoConnect?: boolean;
   children?: ReactNode;
 }
 
@@ -26,6 +28,7 @@ export const ReefKnot: FC<ReefKnotContextProps> = ({
   walletconnectProjectId,
   chains,
   defaultChain,
+  autoConnect = true,
   children,
 }) => {
   const walletDataList = getWalletDataList({
@@ -46,9 +49,16 @@ export const ReefKnot: FC<ReefKnotContextProps> = ({
 
   return (
     <ReefKnotContext.Provider value={contextValue}>
-      <AcceptTermsModalContextProvider>
-        <WCWarnBannerContextProvider>{children}</WCWarnBannerContextProvider>
-      </AcceptTermsModalContextProvider>
+      <ReefKnotModalContextProvider>
+        <WCWarnBannerContextProvider>
+          <AutoConnect
+            autoConnect={autoConnect}
+            walletDataList={walletDataList}
+            chains={chains}
+          />
+          {children}
+        </WCWarnBannerContextProvider>
+      </ReefKnotModalContextProvider>
     </ReefKnotContext.Provider>
   );
 };

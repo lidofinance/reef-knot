@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FC, PropsWithChildren } from 'react';
-import { ProviderWeb3 } from '@reef-knot/web3-react';
-import { getConnectors, holesky } from '@reef-knot/core-react';
-import { backendRPC, getBackendRPCPath, dynamics } from 'config';
+import { ReefKnot, getConnectors, holesky } from 'reef-knot/core-react';
 import { WagmiConfig, createClient, configureChains, Chain } from 'wagmi';
 import * as wagmiChains from 'wagmi/chains';
+
+import { backendRPC, getBackendRPCPath, dynamics } from 'config';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
+
+import { ProviderSDKWithProps } from './ProviderSDKWithProps';
 
 const wagmiChainsArray = Object.values({ ...wagmiChains, holesky });
 const supportedChains = wagmiChainsArray.filter((chain) =>
@@ -40,23 +41,29 @@ const connectors = getConnectors({
 
 const client = createClient({
   connectors,
-  autoConnect: true,
+  autoConnect: false, // default wagmi autoConnect should be false
   provider,
   webSocketProvider,
 });
 
-const Web3Provider: FC<PropsWithChildren> = ({ children }) => (
+const ConfigContextProviders: FC<PropsWithChildren> = ({ children }) => (
   <WagmiConfig client={client}>
-    <ProviderWeb3
-      pollingInterval={1200}
-      defaultChainId={dynamics.defaultChain}
-      supportedChainIds={dynamics.supportedChains}
+    <ReefKnot
       rpc={backendRPC}
+      chains={supportedChains}
+      defaultChain={defaultChain}
       walletconnectProjectId={dynamics.walletconnectProjectId}
+      autoConnect
     >
-      {children}
-    </ProviderWeb3>
+      <ProviderSDKWithProps
+        defaultChainId={defaultChain.id}
+        supportedChains={supportedChains}
+        rpc={backendRPC}
+      >
+        {children}
+      </ProviderSDKWithProps>
+    </ReefKnot>
   </WagmiConfig>
 );
 
-export default Web3Provider;
+export default ConfigContextProviders;

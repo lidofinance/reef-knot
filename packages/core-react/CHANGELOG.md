@@ -1,5 +1,34 @@
 # @reef-knot/core-react
 
+## 3.0.0
+
+### Major Changes
+
+- Rework modals interface, add useConnect hook for connection
+
+## 2.1.1
+
+### Patch Changes
+
+- Fix isAutoConnectionSuitable, add a separate useAutoConnectCheck hook
+
+## 2.1.0
+
+### Minor Changes
+
+- 85b3f79:
+  - rework getUnsupportedChainError, hide mumbai network in the error
+  - (web3-react) fix logic of useConnectorError
+  - (web3-react) deprecate useConnectorInfo, useDisconnect
+  - (core-react) rework and add hooks: useConnectorInfo, useDisconnect, useEagerConnect
+  - (reef-knot) add connectors export as "Connectors"
+
+## 2.0.0
+
+### Major Changes
+
+- 1046886: Add auto-connect, based on wagmi and autoConnectOnly wallet adapters
+
 ## 1.8.1
 
 ### Patch Changes
