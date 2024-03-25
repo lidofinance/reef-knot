@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants';
+import { CHAINS } from './chains';
 import dynamics from './dynamics';
 
 export const getBackendRPCPath = (chainId: CHAINS) => {

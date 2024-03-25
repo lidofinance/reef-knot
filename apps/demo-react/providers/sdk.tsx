@@ -24,6 +24,7 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
             transport: custom(providerWeb3.provider as any),
           })
         : undefined;
+
     const sdk = new LidoSDK({
       chainId: chainId as any,
       rpcUrls: [getBackendRPCPath(chainId)],
