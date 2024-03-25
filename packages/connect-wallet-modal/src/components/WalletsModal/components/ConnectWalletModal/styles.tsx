@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
-import { Input } from '@lidofinance/lido-ui';
+import { Input, Link } from '@lidofinance/lido-ui';
 
 const SCROLLBAR_WIDTH = 10;
 
@@ -137,6 +137,8 @@ export const MoreWalletsText = styled.div`
 
 export const Subtitle = styled.div`
   ${({ theme }) => css`
+    display: flex;
+    align-items: baseline;
     font-size: ${theme.fontSizesMap.xs}px;
     font-weight: 700;
   `}
@@ -178,6 +180,13 @@ export const InputClearButton = styled.button`
   svg {
     display: block;
   }
+`;
+
+export const NoWalletLink = styled(Link)`
+  ${({ theme }) => css`
+    margin-left: ${theme.spaceMap.md}px;
+    font-size: ${theme.fontSizesMap.xxs}px;
+  `}
 `;
 
 export const IconInputClear = () => (

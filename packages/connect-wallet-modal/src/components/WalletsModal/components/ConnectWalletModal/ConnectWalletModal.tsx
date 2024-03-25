@@ -8,7 +8,6 @@ import React, {
 import { useReefKnotModal } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 
-import { Link } from '@lidofinance/lido-ui';
 import { Modal } from '@reef-knot/ui-react';
 import { WalletsModalProps } from '../../types';
 import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
@@ -26,6 +25,7 @@ import {
   IconSearch,
   IconMoreWallets,
   IconInputClear,
+  NoWalletLink,
 } from './styles';
 
 import { sortWalletsList } from './sortWalletsList';
@@ -123,9 +123,11 @@ export const ConnectWalletModal = ({
       <ContentHeader>
         <Terms {...termsProps} />
         <Subtitle>
-          Choose wallet{' '}
+          <span>Choose wallet </span>
           {linkDontHaveWallet && (
-            <Link href={linkDontHaveWallet}>I don&apos;t have a wallet</Link>
+            <NoWalletLink href={linkDontHaveWallet}>
+              I don&apos;t have a wallet
+            </NoWalletLink>
           )}
         </Subtitle>
         {isShownOtherWallets && (
