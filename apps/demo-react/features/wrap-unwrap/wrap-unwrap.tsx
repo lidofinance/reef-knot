@@ -39,7 +39,7 @@ export const WrapUnwrap: FC = () => {
 
   return (
     <ActionItem title={title} action={handleCall}>
-      <Select value={type} onChange={handleTypeChange}>
+      <Select value={type} onChange={handleTypeChange} fullwidth>
         <Option value={CallType.wrap}>Wrap</Option>
         <Option value={CallType.unwrap}>Unwrap</Option>
       </Select>

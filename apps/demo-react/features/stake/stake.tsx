@@ -37,6 +37,7 @@ export const Stake: FC = () => {
         placeholder="0x0000000"
         value={referralAddressState}
         onChange={(e) => setReferralAddress(e.currentTarget.value)}
+        fullwidth
       />
     </ActionItem>
   );

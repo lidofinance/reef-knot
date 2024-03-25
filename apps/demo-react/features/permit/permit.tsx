@@ -44,7 +44,7 @@ export const Permit: FC = () => {
 
   return (
     <ActionItem action={handlePermit} title="Permit">
-      <Select value={token} onChange={handleTokenChange}>
+      <Select value={token} onChange={handleTokenChange} fullwidth>
         <Option value={TokenType.stETH}>stETH</Option>
         <Option value={TokenType.wstETH}>wstETH</Option>
       </Select>

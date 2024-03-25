@@ -14,3 +14,9 @@ export const ActionsBlockStyle = styled.div`
   width: 100%;
   flex-wrap: wrap;
 `;
+
+export const ColumnStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;

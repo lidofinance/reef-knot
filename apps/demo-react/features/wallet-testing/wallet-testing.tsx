@@ -1,15 +1,23 @@
 import { Stake, WrapUnwrap, Withdrawals, Permit } from 'features';
 
-import { WrapperStyle, ActionsBlockStyle } from './wallet-testing-styles';
+import {
+  WrapperStyle,
+  ActionsBlockStyle,
+  ColumnStyle,
+} from './wallet-testing-styles';
 
 export const WalletTesting = () => {
   return (
     <WrapperStyle>
       <ActionsBlockStyle>
-        <Stake />
-        <WrapUnwrap />
-        <Withdrawals />
-        <Permit />
+        <ColumnStyle>
+          <Stake />
+          <WrapUnwrap />
+        </ColumnStyle>
+        <ColumnStyle>
+          <Withdrawals />
+          <Permit />
+        </ColumnStyle>
       </ActionsBlockStyle>
     </WrapperStyle>
   );

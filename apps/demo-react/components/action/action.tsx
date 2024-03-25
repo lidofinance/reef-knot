@@ -161,6 +161,7 @@ export const Action = <TResult,>({
           disabled={walletAction && !active}
           loading={loading}
           onClick={startLoading}
+          fullwidth
         >
           {title}
         </Button>

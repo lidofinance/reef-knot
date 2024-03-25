@@ -9,4 +9,5 @@ export const WrapperStyle = styled.div`
 
 export const ActionStyle = styled(Action)`
   word-break: break-word;
+  display: flex;
 `;
