@@ -22,39 +22,39 @@ const buttonComponentsByConnectorId: WalletsModalEthProps['buttonComponentsByCon
     ledgerHID: ConnectLedger,
   };
 
-const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsDisplayConfig'] =
-  [
-    'browserExtension',
-    'metamask',
-    'ledgerHID',
-    'ledgerLive',
-    'walletconnect',
-    'coinbase',
-    'trust',
-    'okx',
-    'exodus',
-    'brave',
-    'bitget',
-    'xdefi',
-    'imToken',
-    'coin98',
-    'ambire',
-    'safe',
-    'dappBrowserInjected',
-  ];
+const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
+  'browserExtension',
+  'metamask',
+  'ledgerHID',
+  'ledgerLive',
+  'walletconnect',
+  'coinbase',
+  'trust',
+  'okx',
+  'exodus',
+  'brave',
+  'bitget',
+  'xdefi',
+  'imToken',
+  'coin98',
+  'ambire',
+  'safe',
+  'dappBrowserInjected',
+];
 
-const WALLETS_PINNED_CONFIG_DEFAULT: WalletsModalEthProps['walletsPinnedConfig'] =
-  ['browserExtension'];
+const WALLETS_PINNED_CONFIG_DEFAULT: WalletsModalEthProps['walletsPinned'] = [
+  'browserExtension',
+];
 
 type WalletsModalForEthProps = Omit<
   WalletsModalEthProps,
   | 'buttonComponentsByConnectorId'
   | 'walletDataList'
-  | 'walletsDisplayConfig'
-  | 'walletsPinnedConfig'
+  | 'walletsShown'
+  | 'walletsPinned'
 > & {
-  walletsDisplayConfig?: WalletsModalEthProps['walletsDisplayConfig'];
-  walletsPinnedConfig?: WalletsModalEthProps['walletsPinnedConfig'];
+  walletsShown?: WalletsModalEthProps['walletsShown'];
+  walletsPinned?: WalletsModalEthProps['walletsPinned'];
 };
 
 export function WalletsModalForEth(props: WalletsModalForEthProps) {
@@ -64,12 +64,8 @@ export function WalletsModalForEth(props: WalletsModalForEthProps) {
     <WalletsModal
       {...props}
       walletDataList={walletDataList}
-      walletsDisplayConfig={
-        props.walletsDisplayConfig || WALLETS_DISPLAY_CONFIG_DEFAULT
-      }
-      walletsPinnedConfig={
-        props.walletsPinnedConfig || WALLETS_PINNED_CONFIG_DEFAULT
-      }
+      walletsShown={props.walletsShown || WALLETS_DISPLAY_CONFIG_DEFAULT}
+      walletsPinned={props.walletsPinned || WALLETS_PINNED_CONFIG_DEFAULT}
       buttonComponentsByConnectorId={buttonComponentsByConnectorId}
     />
   );

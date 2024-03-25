@@ -21,8 +21,8 @@ export type WalletsModalProps<I extends string = string> = ModalProps & {
   metrics?: Metrics;
   termsLink?: string;
   privacyNoticeLink?: string;
-  walletsDisplayConfig: I[];
-  walletsPinnedConfig: I[];
+  walletsShown: I[];
+  walletsPinned: I[];
   walletsDisplayInitialCount?: number;
   linkDontHaveWallet?: string;
 };

@@ -31,7 +31,7 @@ Use it like this:
 
 ### For Ethereum
 
-The package provides the modal variant with the predefined list of wallets, which work with the Ethereum network. 
+The package provides the modal variant with the predefined list of wallets, which work with the Ethereum network.
 
 Import the component:
 ```ts
@@ -46,10 +46,10 @@ Use it like this:
 #### How to configure the wallets list
 You can control displayed wallet connection buttons from the list of wallets in the modal.
 Wallets will be displayed in the specified sequence.
-Use the `walletsDisplayConfig` property like this:
+Use the `walletsShown` property like this:
 ```tsx
 <WalletsModalForEth
-  walletsDisplayConfig={[
+  walletsShown={[
     'metamask',
     'walletconnect',
     'brave',
@@ -60,9 +60,9 @@ Use the `walletsDisplayConfig` property like this:
 
 #### How to pin certain wallet at top of the list
 You can pin certain wallets to display it at the top of the list.
-Use the `walletsPinnedConfig` property like this:
+Use the `walletsPinned` property like this:
 ```tsx
 <WalletsModalForEth
-  walletsPinnedConfig={['dappBrowserInjected']}
+  walletsPinned={['dappBrowserInjected']}
 />
 ```

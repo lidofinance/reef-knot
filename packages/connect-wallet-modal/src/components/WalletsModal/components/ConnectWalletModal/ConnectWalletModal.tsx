@@ -48,8 +48,8 @@ export const ConnectWalletModal = ({
     metrics,
     buttonComponentsByConnectorId,
     walletDataList,
-    walletsDisplayConfig,
-    walletsPinnedConfig,
+    walletsShown,
+    walletsPinned,
     walletsDisplayInitialCount = 6,
     linkDontHaveWallet,
   } = passedDownProps;
@@ -63,10 +63,10 @@ export const ConnectWalletModal = ({
   const walletsListFull = useMemo(() => {
     return sortWalletsList({
       walletDataList,
-      walletsDisplayConfig,
-      walletsPinnedConfig,
+      walletsShown,
+      walletsPinned,
     });
-  }, [walletDataList, walletsDisplayConfig, walletsPinnedConfig]);
+  }, [walletDataList, walletsShown, walletsPinned]);
 
   const walletsList = useMemo(() => {
     if (!isShownOtherWallets) {
@@ -125,7 +125,7 @@ export const ConnectWalletModal = ({
         <Subtitle>
           Choose wallet{' '}
           {linkDontHaveWallet && (
-            <Link href={linkDontHaveWallet}>I don't have a wallet</Link>
+            <Link href={linkDontHaveWallet}>I don&apos;t have a wallet</Link>
           )}
         </Subtitle>
         {isShownOtherWallets && (

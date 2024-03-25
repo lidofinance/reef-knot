@@ -3,16 +3,16 @@ import { WalletsModalProps } from '../../types';
 
 type GetWalletsListArgs = {
   walletDataList: WalletAdapterData[];
-  walletsDisplayConfig: WalletsModalProps['walletsDisplayConfig'];
-  walletsPinnedConfig: WalletsModalProps['walletsPinnedConfig'];
+  walletsShown: WalletsModalProps['walletsShown'];
+  walletsPinned: WalletsModalProps['walletsPinned'];
 };
 
 export function sortWalletsList({
   walletDataList,
-  walletsDisplayConfig,
-  walletsPinnedConfig,
+  walletsShown,
+  walletsPinned,
 }: GetWalletsListArgs) {
-  const filteredWalletData = walletsDisplayConfig.reduce(
+  const filteredWalletData = walletsShown.reduce(
     (walletsList, walletId) => {
       const walletData = walletDataList.find((w) => w.walletId === walletId);
 
@@ -23,7 +23,7 @@ export function sortWalletsList({
       // Filtering wallets marked as hidden and auto connect only
       if (autoConnectOnly) return walletsList;
 
-      if (walletsPinnedConfig.includes(walletId)) {
+      if (walletsPinned.includes(walletId)) {
         // Put the pinned wallets on the first place, above all another
         walletsList.pinned.push(walletData);
       } else if (detector?.()) {
@@ -45,8 +45,7 @@ export function sortWalletsList({
 
   const pinsSorted = [...filteredWalletData.pinned].sort(
     (a, b) =>
-      walletsPinnedConfig.indexOf(a.walletId) -
-      walletsPinnedConfig.indexOf(b.walletId),
+      walletsPinned.indexOf(a.walletId) - walletsPinned.indexOf(b.walletId),
   );
 
   return [
