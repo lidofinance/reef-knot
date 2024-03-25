@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const ActionBlock = styled(Block)`
   padding: 8px;
+  flex-direction: column;
 `;
 export const Controls = styled.div`
   display: flex;
@@ -25,4 +26,8 @@ export const ErrorMessage = styled.span`
   color: ${({ theme }) => theme.colors.error};
   word-break: break-word;
   white-space: break-spaces;
+`;
+
+export const ContentWrapper = styled.div`
+  display: flex;
 `;
