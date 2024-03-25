@@ -6,6 +6,7 @@ import { ThemeToggler } from '@lidofinance/lido-ui';
 
 import WalletButton from 'components/layout/header/walletButton';
 import WalletConnect from 'components/layout/header/walletConnect';
+import { HeaderWalletInfoButton } from 'components/layout/header/header-wallet-info-button';
 
 import { HeaderWalletChainStyle } from './headerWalletStyles';
 
@@ -21,6 +22,7 @@ const HeaderWallet: FC = () => {
         </HeaderWalletChainStyle>
       )}
       {active ? <WalletButton /> : <WalletConnect size="sm" />}
+      <HeaderWalletInfoButton />
       <ThemeToggler />
     </>
   );

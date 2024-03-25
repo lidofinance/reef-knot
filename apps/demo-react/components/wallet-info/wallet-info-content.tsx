@@ -1,19 +1,24 @@
 import React from 'react';
-import {
-  useWeb3,
-  useConnectorInfo,
-  useSupportedChains,
-} from 'reef-knot/web3-react';
+import { Close } from '@lidofinance/lido-ui';
+import { useWeb3, useSupportedChains } from 'reef-knot/web3-react';
+import { useConnectorInfo } from 'reef-knot/core-react';
 import { useAccount, useNetwork } from 'wagmi';
 
-import { HeadingStyle, DataTableRowStyle } from './styles';
+import {
+  HeadingStyle,
+  DataTableRowStyle,
+  WalletInfoHeaderStyles,
+  CloseButtonStyle,
+} from './styles';
 import { Web3ProviderInfo } from './provider-info';
+import { useClientConfig } from 'providers/client-config';
 
 export const WalletInfoContent = ({
   children,
 }: {
   children?: React.ReactNode;
 }) => {
+  const { setIsWalletInfoIsOpen } = useClientConfig();
   const connectorInfo = useConnectorInfo();
   const supportedChainsData = useSupportedChains();
   const supportedChainIds = supportedChainsData.supportedChains.map(
@@ -35,11 +40,20 @@ export const WalletInfoContent = ({
 
   return (
     <div>
+      <WalletInfoHeaderStyles>
+        <CloseButtonStyle
+          icon={<Close />}
+          size="xs"
+          variant="outlined"
+          color="secondary"
+          onClick={() => setIsWalletInfoIsOpen(false)}
+        />
+      </WalletInfoHeaderStyles>
       <div>
         <code>
           <Web3ProviderInfo />
           <DataTableRowStyle title="providerName" highlight>
-            {connectorInfo.providerName}
+            {connectorInfo.connectorName}
           </DataTableRowStyle>
           <HeadingStyle>Shimmed useWeb3() data below</HeadingStyle>
 
