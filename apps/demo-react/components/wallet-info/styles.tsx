@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DataTableRow, ArrowLeft, ButtonIcon } from '@lidofinance/lido-ui';
+import { DataTableRow, ButtonIcon } from '@lidofinance/lido-ui';
 
 export const ContainerStyle = styled.div`
   position: fixed;
@@ -11,8 +11,9 @@ export const ContainerStyle = styled.div`
 
 export const WrapperStyle = styled.div<{ $show: boolean }>`
   z-index: 200;
+  overflow-y: scroll;
   width: 472px;
-  height: 100%;
+  height: 100vh;
   padding: 22px 40px;
   background-color: ${({ theme }) =>
     theme.name === 'dark' ? '#1e2938' : '#dddfe2'};
@@ -41,19 +42,6 @@ export const DataTableRowStyle = styled(DataTableRow)`
   margin: 4px 0;
 `;
 
-export const ArrowLeftStyle = styled(ArrowLeft)<{ $open: boolean }>`
-  transform: ${({ $open }) => ($open ? 'rotate(180deg)' : 'rotate(0deg)')};
-  transition: transform 0.15s ease-out;
-`;
-
-export const ButtonIconStyle = styled(ButtonIcon)`
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  margin-right: 8px;
-  transform: translate(0, -50%);
-`;
-
 export const ProviderInfoRowStyle = styled(DataTableRowStyle)`
   & div:last-child {
     word-break: break-all;
@@ -62,4 +50,17 @@ export const ProviderInfoRowStyle = styled(DataTableRowStyle)`
 
 export const ProviderInfoContentStyle = styled.div`
   padding: 8px 12px;
+`;
+
+export const WalletInfoHeaderStyles = styled.div`
+  margin-bottom: 22px;
+  display: flex;
+`;
+
+export const CloseButtonStyle = styled(ButtonIcon)`
+  margin-left: auto;
+
+  &:before {
+    border: 1px solid rgba(0, 10, 61, 0.12);
+  }
 `;

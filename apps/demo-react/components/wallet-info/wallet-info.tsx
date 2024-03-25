@@ -1,25 +1,16 @@
-import { useState, FC } from 'react';
+import { FC } from 'react';
 
-import {
-  WrapperStyle,
-  ContainerStyle,
-  ArrowLeftStyle,
-  ButtonIconStyle,
-} from './styles';
+import { useClientConfig } from 'providers/client-config';
+
 import { WalletInfoContent } from './wallet-info-content';
+import { WrapperStyle, ContainerStyle } from './styles';
 
 export const WalletInfo: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isWalletInfoIsOpen } = useClientConfig();
 
   return (
     <ContainerStyle>
-      <WrapperStyle $show={isOpen}>
-        <ButtonIconStyle
-          onClick={() => setIsOpen(!isOpen)}
-          icon={<ArrowLeftStyle $open={isOpen} />}
-          size="xs"
-          variant="ghost"
-        />
+      <WrapperStyle $show={isWalletInfoIsOpen}>
         <WalletInfoContent />
       </WrapperStyle>
     </ContainerStyle>
