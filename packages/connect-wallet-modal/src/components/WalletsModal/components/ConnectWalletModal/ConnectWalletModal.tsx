@@ -189,7 +189,7 @@ export const ConnectWalletModal = ({
         <MoreWalletsToggleButton onClick={handleToggleWalletsList}>
           <IconMoreWallets />
           <MoreWalletsText>
-            {isShownOtherWallets ? 'Hide wallets' : 'Other wallets'}
+            {isShownOtherWallets ? 'Less wallets' : 'More wallets'}
           </MoreWalletsText>
         </MoreWalletsToggleButton>
       )}
