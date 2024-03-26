@@ -17,7 +17,7 @@ const WalletButton: FC<ButtonProps> = (props) => {
   const { account } = useWeb3();
 
   return (
-    <WalledButtonStyle
+    <WalletButtonStyle
       size="sm"
       variant="text"
       color="secondary"
