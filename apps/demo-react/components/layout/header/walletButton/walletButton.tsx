@@ -24,9 +24,9 @@ const WalletButton: FC<ButtonProps> = (props) => {
       onClick={openModal}
       {...rest}
     >
-      <WalledButtonWrapperStyle>
+      <WalletButtonWrapperStyle>
         <AddressBadge address={account} />
-      </WalledButtonWrapperStyle>
+      </WalletButtonWrapperStyle>
     </WalledButtonStyle>
   );
 };
