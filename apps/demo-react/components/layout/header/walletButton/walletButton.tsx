@@ -27,7 +27,7 @@ const WalletButton: FC<ButtonProps> = (props) => {
       <WalletButtonWrapperStyle>
         <AddressBadge address={account} />
       </WalletButtonWrapperStyle>
-    </WalledButtonStyle>
+    </WalletButtonStyle>
   );
 };
 
