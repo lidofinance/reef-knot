@@ -7,8 +7,8 @@ import { useWeb3 } from 'reef-knot/web3-react';
 import AddressBadge from 'components/layout/header/walletButton/addressBadge';
 
 import {
-  WalledButtonStyle,
-  WalledButtonWrapperStyle,
+  WalletButtonStyle,
+  WalletButtonWrapperStyle,
 } from './walletButtonStyles';
 
 const WalletButton: FC<ButtonProps> = (props) => {
