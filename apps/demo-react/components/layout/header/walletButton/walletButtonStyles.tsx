@@ -7,7 +7,7 @@ export const WalledButtonStyle = styled(Button)`
   overflow: hidden;
 `;
 
-export const WalledButtonWrapperStyle = styled.span`
+export const WalletButtonWrapperStyle = styled.span`
   display: flex;
   align-items: center;
   justify-content: flex-start;
