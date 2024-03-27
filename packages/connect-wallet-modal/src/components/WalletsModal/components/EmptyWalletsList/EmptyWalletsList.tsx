@@ -1,14 +1,16 @@
 import React from 'react';
-import { Wrap, ContentWrap, WalletIcon } from './styles';
 import { Button, Text } from '@lidofinance/lido-ui';
+import { Wrap, ContentWrap, WalletIcon } from './styles';
 
 type EmptyWalletsListProps = {
   inputValue: string;
+  shouldInvertColor?: boolean;
   onClickClear: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 export const EmptyWalletsList = ({
   inputValue,
+  shouldInvertColor,
   onClickClear,
 }: EmptyWalletsListProps) => {
   return (
@@ -25,7 +27,12 @@ export const EmptyWalletsList = ({
           Nothing found
         </Text>
       </ContentWrap>
-      <Button size="xs" variant="translucent" onClick={onClickClear}>
+      <Button
+        size="xs"
+        color={shouldInvertColor ? 'secondary' : 'primary'}
+        variant="translucent"
+        onClick={onClickClear}
+      >
         Clear search
       </Button>
     </Wrap>

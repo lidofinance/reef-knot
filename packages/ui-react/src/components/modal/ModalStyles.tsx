@@ -5,7 +5,22 @@ import { ButtonIcon } from '../button';
 
 const MAX_INNER_WIDTH = 600;
 
-export const ModalStyle = styled.div<{ $center: boolean; $width?: number }>`
+const clampHeightByWindowCss = css`
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  max-height: 100%;
+`;
+
+type ModalStyeProps = {
+  $center: boolean;
+  $width?: number;
+  $clampHeightByWindow?: boolean;
+};
+export const ModalStyle = styled.div<ModalStyeProps>`
+  ${({ $clampHeightByWindow }) =>
+    $clampHeightByWindow && clampHeightByWindowCss}
+
   ${({
     theme: { fontSizesMap, borderRadiusesMap, colors, boxShadows },
     $center,
@@ -25,12 +40,16 @@ export const ModalStyle = styled.div<{ $center: boolean; $width?: number }>`
     line-height: 1.5em;
     text-align: ${$center ? 'center' : 'left'};
     border-radius: ${borderRadiusesMap.xl}px;
+    overflow: hidden;
     box-shadow: ${boxShadows.xxl} ${colors.shadowDark};
     box-sizing: content-box;
   `}
 `;
 
-export const ModalBaseStyle = styled.div`
+export const ModalBaseStyle = styled.div<{ $clampHeightByWindow?: boolean }>`
+  ${({ $clampHeightByWindow }) =>
+    $clampHeightByWindow && clampHeightByWindowCss}
+
   ${({ theme: { colors } }) => css`
     color: ${colors.text};
     background: ${colors.foreground};

@@ -16,7 +16,9 @@ export type ModalOverlayOwnProps = CommonComponentProps<
 
 export type ModalOverlayProps = ModalOverlayOwnProps & TransitionWrapperProps;
 export type ModalOverlayInnerProps = ModalOverlayOwnProps &
-  TransitionInnerProps;
+  TransitionInnerProps & {
+    clampHeightByWindow?: boolean;
+  };
 
 export type ModalProps = {
   title?: React.ReactNode;
@@ -27,6 +29,7 @@ export type ModalProps = {
   open?: boolean;
   omitContentStyle?: boolean;
   widthClamp?: number;
+  clampHeightByWindow?: boolean;
 } & Omit<ModalOverlayProps, 'title' | 'in'>;
 
 export type ModalExtraProps = CommonComponentProps<'div'>;

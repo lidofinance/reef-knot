@@ -39,7 +39,7 @@ export const ConnectButtonTitleStyle = styled.div`
 `;
 
 export const ConnectButtonIconStyle = styled.span<{ $isCompact?: boolean }>`
-  ${({ $isCompact }) => css`
+  ${({ theme, $isCompact }) => css`
     display: flex;
     margin-right: 12px;
 
@@ -54,6 +54,18 @@ export const ConnectButtonIconStyle = styled.span<{ $isCompact?: boolean }>`
             width: 48px;
             height: 48px;
           `}
+
+      ${theme.mediaQueries.md} {
+        ${$isCompact
+          ? css`
+              width: 36px;
+              height: 36px;
+            `
+          : css`
+              width: 40px;
+              height: 40px;
+            `}
+      }
     }
   `}
 `;

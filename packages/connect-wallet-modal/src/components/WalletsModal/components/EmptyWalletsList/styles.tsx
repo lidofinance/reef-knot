@@ -3,6 +3,7 @@ import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
 
 export const Wrap = styled.div`
   ${({ theme }) => css`
+    padding: ${theme.spaceMap.md}px;
     display: flex;
     flex-direction: column;
     align-items: center;

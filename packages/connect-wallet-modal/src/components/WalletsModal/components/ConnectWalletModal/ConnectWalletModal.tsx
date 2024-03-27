@@ -1,32 +1,9 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useReefKnotModal } from '@reef-knot/core-react';
-import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 
-import { Modal } from '@reef-knot/ui-react';
 import { WalletsModalProps } from '../../types';
-import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
-import { EmptyWalletsList } from '../EmptyWalletsList';
-import {
-  Subtitle,
-  WalletsButtonsScrollBox,
-  WalletsButtonsContainer,
-  ContentHeader,
-  MoreWalletsToggleButton,
-  WalletInput,
-  SearchIconWrap,
-  MoreWalletsText,
-  InputClearButton,
-  IconSearch,
-  IconMoreWallets,
-  IconInputClear,
-  NoWalletLink,
-} from './styles';
+import { WalletModalConnectTermsProps } from '../../../Terms';
+import { ConnectWalletModalLayout } from '../ConnectWalletModalLayout';
 
 import { sortWalletsList } from './sortWalletsList';
 
@@ -38,25 +15,20 @@ type ConnectWalletModalProps = WalletsModalProps & {
 
 export const ConnectWalletModal = ({
   onCloseSuccess,
-  onCloseReject,
-  termsProps,
   ...passedDownProps
 }: ConnectWalletModalProps) => {
   const {
     shouldInvertWalletIcon = false,
-    buttonsFullWidth = false,
     metrics,
     buttonComponentsByConnectorId,
     walletDataList,
     walletsShown,
     walletsPinned,
     walletsDisplayInitialCount = 6,
-    linkDontHaveWallet,
   } = passedDownProps;
 
   const { termsChecked } = useReefKnotModal();
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState('');
   const [isShownOtherWallets, setShowOtherWallets] = useState(false);
 
@@ -87,14 +59,6 @@ export const ConnectWalletModal = ({
     walletsDisplayInitialCount,
   ]);
 
-  useEffect(() => {
-    if (isShownOtherWallets) {
-      if (!isMobileOrTablet) inputRef.current?.focus();
-    } else {
-      setInputValue('');
-    }
-  }, [isShownOtherWallets]);
-
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.currentTarget.value);
@@ -102,7 +66,7 @@ export const ConnectWalletModal = ({
     [],
   );
 
-  const handleClearInput = useCallback(() => {
+  const handleInputClear = useCallback(() => {
     setInputValue('');
   }, []);
 
@@ -110,89 +74,38 @@ export const ConnectWalletModal = ({
     setShowOtherWallets((value) => !value);
   }, []);
 
+  const isWalletsListEmpty = walletsList.length === 0;
+  const isWalletsToggleButtonShown =
+    walletsListFull.length > walletsList.length || isShownOtherWallets;
+
   return (
-    <Modal
+    <ConnectWalletModalLayout
+      inputValue={inputValue}
+      isEmptyWalletsList={isWalletsListEmpty}
+      isShownOtherWallets={isShownOtherWallets}
+      isShownWalletsToggleButton={isWalletsToggleButtonShown}
+      onInputChange={handleInputChange}
+      onInputClear={handleInputClear}
+      onToggleWalletsList={handleToggleWalletsList}
       {...passedDownProps}
-      open
-      title="Connect wallet"
-      center={false}
-      omitContentStyle
-      onClose={onCloseReject}
-      widthClamp={660}
     >
-      <ContentHeader>
-        <Terms {...termsProps} />
-        <Subtitle>
-          <span>Choose wallet </span>
-          {linkDontHaveWallet && (
-            <NoWalletLink href={linkDontHaveWallet}>
-              I don&apos;t have a wallet
-            </NoWalletLink>
-          )}
-        </Subtitle>
-        {isShownOtherWallets && (
-          <WalletInput
-            ref={inputRef}
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Wallet name"
-            leftDecorator={
-              <SearchIconWrap>
-                <IconSearch />
-              </SearchIconWrap>
-            }
-            rightDecorator={
-              inputValue && (
-                <InputClearButton onClick={handleClearInput}>
-                  <IconInputClear />
-                </InputClearButton>
-              )
-            }
+      {walletsList.map((walletData) => {
+        const WalletComponent =
+          buttonComponentsByConnectorId[walletData.walletId] ??
+          buttonComponentsByConnectorId.default;
+        if (!WalletComponent) return null;
+        return (
+          <WalletComponent
+            key={walletData.walletId}
+            disabled={!termsChecked}
+            onConnect={onCloseSuccess}
+            shouldInvertWalletIcon={shouldInvertWalletIcon}
+            metrics={metrics}
+            isCompact={isShownOtherWallets}
+            {...walletData}
           />
-        )}
-      </ContentHeader>
-
-      <WalletsButtonsScrollBox $isCompact={!isShownOtherWallets}>
-        {walletsList.length === 0 && (
-          <EmptyWalletsList
-            inputValue={inputValue}
-            onClickClear={handleClearInput}
-          />
-        )}
-        {walletsList.length > 0 && (
-          <WalletsButtonsContainer
-            $isCompact={isShownOtherWallets}
-            $buttonsFullWidth={isShownOtherWallets || buttonsFullWidth}
-          >
-            {walletsList.map((walletData) => {
-              const WalletComponent =
-                buttonComponentsByConnectorId[walletData.walletId] ??
-                buttonComponentsByConnectorId.default;
-              if (!WalletComponent) return null;
-              return (
-                <WalletComponent
-                  key={walletData.walletId}
-                  disabled={!termsChecked}
-                  onConnect={onCloseSuccess}
-                  shouldInvertWalletIcon={shouldInvertWalletIcon}
-                  metrics={metrics}
-                  isCompact={isShownOtherWallets}
-                  {...walletData}
-                />
-              );
-            })}
-          </WalletsButtonsContainer>
-        )}
-      </WalletsButtonsScrollBox>
-
-      {(walletsListFull.length > walletsList.length || isShownOtherWallets) && (
-        <MoreWalletsToggleButton onClick={handleToggleWalletsList}>
-          <IconMoreWallets />
-          <MoreWalletsText>
-            {isShownOtherWallets ? 'Less wallets' : 'More wallets'}
-          </MoreWalletsText>
-        </MoreWalletsToggleButton>
-      )}
-    </Modal>
+        );
+      })}
+    </ConnectWalletModalLayout>
   );
 };
