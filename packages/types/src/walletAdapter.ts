@@ -59,5 +59,3 @@ export interface WalletAdapterArgs {
   walletconnectProjectId?: string;
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
-
-export type WalletsListType = Record<string, WalletAdapterType>;

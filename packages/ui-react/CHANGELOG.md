@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 1.1.0
+
+### Minor Changes
+
+- connect-wallet-modal ui and config updated
+
 ## 1.0.8
 
 ### Patch Changes

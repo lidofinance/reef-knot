@@ -1,5 +1,32 @@
 # @reef-knot/wallets-list
 
+## 1.13.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-dapp-browser-injected@1.1.0
+  - @reef-knot/wallet-adapter-browser-extension@1.1.0
+  - @reef-knot/wallet-adapter-walletconnect@1.3.0
+  - @reef-knot/wallet-adapter-ledger-live@2.1.0
+  - @reef-knot/wallet-adapter-ledger-hid@2.1.0
+  - @reef-knot/wallet-adapter-coinbase@1.1.0
+  - @reef-knot/wallet-adapter-metamask@1.1.0
+  - @reef-knot/wallet-adapter-bitkeep@1.2.0
+  - @reef-knot/wallet-adapter-imtoken@1.1.0
+  - @reef-knot/wallet-adapter-ambire@1.3.0
+  - @reef-knot/wallet-adapter-coin98@1.1.0
+  - @reef-knot/wallet-adapter-exodus@1.3.0
+  - @reef-knot/wallet-adapter-brave@1.1.0
+  - @reef-knot/wallet-adapter-trust@1.1.0
+  - @reef-knot/wallet-adapter-xdefi@1.1.0
+  - @reef-knot/wallet-adapter-safe@1.1.0
+  - @reef-knot/wallet-adapter-okx@1.4.0
+
 ## 1.12.0
 
 ### Minor Changes

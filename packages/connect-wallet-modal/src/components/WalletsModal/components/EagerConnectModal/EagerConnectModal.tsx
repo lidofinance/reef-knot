@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal } from '@reef-knot/ui-react';
-import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
-import { CommonButtonsContainer } from '../styles';
+import { CommonButtonsContainer, ErrorBlock } from './styles';
 import {
   useReefKnotContext,
   getUnsupportedChainError,
@@ -12,19 +11,6 @@ export type AcceptTermsModalProps = React.PropsWithChildren<{
   tryConnection: () => Promise<any>;
   initialError: Error | undefined;
 }>;
-
-const ErrorBlock = styled.div`
-  ${({ theme: { fontSizesMap, spaceMap, borderRadiusesMap } }) => css`
-    background: var(--lido-color-error);
-    color: var(--lido-color-errorContrast);
-    font-size: ${fontSizesMap.xxs}px;
-    line-height: 1.6em;
-    padding: ${spaceMap.lg}px;
-    margin-top: ${spaceMap.sm}px;
-    margin-bottom: ${spaceMap.md}px;
-    border-radius: ${borderRadiusesMap.lg}px;
-  `}
-`;
 
 export const EagerConnectModal = ({
   tryConnection,

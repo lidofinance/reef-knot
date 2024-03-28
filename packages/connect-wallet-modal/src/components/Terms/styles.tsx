@@ -6,8 +6,7 @@ export const TermsStyle = styled.label`
     align-items: center;
     font-size: ${fontSizesMap.xxs}px;
     line-height: 1.6em;
-    padding: ${spaceMap.lg}px;
-    margin-top: ${spaceMap.sm}px;
+    padding: ${spaceMap.lg}px ${spaceMap.md}px;
     margin-bottom: ${spaceMap.md}px;
     border-radius: ${borderRadiusesMap.lg}px;
     background: ${colors.background};

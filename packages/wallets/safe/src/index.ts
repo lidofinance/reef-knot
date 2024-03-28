@@ -1,9 +1,12 @@
 import { WalletAdapterType } from '@reef-knot/types';
 import { SafeConnector } from 'wagmi/connectors/safe';
 
+export const id = 'safe';
+export const name = 'Safe';
+
 export const Safe: WalletAdapterType = ({ chains }) => ({
-  walletName: 'Safe',
-  walletId: 'safe',
+  walletName: name,
+  walletId: id,
   autoConnectOnly: true,
   detector: () => {
     // iframe check

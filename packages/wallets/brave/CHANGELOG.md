@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-brave
 
+## 1.1.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 1.0.1
 
 ### Patch Changes

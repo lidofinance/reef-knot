@@ -9,9 +9,12 @@ declare global {
   }
 }
 
+export const id = 'brave';
+export const name = 'Brave';
+
 export class BraveConnector extends InjectedConnector {
-  readonly id = 'brave';
-  readonly name = 'Brave';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -24,8 +27,8 @@ export class BraveConnector extends InjectedConnector {
 }
 
 export const Brave: WalletAdapterType = ({ chains }) => ({
-  walletName: 'Brave',
-  walletId: 'brave',
+  walletName: name,
+  walletId: id,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.braveEthereum?.isBraveWallet ||

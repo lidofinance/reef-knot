@@ -20,7 +20,7 @@ function isWalletAdapterIcons(
 }
 
 const ConnectButton: FC<ConnectButtonProps> = (props: ConnectButtonProps) => {
-  const { icon, shouldInvertWalletIcon, children, ...rest } = props;
+  const { icon, shouldInvertWalletIcon, children, isCompact, ...rest } = props;
 
   let ButtonIcon: ElementType = React.Fragment;
   if (icon) {
@@ -34,7 +34,7 @@ const ConnectButton: FC<ConnectButtonProps> = (props: ConnectButtonProps) => {
   return (
     <ConnectButtonStyle {...rest}>
       <ConnectButtonContentStyle>
-        <ConnectButtonIconStyle>
+        <ConnectButtonIconStyle $isCompact={isCompact}>
           {isValidElement(<ButtonIcon />) && <ButtonIcon />}
         </ConnectButtonIconStyle>
         <ConnectButtonTitleStyle>{children}</ConnectButtonTitleStyle>

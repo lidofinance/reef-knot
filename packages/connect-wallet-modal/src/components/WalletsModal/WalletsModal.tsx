@@ -1,30 +1,19 @@
 import React from 'react';
 import { Modal } from '@reef-knot/ui-react';
-import { WalletsModalProps, ButtonsCommonProps } from './types';
+import { WalletsModalProps } from './types';
 import { Terms, WalletModalConnectTermsProps } from '../Terms';
-import { WalletsButtonsContainer } from './styles';
 import { LedgerModal } from '../Ledger';
-import { EagerConnectModal } from './components';
-import { getWalletsButtons } from './getWalletsButtons';
+import { EagerConnectModal } from './components/EagerConnectModal';
+import { ConnectWalletModal } from './components/ConnectWalletModal';
 import { useReefKnotModal } from '@reef-knot/core-react';
 
 export function WalletsModal({
   children,
   ...passedDownProps
 }: React.PropsWithChildren<WalletsModalProps>) {
-  const {
-    shouldInvertWalletIcon = false,
-    buttonsFullWidth = false,
-    metrics,
-    termsLink,
-    privacyNoticeLink,
-    buttonComponentsByConnectorId,
-    walletDataList,
-    hiddenWallets,
-  } = passedDownProps;
+  const { metrics, termsLink, privacyNoticeLink } = passedDownProps;
 
-  const { currentModal, closeModal, forceCloseAllModals, termsChecked } =
-    useReefKnotModal();
+  const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
 
   const termsProps: WalletModalConnectTermsProps = {
     termsLink: termsLink || 'https://lido.fi/terms-of-use',
@@ -38,30 +27,13 @@ export function WalletsModal({
 
   switch (currentModal?.type) {
     case 'wallet': {
-      const buttonsCommonProps: ButtonsCommonProps = {
-        disabled: !termsChecked,
-        onConnect: onCloseSuccess,
-        shouldInvertWalletIcon,
-        metrics,
-      };
       return (
-        <Modal
+        <ConnectWalletModal
           {...passedDownProps}
-          open
-          title="Connect wallet"
-          center={false}
-          onClose={onCloseReject}
-        >
-          <Terms {...termsProps} />
-          <WalletsButtonsContainer $buttonsFullWidth={buttonsFullWidth}>
-            {getWalletsButtons({
-              commonProps: buttonsCommonProps,
-              buttonComponentsByConnectorId,
-              hiddenWallets,
-              walletDataList,
-            })}
-          </WalletsButtonsContainer>
-        </Modal>
+          termsProps={termsProps}
+          onCloseSuccess={onCloseSuccess}
+          onCloseReject={onCloseReject}
+        />
       );
     }
 

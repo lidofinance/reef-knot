@@ -1,5 +1,16 @@
 # @reef-knot/connect-wallet-modal
 
+## 4.0.0
+
+### Major Changes
+
+- connect-wallet-modal ui and config updated
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@1.13.0
+
 ## 3.0.2
 
 ### Patch Changes

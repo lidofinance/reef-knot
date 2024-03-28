@@ -1,5 +1,11 @@
 # @reef-knot/types
 
+## 1.6.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 1.5.0
 
 ### Minor Changes
