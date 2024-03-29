@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Modal } from '@reef-knot/ui-react';
 import { EmptyWalletsList } from '../EmptyWalletsList';
@@ -13,6 +13,7 @@ import {
   MoreWalletsToggleButton,
   MoreWalletsText,
   IconMoreWallets,
+  MEDIA_MOBILE_HEIGHT,
 } from './styles';
 import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
 
@@ -49,6 +50,7 @@ export const ConnectWalletModalLayout = ({
   const { buttonsFullWidth = false, shouldInvertWalletIcon } = passedDownProps;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isMobileHeight, setIsMobileHeight] = useState(false);
 
   useEffect(() => {
     if (isShownOtherWallets) {
@@ -57,6 +59,18 @@ export const ConnectWalletModalLayout = ({
       onInputClear();
     }
   }, [isShownOtherWallets, onInputClear]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MEDIA_MOBILE_HEIGHT);
+    setIsMobileHeight(mediaQuery.matches);
+    const onMediaChange = (e: MediaQueryListEvent) => {
+      setIsMobileHeight(e.matches);
+    };
+    mediaQuery.addEventListener('change', onMediaChange);
+    return () => {
+      mediaQuery.removeEventListener('change', onMediaChange);
+    };
+  }, []);
 
   return (
     <Modal
@@ -67,7 +81,8 @@ export const ConnectWalletModalLayout = ({
       omitContentStyle
       onClose={onCloseReject}
       widthClamp={660}
-      clampHeightByWindow
+      clampHeightByWindow={!isShownOtherWallets && isMobileHeight}
+      stretchHeightByWindow={isShownOtherWallets && isMobileHeight}
     >
       <ContentWrapper key={isShownOtherWallets ? 'compact' : 'full'}>
         <ContentWrapperInner>

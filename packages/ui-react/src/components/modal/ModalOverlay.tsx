@@ -22,6 +22,7 @@ function ModalOverlay(
     duration,
     transitionStatus,
     clampHeightByWindow,
+    stretchHeightByWindow,
     ...rest
   } = props;
   const closable = !!onClose;
@@ -52,6 +53,7 @@ function ModalOverlay(
           $transition={transitionStatus}
           $duration={duration}
           $clampHeightByWindow={clampHeightByWindow}
+          $stretchHeightByWindow={stretchHeightByWindow}
           {...rest}
         />
       </ModalOverflowStyle>

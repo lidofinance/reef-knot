@@ -5,6 +5,7 @@ type TransitionProps = {
   $duration: number;
   $transition: TransitionInnerProps['transitionStatus'];
   $clampHeightByWindow?: boolean;
+  $stretchHeightByWindow?: boolean;
 };
 
 const getOpacity = ({ $transition }: TransitionProps) => {
@@ -53,6 +54,15 @@ export const ModalContentStyle = styled.div<TransitionProps>`
       flex-direction: column;
       flex: 0 1 auto;
       max-height: 100%;
+    `}
+
+  ${({ $stretchHeightByWindow }) =>
+    $stretchHeightByWindow &&
+    css`
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      height: 100%;
     `}
 
   box-sizing: border-box;

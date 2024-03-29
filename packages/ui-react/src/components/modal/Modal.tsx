@@ -27,6 +27,7 @@ function Modal(props: ModalProps, ref?: ForwardedRef<HTMLDivElement>) {
     widthClamp,
     omitContentStyle,
     clampHeightByWindow,
+    stretchHeightByWindow,
     ...rest
   } = props;
   const { onClose, onBack } = props;
@@ -62,13 +63,18 @@ function Modal(props: ModalProps, ref?: ForwardedRef<HTMLDivElement>) {
       {...rest}
       ref={ref}
       clampHeightByWindow={clampHeightByWindow}
+      stretchHeightByWindow={stretchHeightByWindow}
     >
       <ModalStyle
         $center={center}
         $width={widthClamp}
         $clampHeightByWindow={clampHeightByWindow}
+        $stretchHeightByWindow={stretchHeightByWindow}
       >
-        <ModalBaseStyle $clampHeightByWindow={clampHeightByWindow}>
+        <ModalBaseStyle
+          $clampHeightByWindow={clampHeightByWindow}
+          $stretchHeightByWindow={stretchHeightByWindow}
+        >
           {modalHeader}
           {withSubtitle && <ModalSubtitleStyle>{subtitle}</ModalSubtitleStyle>}
           {omitContentStyle ? (

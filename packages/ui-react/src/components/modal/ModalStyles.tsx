@@ -12,14 +12,25 @@ const clampHeightByWindowCss = css`
   max-height: 100%;
 `;
 
+const stretchHeightByWindowCss = css`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  max-height: 100%;
+`;
+
 type ModalStyeProps = {
   $center: boolean;
   $width?: number;
   $clampHeightByWindow?: boolean;
+  $stretchHeightByWindow?: boolean;
 };
 export const ModalStyle = styled.div<ModalStyeProps>`
   ${({ $clampHeightByWindow }) =>
     $clampHeightByWindow && clampHeightByWindowCss}
+
+  ${({ $stretchHeightByWindow }) =>
+    $stretchHeightByWindow && stretchHeightByWindowCss}
 
   ${({
     theme: { fontSizesMap, borderRadiusesMap, colors, boxShadows },
@@ -46,9 +57,16 @@ export const ModalStyle = styled.div<ModalStyeProps>`
   `}
 `;
 
-export const ModalBaseStyle = styled.div<{ $clampHeightByWindow?: boolean }>`
+type ModalBaseStyleProps = {
+  $clampHeightByWindow?: boolean;
+  $stretchHeightByWindow?: boolean;
+};
+export const ModalBaseStyle = styled.div<ModalBaseStyleProps>`
   ${({ $clampHeightByWindow }) =>
     $clampHeightByWindow && clampHeightByWindowCss}
+
+  ${({ $stretchHeightByWindow }) =>
+    $stretchHeightByWindow && stretchHeightByWindowCss}
 
   ${({ theme: { colors } }) => css`
     color: ${colors.text};

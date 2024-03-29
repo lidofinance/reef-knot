@@ -18,6 +18,7 @@ export type ModalOverlayProps = ModalOverlayOwnProps & TransitionWrapperProps;
 export type ModalOverlayInnerProps = ModalOverlayOwnProps &
   TransitionInnerProps & {
     clampHeightByWindow?: boolean;
+    stretchHeightByWindow?: boolean;
   };
 
 export type ModalProps = {
@@ -30,6 +31,7 @@ export type ModalProps = {
   omitContentStyle?: boolean;
   widthClamp?: number;
   clampHeightByWindow?: boolean;
+  stretchHeightByWindow?: boolean;
 } & Omit<ModalOverlayProps, 'title' | 'in'>;
 
 export type ModalExtraProps = CommonComponentProps<'div'>;

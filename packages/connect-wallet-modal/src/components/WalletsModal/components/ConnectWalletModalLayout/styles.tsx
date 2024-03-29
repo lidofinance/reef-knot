@@ -7,8 +7,8 @@ import { Link } from '@lidofinance/lido-ui';
  */
 export const SCROLLBAR_WIDTH = 10;
 
-export const MEDIA_FULL_HEIGHT = `@media (min-height: 641px)`;
-export const MEDIA_COMPACT_HEIGHT = `@media (max-height: 640px)`;
+export const MEDIA_DESKTOP_HEIGHT = `(min-height: 641px)`;
+export const MEDIA_MOBILE_HEIGHT = `(max-height: 640px)`;
 
 const scrollBoxCss = css`
   ${({ theme }) => css`
@@ -64,8 +64,9 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   flex: 0 1 auto;
 
-  ${MEDIA_COMPACT_HEIGHT} {
+  @media ${MEDIA_MOBILE_HEIGHT} {
     ${scrollBoxCss}
+    flex: 1 1 auto;
 
     &::-webkit-scrollbar-track {
       margin-bottom: 12px;
@@ -75,7 +76,11 @@ export const ContentWrapper = styled.div`
 `;
 
 export const ContentWrapperInner = styled.div`
-  ${MEDIA_COMPACT_HEIGHT} {
+  @media ${MEDIA_MOBILE_HEIGHT} {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 100%;
     margin-right: -${SCROLLBAR_WIDTH}px;
   }
 `;
@@ -102,10 +107,10 @@ export const Subtitle = styled.div`
 export const WalletsButtonsScrollBox = styled.div<{ $isCompact: boolean }>`
   ${({ $isCompact }) => css`
     display: flex;
-    flex: 0 0 auto;
+    flex: 1 1 auto;
+    flex-direction: column;
 
-    ${MEDIA_FULL_HEIGHT} {
-      flex: 1 1 auto;
+    @media ${MEDIA_DESKTOP_HEIGHT} {
       ${scrollBoxCss}
       ${$isCompact
         ? css`
@@ -124,7 +129,7 @@ export const WalletsButtonsContainer = styled.div<{
 }>`
   ${modalContentCss};
   ${({ theme, $buttonsFullWidth, $isCompact }) => css`
-    ${MEDIA_FULL_HEIGHT} {
+    @media ${MEDIA_DESKTOP_HEIGHT} {
       padding-right: calc(${theme.spaceMap.xxl}px - ${SCROLLBAR_WIDTH}px);
     }
 
