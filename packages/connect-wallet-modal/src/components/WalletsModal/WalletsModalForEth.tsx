@@ -17,8 +17,8 @@ const buttonComponentsByConnectorId: WalletsModalEthProps['buttonComponentsByCon
   {
     default: ConnectInjected, // fallback
     browserExtension: ConnectBrowser,
-    walletconnect: ConnectWC,
-    coinbase: ConnectCoinbase,
+    walletConnect: ConnectWC,
+    coinbaseWallet: ConnectCoinbase,
     ledgerHID: ConnectLedger,
   };
 

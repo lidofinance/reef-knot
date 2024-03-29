@@ -9,12 +9,12 @@ export type Metrics = {
   };
 };
 
-export type ButtonComponentsByConnectorId<I extends string> = {
-  [K in I | 'default']?: ComponentType<ButtonsCommonProps>;
+export type ButtonComponentsByConnectorId = {
+  [key: string]: ComponentType<ButtonsCommonProps>;
 };
 
 export type WalletsModalProps<I extends string = string> = ModalProps & {
-  buttonComponentsByConnectorId: ButtonComponentsByConnectorId<I>;
+  buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
   walletDataList: WalletAdapterData[];
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
