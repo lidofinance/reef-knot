@@ -11,7 +11,6 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
-    "copy-to-clipboard": "^3.3.3",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/constants": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
@@ -21,6 +20,7 @@
     "@lidofinance/lido-ethereum-sdk": "^3.1.1",
     "@lidofinance/lido-ui": "^3.18.0",
     "@svgr/webpack": "^8.0.1",
+    "copy-to-clipboard": "^3.3.3",
     "fs-extra": "^11.2.0",
     "@tanstack/react-query": "^5.29.0",
     "flatted": "^3.2.7",

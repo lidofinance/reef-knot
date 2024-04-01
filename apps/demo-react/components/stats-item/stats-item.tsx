@@ -1,12 +1,12 @@
 import { FC } from 'react';
+import { ReactComponent as ETHIcon } from 'assets/icons/ETH.svg';
+import { ReactComponent as stETHIcon } from 'assets/icons/stETH.svg';
+import { ReactComponent as wstETHIcon } from 'assets/icons/wstETH.svg';
 
 import {
   StatsWrapperStyle,
   StatsTokenStyle,
   StatsValueStyle,
-  ETHIcon,
-  stETHIcon,
-  wstETHIcon,
   InlineLoaderStyle,
   ContentWrapperStyle,
 } from './stats-item-styles';
