@@ -11,7 +11,6 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
-    "copy-to-clipboard": "^3.3.3",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/constants": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
@@ -21,6 +20,7 @@
     "@lidofinance/lido-ethereum-sdk": "^3.1.1",
     "@lidofinance/lido-ui": "^3.18.0",
     "@svgr/webpack": "^8.0.1",
+    "copy-to-clipboard": "^3.3.3",
     "fs-extra": "^11.2.0",
     "lodash": "^4.17.21",
     "next": "12.3.4",
@@ -32,7 +32,6 @@
     "swr": "^2.2.5",
     "tiny-invariant": "^1.3.1",
     "url-loader": "^4.1.1",
-    "viem": "^2.7.11",
     "wagmi": "^0.12.19"
   },
   "devDependencies": {
@@ -45,6 +44,6 @@
     "next-transpile-modules": "9.0.0",
     "tsconfig": "*",
     "typechain": "^8.3.0",
-    "typescript": "4.9.5"
+    "typescript": "^4.9.5"
   }
 }

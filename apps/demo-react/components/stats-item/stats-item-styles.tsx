@@ -1,40 +1,6 @@
 import styled from 'styled-components';
 import { InlineLoader } from '@lidofinance/lido-ui';
 
-import ETH from 'assets/icons/ETH.svg';
-import stETH from 'assets/icons/stETH.svg';
-import wstETH from 'assets/icons/wstETH.svg';
-
-export const ETHIcon = styled.img.attrs({
-  src: ETH,
-  alt: 'ETH',
-})`
-  display: block;
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-`;
-
-export const stETHIcon = styled.img.attrs({
-  src: stETH,
-  alt: 'stETH',
-})`
-  display: block;
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-`;
-
-export const wstETHIcon = styled.img.attrs({
-  src: wstETH,
-  alt: 'wstETH',
-})`
-  display: block;
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-`;
-
 export const StatsWrapperStyle = styled.div`
   margin-right: 18px;
   flex-grow: 1;
@@ -75,4 +41,5 @@ export const InlineLoaderStyle = styled(InlineLoader)`
 export const ContentWrapperStyle = styled.div`
   display: flex;
   align-items: baseline;
+  margin-left: 8px;
 `;

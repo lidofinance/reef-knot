@@ -3,8 +3,9 @@ import { ReefKnot, getConnectors, holesky } from 'reef-knot/core-react';
 import { WagmiConfig, createClient, configureChains, Chain } from 'wagmi';
 import * as wagmiChains from 'wagmi/chains';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
+import { CHAINS } from '@lido-sdk/constants';
 
-import { getBackendRPCPath, dynamics, CHAINS } from 'config';
+import { getBackendRPCPath, dynamics } from 'config';
 import { useClientConfig } from 'providers/client-config';
 
 import { SDKLegacyProvider } from './sdk-legacy';
