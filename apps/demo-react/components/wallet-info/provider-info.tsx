@@ -3,7 +3,7 @@ import { ProviderInfoRowStyle, ProviderInfoContentStyle } from './styles';
 
 const HIDDEN_KEYS = ['_jsonRpcConnection'];
 
-function stringify(obj: object) {
+const stringify = (obj: object) => {
   let cache: unknown[] | null = [];
   const str = JSON.stringify(obj, function (_key, value) {
     if (typeof value === 'object' && value !== null) {
@@ -18,7 +18,7 @@ function stringify(obj: object) {
   });
   cache = null; // reset the cache
   return str;
-}
+};
 
 export const Web3ProviderInfo = () => {
   const windowEthereumData = Object.entries({ ...globalThis.window?.ethereum });

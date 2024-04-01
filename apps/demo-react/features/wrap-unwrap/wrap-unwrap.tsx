@@ -20,22 +20,24 @@ export const WrapUnwrap: FC = () => {
   const account = web3account as `0x{string}`;
 
   const { wrap } = useLidoSDK();
+  const isWrapTx = type === CallType.wrap;
 
   const handleCall = useCallback(async () => {
     const callValue = inputValue ?? BigInt(0);
-    const method = type === CallType.wrap ? wrap.wrapEth : wrap.unwrap;
-
-    return await method.call(wrap, {
+    const callData = {
       value: callValue,
       account,
       callback: transactionToast,
-    });
-  }, [inputValue, type, wrap, account]);
+    };
+
+    if (isWrapTx) return await wrap.wrapEth(callData);
+    else return await wrap.unwrap(callData);
+  }, [inputValue, account, isWrapTx, wrap]);
 
   const handleTypeChange = (value: string | number) => {
     setType(value as CallType);
   };
-  const title = type === CallType.wrap ? 'Wrap' : 'Unwrap';
+  const title = isWrapTx ? 'Wrap' : 'Unwrap';
 
   return (
     <ActionItem title={title} action={handleCall}>

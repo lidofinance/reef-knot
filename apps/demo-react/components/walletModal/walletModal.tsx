@@ -8,7 +8,7 @@ import {
   Copy,
 } from '@lidofinance/lido-ui';
 import { useEtherscanOpen } from '@lido-sdk/react';
-import { useConnectorInfo, useDisconnect, useWeb3 } from '@reef-knot/web3-react';
+import { useConnectorInfo, useDisconnect, useWeb3 } from 'reef-knot/web3-react';
 import { useCopyToClipboard } from 'hooks/useCopyToClipboard';
 import { FC, useCallback } from 'react';
 import {
@@ -44,7 +44,7 @@ const WalletModal: FC<ModalProps> = (props) => {
             </WalletModalConnectorStyle>
           )}
 
-          {disconnect && (
+          {!!forceDisconnect && (
             <WalletModalDisconnectStyle
               size="xs"
               variant="outlined"

@@ -9,14 +9,11 @@ export const WrapperStyle = styled(Block)`
 `;
 
 export const ActionsBlockStyle = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
   width: 100%;
-  flex-wrap: wrap;
-`;
 
-export const ColumnStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    grid-template-columns: repeat(1, auto);
+  }
 `;
