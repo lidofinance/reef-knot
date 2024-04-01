@@ -7,8 +7,8 @@ export const WalletTesting = () => {
     <WrapperStyle>
       <ActionsBlockStyle>
         <Stake />
-        <Withdrawals />
         <WrapUnwrap />
+        <Withdrawals />
         <Permit />
         <Claim />
       </ActionsBlockStyle>
