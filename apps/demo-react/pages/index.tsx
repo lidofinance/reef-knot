@@ -5,7 +5,7 @@ import { WalletInfo } from 'components';
 import Layout from 'components/layout';
 import { WalletTesting, Stats } from 'features';
 
-export function Web() {
+export const Web = () => {
   return (
     <>
       <WalletInfo />
@@ -19,7 +19,7 @@ export function Web() {
       </Layout>
     </>
   );
-}
+};
 
 const WebNoSSR = dynamic(() => Promise.resolve(Web), { ssr: false });
 export default WebNoSSR;

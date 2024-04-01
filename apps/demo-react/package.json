@@ -11,6 +11,7 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
+    "copy-to-clipboard": "^3.3.3",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/constants": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",

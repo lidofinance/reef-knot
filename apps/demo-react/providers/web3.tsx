@@ -46,7 +46,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
           [CHAINS.Mainnet]: getBackendRPCPath(CHAINS.Mainnet),
         },
       ),
-    [supportedChainIds, getBackendRPCPath],
+    [supportedChainIds],
   );
 
   const client = useMemo(() => {
@@ -86,13 +86,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       provider,
       webSocketProvider,
     });
-  }, [
-    supportedChains,
-    defaultChain,
-    backendRPC,
-    walletconnectProjectId,
-    getBackendRPCPath,
-  ]);
+  }, [supportedChains, defaultChain, backendRPC, walletconnectProjectId]);
   return (
     <WagmiConfig client={client}>
       <ReefKnot

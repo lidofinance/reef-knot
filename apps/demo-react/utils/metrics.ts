@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Metrics } from 'reef-knot/connect-wallet-modal';
 
 const metrics: Metrics = {
