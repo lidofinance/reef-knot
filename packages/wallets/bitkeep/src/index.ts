@@ -11,9 +11,14 @@ declare global {
   }
 }
 
+// The current metrics implementation is based on walletId,
+// using previous "bitkeep" name here not to break metrics
+export const id = 'bitget';
+export const name = 'Bitget';
+
 export class BitgetConnector extends InjectedConnector {
-  readonly id = 'bitget';
-  readonly name = 'Bitget';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -25,10 +30,8 @@ export class BitgetConnector extends InjectedConnector {
 }
 
 export const Bitget: WalletAdapterType = ({ chains }) => ({
-  walletName: 'Bitget',
-  // The current metrics implementation is based on walletId,
-  // using previous "bitkeep" name here not to break metrics
-  walletId: 'bitkeep',
+  walletName: name,
+  walletId: id,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.bitkeep?.ethereum,
   downloadURLs: {

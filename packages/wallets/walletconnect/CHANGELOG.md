@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-walletconnect
 
+## 1.3.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 1.2.4
 
 ### Patch Changes

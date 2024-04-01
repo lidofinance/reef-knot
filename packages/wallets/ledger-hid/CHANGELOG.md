@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-ledger-hid
 
+## 2.1.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 2.0.0
 
 ### Patch Changes

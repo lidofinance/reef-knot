@@ -1,10 +1,1 @@
-<svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="16" cy="16" rx="16" ry="16" fill="#C2F0FF"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M8.01037 11.708C8.13566 10.1911 9.38025 9 10.8971 9H20.3786V11.0183H23.0123V13.7095H24V23.6667H11.8848C9.73927 23.6667 8 21.8895 8 19.6972V11.708H8.01037ZM11.8189 13.7095H21.8272V12.2294H11.8189V13.7095ZM9.18519 11.9602C9.18519 10.9942 9.95164 10.211 10.8971 10.211H19.1934V11.0183H10.6337V13.6889C9.81331 13.5595 9.18519 12.8348 9.18519 11.9602ZM20.6667 18.6667C20.6667 17.4497 21.4979 16.3334 22.6667 16.3333V21C21.4979 21 20.6667 19.8836 20.6667 18.6667Z" fill="url(#paint0_linear_2554_4531)"/>
-<defs>
-<linearGradient id="paint0_linear_2554_4531" x1="12" y1="9" x2="16" y2="23.6667" gradientUnits="userSpaceOnUse">
-<stop stop-color="#0087E9"/>
-<stop offset="1" stop-color="#03D2FF"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" fill="#fff" rx="24"/><path stroke="#7A8AA0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M33 23v-6a2 2 0 0 0-2-2H17a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><path stroke="#7A8AA0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m24 24 4 10 1.7-4.3L34 28l-10-4Z"/></svg>

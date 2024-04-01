@@ -2,8 +2,8 @@ import { WalletAdapterType } from '@reef-knot/types';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletIcon } from './icons/index.js';
 
-const id = 'browserExtension';
-const name = 'Browser';
+export const id = 'browserExtension';
+export const name = 'Browser';
 
 export class BrowserExtensionConnector extends InjectedConnector {
   readonly id = id;

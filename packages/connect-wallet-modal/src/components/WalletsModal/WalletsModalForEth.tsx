@@ -8,20 +8,54 @@ import {
   ConnectBrowser,
 } from '../../connectButtons';
 import { WalletsModal } from './WalletsModal';
-import type { ButtonComponentsByConnectorId, WalletsModalProps } from './types';
+import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
+import type { WalletsModalProps } from './types';
 
-const buttonComponentsByConnectorId: ButtonComponentsByConnectorId = {
-  default: ConnectInjected, // fallback
-  browserExtension: ConnectBrowser,
-  walletConnect: ConnectWC,
-  coinbaseWallet: ConnectCoinbase,
-  ledgerHID: ConnectLedger,
-};
+type WalletsModalEthProps = WalletsModalProps<WalletIdsEthereum>;
+
+const buttonComponentsByConnectorId: WalletsModalEthProps['buttonComponentsByConnectorId'] =
+  {
+    default: ConnectInjected, // fallback
+    browserExtension: ConnectBrowser,
+    walletConnect: ConnectWC,
+    coinbaseWallet: ConnectCoinbase,
+    ledgerHID: ConnectLedger,
+  };
+
+const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
+  'browserExtension',
+  'metamask',
+  'ledgerHID',
+  'ledgerLive',
+  'walletconnect',
+  'coinbase',
+  'trust',
+  'okx',
+  'exodus',
+  'brave',
+  'bitget',
+  'xdefi',
+  'imToken',
+  'coin98',
+  'ambire',
+  'safe',
+  'dappBrowserInjected',
+];
+
+const WALLETS_PINNED_CONFIG_DEFAULT: WalletsModalEthProps['walletsPinned'] = [
+  'browserExtension',
+];
 
 type WalletsModalForEthProps = Omit<
-  WalletsModalProps,
-  'buttonComponentsByConnectorId' | 'walletDataList'
->;
+  WalletsModalEthProps,
+  | 'buttonComponentsByConnectorId'
+  | 'walletDataList'
+  | 'walletsShown'
+  | 'walletsPinned'
+> & {
+  walletsShown?: WalletsModalEthProps['walletsShown'];
+  walletsPinned?: WalletsModalEthProps['walletsPinned'];
+};
 
 export function WalletsModalForEth(props: WalletsModalForEthProps) {
   const { walletDataList } = useReefKnotContext();
@@ -30,6 +64,8 @@ export function WalletsModalForEth(props: WalletsModalForEthProps) {
     <WalletsModal
       {...props}
       walletDataList={walletDataList}
+      walletsShown={props.walletsShown || WALLETS_DISPLAY_CONFIG_DEFAULT}
+      walletsPinned={props.walletsPinned || WALLETS_PINNED_CONFIG_DEFAULT}
       buttonComponentsByConnectorId={buttonComponentsByConnectorId}
     />
   );

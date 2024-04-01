@@ -1,9 +1,11 @@
-import styled from '../../utils/styledWrapper.js';
+import styled, { css } from '../../utils/styledWrapper.js';
 import { TransitionInnerProps } from '../withTransition';
 
 type TransitionProps = {
   $duration: number;
   $transition: TransitionInnerProps['transitionStatus'];
+  $clampHeightByWindow?: boolean;
+  $stretchHeightByWindow?: boolean;
 };
 
 const getOpacity = ({ $transition }: TransitionProps) => {
@@ -35,6 +37,7 @@ export const ModalOverflowStyle = styled.div`
   overflow: auto;
   overflow-x: hidden;
   display: flex;
+  flex-direction: column;
 `;
 
 const getTransform = ({ $transition }: TransitionProps) => {
@@ -44,6 +47,24 @@ const getTransform = ({ $transition }: TransitionProps) => {
 };
 
 export const ModalContentStyle = styled.div<TransitionProps>`
+  ${({ $clampHeightByWindow }) =>
+    $clampHeightByWindow &&
+    css`
+      display: flex;
+      flex-direction: column;
+      flex: 0 1 auto;
+      max-height: 100%;
+    `}
+
+  ${({ $stretchHeightByWindow }) =>
+    $stretchHeightByWindow &&
+    css`
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      height: 100%;
+    `}
+
   box-sizing: border-box;
   max-width: 100%;
   padding: ${({ theme }) => theme.spaceMap.lg}px;

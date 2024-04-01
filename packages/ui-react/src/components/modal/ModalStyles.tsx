@@ -5,24 +5,69 @@ import { ButtonIcon } from '../button';
 
 const MAX_INNER_WIDTH = 600;
 
-export const ModalStyle = styled.div<{ $center: boolean }>`
+const clampHeightByWindowCss = css`
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  max-height: 100%;
+`;
+
+const stretchHeightByWindowCss = css`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  max-height: 100%;
+`;
+
+type ModalStyeProps = {
+  $center: boolean;
+  $width?: number;
+  $clampHeightByWindow?: boolean;
+  $stretchHeightByWindow?: boolean;
+};
+export const ModalStyle = styled.div<ModalStyeProps>`
+  ${({ $clampHeightByWindow }) =>
+    $clampHeightByWindow && clampHeightByWindowCss}
+
+  ${({ $stretchHeightByWindow }) =>
+    $stretchHeightByWindow && stretchHeightByWindowCss}
+
   ${({
     theme: { fontSizesMap, borderRadiusesMap, colors, boxShadows },
     $center,
+    $width,
   }) => css`
-    width: 100%;
-    min-width: 280px;
+    ${$width
+      ? css`
+          width: ${$width}px;
+          max-width: 100%;
+        `
+      : css`
+          width: 100%;
+          min-width: 280px;
+        `}
     font-weight: 400;
     font-size: ${fontSizesMap.xs}px;
     line-height: 1.5em;
     text-align: ${$center ? 'center' : 'left'};
     border-radius: ${borderRadiusesMap.xl}px;
+    overflow: hidden;
     box-shadow: ${boxShadows.xxl} ${colors.shadowDark};
     box-sizing: content-box;
   `}
 `;
 
-export const ModalBaseStyle = styled.div`
+type ModalBaseStyleProps = {
+  $clampHeightByWindow?: boolean;
+  $stretchHeightByWindow?: boolean;
+};
+export const ModalBaseStyle = styled.div<ModalBaseStyleProps>`
+  ${({ $clampHeightByWindow }) =>
+    $clampHeightByWindow && clampHeightByWindowCss}
+
+  ${({ $stretchHeightByWindow }) =>
+    $stretchHeightByWindow && stretchHeightByWindowCss}
+
   ${({ theme: { colors } }) => css`
     color: ${colors.text};
     background: ${colors.foreground};

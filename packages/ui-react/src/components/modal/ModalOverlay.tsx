@@ -16,7 +16,15 @@ function ModalOverlay(
   props: ModalOverlayInnerProps,
   externalRef?: ForwardedRef<HTMLDivElement>,
 ) {
-  const { onClose, onBack, duration, transitionStatus, ...rest } = props;
+  const {
+    onClose,
+    onBack,
+    duration,
+    transitionStatus,
+    clampHeightByWindow,
+    stretchHeightByWindow,
+    ...rest
+  } = props;
   const closable = !!onClose;
 
   useEscape(onClose);
@@ -44,6 +52,8 @@ function ModalOverlay(
           ref={mergedRef}
           $transition={transitionStatus}
           $duration={duration}
+          $clampHeightByWindow={clampHeightByWindow}
+          $stretchHeightByWindow={stretchHeightByWindow}
           {...rest}
         />
       </ModalOverflowStyle>

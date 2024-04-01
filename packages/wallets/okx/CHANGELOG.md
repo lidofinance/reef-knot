@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-okx
 
+## 1.4.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 1.3.1
 
 ### Patch Changes

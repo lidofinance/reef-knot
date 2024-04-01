@@ -17,32 +17,55 @@ export const ConnectButtonStyle = styled(Button).attrs({
 `;
 
 export const ConnectButtonContentStyle = styled.span`
-  ${({ theme: { colors } }) => css`
+  ${({ theme }) => css`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    padding: 0 5px;
-    color: ${colors.text};
+    padding: 0 ${theme.spaceMap.md}px;
+    color: ${theme.colors.text};
   `}
 `;
 
 export const ConnectButtonTitleStyle = styled.div`
-  ${({ theme: { colors } }) => css`
+  ${({ theme }) => css`
     overflow: hidden;
     max-width: 100%;
     text-overflow: ellipsis;
-    color: ${colors.text};
+    color: ${theme.colors.text};
+    font-size: ${theme.fontSizesMap.xs}px;
+    font-weight: 400;
     line-height: 20px;
   `}
 `;
 
-export const ConnectButtonIconStyle = styled.span`
-  display: flex;
-  margin-bottom: 8px;
+export const ConnectButtonIconStyle = styled.span<{ $isCompact?: boolean }>`
+  ${({ theme, $isCompact }) => css`
+    display: flex;
+    margin-right: 12px;
 
-  svg {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
+    svg {
+      border-radius: 50%;
+      ${$isCompact
+        ? css`
+            width: 40px;
+            height: 40px;
+          `
+        : css`
+            width: 48px;
+            height: 48px;
+          `}
+
+      ${theme.mediaQueries.md} {
+        ${$isCompact
+          ? css`
+              width: 36px;
+              height: 36px;
+            `
+          : css`
+              width: 40px;
+              height: 40px;
+            `}
+      }
+    }
+  `}
 `;

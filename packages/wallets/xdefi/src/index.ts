@@ -17,9 +17,12 @@ declare global {
   }
 }
 
+export const id = 'xdefi';
+export const name = 'XDEFI';
+
 export class XdefiConnector extends InjectedConnector {
-  readonly id = 'xdefi';
-  readonly name = 'XDEFI';
+  readonly id = id;
+  readonly name = name;
   constructor(chains: Chain[]) {
     super({
       chains,
@@ -32,8 +35,8 @@ export class XdefiConnector extends InjectedConnector {
 }
 
 export const Xdefi: WalletAdapterType = ({ chains }) => ({
-  walletName: 'XDEFI',
-  walletId: 'xdefi',
+  walletName: name,
+  walletId: id,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.xfi?.ethereum ||

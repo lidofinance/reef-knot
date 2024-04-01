@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-bitkeep
 
+## 1.2.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 1.1.1
 
 ### Patch Changes

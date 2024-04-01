@@ -2,9 +2,12 @@ import { WalletAdapterType } from '@reef-knot/types';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletIcon, WalletIconInverted } from './icons/index.js';
 
+export const id = 'metamask';
+export const name = 'MetaMask';
+
 export const MetaMask: WalletAdapterType = ({ chains }) => ({
-  walletName: 'MetaMask',
-  walletId: 'metamask',
+  walletName: name,
+  walletId: id,
   icon: {
     light: WalletIcon,
     dark: WalletIconInverted,
