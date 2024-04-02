@@ -104,6 +104,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   }, [
     connectAsync,
     connector,
+    deeplink,
     disconnect,
     metricsOnClick,
     onBeforeConnect,
