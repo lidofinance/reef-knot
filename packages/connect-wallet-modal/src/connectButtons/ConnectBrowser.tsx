@@ -1,11 +1,10 @@
 import React, { ElementType, FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/web3-react';
+import { useDisconnect, useReefKnotModal } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButton } from '../components/ConnectButton';
 import { capitalize } from '../helpers';
 import { ConnectInjectedProps } from './types';
-import { useReefKnotModal } from '@reef-knot/core-react';
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -77,7 +76,9 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
-      onClick={handleConnect}
+      onClick={() => {
+        void handleConnect();
+      }}
     >
       {walletName}
     </ConnectButton>

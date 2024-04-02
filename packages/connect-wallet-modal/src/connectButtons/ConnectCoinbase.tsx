@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/web3-react';
+import { useDisconnect } from '@reef-knot/core-react';
 import { ConnectButton } from '../components/ConnectButton';
 import { ConnectInjectedProps } from './types';
 

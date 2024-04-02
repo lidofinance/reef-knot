@@ -28,7 +28,9 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
-      onClick={handleConnect}
+      onClick={() => {
+        void handleConnect();
+      }}
     >
       Ledger
     </ConnectButton>

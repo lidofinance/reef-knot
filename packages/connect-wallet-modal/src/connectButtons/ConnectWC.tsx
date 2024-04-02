@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/web3-react';
+import { useDisconnect, isMobileOrTablet } from '@reef-knot/core-react';
 import { WCWarnBannerRequest } from '@reef-knot/ui-react';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
-import { capitalize } from '../helpers';
+import { capitalize, openWindow } from '../helpers';
 import { ConnectWCProps } from './types';
 
 let redirectionWindow: Window | null = null;
@@ -32,6 +32,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     downloadURLs,
     connector,
     walletconnectExtras,
+    deeplink,
     ...rest
   } = props;
 
@@ -52,6 +53,12 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const [isConnecting, setIsConnecting] = useState(false);
 
   const handleConnect = useCallback(async () => {
+    // Handle deeplink on mobiles before connecting to WC
+    if (isMobileOrTablet && deeplink) {
+      openWindow(deeplink);
+      return; // A user was redirected to a wallet mobile app, no need to continue
+    }
+
     // WCURI – WalletConnect Pairing URI: https://docs.walletconnect.com/2.0/specs/clients/core/pairing/pairing-uri
     // Used for connection without WalletConnect QR modal via redirect
     const WCURIConnector = walletconnectExtras?.connectionViaURI?.connector;
@@ -113,7 +120,9 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         {...rest}
         icon={WalletIcon}
         shouldInvertWalletIcon={shouldInvertWalletIcon}
-        onClick={handleConnect}
+        onClick={() => {
+          void handleConnect();
+        }}
       >
         {walletName}
       </ConnectButton>
