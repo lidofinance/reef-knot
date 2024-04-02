@@ -11,6 +11,7 @@ declare module '@wagmi/core' {
 
 export const id = 'trust';
 export const name = 'Trust';
+const currentHost = globalThis.window?.location.host || '';
 
 export class TrustConnector extends InjectedConnector {
   readonly id = id;
@@ -33,5 +34,6 @@ export const Trust: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://trustwallet.com/browser-extension',
   },
+  deeplink: `https://link.trustwallet.com/open_url?coin_id=60&url=${currentHost}`,
   connector: new TrustConnector(chains),
 });

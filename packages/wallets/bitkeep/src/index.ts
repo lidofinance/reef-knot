@@ -15,6 +15,9 @@ declare global {
 // using previous "bitkeep" name here not to break metrics
 export const id = 'bitget';
 export const name = 'Bitget';
+const currentHref = globalThis.window
+  ? encodeURIComponent(globalThis.window.location.href)
+  : '';
 
 export class BitgetConnector extends InjectedConnector {
   readonly id = id;
@@ -37,6 +40,7 @@ export const Bitget: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://web3.bitget.com/',
   },
+  deeplink: `https://bkcode.vip?action=dapp&url=${currentHref}`,
   connector: new BitgetConnector(chains),
 });
 

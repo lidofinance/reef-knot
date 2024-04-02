@@ -4,6 +4,9 @@ import { WalletIcon, WalletIconInverted } from './icons/index.js';
 
 export const id = 'metamask';
 export const name = 'MetaMask';
+const currentHref = globalThis.window
+  ? globalThis.window.location.hostname + globalThis.window.location.pathname // encoding not supported
+  : '';
 
 export const MetaMask: WalletAdapterType = ({ chains }) => ({
   walletName: name,
@@ -14,8 +17,9 @@ export const MetaMask: WalletAdapterType = ({ chains }) => ({
   },
   detector: () => !!globalThis.window?.ethereum?.isMetaMask,
   downloadURLs: {
-    default: 'https://metamask.app.link/dapp/',
+    default: 'https://metamask.io/download/',
   },
+  deeplink: `https://metamask.app.link/dapp/${currentHref}`,
   connector: new MetaMaskConnector({
     chains,
     options: {
