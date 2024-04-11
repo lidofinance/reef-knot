@@ -7,41 +7,38 @@ type GetWalletsListArgs = {
   walletsPinned: WalletsModalProps['walletsPinned'];
 };
 
-export function sortWalletsList({
+export async function sortWalletsList({
   walletDataList,
   walletsShown,
   walletsPinned,
 }: GetWalletsListArgs) {
-  const filteredWalletData = walletsShown.reduce(
-    (walletsList, walletId) => {
-      const walletData = walletDataList.find((w) => w.walletId === walletId);
+  const filteredWalletData = {
+    pinned: [] as WalletAdapterData[],
+    detected: [] as WalletAdapterData[],
+    default: [] as WalletAdapterData[],
+  };
 
-      if (!walletData) return walletsList;
+  for (const walletId of walletsShown) {
+    const walletData = walletDataList.find((w) => w.walletId === walletId);
 
-      const { detector, autoConnectOnly } = walletData;
+    if (!walletData) continue;
 
-      // Filtering wallets marked as hidden and auto connect only
-      if (autoConnectOnly) return walletsList;
+    const { detector, autoConnectOnly } = walletData;
 
-      if (walletsPinned.includes(walletId)) {
-        // Put the pinned wallets on the first place, above all another
-        walletsList.pinned.push(walletData);
-      } else if (detector?.()) {
-        // If condition is true (usually means that a wallet is detected),
-        // move it to the first place in the wallets list, so a user can see it right away
-        walletsList.detected.push(walletData);
-      } else {
-        walletsList.default.push(walletData);
-      }
+    // Filtering wallets marked as auto connect only, they should be hidden in UI
+    if (autoConnectOnly) continue;
 
-      return walletsList;
-    },
-    {
-      pinned: [] as WalletAdapterData[],
-      detected: [] as WalletAdapterData[],
-      default: [] as WalletAdapterData[],
-    },
-  );
+    if (walletsPinned.includes(walletId)) {
+      // Put the pinned wallets on the first place, above all other wallets
+      filteredWalletData.pinned.push(walletData);
+    } else if (await detector?.()) {
+      // If condition is true (usually means that a wallet is detected),
+      // move it to the first place in the wallets list, so a user can see it right away
+      filteredWalletData.detected.push(walletData);
+    } else {
+      filteredWalletData.default.push(walletData);
+    }
+  }
 
   const pinsSorted = [...filteredWalletData.pinned].sort(
     (a, b) =>

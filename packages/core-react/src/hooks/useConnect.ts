@@ -5,16 +5,16 @@ import { useReefKnotModal } from './useReefKnotModal';
 
 export const useConnect = () => {
   const { openModalAsync } = useReefKnotModal();
-  const { isAutoConnectionSuitable } = useAutoConnectCheck();
+  const { checkIfShouldAutoConnect } = useAutoConnectCheck();
   const { eagerConnect } = useEagerConnect();
 
   const connect = useCallback(async () => {
-    if (isAutoConnectionSuitable) {
+    if (await checkIfShouldAutoConnect()) {
       const result = await eagerConnect();
       return { success: !!result };
     } else {
       return openModalAsync({ type: 'wallet' });
     }
-  }, [eagerConnect, openModalAsync, isAutoConnectionSuitable]);
+  }, [checkIfShouldAutoConnect, eagerConnect, openModalAsync]);
   return { connect };
 };

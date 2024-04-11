@@ -1,5 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useReefKnotModal } from '@reef-knot/core-react';
+import { WalletAdapterData } from '@reef-knot/types';
 
 import { WalletsModalProps } from '../../types';
 import { WalletModalConnectTermsProps } from '../../../Terms';
@@ -32,33 +33,6 @@ export const ConnectWalletModal = ({
   const [inputValue, setInputValue] = useState('');
   const [isShownOtherWallets, setShowOtherWallets] = useState(false);
 
-  const walletsListFull = useMemo(() => {
-    return sortWalletsList({
-      walletDataList,
-      walletsShown,
-      walletsPinned,
-    });
-  }, [walletDataList, walletsShown, walletsPinned]);
-
-  const walletsList = useMemo(() => {
-    if (!isShownOtherWallets) {
-      return walletsListFull.slice(0, walletsDisplayInitialCount);
-    }
-
-    if (inputValue) {
-      return walletsListFull.filter((wallet) =>
-        wallet.walletName.toLowerCase().includes(inputValue.toLowerCase()),
-      );
-    }
-
-    return walletsListFull;
-  }, [
-    inputValue,
-    walletsListFull,
-    isShownOtherWallets,
-    walletsDisplayInitialCount,
-  ]);
-
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.currentTarget.value);
@@ -74,16 +48,52 @@ export const ConnectWalletModal = ({
     setShowOtherWallets((value) => !value);
   }, []);
 
-  const isWalletsListEmpty = walletsList.length === 0;
-  const isWalletsToggleButtonShown =
-    walletsListFull.length > walletsList.length || isShownOtherWallets;
+  const [walletsList, setWalletsList] = useState<WalletAdapterData[]>([]);
+
+  const isWalletsToggleButtonShown = useRef(false);
+
+  useEffect(() => {
+    // Asynchronously filling wallets list because there is an async wallet detection during wallets sorting.
+    // Actually, almost all wallets can be detected synchronously, so this process is expected to be fast,
+    // and a loading indicator is not required for now.
+    void (async () => {
+      const walletsListFull = await sortWalletsList({
+        walletDataList,
+        walletsShown,
+        walletsPinned,
+      });
+
+      let _walletsList = walletsListFull;
+      if (!isShownOtherWallets) {
+        _walletsList = walletsListFull.slice(0, walletsDisplayInitialCount);
+      }
+
+      if (inputValue) {
+        _walletsList = walletsListFull.filter((wallet) =>
+          wallet.walletName.toLowerCase().includes(inputValue.toLowerCase()),
+        );
+      }
+
+      setWalletsList(_walletsList);
+      isWalletsToggleButtonShown.current =
+        walletsListFull.length > walletsList.length || isShownOtherWallets;
+    })();
+  }, [
+    inputValue,
+    isShownOtherWallets,
+    walletDataList,
+    walletsDisplayInitialCount,
+    walletsList.length,
+    walletsPinned,
+    walletsShown,
+  ]);
 
   return (
     <ConnectWalletModalLayout
       inputValue={inputValue}
-      isEmptyWalletsList={isWalletsListEmpty}
+      isEmptyWalletsList={walletsList.length === 0}
       isShownOtherWallets={isShownOtherWallets}
-      isShownWalletsToggleButton={isWalletsToggleButtonShown}
+      isShownWalletsToggleButton={isWalletsToggleButtonShown.current}
       onInputChange={handleInputChange}
       onInputClear={handleInputClear}
       onToggleWalletsList={handleToggleWalletsList}
