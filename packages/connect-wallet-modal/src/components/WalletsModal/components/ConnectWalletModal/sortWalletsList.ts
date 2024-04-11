@@ -7,15 +7,21 @@ type GetWalletsListArgs = {
   walletsPinned: WalletsModalProps['walletsPinned'];
 };
 
+type FilteredWalletData = {
+  pinned: WalletAdapterData[];
+  detected: WalletAdapterData[];
+  default: WalletAdapterData[];
+};
+
 export async function sortWalletsList({
   walletDataList,
   walletsShown,
   walletsPinned,
 }: GetWalletsListArgs) {
-  const filteredWalletData = {
-    pinned: [] as WalletAdapterData[],
-    detected: [] as WalletAdapterData[],
-    default: [] as WalletAdapterData[],
+  const filteredWalletData: FilteredWalletData = {
+    pinned: [],
+    detected: [],
+    default: [],
   };
 
   for (const walletId of walletsShown) {
