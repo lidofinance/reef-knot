@@ -1,5 +1,12 @@
 # @reef-knot/core-react
 
+## 3.1.0
+
+### Minor Changes
+
+- Make it possible for wallet detectors to be async;
+- Improve Safe wallet detection;
+
 ## 3.0.0
 
 ### Major Changes
