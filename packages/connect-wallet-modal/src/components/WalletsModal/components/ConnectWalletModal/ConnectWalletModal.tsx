@@ -48,42 +48,51 @@ export const ConnectWalletModal = ({
     setShowOtherWallets((value) => !value);
   }, []);
 
-  const [walletsList, setWalletsList] = useState<WalletAdapterData[]>([]);
-
   const isWalletsToggleButtonShown = useRef(false);
 
-  useEffect(() => {
+  const [walletsList, setWalletsList] = useState<WalletAdapterData[]>([]);
+  const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
+    [],
+  );
+
+  const getWalletsListFull = useCallback(async () => {
     // Asynchronously filling wallets list because there is an async wallet detection during wallets sorting.
     // Actually, almost all wallets can be detected synchronously, so this process is expected to be fast,
     // and a loading indicator is not required for now.
-    void (async () => {
-      const walletsListFull = await sortWalletsList({
-        walletDataList,
-        walletsShown,
-        walletsPinned,
-      });
+    const _walletsListFull = await sortWalletsList({
+      walletDataList,
+      walletsShown,
+      walletsPinned,
+    });
+    setWalletsListFull(_walletsListFull);
+  }, [walletDataList, walletsPinned, walletsShown]);
 
-      let _walletsList = walletsListFull;
-      if (!isShownOtherWallets) {
-        _walletsList = walletsListFull.slice(0, walletsDisplayInitialCount);
-      }
+  useEffect(() => {
+    void getWalletsListFull();
+  }, [getWalletsListFull]);
 
-      if (inputValue) {
-        _walletsList = walletsListFull.filter((wallet) =>
-          wallet.walletName.toLowerCase().includes(inputValue.toLowerCase()),
-        );
-      }
+  useEffect(() => {
+    let _walletsList = walletsListFull;
+    if (!isShownOtherWallets) {
+      _walletsList = walletsListFull.slice(0, walletsDisplayInitialCount);
+    }
 
-      setWalletsList(_walletsList);
-      isWalletsToggleButtonShown.current =
-        walletsListFull.length > walletsList.length || isShownOtherWallets;
-    })();
+    if (inputValue) {
+      _walletsList = walletsListFull.filter((wallet) =>
+        wallet.walletName.toLowerCase().includes(inputValue.toLowerCase()),
+      );
+    }
+
+    setWalletsList(_walletsList);
+    isWalletsToggleButtonShown.current =
+      walletsListFull.length > walletsList.length || isShownOtherWallets;
   }, [
     inputValue,
     isShownOtherWallets,
     walletDataList,
     walletsDisplayInitialCount,
     walletsList.length,
+    walletsListFull,
     walletsPinned,
     walletsShown,
   ]);
