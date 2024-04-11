@@ -17,7 +17,7 @@ export const Safe: WalletAdapterType = ({ chains }) => {
     walletName: name,
     walletId: id,
     autoConnectOnly: true,
-    detector: async () => {
+    detector: async (): Promise<boolean> => {
       // If opened in an iframe. This is an important check for Safe.
       // The updated wagmi SafeConnector already has this check, but the currently used SafeConnector for wagmi 0.x hasn't.
       if (globalThis.window && globalThis.window.parent !== globalThis.window) {
@@ -25,13 +25,13 @@ export const Safe: WalletAdapterType = ({ chains }) => {
         // because in such iframes Safe SDK Promises can get stuck without resolving,
         // so we are using a small timeout for them.
         return Promise.race([
-          new Promise((resolve) => {
+          new Promise<boolean>((resolve) => {
             safeConnector
               .getProvider()
               .then(() => resolve(true))
               .catch(() => resolve(false));
           }),
-          new Promise((resolve) => {
+          new Promise<boolean>((resolve) => {
             setTimeout(() => resolve(false), 200);
           }),
         ]);
