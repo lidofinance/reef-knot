@@ -8,7 +8,7 @@ export const Safe: WalletAdapterType = ({ chains }) => {
   const safeConnector = new SafeConnector({
     chains,
     options: {
-      allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+      allowedDomains: [/app.safe.global$/, /holesky-safe.protofire.io$/],
       debug: false,
     },
   });
@@ -18,16 +18,23 @@ export const Safe: WalletAdapterType = ({ chains }) => {
     walletId: id,
     autoConnectOnly: true,
     detector: async () => {
+      // If opened in an iframe. This is an important check for Safe.
+      // The updated wagmi SafeConnector already has this check, but the currently used SafeConnector for wagmi 0.x hasn't.
       if (globalThis.window && globalThis.window.parent !== globalThis.window) {
-        // if opened in an iframe. It is important check for Safe.
-        // The updated wagmi SafeConnector already has this check, but the currently used SafeConnector for wagmi 0.x hasn't.
-        let provider;
-        try {
-          provider = await safeConnector.getProvider();
-        } catch {
-          return false;
-        }
-        return !!provider;
+        // The Promise.race is needed to handle regular iframes, not related to Safe,
+        // because in such iframes Safe SDK Promises can get stuck without resolving,
+        // so we are using a small timeout for them.
+        return Promise.race([
+          new Promise((resolve) => {
+            safeConnector
+              .getProvider()
+              .then(() => resolve(true))
+              .catch(() => resolve(false));
+          }),
+          new Promise((resolve) => {
+            setTimeout(() => resolve(false), 200);
+          }),
+        ]);
       }
       return false;
     },
