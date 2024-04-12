@@ -89,12 +89,9 @@ export const ConnectWalletModal = ({
   }, [
     inputValue,
     isShownOtherWallets,
-    walletDataList,
     walletsDisplayInitialCount,
     walletsList.length,
     walletsListFull,
-    walletsPinned,
-    walletsShown,
   ]);
 
   return (
