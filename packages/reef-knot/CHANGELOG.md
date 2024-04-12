@@ -1,5 +1,13 @@
 # reef-knot
 
+## 4.1.1
+
+### Patch Changes
+
+- 92be1c7: Fix "checkIfDisconnectMakesSense"
+- Updated dependencies [92be1c7]
+  - @reef-knot/core-react@3.1.1
+
 ## 4.1.0
 
 ### Minor Changes
