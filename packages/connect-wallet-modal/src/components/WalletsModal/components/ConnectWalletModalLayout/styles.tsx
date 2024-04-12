@@ -13,7 +13,7 @@ export const MEDIA_MOBILE_HEIGHT = `(max-height: 640px)`;
 type ScrollbarProps = {
   $isSupportedCustomScrollbar: boolean;
 };
-const getScrollBoxCss = css<ScrollbarProps>`
+const scrollBoxCss = css<ScrollbarProps>`
   ${({ theme, $isSupportedCustomScrollbar }) => css`
     overflow-y: scroll;
     overflow-x: hidden;
@@ -71,7 +71,7 @@ export const ContentWrapper = styled.div<ScrollbarProps>`
   flex: 0 1 auto;
 
   @media ${MEDIA_MOBILE_HEIGHT} {
-    ${getScrollBoxCss}
+    ${scrollBoxCss}
     flex: 1 1 auto;
 
     &::-webkit-scrollbar-track {
@@ -125,7 +125,7 @@ export const WalletsButtonsScrollBox = styled.div<WalletsButtonsScrollBox>`
     flex-direction: column;
 
     @media ${MEDIA_DESKTOP_HEIGHT} {
-      ${getScrollBoxCss}
+      ${scrollBoxCss}
       ${$isCompact
         ? css`
             max-height: 350px;
