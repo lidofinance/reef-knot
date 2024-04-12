@@ -51,6 +51,8 @@ export const ConnectWalletModalLayout = ({
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isMobileHeight, setIsMobileHeight] = useState(false);
+  const [isSupportedCustomScrollbar, setIsSupportedCustomScrollbar] =
+    useState(true);
 
   useEffect(() => {
     if (isShownOtherWallets) {
@@ -61,6 +63,17 @@ export const ConnectWalletModalLayout = ({
   }, [isShownOtherWallets, onInputClear]);
 
   useEffect(() => {
+    // Additional check because `@supports selector(::-webkit-scrollbar)`
+    // passes as true on iOS device, but styles will not really apply
+    // Also the `helpers/userAgents` does not work really well in my tested case,
+    // so there is another iPhone/iPad check implementation
+    const isIOS =
+      /Macintosh/i.test(navigator.userAgent) &&
+      navigator.maxTouchPoints &&
+      navigator.maxTouchPoints > 1;
+    setIsSupportedCustomScrollbar(!isIOS);
+
+    // Screen height media query
     const mediaQuery = window.matchMedia(MEDIA_MOBILE_HEIGHT);
     setIsMobileHeight(mediaQuery.matches);
     const onMediaChange = (e: MediaQueryListEvent) => {
@@ -84,8 +97,13 @@ export const ConnectWalletModalLayout = ({
       clampHeightByWindow={!isShownOtherWallets && isMobileHeight}
       stretchHeightByWindow={isShownOtherWallets && isMobileHeight}
     >
-      <ContentWrapper key={isShownOtherWallets ? 'compact' : 'full'}>
-        <ContentWrapperInner>
+      <ContentWrapper
+        key={isShownOtherWallets ? 'compact' : 'full'}
+        $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
+      >
+        <ContentWrapperInner
+          $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
+        >
           <ContentHeader>
             <Terms {...termsProps} />
             <Subtitle>
@@ -109,6 +127,7 @@ export const ConnectWalletModalLayout = ({
           <WalletsButtonsScrollBox
             key={isShownOtherWallets ? 'full' : 'compact'}
             $isCompact={!isShownOtherWallets}
+            $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
           >
             {isEmptyWalletsList && (
               <EmptyWalletsList
@@ -122,6 +141,7 @@ export const ConnectWalletModalLayout = ({
               <WalletsButtonsContainer
                 $isCompact={isShownOtherWallets}
                 $buttonsFullWidth={isShownOtherWallets || buttonsFullWidth}
+                $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
               >
                 {children}
               </WalletsButtonsContainer>
