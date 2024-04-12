@@ -17,14 +17,24 @@ export const useForceDisconnect = () => {
 
 export const useDisconnect = (): {
   disconnect?: () => void;
+  checkIfDisconnectMakesSense: () => boolean;
 } => {
-  const { isConnected } = useAccount();
+  const { isConnected, connector } = useAccount();
   const { disconnect } = useDisconnectWagmi();
 
-  const { isAutoConnectionSuitable } = useAutoConnectCheck();
-  const available = isConnected && !isAutoConnectionSuitable;
+  const { getAutoConnectOnlyConnectors } = useAutoConnectCheck();
+  const checkIfDisconnectMakesSense = () => {
+    // It doesn't make sense to offer a user the ability to disconnect if the user is not connected yet,
+    // or if the user was connected automatically
+    const autoConnectOnlyConnectors = getAutoConnectOnlyConnectors();
+    return (
+      isConnected &&
+      autoConnectOnlyConnectors.some((c) => c.id === connector?.id)
+    );
+  };
 
   return {
-    disconnect: available ? disconnect : undefined,
+    disconnect: checkIfDisconnectMakesSense() ? disconnect : undefined,
+    checkIfDisconnectMakesSense,
   };
 };

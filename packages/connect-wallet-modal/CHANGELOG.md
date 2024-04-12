@@ -1,5 +1,16 @@
 # @reef-knot/connect-wallet-modal
 
+## 4.1.0
+
+### Minor Changes
+
+- Make it possible for wallet detectors to be async;
+- Improve Safe wallet detection;
+
+### Patch Changes
+
+- @reef-knot/wallets-list@1.13.1
+
 ## 4.0.0
 
 ### Major Changes

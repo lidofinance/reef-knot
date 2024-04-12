@@ -1,5 +1,12 @@
 # @reef-knot/wallets-list
 
+## 1.13.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-safe@1.2.0
+
 ## 1.13.0
 
 ### Minor Changes

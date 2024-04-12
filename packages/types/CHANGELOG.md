@@ -1,5 +1,12 @@
 # @reef-knot/types
 
+## 1.7.0
+
+### Minor Changes
+
+- Make it possible for wallet detectors to be async;
+- Improve Safe wallet detection;
+
 ## 1.6.0
 
 ### Minor Changes

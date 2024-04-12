@@ -46,7 +46,7 @@ export const connectEagerly = async (
   const isTermsAccepted = checkTermsAccepted();
 
   for (const adapter of adapters) {
-    if (adapter.detector?.()) {
+    if (await adapter.detector?.()) {
       // wallet is detected
       let connectionResult: ConnectResult | null = null;
       const tryConnection = () =>
@@ -55,7 +55,7 @@ export const connectEagerly = async (
           return result;
         });
 
-      // if terms are not accepted, show modal and wait for user to try connect from it
+      // if terms are not accepted, show modal and wait for user to try to connect from it
       if (!isTermsAccepted) {
         // Terms of service were not accepted previously.
         // So, for legal reasons, we must ask a user to accept the terms before connecting.

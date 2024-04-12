@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/web3-react';
+import { useDisconnect } from '@reef-knot/core-react';
 import { ConnectButton } from '../components/ConnectButton';
 import { capitalize, suggestApp } from '../helpers';
 import { ConnectInjectedProps } from './types';
@@ -21,7 +21,6 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     connector,
     ...rest
   } = props;
-  const walletIsDetected = !!detector?.();
   const walletIdCapitalized = capitalize(walletId);
   const metricsOnConnect =
     metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
@@ -40,7 +39,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     onBeforeConnect?.();
     metricsOnClick?.();
 
-    if (walletIsDetected) {
+    if (await detector?.()) {
       disconnect?.();
       await connectAsync({ connector });
     } else if (downloadURLs) {
@@ -49,11 +48,11 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
   }, [
     connectAsync,
     connector,
+    detector,
     disconnect,
     downloadURLs,
     metricsOnClick,
     onBeforeConnect,
-    walletIsDetected,
   ]);
 
   return (

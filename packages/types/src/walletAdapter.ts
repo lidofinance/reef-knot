@@ -16,8 +16,7 @@ export type WalletAdapterData = {
   icon?: ElementType | WalletAdapterIcons;
 
   // A function to check if the wallet is installed and injected.
-  // For example: isMetaMaskProvider: () => !!window.ethereum?.isMetaMask
-  detector?: () => boolean;
+  detector?: () => boolean | Promise<boolean>;
 
   // The wallet can be connected via automatic connection only.
   // The `detector` method will be called during auto connection, to decide if the wallet should be connected.
