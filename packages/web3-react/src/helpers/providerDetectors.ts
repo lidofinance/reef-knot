@@ -1,4 +1,4 @@
-import { isMobileOrTablet } from './userAgents';
+import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 
 export const hasInjected = () => !!globalThis.window?.ethereum;
 

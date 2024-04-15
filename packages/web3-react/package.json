@@ -48,15 +48,14 @@
     "@ethersproject/providers": "^5.7.2",
     "@reef-knot/core-react": "^3.0.0",
     "@reef-knot/ledger-connector": "^3.0.0",
+    "@reef-knot/wallets-helpers": "^1.1.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/react": "18.2.45",
-    "@types/ua-parser-js": "^0.7.36",
     "babel-loader": "8.2.2",
     "babel-plugin-styled-components": "1.13.2",
     "eslint-config-custom": "*",
-    "react": "18.2.0",
-    "ua-parser-js": "1.0.33"
+    "react": "18.2.0"
   },
   "dependencies": {
     "tiny-invariant": "^1.1.0"
@@ -65,8 +64,8 @@
     "@ethersproject/providers": "5",
     "@reef-knot/core-react": "^3.0.0",
     "@reef-knot/ledger-connector": "^3.0.0",
+    "@reef-knot/wallets-helpers": "^1.1.5",
     "react": ">=18",
-    "ua-parser-js": "^1.0.33",
     "wagmi": "^0.12.19"
   }
 }

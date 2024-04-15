@@ -7,6 +7,7 @@ export const isIOS = os.name === 'iOS';
 export const isAndroid = os.name === 'Android';
 
 export const device = parser.getDevice();
+export const isIPad = device.model === 'iPad';
 export const isMobile = device.type === 'mobile';
 export const isTablet = device.type === 'tablet';
 export const isMobileOrTablet = isMobile || isTablet;

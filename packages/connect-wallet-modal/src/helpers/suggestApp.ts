@@ -1,5 +1,5 @@
 import { openWindow } from './openWindow';
-import { isAndroid, isIOS } from './userAgents';
+import { isAndroid, isIOS } from '@reef-knot/wallets-helpers';
 
 export const suggestApp = (urls: {
   default: string;

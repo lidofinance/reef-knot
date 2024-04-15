@@ -36,15 +36,12 @@
     "dev": "dev=on rollup -c -w",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
-  "dependencies": {
-    "ua-parser-js": "1.0.33"
-  },
   "devDependencies": {
     "@reef-knot/ledger-connector": "^3.0.0",
     "@reef-knot/wallets-list": "^1.13.1",
     "@reef-knot/types": "^1.7.0",
     "@reef-knot/ui-react": "^1.0.8",
-    "@types/ua-parser-js": "^0.7.36",
+    "@reef-knot/wallets-helpers": "^1.1.5",
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "wagmi": "^0.12.19"
@@ -54,6 +51,7 @@
     "@reef-knot/wallets-list": "^1.4.1",
     "@reef-knot/types": "^1.2.1",
     "@reef-knot/ui-react": "^1.0.4",
+    "@reef-knot/wallets-helpers": "^1.1.5",
     "react": ">=18",
     "wagmi": "^0.12.19"
   }

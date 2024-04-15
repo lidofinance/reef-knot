@@ -17,10 +17,9 @@ import {
 } from './styles';
 import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
 
-import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
+import { isMobileOrTablet, isIOS, isIPad } from '@reef-knot/wallets-helpers';
 import type { WalletsModalProps } from '../../types';
 import { WalletModalInput } from '../WalletModalInput';
-import { isIOS, isIPad } from '../../../../helpers/userAgents';
 
 // Additional check because `@supports selector(::-webkit-scrollbar)`
 // passes as true on iOS/iPad devices, but styles will not really apply
@@ -59,7 +58,7 @@ export const ConnectWalletModalLayout = ({
 
   useEffect(() => {
     if (isShownOtherWallets) {
-      if (!isMobileOrTablet && !isIPad) inputRef.current?.focus();
+      if (!isMobileOrTablet) inputRef.current?.focus();
     } else {
       onInputClear();
     }
