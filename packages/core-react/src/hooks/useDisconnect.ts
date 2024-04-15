@@ -27,10 +27,10 @@ export const useDisconnect = (): {
     // It doesn't make sense to offer a user the ability to disconnect if the user is not connected yet,
     // or if the user was connected automatically
     const autoConnectOnlyConnectors = getAutoConnectOnlyConnectors();
-    return (
-      isConnected &&
-      autoConnectOnlyConnectors.some((c) => c.id === connector?.id)
+    const isConnectorNotAutoConnectOnly = autoConnectOnlyConnectors.every(
+      (c) => c.id !== connector?.id,
     );
+    return isConnected && isConnectorNotAutoConnectOnly;
   };
 
   return {
