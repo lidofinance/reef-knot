@@ -20,6 +20,11 @@ import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import type { WalletsModalProps } from '../../types';
 import { WalletModalInput } from '../WalletModalInput';
+import { isIOS, isIPad } from '../../../../helpers/userAgents';
+
+// Additional check because `@supports selector(::-webkit-scrollbar)`
+// passes as true on iOS/iPad devices, but styles will not really apply
+const isSupportedCustomScrollbar = !isIOS && !isIPad;
 
 type ConnectWalletModalLayoutProps = WalletsModalProps & {
   termsProps: WalletModalConnectTermsProps;
@@ -51,28 +56,16 @@ export const ConnectWalletModalLayout = ({
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isMobileHeight, setIsMobileHeight] = useState(false);
-  const [isSupportedCustomScrollbar, setIsSupportedCustomScrollbar] =
-    useState(true);
 
   useEffect(() => {
     if (isShownOtherWallets) {
-      if (!isMobileOrTablet) inputRef.current?.focus();
+      if (!isMobileOrTablet && !isIPad) inputRef.current?.focus();
     } else {
       onInputClear();
     }
   }, [isShownOtherWallets, onInputClear]);
 
   useEffect(() => {
-    // Additional check because `@supports selector(::-webkit-scrollbar)`
-    // passes as true on iOS device, but styles will not really apply
-    // Also the `helpers/userAgents` does not work really well in my tested case,
-    // so there is another iPhone/iPad check implementation
-    const isIOS =
-      /Macintosh/i.test(navigator.userAgent) &&
-      navigator.maxTouchPoints &&
-      navigator.maxTouchPoints > 1;
-    setIsSupportedCustomScrollbar(!isIOS);
-
     // Screen height media query
     const mediaQuery = window.matchMedia(MEDIA_MOBILE_HEIGHT);
     setIsMobileHeight(mediaQuery.matches);
