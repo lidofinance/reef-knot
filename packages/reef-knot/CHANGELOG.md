@@ -1,12 +1,29 @@
 # reef-knot
 
+## 4.1.3
+
+### Patch Changes
+
+- @reef-knot/wallets-list@1.13.2
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@4.1.2
+  - @reef-knot/wallets-helpers@1.1.6
+  - @reef-knot/core-react@3.1.2
+  - @reef-knot/web3-react@3.0.1
+
 ## 4.1.1
 
 ### Patch Changes
 
 - 92be1c7: Fix "checkIfDisconnectMakesSense"
-- Updated dependencies [92be1c7]
+- Updated dependencies
   - @reef-knot/core-react@3.1.1
+  - @reef-knot/connect-wallet-modal@4.1.1
 
 ## 4.1.0
 

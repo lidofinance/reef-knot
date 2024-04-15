@@ -10,36 +10,42 @@ export const SCROLLBAR_WIDTH = 10;
 export const MEDIA_DESKTOP_HEIGHT = `(min-height: 641px)`;
 export const MEDIA_MOBILE_HEIGHT = `(max-height: 640px)`;
 
-const scrollBoxCss = css`
-  ${({ theme }) => css`
+type ScrollbarProps = {
+  $isSupportedCustomScrollbar: boolean;
+};
+const scrollBoxCss = css<ScrollbarProps>`
+  ${({ theme, $isSupportedCustomScrollbar }) => css`
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 
-    @supports selector(::-webkit-scrollbar) {
-      &::-webkit-scrollbar-track {
-        border-radius: 30px;
-        background-color: transparent;
-      }
+    ${$isSupportedCustomScrollbar &&
+    css`
+      @supports selector(::-webkit-scrollbar) {
+        &::-webkit-scrollbar-track {
+          border-radius: 30px;
+          background-color: transparent;
+        }
 
-      &::-webkit-scrollbar {
-        width: ${SCROLLBAR_WIDTH}px;
-        background-color: transparent;
-      }
+        &::-webkit-scrollbar {
+          width: ${SCROLLBAR_WIDTH}px;
+          background-color: transparent;
+        }
 
-      &::-webkit-scrollbar-thumb {
-        border-style: solid;
-        border-color: transparent;
-        border-width: 2px;
-        border-radius: 5px;
-        background-clip: content-box;
-        background-color: ${theme.colors.border};
+        &::-webkit-scrollbar-thumb {
+          border-style: solid;
+          border-color: transparent;
+          border-width: 2px;
+          border-radius: 5px;
+          background-clip: content-box;
+          background-color: ${theme.colors.border};
 
-        &:hover {
-          border-width: 0;
+          &:hover {
+            border-width: 0;
+          }
         }
       }
-    }
+    `}
   `}
 `;
 
@@ -59,7 +65,7 @@ const modalContentCss = css`
 /**
  * Main Container
  */
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled.div<ScrollbarProps>`
   display: flex;
   flex-direction: column;
   flex: 0 1 auto;
@@ -75,13 +81,18 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const ContentWrapperInner = styled.div`
+export const ContentWrapperInner = styled.div<ScrollbarProps>`
   @media ${MEDIA_MOBILE_HEIGHT} {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
     min-height: 100%;
-    margin-right: -${SCROLLBAR_WIDTH}px;
+
+    ${({ $isSupportedCustomScrollbar }) =>
+      $isSupportedCustomScrollbar &&
+      css`
+        margin-right: -${SCROLLBAR_WIDTH}px;
+      `}
   }
 `;
 
@@ -104,7 +115,10 @@ export const Subtitle = styled.div`
 /**
  * Wallets Layout
  */
-export const WalletsButtonsScrollBox = styled.div<{ $isCompact: boolean }>`
+type WalletsButtonsScrollBox = ScrollbarProps & {
+  $isCompact: boolean;
+};
+export const WalletsButtonsScrollBox = styled.div<WalletsButtonsScrollBox>`
   ${({ $isCompact }) => css`
     display: flex;
     flex: 1 1 auto;
@@ -114,24 +128,37 @@ export const WalletsButtonsScrollBox = styled.div<{ $isCompact: boolean }>`
       ${scrollBoxCss}
       ${$isCompact
         ? css`
-            max-height: 300px;
+            max-height: 350px;
           `
         : css`
-            height: 300px;
+            height: 298px;
           `}
     }
   `}
 `;
 
-export const WalletsButtonsContainer = styled.div<{
+type WalletsButtonsContainerProps = ScrollbarProps & {
   $buttonsFullWidth: boolean;
   $isCompact?: boolean;
-}>`
+};
+export const WalletsButtonsContainer = styled.div<WalletsButtonsContainerProps>`
   ${modalContentCss};
-  ${({ theme, $buttonsFullWidth, $isCompact }) => css`
-    @media ${MEDIA_DESKTOP_HEIGHT} {
-      padding-right: calc(${theme.spaceMap.xxl}px - ${SCROLLBAR_WIDTH}px);
-    }
+  ${({
+    theme,
+    $buttonsFullWidth,
+    $isCompact,
+    $isSupportedCustomScrollbar,
+  }) => css`
+    ${$isSupportedCustomScrollbar &&
+    css`
+      @media ${MEDIA_DESKTOP_HEIGHT} {
+        padding-right: calc(${theme.spaceMap.xxl}px - ${SCROLLBAR_WIDTH}px);
+
+        ${theme.mediaQueries.md} {
+          padding-right: calc(${theme.spaceMap.lg}px - ${SCROLLBAR_WIDTH}px);
+        }
+      }
+    `}
 
     padding-bottom: ${theme.spaceMap.xxl}px;
     height: fit-content;
@@ -144,7 +171,7 @@ export const WalletsButtonsContainer = styled.div<{
     ${theme.mediaQueries.md} {
       padding-bottom: ${theme.spaceMap.lg}px;
       grid-template-columns: 100%;
-      grid-auto-rows: ${$isCompact ? 56 : 64}px;
+      grid-auto-rows: 64px;
     }
   `}
 `;

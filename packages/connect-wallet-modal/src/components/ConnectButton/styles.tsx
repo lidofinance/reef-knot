@@ -56,15 +56,8 @@ export const ConnectButtonIconStyle = styled.span<{ $isCompact?: boolean }>`
           `}
 
       ${theme.mediaQueries.md} {
-        ${$isCompact
-          ? css`
-              width: 36px;
-              height: 36px;
-            `
-          : css`
-              width: 40px;
-              height: 40px;
-            `}
+        width: 40px;
+        height: 40px;
       }
     }
   `}

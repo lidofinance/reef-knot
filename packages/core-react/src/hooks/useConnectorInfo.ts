@@ -4,7 +4,7 @@ import {
   LedgerHIDConnector,
   LedgerLiveConnector,
 } from '@reef-knot/ledger-connector';
-import { isMobileOrTablet } from '../helpers/userAgents';
+import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 
 type ConnectorInfo = {
   connectorName?: string;
