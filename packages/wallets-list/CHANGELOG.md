@@ -1,5 +1,14 @@
 # @reef-knot/wallets-list
 
+## 1.13.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-dapp-browser-injected@1.1.1
+  - @reef-knot/wallet-adapter-walletconnect@1.3.1
+  - @reef-knot/wallet-adapter-ambire@1.3.1
+
 ## 1.13.1
 
 ### Patch Changes

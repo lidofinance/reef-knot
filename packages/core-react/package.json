@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/core-react",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -41,7 +41,7 @@
     "@reef-knot/wallets-list": "^1.13.1",
     "@reef-knot/types": "^1.7.0",
     "@reef-knot/ui-react": "^1.0.8",
-    "@reef-knot/wallets-helpers": "^1.1.5",
+    "@reef-knot/wallets-helpers": "^1.1.6",
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "wagmi": "^0.12.19"
@@ -51,7 +51,7 @@
     "@reef-knot/wallets-list": "^1.4.1",
     "@reef-knot/types": "^1.2.1",
     "@reef-knot/ui-react": "^1.0.4",
-    "@reef-knot/wallets-helpers": "^1.1.5",
+    "@reef-knot/wallets-helpers": "^1.1.6",
     "react": ">=18",
     "wagmi": "^0.12.19"
   }
