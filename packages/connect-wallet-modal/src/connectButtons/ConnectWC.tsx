@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect, isMobileOrTablet } from '@reef-knot/core-react';
+import { useDisconnect } from '@reef-knot/core-react';
+import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { WCWarnBannerRequest } from '@reef-knot/ui-react';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
