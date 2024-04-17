@@ -19,7 +19,6 @@ declare global {
 
 export const id = 'coin98';
 export const name = 'Coin98';
-const currentHost = globalThis.window?.location.host || '';
 
 export class Coin98Connector extends InjectedConnector {
   readonly id = id;
@@ -35,6 +34,10 @@ export class Coin98Connector extends InjectedConnector {
   }
 }
 
+const deeplinkDAppUrl = globalThis.window
+  ? globalThis.window.location.host + globalThis.window.location.pathname
+  : '';
+
 export const Coin98: WalletAdapterType = ({ chains, defaultChain }) => ({
   walletName: name,
   walletId: id,
@@ -42,7 +45,7 @@ export const Coin98: WalletAdapterType = ({ chains, defaultChain }) => ({
   detector: () =>
     !!globalThis.window?.coin98?.provider ||
     !!globalThis.window?.ethereum?.isCoin98,
-  deeplink: `https://coin98.com/dapp/${currentHost}/${defaultChain.id}`,
+  deeplink: `https://coin98.com/dapp/${deeplinkDAppUrl}/${defaultChain.id}`,
   downloadURLs: {
     default: 'https://coin98.com/wallet',
     ios: 'https://ios.coin98.com',
