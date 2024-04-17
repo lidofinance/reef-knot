@@ -34,8 +34,9 @@ export class Coin98Connector extends InjectedConnector {
   }
 }
 
+// At the moment of writing, Coin98 only supports passing host as dApp link
 const deeplinkDAppUrl = globalThis.window
-  ? globalThis.window.location.host + globalThis.window.location.pathname
+  ? globalThis.window.location.host
   : '';
 
 export const Coin98: WalletAdapterType = ({ chains, defaultChain }) => ({
