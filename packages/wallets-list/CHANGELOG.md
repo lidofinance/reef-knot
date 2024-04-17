@@ -1,5 +1,17 @@
 # @reef-knot/wallets-list
 
+## 1.13.3
+
+### Patch Changes
+
+- Updated dependencies [a6ca608]
+  - @reef-knot/wallet-adapter-metamask@1.2.0
+  - @reef-knot/wallet-adapter-bitkeep@1.3.0
+  - @reef-knot/wallet-adapter-imtoken@1.2.0
+  - @reef-knot/wallet-adapter-coin98@1.2.0
+  - @reef-knot/wallet-adapter-trust@1.2.0
+  - @reef-knot/wallet-adapter-okx@1.5.0
+
 ## 1.13.2
 
 ### Patch Changes

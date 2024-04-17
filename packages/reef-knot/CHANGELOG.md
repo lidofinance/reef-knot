@@ -1,5 +1,19 @@
 # reef-knot
 
+## 4.2.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
+### Patch Changes
+
+- Updated dependencies [a6ca608]
+  - @reef-knot/connect-wallet-modal@4.2.0
+  - @reef-knot/core-react@3.2.0
+  - @reef-knot/types@1.8.0
+  - @reef-knot/wallets-list@1.13.3
+
 ## 4.1.3
 
 ### Patch Changes

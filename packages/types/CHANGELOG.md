@@ -1,5 +1,11 @@
 # @reef-knot/types
 
+## 1.8.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
 ## 1.7.0
 
 ### Minor Changes
