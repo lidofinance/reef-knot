@@ -19,6 +19,12 @@ declare global {
 export const id = 'okx';
 export const name = 'OKX Wallet';
 
+const deeplinkDAppUrl = globalThis.window
+  ? globalThis.window.location.host + globalThis.window.location.pathname
+  : '';
+const deeplink = 'okx://wallet/dapp/url?dappUrl=' + deeplinkDAppUrl;
+const urlWithDeeplink = 'https://www.okx.com/download?deeplink=' + deeplink;
+
 export class OkxConnector extends InjectedConnector {
   readonly id = id;
   readonly name = name;
@@ -46,5 +52,6 @@ export const Okx: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://www.okx.com/download',
   },
+  deeplink: urlWithDeeplink,
   connector: new OkxConnector(chains),
 });

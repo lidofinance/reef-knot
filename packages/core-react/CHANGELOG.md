@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 3.2.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
 ## 3.1.2
 
 ### Patch Changes

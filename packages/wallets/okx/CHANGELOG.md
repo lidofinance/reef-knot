@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-okx
 
+## 1.5.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
 ## 1.4.0
 
 ### Minor Changes
