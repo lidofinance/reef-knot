@@ -1,14 +1,20 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { injected } from 'wagmi/connectors';
 import { WalletIcon, WalletIconInverted } from './icons/index.js';
 
-export const id = 'metamask';
+export const id = 'metaMask';
 export const name = 'MetaMask';
 const currentHref = globalThis.window
   ? globalThis.window.location.hostname + globalThis.window.location.pathname // encoding not supported
   : '';
 
-export const MetaMask: WalletAdapterType = ({ chains }) => ({
+const getMetaMaskConnector = () =>
+  injected({
+    target: 'metaMask',
+    shimDisconnect: false,
+  });
+
+export const MetaMask: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
   icon: {
@@ -20,10 +26,5 @@ export const MetaMask: WalletAdapterType = ({ chains }) => ({
     default: 'https://metamask.io/download/',
   },
   deeplink: `https://metamask.app.link/dapp/${currentHref}`,
-  connector: new MetaMaskConnector({
-    chains,
-    options: {
-      UNSTABLE_shimOnConnectSelectAccount: true, // allows to select a different MetaMask account
-    },
-  }),
+  createConnectorFn: getMetaMaskConnector(),
 });

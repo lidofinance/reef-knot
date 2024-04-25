@@ -1,20 +1,23 @@
-import { WalletAdapterData } from '@reef-knot/types';
-import { WalletsModalProps } from '../../types';
+import type { Config } from 'wagmi';
+import type { WalletConnectorData } from '@reef-knot/types';
+import type { WalletsModalProps } from '../../types';
 
 type GetWalletsListArgs = {
-  walletDataList: WalletAdapterData[];
+  config: Config;
+  walletConnectorsList: WalletConnectorData[];
   walletsShown: WalletsModalProps['walletsShown'];
   walletsPinned: WalletsModalProps['walletsPinned'];
 };
 
 type FilteredWalletData = {
-  pinned: WalletAdapterData[];
-  detected: WalletAdapterData[];
-  default: WalletAdapterData[];
+  pinned: WalletConnectorData[];
+  detected: WalletConnectorData[];
+  default: WalletConnectorData[];
 };
 
 export async function sortWalletsList({
-  walletDataList,
+  config,
+  walletConnectorsList,
   walletsShown,
   walletsPinned,
 }: GetWalletsListArgs) {
@@ -25,7 +28,9 @@ export async function sortWalletsList({
   };
 
   for (const walletId of walletsShown) {
-    const walletData = walletDataList.find((w) => w.walletId === walletId);
+    const walletData = walletConnectorsList.find(
+      (w) => w.walletId === walletId,
+    );
 
     if (!walletData) continue;
 
@@ -37,7 +42,7 @@ export async function sortWalletsList({
     if (walletsPinned.includes(walletId)) {
       // Put the pinned wallets on the first place, above all other wallets
       filteredWalletData.pinned.push(walletData);
-    } else if (await detector?.()) {
+    } else if (await detector?.(config)) {
       // If condition is true (usually means that a wallet is detected),
       // move it to the first place in the wallets list, so a user can see it right away
       filteredWalletData.detected.push(walletData);

@@ -1,63 +1,43 @@
-import React, { createContext, FC, ReactNode, useMemo } from 'react';
-import { WalletAdapterData } from '@reef-knot/types';
-import { Chain } from 'wagmi/chains';
+import React, { createContext, ReactNode, useMemo } from 'react';
 import { WCWarnBannerContextProvider } from '@reef-knot/ui-react';
-import { getWalletDataList } from '../walletData/index';
-import { AutoConnect } from '../components/AutoConnect';
 import { ReefKnotModalContextProvider } from './reefKnotModalContext';
+import type { Chain } from 'wagmi/chains';
+import type { WalletConnectorData } from '@reef-knot/types';
 
 export interface ReefKnotContextProps {
+  walletConnectorsList: WalletConnectorData[];
   rpc: Record<number, string>;
-  walletconnectProjectId?: string;
-  chains: Chain[];
-  defaultChain: Chain;
-  autoConnect?: boolean;
+  chains: readonly [Chain, ...Chain[]];
   children?: ReactNode;
 }
 
 export type ReefKnotContextValue = {
   rpc: Record<number, string>;
-  walletDataList: WalletAdapterData[];
-  chains: Chain[];
+  walletConnectorsList: WalletConnectorData[];
+  chains: readonly [Chain, ...Chain[]];
 };
 
 export const ReefKnotContext = createContext({} as ReefKnotContextValue);
 
-export const ReefKnot: FC<ReefKnotContextProps> = ({
+export const ReefKnot = ({
   rpc,
-  walletconnectProjectId,
   chains,
-  defaultChain,
-  autoConnect = true,
+  walletConnectorsList,
   children,
-}) => {
-  const walletDataList = getWalletDataList({
-    rpc,
-    walletconnectProjectId,
-    chains,
-    defaultChain,
-  });
-
+}: ReefKnotContextProps) => {
   const contextValue = useMemo(
     () => ({
       rpc,
-      walletDataList,
+      walletConnectorsList,
       chains,
     }),
-    [rpc, walletDataList, chains],
+    [rpc, walletConnectorsList, chains],
   );
 
   return (
     <ReefKnotContext.Provider value={contextValue}>
       <ReefKnotModalContextProvider>
-        <WCWarnBannerContextProvider>
-          <AutoConnect
-            autoConnect={autoConnect}
-            walletDataList={walletDataList}
-            chains={chains}
-          />
-          {children}
-        </WCWarnBannerContextProvider>
+        <WCWarnBannerContextProvider>{children}</WCWarnBannerContextProvider>
       </ReefKnotModalContextProvider>
     </ReefKnotContext.Provider>
   );

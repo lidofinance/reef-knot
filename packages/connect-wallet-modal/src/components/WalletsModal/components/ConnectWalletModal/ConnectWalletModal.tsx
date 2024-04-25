@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useReefKnotModal } from '@reef-knot/core-react';
-import { WalletAdapterData } from '@reef-knot/types';
+import { useConfig } from 'wagmi';
+import { useReefKnotContext, useReefKnotModal } from '@reef-knot/core-react';
 
 import { WalletsModalProps } from '../../types';
 import { WalletModalConnectTermsProps } from '../../../Terms';
 import { ConnectWalletModalLayout } from '../ConnectWalletModalLayout';
 
 import { sortWalletsList } from './sortWalletsList';
+import type { WalletConnectorData } from '@reef-knot/types';
 
 type ConnectWalletModalProps = WalletsModalProps & {
   onCloseSuccess?: () => void;
@@ -22,12 +23,13 @@ export const ConnectWalletModal = ({
     shouldInvertWalletIcon = false,
     metrics,
     buttonComponentsByConnectorId,
-    walletDataList,
     walletsShown,
     walletsPinned,
     walletsDisplayInitialCount = 6,
   } = passedDownProps;
 
+  const config = useConfig();
+  const { walletConnectorsList } = useReefKnotContext();
   const { termsChecked } = useReefKnotModal();
 
   const [inputValue, setInputValue] = useState('');
@@ -50,8 +52,8 @@ export const ConnectWalletModal = ({
 
   const isWalletsToggleButtonShown = useRef(false);
 
-  const [walletsList, setWalletsList] = useState<WalletAdapterData[]>([]);
-  const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
+  const [walletsList, setWalletsList] = useState<WalletConnectorData[]>([]);
+  const [walletsListFull, setWalletsListFull] = useState<WalletConnectorData[]>(
     [],
   );
 
@@ -60,12 +62,13 @@ export const ConnectWalletModal = ({
     // Actually, almost all wallets can be detected synchronously, so this process is expected to be fast,
     // and a loading indicator is not required for now.
     const _walletsListFull = await sortWalletsList({
-      walletDataList,
+      config,
+      walletConnectorsList,
       walletsShown,
       walletsPinned,
     });
     setWalletsListFull(_walletsListFull);
-  }, [walletDataList, walletsPinned, walletsShown]);
+  }, [walletConnectorsList, walletsPinned, walletsShown]);
 
   useEffect(() => {
     void getWalletsListFull();
@@ -107,6 +110,7 @@ export const ConnectWalletModal = ({
     >
       {walletsList.map((walletData) => {
         const WalletComponent =
+          buttonComponentsByConnectorId[walletData.walletId] ??
           buttonComponentsByConnectorId[walletData.connector.id] ??
           buttonComponentsByConnectorId.default;
         if (!WalletComponent) return null;

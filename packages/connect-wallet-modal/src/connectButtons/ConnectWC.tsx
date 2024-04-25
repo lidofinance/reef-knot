@@ -37,21 +37,21 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     ...rest
   } = props;
 
-  const walletIdCapitalized = capitalize(walletId);
-  const metricsOnConnect =
-    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
-  const metricsOnClick =
-    metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
+  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
-  const { connectAsync } = useConnect({
-    onSuccess() {
-      onConnect?.();
-      metricsOnConnect?.();
-    },
-  });
+  const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const [isConnecting, setIsConnecting] = useState(false);
+
+  // WCURI – WalletConnect Pairing URI: https://docs.walletconnect.com/2.0/specs/clients/core/pairing/pairing-uri
+  // Used for connection without WalletConnect QR modal via redirect
+  const WCURIConnector = walletconnectExtras?.connectionViaURI?.connector;
+  const WCURICondition = walletconnectExtras?.connectionViaURI?.condition;
+  const WCURIRedirectLink = walletconnectExtras?.connectionViaURI?.redirectLink;
+  const WCURICloseRedirectionWindow =
+    walletconnectExtras?.connectionViaURI?.closeRedirectionWindow ?? true;
 
   const handleConnect = useCallback(async () => {
     // Handle deeplink on mobiles before connecting to WC
@@ -60,22 +60,17 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       return; // A user was redirected to a wallet mobile app, no need to continue
     }
 
-    // WCURI – WalletConnect Pairing URI: https://docs.walletconnect.com/2.0/specs/clients/core/pairing/pairing-uri
-    // Used for connection without WalletConnect QR modal via redirect
-    const WCURIConnector = walletconnectExtras?.connectionViaURI?.connector;
-    const WCURICondition = walletconnectExtras?.connectionViaURI?.condition;
-    const WCURIRedirectLink =
-      walletconnectExtras?.connectionViaURI?.redirectLink;
-    const WCURICloseRedirectionWindow =
-      walletconnectExtras?.connectionViaURI?.closeRedirectionWindow ?? true;
-
     setIsConnecting(true);
 
     try {
       onBeforeConnect?.();
       metricsOnClick?.();
-
       disconnect?.();
+
+      const onSuccess = () => {
+        onConnect?.();
+        metricsOnConnect?.();
+      };
 
       if (WCURICondition && WCURIConnector && WCURIRedirectLink) {
         // BEGIN Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
@@ -84,20 +79,22 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
         // Initiate a connection, but do not block the further execution
-        connectAsync({ connector: WCURIConnector }).finally(() => {
-          // We got a connection result
-          if (WCURICloseRedirectionWindow) {
-            // Close the previously opened window if necessary
-            redirectionWindow?.close();
-          }
-        });
+        connectAsync({ connector: WCURIConnector }, { onSuccess }).finally(
+          () => {
+            // We got a connection result
+            if (WCURICloseRedirectionWindow) {
+              // Close the previously opened window if necessary
+              redirectionWindow?.close();
+            }
+          },
+        );
 
         // Wait for WalletConnect Pairing URI to arrive
         const wcUri = await getWalletConnectUri(WCURIConnector);
         setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
         // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
       } else {
-        await connectAsync({ connector });
+        await connectAsync({ connector }, { onSuccess });
       }
     } finally {
       setIsConnecting(false);
@@ -109,10 +106,10 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     disconnect,
     metricsOnClick,
     onBeforeConnect,
-    walletconnectExtras?.connectionViaURI?.closeRedirectionWindow,
-    walletconnectExtras?.connectionViaURI?.condition,
-    walletconnectExtras?.connectionViaURI?.connector,
-    walletconnectExtras?.connectionViaURI?.redirectLink,
+    WCURICloseRedirectionWindow,
+    WCURICondition,
+    WCURIConnector,
+    WCURIRedirectLink,
   ]);
 
   return (

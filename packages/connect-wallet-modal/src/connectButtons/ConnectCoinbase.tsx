@@ -24,20 +24,31 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
   const metricsOnConnect = metrics?.events?.connect?.handlers.onConnectCoinbase;
   const metricsOnClick = metrics?.events?.click?.handlers.onClickCoinbase;
 
-  const { connect } = useConnect({
-    onSuccess() {
-      onConnect?.();
-      metricsOnConnect?.();
-    },
-  });
+  const { connect } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(() => {
     onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
-    connect({ connector });
-  }, [connect, connector, disconnect, metricsOnClick, onBeforeConnect]);
+    connect(
+      { connector },
+      {
+        onSuccess: () => {
+          onConnect?.();
+          metricsOnConnect?.();
+        },
+      },
+    );
+  }, [
+    connect,
+    connector,
+    disconnect,
+    metricsOnClick,
+    onBeforeConnect,
+    onConnect,
+    metricsOnConnect,
+  ]);
 
   return (
     <ConnectButton

@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  useWeb3,
-  useConnectorInfo,
-  useSupportedChains,
-} from 'reef-knot/web3-react';
-import { useAccount, useNetwork } from 'wagmi';
+import { useWeb3, useSupportedChains } from 'reef-knot/web3-react';
+import { useConnectorInfo } from 'reef-knot/core-react';
+import { useAccount } from 'wagmi';
 import { H3 } from '@lidofinance/lido-ui';
 import { Line, Heading } from './styles';
 import { BlueWrapper } from './BlueWrapper';
@@ -12,23 +9,20 @@ import { Web3ProviderInfo } from './Web3ProviderInfo';
 
 export const WalletInfo = ({ children }: { children?: React.ReactNode }) => {
   const connectorInfo = useConnectorInfo();
-  const supportedChainsData = useSupportedChains();
-  const supportedChainIds = supportedChainsData.supportedChains.map(
-    (c) => c.chainId,
-  );
+  const { supportedChains, isUnsupported } = useSupportedChains();
+  const supportedChainIds = supportedChains.map((c) => c.chainId);
 
   // Get data via web3-react
   const web3Info = useWeb3();
 
   // Get data via wagmi
   const {
+    chain,
     address: wagmiAddress,
     status: wagmiStatus,
     isConnected: wagmiIsConnected,
     connector,
   } = useAccount();
-
-  const { chain } = useNetwork();
 
   return (
     <BlueWrapper>
@@ -37,7 +31,7 @@ export const WalletInfo = ({ children }: { children?: React.ReactNode }) => {
         <div>
           <code>
             <Web3ProviderInfo />
-            <Line>providerName: {connectorInfo.providerName}</Line>
+            <Line>providerName: {connectorInfo.connectorName}</Line>
             <Line>
               <b>shimmed useWeb3() data below</b>
             </Line>
@@ -48,9 +42,7 @@ export const WalletInfo = ({ children }: { children?: React.ReactNode }) => {
             <Line>
               <b>Supported Chains</b>
             </Line>
-            <Line>
-              Chain is unsupported: {String(supportedChainsData.isUnsupported)}
-            </Line>
+            <Line>Chain is unsupported: {String(isUnsupported)}</Line>
             <Line>Supported chain IDs: {supportedChainIds?.join(',')}</Line>
           </code>
         </div>
@@ -63,7 +55,7 @@ export const WalletInfo = ({ children }: { children?: React.ReactNode }) => {
             <Line>Connector ID: {connector?.id}</Line>
             <Line>Connector name: {connector?.name}</Line>
             <Line>Chain ID: {chain?.id}</Line>
-            <Line>Chain is unsupported: {String(chain?.unsupported)}</Line>
+            <Line>Chain is unsupported: {String(isUnsupported)}</Line>
           </code>
         </div>
         {children}

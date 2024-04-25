@@ -1,7 +1,6 @@
 import { WalletAdapterType } from '@reef-knot/types';
 import { WalletIcon } from './icons/index.js';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { Chain } from '@wagmi/core';
+import { injected } from 'wagmi/connectors';
 
 declare module '@wagmi/core' {
   interface Ethereum {
@@ -15,20 +14,16 @@ const currentHref = globalThis.window
   ? encodeURIComponent(globalThis.window.location.href)
   : '';
 
-export class ImTokenConnector extends InjectedConnector {
-  readonly id = id;
-  readonly name = name;
-  constructor(chains: Chain[]) {
-    super({
-      chains,
-      options: {
-        getProvider: () => globalThis.window?.ethereum,
-      },
-    });
-  }
-}
+const getImTokenConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () => globalThis.window?.ethereum,
+    }),
+  });
 
-export const ImToken: WalletAdapterType = ({ chains }) => ({
+export const ImToken: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
   icon: WalletIcon,
@@ -37,5 +32,5 @@ export const ImToken: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://token.im/download',
   },
-  connector: new ImTokenConnector(chains),
+  createConnectorFn: getImTokenConnector(),
 });

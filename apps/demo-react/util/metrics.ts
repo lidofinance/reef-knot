@@ -1,118 +1,53 @@
-import { Metrics } from 'reef-knot/connect-wallet-modal';
+import type { Metrics } from 'reef-knot/connect-wallet-modal';
+import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 
-const metrics: Metrics = {
+const getMetricHandler = (msg: string) => () => console.log(`metrics: ${msg}`);
+const getClickHandler = (msg: string) => getMetricHandler(`${msg} clicked`);
+const getConnectHandler = (msg: string) => getMetricHandler(`${msg} connected`);
+
+const metrics: Metrics<WalletIdsEthereum> = {
   events: {
     click: {
       handlers: {
-        onClickTermsAccept: () => {
-          console.log('metrics: Terms clicked');
-        },
-        onClickAmbire: () => {
-          console.log('metrics: Ambire clicked');
-        },
-        onClickBlockchaincom: () => {
-          console.log('metrics: Blockchain.com clicked');
-        },
-        onClickBrave: () => {
-          console.log('metrics: Brave clicked');
-        },
-        onClickCoin98: () => {
-          console.log('metrics: Coin98 clicked');
-        },
-        onClickCoinbase: () => {
-          console.log('metrics: Coinbase clicked');
-        },
-        onClickExodus: () => {
-          console.log('metrics: Exodus clicked');
-        },
-        onClickGamestop: () => {
-          console.log('metrics: Gamestop clicked');
-        },
-        onClickImToken: () => {
-          console.log('metrics: imToken clicked');
-        },
-        onClickLedger: () => {
-          console.log('metrics: Ledger clicked');
-        },
-        onClickMathWallet: () => {
-          console.log('metrics: MathWallet clicked');
-        },
-        onClickMetamask: () => {
-          console.log('metrics: MetaMask clicked');
-        },
-        onClickOperaWallet: () => {
-          console.log('metrics: Opera Wallet clicked');
-        },
-        onClickTally: () => {
-          console.log('metrics: Tally Wallet clicked');
-        },
-        onClickTrust: () => {
-          console.log('metrics: Trust Wallet clicked');
-        },
-        onClickWC: () => {
-          console.log('metrics: WalletConnect clicked');
-        },
-        onClickXdefi: () => {
-          console.log('metrics: XDEFI clicked');
-        },
-        onClickZenGo: () => {
-          console.log('metrics: ZenGo clicked');
-        },
+        termsAccept: getClickHandler('Terms'),
+        okx: getClickHandler('okx'),
+        browserExtension: getClickHandler('browserExtension'),
+        ledgerLive: getClickHandler('ledgerLive'),
+        bitget: getClickHandler('bitget'),
+        dappBrowserInjected: getClickHandler('dappBrowserInjected'),
+        safe: getClickHandler('safe'),
+        ambire: getClickHandler('Ambire'),
+        brave: getClickHandler('Brave'),
+        coin98: getClickHandler('Coin98'),
+        coinbase: getClickHandler('Coinbase'),
+        exodus: getClickHandler('Exodus'),
+        imToken: getClickHandler('imToken'),
+        ledgerHID: getClickHandler('Ledger'),
+        metaMask: getClickHandler('MetaMask'),
+        trust: getClickHandler('Trust Wallet'),
+        walletConnect: getClickHandler('WalletConnect'),
+        xdefi: getClickHandler('XDEFI'),
       },
     },
     connect: {
       handlers: {
-        onConnectAmbire: () => {
-          console.log('metrics: Ambire connected');
-        },
-        onConnectBlockchaincom: () => {
-          console.log('metrics: Blockchain.com connected');
-        },
-        onConnectBrave: () => {
-          console.log('metrics: Brave connected');
-        },
-        onConnectCoin98: () => {
-          console.log('metrics: Coin98 connected');
-        },
-        onConnectCoinbase: () => {
-          console.log('metrics: Coinbase connected');
-        },
-        onConnectExodus: () => {
-          console.log('metrics: Exodus connected');
-        },
-        onConnectGamestop: () => {
-          console.log('metrics: Gamestop connected');
-        },
-        onConnectImToken: () => {
-          console.log('metrics: imToken connected');
-        },
-        onConnectLedger: () => {
-          console.log('metrics: Ledger connected');
-        },
-        onConnectMathWallet: () => {
-          console.log('metrics: MathWallet connected');
-        },
-        onConnectMetamask: () => {
-          console.log('metrics: MetaMask connected');
-        },
-        onConnectOperaWallet: () => {
-          console.log('metrics: Opera Wallet connected');
-        },
-        onConnectTally: () => {
-          console.log('metrics: Tally Wallet connected');
-        },
-        onConnectTrust: () => {
-          console.log('metrics: Trust Wallet connected');
-        },
-        onConnectWC: () => {
-          console.log('metrics: WalletConnect connected');
-        },
-        onConnectXdefi: () => {
-          console.log('metrics: XDEFI connected');
-        },
-        onConnectZenGo: () => {
-          console.log('metrics: ZenGo connected');
-        },
+        okx: getConnectHandler('okx'),
+        browserExtension: getConnectHandler('browserExtension'),
+        ledgerLive: getConnectHandler('ledgerLive'),
+        bitget: getConnectHandler('bitget'),
+        dappBrowserInjected: getConnectHandler('dappBrowserInjected'),
+        safe: getConnectHandler('safe'),
+        ambire: getConnectHandler('Ambire'),
+        brave: getConnectHandler('Brave'),
+        coin98: getConnectHandler('Coin98'),
+        coinbase: getConnectHandler('Coinbase'),
+        exodus: getConnectHandler('Exodus'),
+        imToken: getConnectHandler('imToken'),
+        ledgerHID: getConnectHandler('Ledger'),
+        metaMask: getConnectHandler('MetaMask'),
+        trust: getConnectHandler('Trust Wallet'),
+        walletConnect: getConnectHandler('WalletConnect'),
+        xdefi: getConnectHandler('XDEFI'),
       },
     },
   },

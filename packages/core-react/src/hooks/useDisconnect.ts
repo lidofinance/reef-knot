@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useAccount, useDisconnect as useDisconnectWagmi } from 'wagmi';
 import { useAutoConnectCheck } from './useAutoConnectCheck';
 import { useReefKnotModal } from './useReefKnotModal';
@@ -17,13 +17,14 @@ export const useForceDisconnect = () => {
 
 export const useDisconnect = (): {
   disconnect?: () => void;
-  checkIfDisconnectMakesSense: () => boolean;
+  isDisconnectMakesSense: boolean;
 } => {
   const { isConnected, connector } = useAccount();
   const { disconnect } = useDisconnectWagmi();
 
   const { getAutoConnectOnlyConnectors } = useAutoConnectCheck();
-  const checkIfDisconnectMakesSense = () => {
+
+  const isDisconnectMakesSense = useMemo(() => {
     // It doesn't make sense to offer a user the ability to disconnect if the user is not connected yet,
     // or if the user was connected automatically
     const autoConnectOnlyConnectors = getAutoConnectOnlyConnectors();
@@ -31,10 +32,10 @@ export const useDisconnect = (): {
       (c) => c.id !== connector?.id,
     );
     return isConnected && isConnectorNotAutoConnectOnly;
-  };
+  }, [isConnected, connector, getAutoConnectOnlyConnectors]);
 
   return {
-    disconnect: checkIfDisconnectMakesSense() ? disconnect : undefined,
-    checkIfDisconnectMakesSense,
+    disconnect: isDisconnectMakesSense ? disconnect : undefined,
+    isDisconnectMakesSense,
   };
 };

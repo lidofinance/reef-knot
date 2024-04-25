@@ -1,6 +1,6 @@
 import { WalletAdapterType } from '@reef-knot/types';
 import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/phantom.svg';
 
 declare module '@wagmi/core' {
@@ -15,7 +15,20 @@ declare global {
   }
 }
 
-export const Phantom: WalletAdapterType = ({ chains }) => ({
+export const id = 'phantom';
+export const name = 'Phantom';
+
+const getPhantomConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () =>
+        globalThis.window?.phantom?.ethereum || globalThis.window?.ethereum,
+    }),
+  });
+
+export const Phantom: WalletAdapterType = () => ({
   walletName: 'Phantom',
   walletId: 'phantom',
   icon: {
@@ -28,12 +41,5 @@ export const Phantom: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://phantom.app/download',
   },
-  connector: new InjectedConnector({
-    chains,
-    options: {
-      name: 'Phantom',
-      getProvider: () =>
-        globalThis.window?.phantom?.ethereum || globalThis.window?.ethereum,
-    },
-  }),
+  createConnectorFn: getPhantomConnector(),
 });

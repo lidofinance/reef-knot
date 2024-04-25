@@ -1,25 +1,28 @@
+import { useCallback } from 'react';
+import { useConfig } from 'wagmi';
 import { useReefKnotContext } from './useReefKnotContext';
 
 export const useAutoConnectCheck = () => {
-  const { walletDataList } = useReefKnotContext();
+  const config = useConfig();
+  const { walletConnectorsList } = useReefKnotContext();
 
-  const checkIfShouldAutoConnect = async () => {
-    const autoConnectOnlyAdapters = walletDataList.filter(
+  const checkIfShouldAutoConnect = useCallback(async () => {
+    const autoConnectOnlyAdapters = walletConnectorsList.filter(
       ({ autoConnectOnly }) => autoConnectOnly,
     );
     for (const adapter of autoConnectOnlyAdapters) {
       // Try to detect at least one wallet, marked as for auto connection only
-      if (await adapter.detector?.()) return true;
+      if (await adapter.detector?.(config)) return true;
     }
     return false;
-  };
+  }, [walletConnectorsList, config]);
 
-  const getAutoConnectOnlyConnectors = () => {
-    const autoConnectOnlyAdapters = walletDataList.filter(
+  const getAutoConnectOnlyConnectors = useCallback(() => {
+    const autoConnectOnlyAdapters = walletConnectorsList.filter(
       ({ autoConnectOnly }) => autoConnectOnly,
     );
     return autoConnectOnlyAdapters.map((adapter) => adapter.connector);
-  };
+  }, [walletConnectorsList]);
 
   return {
     checkIfShouldAutoConnect,

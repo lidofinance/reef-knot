@@ -1,4 +1,4 @@
-import { useAccount, useNetwork, useConnect } from 'wagmi';
+import { useAccount, useConnect } from 'wagmi';
 import { useSupportedChains } from './useSupportedChains';
 
 export interface Web3ReactManagerFunctions {
@@ -25,7 +25,6 @@ export interface Web3ReactContextInterface<T = any>
 // Because of migration to wagmi library, this method now returns values from wagmi and is left here for backwards compatibility.
 export function useWeb3<T = any>(_key?: string): Web3ReactContextInterface<T> {
   const wagmiAccount = useAccount();
-  const wagmiNetwork = useNetwork();
   const { error: wagmiError } = useConnect();
   const account = wagmiAccount?.address;
 
@@ -44,7 +43,7 @@ export function useWeb3<T = any>(_key?: string): Web3ReactContextInterface<T> {
   // chainId to be unsupported, they expect chainId === undefined in that case.
   // Making wagmi's logic to be the same as web3-react here, except setting an error:
   const { isUnsupported } = useSupportedChains();
-  const chainId = isUnsupported ? undefined : wagmiNetwork?.chain?.id;
+  const chainId = isUnsupported ? undefined : wagmiAccount?.chainId;
   const active = isUnsupported ? false : wagmiAccount?.isConnected;
 
   // wagmi error can be null, but historically we need `Error | undefined` here

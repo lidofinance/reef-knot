@@ -1,12 +1,12 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi, Chain } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/bitget.svg';
+import type { EIP1193Provider } from 'viem';
 
 declare global {
   interface Window {
     bitkeep?: {
-      ethereum?: EthereumTypeWagmi;
+      ethereum?: EIP1193Provider;
     };
   }
 }
@@ -19,20 +19,16 @@ const currentHref = globalThis.window
   ? encodeURIComponent(globalThis.window.location.href)
   : '';
 
-export class BitgetConnector extends InjectedConnector {
-  readonly id = id;
-  readonly name = name;
-  constructor(chains: Chain[]) {
-    super({
-      chains,
-      options: {
-        getProvider: () => globalThis.window?.bitkeep?.ethereum,
-      },
-    });
-  }
-}
+const getBitgetConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () => globalThis.window?.bitkeep?.ethereum,
+    }),
+  });
 
-export const Bitget: WalletAdapterType = ({ chains }) => ({
+export const Bitget: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
   icon: WalletIcon,
@@ -41,7 +37,7 @@ export const Bitget: WalletAdapterType = ({ chains }) => ({
     default: 'https://web3.bitget.com/',
   },
   deeplink: `https://bkcode.vip?action=dapp&url=${currentHref}`,
-  connector: new BitgetConnector(chains),
+  createConnectorFn: getBitgetConnector(),
 });
 
 // BitKeep is the previous name of the wallet.

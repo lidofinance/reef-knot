@@ -1,44 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { ProviderSDK } from '@lido-sdk/react';
-import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
+import React, { useMemo } from 'react';
+import { useSupportedChains, useWeb3 } from 'reef-knot/web3-react';
+import { useAccount, useConnectorClient } from 'wagmi';
+
 import { Web3Provider } from '@ethersproject/providers';
-import { Chain, useAccount } from 'wagmi';
+import { ProviderSDK } from '@lido-sdk/react';
+
 import { mainnet } from 'wagmi/chains';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
+import { useReefKnotContext } from 'reef-knot/core-react';
 
 const POLLING_INTERVAL = 12_000;
 
 export const ProviderSDKWithProps = (props: {
   children?: React.ReactNode;
   defaultChainId: number;
-  supportedChains: Chain[];
-  rpc: Record<number, string>;
 }) => {
-  const { children, defaultChainId, rpc, supportedChains } = props;
+  const { children, defaultChainId } = props;
   const { chainId = defaultChainId, account } = useWeb3();
-  const { connector, isConnected } = useAccount();
+  const { supportedChains } = useSupportedChains();
+  const { isConnected } = useAccount();
+  const { data: client } = useConnectorClient();
+  const { rpc } = useReefKnotContext();
 
-  const [providerWeb3, setProviderWeb3] = useState<Web3Provider>();
+  const providerWeb3 = useMemo(() => {
+    if (!client || !isConnected) return;
+    const { account, chain, transport } = client;
+    if (!account) return;
 
-  // Reset web3 provider if the provider was set previously,
-  // and currently no wallet is connected.
-  // Gets triggered on a wallet disconnection, for example.
-  if (!isConnected && providerWeb3) {
-    setProviderWeb3(undefined);
-  }
+    // https://wagmi.sh/core/guides/ethers#reference-implementation-1
+    const network = {
+      chainId: chain.id,
+      name: chain.name,
+      ensAddress: chain.contracts?.ensRegistry?.address,
+    };
+    const providerWeb3 = new Web3Provider(transport, network);
+    providerWeb3.pollingInterval = POLLING_INTERVAL;
 
-  useEffect(() => {
-    void (async () => {
-      if (!providerWeb3 && connector && isConnected) {
-        const provider = await connector.getProvider();
-        const wrappedProvider = new Web3Provider(provider);
-        wrappedProvider.pollingInterval = POLLING_INTERVAL;
-        setProviderWeb3(wrappedProvider);
-      }
-    })();
-  }, [connector, isConnected, providerWeb3]);
+    return providerWeb3;
+  }, [isConnected, client]);
 
-  const supportedChainIds = supportedChains.map((chain) => chain.id);
+  const supportedChainIds = useMemo(
+    () => supportedChains.map((chain) => chain.chainId),
+    [supportedChains],
+  );
 
   const providerRpc = getStaticRpcBatchProvider(
     chainId,

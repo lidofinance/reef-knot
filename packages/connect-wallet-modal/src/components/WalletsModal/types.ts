@@ -1,11 +1,14 @@
 import type { ComponentType } from 'react';
 import type { ModalProps } from '@reef-knot/ui-react';
-import type { WalletAdapterData } from '@reef-knot/types';
 
-export type Metrics = {
+export type Metrics<WalletIdsList extends string = string> = {
   events?: {
-    connect?: { handlers: Record<`onConnect${string}`, () => void> };
-    click?: { handlers: Record<`onClick${string}`, () => void> };
+    connect?: {
+      handlers: Partial<Record<WalletIdsList, () => void>>;
+    };
+    click?: {
+      handlers: Partial<Record<WalletIdsList | 'termsAccept', () => void>>;
+    };
   };
 };
 
@@ -15,10 +18,9 @@ export type ButtonComponentsByConnectorId = {
 
 export type WalletsModalProps<I extends string = string> = ModalProps & {
   buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
-  walletDataList: WalletAdapterData[];
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
-  metrics?: Metrics;
+  metrics?: Metrics<I>;
   termsLink?: string;
   privacyNoticeLink?: string;
   walletsShown: I[];

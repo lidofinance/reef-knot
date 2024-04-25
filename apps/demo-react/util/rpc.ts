@@ -1,6 +1,5 @@
 import getConfig from 'next/config';
-import { mainnet, goerli } from 'wagmi/chains';
-import { holesky } from 'reef-knot/core-react';
+import { mainnet, goerli, holesky } from 'wagmi/chains';
 
 const { publicRuntimeConfig } = getConfig();
 const { alchemyApiKey } = publicRuntimeConfig;

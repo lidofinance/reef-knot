@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { useConnect } from 'wagmi';
+import { useConfig, useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
@@ -29,27 +29,32 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
   const metricsOnClick =
     metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
 
-  const { connectAsync } = useConnect({
-    onSuccess() {
-      onConnect?.();
-      metricsOnConnect?.();
-    },
-  });
+  const config = useConfig();
+  const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
     metricsOnClick?.();
 
-    if (await detector?.()) {
+    if (await detector?.(config)) {
       disconnect?.();
-      await connectAsync({ connector });
+      await connectAsync(
+        { connector },
+        {
+          onSuccess: () => {
+            onConnect?.();
+            metricsOnConnect?.();
+          },
+        },
+      );
     } else if (isMobileOrTablet && deeplink) {
       openWindow(deeplink);
     } else if (downloadURLs) {
       suggestApp(downloadURLs);
     }
   }, [
+    config,
     connectAsync,
     connector,
     deeplink,
@@ -58,6 +63,8 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     downloadURLs,
     metricsOnClick,
     onBeforeConnect,
+    onConnect,
+    metricsOnConnect,
   ]);
 
   return (

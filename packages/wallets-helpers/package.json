@@ -39,13 +39,14 @@
   "devDependencies": {
     "@types/ua-parser-js": "0.7.39",
     "eslint-config-custom": "*",
-    "wagmi": "^0.12.19",
+    "wagmi": "2.5.18",
     "ua-parser-js": "1.0.37"
   },
   "peerDependencies": {
     "@types/ua-parser-js": "0.7.39",
     "react": ">=18",
-    "wagmi": "^0.12.19",
-    "ua-parser-js": "1.0.37"
+    "wagmi": "2.5.18",
+    "ua-parser-js": "1.0.37",
+    "@tanstack/react-query": "^5.29.0"
   }
 }

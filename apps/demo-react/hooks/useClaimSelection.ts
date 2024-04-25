@@ -6,12 +6,12 @@ import {
   MAX_REQUESTS_COUNT_LEDGER_LIMIT,
 } from './useWithdrawalsData';
 import type { RequestStatusClaimable } from './useWithdrawalsData';
-import { useIsLedgerLive } from './useIsLedgerLive';
+import { useConnectorInfo } from 'reef-knot/core-react';
 
 export const useClaimSelection = (
   claimableRequests: RequestStatusClaimable[] | null,
 ) => {
-  const isLedgerLive = useIsLedgerLive();
+  const { isLedgerLive } = useConnectorInfo();
   const maxRequestCount = isLedgerLive
     ? MAX_REQUESTS_COUNT_LEDGER_LIMIT
     : MAX_REQUESTS_COUNT;

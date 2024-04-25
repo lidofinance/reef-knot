@@ -9,7 +9,7 @@ import {
 } from '@lidofinance/lido-ui';
 import { useState } from 'react';
 import {
-  ProviderWeb3WithProps,
+  ConfigContextProviders,
   Header,
   WalletInfo,
   MainContainer,
@@ -35,7 +35,7 @@ export function Web() {
       <Block style={{ borderRadius: 'unset' }}>
         <Header />
         <GlobalStyle />
-        <ProviderWeb3WithProps>
+        <ConfigContextProviders>
           <MainContainer>
             <ConnectDisconnect />
             <div style={{ display: 'flex', gap: '40px' }}>
@@ -50,7 +50,7 @@ export function Web() {
             <WalletInfo />
             <WalletsModal isDarkTheme={selectedTheme === ThemeName.dark} />
           </MainContainer>
-        </ProviderWeb3WithProps>
+        </ConfigContextProviders>
       </Block>
     </ThemeProvider>
   );

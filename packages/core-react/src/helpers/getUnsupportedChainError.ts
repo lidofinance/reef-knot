@@ -1,6 +1,8 @@
 import { Chain } from 'wagmi/chains';
 
-export const getUnsupportedChainError = (supportedChains: Chain[]) => {
+export const getUnsupportedChainError = (
+  supportedChains: readonly [Chain, ...Chain[]],
+) => {
   // Get names of supported chains to suggest them in case of "unsupported network" error
   const supportedChainsNames = (() => {
     const chains = supportedChains

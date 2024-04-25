@@ -36,7 +36,8 @@
     "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
-    "wagmi": "^0.12.18",
-    "@reef-knot/types": "^1.2.1"
+    "wagmi": "2.5.18",
+    "@reef-knot/types": "^1.6.0",
+    "@tanstack/react-query": "^5.29.0"
   }
 }

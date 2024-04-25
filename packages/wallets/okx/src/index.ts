@@ -1,6 +1,7 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi, Chain } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { Chain } from 'wagmi/chains';
+import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/okx.svg';
 import WalletIconInverted from './icons/okx-inverted.svg';
 
@@ -25,21 +26,17 @@ const deeplinkDAppUrl = globalThis.window
 const deeplink = 'okx://wallet/dapp/url?dappUrl=' + deeplinkDAppUrl;
 const urlWithDeeplink = 'https://www.okx.com/download?deeplink=' + deeplink;
 
-export class OkxConnector extends InjectedConnector {
-  readonly id = id;
-  readonly name = name;
-  constructor(chains: Chain[]) {
-    super({
-      chains,
-      options: {
-        getProvider: () =>
-          globalThis.window?.okxwallet || globalThis.window?.ethereum,
-      },
-    });
-  }
-}
+const getOkxConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () =>
+        globalThis.window?.okxwallet || globalThis.window?.ethereum,
+    }),
+  });
 
-export const Okx: WalletAdapterType = ({ chains }) => ({
+export const Okx: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
   icon: {
@@ -53,5 +50,5 @@ export const Okx: WalletAdapterType = ({ chains }) => ({
     default: 'https://www.okx.com/download',
   },
   deeplink: urlWithDeeplink,
-  connector: new OkxConnector(chains),
+  createConnectorFn: getOkxConnector(),
 });
