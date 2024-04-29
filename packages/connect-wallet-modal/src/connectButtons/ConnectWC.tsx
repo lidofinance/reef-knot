@@ -5,7 +5,7 @@ import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { WCWarnBannerRequest } from '@reef-knot/ui-react';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
-import { capitalize, openWindow } from '../helpers';
+import { openWindow } from '../helpers';
 import { ConnectWCProps } from './types';
 
 let redirectionWindow: Window | null = null;
