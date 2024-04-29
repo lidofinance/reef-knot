@@ -73,7 +73,7 @@ export const getWalletConnectorsList = ({
   connectors: readonly Connector[];
   walletAdaptersList: WalletAdapterData[];
 }): WalletConnectorData[] => {
-  let walletConnectorsList: WalletConnectorData[] = [];
+  const walletConnectorsList: WalletConnectorData[] = [];
   let connectorIdx = 0;
 
   for (const adapterData of walletAdaptersList) {
