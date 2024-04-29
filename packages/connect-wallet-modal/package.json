@@ -55,7 +55,7 @@
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "wagmi": "2.5.18"
+    "wagmi": "2.7.0"
   },
   "peerDependencies": {
     "@reef-knot/core-react": "^3.0.0",
@@ -66,7 +66,7 @@
     "@reef-knot/ledger-connector": "^3.0.0",
     "react": ">=18",
     "@lidofinance/lido-ui": "^3.18.0",
-    "wagmi": "2.5.18",
+    "wagmi": "2.7.0",
     "@tanstack/react-query": "^5.29.0"
   }
 }
