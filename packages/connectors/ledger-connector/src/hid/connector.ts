@@ -1,4 +1,8 @@
-import { ConnectorNotFoundError, createConnector } from 'wagmi';
+import {
+  ChainNotConfiguredError,
+  ConnectorNotFoundError,
+  createConnector,
+} from 'wagmi';
 import { Chain } from 'wagmi/chains';
 import { checkError } from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
@@ -66,8 +70,8 @@ export const ledgerHIDConnector = ({
     async getChainId() {
       const provider = await this.getProvider();
       const { chainId } = await provider.getNetwork();
-      if (chainId) return Promise.resolve(chainId);
-      return Promise.reject('The chain must be set');
+      if (chainId) return chainId;
+      throw new ChainNotConfiguredError();
     },
 
     async isAuthorized() {

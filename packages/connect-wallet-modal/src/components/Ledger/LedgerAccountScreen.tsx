@@ -83,7 +83,14 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
         setError(helpers.interceptLedgerError(e as Error));
       }
     },
-    [closeScreen, connect, disconnectTransport, connectors, setError],
+    [
+      closeScreen,
+      connect,
+      disconnectTransport,
+      connectors,
+      setError,
+      metricsOnConnect,
+    ],
   );
 
   const handleDerivationPathSelect = useCallback((value: string) => {

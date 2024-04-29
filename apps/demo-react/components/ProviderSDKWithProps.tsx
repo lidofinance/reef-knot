@@ -23,9 +23,8 @@ export const ProviderSDKWithProps = (props: {
   const { rpc } = useReefKnotContext();
 
   const providerWeb3 = useMemo(() => {
-    if (!client || !isConnected) return;
-    const { account, chain, transport } = client;
-    if (!account) return;
+    if (!client || !client.account || !isConnected) return;
+    const { chain, transport } = client;
 
     // https://wagmi.sh/core/guides/ethers#reference-implementation-1
     const network = {
@@ -33,10 +32,10 @@ export const ProviderSDKWithProps = (props: {
       name: chain.name,
       ensAddress: chain.contracts?.ensRegistry?.address,
     };
-    const providerWeb3 = new Web3Provider(transport, network);
-    providerWeb3.pollingInterval = POLLING_INTERVAL;
+    const provider = new Web3Provider(transport, network);
+    provider.pollingInterval = POLLING_INTERVAL;
 
-    return providerWeb3;
+    return provider;
   }, [isConnected, client]);
 
   const supportedChainIds = useMemo(

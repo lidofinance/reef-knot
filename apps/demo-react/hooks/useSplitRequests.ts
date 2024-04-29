@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { parseEther } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 
+import { useConnectorInfo } from 'reef-knot/core-react';
 import { useContractSWR, useWSTETHContractRPC } from '@lido-sdk/react';
 import { TOKENS } from '@lido-sdk/constants';
 
@@ -10,7 +11,6 @@ import {
   MAX_REQUESTS_COUNT_LEDGER_LIMIT,
   STRATEGY_LAZY,
 } from './useWithdrawalsData';
-import { useConnectorInfo } from 'reef-knot/core-react';
 import { useToken } from './useToken';
 import { useWithdrawalsBaseData } from './useWithdrawalsBaseData';
 

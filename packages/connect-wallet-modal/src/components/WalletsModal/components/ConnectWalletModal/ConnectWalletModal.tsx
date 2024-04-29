@@ -68,7 +68,7 @@ export const ConnectWalletModal = ({
       walletsPinned,
     });
     setWalletsListFull(_walletsListFull);
-  }, [walletConnectorsList, walletsPinned, walletsShown]);
+  }, [config, walletConnectorsList, walletsPinned, walletsShown]);
 
   useEffect(() => {
     void getWalletsListFull();

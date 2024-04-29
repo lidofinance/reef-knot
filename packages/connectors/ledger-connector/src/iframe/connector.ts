@@ -143,7 +143,7 @@ export function ledgerLiveConnector({
       }
     },
 
-    async AccountsChanged(accounts: Address[]) {
+    AccountsChanged(accounts: Address[]) {
       if (accounts.length === 0 || !accounts[0]) {
         emitter.emit('disconnect');
       } else {
@@ -151,7 +151,7 @@ export function ledgerLiveConnector({
       }
     },
 
-    async ChainChanged(chainId: number | string) {
+    ChainChanged(chainId: number | string) {
       emitter.emit('change', { chainId: Number(chainId) });
     },
 
@@ -161,7 +161,7 @@ export function ledgerLiveConnector({
       provider.removeListener('chainChanged', this.onChainChanged);
     },
 
-    async onDisconnect() {
+    onDisconnect() {
       emitter.emit('disconnect');
     },
 

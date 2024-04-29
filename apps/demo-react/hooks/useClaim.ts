@@ -52,10 +52,10 @@ export const useClaim = () => {
   return useCallback(
     async (sortedRequests: RequestStatusClaimable[]) => {
       try {
-        const ethToClaim = sortedRequests.reduce(
-          (s, r) => s.add(r.claimableEth),
-          BigNumber.from(0),
-        );
+        // const ethToClaim = sortedRequests.reduce(
+        //   (s, r) => s.add(r.claimableEth),
+        //   BigNumber.from(0),
+        // );
 
         const ids = sortedRequests.map((r) => r.id);
         const hints = sortedRequests.map((r) => r.hint);

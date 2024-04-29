@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useConnectorInfo } from 'reef-knot/core-react';
 
 import {
   MAX_REQUESTS_COUNT,
@@ -6,7 +7,6 @@ import {
   MAX_REQUESTS_COUNT_LEDGER_LIMIT,
 } from './useWithdrawalsData';
 import type { RequestStatusClaimable } from './useWithdrawalsData';
-import { useConnectorInfo } from 'reef-knot/core-react';
 
 export const useClaimSelection = (
   claimableRequests: RequestStatusClaimable[] | null,

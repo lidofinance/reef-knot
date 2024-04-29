@@ -100,6 +100,8 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       setIsConnecting(false);
     }
   }, [
+    metricsOnConnect,
+    onConnect,
     connectAsync,
     connector,
     deeplink,

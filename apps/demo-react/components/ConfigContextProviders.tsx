@@ -7,11 +7,11 @@ import {
   getWalletAdaptersList,
   getWalletConnectorsList,
 } from 'reef-knot/core-react';
+import { WalletsListEthereum } from 'reef-knot/wallets';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ProviderSDKWithProps } from './ProviderSDKWithProps';
 import { rpcUrlsString } from '../util/rpc';
 import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
-import { WalletsListEthereum } from '@reef-knot/wallets-list';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const SUPPORTED_CHAINS = [holesky, mainnet, goerli] as const;
 const DEFAULT_CHAIN = SUPPORTED_CHAINS[0];

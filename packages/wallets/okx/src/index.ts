@@ -1,6 +1,5 @@
 import { WalletAdapterType } from '@reef-knot/types';
 import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
-import { Chain } from 'wagmi/chains';
 import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/okx.svg';
 import WalletIconInverted from './icons/okx-inverted.svg';

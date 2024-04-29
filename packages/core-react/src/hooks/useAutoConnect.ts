@@ -27,5 +27,6 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
     void tryReconnect();
 
     // No hook deps: do not retry the auto-connect attemption.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
