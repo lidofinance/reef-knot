@@ -6,7 +6,7 @@ export const name = 'Safe';
 
 const getSafeConnector = () =>
   safe({
-    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    allowedDomains: [/app.safe.global$/, /holesky-safe.protofire.io$/],
     debug: false,
   });
 
