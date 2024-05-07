@@ -42,15 +42,9 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
 
     if (web3ProviderIsDetected) {
       disconnect?.();
-      await connectAsync(
-        { connector },
-        {
-          onSuccess: () => {
-            onConnect?.();
-            metricsOnConnect?.();
-          },
-        },
-      );
+      await connectAsync({ connector });
+      onConnect?.();
+      metricsOnConnect?.();
     } else {
       await openModalAsync({
         type: 'requirements',

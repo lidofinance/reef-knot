@@ -21,13 +21,15 @@ import type {
 export const idLedgerLive = 'ledgerLive';
 export const name = 'Ledger Live';
 
+type LedgerLiveConnectorArgs = {
+  options?: IFrameEthereumProviderOptions;
+  defaultChain: Chain;
+};
+
 export function ledgerLiveConnector({
   options,
   defaultChain,
-}: {
-  options?: IFrameEthereumProviderOptions;
-  defaultChain: Chain;
-}) {
+}: LedgerLiveConnectorArgs) {
   const providers: Record<Chain['id'], IFrameEthereumProvider> = {};
 
   return createConnector<IFrameEthereumProvider>(({ chains, emitter }) => ({
