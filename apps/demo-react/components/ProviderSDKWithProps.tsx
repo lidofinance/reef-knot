@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSupportedChains, useWeb3 } from 'reef-knot/web3-react';
-import { useAccount, useConnectorClient } from 'wagmi';
+import { useConnectorClient } from 'wagmi';
 
 import { Web3Provider } from '@ethersproject/providers';
 import { ProviderSDK } from '@lido-sdk/react';
@@ -16,14 +16,13 @@ export const ProviderSDKWithProps = (props: {
   defaultChainId: number;
 }) => {
   const { children, defaultChainId } = props;
-  const { chainId = defaultChainId, account } = useWeb3();
+  const { chainId = defaultChainId, account, active } = useWeb3();
   const { supportedChains } = useSupportedChains();
-  const { isConnected } = useAccount();
   const { data: client } = useConnectorClient();
   const { rpc } = useReefKnotContext();
 
   const providerWeb3 = useMemo(() => {
-    if (!client || !client.account || !isConnected) return;
+    if (!client || !client.account || !active) return;
     const { chain, transport } = client;
 
     // https://wagmi.sh/core/guides/ethers#reference-implementation-1
@@ -36,7 +35,7 @@ export const ProviderSDKWithProps = (props: {
     provider.pollingInterval = POLLING_INTERVAL;
 
     return provider;
-  }, [isConnected, client]);
+  }, [active, client]);
 
   const supportedChainIds = useMemo(
     () => supportedChains.map((chain) => chain.chainId),

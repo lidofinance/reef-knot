@@ -16,14 +16,7 @@ export const Safe: WalletAdapterType = () => ({
   autoConnectOnly: true,
   detector: async (config): Promise<boolean> => {
     const safeConnector = config.connectors.find((c) => c.id === id);
-
-    // If opened in an iframe. This is an important check for Safe.
-    // The updated wagmi SafeConnector already has this check, but the currently used SafeConnector for wagmi 0.x hasn't.
-    if (
-      safeConnector &&
-      globalThis.window &&
-      globalThis.window.parent !== globalThis.window
-    ) {
+    if (safeConnector) {
       // The Promise.race is needed to handle regular iframes, not related to Safe,
       // because in such iframes Safe SDK Promises can get stuck without resolving,
       // so we are using a small timeout for them.

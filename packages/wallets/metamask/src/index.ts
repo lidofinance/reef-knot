@@ -11,7 +11,7 @@ const currentHref = globalThis.window
 const getMetaMaskConnector = () =>
   injected({
     target: 'metaMask',
-    shimDisconnect: false,
+    shimDisconnect: true,
   });
 
 export const MetaMask: WalletAdapterType = () => ({

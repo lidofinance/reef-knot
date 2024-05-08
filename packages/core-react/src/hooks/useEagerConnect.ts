@@ -29,7 +29,7 @@ const connectToAdapter = async (
     // This case is considered as error for now, and we explicitly call disconnect() here.
     // This logic comes from previously used web3-react connection logic, which wasn't reworked yet after web3-react removal.
     // web3-react logic was: if a chain is unsupported – break the connection, throw an error
-    // wagmi logic is: if a chain is unsupported – connect anyway, without errors, set `chain.unsupported` flag to true.
+    // wagmi logic is: if a chain is unsupported – connect anyway, without errors.
     // So, here we are trying to mimic the legacy logic, because we are not ready to rework it yet.
     const connectError = getUnsupportedChainError(supportedChains);
     await disconnect(config);
