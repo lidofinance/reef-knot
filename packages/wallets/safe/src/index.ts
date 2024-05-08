@@ -16,7 +16,11 @@ export const Safe: WalletAdapterType = () => ({
   autoConnectOnly: true,
   detector: async (config): Promise<boolean> => {
     const safeConnector = config.connectors.find((c) => c.id === id);
-    if (safeConnector) {
+    if (
+      safeConnector &&
+      globalThis.window &&
+      globalThis.window.parent !== globalThis.window
+    ) {
       // The Promise.race is needed to handle regular iframes, not related to Safe,
       // because in such iframes Safe SDK Promises can get stuck without resolving,
       // so we are using a small timeout for them.
@@ -24,7 +28,7 @@ export const Safe: WalletAdapterType = () => ({
         new Promise<boolean>((resolve) => {
           safeConnector
             .getProvider()
-            .then(() => resolve(true))
+            .then((provider: unknown) => resolve(!!provider))
             .catch(() => resolve(false));
         }),
         new Promise<boolean>((resolve) => {
