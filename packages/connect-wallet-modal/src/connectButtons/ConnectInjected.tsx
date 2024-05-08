@@ -39,15 +39,9 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
 
     if (await detector?.(config)) {
       disconnect?.();
-      await connectAsync(
-        { connector },
-        {
-          onSuccess: () => {
-            onConnect?.();
-            metricsOnConnect?.();
-          },
-        },
-      );
+      await connectAsync({ connector });
+      onConnect?.();
+      metricsOnConnect?.();
     } else if (isMobileOrTablet && deeplink) {
       openWindow(deeplink);
     } else if (downloadURLs) {

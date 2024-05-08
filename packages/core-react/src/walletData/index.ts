@@ -6,26 +6,26 @@ import type {
   WalletConnectorData,
 } from '@reef-knot/types';
 
-export interface GetWalletAdaptersListArgs {
+export interface GetWalletsDataListArgs {
   walletsList: Record<string, WalletAdapterType>;
   rpc: Record<number, string>;
   defaultChain: Chain;
   walletconnectProjectId?: string;
 }
 
-export const getWalletAdaptersList = ({
+export const getWalletsDataList = ({
   walletsList,
   rpc,
   defaultChain,
   walletconnectProjectId,
-}: GetWalletAdaptersListArgs) => {
+}: GetWalletsDataListArgs) => {
   const walletAdapters = Object.values(walletsList);
 
   if (!rpc[defaultChain.id]) {
     throw 'RPC for default chain must be provided';
   }
 
-  const walletAdaptersList = walletAdapters.map((walletAdapter) =>
+  const walletsDataList = walletAdapters.map((walletAdapter) =>
     walletAdapter({
       rpc,
       defaultChain,
@@ -33,7 +33,7 @@ export const getWalletAdaptersList = ({
     }),
   );
 
-  const connectorCreatorFns = walletAdaptersList.reduce<CreateConnectorFn[]>(
+  const connectorCreatorFns = walletsDataList.reduce<CreateConnectorFn[]>(
     (list, adapterData) => {
       const { createConnectorFn, walletconnectExtras } = adapterData;
       list.push(createConnectorFn);
@@ -50,15 +50,15 @@ export const getWalletAdaptersList = ({
   );
 
   return {
-    walletAdaptersList,
+    walletsDataList,
     connectorCreatorFns,
   };
 };
 
 /**
- * Connectors and adapters should be sorted in the same way to match one to one.
+ * Connectors and wallet data should be sorted in the same way to match one to one.
  * That could be easily achieved if you follow next order:
- * `getWalletAdaptersList` —> `wagmi/createConfig` —> `getWalletConnectorsList`
+ * `getWalletsDataList` —> `wagmi/createConfig` —> `getWalletConnectorsList`
  * (example in the reef-knot repository; `apps/demo-react/components/ConfigContextProviders.tsx`)
  *
  * We do not have another way to match them properly here because
@@ -68,15 +68,15 @@ export const getWalletAdaptersList = ({
  */
 export const getWalletConnectorsList = ({
   connectors,
-  walletAdaptersList,
+  walletsDataList,
 }: {
   connectors: readonly Connector[];
-  walletAdaptersList: WalletAdapterData[];
+  walletsDataList: WalletAdapterData[];
 }): WalletConnectorData[] => {
   const walletConnectorsList: WalletConnectorData[] = [];
   let connectorIdx = 0;
 
-  for (const adapterData of walletAdaptersList) {
+  for (const adapterData of walletsDataList) {
     const connectorData: WalletConnectorData = {
       ...adapterData,
       connector: connectors[connectorIdx],

@@ -4,7 +4,7 @@ import { goerli, mainnet, holesky } from 'wagmi/chains';
 import {
   AutoConnect,
   ReefKnot,
-  getWalletAdaptersList,
+  getWalletsDataList,
   getWalletConnectorsList,
 } from 'reef-knot/core-react';
 import { WalletsListEthereum } from 'reef-knot/wallets';
@@ -16,7 +16,7 @@ import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
 const SUPPORTED_CHAINS = [holesky, mainnet, goerli] as const;
 const DEFAULT_CHAIN = SUPPORTED_CHAINS[0];
 
-const { walletAdaptersList, connectorCreatorFns } = getWalletAdaptersList({
+const { walletsDataList, connectorCreatorFns } = getWalletsDataList({
   walletsList: WalletsListEthereum,
   rpc: rpcUrlsString,
   walletconnectProjectId: WC_PROJECT_ID,
@@ -36,7 +36,7 @@ const config = createConfig({
 
 const walletConnectorsList = getWalletConnectorsList({
   connectors: config.connectors,
-  walletAdaptersList,
+  walletsDataList,
 });
 
 const queryClient = new QueryClient();
