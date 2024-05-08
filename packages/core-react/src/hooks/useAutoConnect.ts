@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import { useAccount, useReconnect } from 'wagmi';
+import { useConfig, useAccount, useReconnect } from 'wagmi';
 import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
+  const { storage } = useConfig();
   const { reconnectAsync } = useReconnect();
   const { isConnected } = useAccount();
   const { eagerConnect } = useEagerConnect();
@@ -19,7 +20,12 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
 
       // If still not connected and there were no errors and the terms of service are accepted,
       // call the default wagmi autoConnect method, which attempts to connect to the last used connector.
-      if (!connectResult && checkTermsAccepted()) {
+      if (
+        !connectResult &&
+        checkTermsAccepted() &&
+        // We do not want to reconnect if there `recentConnectorId` was deleted during disconnect
+        (await storage?.getItem('recentConnectorId'))
+      ) {
         await reconnectAsync();
       }
     };

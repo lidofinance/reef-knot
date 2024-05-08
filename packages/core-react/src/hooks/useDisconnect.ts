@@ -1,10 +1,29 @@
 import { useCallback, useMemo } from 'react';
-import { useAccount, useDisconnect as useDisconnectWagmi } from 'wagmi';
+import {
+  useConfig,
+  useAccount,
+  useDisconnect as useDisconnectWagmi,
+} from 'wagmi';
 import { useAutoConnectCheck } from './useAutoConnectCheck';
 import { useReefKnotModal } from './useReefKnotModal';
 
-export const useForceDisconnect = () => {
+const useDisconnectCleaningStorage = () => {
+  const { storage } = useConfig();
   const { disconnect } = useDisconnectWagmi();
+
+  const handleDisconnect = useCallback(
+    (...args: Parameters<typeof disconnect>) => {
+      disconnect(...args);
+      void storage?.removeItem('recentConnectorId');
+    },
+    [disconnect, storage],
+  );
+
+  return handleDisconnect;
+};
+
+export const useForceDisconnect = () => {
+  const disconnect = useDisconnectCleaningStorage();
   const { forceCloseAllModals } = useReefKnotModal();
 
   const forceDisconnect = useCallback(() => {
@@ -20,7 +39,7 @@ export const useDisconnect = (): {
   isDisconnectMakesSense: boolean;
 } => {
   const { isConnected, connector } = useAccount();
-  const { disconnect } = useDisconnectWagmi();
+  const disconnect = useDisconnectCleaningStorage();
 
   const { getAutoConnectOnlyConnectors } = useAutoConnectCheck();
 
