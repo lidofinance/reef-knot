@@ -46,6 +46,6 @@
     "next-transpile-modules": "9.0.0",
     "tsconfig": "*",
     "typechain": "^8.3.0",
-    "typescript": "^5.4.5"
+    "typescript": "5.4.5"
   }
 }

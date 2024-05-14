@@ -79,7 +79,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
         // Initiate a connection, but do not block the further execution
-        connectAsync({ connector: WCURIConnector }, { onSuccess }).finally(
+        void connectAsync({ connector: WCURIConnector }, { onSuccess }).finally(
           () => {
             // We got a connection result
             if (WCURICloseRedirectionWindow) {
