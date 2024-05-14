@@ -9,6 +9,7 @@ type InjectedProps = {
   $square: boolean;
   $loading: boolean;
   $active: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   theme: Record<string, any>;
 };
 

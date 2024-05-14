@@ -51,6 +51,7 @@ const StakeForm = ({
   const [inputValue, setInputValue] = useState(defaultWrapInputValue);
   const [isLoading, setIsLoading] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [stakeData, setStakeData] = useState({} as any);
   const [referralAddress, setReferralAddress] = useState('');
   const [walletBalance, setWalletBalance] = useState('');
@@ -88,8 +89,10 @@ const StakeForm = ({
         referralAddress || AddressZero,
         overrides,
       );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setEstimateStakeGas(originalGasLimit as any);
       setStakeGasLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setEstimateStakeGas(STETH_SUBMIT_GAS_LIMIT_DEFAULT);
       setStakeGasError(e?.message);
@@ -146,6 +149,7 @@ const StakeForm = ({
           setStakeData(data);
         });
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setTxError(error?.reason);
     }
@@ -215,6 +219,7 @@ const StakeForm = ({
           {`${stakeCostInUsd?.toFixed(2)}$`}
         </DataTableRow>
         <DataTableRow title="Lido reward fee" loading={!lidoFee.data}>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {`${(lidoFee.data as any) / 100} %`}
         </DataTableRow>
       </DataTable>
