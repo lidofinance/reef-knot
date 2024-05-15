@@ -1,5 +1,33 @@
 # @reef-knot/wallets-list
 
+## 2.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-dapp-browser-injected@2.0.0
+  - @reef-knot/wallet-adapter-browser-extension@2.0.0
+  - @reef-knot/wallet-adapter-walletconnect@2.0.0
+  - @reef-knot/wallet-adapter-ledger-live@3.0.0
+  - @reef-knot/wallet-adapter-ledger-hid@3.0.0
+  - @reef-knot/wallet-adapter-coinbase@2.0.0
+  - @reef-knot/wallet-adapter-metamask@2.0.0
+  - @reef-knot/wallet-adapter-bitkeep@2.0.0
+  - @reef-knot/wallet-adapter-imtoken@2.0.0
+  - @reef-knot/wallet-adapter-ambire@2.0.0
+  - @reef-knot/wallet-adapter-coin98@2.0.0
+  - @reef-knot/wallet-adapter-exodus@2.0.0
+  - @reef-knot/wallet-adapter-brave@2.0.0
+  - @reef-knot/wallet-adapter-trust@2.0.0
+  - @reef-knot/wallet-adapter-xdefi@2.0.0
+  - @reef-knot/wallet-adapter-safe@2.0.0
+  - @reef-knot/wallet-adapter-okx@2.0.0
+  - @reef-knot/types@2.0.0
+
 ## 1.13.3
 
 ### Patch Changes

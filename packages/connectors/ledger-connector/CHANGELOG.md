@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 4.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
 ## 3.0.0
 
 ### Major Changes
