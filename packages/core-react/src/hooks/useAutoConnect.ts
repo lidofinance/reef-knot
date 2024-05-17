@@ -23,7 +23,7 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
       if (
         !connectResult &&
         checkTermsAccepted() &&
-        // We do not want to reconnect if there `recentConnectorId` was deleted during disconnect
+        // We do not want to reconnect if the `recentConnectorId` item was deleted during disconnect
         (await storage?.getItem('recentConnectorId'))
       ) {
         await reconnectAsync();
