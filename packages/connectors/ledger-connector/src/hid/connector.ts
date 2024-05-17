@@ -10,19 +10,20 @@ import type { LedgerHQProvider } from './provider';
 export const idLedgerHid = 'ledgerHID';
 export const name = 'Ledger';
 
-export const ledgerHIDConnector = ({
+ledgerHIDConnector.type = 'ledgerHID' as const;
+export function ledgerHIDConnector({
   rpc,
   defaultChain,
 }: {
   rpc: Record<number, string>;
   defaultChain: Chain;
-}) => {
+}) {
   const providers: Record<Chain['id'], LedgerHQProvider> = {};
 
   return createConnector<LedgerHQProvider>(({ chains, emitter }) => ({
     id: idLedgerHid,
     name,
-    type: 'ledgerHID', // TODO: define type
+    type: ledgerHIDConnector.type,
 
     async getProvider({ chainId } = {}) {
       const chain = chains.find((x) => x.id === chainId) ?? defaultChain;
@@ -100,4 +101,4 @@ export const ledgerHIDConnector = ({
       // NOOP
     },
   }));
-};
+}

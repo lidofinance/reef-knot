@@ -26,6 +26,7 @@ type LedgerLiveConnectorArgs = {
   defaultChain: Chain;
 };
 
+ledgerLiveConnector.type = 'ledgerLive';
 export function ledgerLiveConnector({
   options,
   defaultChain,
@@ -35,7 +36,7 @@ export function ledgerLiveConnector({
   return createConnector<IFrameEthereumProvider>(({ chains, emitter }) => ({
     id: idLedgerLive,
     name,
-    type: 'ledgerLive', // TODO: define the type
+    type: ledgerLiveConnector.type,
 
     async getProvider({ chainId } = {}) {
       const chain = chains.find((x) => x.id === chainId) ?? defaultChain;
