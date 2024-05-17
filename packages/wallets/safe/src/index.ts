@@ -4,13 +4,21 @@ import type { WalletAdapterType } from '@reef-knot/types';
 export const id = 'safe';
 export const name = 'Safe';
 
-const getSafeConnector = () =>
+type GetSafeConnectorArgs = {
+  allowedDomains?: RegExp[];
+};
+
+const getSafeConnector = ({ allowedDomains = [] }: GetSafeConnectorArgs) =>
   safe({
-    allowedDomains: [/app.safe.global$/, /holesky-safe.protofire.io$/],
+    allowedDomains: [
+      /app.safe.global$/,
+      /holesky-safe.protofire.io$/,
+      ...allowedDomains,
+    ],
     debug: false,
   });
 
-export const Safe: WalletAdapterType = () => ({
+export const Safe: WalletAdapterType = ({ safeAllowedDomains }) => ({
   walletName: name,
   walletId: id,
   autoConnectOnly: true,
@@ -38,5 +46,7 @@ export const Safe: WalletAdapterType = () => ({
     }
     return false;
   },
-  createConnectorFn: getSafeConnector(),
+  createConnectorFn: getSafeConnector({
+    allowedDomains: safeAllowedDomains,
+  }),
 });

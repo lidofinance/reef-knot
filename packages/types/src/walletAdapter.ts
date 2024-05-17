@@ -57,6 +57,7 @@ export interface WalletAdapterArgs {
   rpc: Record<number, string>;
   defaultChain: Chain;
   walletconnectProjectId?: string;
+  safeAllowedDomains?: RegExp[];
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
 

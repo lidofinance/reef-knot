@@ -11,6 +11,7 @@ export interface GetWalletsDataListArgs {
   rpc: Record<number, string>;
   defaultChain: Chain;
   walletconnectProjectId?: string;
+  safeAllowedDomains?: RegExp[];
 }
 
 export const getWalletsDataList = ({
@@ -18,6 +19,7 @@ export const getWalletsDataList = ({
   rpc,
   defaultChain,
   walletconnectProjectId,
+  safeAllowedDomains,
 }: GetWalletsDataListArgs) => {
   const walletAdapters = Object.values(walletsList);
 
@@ -30,6 +32,7 @@ export const getWalletsDataList = ({
       rpc,
       defaultChain,
       walletconnectProjectId,
+      safeAllowedDomains,
     }),
   );
 
