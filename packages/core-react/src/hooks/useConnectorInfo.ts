@@ -1,8 +1,8 @@
 import { useAccount } from 'wagmi';
 import { idLedgerHid, idLedgerLive } from '@reef-knot/ledger-connector';
 import {
+  hasInjected,
   isDappBrowserProvider,
-  isMetamaskProvider,
 } from '../helpers/providerDetectors';
 
 type ConnectorInfo = {
@@ -10,7 +10,6 @@ type ConnectorInfo = {
   isGnosis: boolean;
   isLedger: boolean;
   isLedgerLive: boolean;
-  isMetamask: boolean;
   isDappBrowser: boolean;
   isInjected: boolean;
 };
@@ -22,9 +21,8 @@ export const useConnectorInfo = (): ConnectorInfo => {
   const isLedger = Boolean(connector?.id === idLedgerHid);
   const isLedgerLive = Boolean(connector?.id === idLedgerLive);
   const isGnosis = Boolean(connector?.id === 'safe');
-  const isInjected = connector?.id === 'injected';
-  const isMetamask = isInjected && isMetamaskProvider();
-  const isDappBrowser = isInjected && isDappBrowserProvider();
+  const isInjected = hasInjected();
+  const isDappBrowser = isDappBrowserProvider();
 
   // Do not set connector's name if the app is opened in a mobile wallet dapp browser,
   // because we use a generic injected connector for this case and proper detection is hard.
@@ -37,7 +35,6 @@ export const useConnectorInfo = (): ConnectorInfo => {
     isGnosis,
     isLedger,
     isLedgerLive,
-    isMetamask,
 
     isDappBrowser,
     isInjected,
