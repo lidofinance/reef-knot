@@ -1,5 +1,5 @@
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
-import 'viem/window';
+import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
 export const hasInjected = () => !!globalThis.window?.ethereum;
 

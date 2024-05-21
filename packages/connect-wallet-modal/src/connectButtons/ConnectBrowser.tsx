@@ -5,7 +5,7 @@ import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButton } from '../components/ConnectButton';
 import { capitalize } from '../helpers';
 import { ConnectInjectedProps } from './types';
-import 'viem/window';
+import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
