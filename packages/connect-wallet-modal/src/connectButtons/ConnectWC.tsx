@@ -78,23 +78,26 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow = window.open('', '_blank');
         redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
-        // Initiate a connection, but do not block the further execution
-        void connectAsync({ connector: WCURIConnector }, { onSuccess }).finally(
-          () => {
-            // We got a connection result
-            if (WCURICloseRedirectionWindow) {
-              // Close the previously opened window if necessary
-              redirectionWindow?.close();
-            }
+        await Promise.all([
+          connectAsync({ connector: WCURIConnector }),
+          async () => {
+            // Wait for WalletConnect Pairing URI to arrive
+            const wcUri = await getWalletConnectUri(WCURIConnector);
+            setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
+            // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
           },
-        );
+        ]);
 
-        // Wait for WalletConnect Pairing URI to arrive
-        const wcUri = await getWalletConnectUri(WCURIConnector);
-        setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
-        // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
+        onSuccess();
+
+        // We got a connection result
+        if (WCURICloseRedirectionWindow) {
+          // Close the previously opened window if necessary
+          redirectionWindow?.close();
+        }
       } else {
-        await connectAsync({ connector }, { onSuccess });
+        await connectAsync({ connector });
+        onSuccess();
       }
     } finally {
       setIsConnecting(false);
