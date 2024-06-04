@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useConfig } from 'wagmi';
 import { useReefKnotContext, useReefKnotModal } from '@reef-knot/core-react';
 
@@ -50,31 +50,32 @@ export const ConnectWalletModal = ({
     setShowOtherWallets((value) => !value);
   }, []);
 
-  const isWalletsToggleButtonShown = useRef(false);
-
-  const [walletsList, setWalletsList] = useState<WalletAdapterData[]>([]);
   const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
     [],
   );
 
   useEffect(() => {
+    let isActive = true;
     const fetch = async () => {
       // Asynchronously filling wallets list because there is an async wallet detection during wallets sorting.
       // Actually, almost all wallets can be detected synchronously, so this process is expected to be fast,
       // and a loading indicator is not required for now.
       const _walletsListFull = await sortWalletsList({
-        config,
         walletConnectorsList,
         walletsShown,
         walletsPinned,
       });
-      setWalletsListFull(_walletsListFull);
+      if (isActive) setWalletsListFull(_walletsListFull);
     };
     void fetch();
+    return () => {
+      isActive = false;
+    };
   }, [config, walletConnectorsList, walletsPinned, walletsShown]);
 
-  useEffect(() => {
+  const walletsList = useMemo(() => {
     let _walletsList = walletsListFull;
+
     if (!isShownOtherWallets) {
       _walletsList = walletsListFull.slice(0, walletsDisplayInitialCount);
     }
@@ -85,23 +86,23 @@ export const ConnectWalletModal = ({
       );
     }
 
-    setWalletsList(_walletsList);
-    isWalletsToggleButtonShown.current =
-      walletsListFull.length > walletsList.length || isShownOtherWallets;
+    return _walletsList;
   }, [
     inputValue,
     isShownOtherWallets,
     walletsDisplayInitialCount,
-    walletsList.length,
     walletsListFull,
   ]);
+
+  const isWalletsToggleButtonShown =
+    walletsListFull.length > walletsList.length || isShownOtherWallets;
 
   return (
     <ConnectWalletModalLayout
       inputValue={inputValue}
       isEmptyWalletsList={walletsList.length === 0}
       isShownOtherWallets={isShownOtherWallets}
-      isShownWalletsToggleButton={isWalletsToggleButtonShown.current}
+      isShownWalletsToggleButton={isWalletsToggleButtonShown}
       onInputChange={handleInputChange}
       onInputClear={handleInputClear}
       onToggleWalletsList={handleToggleWalletsList}
