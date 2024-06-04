@@ -33,6 +33,7 @@ export const getTahoConnector = () =>
 export const Taho: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.tally || !!globalThis.window?.ethereum?.isTally,

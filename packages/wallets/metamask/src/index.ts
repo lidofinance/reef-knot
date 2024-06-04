@@ -17,6 +17,7 @@ const getMetaMaskConnector = () =>
 export const MetaMask: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: {
     light: WalletIcon,
     dark: WalletIconInverted,

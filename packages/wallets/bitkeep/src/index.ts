@@ -31,6 +31,7 @@ const getBitgetConnector = () =>
 export const Bitget: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.bitkeep?.ethereum,
   downloadURLs: {

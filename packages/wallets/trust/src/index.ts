@@ -27,6 +27,7 @@ const deeplinkDAppUrl = globalThis.window
 export const Trust: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.ethereum?.isTrust,
   downloadURLs: {

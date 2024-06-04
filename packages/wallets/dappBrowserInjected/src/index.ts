@@ -17,6 +17,7 @@ const getDAppBrowserInjectedConnector = () =>
 export const DAppBrowserInjected: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   autoConnectOnly: true,
   detector: () => !!globalThis.window?.ethereum && isMobileOrTablet,
   createConnectorFn: getDAppBrowserInjectedConnector(),

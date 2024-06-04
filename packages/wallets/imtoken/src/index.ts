@@ -26,6 +26,7 @@ const getImTokenConnector = () =>
 export const ImToken: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.ethereum?.isImToken,
   deeplink: `imtokenv2://navigate/DappView?url=${currentHref}`,

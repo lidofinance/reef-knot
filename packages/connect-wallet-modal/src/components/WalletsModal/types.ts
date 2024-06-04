@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import type { ModalProps } from '@reef-knot/ui-react';
+import type { Connector, CreateConnectorFn } from 'wagmi';
 
 export type Metrics<WalletIdsList extends string = string> = {
   events?: {
@@ -36,4 +37,5 @@ export type ButtonsCommonProps = {
   shouldInvertWalletIcon: boolean;
   metrics?: Metrics;
   isCompact?: boolean;
+  connector: Connector | CreateConnectorFn;
 };

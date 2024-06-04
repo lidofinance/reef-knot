@@ -10,6 +10,7 @@ export const WalletConnect: WalletAdapterType = ({
 }) => ({
   walletName: name,
   walletId: id,
+  type: getWalletConnectConnector.type,
   icon: WalletIcon,
   createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,

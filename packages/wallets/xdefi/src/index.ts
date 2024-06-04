@@ -32,6 +32,7 @@ export const getXdefiConnector = () =>
 export const Xdefi: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.xfi?.ethereum ||

@@ -7,7 +7,7 @@ import { WalletModalConnectTermsProps } from '../../../Terms';
 import { ConnectWalletModalLayout } from '../ConnectWalletModalLayout';
 
 import { sortWalletsList } from './sortWalletsList';
-import type { WalletConnectorData } from '@reef-knot/types';
+import type { WalletAdapterData } from '@reef-knot/types';
 
 type ConnectWalletModalProps = WalletsModalProps & {
   onCloseSuccess?: () => void;
@@ -52,27 +52,26 @@ export const ConnectWalletModal = ({
 
   const isWalletsToggleButtonShown = useRef(false);
 
-  const [walletsList, setWalletsList] = useState<WalletConnectorData[]>([]);
-  const [walletsListFull, setWalletsListFull] = useState<WalletConnectorData[]>(
+  const [walletsList, setWalletsList] = useState<WalletAdapterData[]>([]);
+  const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
     [],
   );
 
-  const getWalletsListFull = useCallback(async () => {
-    // Asynchronously filling wallets list because there is an async wallet detection during wallets sorting.
-    // Actually, almost all wallets can be detected synchronously, so this process is expected to be fast,
-    // and a loading indicator is not required for now.
-    const _walletsListFull = await sortWalletsList({
-      config,
-      walletConnectorsList,
-      walletsShown,
-      walletsPinned,
-    });
-    setWalletsListFull(_walletsListFull);
-  }, [config, walletConnectorsList, walletsPinned, walletsShown]);
-
   useEffect(() => {
-    void getWalletsListFull();
-  }, [getWalletsListFull]);
+    const fetch = async () => {
+      // Asynchronously filling wallets list because there is an async wallet detection during wallets sorting.
+      // Actually, almost all wallets can be detected synchronously, so this process is expected to be fast,
+      // and a loading indicator is not required for now.
+      const _walletsListFull = await sortWalletsList({
+        config,
+        walletConnectorsList,
+        walletsShown,
+        walletsPinned,
+      });
+      setWalletsListFull(_walletsListFull);
+    };
+    void fetch();
+  }, [config, walletConnectorsList, walletsPinned, walletsShown]);
 
   useEffect(() => {
     let _walletsList = walletsListFull;
@@ -111,7 +110,7 @@ export const ConnectWalletModal = ({
       {walletsList.map((walletData) => {
         const WalletComponent =
           buttonComponentsByConnectorId[walletData.walletId] ??
-          buttonComponentsByConnectorId[walletData.connector.id] ??
+          buttonComponentsByConnectorId[walletData.type] ??
           buttonComponentsByConnectorId.default;
         if (!WalletComponent) return null;
         return (
@@ -123,6 +122,7 @@ export const ConnectWalletModal = ({
             metrics={metrics}
             isCompact={isShownOtherWallets}
             {...walletData}
+            connector={walletData.createConnectorFn}
           />
         );
       })}

@@ -7,16 +7,16 @@ import { connect, disconnect } from 'wagmi/actions';
 import { getUnsupportedChainError } from '../helpers/getUnsupportedChainError';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 
-import type { WalletConnectorData } from '@reef-knot/types';
+import type { WalletAdapterData } from '@reef-knot/types';
 import type { Chain } from 'wagmi/chains';
-import type { Config, Connector, ConnectReturnType } from '@wagmi/core';
+import type { Config, CreateConnectorFn, ConnectReturnType } from '@wagmi/core';
 import type { ReefKnotModalContextValue } from '../context';
 
 type ConnectResult = ConnectReturnType;
 
 const connectToAdapter = async (
   config: Config,
-  connector: Connector,
+  connector: CreateConnectorFn,
   supportedChains: readonly [Chain, ...Chain[]],
 ) => {
   const connectResult = await connect(config, { connector });
@@ -38,8 +38,18 @@ const connectToAdapter = async (
     // There is a strong recommendation in the MetaMask documentation
     // to reload the page upon chain changes, unless there is a good reason not to.
     // This looks like a good general approach.
-    const provider: any = await connector.getProvider();
-    provider.once('chainChanged', () => globalThis.window?.location.reload());
+
+    if (config.state.current) {
+      const activeConnector = config.state.connections.get(
+        config.state.current,
+      )?.connector;
+      if (activeConnector) {
+        const provider: any = await activeConnector.getProvider();
+        provider.once('chainChanged', () =>
+          globalThis.window?.location.reload(),
+        );
+      }
+    }
 
     throw connectError;
   }
@@ -49,20 +59,20 @@ const connectToAdapter = async (
 
 export const connectEagerly = async (
   config: Config,
-  adapters: WalletConnectorData[],
+  adapters: WalletAdapterData[],
   openModalAsync: ReefKnotModalContextValue['openModalAsync'],
   supportedChains: readonly [Chain, ...Chain[]],
 ): Promise<ConnectResult | null> => {
   const isTermsAccepted = checkTermsAccepted();
 
   for (const adapter of adapters) {
-    if (await adapter.detector?.(config)) {
+    if (await adapter.detector?.()) {
       // wallet is detected
       let connectionResult: ConnectResult | null = null;
       const tryConnection = async () => {
         const result = await connectToAdapter(
           config,
-          adapter.connector,
+          adapter.createConnectorFn,
           supportedChains,
         );
         connectionResult = result;

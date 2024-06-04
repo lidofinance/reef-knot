@@ -8,6 +8,7 @@ import WalletIcon from './icons/zengo.svg';
 export const Zengo: WalletAdapterType = ({ walletconnectProjectId }) => ({
   walletName: 'ZenGo',
   walletId: 'zengo',
+  type: getWalletConnectConnector.type,
   icon: WalletIcon,
   createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,

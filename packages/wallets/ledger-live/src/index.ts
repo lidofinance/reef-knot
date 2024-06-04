@@ -7,6 +7,7 @@ export const name = 'Ledger Live';
 export const LedgerLive: WalletAdapterType = ({ defaultChain }) => ({
   walletName: name,
   walletId: id,
+  type: ledgerLiveConnector.type,
   autoConnectOnly: true,
   detector: () => isLedgerLive(),
   createConnectorFn: ledgerLiveConnector({

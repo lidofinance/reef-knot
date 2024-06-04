@@ -38,6 +38,7 @@ const getOkxConnector = () =>
 export const Okx: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: {
     light: WalletIcon,
     dark: WalletIconInverted,

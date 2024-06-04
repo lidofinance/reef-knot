@@ -11,6 +11,7 @@ export const Blockchaincom: WalletAdapterType = ({
 }) => ({
   walletName: name,
   walletId: id,
+  type: getWalletConnectConnector.type,
   icon: {
     light: WalletIcon,
     dark: WalletIconInverted,

@@ -4,7 +4,7 @@ import {
   useAccount,
   useDisconnect as useDisconnectWagmi,
 } from 'wagmi';
-import { useAutoConnectCheck } from './useAutoConnectCheck';
+import { useReefKnotContext } from './useReefKnotContext';
 import { useReefKnotModal } from './useReefKnotModal';
 
 const useDisconnectCleaningStorage = () => {
@@ -40,18 +40,16 @@ export const useDisconnect = (): {
 } => {
   const { isConnected, connector } = useAccount();
   const disconnect = useDisconnectCleaningStorage();
-
-  const { getAutoConnectOnlyConnectors } = useAutoConnectCheck();
+  const { walletConnectorsList } = useReefKnotContext();
 
   const isDisconnectMakesSense = useMemo(() => {
     // It doesn't make sense to offer a user the ability to disconnect if the user is not connected yet,
     // or if the user was connected automatically
-    const autoConnectOnlyConnectors = getAutoConnectOnlyConnectors();
-    const isConnectorNotAutoConnectOnly = autoConnectOnlyConnectors.every(
-      (c) => c.id !== connector?.id,
+    const connectorData = walletConnectorsList.find(
+      (c) => c.walletId === connector?.id,
     );
-    return isConnected && isConnectorNotAutoConnectOnly;
-  }, [isConnected, connector, getAutoConnectOnlyConnectors]);
+    return isConnected && !!connectorData?.autoConnectOnly;
+  }, [isConnected, connector, walletConnectorsList]);
 
   return {
     disconnect: isDisconnectMakesSense ? disconnect : undefined,

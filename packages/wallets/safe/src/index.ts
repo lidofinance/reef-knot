@@ -1,4 +1,5 @@
 import { safe } from 'wagmi/connectors';
+import { withTimeout } from 'viem';
 import type { WalletAdapterType } from '@reef-knot/types';
 
 export const id = 'safe';
@@ -21,30 +22,61 @@ const getSafeConnector = ({ allowedDomains = [] }: GetSafeConnectorArgs) =>
 export const Safe: WalletAdapterType = ({ safeAllowedDomains }) => ({
   walletName: name,
   walletId: id,
+  type: safe.type,
   autoConnectOnly: true,
-  detector: async (config): Promise<boolean> => {
-    const safeConnector = config.connectors.find((c) => c.id === id);
-    if (
-      safeConnector &&
-      globalThis.window &&
-      globalThis.window.parent !== globalThis.window
-    ) {
-      // The Promise.race is needed to handle regular iframes, not related to Safe,
-      // because in such iframes Safe SDK Promises can get stuck without resolving,
-      // so we are using a small timeout for them.
-      return Promise.race([
-        new Promise<boolean>((resolve) => {
-          safeConnector
-            .getProvider()
-            .then((provider: unknown) => resolve(!!provider))
-            .catch(() => resolve(false));
-        }),
-        new Promise<boolean>((resolve) => {
-          setTimeout(() => resolve(false), 200);
-        }),
-      ]);
+  detector: async (): Promise<boolean> => {
+    // We cannot longer use `safeConnector.getProvider()` directly
+    // because in the current wagmi version it must be initialized
+    // with `wagmi/createConfig/setup` otherewise the `getProvider` method is not accessible.
+    // https://github.com/wevm/wagmi/blob/fa5864bfb3ebfb0dc147b35003152a17a785ade6/packages/core/src/createConfig.ts#L96-L111
+    //
+    // We also do not use wagmi config here because we prefer to create a connection on flight
+    // when the connect button is clicked. This approach helps us to avoid connector collisions
+    // that appear in wagmi sometimes when it has multiple injected connectors in the config list
+    // which leading to some bugs detected during manual ui tests.
+    //
+    // So, with that being said, as we do not have an access to `safeConnector.getProvider`
+    // we forced to copy an implementation from its original source  to implement a wallet detector:
+    // https://github.com/wevm/wagmi/blob/fa5864bfb3ebfb0dc147b35003152a17a785ade6/packages/connectors/src/safe.ts#L85-L116
+
+    const isIframe =
+      globalThis.window && globalThis.window?.parent !== globalThis.window;
+
+    if (!isIframe) return false;
+
+    try {
+      const { default: SafeAppsSDK } = await import(
+        '@safe-global/safe-apps-sdk'
+      );
+
+      let SDK: typeof SafeAppsSDK;
+      if (
+        typeof SafeAppsSDK !== 'function' &&
+        typeof (SafeAppsSDK as any).default === 'function'
+      ) {
+        SDK = (SafeAppsSDK as any).default;
+      } else {
+        SDK = SafeAppsSDK;
+      }
+      const parameters: ConstructorParameters<typeof SafeAppsSDK>[0] = {
+        allowedDomains: safeAllowedDomains,
+      };
+      const sdk = new SDK(parameters);
+
+      // `getInfo` hangs when not used in Safe App iFrame
+      // https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840
+      const safeSdk = await withTimeout(() => sdk.safe.getInfo(), {
+        timeout: 200,
+      });
+      if (!safeSdk) return false;
+      const { SafeAppProvider } = await import(
+        '@safe-global/safe-apps-provider'
+      );
+      const provider = new SafeAppProvider(safeSdk, sdk);
+      return !!provider;
+    } catch {
+      return false;
     }
-    return false;
   },
   createConnectorFn: getSafeConnector({
     allowedDomains: safeAllowedDomains,

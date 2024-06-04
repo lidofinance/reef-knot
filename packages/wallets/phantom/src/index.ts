@@ -31,6 +31,7 @@ const getPhantomConnector = () =>
 export const Phantom: WalletAdapterType = () => ({
   walletName: 'Phantom',
   walletId: 'phantom',
+  type: injected.type,
   icon: {
     light: WalletIcon,
     dark: WalletIcon,

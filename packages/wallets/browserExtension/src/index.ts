@@ -17,6 +17,7 @@ const getBrowserExtensionConnector = () =>
 export const BrowserExtension: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   createConnectorFn: getBrowserExtensionConnector(),
 });

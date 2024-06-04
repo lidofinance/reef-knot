@@ -8,6 +8,7 @@ import WalletIcon from './icons/zerion.svg';
 export const Zerion: WalletAdapterType = ({ walletconnectProjectId }) => ({
   walletName: 'Zerion',
   walletId: 'zerion',
+  type: getWalletConnectConnector.type,
   icon: WalletIcon,
   createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,

@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from 'react';
-import { useConnect } from 'wagmi';
+import { useConfig, useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { WCWarnBannerRequest } from '@reef-knot/ui-react';
@@ -40,6 +40,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
+  const config = useConfig();
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
@@ -47,7 +48,8 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
 
   // WCURI – WalletConnect Pairing URI: https://docs.walletconnect.com/2.0/specs/clients/core/pairing/pairing-uri
   // Used for connection without WalletConnect QR modal via redirect
-  const WCURIConnector = walletconnectExtras?.connectionViaURI?.connector;
+  const WCURIConnectorFn =
+    walletconnectExtras?.connectionViaURI?.createConnectorFn;
   const WCURICondition = walletconnectExtras?.connectionViaURI?.condition;
   const WCURIRedirectLink = walletconnectExtras?.connectionViaURI?.redirectLink;
   const WCURICloseRedirectionWindow =
@@ -72,23 +74,26 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         metricsOnConnect?.();
       };
 
-      if (WCURICondition && WCURIConnector && WCURIRedirectLink) {
+      if (WCURICondition && WCURIConnectorFn && WCURIRedirectLink) {
         // BEGIN Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
         // Because of popup blockers, window.open must be called directly from onclick handler
         redirectionWindow = window.open('', '_blank');
         redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
-        await Promise.all([
-          connectAsync({ connector: WCURIConnector }),
-          async () => {
-            // Wait for WalletConnect Pairing URI to arrive
-            const wcUri = await getWalletConnectUri(WCURIConnector);
-            setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
-            // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
-          },
-        ]);
-
+        await connectAsync({ connector: WCURIConnectorFn });
         onSuccess();
+
+        // Wait for WalletConnect Pairing URI to arrive
+        if (config.state.current) {
+          const activeConnector = config.state.connections.get(
+            config.state.current,
+          )?.connector;
+          if (activeConnector) {
+            const wcUri = await getWalletConnectUri(activeConnector);
+            setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
+          }
+        }
+        // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
 
         // We got a connection result
         if (WCURICloseRedirectionWindow) {
@@ -103,6 +108,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       setIsConnecting(false);
     }
   }, [
+    config,
     metricsOnConnect,
     onConnect,
     connectAsync,
@@ -113,7 +119,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     onBeforeConnect,
     WCURICloseRedirectionWindow,
     WCURICondition,
-    WCURIConnector,
+    WCURIConnectorFn,
     WCURIRedirectLink,
   ]);
 

@@ -38,6 +38,7 @@ const deeplinkDAppUrl = globalThis.window
 export const Coin98: WalletAdapterType = ({ defaultChain }) => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.coin98?.provider ||

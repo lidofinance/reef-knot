@@ -5,7 +5,6 @@ import {
   AutoConnect,
   ReefKnot,
   getWalletsDataList,
-  getWalletConnectorsList,
 } from 'reef-knot/core-react';
 import { WalletsListEthereum } from 'reef-knot/wallets';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -16,7 +15,7 @@ import { WC_PROJECT_ID } from '../util/walletconnectProjectId';
 const SUPPORTED_CHAINS = [holesky, mainnet, goerli] as const;
 const DEFAULT_CHAIN = SUPPORTED_CHAINS[0];
 
-const { walletsDataList, connectorCreatorFns } = getWalletsDataList({
+const { walletsDataList } = getWalletsDataList({
   walletsList: WalletsListEthereum,
   rpc: rpcUrlsString,
   walletconnectProjectId: WC_PROJECT_ID,
@@ -24,7 +23,6 @@ const { walletsDataList, connectorCreatorFns } = getWalletsDataList({
 });
 
 const config = createConfig({
-  connectors: connectorCreatorFns,
   chains: SUPPORTED_CHAINS,
   multiInjectedProviderDiscovery: false,
   transports: {
@@ -32,11 +30,6 @@ const config = createConfig({
     [mainnet.id]: http(),
     [goerli.id]: http(),
   },
-});
-
-const walletConnectorsList = getWalletConnectorsList({
-  connectors: config.connectors,
-  walletsDataList,
 });
 
 const queryClient = new QueryClient();
@@ -52,7 +45,7 @@ const ConfigContextProviders = ({
         <ReefKnot
           rpc={rpcUrlsString}
           chains={SUPPORTED_CHAINS}
-          walletConnectorsList={walletConnectorsList}
+          walletConnectorsList={walletsDataList}
         >
           <AutoConnect autoConnect />
           <ProviderSDKWithProps defaultChainId={DEFAULT_CHAIN.id}>

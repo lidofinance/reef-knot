@@ -9,13 +9,14 @@ const memoize = (key: string, getter: () => WCConnector) => {
   return cache[key];
 };
 
-export const getWalletConnectConnector = ({
+getWalletConnectConnector.type = walletConnect.type;
+export function getWalletConnectConnector({
   projectId = '',
   qrcode = true,
 }: {
   projectId?: string;
   qrcode?: boolean;
-}) => {
+}) {
   if (!projectId) {
     console.warn(
       'No WalletConnect Project ID found, it is required by WalletConnect v2: https://docs.walletconnect.com/2.0/cloud/relay#project-id',
@@ -33,4 +34,4 @@ export const getWalletConnectConnector = ({
       },
     }),
   );
-};
+}

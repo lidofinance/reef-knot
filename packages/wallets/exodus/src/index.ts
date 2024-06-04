@@ -31,6 +31,7 @@ export const getExodusConnector = () =>
 export const Exodus: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.exodus || !!globalThis.window?.ethereum?.isExodus,

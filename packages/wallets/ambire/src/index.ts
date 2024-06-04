@@ -8,6 +8,7 @@ export const name = 'Ambire';
 export const Ambire: WalletAdapterType = ({ walletconnectProjectId }) => ({
   walletName: name,
   walletId: id,
+  type: getWalletConnectConnector.type,
   icon: WalletIcon,
   createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,

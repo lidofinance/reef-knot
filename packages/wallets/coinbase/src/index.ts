@@ -13,6 +13,7 @@ export const getCoinbaseConnector = () =>
 export const Coinbase: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: coinbaseWallet.type,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.ethereum?.isCoinbaseWallet,
   createConnectorFn: getCoinbaseConnector(),
