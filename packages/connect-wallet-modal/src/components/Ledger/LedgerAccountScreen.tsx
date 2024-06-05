@@ -11,6 +11,7 @@ import { LedgerDerivationPathSelect } from './LedgerDerivationPathSelect';
 import { AccountRecord, AccountsStorage } from './types';
 import { DERIVATION_PATHS } from './constants';
 import { idLedgerHid } from '@reef-knot/ledger-connector';
+import { useReefKnotContext } from '@reef-knot/core-react';
 
 const BoxWrapper = styled.div`
   display: flex;
@@ -61,17 +62,20 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
 
   const metricsOnConnect = metrics?.events?.connect?.handlers.onConnectLedger;
 
-  const { connect, connectors } = useConnect();
+  const { connect } = useConnect();
+  const { walletDataList } = useReefKnotContext();
 
   const handleAccountButtonClick = useCallback(
     async (account: AccountRecord) => {
-      const ledgerConnector = connectors.find((c) => c.id === idLedgerHid);
-      if (!ledgerConnector) return;
+      const ledgerWalletData = walletDataList.find(
+        (c) => c.walletId === idLedgerHid,
+      );
+      if (!ledgerWalletData) return;
       saveLedgerDerivationPath(account.path);
       await disconnectTransport(true);
       try {
         connect(
-          { connector: ledgerConnector },
+          { connector: ledgerWalletData.createConnectorFn },
           {
             onSuccess: () => {
               metricsOnConnect?.();
@@ -87,7 +91,7 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
       closeScreen,
       connect,
       disconnectTransport,
-      connectors,
+      walletDataList,
       setError,
       metricsOnConnect,
     ],
