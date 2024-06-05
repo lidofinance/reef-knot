@@ -5,7 +5,7 @@ import type { Chain } from 'wagmi/chains';
 import type { WalletAdapterData } from '@reef-knot/types';
 
 export interface ReefKnotContextProps {
-  walletConnectorsList: WalletAdapterData[];
+  walletDataList: WalletAdapterData[];
   rpc: Record<number, string>;
   chains: readonly [Chain, ...Chain[]];
   children?: ReactNode;
@@ -13,7 +13,7 @@ export interface ReefKnotContextProps {
 
 export type ReefKnotContextValue = {
   rpc: Record<number, string>;
-  walletConnectorsList: WalletAdapterData[];
+  walletDataList: WalletAdapterData[];
   chains: readonly [Chain, ...Chain[]];
 };
 
@@ -22,16 +22,16 @@ export const ReefKnotContext = createContext({} as ReefKnotContextValue);
 export const ReefKnot = ({
   rpc,
   chains,
-  walletConnectorsList,
+  walletDataList,
   children,
 }: ReefKnotContextProps) => {
   const contextValue = useMemo(
     () => ({
       rpc,
-      walletConnectorsList,
+      walletDataList,
       chains,
     }),
-    [rpc, walletConnectorsList, chains],
+    [rpc, walletDataList, chains],
   );
 
   return (

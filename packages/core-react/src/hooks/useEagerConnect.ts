@@ -114,10 +114,10 @@ export const connectEagerly = async (
 export const useEagerConnect = () => {
   const config = useConfig();
   const { openModalAsync } = useReefKnotModal();
-  const { walletConnectorsList, chains } = useReefKnotContext();
+  const { walletDataList, chains } = useReefKnotContext();
 
   const eagerConnect = useCallback(() => {
-    const autoConnectOnlyAdapters = walletConnectorsList.filter(
+    const autoConnectOnlyAdapters = walletDataList.filter(
       ({ autoConnectOnly }) => autoConnectOnly,
     );
 
@@ -127,7 +127,7 @@ export const useEagerConnect = () => {
       openModalAsync,
       chains,
     );
-  }, [openModalAsync, walletConnectorsList, chains, config]);
+  }, [openModalAsync, walletDataList, chains, config]);
 
   return { eagerConnect };
 };

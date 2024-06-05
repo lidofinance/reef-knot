@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useConfig } from 'wagmi';
-import { useReefKnotContext, useReefKnotModal } from '@reef-knot/core-react';
+import {
+  LS_KEY_RECONNECT_WALLET_ID,
+  useReefKnotContext,
+  useReefKnotModal,
+} from '@reef-knot/core-react';
 
 import { WalletsModalProps } from '../../types';
 import { WalletModalConnectTermsProps } from '../../../Terms';
@@ -29,7 +33,7 @@ export const ConnectWalletModal = ({
   } = passedDownProps;
 
   const config = useConfig();
-  const { walletConnectorsList } = useReefKnotContext();
+  const { walletDataList } = useReefKnotContext();
   const { termsChecked } = useReefKnotModal();
 
   const [inputValue, setInputValue] = useState('');
@@ -54,6 +58,14 @@ export const ConnectWalletModal = ({
     [],
   );
 
+  const handleConnectSuccess = useCallback(
+    (walletId: string) => {
+      void config.storage?.setItem(LS_KEY_RECONNECT_WALLET_ID, walletId);
+      onCloseSuccess?.();
+    },
+    [onCloseSuccess, config.storage],
+  );
+
   useEffect(() => {
     let isActive = true;
     const fetch = async () => {
@@ -61,7 +73,7 @@ export const ConnectWalletModal = ({
       // Actually, almost all wallets can be detected synchronously, so this process is expected to be fast,
       // and a loading indicator is not required for now.
       const _walletsListFull = await sortWalletsList({
-        walletConnectorsList,
+        walletDataList,
         walletsShown,
         walletsPinned,
       });
@@ -71,7 +83,7 @@ export const ConnectWalletModal = ({
     return () => {
       isActive = false;
     };
-  }, [config, walletConnectorsList, walletsPinned, walletsShown]);
+  }, [config, walletDataList, walletsPinned, walletsShown]);
 
   const walletsList = useMemo(() => {
     let _walletsList = walletsListFull;
@@ -118,7 +130,7 @@ export const ConnectWalletModal = ({
           <WalletComponent
             key={walletData.walletId}
             disabled={!termsChecked}
-            onConnect={onCloseSuccess}
+            onConnect={() => handleConnectSuccess(walletData.walletId)}
             shouldInvertWalletIcon={shouldInvertWalletIcon}
             metrics={metrics}
             isCompact={isShownOtherWallets}

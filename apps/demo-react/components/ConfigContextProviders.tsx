@@ -45,7 +45,7 @@ const ConfigContextProviders = ({
         <ReefKnot
           rpc={rpcUrlsString}
           chains={SUPPORTED_CHAINS}
-          walletConnectorsList={walletsDataList}
+          walletDataList={walletsDataList}
         >
           <AutoConnect autoConnect />
           <ProviderSDKWithProps defaultChainId={DEFAULT_CHAIN.id}>

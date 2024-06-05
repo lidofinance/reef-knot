@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 import { useConfig, useAccount, useReconnect } from 'wagmi';
 import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
+import { useReefKnotContext } from './useReefKnotContext';
+import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { storage } = useConfig();
   const { reconnectAsync } = useReconnect();
   const { isConnected } = useAccount();
   const { eagerConnect } = useEagerConnect();
+  const { walletDataList } = useReefKnotContext();
 
   useEffect(() => {
     const tryReconnect = async () => {
@@ -26,7 +29,19 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
         // We do not want to reconnect if the `recentConnectorId` item was deleted during disconnect
         (await storage?.getItem('recentConnectorId'))
       ) {
-        await reconnectAsync();
+        const savedReconnectWalletId = await storage?.getItem(
+          LS_KEY_RECONNECT_WALLET_ID,
+        );
+        const walletData = walletDataList.find(
+          (data) => data.walletId === savedReconnectWalletId,
+        );
+        if (walletData) {
+          const createConnectorFn = walletData?.walletconnectExtras
+            ?.connectionViaURI?.condition
+            ? walletData?.walletconnectExtras.connectionViaURI.createConnectorFn
+            : walletData?.createConnectorFn;
+          await reconnectAsync({ connectors: [createConnectorFn] });
+        }
       }
     };
 

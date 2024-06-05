@@ -2,7 +2,7 @@ import type { WalletAdapterData } from '@reef-knot/types';
 import type { WalletsModalProps } from '../../types';
 
 type GetWalletsListArgs = {
-  walletConnectorsList: WalletAdapterData[];
+  walletDataList: WalletAdapterData[];
   walletsShown: WalletsModalProps['walletsShown'];
   walletsPinned: WalletsModalProps['walletsPinned'];
 };
@@ -14,7 +14,7 @@ type FilteredWalletData = {
 };
 
 export async function sortWalletsList({
-  walletConnectorsList,
+  walletDataList,
   walletsShown,
   walletsPinned,
 }: GetWalletsListArgs) {
@@ -25,9 +25,7 @@ export async function sortWalletsList({
   };
 
   for (const walletId of walletsShown) {
-    const walletData = walletConnectorsList.find(
-      (w) => w.walletId === walletId,
-    );
+    const walletData = walletDataList.find((w) => w.walletId === walletId);
 
     if (!walletData) continue;
 
