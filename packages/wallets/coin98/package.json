@@ -33,11 +33,13 @@
   },
   "devDependencies": {
     "@reef-knot/types": "^2.0.0",
+    "@reef-knot/wallets-helpers": "^2.0.0",
     "@svgr/rollup": "^6.5.1"
   },
   "peerDependencies": {
     "wagmi": "2.10.4",
     "@reef-knot/types": "^2.0.0",
+    "@reef-knot/wallets-helpers": "^2.0.0",
     "@tanstack/react-query": "^5.29.0"
   }
 }

@@ -16,6 +16,7 @@ declare global {
   }
 }
 
+export const rdns = 'io.xdefi';
 export const id = 'xdefi';
 export const name = 'XDEFI';
 
