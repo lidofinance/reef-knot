@@ -1,20 +1,19 @@
-import { WalletAdapterType } from '@reef-knot/types';
 import { coinbaseWallet } from 'wagmi/connectors';
+import type { WalletAdapterType } from '@reef-knot/types';
+import { isProviderExistsEIP6963 } from '@reef-knot/wallets-helpers';
 import { WalletIcon } from './icons/index.js';
 
 export const id = 'coinbase';
 export const name = 'Coinbase';
+export const rdns = 'com.coinbase.wallet';
 
-export const getCoinbaseConnector = () =>
-  coinbaseWallet({
-    appName: globalThis.window?.location?.hostname,
-  });
-
-export const Coinbase: WalletAdapterType = () => ({
+export const Coinbase: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: coinbaseWallet.type,
   icon: WalletIcon,
-  detector: () => !!globalThis.window?.ethereum?.isCoinbaseWallet,
-  createConnectorFn: getCoinbaseConnector(),
+  detector: () => isProviderExistsEIP6963(providersStore, rdns),
+  createConnectorFn: coinbaseWallet({
+    appName: globalThis.window?.location?.hostname,
+  }),
 });

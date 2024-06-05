@@ -1,44 +1,31 @@
-import { WalletAdapterType } from '@reef-knot/types';
 import { injected } from 'wagmi/connectors';
+import type { WalletAdapterType } from '@reef-knot/types';
+import {
+  getTargetEIP6963,
+  isProviderExistsEIP6963,
+} from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/bitget.svg';
-import type { EIP1193Provider } from 'viem';
 
-declare global {
-  interface Window {
-    bitkeep?: {
-      ethereum?: EIP1193Provider;
-    };
-  }
-}
-
-// The current metrics implementation is based on walletId,
-// using previous "bitkeep" name here not to break metrics
 export const id = 'bitget';
 export const name = 'Bitget';
+export const rdns = 'com.bitget.web3';
 const currentHref = globalThis.window
   ? encodeURIComponent(globalThis.window.location.href)
   : '';
 
-const getBitgetConnector = () =>
-  injected({
-    target: () => ({
-      id,
-      name,
-      provider: () => globalThis.window?.bitkeep?.ethereum,
-    }),
-  });
-
-export const Bitget: WalletAdapterType = () => ({
+export const Bitget: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: injected.type,
   icon: WalletIcon,
-  detector: () => !!globalThis.window?.bitkeep?.ethereum,
+  detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {
     default: 'https://web3.bitget.com/',
   },
   deeplink: `https://bkcode.vip?action=dapp&url=${currentHref}`,
-  createConnectorFn: getBitgetConnector(),
+  createConnectorFn: injected({
+    target: getTargetEIP6963(providersStore, rdns),
+  }),
 });
 
 // BitKeep is the previous name of the wallet.
