@@ -85,12 +85,12 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
           (async () => {
             // One-time disposable connector to access `.getProvider()` before wagmi will initialize it
             // Do not save it nor use it later
-            const connector = WCURIConnectorFn({
+            const connectorDisposable = WCURIConnectorFn({
               chains: config.chains,
               emitter: {} as any,
             }) as Connector;
             // Wait for WalletConnect Pairing URI to arrive
-            const wcUri = await getWalletConnectUri(connector);
+            const wcUri = await getWalletConnectUri(connectorDisposable);
             setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
             // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
           })(),
