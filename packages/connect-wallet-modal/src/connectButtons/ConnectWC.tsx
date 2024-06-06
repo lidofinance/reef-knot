@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from 'react';
-import { useConfig, useConnect } from 'wagmi';
+import { Connector, useConfig, useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { WCWarnBannerRequest } from '@reef-knot/ui-react';
@@ -80,21 +80,23 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow = window.open('', '_blank');
         redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
-        await connectAsync({ connector: WCURIConnectorFn });
-        onSuccess();
-
-        // Wait for WalletConnect Pairing URI to arrive
-        if (config.state.current) {
-          const activeConnector = config.state.connections.get(
-            config.state.current,
-          )?.connector;
-          if (activeConnector) {
-            const wcUri = await getWalletConnectUri(activeConnector);
+        await Promise.all([
+          connectAsync({ connector: WCURIConnectorFn }),
+          (async () => {
+            // One-time disposable connector to access `.getProvider()` before wagmi will initialize it
+            // Do not save it nor use it later
+            const connector = WCURIConnectorFn({
+              chains: config.chains,
+              emitter: {} as any,
+            }) as Connector;
+            // Wait for WalletConnect Pairing URI to arrive
+            const wcUri = await getWalletConnectUri(connector);
             setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
-          }
-        }
-        // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
+            // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
+          })(),
+        ]);
 
+        onSuccess();
         // We got a connection result
         if (WCURICloseRedirectionWindow) {
           // Close the previously opened window if necessary
