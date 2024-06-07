@@ -1,6 +1,7 @@
 import type { ElementType } from 'react';
 import type { Chain } from 'wagmi/chains';
-import type { Config, CreateConnectorFn } from 'wagmi';
+import type { CreateConnectorFn } from 'wagmi';
+import type { Store as ProvidersStore } from 'mipd';
 
 export type WalletAdapterIcons = {
   light: ElementType;
@@ -10,6 +11,9 @@ export type WalletAdapterIcons = {
 export type WalletAdapterData = {
   walletId: string;
   walletName: string;
+
+  // The `type` field is intended to match a wagmi connector's `type` field.
+  // Example values are: 'injected', 'walletConnect'
   type: string;
 
   // Icons for the light and dark color themes.
@@ -59,5 +63,6 @@ export interface WalletAdapterArgs {
   defaultChain: Chain;
   walletconnectProjectId?: string;
   safeAllowedDomains?: RegExp[];
+  providersStore: ProvidersStore;
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
