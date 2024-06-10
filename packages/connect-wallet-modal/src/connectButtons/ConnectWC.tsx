@@ -1,8 +1,7 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConfig, useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
-import { WCWarnBannerRequest } from '@reef-knot/ui-react';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
 import { openWindow } from '../helpers';
@@ -44,8 +43,6 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
-  const [isConnecting, setIsConnecting] = useState(false);
-
   // WCURI – WalletConnect Pairing URI: https://docs.walletconnect.com/2.0/specs/clients/core/pairing/pairing-uri
   // Used for connection without WalletConnect QR modal via redirect
   const WCURIConnectorFn =
@@ -62,50 +59,44 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       return; // A user was redirected to a wallet mobile app, no need to continue
     }
 
-    setIsConnecting(true);
+    onBeforeConnect?.();
+    metricsOnClick?.();
+    disconnect?.();
 
-    try {
-      onBeforeConnect?.();
-      metricsOnClick?.();
-      disconnect?.();
+    const onSuccess = () => {
+      onConnect?.();
+      metricsOnConnect?.();
+    };
 
-      const onSuccess = () => {
-        onConnect?.();
-        metricsOnConnect?.();
-      };
+    if (WCURICondition && WCURIConnectorFn && WCURIRedirectLink) {
+      // BEGIN Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
+      // Because of popup blockers, window.open must be called directly from onclick handler
+      redirectionWindow = window.open('', '_blank');
+      redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
-      if (WCURICondition && WCURIConnectorFn && WCURIRedirectLink) {
-        // BEGIN Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
-        // Because of popup blockers, window.open must be called directly from onclick handler
-        redirectionWindow = window.open('', '_blank');
-        redirectionWindow?.document.write(getRedirectionLoadingHTML());
+      await connectAsync({ connector: WCURIConnectorFn });
+      onSuccess();
 
-        await connectAsync({ connector: WCURIConnectorFn });
-        onSuccess();
-
-        // Wait for WalletConnect Pairing URI to arrive
-        if (config.state.current) {
-          const activeConnector = config.state.connections.get(
-            config.state.current,
-          )?.connector;
-          if (activeConnector) {
-            const wcUri = await getWalletConnectUri(activeConnector);
-            setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
-          }
+      // Wait for WalletConnect Pairing URI to arrive
+      if (config.state.current) {
+        const activeConnector = config.state.connections.get(
+          config.state.current,
+        )?.connector;
+        if (activeConnector) {
+          const wcUri = await getWalletConnectUri(activeConnector);
+          setRedirectionWindowLocation(WCURIRedirectLink, wcUri);
         }
-        // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
-
-        // We got a connection result
-        if (WCURICloseRedirectionWindow) {
-          // Close the previously opened window if necessary
-          redirectionWindow?.close();
-        }
-      } else {
-        await connectAsync({ connector });
-        onSuccess();
       }
-    } finally {
-      setIsConnecting(false);
+      // END Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
+
+      // We got a connection result
+      if (WCURICloseRedirectionWindow) {
+        // Close the previously opened window if necessary
+        redirectionWindow?.close();
+      }
+    } else {
+      await connectAsync({ connector });
+      onSuccess();
     }
   }, [
     config,
@@ -124,18 +115,15 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   ]);
 
   return (
-    <>
-      {isConnecting ? <WCWarnBannerRequest /> : null}
-      <ConnectButton
-        {...rest}
-        icon={WalletIcon}
-        shouldInvertWalletIcon={shouldInvertWalletIcon}
-        onClick={() => {
-          void handleConnect();
-        }}
-      >
-        {walletName}
-      </ConnectButton>
-    </>
+    <ConnectButton
+      {...rest}
+      icon={WalletIcon}
+      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      onClick={() => {
+        void handleConnect();
+      }}
+    >
+      {walletName}
+    </ConnectButton>
   );
 };
