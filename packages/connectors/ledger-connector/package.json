@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/w3c-web-hid": "^1.0.2",
     "viem": "2.13.3",
-    "wagmi": "2.9.8",
+    "wagmi": "2.10.2",
     "eslint-config-custom": "*"
   },
   "dependencies": {
@@ -57,7 +57,7 @@
   },
   "peerDependencies": {
     "viem": "2.13.3",
-    "wagmi": "2.9.8",
+    "wagmi": "2.10.2",
     "@tanstack/react-query": "^5.29.0"
   }
 }
