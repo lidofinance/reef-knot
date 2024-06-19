@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import {
-  useConfig,
   useAccount,
+  useConfig,
   useDisconnect as useDisconnectWagmi,
 } from 'wagmi';
 import { useReefKnotContext } from './useReefKnotContext';
@@ -12,7 +12,7 @@ const useDisconnectCleaningStorage = () => {
   const { storage } = useConfig();
   const { disconnect } = useDisconnectWagmi();
 
-  const handleDisconnect = useCallback(
+  return useCallback(
     (...args: Parameters<typeof disconnect>) => {
       disconnect(...args);
       void storage?.removeItem('recentConnectorId');
@@ -20,8 +20,6 @@ const useDisconnectCleaningStorage = () => {
     },
     [disconnect, storage],
   );
-
-  return handleDisconnect;
 };
 
 export const useForceDisconnect = () => {
