@@ -27,11 +27,11 @@
   },
   "devDependencies": {
     "react": "18.2.0",
-    "wagmi": "2.10.2"
+    "wagmi": "2.10.4"
   },
   "peerDependencies": {
     "react": ">=18",
-    "wagmi": "2.10.2",
+    "wagmi": "2.10.4",
     "@tanstack/react-query": "^5.29.0"
   }
 }

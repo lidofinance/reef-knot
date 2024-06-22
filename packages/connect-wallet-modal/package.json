@@ -56,7 +56,7 @@
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "viem": "2.13.3",
-    "wagmi": "2.10.2"
+    "wagmi": "2.10.4"
   },
   "peerDependencies": {
     "@reef-knot/core-react": "^4.0.0",
@@ -68,7 +68,7 @@
     "react": ">=18",
     "@lidofinance/lido-ui": "^3.18.0",
     "viem": "2.13.3",
-    "wagmi": "2.10.2",
+    "wagmi": "2.10.4",
     "@tanstack/react-query": "^5.29.0"
   }
 }
