@@ -1,5 +1,20 @@
 # @reef-knot/core-react
 
+## 4.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.0.0
+  - @reef-knot/wallets-helpers@2.0.0
+  - @reef-knot/wallets-list@2.0.0
+  - @reef-knot/ui-react@2.0.0
+  - @reef-knot/types@2.0.0
+
 ## 3.2.0
 
 ### Minor Changes

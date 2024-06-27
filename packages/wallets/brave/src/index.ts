@@ -1,34 +1,33 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi, Chain } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { injected } from 'wagmi/connectors';
 import { WalletIcon } from './icons/index.js';
+import type { EIP1193Provider } from 'viem';
 
 declare global {
   interface Window {
-    braveEthereum?: EthereumTypeWagmi;
+    braveEthereum?: EIP1193Provider & {
+      isBraveWallet: boolean;
+    };
   }
 }
 
 export const id = 'brave';
 export const name = 'Brave';
 
-export class BraveConnector extends InjectedConnector {
-  readonly id = id;
-  readonly name = name;
-  constructor(chains: Chain[]) {
-    super({
-      chains,
-      options: {
-        getProvider: () =>
-          globalThis.window?.braveEthereum || globalThis.window?.ethereum,
-      },
-    });
-  }
-}
+const getBraveConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () =>
+        globalThis.window?.braveEthereum || globalThis.window?.ethereum,
+    }),
+  });
 
-export const Brave: WalletAdapterType = ({ chains }) => ({
+export const Brave: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.braveEthereum?.isBraveWallet ||
@@ -36,5 +35,5 @@ export const Brave: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://brave.com/wallet/',
   },
-  connector: new BraveConnector(chains),
+  createConnectorFn: getBraveConnector(),
 });

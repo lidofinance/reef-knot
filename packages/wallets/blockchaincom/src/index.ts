@@ -3,18 +3,20 @@ import { getWalletConnectConnector } from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/blockchaincom.svg';
 import WalletIconInverted from './icons/blockchaincom-inverted.svg';
 
+export const id = 'blockchaincom';
+export const name = 'Blockchain.com';
+
 export const Blockchaincom: WalletAdapterType = ({
   walletconnectProjectId,
-  chains,
 }) => ({
-  walletName: 'Blockchain.com',
-  walletId: 'blockchaincom',
+  walletName: name,
+  walletId: id,
+  type: getWalletConnectConnector.type,
   icon: {
     light: WalletIcon,
     dark: WalletIconInverted,
   },
-  connector: getWalletConnectConnector({
-    chains,
+  createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,
   }),
 });

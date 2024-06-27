@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { parseEther } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 
+import { useConnectorInfo } from 'reef-knot/core-react';
 import { useContractSWR, useWSTETHContractRPC } from '@lido-sdk/react';
 import { TOKENS } from '@lido-sdk/constants';
 
@@ -10,12 +11,11 @@ import {
   MAX_REQUESTS_COUNT_LEDGER_LIMIT,
   STRATEGY_LAZY,
 } from './useWithdrawalsData';
-import { useIsLedgerLive } from './useIsLedgerLive';
 import { useToken } from './useToken';
 import { useWithdrawalsBaseData } from './useWithdrawalsBaseData';
 
 export const useSplitRequest = (inputValue: string, selectedToken: TOKENS) => {
-  const isLedgerLive = useIsLedgerLive();
+  const { isLedgerLive } = useConnectorInfo();
   const maxRequestCount = isLedgerLive
     ? MAX_REQUESTS_COUNT_LEDGER_LIMIT
     : MAX_REQUESTS_COUNT;

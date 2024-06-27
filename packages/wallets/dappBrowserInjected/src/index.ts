@@ -1,20 +1,24 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { injected } from 'wagmi/connectors';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 
 export const id = 'dappBrowserInjected';
 export const name = 'DAppBrowser';
 
-export const DAppBrowserInjected: WalletAdapterType = ({ chains }) => ({
+const getDAppBrowserInjectedConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () => globalThis.window?.ethereum,
+    }),
+  });
+
+export const DAppBrowserInjected: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   autoConnectOnly: true,
   detector: () => !!globalThis.window?.ethereum && isMobileOrTablet,
-  connector: new InjectedConnector({
-    chains,
-    options: {
-      name: 'DAppBrowser',
-      getProvider: () => globalThis.window?.ethereum,
-    },
-  }),
+  createConnectorFn: getDAppBrowserInjectedConnector(),
 });

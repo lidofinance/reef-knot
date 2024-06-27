@@ -29,12 +29,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
   const metricsOnClick =
     metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
 
-  const { connectAsync } = useConnect({
-    onSuccess() {
-      onConnect?.();
-      metricsOnConnect?.();
-    },
-  });
+  const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
@@ -44,6 +39,8 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     if (await detector?.()) {
       disconnect?.();
       await connectAsync({ connector });
+      onConnect?.();
+      metricsOnConnect?.();
     } else if (isMobileOrTablet && deeplink) {
       openWindow(deeplink);
     } else if (downloadURLs) {
@@ -58,6 +55,8 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     downloadURLs,
     metricsOnClick,
     onBeforeConnect,
+    onConnect,
+    metricsOnConnect,
   ]);
 
   return (

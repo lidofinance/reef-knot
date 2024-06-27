@@ -16,6 +16,7 @@ type UnwrapProcessingProps = (
   stethBalanceUpdate: () => void,
   chainId: CHAINS,
   inputValue: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Promise<any>;
 
 export const unwrapProcessing: UnwrapProcessingProps = async (
@@ -59,6 +60,7 @@ export const unwrapProcessing: UnwrapProcessingProps = async (
     }
 
     handleEnding();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     throw new Error(error);
   }
@@ -72,6 +74,7 @@ type WrapProcessingWithApproveProps = (
   stethBalanceUpdate: () => void,
   inputValue: string,
   selectedToken: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Promise<any>;
 
 export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
@@ -140,6 +143,7 @@ export const wrapProcessingWithApprove: WrapProcessingWithApproveProps = async (
 
       handleEnding();
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     throw new Error(error);
   }

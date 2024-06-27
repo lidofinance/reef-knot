@@ -5,6 +5,7 @@ import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButton } from '../components/ConnectButton';
 import { capitalize } from '../helpers';
 import { ConnectInjectedProps } from './types';
+import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -29,12 +30,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const metricsOnClick =
     metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
 
-  const { connectAsync } = useConnect({
-    onSuccess() {
-      onConnect?.();
-      metricsOnConnect?.();
-    },
-  });
+  const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const ButtonIcon: ElementType =
@@ -47,6 +43,8 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     if (web3ProviderIsDetected) {
       disconnect?.();
       await connectAsync({ connector });
+      onConnect?.();
+      metricsOnConnect?.();
     } else {
       await openModalAsync({
         type: 'requirements',
@@ -69,6 +67,8 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     onBeforeConnect,
     openModalAsync,
     web3ProviderIsDetected,
+    onConnect,
+    metricsOnConnect,
   ]);
 
   return (

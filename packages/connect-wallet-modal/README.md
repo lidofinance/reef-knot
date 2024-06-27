@@ -50,7 +50,7 @@ Use the `walletsShown` property like this:
 ```tsx
 <WalletsModalForEth
   walletsShown={[
-    'metamask',
+    'metaMask',
     'walletconnect',
     'brave',
     'dappBrowserInjected',

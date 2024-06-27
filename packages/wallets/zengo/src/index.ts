@@ -5,21 +5,17 @@ import {
 } from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/zengo.svg';
 
-export const Zengo: WalletAdapterType = ({
-  walletconnectProjectId,
-  chains,
-}) => ({
+export const Zengo: WalletAdapterType = ({ walletconnectProjectId }) => ({
   walletName: 'ZenGo',
   walletId: 'zengo',
+  type: getWalletConnectConnector.type,
   icon: WalletIcon,
-  connector: getWalletConnectConnector({
-    chains,
+  createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,
   }),
   walletconnectExtras: {
     connectionViaURI: {
-      connector: getWalletConnectConnector({
-        chains,
+      createConnectorFn: getWalletConnectConnector({
         qrcode: false,
         projectId: walletconnectProjectId,
       }),

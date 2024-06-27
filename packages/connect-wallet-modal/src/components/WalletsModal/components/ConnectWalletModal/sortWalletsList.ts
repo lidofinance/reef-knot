@@ -1,5 +1,5 @@
-import { WalletAdapterData } from '@reef-knot/types';
-import { WalletsModalProps } from '../../types';
+import type { WalletAdapterData } from '@reef-knot/types';
+import type { WalletsModalProps } from '../../types';
 
 type GetWalletsListArgs = {
   walletDataList: WalletAdapterData[];

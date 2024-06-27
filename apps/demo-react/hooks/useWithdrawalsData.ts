@@ -104,6 +104,7 @@ export const useWithdrawalRequestMethods = () => {
       signature,
       requests,
     }: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       signature?: any;
       requests: BigNumberish[];
     }) => {
@@ -153,6 +154,7 @@ export const useWithdrawalRequestMethods = () => {
       signature,
       requests,
     }: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       signature?: any;
       requests: BigNumber[];
     }) => {

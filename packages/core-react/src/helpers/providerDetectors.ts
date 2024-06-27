@@ -1,9 +1,7 @@
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
+import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
 export const hasInjected = () => !!globalThis.window?.ethereum;
-
-export const isMetamaskProvider = () =>
-  !!globalThis.window?.ethereum?.isMetaMask;
 
 export const isDappBrowserProvider = (): boolean => {
   return isMobileOrTablet && hasInjected();

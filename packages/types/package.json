@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/types",
-  "version": "1.8.0",
+  "version": "2.0.0",
   "main": "",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -27,10 +27,11 @@
   },
   "devDependencies": {
     "react": "18.2.0",
-    "wagmi": "^0.12.19"
+    "wagmi": "2.10.4"
   },
   "peerDependencies": {
     "react": ">=18",
-    "wagmi": "^0.12.19"
+    "wagmi": "2.10.4",
+    "@tanstack/react-query": "^5.29.0"
   }
 }

@@ -1,6 +1,6 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi, Chain } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/coin98.svg';
 
 declare module '@wagmi/core' {
@@ -20,28 +20,25 @@ declare global {
 export const id = 'coin98';
 export const name = 'Coin98';
 
-export class Coin98Connector extends InjectedConnector {
-  readonly id = id;
-  readonly name = name;
-  constructor(chains: Chain[]) {
-    super({
-      chains,
-      options: {
-        getProvider: () =>
-          globalThis.window?.coin98?.provider || globalThis.window?.ethereum,
-      },
-    });
-  }
-}
+const getCoin98 = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () =>
+        globalThis.window?.coin98?.provider || globalThis.window?.ethereum,
+    }),
+  });
 
 // At the moment of writing, Coin98 only supports passing host as dApp link
 const deeplinkDAppUrl = globalThis.window
   ? globalThis.window.location.host
   : '';
 
-export const Coin98: WalletAdapterType = ({ chains, defaultChain }) => ({
+export const Coin98: WalletAdapterType = ({ defaultChain }) => ({
   walletName: name,
   walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.coin98?.provider ||
@@ -52,5 +49,5 @@ export const Coin98: WalletAdapterType = ({ chains, defaultChain }) => ({
     ios: 'https://ios.coin98.com',
     android: 'https://android.coin98.com',
   },
-  connector: new Coin98Connector(chains),
+  createConnectorFn: getCoin98(),
 });

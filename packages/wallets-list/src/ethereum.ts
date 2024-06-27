@@ -48,4 +48,4 @@ export const WalletsListEthereum = {
   [idSafe]: Safe,
 } as const;
 
-export type WalletIdsEthereum = keyof typeof WalletsListEthereum;
+export type WalletIdsEthereum = keyof Readonly<typeof WalletsListEthereum>;

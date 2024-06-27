@@ -1,5 +1,11 @@
 # @reef-knot/types
 
+## 2.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
 ## 1.8.0
 
 ### Minor Changes

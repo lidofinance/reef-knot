@@ -1,5 +1,11 @@
 # @reef-knot/wallets-helpers
 
+## 2.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
 ## 1.1.6
 
 ### Patch Changes

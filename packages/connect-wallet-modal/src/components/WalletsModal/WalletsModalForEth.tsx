@@ -1,5 +1,4 @@
 import React from 'react';
-import { useReefKnotContext } from '@reef-knot/core-react';
 import {
   ConnectInjected,
   ConnectLedger,
@@ -24,10 +23,10 @@ const buttonComponentsByConnectorId: WalletsModalEthProps['buttonComponentsByCon
 
 const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
   'browserExtension',
-  'metamask',
+  'metaMask',
   'ledgerHID',
   'ledgerLive',
-  'walletconnect',
+  'walletConnect',
   'coinbase',
   'trust',
   'okx',
@@ -48,22 +47,16 @@ const WALLETS_PINNED_CONFIG_DEFAULT: WalletsModalEthProps['walletsPinned'] = [
 
 type WalletsModalForEthProps = Omit<
   WalletsModalEthProps,
-  | 'buttonComponentsByConnectorId'
-  | 'walletDataList'
-  | 'walletsShown'
-  | 'walletsPinned'
+  'buttonComponentsByConnectorId' | 'walletsShown' | 'walletsPinned'
 > & {
   walletsShown?: WalletsModalEthProps['walletsShown'];
   walletsPinned?: WalletsModalEthProps['walletsPinned'];
 };
 
 export function WalletsModalForEth(props: WalletsModalForEthProps) {
-  const { walletDataList } = useReefKnotContext();
-
   return (
     <WalletsModal
       {...props}
-      walletDataList={walletDataList}
       walletsShown={props.walletsShown || WALLETS_DISPLAY_CONFIG_DEFAULT}
       walletsPinned={props.walletsPinned || WALLETS_PINNED_CONFIG_DEFAULT}
       buttonComponentsByConnectorId={buttonComponentsByConnectorId}

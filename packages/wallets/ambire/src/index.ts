@@ -5,21 +5,17 @@ import WalletIcon from './icons/ambire.svg';
 export const id = 'ambire';
 export const name = 'Ambire';
 
-export const Ambire: WalletAdapterType = ({
-  walletconnectProjectId,
-  chains,
-}) => ({
+export const Ambire: WalletAdapterType = ({ walletconnectProjectId }) => ({
   walletName: name,
   walletId: id,
+  type: getWalletConnectConnector.type,
   icon: WalletIcon,
-  connector: getWalletConnectConnector({
-    chains,
+  createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,
   }),
   walletconnectExtras: {
     connectionViaURI: {
-      connector: getWalletConnectConnector({
-        chains,
+      createConnectorFn: getWalletConnectConnector({
         qrcode: false,
         projectId: walletconnectProjectId,
       }),
