@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 4.0.1
+
+### Patch Changes
+
+- useDisconnect condition fixed
+
 ## 4.0.0
 
 ### Major Changes
