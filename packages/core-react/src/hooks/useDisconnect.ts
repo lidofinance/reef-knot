@@ -48,7 +48,7 @@ export const useDisconnect = (): {
     const connectorData = walletDataList.find(
       (c) => c.walletId === connector?.id,
     );
-    return isConnected && !!connectorData?.autoConnectOnly;
+    return isConnected && !connectorData?.autoConnectOnly;
   }, [isConnected, connector, walletDataList]);
 
   return {
