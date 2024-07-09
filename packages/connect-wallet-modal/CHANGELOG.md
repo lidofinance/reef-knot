@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.0.1
+
+### Patch Changes
+
+- Connect buttons type attribute fixed
+
 ## 5.0.0
 
 ### Major Changes
