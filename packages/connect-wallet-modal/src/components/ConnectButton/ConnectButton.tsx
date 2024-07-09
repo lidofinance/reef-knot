@@ -32,7 +32,7 @@ const ConnectButton: FC<ConnectButtonProps> = (props: ConnectButtonProps) => {
   }
 
   return (
-    <ConnectButtonStyle {...rest}>
+    <ConnectButtonStyle {...rest} type="button">
       <ConnectButtonContentStyle>
         <ConnectButtonIconStyle $isCompact={isCompact}>
           {isValidElement(<ButtonIcon />) && <ButtonIcon />}
