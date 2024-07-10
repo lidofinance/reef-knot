@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.0.2
+
+### Patch Changes
+
+- Wallets modal metrics fixed
+
 ## 5.0.1
 
 ### Patch Changes
