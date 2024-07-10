@@ -23,11 +23,8 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     deeplink,
     ...rest
   } = props;
-  const walletIdCapitalized = capitalize(walletId);
-  const metricsOnConnect =
-    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
-  const metricsOnClick =
-    metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
+  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();

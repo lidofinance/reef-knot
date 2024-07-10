@@ -3,7 +3,6 @@ import { useConnect } from 'wagmi';
 import { useDisconnect, useReefKnotModal } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButton } from '../components/ConnectButton';
-import { capitalize } from '../helpers';
 import { ConnectInjectedProps } from './types';
 import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
@@ -24,11 +23,8 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const { openModalAsync } = useReefKnotModal();
 
   const web3ProviderIsDetected = !!globalThis.window?.ethereum;
-  const walletIdCapitalized = capitalize(walletId);
-  const metricsOnConnect =
-    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
-  const metricsOnClick =
-    metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
+  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();

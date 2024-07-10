@@ -21,8 +21,8 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
     ...rest
   } = props;
 
-  const metricsOnConnect = metrics?.events?.connect?.handlers.onConnectCoinbase;
-  const metricsOnClick = metrics?.events?.click?.handlers.onClickCoinbase;
+  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
