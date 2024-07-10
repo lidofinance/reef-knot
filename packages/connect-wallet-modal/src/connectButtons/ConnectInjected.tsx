@@ -3,7 +3,7 @@ import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
-import { capitalize, suggestApp, openWindow } from '../helpers';
+import { suggestApp, openWindow } from '../helpers';
 import { ConnectInjectedProps } from './types';
 
 export const ConnectInjected: FC<ConnectInjectedProps> = (
@@ -23,11 +23,8 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     deeplink,
     ...rest
   } = props;
-  const walletIdCapitalized = capitalize(walletId);
-  const metricsOnConnect =
-    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
-  const metricsOnClick =
-    metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
+  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
