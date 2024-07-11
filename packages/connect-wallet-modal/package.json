@@ -37,9 +37,9 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
-    "@ledgerhq/hw-transport": "^6.30.1",
-    "@ledgerhq/hw-app-eth": "^6.35.2",
-    "@ledgerhq/hw-transport-webhid": "^6.28.1",
+    "@ledgerhq/hw-transport": "^6.31.0",
+    "@ledgerhq/hw-app-eth": "^6.37.1",
+    "@ledgerhq/hw-transport-webhid": "^6.29.0",
     "@lidofinance/lido-ui": "^3.18.0",
     "@reef-knot/wallets-list": "^2.0.1",
     "@types/react": "18.2.45",
