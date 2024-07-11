@@ -1,5 +1,18 @@
 # reef-knot
 
+## 5.1.0
+
+### Minor Changes
+
+- Remove WC warning banner
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.1.0
+  - @reef-knot/core-react@4.1.0
+  - @reef-knot/ui-react@2.1.0
+
 ## 5.0.3
 
 ### Patch Changes

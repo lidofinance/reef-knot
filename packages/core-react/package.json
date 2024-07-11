@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/core-react",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -40,7 +40,7 @@
     "@reef-knot/ledger-connector": "^4.0.0",
     "@reef-knot/wallets-list": "^2.0.0",
     "@reef-knot/types": "^2.0.0",
-    "@reef-knot/ui-react": "^2.0.0",
+    "@reef-knot/ui-react": "^2.1.0",
     "@reef-knot/wallets-helpers": "^2.0.0",
     "eslint-config-custom": "*",
     "react": "18.2.0",

@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.1.0
+
+### Minor Changes
+
+- Remove WC warning banner
+
 ## 5.0.2
 
 ### Patch Changes

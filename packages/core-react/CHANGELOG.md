@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 4.1.0
+
+### Minor Changes
+
+- Remove WC warning banner
+
 ## 4.0.1
 
 ### Patch Changes
