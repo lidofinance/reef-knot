@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 4.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-ledger-live",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -32,8 +32,8 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^2.0.0",
-    "@reef-knot/ledger-connector": "^4.0.0",
+    "@reef-knot/types": "^2.0.1",
+    "@reef-knot/ledger-connector": "^4.0.1",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },

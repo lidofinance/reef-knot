@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 4.1.1
+
+### Patch Changes
+
+- Wagmi version updated
+
 ## 4.1.0
 
 ### Minor Changes

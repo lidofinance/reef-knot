@@ -1,5 +1,12 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.1.1
+
+### Patch Changes
+
+- Wagmi version updated
+  - @reef-knot/wallets-list@2.0.1
+
 ## 5.1.0
 
 ### Minor Changes
