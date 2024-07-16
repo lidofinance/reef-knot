@@ -45,7 +45,8 @@
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "viem": "2.13.3",
-    "wagmi": "2.10.4"
+    "wagmi": "2.10.4",
+    "mipd": "0.0.7"
   },
   "peerDependencies": {
     "@reef-knot/ledger-connector": "^4.0.0",

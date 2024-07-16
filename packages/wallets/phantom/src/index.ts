@@ -1,34 +1,16 @@
-import { WalletAdapterType } from '@reef-knot/types';
-import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
 import { injected } from 'wagmi/connectors';
+import type { WalletAdapterType } from '@reef-knot/types';
+import {
+  getTargetEIP6963,
+  isProviderExistsEIP6963,
+} from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/phantom.svg';
-
-declare module '@wagmi/core' {
-  interface Ethereum {
-    isPhantom?: true;
-  }
-}
-
-declare global {
-  interface Window {
-    phantom?: { ethereum?: EthereumTypeWagmi };
-  }
-}
 
 export const id = 'phantom';
 export const name = 'Phantom';
+export const rdns = 'app.phantom';
 
-const getPhantomConnector = () =>
-  injected({
-    target: () => ({
-      id,
-      name,
-      provider: () =>
-        globalThis.window?.phantom?.ethereum || globalThis.window?.ethereum,
-    }),
-  });
-
-export const Phantom: WalletAdapterType = () => ({
+export const Phantom: WalletAdapterType = ({ providersStore }) => ({
   walletName: 'Phantom',
   walletId: 'phantom',
   type: injected.type,
@@ -36,11 +18,11 @@ export const Phantom: WalletAdapterType = () => ({
     light: WalletIcon,
     dark: WalletIcon,
   },
-  detector: () =>
-    !!globalThis.window?.phantom?.ethereum?.isPhantom ||
-    !!globalThis.window?.ethereum?.isPhantom,
+  detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {
     default: 'https://phantom.app/download',
   },
-  createConnectorFn: getPhantomConnector(),
+  createConnectorFn: injected({
+    target: getTargetEIP6963(providersStore, rdns),
+  }),
 });

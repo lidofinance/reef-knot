@@ -1,5 +1,6 @@
 import type { Chain } from 'wagmi/chains';
 import type { WalletAdapterType } from '@reef-knot/types';
+import { providersStore } from '../eip6963';
 
 export interface GetWalletsDataListArgs {
   walletsList: Record<string, WalletAdapterType>;
@@ -28,6 +29,7 @@ export const getWalletsDataList = ({
       defaultChain,
       walletconnectProjectId,
       safeAllowedDomains,
+      providersStore,
     }),
   );
 
