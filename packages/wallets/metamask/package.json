@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-metamask",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -32,12 +32,12 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^2.0.0",
+    "@reef-knot/types": "^2.0.1",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "wagmi": "2.10.4",
+    "wagmi": "2.11.2",
     "@reef-knot/types": "^2.0.0",
     "@tanstack/react-query": "^5.29.0"
   }
