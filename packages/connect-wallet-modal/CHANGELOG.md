@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.2.0
+
+### Minor Changes
+
+- ad07297: Minor update of ledger libs
+
 ## 5.1.1
 
 ### Patch Changes
