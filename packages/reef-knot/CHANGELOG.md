@@ -1,5 +1,12 @@
 # reef-knot
 
+## 5.2.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ui-react@2.1.2
+
 ## 5.2.0
 
 ### Minor Changes

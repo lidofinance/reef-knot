@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 2.1.2
+
+### Patch Changes
+
+- Wallets modal scroll lock condition fixed
+
 ## 2.1.1
 
 ### Patch Changes
