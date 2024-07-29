@@ -7,6 +7,7 @@ export const name = 'Coinbase';
 
 export const getCoinbaseConnector = () =>
   coinbaseWallet({
+    preference: 'eoaOnly',
     appName: globalThis.window?.location?.hostname,
   });
 
