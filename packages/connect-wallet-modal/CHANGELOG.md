@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.2.2
+
+### Patch Changes
+
+- Wallets modal: metrics props pass fixed
+
 ## 5.2.1
 
 ### Patch Changes

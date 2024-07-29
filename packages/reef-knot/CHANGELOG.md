@@ -1,5 +1,12 @@
 # reef-knot
 
+## 5.2.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.2.2
+
 ## 5.2.2
 
 ### Patch Changes
