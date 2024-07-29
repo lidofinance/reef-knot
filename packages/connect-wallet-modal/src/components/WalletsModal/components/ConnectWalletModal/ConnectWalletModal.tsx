@@ -21,6 +21,8 @@ type ConnectWalletModalProps = WalletsModalProps & {
 
 export const ConnectWalletModal = ({
   onCloseSuccess,
+  onClickWalletsMore,
+  onClickWalletsLess,
   ...passedDownProps
 }: ConnectWalletModalProps) => {
   const {
@@ -29,8 +31,6 @@ export const ConnectWalletModal = ({
     buttonComponentsByConnectorId,
     walletsShown,
     walletsPinned,
-    onClickWalletsMore,
-    onClickWalletsLess,
     walletsDisplayInitialCount = 6,
   } = passedDownProps;
 
