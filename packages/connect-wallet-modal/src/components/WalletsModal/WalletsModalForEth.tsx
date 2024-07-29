@@ -28,6 +28,7 @@ const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
   'ledgerLive',
   'walletConnect',
   'coinbase',
+  'coinbaseSmartWallet',
   'trust',
   'okx',
   'exodus',

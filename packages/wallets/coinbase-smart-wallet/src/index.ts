@@ -2,20 +2,20 @@ import { WalletAdapterType } from '@reef-knot/types';
 import { coinbaseWallet } from 'wagmi/connectors';
 import { WalletIcon } from './icons/index.js';
 
-export const id = 'coinbase';
-export const name = 'Coinbase';
+export const id = 'coinbaseSmartWallet';
+export const name = 'Coinbase Smart Wallet';
 
-export const getCoinbaseConnector = () =>
+export const getCoinbaseSmartWalletConnector = () =>
   coinbaseWallet({
-    preference: 'eoaOnly',
+    preference: 'smartWalletOnly',
     appName: globalThis.window?.location?.hostname,
   });
 
-export const Coinbase: WalletAdapterType = () => ({
+export const CoinbaseSmartWallet: WalletAdapterType = () => ({
   walletName: name,
   walletId: id,
   type: coinbaseWallet.type,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.ethereum?.isCoinbaseWallet,
-  createConnectorFn: getCoinbaseConnector(),
+  createConnectorFn: getCoinbaseSmartWalletConnector(),
 });

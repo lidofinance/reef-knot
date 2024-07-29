@@ -17,6 +17,10 @@ import { ImToken, id as idImToken } from '@reef-knot/wallet-adapter-imtoken';
 import { Trust, id as idTrust } from '@reef-knot/wallet-adapter-trust';
 import { Xdefi, id as idXdefi } from '@reef-knot/wallet-adapter-xdefi';
 import { Coinbase, id as idCoinbase } from '@reef-knot/wallet-adapter-coinbase';
+import {
+  CoinbaseSmartWallet,
+  id as idCoinbaseSmartWallet,
+} from '@reef-knot/wallet-adapter-coinbase-smart-wallet';
 import { Ledger, id as idLedger } from '@reef-knot/wallet-adapter-ledger-hid';
 import {
   LedgerLive,
@@ -44,6 +48,7 @@ export const WalletsListEthereum = {
   [idTrust]: Trust,
   [idXdefi]: Xdefi,
   [idCoinbase]: Coinbase,
+  [idCoinbaseSmartWallet]: CoinbaseSmartWallet,
   [idDAppBrowserInjected]: DAppBrowserInjected,
   [idSafe]: Safe,
 } as const;
