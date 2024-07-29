@@ -29,6 +29,8 @@ export const ConnectWalletModal = ({
     buttonComponentsByConnectorId,
     walletsShown,
     walletsPinned,
+    onClickWalletsMore,
+    onClickWalletsLess,
     walletsDisplayInitialCount = 6,
   } = passedDownProps;
 
@@ -51,8 +53,14 @@ export const ConnectWalletModal = ({
   }, []);
 
   const handleToggleWalletsList = useCallback(() => {
-    setShowOtherWallets((value) => !value);
-  }, []);
+    const nextShownState = !isShownOtherWallets;
+    setShowOtherWallets(nextShownState);
+    if (nextShownState) {
+      onClickWalletsMore?.();
+    } else {
+      onClickWalletsLess?.();
+    }
+  }, [isShownOtherWallets, onClickWalletsMore, onClickWalletsLess]);
 
   const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
     [],
