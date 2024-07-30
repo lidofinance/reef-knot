@@ -8,8 +8,8 @@ import {
   Copy,
 } from '@lidofinance/lido-ui';
 import { useEtherscanOpen } from '@lido-sdk/react';
-import { useConnectorInfo, useWeb3 } from 'reef-knot/web3-react';
-import { useForceDisconnect } from 'reef-knot/core-react';
+import { useWeb3 } from 'reef-knot/web3-react';
+import { useForceDisconnect, useConnectorInfo } from 'reef-knot/core-react';
 import { useCopyToClipboard } from 'hooks/useCopyToClipboard';
 import { FC, useCallback } from 'react';
 import {
@@ -25,7 +25,7 @@ import {
 const WalletModal: FC<ModalProps> = (props) => {
   const { onClose } = props;
   const { account } = useWeb3();
-  const { providerName } = useConnectorInfo();
+  const { connectorName } = useConnectorInfo();
   const { forceDisconnect } = useForceDisconnect();
   const handleDisconnect = useCallback(() => {
     forceDisconnect?.();
@@ -39,9 +39,9 @@ const WalletModal: FC<ModalProps> = (props) => {
     <Modal title="Account" {...props}>
       <WalletModalContentStyle>
         <WalletModalConnectedStyle>
-          {providerName && (
+          {connectorName && (
             <WalletModalConnectorStyle>
-              Connected with {providerName}
+              Connected with {connectorName}
             </WalletModalConnectorStyle>
           )}
 

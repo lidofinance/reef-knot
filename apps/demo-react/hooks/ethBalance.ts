@@ -1,12 +1,11 @@
 import useSWR from 'swr';
-import { useAccount, useNetwork } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 import { useLidoSDK } from 'providers/sdk';
 
 export const useETHBalance = () => {
   const { core } = useLidoSDK();
-  const { address: account, isConnected } = useAccount();
-  const { chain } = useNetwork();
+  const { address: account, isConnected, chain } = useAccount();
 
   return useSWR(
     ['swr:eth_balance', chain?.id],

@@ -1,12 +1,11 @@
-import { CHAINS } from '@lido-sdk/constants';
+import { mainnet, holesky, Chain } from 'wagmi/chains';
 import dynamics from './dynamics';
 
-export const getBackendRPCPath = (chainId: CHAINS) => {
+export const getBackendRPCPath = (chainId: Chain['id']) => {
   return dynamics.rpcProviderUrls[chainId];
 };
 
 export const backendRPC = {
-  [CHAINS.Mainnet]: getBackendRPCPath(CHAINS.Mainnet),
-  [CHAINS.Goerli]: getBackendRPCPath(CHAINS.Goerli),
-  [CHAINS.Holesky]: getBackendRPCPath(CHAINS.Holesky),
+  [mainnet.id]: getBackendRPCPath(mainnet.id),
+  [holesky.id]: getBackendRPCPath(holesky.id),
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Close } from '@lidofinance/lido-ui';
 import { useWeb3, useSupportedChains } from 'reef-knot/web3-react';
 import { useConnectorInfo } from 'reef-knot/core-react';
-import { useAccount, useNetwork } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 import {
   HeadingStyle,
@@ -21,6 +21,7 @@ export const WalletInfoContent = ({
   const { setIsWalletInfoIsOpen } = useClientConfig();
   const connectorInfo = useConnectorInfo();
   const supportedChainsData = useSupportedChains();
+  const { isUnsupported } = supportedChainsData;
   const supportedChainIds = supportedChainsData.supportedChains.map(
     (c) => c.chainId,
   );
@@ -34,9 +35,8 @@ export const WalletInfoContent = ({
     status: wagmiStatus,
     isConnected: wagmiIsConnected,
     connector,
+    chain,
   } = useAccount();
-
-  const { chain } = useNetwork();
 
   return (
     <div>
@@ -97,7 +97,7 @@ export const WalletInfoContent = ({
             Chain ID: {chain?.id}
           </DataTableRowStyle>
           <DataTableRowStyle title="chain is unsupported">
-            {String(chain?.unsupported)}
+            {String(isUnsupported)}
           </DataTableRowStyle>
         </code>
       </div>

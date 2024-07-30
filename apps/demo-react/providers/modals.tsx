@@ -24,6 +24,9 @@ export enum MODAL {
 
 export const ModalContext = createContext({} as ModalContextValue);
 
+const LINK_DONT_HAVE_WALLET_DEFAULT =
+  'https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask';
+
 const ModalProvider: FC<PropsWithChildren> = ({ children }) => {
   const [active, setActive] = useState<MODAL | null>(null);
   const { themeName } = useThemeToggle();
@@ -54,9 +57,16 @@ const ModalProvider: FC<PropsWithChildren> = ({ children }) => {
       {children}
       <WalletModal open={active === MODAL.wallet} {...common} />
       <WalletsModalForEth
-        hiddenWallets={['Opera Wallet']}
-        shouldInvertWalletIcon={themeName === 'dark'}
         metrics={metrics}
+        shouldInvertWalletIcon={themeName === 'dark'}
+        linkDontHaveWallet={LINK_DONT_HAVE_WALLET_DEFAULT}
+        walletsPinned={['okx', 'browserExtension']}
+        onClickWalletsMore={() =>
+          console.log('metrics: wallets modal show more')
+        }
+        onClickWalletsLess={() =>
+          console.log('metrics: wallets modal show less')
+        }
       />
     </ModalContext.Provider>
   );

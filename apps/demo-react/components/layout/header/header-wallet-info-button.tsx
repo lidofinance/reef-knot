@@ -1,4 +1,4 @@
-import { ReactComponent as GearIcon } from 'assets/icons/system.svg';
+// import { ReactComponent as GearIcon } from 'assets/icons/system.svg';
 import { useClientConfig } from 'providers/client-config';
 
 import { HeaderControlButton } from './header-control-button';
@@ -8,7 +8,7 @@ export const HeaderWalletInfoButton = () => {
 
   return (
     <HeaderControlButton onClick={() => setIsWalletInfoIsOpen(true)}>
-      <GearIcon />
+      {/*<GearIcon />*/}
     </HeaderControlButton>
   );
 };
