@@ -1,17 +1,15 @@
 import { WalletAdapterType } from '@reef-knot/types';
+import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/exodus.svg';
-import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
-import { injected } from '@wagmi/connectors';
-
-declare module '@wagmi/core' {
-  interface Ethereum {
-    isExodus?: true;
-  }
-}
+import type { EIP1193Provider } from 'viem';
 
 declare global {
   interface Window {
-    exodus?: { ethereum?: EthereumTypeWagmi };
+    exodus?: EIP1193Provider & {
+      ethereum?: {
+        isExodus?: true;
+      };
+    };
   }
 }
 
