@@ -20,6 +20,7 @@
     "@lidofinance/lido-ethereum-sdk": "^3.1.1",
     "@lidofinance/lido-ui": "^3.18.0",
     "@svgr/webpack": "^8.0.1",
+    "@tanstack/react-query": "^5.29.0",
     "copy-to-clipboard": "^3.3.3",
     "fs-extra": "^11.2.0",
     "lodash": "^4.17.21",
@@ -32,7 +33,8 @@
     "swr": "^2.2.5",
     "tiny-invariant": "^1.3.1",
     "url-loader": "^4.1.1",
-    "wagmi": "^0.12.19"
+    "viem": "2.13.3",
+    "wagmi": "2.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -44,7 +46,6 @@
     "next-transpile-modules": "9.0.0",
     "tsconfig": "*",
     "typechain": "^8.3.0",
-    "typescript": "^4.9.5",
-    "viem": "^2.9.6"
+    "typescript": "^5.4.5"
   }
 }
