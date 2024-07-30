@@ -1,10 +1,9 @@
 import { useAccount } from 'wagmi';
-import { SafeConnector } from 'wagmi/connectors/safe';
+import { idLedgerHid, idLedgerLive } from '@reef-knot/ledger-connector';
 import {
-  LedgerHIDConnector,
-  LedgerLiveConnector,
-} from '@reef-knot/ledger-connector';
-import { isMobileOrTablet } from '../helpers/userAgents';
+  hasInjected,
+  isDappBrowserProvider,
+} from '../helpers/providerDetectors';
 
 type ConnectorInfo = {
   connectorName?: string;
@@ -12,29 +11,32 @@ type ConnectorInfo = {
   isLedger: boolean;
   isLedgerLive: boolean;
   isDappBrowser: boolean;
+  isInjected: boolean;
 };
 
 export const useConnectorInfo = (): ConnectorInfo => {
   const { connector } = useAccount();
 
   // These checks are working only for connected wallets! There is no connector if a wallet is not connected yet.
-  const isLedger = connector instanceof LedgerHIDConnector;
-  const isLedgerLive = connector instanceof LedgerLiveConnector;
-  const isGnosis = connector instanceof SafeConnector;
-  const isDappBrowser = !!globalThis.window?.ethereum && isMobileOrTablet;
-
-  let connectorName = connector?.name;
+  const isLedger = Boolean(connector?.id === idLedgerHid);
+  const isLedgerLive = Boolean(connector?.id === idLedgerLive);
+  const isGnosis = Boolean(connector?.id === 'safe');
+  const isInjected = hasInjected();
+  const isDappBrowser = isDappBrowserProvider();
 
   // Do not set connector's name if the app is opened in a mobile wallet dapp browser,
   // because we use a generic injected connector for this case and proper detection is hard.
   // Also, it will be easy for a user to understand which wallet app is being used for connection.
-  if (isDappBrowser) connectorName = undefined;
+  const connectorName = isDappBrowser ? undefined : connector?.name;
 
   return {
     connectorName,
+
     isGnosis,
     isLedger,
     isLedgerLive,
+
     isDappBrowser,
+    isInjected,
   };
 };

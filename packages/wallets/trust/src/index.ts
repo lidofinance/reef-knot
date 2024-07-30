@@ -1,7 +1,6 @@
 import { WalletAdapterType } from '@reef-knot/types';
 import { WalletIcon } from './icons/index.js';
-import { Chain } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { injected } from 'wagmi/connectors';
 
 declare module '@wagmi/core' {
   interface Ethereum {
@@ -9,26 +8,31 @@ declare module '@wagmi/core' {
   }
 }
 
-export class TrustConnector extends InjectedConnector {
-  readonly id = 'trust';
-  readonly name = 'Trust';
-  constructor(chains: Chain[]) {
-    super({
-      chains,
-      options: {
-        getProvider: () => globalThis.window?.ethereum,
-      },
-    });
-  }
-}
+export const id = 'trust';
+export const name = 'Trust';
 
-export const Trust: WalletAdapterType = ({ chains }) => ({
-  walletName: 'Trust',
-  walletId: 'trust',
+export const getTrustConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () => globalThis.window?.ethereum,
+    }),
+  });
+
+const deeplinkDAppUrl = globalThis.window
+  ? globalThis.window.location.host + globalThis.window.location.pathname
+  : '';
+
+export const Trust: WalletAdapterType = () => ({
+  walletName: name,
+  walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () => !!globalThis.window?.ethereum?.isTrust,
   downloadURLs: {
     default: 'https://trustwallet.com/browser-extension',
   },
-  connector: new TrustConnector(chains),
+  deeplink: `https://link.trustwallet.com/open_url?coin_id=60&url=${deeplinkDAppUrl}`,
+  createConnectorFn: getTrustConnector(),
 });

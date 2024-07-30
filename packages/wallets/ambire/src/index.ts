@@ -2,21 +2,20 @@ import { WalletAdapterType } from '@reef-knot/types';
 import { getWalletConnectConnector } from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/ambire.svg';
 
-export const Ambire: WalletAdapterType = ({
-  walletconnectProjectId,
-  chains,
-}) => ({
-  walletName: 'Ambire',
-  walletId: 'ambire',
+export const id = 'ambire';
+export const name = 'Ambire';
+
+export const Ambire: WalletAdapterType = ({ walletconnectProjectId }) => ({
+  walletName: name,
+  walletId: id,
+  type: getWalletConnectConnector.type,
   icon: WalletIcon,
-  connector: getWalletConnectConnector({
-    chains,
+  createConnectorFn: getWalletConnectConnector({
     projectId: walletconnectProjectId,
   }),
   walletconnectExtras: {
     connectionViaURI: {
-      connector: getWalletConnectConnector({
-        chains,
+      createConnectorFn: getWalletConnectConnector({
         qrcode: false,
         projectId: walletconnectProjectId,
       }),

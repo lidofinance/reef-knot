@@ -1,6 +1,6 @@
-import { ElementType } from 'react';
-import { Connector } from 'wagmi';
+import type { ElementType } from 'react';
 import type { Chain } from 'wagmi/chains';
+import type { Config, CreateConnectorFn } from 'wagmi';
 
 export type WalletAdapterIcons = {
   light: ElementType;
@@ -10,14 +10,14 @@ export type WalletAdapterIcons = {
 export type WalletAdapterData = {
   walletId: string;
   walletName: string;
+  type: string;
 
   // Icons for the light and dark color themes.
   // You can use different icons or the same icon for both cases.
   icon?: ElementType | WalletAdapterIcons;
 
   // A function to check if the wallet is installed and injected.
-  // For example: isMetaMaskProvider: () => !!window.ethereum?.isMetaMask
-  detector?: () => boolean;
+  detector?: () => boolean | Promise<boolean>;
 
   // The wallet can be connected via automatic connection only.
   // The `detector` method will be called during auto connection, to decide if the wallet should be connected.
@@ -32,14 +32,16 @@ export type WalletAdapterData = {
     ios?: string;
   };
 
-  connector: Connector;
+  deeplink?: string;
+
+  createConnectorFn: CreateConnectorFn;
 
   // Additional options for wallets based on WalletConnect
   walletconnectExtras?: {
     // Option for direct connection via WalletConnect (WC) URI (without QR code modal)
     connectionViaURI?: {
       // Should be WC connector with disabled QR code
-      connector: Connector;
+      createConnectorFn: CreateConnectorFn;
       // In which case this connection type must be used instead the default connector
       condition: boolean;
       // Where to redirect when WC URI is ready
@@ -54,10 +56,8 @@ export type WalletAdapterData = {
 
 export interface WalletAdapterArgs {
   rpc: Record<number, string>;
-  chains: Chain[];
   defaultChain: Chain;
   walletconnectProjectId?: string;
+  safeAllowedDomains?: RegExp[];
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;
-
-export type WalletsListType = Record<string, WalletAdapterType>;

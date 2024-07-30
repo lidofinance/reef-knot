@@ -1,5 +1,36 @@
 # @reef-knot/types
 
+## 2.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
+## 2.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+## 1.8.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
+## 1.7.0
+
+### Minor Changes
+
+- Make it possible for wallet detectors to be async;
+- Improve Safe wallet detection;
+
+## 1.6.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 1.5.0
 
 ### Minor Changes

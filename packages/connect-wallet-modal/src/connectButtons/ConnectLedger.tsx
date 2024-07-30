@@ -5,6 +5,7 @@ import { useReefKnotModal } from '@reef-knot/core-react';
 
 export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   const {
+    walletId,
     onConnect,
     onBeforeConnect,
     shouldInvertWalletIcon,
@@ -14,21 +15,23 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   } = props;
 
   const { openModalAsync } = useReefKnotModal();
-  const onClickLedger = metrics?.events?.click?.handlers.onClickLedger;
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
-    onClickLedger?.();
+    metricsOnClick?.();
     const result = await openModalAsync({ type: 'ledger' });
     if (result.success) onConnect?.();
-  }, [onBeforeConnect, onClickLedger, openModalAsync, onConnect]);
+  }, [onBeforeConnect, openModalAsync, onConnect, metricsOnClick]);
 
   return (
     <ConnectButton
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
-      onClick={handleConnect}
+      onClick={() => {
+        void handleConnect();
+      }}
     >
       Ledger
     </ConnectButton>

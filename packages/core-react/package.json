@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/core-react",
-  "version": "3.0.0",
+  "version": "4.1.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -36,25 +36,26 @@
     "dev": "dev=on rollup -c -w",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
-  "dependencies": {
-    "ua-parser-js": "1.0.33"
-  },
   "devDependencies": {
-    "@reef-knot/ledger-connector": "^3.0.0",
-    "@reef-knot/wallets-list": "^1.12.0",
-    "@reef-knot/types": "^1.5.0",
-    "@reef-knot/ui-react": "^1.0.8",
-    "@types/ua-parser-js": "^0.7.36",
+    "@reef-knot/ledger-connector": "^4.0.1",
+    "@reef-knot/wallets-list": "^2.0.1",
+    "@reef-knot/types": "^2.0.1",
+    "@reef-knot/ui-react": "^2.1.1",
+    "@reef-knot/wallets-helpers": "^2.0.1",
     "eslint-config-custom": "*",
     "react": "18.2.0",
-    "wagmi": "^0.12.19"
+    "viem": "2.13.3",
+    "wagmi": "2.11.2"
   },
   "peerDependencies": {
-    "@reef-knot/ledger-connector": "^3.0.0",
-    "@reef-knot/wallets-list": "^1.4.1",
-    "@reef-knot/types": "^1.2.1",
-    "@reef-knot/ui-react": "^1.0.4",
+    "@reef-knot/ledger-connector": "^4.0.0",
+    "@reef-knot/wallets-list": "^2.0.0",
+    "@reef-knot/types": "^2.0.0",
+    "@reef-knot/ui-react": "^2.0.0",
+    "@reef-knot/wallets-helpers": "^2.0.0",
     "react": ">=18",
-    "wagmi": "^0.12.19"
+    "viem": "2.13.3",
+    "wagmi": "2.11.2",
+    "@tanstack/react-query": "^5.29.0"
   }
 }

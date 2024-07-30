@@ -1,5 +1,30 @@
 # @reef-knot/web3-react
 
+## 4.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
+## 4.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.0.0
+  - @reef-knot/wallets-helpers@2.0.0
+  - @reef-knot/core-react@4.0.0
+
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies
+
 ## 3.0.0
 
 ### Patch Changes

@@ -1,5 +1,35 @@
 # @reef-knot/ui-react
 
+## 2.1.2
+
+### Patch Changes
+
+- Wallets modal scroll lock condition fixed
+
+## 2.1.1
+
+### Patch Changes
+
+- Wagmi version updated
+
+## 2.1.0
+
+### Minor Changes
+
+- Remove WC warning banner
+
+## 2.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+## 1.1.0
+
+### Minor Changes
+
+- connect-wallet-modal ui and config updated
+
 ## 1.0.8
 
 ### Patch Changes

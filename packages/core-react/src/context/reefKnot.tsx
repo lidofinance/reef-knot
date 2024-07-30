@@ -1,43 +1,29 @@
-import React, { createContext, FC, ReactNode, useMemo } from 'react';
-import { WalletAdapterData } from '@reef-knot/types';
-import { Chain } from 'wagmi/chains';
-import { WCWarnBannerContextProvider } from '@reef-knot/ui-react';
-import { getWalletDataList } from '../walletData/index';
-import { AutoConnect } from '../components/AutoConnect';
+import React, { createContext, ReactNode, useMemo } from 'react';
 import { ReefKnotModalContextProvider } from './reefKnotModalContext';
+import type { Chain } from 'wagmi/chains';
+import type { WalletAdapterData } from '@reef-knot/types';
 
 export interface ReefKnotContextProps {
+  walletDataList: WalletAdapterData[];
   rpc: Record<number, string>;
-  walletconnectProjectId?: string;
-  chains: Chain[];
-  defaultChain: Chain;
-  autoConnect?: boolean;
+  chains: readonly [Chain, ...Chain[]];
   children?: ReactNode;
 }
 
 export type ReefKnotContextValue = {
   rpc: Record<number, string>;
   walletDataList: WalletAdapterData[];
-  chains: Chain[];
+  chains: readonly [Chain, ...Chain[]];
 };
 
 export const ReefKnotContext = createContext({} as ReefKnotContextValue);
 
-export const ReefKnot: FC<ReefKnotContextProps> = ({
+export const ReefKnot = ({
   rpc,
-  walletconnectProjectId,
   chains,
-  defaultChain,
-  autoConnect = true,
+  walletDataList,
   children,
-}) => {
-  const walletDataList = getWalletDataList({
-    rpc,
-    walletconnectProjectId,
-    chains,
-    defaultChain,
-  });
-
+}: ReefKnotContextProps) => {
   const contextValue = useMemo(
     () => ({
       rpc,
@@ -49,16 +35,7 @@ export const ReefKnot: FC<ReefKnotContextProps> = ({
 
   return (
     <ReefKnotContext.Provider value={contextValue}>
-      <ReefKnotModalContextProvider>
-        <WCWarnBannerContextProvider>
-          <AutoConnect
-            autoConnect={autoConnect}
-            walletDataList={walletDataList}
-            chains={chains}
-          />
-          {children}
-        </WCWarnBannerContextProvider>
-      </ReefKnotModalContextProvider>
+      <ReefKnotModalContextProvider>{children}</ReefKnotModalContextProvider>
     </ReefKnotContext.Provider>
   );
 };

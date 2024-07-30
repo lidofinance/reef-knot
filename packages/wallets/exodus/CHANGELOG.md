@@ -1,5 +1,28 @@
 # @reef-knot/wallet-adapter-exodus
 
+## 2.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
+## 2.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@2.0.0
+
+## 1.3.0
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
 ## 1.2.4
 
 ### Patch Changes

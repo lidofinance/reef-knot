@@ -1,5 +1,109 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.2.2
+
+### Patch Changes
+
+- Wallets modal: metrics props pass fixed
+
+## 5.2.1
+
+### Patch Changes
+
+- Wallet modal show more/less wallets metrics added
+
+## 5.2.0
+
+### Minor Changes
+
+- ad07297: Minor update of ledger libs
+
+## 5.1.1
+
+### Patch Changes
+
+- Wagmi version updated
+  - @reef-knot/wallets-list@2.0.1
+
+## 5.1.0
+
+### Minor Changes
+
+- Remove WC warning banner
+
+## 5.0.2
+
+### Patch Changes
+
+- Wallets modal metrics fixed
+
+## 5.0.1
+
+### Patch Changes
+
+- Connect buttons type attribute fixed
+
+## 5.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.0.0
+  - @reef-knot/wallets-helpers@2.0.0
+  - @reef-knot/wallets-list@2.0.0
+  - @reef-knot/core-react@4.0.0
+  - @reef-knot/web3-react@4.0.0
+  - @reef-knot/ui-react@2.0.0
+  - @reef-knot/types@2.0.0
+
+## 4.2.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
+### Patch Changes
+
+- @reef-knot/wallets-list@1.13.3
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies
+
+## 4.1.1
+
+### Patch Changes
+
+- connect wallet modal safari styles fixed
+
+## 4.1.0
+
+### Minor Changes
+
+- Make it possible for wallet detectors to be async;
+- Improve Safe wallet detection;
+
+### Patch Changes
+
+- @reef-knot/wallets-list@1.13.1
+
+## 4.0.0
+
+### Major Changes
+
+- connect-wallet-modal ui and config updated
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@1.13.0
+
 ## 3.0.2
 
 ### Patch Changes

@@ -1,8 +1,7 @@
 import { WalletAdapterType } from '@reef-knot/types';
-import { Chain, Ethereum as EthereumTypeWagmi } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { Ethereum as EthereumTypeWagmi } from '@wagmi/core';
+import { injected } from '@wagmi/connectors';
 import { WalletIcon } from './icons/index.js';
-
 declare module '@wagmi/core' {
   interface Ethereum {
     isXDEFI?: true;
@@ -17,23 +16,23 @@ declare global {
   }
 }
 
-export class XdefiConnector extends InjectedConnector {
-  readonly id = 'xdefi';
-  readonly name = 'XDEFI';
-  constructor(chains: Chain[]) {
-    super({
-      chains,
-      options: {
-        getProvider: () =>
-          globalThis.window?.xfi?.ethereum || globalThis.window?.ethereum,
-      },
-    });
-  }
-}
+export const id = 'xdefi';
+export const name = 'XDEFI';
 
-export const Xdefi: WalletAdapterType = ({ chains }) => ({
-  walletName: 'XDEFI',
-  walletId: 'xdefi',
+export const getXdefiConnector = () =>
+  injected({
+    target: () => ({
+      id,
+      name,
+      provider: () =>
+        globalThis.window?.xfi?.ethereum || globalThis.window?.ethereum,
+    }),
+  });
+
+export const Xdefi: WalletAdapterType = () => ({
+  walletName: name,
+  walletId: id,
+  type: injected.type,
   icon: WalletIcon,
   detector: () =>
     !!globalThis.window?.xfi?.ethereum ||
@@ -41,5 +40,5 @@ export const Xdefi: WalletAdapterType = ({ chains }) => ({
   downloadURLs: {
     default: 'https://www.xdefi.io/',
   },
-  connector: new XdefiConnector(chains),
+  createConnectorFn: getXdefiConnector(),
 });

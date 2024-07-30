@@ -1,5 +1,63 @@
 # @reef-knot/core-react
 
+## 4.1.1
+
+### Patch Changes
+
+- Wagmi version updated
+
+## 4.1.0
+
+### Minor Changes
+
+- Remove WC warning banner
+
+## 4.0.1
+
+### Patch Changes
+
+- useDisconnect condition fixed
+
+## 4.0.0
+
+### Major Changes
+
+- Wagmi version updated and corresponding changes applied
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.0.0
+  - @reef-knot/wallets-helpers@2.0.0
+  - @reef-knot/wallets-list@2.0.0
+  - @reef-knot/ui-react@2.0.0
+  - @reef-knot/types@2.0.0
+
+## 3.2.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies
+
+## 3.1.1
+
+### Patch Changes
+
+- 92be1c7: Fix "checkIfDisconnectMakesSense"
+
+## 3.1.0
+
+### Minor Changes
+
+- Make it possible for wallet detectors to be async;
+- Improve Safe wallet detection;
+
 ## 3.0.0
 
 ### Major Changes

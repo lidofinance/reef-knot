@@ -1,36 +1,55 @@
-import { Chain } from 'wagmi';
-import { connect, disconnect } from 'wagmi/actions';
-import type { ConnectResult, Connector } from '@wagmi/core';
 import { useCallback } from 'react';
-import { WalletAdapterData } from '@reef-knot/types';
-import { getUnsupportedChainError } from '../helpers/getUnsupportedChainError';
-import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
+import { useConfig } from 'wagmi';
 import { useReefKnotContext } from './useReefKnotContext';
-import { ReefKnotModalContextValue } from '../context';
 import { useReefKnotModal } from './useReefKnotModal';
 
-const connectToAdapter = async (
-  connector: Connector,
-  supportedChains: Chain[],
-) => {
-  const connectResult = await connect({ connector });
+import { connect, disconnect } from 'wagmi/actions';
+import { getUnsupportedChainError } from '../helpers/getUnsupportedChainError';
+import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 
-  if (connectResult?.chain.unsupported) {
+import type { WalletAdapterData } from '@reef-knot/types';
+import type { Chain } from 'wagmi/chains';
+import type { Config, CreateConnectorFn, ConnectReturnType } from '@wagmi/core';
+import type { ReefKnotModalContextValue } from '../context';
+
+type ConnectResult = ConnectReturnType;
+
+const connectToAdapter = async (
+  config: Config,
+  connector: CreateConnectorFn,
+  supportedChains: readonly [Chain, ...Chain[]],
+) => {
+  const connectResult = await connect(config, { connector });
+
+  if (
+    connectResult &&
+    supportedChains.findIndex(({ id }) => id === connectResult.chainId) === -1
+  ) {
     // No errors during connection, but the chain is unsupported.
     // This case is considered as error for now, and we explicitly call disconnect() here.
     // This logic comes from previously used web3-react connection logic, which wasn't reworked yet after web3-react removal.
     // web3-react logic was: if a chain is unsupported – break the connection, throw an error
-    // wagmi logic is: if a chain is unsupported – connect anyway, without errors, set `chain.unsupported` flag to true.
+    // wagmi logic is: if a chain is unsupported – connect anyway, without errors.
     // So, here we are trying to mimic the legacy logic, because we are not ready to rework it yet.
     const connectError = getUnsupportedChainError(supportedChains);
-    await disconnect();
+    await disconnect(config);
 
     // A user may change a chain in a wallet app, prepare for that event.
     // There is a strong recommendation in the MetaMask documentation
     // to reload the page upon chain changes, unless there is a good reason not to.
     // This looks like a good general approach.
-    const provider = await connector.getProvider();
-    provider.once('chainChanged', () => globalThis.window?.location.reload());
+
+    if (config.state.current) {
+      const activeConnector = config.state.connections.get(
+        config.state.current,
+      )?.connector;
+      if (activeConnector) {
+        const provider: any = await activeConnector.getProvider();
+        provider.once('chainChanged', () =>
+          globalThis.window?.location.reload(),
+        );
+      }
+    }
 
     throw connectError;
   }
@@ -39,23 +58,28 @@ const connectToAdapter = async (
 };
 
 export const connectEagerly = async (
+  config: Config,
   adapters: WalletAdapterData[],
   openModalAsync: ReefKnotModalContextValue['openModalAsync'],
-  supportedChains: Chain[],
+  supportedChains: readonly [Chain, ...Chain[]],
 ): Promise<ConnectResult | null> => {
   const isTermsAccepted = checkTermsAccepted();
 
   for (const adapter of adapters) {
-    if (adapter.detector?.()) {
+    if (await adapter.detector?.()) {
       // wallet is detected
       let connectionResult: ConnectResult | null = null;
-      const tryConnection = () =>
-        connectToAdapter(adapter.connector, supportedChains).then((result) => {
-          connectionResult = result;
-          return result;
-        });
+      const tryConnection = async () => {
+        const result = await connectToAdapter(
+          config,
+          adapter.createConnectorFn,
+          supportedChains,
+        );
+        connectionResult = result;
+        return result;
+      };
 
-      // if terms are not accepted, show modal and wait for user to try connect from it
+      // if terms are not accepted, show modal and wait for user to try to connect from it
       if (!isTermsAccepted) {
         // Terms of service were not accepted previously.
         // So, for legal reasons, we must ask a user to accept the terms before connecting.
@@ -88,15 +112,22 @@ export const connectEagerly = async (
 };
 
 export const useEagerConnect = () => {
+  const config = useConfig();
   const { openModalAsync } = useReefKnotModal();
   const { walletDataList, chains } = useReefKnotContext();
-  const autoConnectOnlyAdapters = walletDataList.filter(
-    (adapter) => adapter.autoConnectOnly,
-  );
 
   const eagerConnect = useCallback(() => {
-    return connectEagerly(autoConnectOnlyAdapters, openModalAsync, chains);
-  }, [openModalAsync, autoConnectOnlyAdapters, chains]);
+    const autoConnectOnlyAdapters = walletDataList.filter(
+      ({ autoConnectOnly }) => autoConnectOnly,
+    );
+
+    return connectEagerly(
+      config,
+      autoConnectOnlyAdapters,
+      openModalAsync,
+      chains,
+    );
+  }, [openModalAsync, walletDataList, chains, config]);
 
   return { eagerConnect };
 };

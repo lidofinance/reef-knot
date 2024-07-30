@@ -1,5 +1,173 @@
 # reef-knot
 
+## 5.2.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.2.2
+
+## 5.2.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.2.1
+
+## 5.2.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ui-react@2.1.2
+
+## 5.2.0
+
+### Minor Changes
+
+- ad07297: Minor update of ledger libs
+
+### Patch Changes
+
+- Updated dependencies [ad07297]
+  - @reef-knot/ledger-connector@4.1.0
+  - @reef-knot/connect-wallet-modal@5.2.0
+
+## 5.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.0.1
+  - @reef-knot/connect-wallet-modal@5.1.1
+  - @reef-knot/wallets-helpers@2.0.1
+  - @reef-knot/core-react@4.1.1
+  - @reef-knot/web3-react@4.0.1
+  - @reef-knot/ui-react@2.1.1
+  - @reef-knot/types@2.0.1
+  - @reef-knot/wallets-list@2.0.1
+
+## 5.1.0
+
+### Minor Changes
+
+- Remove WC warning banner
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.1.0
+  - @reef-knot/core-react@4.1.0
+  - @reef-knot/ui-react@2.1.0
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.0.2
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.0.1
+
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@4.0.1
+
+## 5.0.0
+
+### Major Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.0.0
+  - @reef-knot/connect-wallet-modal@5.0.0
+  - @reef-knot/wallets-helpers@2.0.0
+  - @reef-knot/wallets-list@2.0.0
+  - @reef-knot/core-react@4.0.0
+  - @reef-knot/web3-react@4.0.0
+  - @reef-knot/ui-react@2.0.0
+  - @reef-knot/types@2.0.0
+
+## 4.2.0
+
+### Minor Changes
+
+- a6ca608: Add deeplinks support
+
+### Patch Changes
+
+- Updated dependencies [a6ca608]
+  - @reef-knot/connect-wallet-modal@4.2.0
+  - @reef-knot/core-react@3.2.0
+  - @reef-knot/types@1.8.0
+  - @reef-knot/wallets-list@1.13.3
+
+## 4.1.3
+
+### Patch Changes
+
+- @reef-knot/wallets-list@1.13.2
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@4.1.2
+  - @reef-knot/wallets-helpers@1.1.6
+  - @reef-knot/core-react@3.1.2
+  - @reef-knot/web3-react@3.0.1
+
+## 4.1.1
+
+### Patch Changes
+
+- 92be1c7: Fix "checkIfDisconnectMakesSense"
+- Updated dependencies
+  - @reef-knot/core-react@3.1.1
+  - @reef-knot/connect-wallet-modal@4.1.1
+
+## 4.1.0
+
+### Minor Changes
+
+- Make it possible for wallet detectors to be async;
+- Improve Safe wallet detection;
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@4.1.0
+  - @reef-knot/core-react@3.1.0
+  - @reef-knot/types@1.7.0
+  - @reef-knot/wallets-list@1.13.1
+
+## 4.0.0
+
+### Major Changes
+
+- connect-wallet-modal ui and config updated
+
+### Minor Changes
+
+- wallet connectors id exports and typings updated
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+  - @reef-knot/wallets-list@1.13.0
+  - @reef-knot/types@1.6.0
+  - @reef-knot/connect-wallet-modal@4.0.0
+  - @reef-knot/ui-react@1.1.0
+
 ## 3.0.2
 
 ### Patch Changes

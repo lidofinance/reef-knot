@@ -10,6 +10,8 @@ import { Metrics } from '../WalletsModal';
 import { LedgerDerivationPathSelect } from './LedgerDerivationPathSelect';
 import { AccountRecord, AccountsStorage } from './types';
 import { DERIVATION_PATHS } from './constants';
+import { idLedgerHid } from '@reef-knot/ledger-connector';
+import { useReefKnotContext } from '@reef-knot/core-react';
 
 const BoxWrapper = styled.div`
   display: flex;
@@ -60,27 +62,39 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
 
   const metricsOnConnect = metrics?.events?.connect?.handlers.onConnectLedger;
 
-  const { connect, connectors } = useConnect({
-    onSuccess() {
-      metricsOnConnect?.();
-    },
-  });
-  const ledgerConnector = connectors.find(
-    (connector) => connector.id === 'ledgerHID',
-  );
+  const { connect } = useConnect();
+  const { walletDataList } = useReefKnotContext();
 
   const handleAccountButtonClick = useCallback(
     async (account: AccountRecord) => {
+      const ledgerWalletData = walletDataList.find(
+        (c) => c.walletId === idLedgerHid,
+      );
+      if (!ledgerWalletData) return;
       saveLedgerDerivationPath(account.path);
       await disconnectTransport(true);
       try {
-        connect({ connector: ledgerConnector });
+        connect(
+          { connector: ledgerWalletData.createConnectorFn },
+          {
+            onSuccess: () => {
+              metricsOnConnect?.();
+            },
+          },
+        );
         closeScreen?.();
       } catch (e) {
         setError(helpers.interceptLedgerError(e as Error));
       }
     },
-    [closeScreen, connect, disconnectTransport, ledgerConnector, setError],
+    [
+      closeScreen,
+      connect,
+      disconnectTransport,
+      walletDataList,
+      setError,
+      metricsOnConnect,
+    ],
   );
 
   const handleDerivationPathSelect = useCallback((value: string) => {

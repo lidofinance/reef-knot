@@ -1,11 +1,10 @@
 import React, { ElementType, FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/web3-react';
+import { useDisconnect, useReefKnotModal } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButton } from '../components/ConnectButton';
-import { capitalize } from '../helpers';
 import { ConnectInjectedProps } from './types';
-import { useReefKnotModal } from '@reef-knot/core-react';
+import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -24,18 +23,10 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const { openModalAsync } = useReefKnotModal();
 
   const web3ProviderIsDetected = !!globalThis.window?.ethereum;
-  const walletIdCapitalized = capitalize(walletId);
-  const metricsOnConnect =
-    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
-  const metricsOnClick =
-    metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
+  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
-  const { connectAsync } = useConnect({
-    onSuccess() {
-      onConnect?.();
-      metricsOnConnect?.();
-    },
-  });
+  const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const ButtonIcon: ElementType =
@@ -48,6 +39,8 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     if (web3ProviderIsDetected) {
       disconnect?.();
       await connectAsync({ connector });
+      onConnect?.();
+      metricsOnConnect?.();
     } else {
       await openModalAsync({
         type: 'requirements',
@@ -70,6 +63,8 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     onBeforeConnect,
     openModalAsync,
     web3ProviderIsDetected,
+    onConnect,
+    metricsOnConnect,
   ]);
 
   return (
@@ -77,7 +72,9 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
-      onClick={handleConnect}
+      onClick={() => {
+        void handleConnect();
+      }}
     >
       {walletName}
     </ConnectButton>

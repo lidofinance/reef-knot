@@ -1,8 +1,9 @@
 import React, { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/web3-react';
+import { useDisconnect } from '@reef-knot/core-react';
+import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
-import { capitalize, suggestApp } from '../helpers';
+import { suggestApp, openWindow } from '../helpers';
 import { ConnectInjectedProps } from './types';
 
 export const ConnectInjected: FC<ConnectInjectedProps> = (
@@ -19,41 +20,40 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     downloadURLs,
     detector,
     connector,
+    deeplink,
     ...rest
   } = props;
-  const walletIsDetected = !!detector?.();
-  const walletIdCapitalized = capitalize(walletId);
-  const metricsOnConnect =
-    metrics?.events?.connect?.handlers[`onConnect${walletIdCapitalized}`];
-  const metricsOnClick =
-    metrics?.events?.click?.handlers[`onClick${walletIdCapitalized}`];
+  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
+  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
-  const { connectAsync } = useConnect({
-    onSuccess() {
-      onConnect?.();
-      metricsOnConnect?.();
-    },
-  });
+  const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
     metricsOnClick?.();
 
-    if (walletIsDetected) {
+    if (await detector?.()) {
       disconnect?.();
       await connectAsync({ connector });
+      onConnect?.();
+      metricsOnConnect?.();
+    } else if (isMobileOrTablet && deeplink) {
+      openWindow(deeplink);
     } else if (downloadURLs) {
       suggestApp(downloadURLs);
     }
   }, [
     connectAsync,
     connector,
+    deeplink,
+    detector,
     disconnect,
     downloadURLs,
     metricsOnClick,
     onBeforeConnect,
-    walletIsDetected,
+    onConnect,
+    metricsOnConnect,
   ]);
 
   return (
@@ -61,7 +61,9 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
-      onClick={handleConnect}
+      onClick={() => {
+        void handleConnect();
+      }}
     >
       {walletName}
     </ConnectButton>

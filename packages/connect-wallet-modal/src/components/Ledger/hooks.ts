@@ -1,5 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { fetchBalance } from 'wagmi/actions';
+import { useConfig } from 'wagmi';
+import { getBalance } from 'wagmi/actions';
 import { LedgerContext } from './LedgerContext';
 import { AccountRecord, AccountsStorage } from './types';
 import {
@@ -8,6 +9,7 @@ import {
   isDeviceBusy,
 } from './helpers';
 import { TransportError } from '@ledgerhq/hw-transport';
+import { formatBalance } from '../../helpers/formatBalance';
 
 export const useLedgerContext = () => useContext(LedgerContext);
 
@@ -26,6 +28,7 @@ export const useLedgerAccounts = ({
 }: LedgerAccountsHookParams) => {
   const { ledgerAppEth, connectTransport, transport, setError } =
     useLedgerContext();
+  const config = useConfig();
 
   const [accounts, setAccounts] = useState<Record<string, AccountRecord>>({});
 
@@ -46,7 +49,7 @@ export const useLedgerAccounts = ({
 
       const getAndPushAccount = async (index: string, path: string) => {
         const { address } = await eth.getAddress(path);
-        const { formatted, symbol } = await fetchBalance({ address } as {
+        const { value, symbol } = await getBalance(config, { address } as {
           address: `0x${string}`;
         });
         accountRecords.push({
@@ -54,7 +57,7 @@ export const useLedgerAccounts = ({
           path,
           pathTemplate: derivationPathTemplate,
           address,
-          balance: Number(formatted),
+          balance: Number(formatBalance(value)),
           token: symbol,
         });
       };
@@ -95,7 +98,7 @@ export const useLedgerAccounts = ({
 
       return accountRecords;
     },
-    [derivationPathTemplate, ledgerAppEth, transport],
+    [derivationPathTemplate, ledgerAppEth, transport, config],
   );
 
   useEffect(() => {

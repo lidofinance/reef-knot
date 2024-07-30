@@ -1,27 +1,35 @@
-import { ComponentType } from 'react';
-import { ModalProps } from '@reef-knot/ui-react';
-import { WalletAdapterData } from '@reef-knot/types';
+import type { ComponentType } from 'react';
+import type { ModalProps } from '@reef-knot/ui-react';
+import type { Connector, CreateConnectorFn } from 'wagmi';
 
-export type Metrics = {
+export type Metrics<WalletIdsList extends string = string> = {
   events?: {
-    connect?: { handlers: Record<`onConnect${string}`, () => void> };
-    click?: { handlers: Record<`onClick${string}`, () => void> };
+    connect?: {
+      handlers: Partial<Record<WalletIdsList, () => void>>;
+    };
+    click?: {
+      handlers: Partial<Record<WalletIdsList | 'termsAccept', () => void>>;
+    };
   };
 };
 
 export type ButtonComponentsByConnectorId = {
-  [K: string]: ComponentType;
+  [key: string]: ComponentType<ButtonsCommonProps>;
 };
 
-export type WalletsModalProps = ModalProps & {
+export type WalletsModalProps<I extends string = string> = ModalProps & {
   buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
-  walletDataList: WalletAdapterData[];
-  hiddenWallets?: string[];
   shouldInvertWalletIcon?: boolean;
   buttonsFullWidth?: boolean;
-  metrics?: Metrics;
+  metrics?: Metrics<I>;
   termsLink?: string;
   privacyNoticeLink?: string;
+  walletsShown: I[];
+  walletsPinned: I[];
+  walletsDisplayInitialCount?: number;
+  linkDontHaveWallet?: string;
+  onClickWalletsMore?: () => void;
+  onClickWalletsLess?: () => void;
 };
 
 export type ButtonsCommonProps = {
@@ -30,4 +38,6 @@ export type ButtonsCommonProps = {
   onConnect?: () => void;
   shouldInvertWalletIcon: boolean;
   metrics?: Metrics;
+  isCompact?: boolean;
+  connector: Connector | CreateConnectorFn;
 };
