@@ -50,7 +50,7 @@
     "@reef-knot/wallet-adapter-trust": "2.0.0",
     "@reef-knot/wallet-adapter-xdefi": "2.0.0",
     "@reef-knot/wallet-adapter-coinbase": "2.0.0",
-    "@reef-knot/wallet-adapter-coinbase-smart-wallet": "*",
+    "@reef-knot/wallet-adapter-coinbase-smart-wallet": "file:../wallets/coinbase-smart-wallet",
     "@reef-knot/wallet-adapter-ledger-hid": "3.0.0",
     "@reef-knot/wallet-adapter-ledger-live": "3.0.0",
     "@reef-knot/wallet-adapter-dapp-browser-injected": "2.0.0",
