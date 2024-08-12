@@ -50,6 +50,18 @@
     "@reef-knot/types": "2.0.1",
     "@reef-knot/ledger-connector": "4.1.0"
   },
+  "peerDependencies": {
+    "@lidofinance/lido-ui": "^3.18.0",
+    "@tanstack/react-query": "^5.51.1",
+    "@types/ua-parser-js": "0.7.39",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "react-is": ">=18",
+    "styled-components": "^5.3.5",
+    "ua-parser-js": "1.0.37",
+    "viem": "2.13.3",
+    "wagmi": "2.11.2"
+  },
   "devDependencies": {
     "eslint-config-custom": "*"
   }
