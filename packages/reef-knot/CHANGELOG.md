@@ -1,5 +1,13 @@
 # reef-knot
 
+## 5.3.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-helpers@2.0.2
+  - @reef-knot/ui-react@2.1.3
+
 ## 5.3.0
 
 ### Minor Changes

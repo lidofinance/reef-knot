@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 2.1.3
+
+### Patch Changes
+
+- Remove unused react-is from deps
+
 ## 2.1.2
 
 ### Patch Changes
