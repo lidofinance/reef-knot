@@ -1,6 +1,6 @@
 {
   "name": "reef-knot",
-  "version": "5.2.3",
+  "version": "5.3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
