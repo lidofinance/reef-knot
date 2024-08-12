@@ -1,6 +1,6 @@
 {
   "name": "reef-knot",
-  "version": "5.2.3",
+  "version": "5.3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -49,6 +49,15 @@
     "@reef-knot/wallets-helpers": "2.0.1",
     "@reef-knot/types": "2.0.1",
     "@reef-knot/ledger-connector": "4.1.0"
+  },
+  "peerDependencies": {
+    "@lidofinance/lido-ui": "^3.18.0",
+    "@tanstack/react-query": "^5.51.1",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "styled-components": "^5.3.5",
+    "viem": "2.13.3",
+    "wagmi": "2.11.2"
   },
   "devDependencies": {
     "eslint-config-custom": "*"

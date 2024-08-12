@@ -47,7 +47,6 @@
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18",
-    "react-is": ">=18",
     "styled-components": "5",
     "wagmi": "2.11.2"
   },
@@ -56,7 +55,6 @@
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-is": "18.2.0",
     "styled-components": "^5.3.6",
     "wagmi": "2.11.2",
     "@tanstack/react-query": "^5.29.0"

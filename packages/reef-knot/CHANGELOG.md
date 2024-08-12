@@ -1,5 +1,11 @@
 # reef-knot
 
+## 5.3.0
+
+### Minor Changes
+
+- Add peer dependencies from subpackages to reef-knot root package
+
 ## 5.2.3
 
 ### Patch Changes
