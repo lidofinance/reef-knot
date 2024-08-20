@@ -31,6 +31,6 @@ export const Coin98: WalletAdapterType = ({
     android: 'https://android.coin98.com',
   },
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });

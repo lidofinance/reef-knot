@@ -23,6 +23,6 @@ export const Phantom: WalletAdapterType = ({ providersStore }) => ({
     default: 'https://phantom.app/download',
   },
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });

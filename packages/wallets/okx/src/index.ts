@@ -31,6 +31,6 @@ export const Okx: WalletAdapterType = ({ providersStore }) => ({
   },
   deeplink: urlWithDeeplink,
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });

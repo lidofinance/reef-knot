@@ -20,6 +20,6 @@ export const Exodus: WalletAdapterType = ({ providersStore }) => ({
     default: 'https://www.exodus.com/download/',
   },
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });

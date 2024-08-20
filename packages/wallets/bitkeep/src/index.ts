@@ -24,7 +24,7 @@ export const Bitget: WalletAdapterType = ({ providersStore }) => ({
   },
   deeplink: `https://bkcode.vip?action=dapp&url=${currentHref}`,
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });
 

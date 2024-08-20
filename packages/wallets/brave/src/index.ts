@@ -20,6 +20,6 @@ export const Brave: WalletAdapterType = ({ providersStore }) => ({
     default: 'https://brave.com/wallet/',
   },
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });

@@ -27,7 +27,7 @@ export const MetaMask: WalletAdapterType = ({ providersStore }) => ({
   },
   deeplink: `https://metamask.app.link/dapp/${currentHref}`,
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
     shimDisconnect: true,
   }),
 });

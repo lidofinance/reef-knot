@@ -25,6 +25,6 @@ export const Trust: WalletAdapterType = ({ providersStore }) => ({
   },
   deeplink: `https://link.trustwallet.com/open_url?coin_id=60&url=${deeplinkDAppUrl}`,
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });

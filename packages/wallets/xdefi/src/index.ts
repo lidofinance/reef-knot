@@ -20,6 +20,6 @@ export const Xdefi: WalletAdapterType = ({ providersStore }) => ({
     default: 'https://www.xdefi.io/',
   },
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });
