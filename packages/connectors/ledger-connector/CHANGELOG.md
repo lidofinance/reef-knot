@@ -1,5 +1,17 @@
 # @reef-knot/ledger-connector
 
+## 4.1.0
+
+### Minor Changes
+
+- ad07297: Minor update of ledger libs
+
+## 4.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
 ## 4.0.0
 
 ### Major Changes

@@ -13,6 +13,8 @@ export default function WalletsModal(props: { isDarkTheme: boolean }) {
       shouldInvertWalletIcon={isDarkTheme}
       linkDontHaveWallet={LINK_DONT_HAVE_WALLET_DEFAULT}
       walletsPinned={['okx', 'browserExtension']}
+      onClickWalletsMore={() => console.log('metrics: wallets modal show more')}
+      onClickWalletsLess={() => console.log('metrics: wallets modal show less')}
     />
   );
 }

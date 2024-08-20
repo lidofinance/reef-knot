@@ -1,5 +1,66 @@
 # reef-knot
 
+## 5.3.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-helpers@2.0.2
+  - @reef-knot/ui-react@2.1.3
+
+## 5.3.0
+
+### Minor Changes
+
+- Add peer dependencies from subpackages to reef-knot root package
+
+## 5.2.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.2.2
+
+## 5.2.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.2.1
+
+## 5.2.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ui-react@2.1.2
+
+## 5.2.0
+
+### Minor Changes
+
+- ad07297: Minor update of ledger libs
+
+### Patch Changes
+
+- Updated dependencies [ad07297]
+  - @reef-knot/ledger-connector@4.1.0
+  - @reef-knot/connect-wallet-modal@5.2.0
+
+## 5.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.0.1
+  - @reef-knot/connect-wallet-modal@5.1.1
+  - @reef-knot/wallets-helpers@2.0.1
+  - @reef-knot/core-react@4.1.1
+  - @reef-knot/web3-react@4.0.1
+  - @reef-knot/ui-react@2.1.1
+  - @reef-knot/types@2.0.1
+  - @reef-knot/wallets-list@2.0.1
+
 ## 5.1.0
 
 ### Minor Changes

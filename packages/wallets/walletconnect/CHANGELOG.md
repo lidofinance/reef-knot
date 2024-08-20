@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-walletconnect
 
+## 2.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
 ## 2.0.0
 
 ### Major Changes
