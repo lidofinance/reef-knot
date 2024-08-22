@@ -1,5 +1,5 @@
 #  Reef Knot &nbsp; <img src="logo.svg" alt='Reef Knot logo' height='45' align='top'/> &nbsp;   
-![NPM Version](https://img.shields.io/npm/v/reef-knot)  
+[![NPM Version](https://img.shields.io/npm/v/reef-knot)](https://www.npmjs.com/package/reef-knot)  
 
 Web3 Wallets Connection Library
 
