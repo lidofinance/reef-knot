@@ -1,39 +1,25 @@
-import { WalletAdapterType } from '@reef-knot/types';
 import { injected } from 'wagmi/connectors';
+import { WalletAdapterType } from '@reef-knot/types';
+import {
+  getTargetEIP6963,
+  isProviderExistsEIP6963,
+} from '@reef-knot/wallets-helpers';
 import { WalletIcon } from './icons/index.js';
-import type { EIP1193Provider } from 'viem';
 
-declare global {
-  interface Window {
-    xfi?: {
-      ethereum: EIP1193Provider & { isXDEFI?: true };
-    };
-  }
-}
-
+export const rdns = 'io.xdefi';
 export const id = 'xdefi';
 export const name = 'XDEFI';
 
-export const getXdefiConnector = () =>
-  injected({
-    target: () => ({
-      id,
-      name,
-      provider: () =>
-        globalThis.window?.xfi?.ethereum || globalThis.window?.ethereum,
-    }),
-  });
-
-export const Xdefi: WalletAdapterType = () => ({
+export const Xdefi: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: injected.type,
   icon: WalletIcon,
-  detector: () =>
-    !!globalThis.window?.xfi?.ethereum ||
-    !!globalThis.window?.ethereum?.isXDEFI,
+  detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {
     default: 'https://www.xdefi.io/',
   },
-  createConnectorFn: getXdefiConnector(),
+  createConnectorFn: injected({
+    target: () => getTargetEIP6963(providersStore, rdns),
+  }),
 });

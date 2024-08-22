@@ -1,40 +1,25 @@
-import { WalletAdapterType } from '@reef-knot/types';
 import { injected } from 'wagmi/connectors';
+import type { WalletAdapterType } from '@reef-knot/types';
+import {
+  getTargetEIP6963,
+  isProviderExistsEIP6963,
+} from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/exodus.svg';
-import type { EIP1193Provider } from 'viem';
-
-declare global {
-  interface Window {
-    exodus?: EIP1193Provider & {
-      ethereum?: {
-        isExodus?: true;
-      };
-    };
-  }
-}
 
 export const id = 'exodus';
 export const name = 'Exodus';
+export const rdns = 'com.exodus.web3-wallet';
 
-export const getExodusConnector = () =>
-  injected({
-    target: () => ({
-      id,
-      name,
-      provider: () =>
-        globalThis.window?.exodus?.ethereum || globalThis.window?.ethereum,
-    }),
-  });
-
-export const Exodus: WalletAdapterType = () => ({
+export const Exodus: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: injected.type,
   icon: WalletIcon,
-  detector: () =>
-    !!globalThis.window?.exodus || !!globalThis.window?.ethereum?.isExodus,
+  detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {
     default: 'https://www.exodus.com/download/',
   },
-  createConnectorFn: getExodusConnector(),
+  createConnectorFn: injected({
+    target: () => getTargetEIP6963(providersStore, rdns),
+  }),
 });

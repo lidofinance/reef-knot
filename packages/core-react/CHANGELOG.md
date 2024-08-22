@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 4.2.0
+
+### Minor Changes
+
+- Support EIP-6963
+
 ## 4.1.1
 
 ### Patch Changes
