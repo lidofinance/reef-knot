@@ -1,5 +1,20 @@
 # @reef-knot/wallets-list
 
+## 2.1.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-coinbase@2.1.0
+  - @reef-knot/wallet-adapter-metamask@2.1.0
+  - @reef-knot/wallet-adapter-bitkeep@2.1.0
+  - @reef-knot/wallet-adapter-coin98@2.1.0
+  - @reef-knot/wallet-adapter-exodus@2.1.0
+  - @reef-knot/wallet-adapter-brave@2.1.0
+  - @reef-knot/wallet-adapter-trust@2.1.0
+  - @reef-knot/wallet-adapter-xdefi@2.1.0
+  - @reef-knot/wallet-adapter-okx@2.1.0
+
 ## 2.0.1
 
 ### Patch Changes

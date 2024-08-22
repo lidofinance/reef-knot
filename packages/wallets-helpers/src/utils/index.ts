@@ -1,2 +1,3 @@
 export * from './isValidHttpUrl';
-export * from './user-agents';
+export * from './userAgents';
+export * from './eip6963';

@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-coinbase",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -32,13 +32,15 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^2.0.1",
+    "@reef-knot/types": "^2.1.0",
+    "@reef-knot/wallets-helpers": "^2.1.0",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
     "wagmi": "2.11.2",
-    "@reef-knot/types": "^2.0.0",
+    "@reef-knot/types": "^2.0.1",
+    "@reef-knot/wallets-helpers": "^2.0.2",
     "@tanstack/react-query": "^5.29.0"
   }
 }

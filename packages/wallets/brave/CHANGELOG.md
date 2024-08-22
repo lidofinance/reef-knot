@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-brave
 
+## 2.1.0
+
+### Minor Changes
+
+- Support EIP-6963
+
 ## 2.0.1
 
 ### Patch Changes

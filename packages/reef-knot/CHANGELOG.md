@@ -1,5 +1,19 @@
 # reef-knot
 
+## 5.4.0
+
+### Minor Changes
+
+- Support EIP-6963
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-helpers@2.1.0
+  - @reef-knot/core-react@4.2.0
+  - @reef-knot/types@2.1.0
+  - @reef-knot/wallets-list@2.0.2
+
 ## 5.3.1
 
 ### Patch Changes

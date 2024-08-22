@@ -3,41 +3,24 @@ import { injected } from 'wagmi/connectors';
 import { WalletIcon } from './icons/index.js';
 import type { EIP1193Provider } from 'viem';
 
-declare module '@wagmi/core' {
-  interface Ethereum {
-    // _isWalletName_?: true;
-  }
-}
-
-declare global {
-  interface Window {
-    // _walletWeb3Provider_?: EIP1193Provider;
-  }
-}
+// This generator is intended to be used for a wallet app working via EIP-6963
+// If the wallet you want to add uses a different technology, just change the code accordingly,
+// use other adapters as examples.
 
 export const id = '{{camelCase walletId}}';
 export const name = '{{properCase walletName}}';
+export const rdns = '';
 
-const getConnector = () =>
-  injected({
-    target: () => ({
-      id,
-      name,
-      provider: () => globalThis.window?._walletWeb3Provider_ || globalThis.window?.ethereum,
-    }),
-  });
-
-export const {{properCase walletName}}: WalletAdapterType = () => ({
+export const {{properCase walletName}}: WalletAdapterType = ({ providersStore }) => ({
   walletId: id,
   walletName: name,
-  // The `type` field is used to match a `WalletComponent`
-  // from the `WalletsModalProps['buttonComponentsByConnectorId']`
-  // if no match found by the `walletId` field
   type: injected.type,
   icon: WalletIcon,
-  // detector: () => !!globalThis.window?.ethereum?._isWalletName_,
+  detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {
     default: 'https://',
   },
-  connector: getConnector(),
+  connector: injected({
+    target: getTargetEIP6963(providersStore, rdns),
+  }),
 });
