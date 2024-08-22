@@ -3,7 +3,7 @@ import NextBundleAnalyzer from '@next/bundle-analyzer';
 
 buildDynamics();
 
-const ANALYZE_BUNDLE = process.env.ANALYZE_BUNDLE == 'true';
+const ANALYZE_BUNDLE = process.env.ANALYZE_BUNDLE === 'true';
 const basePath = process.env.BASE_PATH || '';
 
 const withBundleAnalyzer = NextBundleAnalyzer({
