@@ -42,6 +42,11 @@ jobs:
         env:
           BASE_PATH: /${{ github.event.repository.name }}
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+          WALLETCONNECT_PROJECT_ID: ${{ secrets.WALLETCONNECT_PROJECT_ID }}
+          RPC_PROVIDER_URL_1: ${{ vars.RPC_PROVIDER_URL_1 }}
+          RPC_PROVIDER_URL_17000: ${{ vars.RPC_PROVIDER_URL_17000 }}
+          SUPPORTED_CHAINS: ${{ vars.SUPPORTED_CHAINS }}
+          DEFAULT_CHAIN: ${{ vars.DEFAULT_CHAIN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
