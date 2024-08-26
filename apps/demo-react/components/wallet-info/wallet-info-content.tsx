@@ -55,30 +55,9 @@ export const WalletInfoContent = ({
           <DataTableRowStyle title="providerName" highlight>
             {connectorInfo.connectorName}
           </DataTableRowStyle>
-          <HeadingStyle>Shimmed useWeb3() data below</HeadingStyle>
-
-          <DataTableRowStyle title="account">
-            {web3Info.account}
-          </DataTableRowStyle>
-          <DataTableRowStyle title="active">
-            {String(web3Info.active)}
-          </DataTableRowStyle>
-          <DataTableRowStyle title="error">
-            {web3Info.error?.message}
-          </DataTableRowStyle>
-
-          <HeadingStyle>Chain</HeadingStyle>
-          <DataTableRowStyle title="chain" highlight>
-            {web3Info.chainId}
-          </DataTableRowStyle>
-          <DataTableRowStyle title="chain is unsupported">
-            {String(supportedChainsData.isUnsupported)}
-          </DataTableRowStyle>
-          <DataTableRowStyle title="supported chain IDs">
-            {supportedChainIds?.join(',')}
-          </DataTableRowStyle>
         </code>
       </div>
+
       <HeadingStyle>Wagmi data:</HeadingStyle>
       <div>
         <code>
@@ -93,14 +72,31 @@ export const WalletInfoContent = ({
           <DataTableRowStyle title="connector name">
             {connector?.name}
           </DataTableRowStyle>
-          <DataTableRowStyle title="chain ID">
-            Chain ID: {chain?.id}
-          </DataTableRowStyle>
+          <DataTableRowStyle title="chain">{chain?.id}</DataTableRowStyle>
           <DataTableRowStyle title="chain is unsupported">
             {String(isUnsupported)}
           </DataTableRowStyle>
+          <DataTableRowStyle title="supported chain IDs">
+            {supportedChainIds?.join(',')}
+          </DataTableRowStyle>
         </code>
       </div>
+
+      <HeadingStyle>useWeb3 legacy data</HeadingStyle>
+      <div>
+        <code>
+          <DataTableRowStyle title="active">
+            {String(web3Info.active)}
+          </DataTableRowStyle>
+          <DataTableRowStyle title="chain" highlight>
+            {web3Info.chainId}
+          </DataTableRowStyle>
+          <DataTableRowStyle title="error">
+            {web3Info.error?.message}
+          </DataTableRowStyle>
+        </code>
+      </div>
+
       {children}
     </div>
   );
