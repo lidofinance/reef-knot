@@ -39,6 +39,7 @@ const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
   'ambire',
   'safe',
   'dappBrowserInjected',
+  'binanceWallet',
 ];
 
 const WALLETS_PINNED_CONFIG_DEFAULT: WalletsModalEthProps['walletsPinned'] = [

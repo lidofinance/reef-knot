@@ -1,0 +1,48 @@
+{
+  "name": "@reef-knot/wallet-adapter-binance-wallet",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "dev=on rollup -c -w",
+    "lint": "eslint --ext ts,tsx,js,mjs ."
+  },
+  "devDependencies": {
+    "@reef-knot/types": "^2.0.0",
+    "@reef-knot/wallets-helpers": "^2.0.0",
+    "@svgr/rollup": "^6.5.1",
+    "eslint-config-custom": "*"
+  },
+  "peerDependencies": {
+    "@reef-knot/types": "^2.0.0",
+    "@reef-knot/wallets-helpers": "^2.0.0",
+    "wagmi": "2.10.2"
+  },
+  "dependencies": {
+    "@binance/w3w-wagmi-connector-v2": "^1.2.4-alpha.0"
+  }
+}
