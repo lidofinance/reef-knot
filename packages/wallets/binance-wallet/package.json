@@ -43,6 +43,6 @@
     "wagmi": "2.10.2"
   },
   "dependencies": {
-    "@binance/w3w-wagmi-connector-v2": "^1.2.4-alpha.0"
+    "@binance/w3w-wagmi-connector-v2": "^1.2.3"
   }
 }
