@@ -5,6 +5,7 @@ import {
   ConnectWC,
   ConnectCoinbase,
   ConnectBrowser,
+  ConnectBinance,
 } from '../../connectButtons';
 import { WalletsModal } from './WalletsModal';
 import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
@@ -19,6 +20,7 @@ const buttonComponentsByConnectorId: WalletsModalEthProps['buttonComponentsByCon
     walletConnect: ConnectWC,
     coinbaseWallet: ConnectCoinbase,
     ledgerHID: ConnectLedger,
+    binanceWallet: ConnectBinance,
   };
 
 const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
@@ -39,6 +41,7 @@ const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
   'ambire',
   'safe',
   'dappBrowserInjected',
+  'binanceWallet',
 ];
 
 const WALLETS_PINNED_CONFIG_DEFAULT: WalletsModalEthProps['walletsPinned'] = [

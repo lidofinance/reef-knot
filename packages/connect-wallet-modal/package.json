@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/connect-wallet-modal",
-  "version": "5.2.2",
+  "version": "5.3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -41,7 +41,7 @@
     "@ledgerhq/hw-app-eth": "^6.37.1",
     "@ledgerhq/hw-transport-webhid": "^6.29.0",
     "@lidofinance/lido-ui": "^3.18.0",
-    "@reef-knot/wallets-list": "^2.1.0",
+    "@reef-knot/wallets-list": "^2.2.0",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17"
   },
