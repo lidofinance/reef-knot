@@ -23,7 +23,7 @@ export const BinanceWeb3Wallet: WalletAdapterType = ({ defaultChain }) => {
     walletName: name,
     type: binanceWalletConnector.type,
     icon: WalletIcon,
-    createConnectorFn: binanceWalletConnector(),
+    createConnectorFn: binanceWalletConnector({ chainId: defaultChain.id }),
     detector: isInBinance,
     deeplink,
   };
