@@ -1468,6 +1468,16 @@
     hash.js "^1.1.7"
     js-base64 "^3.7.5"
 
+"@binance/w3w-utils@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@binance/w3w-utils/-/w3w-utils-1.1.6.tgz#0212e06efc71f3644601c9ca4ee7c841080fbcf2"
+  integrity sha512-NGT629vS9tRlbigtNn9wHtTYNB00oyDcsajO/kpAcDiQn4ktYs7+oTIr/qLvjP8Z3opTXpbooqMPITDY7DI0IA==
+  dependencies:
+    "@binance/w3w-types" "1.1.4"
+    eventemitter3 "^5.0.0"
+    hash.js "^1.1.7"
+    js-base64 "^3.7.5"
+
 "@binance/w3w-wagmi-connector-v2@^1.2.3":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@binance/w3w-wagmi-connector-v2/-/w3w-wagmi-connector-v2-1.2.3.tgz#bd7733f8a12d2ee1bc348407198243244011f951"

@@ -1,12 +1,22 @@
 import { WalletAdapterType } from '@reef-knot/types';
 import { WalletIcon } from './icons/index.js';
 import { getWagmiConnectorV2 } from '@binance/w3w-wagmi-connector-v2';
+import { isInBinance, getDeepLink } from '@binance/w3w-utils';
 
 export const id = 'binanceWallet';
 export const name = 'Binance Web3 Wallet';
 
-export const BinanceWeb3Wallet: WalletAdapterType = () => {
+const deeplinkDAppUrl = globalThis.window
+  ? globalThis.window.location.host + globalThis.window.location.pathname
+  : '';
+
+export const BinanceWeb3Wallet: WalletAdapterType = ({ defaultChain }) => {
   const binanceWalletConnector = getWagmiConnectorV2();
+
+  const deeplink =
+    typeof window !== 'undefined'
+      ? getDeepLink(deeplinkDAppUrl, defaultChain.id).http
+      : undefined;
 
   return {
     walletId: id,
@@ -14,5 +24,7 @@ export const BinanceWeb3Wallet: WalletAdapterType = () => {
     type: binanceWalletConnector.type,
     icon: WalletIcon,
     createConnectorFn: binanceWalletConnector(),
+    detector: isInBinance,
+    deeplink,
   };
 };
