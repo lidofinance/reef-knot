@@ -1,5 +1,13 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.3.2
+
+### Patch Changes
+
+- Binance Wallet: actually use explicitly passed deeplink on mobiles
+- Reorder wallets
+  - @reef-knot/wallets-list@2.2.2
+
 ## 5.3.1
 
 ### Patch Changes
