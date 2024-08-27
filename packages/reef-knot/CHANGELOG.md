@@ -1,5 +1,14 @@
 # reef-knot
 
+## 5.5.1
+
+### Patch Changes
+
+- Binance wallet: move up in the wallets display order, add deeplink, add detector fn
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.3.1
+  - @reef-knot/wallets-list@2.2.1
+
 ## 5.5.0
 
 ### Minor Changes
