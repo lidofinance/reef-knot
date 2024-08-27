@@ -8,6 +8,7 @@
 - Updated dependencies
   - @reef-knot/connect-wallet-modal@5.3.1
   - @reef-knot/wallets-list@2.2.1
+  - @reef-knot/core-react@4.2.1
 
 ## 5.5.0
 
