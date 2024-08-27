@@ -1,5 +1,16 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.3.0
+
+### Minor Changes
+
+- Add Binance Web3 Wallet
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@2.2.0
+
 ## 5.2.2
 
 ### Patch Changes
