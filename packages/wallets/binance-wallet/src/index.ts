@@ -13,5 +13,4 @@ export const BinanceWeb3Wallet: WalletAdapterType = () => ({
   type: binanceWalletConnector.type,
   icon: WalletIcon,
   createConnectorFn: binanceWalletConnector(),
-  detector: () => true,
 });
