@@ -35,7 +35,7 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     metricsOnClick?.();
     disconnect?.();
 
-    if (isMobileOrTablet && deeplink) {
+    if (isMobileOrTablet && deeplink && !detector?.()) {
       openWindow(deeplink);
     } else {
       await connectAsync(
