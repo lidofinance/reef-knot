@@ -7,7 +7,7 @@ export const id = 'binanceWallet';
 export const name = 'Binance Web3 Wallet';
 
 const deeplinkDAppUrl = globalThis.window
-  ? globalThis.window.location.host + globalThis.window.location.pathname
+  ? globalThis.window.location.origin + globalThis.window.location.pathname
   : '';
 
 export const BinanceWeb3Wallet: WalletAdapterType = ({ defaultChain }) => {

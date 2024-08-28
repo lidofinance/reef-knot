@@ -1,5 +1,11 @@
 # reef-knot
 
+## 5.5.3
+
+### Patch Changes
+
+- @reef-knot/wallets-list@2.2.3
+
 ## 5.5.2
 
 ### Patch Changes
