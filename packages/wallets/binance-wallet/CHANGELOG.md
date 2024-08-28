@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-binance-wallet
 
+## 1.0.2
+
+### Patch Changes
+
+- Pass chainId to binanceWalletConnector
+
 ## 1.0.1
 
 ### Patch Changes

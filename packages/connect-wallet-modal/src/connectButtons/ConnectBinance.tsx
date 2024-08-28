@@ -3,6 +3,8 @@ import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { ConnectButton } from '../components/ConnectButton';
 import { ConnectInjectedProps } from './types';
+import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
+import { openWindow } from '../helpers/index';
 
 export const ConnectBinance: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -18,36 +20,43 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     downloadURLs,
     detector,
     connector,
+    deeplink,
     ...rest
   } = props;
 
   const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
-  const { connect } = useConnect();
+  const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
-  const handleConnect = useCallback(() => {
+  const handleConnect = useCallback(async () => {
     onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
-    connect(
-      { connector },
-      {
-        onSuccess: () => {
-          onConnect?.();
-          metricsOnConnect?.();
+
+    if (isMobileOrTablet && deeplink && !detector?.()) {
+      openWindow(deeplink);
+    } else {
+      await connectAsync(
+        { connector },
+        {
+          onSuccess: () => {
+            onConnect?.();
+            metricsOnConnect?.();
+          },
         },
-      },
-    );
+      );
+    }
   }, [
-    connect,
-    connector,
-    disconnect,
     metricsOnClick,
+    metricsOnConnect,
+    disconnect,
+    deeplink,
+    connectAsync,
+    connector,
     onBeforeConnect,
     onConnect,
-    metricsOnConnect,
   ]);
 
   return (
@@ -55,7 +64,9 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
-      onClick={handleConnect}
+      onClick={() => {
+        void handleConnect();
+      }}
     >
       {walletName}
     </ConnectButton>
