@@ -1,5 +1,12 @@
 # @reef-knot/wallets-list
 
+## 2.2.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallet-adapter-binance-wallet@1.0.3
+
 ## 2.2.2
 
 ### Patch Changes

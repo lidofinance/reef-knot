@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-binance-wallet
 
+## 1.0.3
+
+### Patch Changes
+
+- Fix Binance wallet deeplink – use origin
+
 ## 1.0.2
 
 ### Patch Changes
