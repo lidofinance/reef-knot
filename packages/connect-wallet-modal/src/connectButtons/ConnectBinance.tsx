@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { ConnectButton } from '../components/ConnectButton';
@@ -30,7 +30,11 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
+  const [binanceModalLoading, setBinanceModalLoading] = useState(false);
+
   const handleConnect = useCallback(async () => {
+    if (binanceModalLoading) return;
+
     onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
@@ -38,9 +42,13 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     if (isMobileOrTablet && deeplink && !detector?.()) {
       openWindow(deeplink);
     } else {
+      setBinanceModalLoading(true);
       await connectAsync(
         { connector },
         {
+          onSettled: () => {
+            setBinanceModalLoading(false);
+          },
           onSuccess: () => {
             onConnect?.();
             metricsOnConnect?.();
@@ -49,14 +57,16 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
       );
     }
   }, [
+    binanceModalLoading,
+    onBeforeConnect,
     metricsOnClick,
-    metricsOnConnect,
     disconnect,
     deeplink,
+    detector,
     connectAsync,
     connector,
-    onBeforeConnect,
     onConnect,
+    metricsOnConnect,
   ]);
 
   return (
