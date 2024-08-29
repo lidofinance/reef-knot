@@ -1,5 +1,13 @@
 # reef-knot
 
+## 5.5.4
+
+### Patch Changes
+
+- Fix the issue with multiple clicks on ConnectBinance button
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.3.3
+
 ## 5.5.3
 
 ### Patch Changes
