@@ -1,5 +1,50 @@
 # reef-knot
 
+## 5.5.4
+
+### Patch Changes
+
+- Fix the issue with multiple clicks on ConnectBinance button
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.3.3
+
+## 5.5.3
+
+### Patch Changes
+
+- @reef-knot/wallets-list@2.2.3
+
+## 5.5.2
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.3.2
+  - @reef-knot/wallets-list@2.2.2
+
+## 5.5.1
+
+### Patch Changes
+
+- Binance wallet: move up in the wallets display order, add deeplink, add detector fn
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.3.1
+  - @reef-knot/wallets-list@2.2.1
+  - @reef-knot/core-react@4.2.1
+
+## 5.5.0
+
+### Minor Changes
+
+- Add Binance Web3 Wallet
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.3.0
+  - @reef-knot/wallets-list@2.2.0
+
 ## 5.4.0
 
 ### Minor Changes
