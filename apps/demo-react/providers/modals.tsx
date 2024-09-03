@@ -60,7 +60,7 @@ const ModalProvider: FC<PropsWithChildren> = ({ children }) => {
         metrics={metrics}
         shouldInvertWalletIcon={themeName === 'dark'}
         linkDontHaveWallet={LINK_DONT_HAVE_WALLET_DEFAULT}
-        walletsPinned={['okx', 'browserExtension']}
+        walletsPinned={['binanceWallet', 'browserExtension']}
         onClickWalletsMore={() =>
           console.log('metrics: wallets modal show more')
         }
