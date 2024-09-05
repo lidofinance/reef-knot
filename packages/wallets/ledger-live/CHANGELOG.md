@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-ledger-live
 
+## 3.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
 ## 3.0.0
 
 ### Major Changes

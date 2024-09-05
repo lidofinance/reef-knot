@@ -1,0 +1,41 @@
+{
+  "id": "rkdemo",
+  "name": "Reef Knot DemoApp",
+  "url": "https://dapp-browser.apps.ledger.com",
+  "params": {
+    "dappUrl": "https://lidofinance.github.io/reef-knot?embed=true",
+    "nanoApp": "Lido",
+    "dappName": "RK Demo",
+    "networks": [
+      {
+        "currency": "ethereum",
+        "chainID": 1,
+        "nodeURL": "https://rpc.ankr.com/eth"
+      },
+       {
+        "currency": "ethereum_holesky",
+        "chainID": 17000,
+        "nodeURL": "https://ethereum-holesky-rpc.publicnode.com"
+      }
+    ]
+  },
+  "homepageUrl": "https://lidofinance.github.io/reef-knot",
+  "icon": "https://cdn.live.ledger.com/icons/platform/lido.png",
+  "platforms": ["android", "ios", "desktop"],
+  "apiVersion": "^1.0.0 || ~0.0.1",
+  "manifestVersion": "1",
+  "branch": "stable",
+  "categories": ["stake/earn/manage"],
+  "currencies": ["ethereum"],
+  "content": {
+    "shortDescription": {
+      "en": "Reef Knot Demo app"
+    },
+    "description": {
+      "en": "Reef Knot Demo app"
+    }
+  },
+  "permissions": [],
+  "domains": ["https://dapp-browser.apps.ledger.com", "https://lidofinance.github.io/"],
+  "visibility": "complete"
+}

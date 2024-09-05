@@ -1,5 +1,17 @@
 # @reef-knot/wallet-adapter-exodus
 
+## 2.1.0
+
+### Minor Changes
+
+- Support EIP-6963
+
+## 2.0.1
+
+### Patch Changes
+
+- Wagmi version updated
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,62 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.3.3
+
+### Patch Changes
+
+- Fix the issue with multiple clicks on ConnectBinance button
+
+## 5.3.2
+
+### Patch Changes
+
+- Binance Wallet: actually use explicitly passed deeplink on mobiles
+- Reorder wallets
+  - @reef-knot/wallets-list@2.2.2
+
+## 5.3.1
+
+### Patch Changes
+
+- Binance wallet: move up in the wallets display order, add deeplink, add detector fn
+  - @reef-knot/wallets-list@2.2.1
+
+## 5.3.0
+
+### Minor Changes
+
+- Add Binance Web3 Wallet
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@2.2.0
+
+## 5.2.2
+
+### Patch Changes
+
+- Wallets modal: metrics props pass fixed
+
+## 5.2.1
+
+### Patch Changes
+
+- Wallet modal show more/less wallets metrics added
+
+## 5.2.0
+
+### Minor Changes
+
+- ad07297: Minor update of ledger libs
+
+## 5.1.1
+
+### Patch Changes
+
+- Wagmi version updated
+  - @reef-knot/wallets-list@2.0.1
+
 ## 5.1.0
 
 ### Minor Changes

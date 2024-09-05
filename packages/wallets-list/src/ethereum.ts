@@ -31,6 +31,10 @@ import {
   id as idDAppBrowserInjected,
 } from '@reef-knot/wallet-adapter-dapp-browser-injected';
 import { Safe, id as idSafe } from '@reef-knot/wallet-adapter-safe';
+import {
+  BinanceWeb3Wallet,
+  id as idBinanceWallet,
+} from '@reef-knot/wallet-adapter-binance-wallet';
 
 export const WalletsListEthereum = {
   [idBrowserExtension]: BrowserExtension,
@@ -51,6 +55,7 @@ export const WalletsListEthereum = {
   [idCoinbaseSmartWallet]: CoinbaseSmartWallet,
   [idDAppBrowserInjected]: DAppBrowserInjected,
   [idSafe]: Safe,
+  [idBinanceWallet]: BinanceWeb3Wallet,
 } as const;
 
 export type WalletIdsEthereum = keyof Readonly<typeof WalletsListEthereum>;

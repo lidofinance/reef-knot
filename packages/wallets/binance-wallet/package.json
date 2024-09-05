@@ -1,6 +1,6 @@
 {
-  "name": "@reef-knot/wallet-adapter-zengo",
-  "version": "2.0.0",
+  "name": "@reef-knot/wallet-adapter-binance-wallet",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -38,9 +38,12 @@
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "wagmi": "2.10.4",
-    "@reef-knot/wallets-helpers": "^2.0.0",
     "@reef-knot/types": "^2.0.0",
-    "@tanstack/react-query": "^5.29.0"
+    "@reef-knot/wallets-helpers": "^2.0.0",
+    "wagmi": "2.10.2"
+  },
+  "dependencies": {
+    "@binance/w3w-wagmi-connector-v2": "^1.2.3",
+    "@binance/w3w-utils": "^1.1.6"
   }
 }

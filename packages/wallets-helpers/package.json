@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-helpers",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -36,17 +36,17 @@
     "dev": "dev=on rollup -c -w",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/ua-parser-js": "0.7.39",
-    "eslint-config-custom": "*",
-    "wagmi": "2.10.4",
     "ua-parser-js": "1.0.37"
   },
+  "devDependencies": {
+    "eslint-config-custom": "*",
+    "wagmi": "2.11.2"
+  },
   "peerDependencies": {
-    "@types/ua-parser-js": "0.7.39",
     "react": ">=18",
-    "wagmi": "2.10.4",
-    "ua-parser-js": "1.0.37",
+    "wagmi": "2.11.2",
     "@tanstack/react-query": "^5.29.0"
   }
 }

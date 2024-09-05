@@ -36,10 +36,16 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
           (data) => data.walletId === savedReconnectWalletId,
         );
         if (walletData) {
-          const createConnectorFn = walletData?.walletconnectExtras
-            ?.connectionViaURI?.condition
-            ? walletData?.walletconnectExtras.connectionViaURI.createConnectorFn
-            : walletData?.createConnectorFn;
+          let createConnectorFn = walletData.createConnectorFn;
+          if (walletData?.walletconnectExtras?.connectionViaURI?.condition) {
+            createConnectorFn =
+              walletData.walletconnectExtras.connectionViaURI.createConnectorFn;
+          }
+
+          // Wait for all EIP-6963 wallets to load their code and fire "eip6963:announceProvider" event
+          // Without the delay, this code can be called from a browser's cache faster than wallet extension code
+          await new Promise((resolve) => setTimeout(resolve, 100));
+
           await reconnectAsync({ connectors: [createConnectorFn] });
         }
       }

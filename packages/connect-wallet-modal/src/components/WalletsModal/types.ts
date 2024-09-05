@@ -28,6 +28,8 @@ export type WalletsModalProps<I extends string = string> = ModalProps & {
   walletsPinned: I[];
   walletsDisplayInitialCount?: number;
   linkDontHaveWallet?: string;
+  onClickWalletsMore?: () => void;
+  onClickWalletsLess?: () => void;
 };
 
 export type ButtonsCommonProps = {
