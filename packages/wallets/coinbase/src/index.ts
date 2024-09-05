@@ -19,7 +19,5 @@ export const Coinbase: WalletAdapterType = ({ providersStore }) => ({
   type: coinbaseWallet.type,
   icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
-  createConnectorFn: coinbaseWallet({
-    appName: globalThis.window?.location?.hostname,
-  }),
+  createConnectorFn: getCoinbaseConnector(),
 });
