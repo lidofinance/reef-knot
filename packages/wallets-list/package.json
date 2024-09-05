@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -50,7 +50,7 @@
     "@reef-knot/wallet-adapter-imtoken": "2.0.1",
     "@reef-knot/wallet-adapter-trust": "2.1.0",
     "@reef-knot/wallet-adapter-xdefi": "2.1.0",
-    "@reef-knot/wallet-adapter-coinbase": "2.1.0",
+    "@reef-knot/wallet-adapter-coinbase": "2.2.0",
     "@reef-knot/wallet-adapter-coinbase-smart-wallet": "1.0.0",
     "@reef-knot/wallet-adapter-ledger-hid": "3.0.1",
     "@reef-knot/wallet-adapter-ledger-live": "3.0.1",
