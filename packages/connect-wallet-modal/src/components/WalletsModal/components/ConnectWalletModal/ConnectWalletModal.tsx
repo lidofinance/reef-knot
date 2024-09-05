@@ -35,7 +35,7 @@ export const ConnectWalletModal = ({
   } = passedDownProps;
 
   const config = useConfig();
-  const { walletDataList } = useReefKnotContext();
+  const { walletDataList, loadingWalletId } = useReefKnotContext();
   const { termsChecked } = useReefKnotModal();
 
   const [inputValue, setInputValue] = useState('');
@@ -117,6 +117,9 @@ export const ConnectWalletModal = ({
   const isWalletsToggleButtonShown =
     walletsListFull.length > walletsList.length || isShownOtherWallets;
 
+  const someWalletIsLoading =
+    loadingWalletId != null && loadingWalletId.length > 0;
+
   return (
     <ConnectWalletModalLayout
       inputValue={inputValue}
@@ -137,7 +140,7 @@ export const ConnectWalletModal = ({
         return (
           <WalletComponent
             key={walletData.walletId}
-            disabled={!termsChecked}
+            disabled={!termsChecked || someWalletIsLoading}
             onConnect={() => handleConnectSuccess(walletData.walletId)}
             shouldInvertWalletIcon={shouldInvertWalletIcon}
             metrics={metrics}

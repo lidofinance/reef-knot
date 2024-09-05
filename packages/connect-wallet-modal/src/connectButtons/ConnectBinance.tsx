@@ -1,6 +1,6 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/core-react';
+import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { ConnectButton } from '../components/ConnectButton';
 import { ConnectInjectedProps } from './types';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
@@ -27,14 +27,11 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
+  const { loadingWalletId, setLoadingWalletId } = useReefKnotContext();
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
-  const [binanceModalLoading, setBinanceModalLoading] = useState(false);
-
   const handleConnect = useCallback(async () => {
-    if (binanceModalLoading) return;
-
     onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
@@ -42,12 +39,12 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     if (isMobileOrTablet && deeplink && !detector?.()) {
       openWindow(deeplink);
     } else {
-      setBinanceModalLoading(true);
+      setLoadingWalletId(walletId);
       await connectAsync(
         { connector },
         {
           onSettled: () => {
-            setBinanceModalLoading(false);
+            setLoadingWalletId(null);
           },
           onSuccess: () => {
             onConnect?.();
@@ -57,12 +54,13 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
       );
     }
   }, [
-    binanceModalLoading,
     onBeforeConnect,
     metricsOnClick,
     disconnect,
     deeplink,
     detector,
+    setLoadingWalletId,
+    walletId,
     connectAsync,
     connector,
     onConnect,
@@ -74,6 +72,7 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
+      isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}

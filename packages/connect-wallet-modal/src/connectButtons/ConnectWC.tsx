@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { Connector, useConfig, useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/core-react';
+import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
@@ -40,6 +40,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const config = useConfig();
+  const { loadingWalletId, setLoadingWalletId } = useReefKnotContext();
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
@@ -97,23 +98,32 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow?.close();
       }
     } else {
-      await connectAsync({ connector });
-      onSuccess();
+      setLoadingWalletId(walletId);
+      await connectAsync(
+        { connector },
+        {
+          onSettled: () => {
+            setLoadingWalletId(null);
+          },
+          onSuccess,
+        },
+      );
     }
   }, [
-    config,
-    metricsOnConnect,
-    onConnect,
-    connectAsync,
-    connector,
     deeplink,
-    disconnect,
-    metricsOnClick,
     onBeforeConnect,
-    WCURICloseRedirectionWindow,
+    metricsOnClick,
+    disconnect,
     WCURICondition,
     WCURIConnectorFn,
     WCURIRedirectLink,
+    onConnect,
+    metricsOnConnect,
+    connectAsync,
+    WCURICloseRedirectionWindow,
+    config.chains,
+    connector,
+    setLoadingWalletId,
   ]);
 
   return (
@@ -121,6 +131,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
+      isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}
