@@ -23,7 +23,6 @@ const setRedirectionWindowLocation = (redirectLink: string, WCURI: string) => {
 export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const {
     onConnect,
-    onBeforeConnect,
     darkThemeEnabled,
     metrics,
     walletId,
@@ -59,7 +58,6 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       return; // A user was redirected to a wallet mobile app, no need to continue
     }
 
-    onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
 
@@ -109,7 +107,6 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     deeplink,
     disconnect,
     metricsOnClick,
-    onBeforeConnect,
     WCURICloseRedirectionWindow,
     WCURICondition,
     WCURIConnectorFn,

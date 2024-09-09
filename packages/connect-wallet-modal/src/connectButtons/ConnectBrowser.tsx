@@ -11,7 +11,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
     darkThemeEnabled,
     metrics,
     walletId,
@@ -33,7 +32,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     (WalletIcon as ElementType) || (WalletIcon as WalletAdapterIcons)?.light;
 
   const handleConnect = useCallback(async () => {
-    onBeforeConnect?.();
     metricsOnClick?.();
 
     if (web3ProviderIsDetected) {
@@ -60,7 +58,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     connector,
     disconnect,
     metricsOnClick,
-    onBeforeConnect,
     openModalAsync,
     web3ProviderIsDetected,
     onConnect,

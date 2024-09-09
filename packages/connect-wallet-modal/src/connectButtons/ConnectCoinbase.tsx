@@ -9,7 +9,6 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
     darkThemeEnabled,
     metrics,
     walletId,
@@ -28,7 +27,6 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(() => {
-    onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
     connect(
@@ -45,7 +43,6 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
     connector,
     disconnect,
     metricsOnClick,
-    onBeforeConnect,
     onConnect,
     metricsOnConnect,
   ]);

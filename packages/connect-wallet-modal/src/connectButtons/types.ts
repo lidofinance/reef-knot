@@ -7,7 +7,6 @@ import type { ConnectButtonBaseProps } from '../components/ConnectButtonBase/typ
 export type ConnectWalletButtonProps = ButtonProps &
   ConnectButtonBaseProps & {
     disabled: boolean;
-    onBeforeConnect?: () => void;
     walletName: string;
     onConnect?: () => void;
     metrics?: MetricsProp;

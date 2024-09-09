@@ -7,7 +7,6 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   const {
     walletId,
     onConnect,
-    onBeforeConnect,
     darkThemeEnabled,
     icon: WalletIcon,
     metrics,
@@ -18,11 +17,10 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const handleConnect = useCallback(async () => {
-    onBeforeConnect?.();
     metricsOnClick?.();
     const result = await openModalAsync({ type: 'ledger' });
     if (result.success) onConnect?.();
-  }, [onBeforeConnect, openModalAsync, onConnect, metricsOnClick]);
+  }, [openModalAsync, onConnect, metricsOnClick]);
 
   return (
     <ConnectButtonBase

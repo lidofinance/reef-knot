@@ -11,7 +11,6 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
     darkThemeEnabled,
     metrics,
     walletId,
@@ -35,7 +34,6 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   const handleConnect = useCallback(async () => {
     if (binanceModalLoading) return;
 
-    onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
 
@@ -58,7 +56,6 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     }
   }, [
     binanceModalLoading,
-    onBeforeConnect,
     metricsOnClick,
     disconnect,
     deeplink,

@@ -12,7 +12,6 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
     darkThemeEnabled,
     metrics,
     walletId,
@@ -31,7 +30,6 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
-    onBeforeConnect?.();
     metricsOnClick?.();
 
     if (await detector?.()) {
@@ -52,7 +50,6 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     disconnect,
     downloadURLs,
     metricsOnClick,
-    onBeforeConnect,
     onConnect,
     metricsOnConnect,
   ]);
