@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC } from 'react';
 import { Checkbox, Link } from '@reef-knot/ui-react';
 import { TermsStyle, TermsTextStyle } from './styles';
-import type { MetricsProp } from '../WalletsModal';
+import type { MetricsProp } from '../ReefKnotWalletsModal';
 import { useReefKnotModal } from '@reef-knot/core-react';
 
 export type WalletModalConnectTermsProps = {

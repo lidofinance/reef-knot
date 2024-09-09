@@ -15,10 +15,10 @@ import {
   IconMoreWallets,
   MEDIA_MOBILE_HEIGHT,
 } from './styles';
-import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
+import { Terms, WalletModalConnectTermsProps } from '../Terms';
 
 import { isMobileOrTablet, isIOS, isIPad } from '@reef-knot/wallets-helpers';
-import type { ReefKnotWalletsModalProps } from '../../types';
+import type { ReefKnotWalletsModalProps } from '../ReefKnotWalletsModal/types';
 import { WalletModalInput } from '../WalletModalInput';
 
 // Additional check because `@supports selector(::-webkit-scrollbar)`

@@ -5,7 +5,7 @@ import { LedgerContextProvider } from './LedgerContext';
 import { LedgerErrorScreen } from './LedgerErrorScreen';
 import { useLedgerContext } from './hooks';
 import { LedgerAccountScreen } from './LedgerAccountScreen';
-import type { MetricsProp } from '../WalletsModal';
+import type { MetricsProp } from '../ReefKnotWalletsModal';
 import { LedgerModalInnerContainer } from './styles';
 
 export type LedgerModalProps = ModalProps & {

@@ -6,11 +6,11 @@ import {
   useReefKnotModal,
 } from '@reef-knot/core-react';
 
-import { ReefKnotWalletsModalProps } from '../../types';
-import { WalletModalConnectTermsProps } from '../../../Terms';
+import { ReefKnotWalletsModalProps } from '../ReefKnotWalletsModal/types';
+import { WalletModalConnectTermsProps } from '../Terms';
 import { ConnectWalletModalLayout } from '../ConnectWalletModalLayout';
 
-import { sortWalletsList } from '../../../../helpers/sortWalletsList';
+import { sortWalletsList } from '../../helpers/sortWalletsList';
 import type { WalletAdapterData } from '@reef-knot/types';
 
 type ConnectWalletModalProps = ReefKnotWalletsModalProps & {

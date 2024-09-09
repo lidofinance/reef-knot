@@ -3,8 +3,8 @@ import { Modal } from '@reef-knot/ui-react';
 import { ReefKnotWalletsModalProps } from './types';
 import { Terms, WalletModalConnectTermsProps } from '../Terms';
 import { LedgerModal } from '../Ledger';
-import { EagerConnectModal } from './components/EagerConnectModal';
-import { ConnectWalletModal } from './components/ConnectWalletModal';
+import { EagerConnectModal } from '../EagerConnectModal';
+import { ConnectWalletModal } from '../ConnectWalletModal';
 import { useReefKnotModal } from '@reef-knot/core-react';
 
 const TERMS_LINK_DEFAULT = 'https://lido.fi/terms-of-use';
