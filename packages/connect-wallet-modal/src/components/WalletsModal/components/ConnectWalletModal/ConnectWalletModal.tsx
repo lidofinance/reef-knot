@@ -145,6 +145,7 @@ export const ConnectWalletModal = ({
             metrics={metrics}
             isCompact={isShownOtherWallets}
             connector={walletData.createConnectorFn}
+            detector={walletData.detector}
           />
         );
       })}

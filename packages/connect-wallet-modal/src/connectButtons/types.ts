@@ -1,6 +1,6 @@
 import type { ButtonProps } from '@reef-knot/ui-react';
 import type { WalletAdapterData } from '@reef-knot/types';
-import type { MetricsProp } from '../components';
+import type { MetricsProp } from '../components/ReefKnotWalletsModal';
 import type { Connector, CreateConnectorFn } from 'wagmi';
 import type { ConnectButtonBaseProps } from '../components/ConnectButtonBase/types';
 
@@ -11,6 +11,7 @@ export type ConnectWalletButtonProps = ButtonProps &
     onConnect?: () => void;
     metrics?: MetricsProp;
     connector: Connector | CreateConnectorFn;
+    detector?: WalletAdapterData['detector'];
   };
 
 export type ConnectInjectedProps = WalletAdapterData & ConnectWalletButtonProps;
