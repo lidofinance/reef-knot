@@ -1,10 +1,10 @@
 import React, { FC, useCallback } from 'react';
-import { useConnect } from 'wagmi';
 import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { ConnectButton } from '../components/ConnectButton';
 import { ConnectInjectedProps } from './types';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { openWindow } from '../helpers/index';
+import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
 
 export const ConnectBinance: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -27,8 +27,8 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
-  const { loadingWalletId, setLoadingWalletId } = useReefKnotContext();
-  const { connectAsync } = useConnect();
+  const { loadingWalletId } = useReefKnotContext();
+  const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
@@ -39,19 +39,9 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     if (isMobileOrTablet && deeplink && !detector?.()) {
       openWindow(deeplink);
     } else {
-      setLoadingWalletId(walletId);
-      await connectAsync(
-        { connector },
-        {
-          onSettled: () => {
-            setLoadingWalletId(null);
-          },
-          onSuccess: () => {
-            onConnect?.();
-            metricsOnConnect?.();
-          },
-        },
-      );
+      await connectWithLoading(walletId, { connector });
+      onConnect?.();
+      metricsOnConnect?.();
     }
   }, [
     onBeforeConnect,
@@ -59,9 +49,8 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     disconnect,
     deeplink,
     detector,
-    setLoadingWalletId,
+    connectWithLoading,
     walletId,
-    connectAsync,
     connector,
     onConnect,
     metricsOnConnect,

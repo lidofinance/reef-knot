@@ -6,6 +6,7 @@ import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
 import { openWindow } from '../helpers';
 import { ConnectWCProps } from './types';
+import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
 
 let redirectionWindow: Window | null = null;
 
@@ -40,8 +41,9 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const config = useConfig();
-  const { loadingWalletId, setLoadingWalletId } = useReefKnotContext();
+  const { loadingWalletId } = useReefKnotContext();
   const { connectAsync } = useConnect();
+  const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
   // WCURI – WalletConnect Pairing URI: https://docs.walletconnect.com/2.0/specs/clients/core/pairing/pairing-uri
@@ -98,16 +100,8 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow?.close();
       }
     } else {
-      setLoadingWalletId(walletId);
-      await connectAsync(
-        { connector },
-        {
-          onSettled: () => {
-            setLoadingWalletId(null);
-          },
-          onSuccess,
-        },
-      );
+      await connectWithLoading(walletId, { connector });
+      onSuccess();
     }
   }, [
     deeplink,
@@ -122,8 +116,9 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     connectAsync,
     WCURICloseRedirectionWindow,
     config.chains,
+    connectWithLoading,
+    walletId,
     connector,
-    setLoadingWalletId,
   ]);
 
   return (
