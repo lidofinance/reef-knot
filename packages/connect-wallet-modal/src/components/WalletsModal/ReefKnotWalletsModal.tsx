@@ -1,25 +1,35 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Modal } from '@reef-knot/ui-react';
-import { WalletsModalProps } from './types';
+import { ReefKnotWalletsModalProps } from './types';
 import { Terms, WalletModalConnectTermsProps } from '../Terms';
 import { LedgerModal } from '../Ledger';
 import { EagerConnectModal } from './components/EagerConnectModal';
 import { ConnectWalletModal } from './components/ConnectWalletModal';
 import { useReefKnotModal } from '@reef-knot/core-react';
 
-export function WalletsModal({
+const TERMS_LINK_DEFAULT = 'https://lido.fi/terms-of-use';
+const PRIVACY_NOTICE_LINK_DEFAULT = 'https://lido.fi/privacy-notice';
+
+export function ReefKnotWalletsModal<I extends string = string>({
   children,
   ...passedDownProps
-}: React.PropsWithChildren<WalletsModalProps>) {
-  const { metrics, termsLink, privacyNoticeLink } = passedDownProps;
+}: React.PropsWithChildren<ReefKnotWalletsModalProps<I>>) {
+  const {
+    metrics,
+    termsLink = TERMS_LINK_DEFAULT,
+    privacyNoticeLink = PRIVACY_NOTICE_LINK_DEFAULT,
+  } = passedDownProps;
 
   const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
 
-  const termsProps: WalletModalConnectTermsProps = {
-    termsLink: termsLink || 'https://lido.fi/terms-of-use',
-    privacyNoticeLink: privacyNoticeLink || 'https://lido.fi/privacy-notice',
-    metrics,
-  };
+  const termsProps: WalletModalConnectTermsProps = useMemo(
+    () => ({
+      termsLink,
+      privacyNoticeLink,
+      metrics,
+    }),
+    [termsLink, privacyNoticeLink, metrics],
+  );
 
   const onCloseSuccess = () => closeModal({ success: true });
   const onCloseReject = () => closeModal({ success: false });

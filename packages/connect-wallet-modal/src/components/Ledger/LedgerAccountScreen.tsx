@@ -6,7 +6,7 @@ import { Pagination, Stack, StackItem } from '@lidofinance/lido-ui';
 import { AccountButton, AccountButtonSkeleton } from './LedgerAccountButton';
 import { useLedgerAccounts, useLedgerContext } from './hooks';
 import { getFirstIndexOnPage, saveLedgerDerivationPath } from './helpers';
-import { Metrics } from '../WalletsModal';
+import type { MetricsProp } from '../WalletsModal';
 import { LedgerDerivationPathSelect } from './LedgerDerivationPathSelect';
 import { AccountRecord, AccountsStorage } from './types';
 import { DERIVATION_PATHS } from './constants';
@@ -23,7 +23,7 @@ const BoxWrapper = styled.div`
 `;
 
 type Props = {
-  metrics?: Metrics;
+  metrics?: MetricsProp;
   closeScreen?: () => void;
 };
 

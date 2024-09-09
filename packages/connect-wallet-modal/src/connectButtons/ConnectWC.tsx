@@ -3,8 +3,8 @@ import { Connector, useConfig, useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
-import { ConnectButton } from '../components/ConnectButton';
-import { openWindow } from '../helpers';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
+import { openWindow } from '../helpers/openWindow';
 import { ConnectWCProps } from './types';
 
 let redirectionWindow: Window | null = null;
@@ -24,7 +24,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const {
     onConnect,
     onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     metrics,
     walletId,
     walletName,
@@ -117,15 +117,15 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   ]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       onClick={() => {
         void handleConnect();
       }}
     >
       {walletName}
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };

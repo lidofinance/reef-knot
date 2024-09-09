@@ -48,7 +48,7 @@ export function Web() {
               <ContractTesting />
             </MainSection>
             <WalletInfo />
-            <WalletsModal isDarkTheme={selectedTheme === ThemeName.dark} />
+            <WalletsModal darkThemeEnabled={selectedTheme === ThemeName.dark} />
           </MainContainer>
         </ConfigContextProviders>
       </Block>

@@ -2,7 +2,7 @@ import React, { ElementType, FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect, useReefKnotModal } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { ConnectInjectedProps } from './types';
 import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
@@ -12,7 +12,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const {
     onConnect,
     onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     metrics,
     walletId,
     walletName,
@@ -68,15 +68,15 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   ]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       onClick={() => {
         void handleConnect();
       }}
     >
       {walletName}
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };

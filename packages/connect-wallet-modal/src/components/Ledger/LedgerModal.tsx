@@ -5,11 +5,11 @@ import { LedgerContextProvider } from './LedgerContext';
 import { LedgerErrorScreen } from './LedgerErrorScreen';
 import { useLedgerContext } from './hooks';
 import { LedgerAccountScreen } from './LedgerAccountScreen';
-import { Metrics } from '../WalletsModal';
+import type { MetricsProp } from '../WalletsModal';
 import { LedgerModalInnerContainer } from './styles';
 
 export type LedgerModalProps = ModalProps & {
-  metrics?: Metrics;
+  metrics?: MetricsProp;
 };
 
 export const LedgerModal = (props: LedgerModalProps) => {

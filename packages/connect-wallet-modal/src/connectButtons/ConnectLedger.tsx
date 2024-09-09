@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { ConnectLedgerProps } from './types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { useReefKnotModal } from '@reef-knot/core-react';
 
 export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
@@ -8,7 +8,7 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
     walletId,
     onConnect,
     onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     icon: WalletIcon,
     metrics,
     ...rest
@@ -25,15 +25,15 @@ export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   }, [onBeforeConnect, openModalAsync, onConnect, metricsOnClick]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       onClick={() => {
         void handleConnect();
       }}
     >
       Ledger
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };

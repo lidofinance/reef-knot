@@ -1,8 +1,8 @@
 import type { ComponentType } from 'react';
 import type { ModalProps } from '@reef-knot/ui-react';
-import type { Connector, CreateConnectorFn } from 'wagmi';
+import type { ConnectWalletButtonProps } from '../../connectButtons/types';
 
-export type Metrics<WalletIdsList extends string = string> = {
+export type MetricsProp<WalletIdsList extends string = string> = {
   events?: {
     connect?: {
       handlers: Partial<Record<WalletIdsList, () => void>>;
@@ -14,30 +14,21 @@ export type Metrics<WalletIdsList extends string = string> = {
 };
 
 export type ButtonComponentsByConnectorId = {
-  [key: string]: ComponentType<ButtonsCommonProps>;
+  [key: string]: ComponentType<ConnectWalletButtonProps>;
 };
 
-export type WalletsModalProps<I extends string = string> = ModalProps & {
-  buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
-  shouldInvertWalletIcon?: boolean;
-  buttonsFullWidth?: boolean;
-  metrics?: Metrics<I>;
-  termsLink?: string;
-  privacyNoticeLink?: string;
-  walletsShown: I[];
-  walletsPinned: I[];
-  walletsDisplayInitialCount?: number;
-  linkDontHaveWallet?: string;
-  onClickWalletsMore?: () => void;
-  onClickWalletsLess?: () => void;
-};
-
-export type ButtonsCommonProps = {
-  disabled: boolean;
-  onBeforeConnect?: () => void;
-  onConnect?: () => void;
-  shouldInvertWalletIcon: boolean;
-  metrics?: Metrics;
-  isCompact?: boolean;
-  connector: Connector | CreateConnectorFn;
-};
+export type ReefKnotWalletsModalProps<I extends string = string> =
+  ModalProps & {
+    buttonComponentsByConnectorId: ButtonComponentsByConnectorId;
+    darkThemeEnabled?: boolean;
+    buttonsFullWidth?: boolean;
+    metrics?: MetricsProp<I>;
+    termsLink?: string;
+    privacyNoticeLink?: string;
+    walletsShown: I[];
+    walletsPinned: I[];
+    walletsDisplayInitialCount?: number;
+    linkDontHaveWallet?: string;
+    onClickWalletsMore?: () => void;
+    onClickWalletsLess?: () => void;
+  };

@@ -1,3 +1,3 @@
-export * from './WalletsModal';
-export * from './WalletsModalForEth';
+export * from './ReefKnotWalletsModal';
+export * from './walletsModalConfig';
 export * from './types';

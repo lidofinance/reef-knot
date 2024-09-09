@@ -1,11 +1,11 @@
-import type { Metrics } from 'reef-knot/connect-wallet-modal';
+import type { MetricsProp } from 'reef-knot/connect-wallet-modal';
 import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 
 const getMetricHandler = (msg: string) => () => console.log(`metrics: ${msg}`);
 const getClickHandler = (msg: string) => getMetricHandler(`${msg} clicked`);
 const getConnectHandler = (msg: string) => getMetricHandler(`${msg} connected`);
 
-const metrics: Metrics<WalletIdsEthereum> = {
+const metrics: MetricsProp<WalletIdsEthereum> = {
   events: {
     click: {
       handlers: {

@@ -1,15 +1,19 @@
-import { ButtonProps } from '@reef-knot/ui-react';
-import { WalletAdapterData } from '@reef-knot/types';
-import { ButtonsCommonProps } from '../components';
+import type { ButtonProps } from '@reef-knot/ui-react';
+import type { WalletAdapterData } from '@reef-knot/types';
+import type { MetricsProp } from '../components';
+import type { Connector, CreateConnectorFn } from 'wagmi';
+import type { ConnectButtonBaseProps } from '../components/ConnectButtonBase/types';
 
-export type ConnectButtonProps = {
-  icon: WalletAdapterData['icon'];
-  shouldInvertWalletIcon?: boolean;
-  isCompact?: boolean;
-} & ButtonProps;
+export type ConnectWalletButtonProps = ButtonProps &
+  ConnectButtonBaseProps & {
+    disabled: boolean;
+    onBeforeConnect?: () => void;
+    walletName: string;
+    onConnect?: () => void;
+    metrics?: MetricsProp;
+    connector: Connector | CreateConnectorFn;
+  };
 
-export type ConnectWalletProps = ButtonsCommonProps & ButtonProps;
-
-export type ConnectInjectedProps = WalletAdapterData & ConnectWalletProps;
-export type ConnectWCProps = WalletAdapterData & ConnectWalletProps;
-export type ConnectLedgerProps = WalletAdapterData & ConnectWalletProps;
+export type ConnectInjectedProps = WalletAdapterData & ConnectWalletButtonProps;
+export type ConnectWCProps = WalletAdapterData & ConnectWalletButtonProps;
+export type ConnectLedgerProps = WalletAdapterData & ConnectWalletButtonProps;
