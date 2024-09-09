@@ -31,7 +31,7 @@ const WALLETS_MODAL_DEFAULT_CONFIG = getDefaultWalletsModalConfig();
 
 | Prop | Description |
 |------|-------------|
-| `buttonComponentsByConnectorId?` | A map of `ConnectButton`s associated with a certain connector id or type. |
+| `buttonComponentsByConnectorId` | A map of `ConnectButton`s associated with a certain connector id or type. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
 | `darkThemeEnabled?` | Set to true for the dark color theme. <br /> ***Default**: `false`* |
 | `buttonsFullWidth?` | Specify connector buttons to render one per row. It could be handy if you are planning to use only few wallets in your dapp. |
 | `walletsShown` | Controls displayed wallet connection buttons from the list of wallets in the modal. Wallets will be displayed in the specified sequence. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
