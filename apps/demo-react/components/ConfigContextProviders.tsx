@@ -3,7 +3,7 @@ import { http, WagmiProvider, createConfig } from 'wagmi';
 import { goerli, mainnet, holesky } from 'wagmi/chains';
 import {
   AutoConnect,
-  ReefKnot,
+  ReefKnotProvider,
   getWalletsDataList,
 } from 'reef-knot/core-react';
 import { WalletsListEthereum } from 'reef-knot/wallets';
@@ -34,6 +34,12 @@ const config = createConfig({
 
 const queryClient = new QueryClient();
 
+const reefKnotConfig = {
+  rpc: rpcUrlsString,
+  chains: SUPPORTED_CHAINS,
+  walletDataList: walletsDataList,
+};
+
 const ConfigContextProviders = ({
   children,
 }: {
@@ -42,16 +48,12 @@ const ConfigContextProviders = ({
   return (
     <WagmiProvider config={config} reconnectOnMount={false}>
       <QueryClientProvider client={queryClient}>
-        <ReefKnot
-          rpc={rpcUrlsString}
-          chains={SUPPORTED_CHAINS}
-          walletDataList={walletsDataList}
-        >
+        <ReefKnotProvider config={reefKnotConfig}>
           <AutoConnect autoConnect />
           <ProviderSDKWithProps defaultChainId={DEFAULT_CHAIN.id}>
             {children}
           </ProviderSDKWithProps>
-        </ReefKnot>
+        </ReefKnotProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
