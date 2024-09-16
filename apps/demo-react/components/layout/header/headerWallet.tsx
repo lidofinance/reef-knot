@@ -10,6 +10,15 @@ import { HeaderWalletInfoButton } from 'components/layout/header/header-wallet-i
 
 import { HeaderWalletChainStyle } from './headerWalletStyles';
 
+const tryGetChainColor = (chainId: CHAINS) => {
+  // getChainColor can throw "Error: Invariant failed: Chain is not supported"
+  try {
+    return getChainColor(chainId);
+  } catch (e) {
+    return '#29b6af'; // fallback color
+  }
+};
+
 const HeaderWallet: FC = () => {
   const { active, chainId } = useWeb3();
   const chainName = chainId && CHAINS[chainId];
@@ -17,7 +26,7 @@ const HeaderWallet: FC = () => {
   return (
     <>
       {chainId && (
-        <HeaderWalletChainStyle $color={getChainColor(chainId)}>
+        <HeaderWalletChainStyle $color={tryGetChainColor(chainId)}>
           {chainName}
         </HeaderWalletChainStyle>
       )}
