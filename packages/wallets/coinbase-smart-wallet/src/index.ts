@@ -7,11 +7,21 @@ export const id = 'coinbaseSmartWallet';
 export const name = 'Coinbase Smart Wallet';
 export const rdns = 'com.coinbase.wallet';
 
-export const getCoinbaseSmartWalletConnector = () =>
-  coinbaseWallet({
+type ConfigType = Parameters<ReturnType<typeof coinbaseWallet>>[0];
+
+export const getCoinbaseSmartWalletConnector = (config: ConfigType) => {
+  const coinbaseCreateConnectorFn = coinbaseWallet({
     preference: 'smartWalletOnly',
     appName: globalThis.window?.location?.hostname,
   });
+
+  const coinbaseConnector = coinbaseCreateConnectorFn(config);
+
+  return {
+    ...coinbaseConnector,
+    name,
+  };
+};
 
 export const CoinbaseSmartWallet: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
@@ -19,5 +29,5 @@ export const CoinbaseSmartWallet: WalletAdapterType = ({ providersStore }) => ({
   type: coinbaseWallet.type,
   icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
-  createConnectorFn: getCoinbaseSmartWalletConnector(),
+  createConnectorFn: getCoinbaseSmartWalletConnector,
 });
