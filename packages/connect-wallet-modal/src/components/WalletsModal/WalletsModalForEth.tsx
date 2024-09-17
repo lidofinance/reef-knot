@@ -32,6 +32,7 @@ const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
   'walletConnect',
   'binanceWallet',
   'coinbase',
+  'coinbaseSmartWallet',
   'trust',
   'exodus',
   'brave',
