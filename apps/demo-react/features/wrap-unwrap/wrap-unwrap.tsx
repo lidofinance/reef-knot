@@ -1,5 +1,6 @@
 import { FC, useCallback, useState } from 'react';
 import { Select, Option } from '@lidofinance/lido-ui';
+import { WrapProps } from '@lidofinance/lido-ethereum-sdk';
 import { useLidoSDK } from 'providers/sdk';
 import { useWeb3 } from 'reef-knot/web3-react';
 import { transactionToast } from 'utils/transaction-toast';
@@ -23,6 +24,15 @@ export const WrapUnwrap: FC = () => {
   const { wrap } = useLidoSDK();
   const isWrapTx = type === CallType.wrapEth || type === CallType.wrapSteth;
 
+  const handleWrapSteth = useCallback(
+    async (callData: WrapProps) => {
+      await wrap.getStethForWrapAllowance(account); // get existing allowance
+      await wrap.approveStethForWrap(callData); // if value is more than allowance perform approve
+      return wrap.wrapSteth(callData);
+    },
+    [account, wrap],
+  );
+
   const handleCall = useCallback(async () => {
     const callValue = inputValue ?? BigInt(0);
     const callData = {
@@ -33,13 +43,13 @@ export const WrapUnwrap: FC = () => {
 
     switch (type) {
       case CallType.wrapEth:
-        return await wrap.wrapEth(callData);
+        return wrap.wrapEth(callData);
       case CallType.wrapSteth:
-        return await wrap.wrapSteth(callData);
+        return handleWrapSteth(callData);
       case CallType.unwrap:
-        return await wrap.unwrap(callData);
+        return wrap.unwrap(callData);
     }
-  }, [inputValue, account, type, wrap]);
+  }, [inputValue, account, type, wrap, handleWrapSteth]);
 
   const handleTypeChange = (value: string | number) => {
     setType(value as CallType);
