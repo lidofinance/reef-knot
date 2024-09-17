@@ -1,6 +1,6 @@
 # reef-knot
 
-## 5.5.5
+## 5.6.0
 
 ### Patch Changes
 
