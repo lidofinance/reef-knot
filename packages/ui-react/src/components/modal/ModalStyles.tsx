@@ -149,7 +149,7 @@ export const ModalSubtitleStyle = styled.div`
     font-weight: 400;
     line-height: 24px;
     margin-top: -${spaceMap.xl}px;
-    padding: 0 ${spaceMap.xxl}px ${spaceMap.xl}px;
+    padding: 0 ${spaceMap.xxl}px ${spaceMap.xxl}px;
     max-width: ${MAX_INNER_WIDTH}px;
     box-sizing: content-box;
 
