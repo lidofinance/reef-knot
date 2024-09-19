@@ -25,7 +25,7 @@ const WALLETS_MODAL_DEFAULT_CONFIG = getDefaultWalletsModalConfig();
 />
 ```
 
-> **Note:** The `WalletIdsEthereum` type being passed as a generic to the component will affect to type safity constrain of `walletsShown`, `walletsPinned` and `metrics` props.
+> **Note:** The `WalletIdsEthereum` type being passed as a generic to the component will affect the type safety constrain of `walletsShown`, `walletsPinned` and `metrics` props.
 
 #### Props configuration list
 
