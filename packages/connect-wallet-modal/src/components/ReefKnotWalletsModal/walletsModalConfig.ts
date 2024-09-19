@@ -1,3 +1,4 @@
+import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 import {
   ConnectInjected,
   ConnectLedger,
@@ -6,7 +7,6 @@ import {
   ConnectBrowser,
   ConnectBinance,
 } from '../../connectButtons';
-import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 import type {
   ButtonComponentsByConnectorId,
   ReefKnotWalletsModalProps,
