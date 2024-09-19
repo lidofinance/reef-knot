@@ -3,38 +3,27 @@ import { ReefKnotModalContextProvider } from './reefKnotModalContext';
 import type { Chain } from 'wagmi/chains';
 import type { WalletAdapterData } from '@reef-knot/types';
 
-export interface ReefKnotContextProps {
-  walletDataList: WalletAdapterData[];
-  rpc: Record<number, string>;
-  chains: readonly [Chain, ...Chain[]];
-  children?: ReactNode;
-}
-
-export type ReefKnotContextValue = {
+export type ReefKnotProviderConfig = {
   rpc: Record<number, string>;
   walletDataList: WalletAdapterData[];
   chains: readonly [Chain, ...Chain[]];
 };
 
+export interface ReefKnotContextProps {
+  config: ReefKnotProviderConfig;
+  children?: ReactNode;
+}
+
+export type ReefKnotContextValue = ReefKnotProviderConfig;
+
 export const ReefKnotContext = createContext({} as ReefKnotContextValue);
 
-export const ReefKnot = ({
-  rpc,
-  chains,
-  walletDataList,
+export const ReefKnotProvider = ({
+  config,
   children,
 }: ReefKnotContextProps) => {
-  const contextValue = useMemo(
-    () => ({
-      rpc,
-      walletDataList,
-      chains,
-    }),
-    [rpc, walletDataList, chains],
-  );
-
   return (
-    <ReefKnotContext.Provider value={contextValue}>
+    <ReefKnotContext.Provider value={config}>
       <ReefKnotModalContextProvider>{children}</ReefKnotModalContextProvider>
     </ReefKnotContext.Provider>
   );
