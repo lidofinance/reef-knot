@@ -8,7 +8,7 @@ import metrics from '../util/metrics';
 const LINK_DONT_HAVE_WALLET_DEFAULT =
   'https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask';
 
-const WALLETS_MODAL_DEFAULT_CONFIG = getDefaultWalletsModalConfig();
+const walletsModalDefaultConfig = getDefaultWalletsModalConfig();
 
 export default function WalletsModal({
   darkThemeEnabled,
