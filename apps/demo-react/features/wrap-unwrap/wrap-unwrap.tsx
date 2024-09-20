@@ -26,8 +26,10 @@ export const WrapUnwrap: FC = () => {
 
   const handleWrapSteth = useCallback(
     async (callData: WrapProps) => {
-      await wrap.getStethForWrapAllowance(account); // get existing allowance
-      await wrap.approveStethForWrap(callData); // if value is more than allowance perform approve
+      const allowance = await wrap.getStethForWrapAllowance(account);
+      if (BigInt(callData.value) > allowance) {
+        await wrap.approveStethForWrap(callData);
+      }
       return wrap.wrapSteth(callData);
     },
     [account, wrap],
