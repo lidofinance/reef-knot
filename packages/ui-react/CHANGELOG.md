@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 2.1.4
+
+### Patch Changes
+
+- 357e61f: Fix padding in ModalSubtitleStyle
+
 ## 2.1.3
 
 ### Patch Changes
