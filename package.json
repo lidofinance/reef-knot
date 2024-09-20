@@ -55,7 +55,7 @@
     "rollup-plugin-typescript2": "0.34.1",
     "tslib": "2.5.0",
     "turbo": "^1.10.16",
-    "typescript": "5.4.5",
+    "typescript": "^5.4.5",
     "typescript-eslint": "^7.9.0"
   },
   "dependencies": {},
