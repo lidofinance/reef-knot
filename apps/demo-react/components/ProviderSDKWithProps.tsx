@@ -7,7 +7,7 @@ import { ProviderSDK } from '@lido-sdk/react';
 
 import { mainnet } from 'wagmi/chains';
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers';
-import { useReefKnotContext } from 'reef-knot/core-react';
+import { rpcUrlsString } from '../util/rpc';
 
 const POLLING_INTERVAL = 12_000;
 
@@ -20,7 +20,6 @@ export const ProviderSDKWithProps = (props: {
   const { supportedChains } = useSupportedChains();
   const config = useConfig();
   const client = useClient();
-  const { rpc } = useReefKnotContext();
 
   const [providerWeb3, setProviderWeb3] = useState<Web3Provider | undefined>();
 
@@ -71,19 +70,25 @@ export const ProviderSDKWithProps = (props: {
   );
 
   const providerRpc = useMemo(
-    () => getStaticRpcBatchProvider(chainId, rpc[chainId], 0, POLLING_INTERVAL),
-    [rpc, chainId],
+    () =>
+      getStaticRpcBatchProvider(
+        chainId,
+        rpcUrlsString[chainId],
+        0,
+        POLLING_INTERVAL,
+      ),
+    [chainId],
   );
 
   const providerMainnetRpc = useMemo(
     () =>
       getStaticRpcBatchProvider(
         mainnet.id,
-        rpc[mainnet.id],
+        rpcUrlsString[mainnet.id],
         0,
         POLLING_INTERVAL,
       ),
-    [rpc],
+    [],
   );
 
   return (

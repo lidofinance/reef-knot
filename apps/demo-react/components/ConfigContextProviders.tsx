@@ -35,8 +35,6 @@ const config = createConfig({
 const queryClient = new QueryClient();
 
 const reefKnotConfig = {
-  rpc: rpcUrlsString,
-  chains: SUPPORTED_CHAINS,
   walletDataList: walletsDataList,
 };
 

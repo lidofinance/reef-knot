@@ -1,12 +1,9 @@
 import React, { createContext, ReactNode, useMemo } from 'react';
 import { ReefKnotModalContextProvider } from './reefKnotModalContext';
-import type { Chain } from 'wagmi/chains';
 import type { WalletAdapterData } from '@reef-knot/types';
 
 export type ReefKnotProviderConfig = {
-  rpc: Record<number, string>;
   walletDataList: WalletAdapterData[];
-  chains: readonly [Chain, ...Chain[]];
 };
 
 export interface ReefKnotContextProps {
