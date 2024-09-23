@@ -15,17 +15,17 @@ import {
   IconMoreWallets,
   MEDIA_MOBILE_HEIGHT,
 } from './styles';
-import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
+import { Terms, WalletModalConnectTermsProps } from '../Terms';
 
 import { isMobileOrTablet, isIOS, isIPad } from '@reef-knot/wallets-helpers';
-import type { WalletsModalProps } from '../../types';
+import type { ReefKnotWalletsModalProps } from '../ReefKnotWalletsModal/types';
 import { WalletModalInput } from '../WalletModalInput';
 
 // Additional check because `@supports selector(::-webkit-scrollbar)`
 // passes as true on iOS/iPad devices, but styles will not really apply
 const isSupportedCustomScrollbar = !isIOS && !isIPad;
 
-type ConnectWalletModalLayoutProps = WalletsModalProps & {
+type ConnectWalletModalLayoutProps = ReefKnotWalletsModalProps & {
   termsProps: WalletModalConnectTermsProps;
   inputValue: string;
   isEmptyWalletsList: boolean;
@@ -51,7 +51,7 @@ export const ConnectWalletModalLayout = ({
   children,
   ...passedDownProps
 }: ConnectWalletModalLayoutProps) => {
-  const { buttonsFullWidth = false, shouldInvertWalletIcon } = passedDownProps;
+  const { buttonsFullWidth = false, darkThemeEnabled } = passedDownProps;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isMobileHeight, setIsMobileHeight] = useState(false);
@@ -124,7 +124,7 @@ export const ConnectWalletModalLayout = ({
             {isEmptyWalletsList && (
               <EmptyWalletsList
                 inputValue={inputValue}
-                shouldInvertColor={shouldInvertWalletIcon}
+                shouldInvertColor={darkThemeEnabled}
                 onClickClear={onInputClear}
               />
             )}

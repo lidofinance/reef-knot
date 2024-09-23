@@ -1,18 +1,17 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { ConnectInjectedProps } from './types';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
-import { openWindow } from '../helpers/index';
+import { openWindow } from '../helpers/openWindow';
 
 export const ConnectBinance: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     metrics,
     walletId,
     walletName,
@@ -35,7 +34,6 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   const handleConnect = useCallback(async () => {
     if (binanceModalLoading) return;
 
-    onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
 
@@ -58,7 +56,6 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     }
   }, [
     binanceModalLoading,
-    onBeforeConnect,
     metricsOnClick,
     disconnect,
     deeplink,
@@ -70,15 +67,15 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   ]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       onClick={() => {
         void handleConnect();
       }}
     >
       {walletName}
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };

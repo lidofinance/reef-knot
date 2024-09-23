@@ -6,14 +6,14 @@ import {
   useReefKnotModal,
 } from '@reef-knot/core-react';
 
-import { WalletsModalProps } from '../../types';
-import { WalletModalConnectTermsProps } from '../../../Terms';
+import { ReefKnotWalletsModalProps } from '../ReefKnotWalletsModal/types';
+import { WalletModalConnectTermsProps } from '../Terms';
 import { ConnectWalletModalLayout } from '../ConnectWalletModalLayout';
 
-import { sortWalletsList } from './sortWalletsList';
+import { sortWalletsList } from '../../helpers/sortWalletsList';
 import type { WalletAdapterData } from '@reef-knot/types';
 
-type ConnectWalletModalProps = WalletsModalProps & {
+type ConnectWalletModalProps = ReefKnotWalletsModalProps & {
   onCloseSuccess?: () => void;
   onCloseReject?: () => void;
   termsProps: WalletModalConnectTermsProps;
@@ -26,7 +26,7 @@ export const ConnectWalletModal = ({
   ...passedDownProps
 }: ConnectWalletModalProps) => {
   const {
-    shouldInvertWalletIcon = false,
+    darkThemeEnabled = false,
     metrics,
     buttonComponentsByConnectorId,
     walletsShown,
@@ -128,22 +128,24 @@ export const ConnectWalletModal = ({
       onToggleWalletsList={handleToggleWalletsList}
       {...passedDownProps}
     >
-      {walletsList.map((walletData) => {
+      {walletsList.map(({ type, walletId, ...walletData }) => {
         const WalletComponent =
-          buttonComponentsByConnectorId[walletData.walletId] ??
-          buttonComponentsByConnectorId[walletData.type] ??
+          buttonComponentsByConnectorId[walletId] ??
+          buttonComponentsByConnectorId[type] ??
           buttonComponentsByConnectorId.default;
         if (!WalletComponent) return null;
         return (
           <WalletComponent
-            key={walletData.walletId}
+            key={walletId}
+            icon={walletData.icon}
+            walletName={walletData.walletName}
             disabled={!termsChecked}
-            onConnect={() => handleConnectSuccess(walletData.walletId)}
-            shouldInvertWalletIcon={shouldInvertWalletIcon}
+            onConnect={() => handleConnectSuccess(walletId)}
+            darkThemeEnabled={darkThemeEnabled}
             metrics={metrics}
             isCompact={isShownOtherWallets}
-            {...walletData}
             connector={walletData.createConnectorFn}
+            detector={walletData.detector}
           />
         );
       })}

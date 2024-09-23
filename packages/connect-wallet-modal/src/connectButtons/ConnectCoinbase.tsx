@@ -1,7 +1,7 @@
 import React, { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { ConnectInjectedProps } from './types';
 
 export const ConnectCoinbase: FC<ConnectInjectedProps> = (
@@ -9,8 +9,7 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     metrics,
     walletId,
     walletName,
@@ -28,7 +27,6 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(() => {
-    onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
     connect(
@@ -45,19 +43,18 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
     connector,
     disconnect,
     metricsOnClick,
-    onBeforeConnect,
     onConnect,
     metricsOnConnect,
   ]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       onClick={handleConnect}
     >
       {walletName}
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };
