@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useConfig } from 'wagmi';
 import { Button, Modal } from '@reef-knot/ui-react';
 import { CommonButtonsContainer, ErrorBlock } from './styles';
 import {
@@ -18,7 +19,7 @@ export const EagerConnectModal = ({
   children,
 }: AcceptTermsModalProps) => {
   const { termsChecked, closeModal } = useReefKnotModal();
-  const { chains: supportedChains } = useReefKnotContext();
+  const { chains: supportedChains } = useConfig();
 
   const [error, setError] = useState(initialError);
 

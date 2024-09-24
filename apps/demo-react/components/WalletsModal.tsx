@@ -17,7 +17,7 @@ export default function WalletsModal({
 }) {
   return (
     <ReefKnotWalletsModal<WalletIdsEthereum>
-      {...WALLETS_MODAL_DEFAULT_CONFIG}
+      {...walletsModalDefaultConfig}
       metrics={metrics}
       darkThemeEnabled={darkThemeEnabled}
       linkDontHaveWallet={LINK_DONT_HAVE_WALLET_DEFAULT}

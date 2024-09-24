@@ -10,10 +10,10 @@ import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 
 Use it like this:
 ```tsx
-const WALLETS_MODAL_DEFAULT_CONFIG = getDefaultWalletsModalConfig();
+const walletsModalDefaultConfig = getDefaultWalletsModalConfig();
 
 <ReefKnotWalletsModal<WalletIdsEthereum>
-  {...WALLETS_MODAL_DEFAULT_CONFIG}
+  {...walletsModalDefaultConfig}
   darkThemeEnabled={false}
   walletsShown={[
     'metaMask',
