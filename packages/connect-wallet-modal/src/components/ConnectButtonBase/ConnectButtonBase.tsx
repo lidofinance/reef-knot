@@ -2,6 +2,7 @@ import React, { ElementType, FC, isValidElement } from 'react';
 import {
   ConnectButtonStyle,
   ConnectButtonContentStyle,
+  ConnectButtonLoaderStyle,
   ConnectButtonIconStyle,
   ConnectButtonTitleStyle,
 } from './styles';
@@ -9,7 +10,14 @@ import { ConnectButtonBaseProps } from './types';
 import { isWalletAdapterIcons } from '../../helpers/isWalletAdapterIcons';
 
 export const ConnectButtonBase: FC<ConnectButtonBaseProps> = (props) => {
-  const { icon, darkThemeEnabled, children, isCompact, ...rest } = props;
+  const {
+    icon,
+    darkThemeEnabled,
+    children,
+    isCompact,
+    isLoading = false,
+    ...rest
+  } = props;
 
   let ButtonIcon: ElementType = React.Fragment;
   if (icon) {
@@ -22,12 +30,14 @@ export const ConnectButtonBase: FC<ConnectButtonBaseProps> = (props) => {
 
   return (
     <ConnectButtonStyle {...rest} type="button">
-      <ConnectButtonContentStyle>
-        <ConnectButtonIconStyle $isCompact={isCompact}>
-          {isValidElement(<ButtonIcon />) && <ButtonIcon />}
-        </ConnectButtonIconStyle>
-        <ConnectButtonTitleStyle>{children}</ConnectButtonTitleStyle>
-      </ConnectButtonContentStyle>
+      <ConnectButtonLoaderStyle $isLoading={isLoading}>
+        <ConnectButtonContentStyle>
+          <ConnectButtonIconStyle $isCompact={isCompact}>
+            {isValidElement(<ButtonIcon />) && <ButtonIcon />}
+          </ConnectButtonIconStyle>
+          <ConnectButtonTitleStyle>{children}</ConnectButtonTitleStyle>
+        </ConnectButtonContentStyle>
+      </ConnectButtonLoaderStyle>
     </ConnectButtonStyle>
   );
 };

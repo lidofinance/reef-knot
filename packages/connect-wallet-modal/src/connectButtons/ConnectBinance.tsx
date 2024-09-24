@@ -1,10 +1,11 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/core-react';
-import { ConnectButtonBase } from '../components/ConnectButtonBase';
-import { ConnectInjectedProps } from './types';
+import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
+import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { openWindow } from '../helpers/openWindow';
+import { ConnectInjectedProps } from './types';
 
 export const ConnectBinance: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -26,41 +27,28 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
-  const { connectAsync } = useConnect();
+  const { loadingWalletId } = useReefKnotContext();
+  const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
-  const [binanceModalLoading, setBinanceModalLoading] = useState(false);
-
   const handleConnect = useCallback(async () => {
-    if (binanceModalLoading) return;
-
     metricsOnClick?.();
     disconnect?.();
 
     if (isMobileOrTablet && deeplink && !detector?.()) {
       openWindow(deeplink);
     } else {
-      setBinanceModalLoading(true);
-      await connectAsync(
-        { connector },
-        {
-          onSettled: () => {
-            setBinanceModalLoading(false);
-          },
-          onSuccess: () => {
-            onConnect?.();
-            metricsOnConnect?.();
-          },
-        },
-      );
+      await connectWithLoading(walletId, { connector });
+      onConnect?.();
+      metricsOnConnect?.();
     }
   }, [
-    binanceModalLoading,
     metricsOnClick,
     disconnect,
     deeplink,
     detector,
-    connectAsync,
+    connectWithLoading,
+    walletId,
     connector,
     onConnect,
     metricsOnConnect,
@@ -71,6 +59,7 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       darkThemeEnabled={darkThemeEnabled}
+      isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}

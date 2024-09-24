@@ -1,4 +1,4 @@
-import styled, { css } from '@reef-knot/ui-react/styled-wrapper';
+import styled, { css, keyframes } from '@reef-knot/ui-react/styled-wrapper';
 import { Button } from '@reef-knot/ui-react';
 
 export const ConnectButtonStyle = styled(Button).attrs({
@@ -16,14 +16,44 @@ export const ConnectButtonStyle = styled(Button).attrs({
   `}
 `;
 
-export const ConnectButtonContentStyle = styled.span`
+export const ConnectButtonContentStyle = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: row;
     align-items: center;
+    height: 100%;
     padding: 0 ${theme.spaceMap.md}px;
     color: ${theme.colors.text};
   `}
+`;
+
+const translation = keyframes`
+  100% {
+    background-position: 0 0;
+  }
+`;
+
+export const ConnectButtonLoaderStyle = styled.div<{ $isLoading: boolean }>`
+  --loader-color: #dfe5eb;
+
+  width: 100%;
+  height: 100%;
+  animation-name: ${translation};
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-play-state: ${({ $isLoading }) =>
+    $isLoading ? 'running' : 'paused'};
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 33.33%,
+    var(--loader-color) 44.44%,
+    var(--loader-color) 55.55%,
+    transparent 66.66%,
+    transparent 100%
+  );
 `;
 
 export const ConnectButtonTitleStyle = styled.div`

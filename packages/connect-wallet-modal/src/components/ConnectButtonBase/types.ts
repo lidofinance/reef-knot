@@ -5,4 +5,5 @@ export type ConnectButtonBaseProps = ButtonProps & {
   icon?: WalletAdapterData['icon'];
   darkThemeEnabled?: boolean;
   isCompact?: boolean;
+  isLoading?: boolean;
 };

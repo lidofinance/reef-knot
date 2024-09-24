@@ -1,5 +1,14 @@
 # @reef-knot/core-react
 
+## 4.3.0
+
+### Minor Changes
+
+- Add the "loading" state for WC and Binance wallet connection buttons;
+- Fix the "retry" button for some cases in the Ledger HID connection modal;
+- Show a loading spinner in the Ledger modal during ledger packages loading;
+- Fix the issue with passing onClickWalletsLess, onClickWalletsMore props;
+
 ## 4.2.1
 
 ### Patch Changes

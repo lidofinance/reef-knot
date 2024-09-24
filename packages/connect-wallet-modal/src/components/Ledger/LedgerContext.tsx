@@ -22,6 +22,7 @@ export type LedgerContextValue = {
   transport: MutableRefObject<Transport | null>;
   ledgerAppEth: MutableRefObject<Eth | null>;
   isTransportConnected: boolean;
+  isLoadingLedgerLibs: boolean;
   error: Error | null;
   setError: (e: Error | null) => void;
   connectTransport: () => Promise<void>;
@@ -42,6 +43,7 @@ export const LedgerContextProvider = ({
   const ledgerAppEth = useRef<Eth | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isTransportConnected, setIsTransportConnected] = useState(false);
+  const [isLoadingLedgerLibs, setIsLoadingLedgerLibs] = useState(false);
   const [activeAccountsRequestsCounter, setActiveAccountsRequestsCounter] =
     useState(0);
 
@@ -73,15 +75,20 @@ export const LedgerContextProvider = ({
     }
 
     try {
+      setIsLoadingLedgerLibs(true);
       const { default: Eth } = await import('@ledgerhq/hw-app-eth');
+      setIsLoadingLedgerLibs(false);
+
       transport.current = await getTransport();
-      isTransportConnecting.current = false;
       ledgerAppEth.current = new Eth(transport.current);
       await ledgerAppEth.current.getAppConfiguration();
       setIsTransportConnected(true);
     } catch (e: any) {
       await disconnectTransport(true);
+      setIsLoadingLedgerLibs(false);
       setError(helpers.interceptLedgerError(e));
+    } finally {
+      isTransportConnecting.current = false;
     }
   }, [disconnectTransport]);
 
@@ -102,6 +109,7 @@ export const LedgerContextProvider = ({
       transport,
       ledgerAppEth,
       isTransportConnected,
+      isLoadingLedgerLibs,
       error,
       setError,
       connectTransport,
@@ -111,12 +119,13 @@ export const LedgerContextProvider = ({
       setActiveAccountsRequestsCounter,
     }),
     [
+      isTransportConnected,
+      isLoadingLedgerLibs,
+      error,
       connectTransport,
       disconnectTransport,
-      error,
-      activeAccountsRequestsCounter,
-      isTransportConnected,
       reconnectTransport,
+      activeAccountsRequestsCounter,
     ],
   );
 
