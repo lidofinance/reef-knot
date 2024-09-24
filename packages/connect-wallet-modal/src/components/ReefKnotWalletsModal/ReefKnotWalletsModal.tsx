@@ -1,24 +1,24 @@
 import React, { useMemo } from 'react';
 import { Modal } from '@reef-knot/ui-react';
+import { useReefKnotModal } from '@reef-knot/core-react';
 import { ReefKnotWalletsModalProps } from './types';
 import { Terms, WalletModalConnectTermsProps } from '../Terms';
 import { LedgerModal } from '../Ledger';
 import { EagerConnectModal } from '../EagerConnectModal';
 import { ConnectWalletModal } from '../ConnectWalletModal';
-import { useReefKnotModal } from '@reef-knot/core-react';
 
 const TERMS_LINK_DEFAULT = 'https://lido.fi/terms-of-use';
 const PRIVACY_NOTICE_LINK_DEFAULT = 'https://lido.fi/privacy-notice';
 
-export function ReefKnotWalletsModal<I extends string = string>({
-  children,
-  ...passedDownProps
-}: React.PropsWithChildren<ReefKnotWalletsModalProps<I>>) {
+export function ReefKnotWalletsModal<I extends string = string>(
+  props: ReefKnotWalletsModalProps<I>,
+) {
   const {
     metrics,
     termsLink = TERMS_LINK_DEFAULT,
     privacyNoticeLink = PRIVACY_NOTICE_LINK_DEFAULT,
-  } = passedDownProps;
+  } = props;
+  const { onClickWalletsLess, onClickWalletsMore, ...passedDownProps } = props;
 
   const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
 
@@ -43,6 +43,8 @@ export function ReefKnotWalletsModal<I extends string = string>({
           termsProps={termsProps}
           onCloseSuccess={onCloseSuccess}
           onCloseReject={onCloseReject}
+          onClickWalletsLess={onClickWalletsLess}
+          onClickWalletsMore={onClickWalletsMore}
         />
       );
     }
