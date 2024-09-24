@@ -6,6 +6,7 @@ export type ConnectButtonProps = {
   icon: WalletAdapterData['icon'];
   shouldInvertWalletIcon?: boolean;
   isCompact?: boolean;
+  isLoading?: boolean;
 } & ButtonProps;
 
 export type ConnectWalletProps = ButtonsCommonProps & ButtonProps;

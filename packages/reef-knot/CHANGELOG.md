@@ -1,5 +1,20 @@
 # reef-knot
 
+## 5.7.0
+
+### Minor Changes
+
+- Add the "loading" state for WC and Binance wallet connection buttons;
+- Fix the "retry" button for some cases in the Ledger HID connection modal;
+- Show a loading spinner in the Ledger modal during ledger packages loading;
+- Fix the issue with passing onClickWalletsLess, onClickWalletsMore props;
+
+### Patch Changes
+
+- Updated dependencies [44073ff]
+  - @reef-knot/connect-wallet-modal@5.5.0
+  - @reef-knot/core-react@4.3.0
+
 ## 5.6.1
 
 ### Patch Changes

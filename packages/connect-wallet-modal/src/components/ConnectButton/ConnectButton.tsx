@@ -3,6 +3,7 @@ import { WalletAdapterData, WalletAdapterIcons } from '@reef-knot/types';
 import {
   ConnectButtonStyle,
   ConnectButtonContentStyle,
+  ConnectButtonLoaderStyle,
   ConnectButtonIconStyle,
   ConnectButtonTitleStyle,
 } from './styles';
@@ -20,7 +21,14 @@ function isWalletAdapterIcons(
 }
 
 const ConnectButton: FC<ConnectButtonProps> = (props: ConnectButtonProps) => {
-  const { icon, shouldInvertWalletIcon, children, isCompact, ...rest } = props;
+  const {
+    icon,
+    shouldInvertWalletIcon,
+    children,
+    isCompact,
+    isLoading = false,
+    ...rest
+  } = props;
 
   let ButtonIcon: ElementType = React.Fragment;
   if (icon) {
@@ -33,12 +41,14 @@ const ConnectButton: FC<ConnectButtonProps> = (props: ConnectButtonProps) => {
 
   return (
     <ConnectButtonStyle {...rest} type="button">
-      <ConnectButtonContentStyle>
-        <ConnectButtonIconStyle $isCompact={isCompact}>
-          {isValidElement(<ButtonIcon />) && <ButtonIcon />}
-        </ConnectButtonIconStyle>
-        <ConnectButtonTitleStyle>{children}</ConnectButtonTitleStyle>
-      </ConnectButtonContentStyle>
+      <ConnectButtonLoaderStyle $isLoading={isLoading}>
+        <ConnectButtonContentStyle>
+          <ConnectButtonIconStyle $isCompact={isCompact}>
+            {isValidElement(<ButtonIcon />) && <ButtonIcon />}
+          </ConnectButtonIconStyle>
+          <ConnectButtonTitleStyle>{children}</ConnectButtonTitleStyle>
+        </ConnectButtonContentStyle>
+      </ConnectButtonLoaderStyle>
     </ConnectButtonStyle>
   );
 };

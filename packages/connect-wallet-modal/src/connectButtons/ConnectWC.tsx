@@ -1,11 +1,12 @@
 import React, { FC, useCallback } from 'react';
 import { Connector, useConfig, useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/core-react';
+import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButton } from '../components/ConnectButton';
 import { openWindow } from '../helpers';
 import { ConnectWCProps } from './types';
+import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
 
 let redirectionWindow: Window | null = null;
 
@@ -40,7 +41,9 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const config = useConfig();
+  const { loadingWalletId } = useReefKnotContext();
   const { connectAsync } = useConnect();
+  const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
   // WCURI – WalletConnect Pairing URI: https://docs.walletconnect.com/2.0/specs/clients/core/pairing/pairing-uri
@@ -97,23 +100,25 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
         redirectionWindow?.close();
       }
     } else {
-      await connectAsync({ connector });
+      await connectWithLoading(walletId, { connector });
       onSuccess();
     }
   }, [
-    config,
-    metricsOnConnect,
-    onConnect,
-    connectAsync,
-    connector,
     deeplink,
-    disconnect,
-    metricsOnClick,
     onBeforeConnect,
-    WCURICloseRedirectionWindow,
+    metricsOnClick,
+    disconnect,
     WCURICondition,
     WCURIConnectorFn,
     WCURIRedirectLink,
+    onConnect,
+    metricsOnConnect,
+    connectAsync,
+    WCURICloseRedirectionWindow,
+    config.chains,
+    connectWithLoading,
+    walletId,
+    connector,
   ]);
 
   return (
@@ -121,6 +126,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       {...rest}
       icon={WalletIcon}
       shouldInvertWalletIcon={shouldInvertWalletIcon}
+      isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}

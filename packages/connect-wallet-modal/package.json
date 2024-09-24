@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/connect-wallet-modal",
-  "version": "5.4.0",
+  "version": "5.5.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -46,7 +46,7 @@
     "@types/react-dom": "18.2.17"
   },
   "devDependencies": {
-    "@reef-knot/core-react": "^4.1.1",
+    "@reef-knot/core-react": "^4.3.0",
     "@reef-knot/types": "^2.0.1",
     "@reef-knot/ui-react": "^2.1.1",
     "@reef-knot/wallets-helpers": "^2.0.1",
