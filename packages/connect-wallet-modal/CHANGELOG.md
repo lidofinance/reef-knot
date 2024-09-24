@@ -1,5 +1,16 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.4.0
+
+### Minor Changes
+
+- Coinbase smart wallet connector
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/wallets-list@2.3.0
+
 ## 5.3.3
 
 ### Patch Changes

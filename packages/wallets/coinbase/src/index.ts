@@ -7,13 +7,17 @@ export const id = 'coinbase';
 export const name = 'Coinbase';
 export const rdns = 'com.coinbase.wallet';
 
+export const getCoinbaseConnector = () =>
+  coinbaseWallet({
+    preference: 'eoaOnly',
+    appName: globalThis.window?.location?.hostname,
+  });
+
 export const Coinbase: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: coinbaseWallet.type,
   icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
-  createConnectorFn: coinbaseWallet({
-    appName: globalThis.window?.location?.hostname,
-  }),
+  createConnectorFn: getCoinbaseConnector(),
 });

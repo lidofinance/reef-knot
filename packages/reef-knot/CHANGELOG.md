@@ -1,5 +1,21 @@
 # reef-knot
 
+## 5.6.1
+
+### Patch Changes
+
+- 357e61f: Fix padding in ModalSubtitleStyle
+- Updated dependencies [357e61f]
+  - @reef-knot/ui-react@2.1.4
+
+## 5.6.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.4.0
+  - @reef-knot/wallets-list@2.3.0
+
 ## 5.5.4
 
 ### Patch Changes
