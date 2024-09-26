@@ -81,7 +81,10 @@ export function ledgerHIDConnector({
         if (!provider) throw new ConnectorNotFoundError();
         const [account] = await this.getAccounts();
         return !!account;
-      } catch {
+      } catch (e) {
+        // The errors caught here are generally expected in most use cases.
+        // However, unexpected errors may still occur, so they should at least be logged to the console.
+        console.error(e);
         return false;
       }
     },
