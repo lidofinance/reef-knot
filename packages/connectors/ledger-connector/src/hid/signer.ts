@@ -18,11 +18,12 @@ import { toUtf8Bytes } from '@ethersproject/strings';
 import { Bytes, hexlify, joinSignature } from '@ethersproject/bytes';
 import { _TypedDataEncoder } from '@ethersproject/hash';
 
-import type { LedgerHQProvider } from './provider';
 import { checkError, convertToUnsigned, toNumber } from './helpers';
-import { UnsignedTransactionStrict } from './types';
+import { LS_KEY_DERIVATION_PATH } from './constants';
 
-export const LS_KEY_DERIVATION_PATH = 'reef-knot_ledger-derivation-path';
+import type { LedgerHQProvider } from './provider';
+import type { UnsignedTransactionStrict } from './types';
+
 const defaultPath = "m/44'/60'/0'/0/0";
 
 export class LedgerHQSigner extends Signer implements TypedDataSigner {
