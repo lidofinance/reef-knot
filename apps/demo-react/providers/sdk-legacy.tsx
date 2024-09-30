@@ -23,7 +23,7 @@ export const SDKLegacyProvider = (props: {
     pollingInterval = POLLING_INTERVAL,
   } = props;
   const { chainId = defaultChainId, account } = useWeb3();
-  const { connector, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const config = useConfig();
   const client = useClient();
 
@@ -88,7 +88,7 @@ export const SDKLegacyProvider = (props: {
         0,
         POLLING_INTERVAL,
       ),
-    [],
+    [rpc],
   );
 
   return (

@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { ReactComponent as ETHIcon } from 'assets/icons/ETH.svg';
-import { ReactComponent as stETHIcon } from 'assets/icons/stETH.svg';
-import { ReactComponent as wstETHIcon } from 'assets/icons/wstETH.svg';
+// import { ReactComponent as ETHIcon } from 'assets/icons/ETH.svg';
+// import { ReactComponent as stETHIcon } from 'assets/icons/stETH.svg';
+// import { ReactComponent as wstETHIcon } from 'assets/icons/wstETH.svg';
 
 import {
   StatsWrapperStyle,
@@ -17,11 +17,11 @@ type StatsItemProps = {
   loading?: boolean;
 };
 
-const ICONS = {
-  ETH: ETHIcon,
-  stETH: stETHIcon,
-  wstETH: wstETHIcon,
-};
+// const ICONS = {
+//   ETH: ETHIcon,
+//   stETH: stETHIcon,
+//   wstETH: wstETHIcon,
+// };
 
 export const StatsItem: FC<StatsItemProps> = ({ value, token, loading }) => {
   let shortValue = value.slice(0, 8);

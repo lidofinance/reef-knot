@@ -1,5 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
-import { useConnect } from 'wagmi';
+import React, { FC, useCallback } from 'react';
 import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { useConnectWithLoading } from '../hooks/useConnectWithLoading';

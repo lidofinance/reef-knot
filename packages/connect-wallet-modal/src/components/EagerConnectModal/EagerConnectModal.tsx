@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { useConfig } from 'wagmi';
 import { Button, Modal } from '@reef-knot/ui-react';
 import { CommonButtonsContainer, ErrorBlock } from './styles';
-import {
-  useReefKnotContext,
-  getUnsupportedChainError,
-} from '@reef-knot/core-react';
+import { getUnsupportedChainError } from '@reef-knot/core-react';
 import { useReefKnotModal } from '@reef-knot/core-react';
 
 export type AcceptTermsModalProps = React.PropsWithChildren<{
