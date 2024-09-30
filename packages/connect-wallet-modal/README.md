@@ -39,4 +39,3 @@ const walletsModalDefaultConfig = getDefaultWalletsModalConfig();
 | `walletsDisplayInitialCount?` | Connection buttons count to render before the "More wallets" button. <br /> ***Default**: `6`* |
 | `metrics?` | A map of the analytic events. |
 | `termsLink?` <br /> `privacyNoticeLink?` <br /> `linkDontHaveWallet?` | UI links. |
-| `onClickWalletsMore?` <br /> `onClickWalletsLess?` | Handlers for click events of the "More wallets" and "Less wallets" buttons. |

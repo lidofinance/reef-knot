@@ -21,8 +21,6 @@ type ConnectWalletModalProps = ReefKnotWalletsModalProps & {
 
 export const ConnectWalletModal = ({
   onCloseSuccess,
-  onClickWalletsMore,
-  onClickWalletsLess,
   ...passedDownProps
 }: ConnectWalletModalProps) => {
   const {
@@ -52,15 +50,17 @@ export const ConnectWalletModal = ({
     setInputValue('');
   }, []);
 
+  const { walletsMore, walletsLess } = metrics?.events?.click?.handlers || {};
+
   const handleToggleWalletsList = useCallback(() => {
     const nextShownState = !isShownOtherWallets;
     setShowOtherWallets(nextShownState);
     if (nextShownState) {
-      onClickWalletsMore?.();
+      walletsMore?.();
     } else {
-      onClickWalletsLess?.();
+      walletsLess?.();
     }
-  }, [isShownOtherWallets, onClickWalletsMore, onClickWalletsLess]);
+  }, [isShownOtherWallets, walletsMore, walletsLess]);
 
   const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
     [],

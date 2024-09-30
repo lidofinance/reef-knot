@@ -17,8 +17,8 @@ export function ReefKnotWalletsModal<I extends string = string>(
     metrics,
     termsLink = TERMS_LINK_DEFAULT,
     privacyNoticeLink = PRIVACY_NOTICE_LINK_DEFAULT,
+    ...passedDownProps
   } = props;
-  const { onClickWalletsLess, onClickWalletsMore, ...passedDownProps } = props;
 
   const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
 
@@ -39,12 +39,10 @@ export function ReefKnotWalletsModal<I extends string = string>(
     case 'wallet': {
       return (
         <ConnectWalletModal
-          {...passedDownProps}
+          {...props}
           termsProps={termsProps}
           onCloseSuccess={onCloseSuccess}
           onCloseReject={onCloseReject}
-          onClickWalletsLess={onClickWalletsLess}
-          onClickWalletsMore={onClickWalletsMore}
         />
       );
     }

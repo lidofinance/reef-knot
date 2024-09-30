@@ -8,7 +8,12 @@ export type MetricsProp<WalletIdsList extends string = string> = {
       handlers: Partial<Record<WalletIdsList, () => void>>;
     };
     click?: {
-      handlers: Partial<Record<WalletIdsList | 'termsAccept', () => void>>;
+      handlers: Partial<
+        Record<
+          WalletIdsList | 'termsAccept' | 'walletsMore' | 'walletsLess',
+          () => void
+        >
+      >;
     };
   };
 };
@@ -29,6 +34,4 @@ export type ReefKnotWalletsModalProps<I extends string = string> =
     walletsPinned: I[];
     walletsDisplayInitialCount?: number;
     linkDontHaveWallet?: string;
-    onClickWalletsMore?: () => void;
-    onClickWalletsLess?: () => void;
   };
