@@ -1,5 +1,5 @@
 import { http, Chain, Transport } from 'viem';
-import { createConfig } from 'wagmi';
+import { createConfig, Storage } from 'wagmi';
 import type { WalletAdapterType } from '@reef-knot/types';
 import { getWalletsDataList } from './getWalletsDataList';
 import type { ReefKnotProviderConfig } from '../context/reefKnotContext';
@@ -16,6 +16,8 @@ type DefaultConfigArgs = {
   walletconnectProjectId: string;
   walletsList: Record<string, WalletAdapterType>;
   autoConnect: boolean;
+  ssr?: boolean;
+  storage?: Storage | null;
 };
 
 const getDefaultTransports = (chains: Chains, rpc: RpcMap) =>
@@ -31,10 +33,12 @@ export const getDefaultConfig = ({
   rpc,
   chains,
   defaultChain,
-  transports: transportsArg,
+  transports,
   walletconnectProjectId,
   walletsList,
   autoConnect,
+  ssr = false,
+  storage,
 }: DefaultConfigArgs) => {
   const { walletsDataList } = getWalletsDataList({
     rpc,
@@ -50,9 +54,10 @@ export const getDefaultConfig = ({
 
   const wagmiConfig = createConfig({
     chains,
-    ssr: true,
+    ssr,
     multiInjectedProviderDiscovery: false,
-    transports: transportsArg || getDefaultTransports(chains, rpc),
+    transports: transports || getDefaultTransports(chains, rpc),
+    storage,
   });
 
   return {
