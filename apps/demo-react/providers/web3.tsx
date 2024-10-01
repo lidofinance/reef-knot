@@ -69,6 +69,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       walletsList: WalletsListEthereum,
       walletconnectProjectId,
       autoConnect: isWalletConnectionAllowed,
+      ssr: true,
     });
   }, [
     backendRPC,

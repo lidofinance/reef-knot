@@ -37,7 +37,7 @@ export const getDefaultConfig = ({
   walletconnectProjectId,
   walletsList,
   autoConnect,
-  ssr = false,
+  ssr,
   storage,
 }: DefaultConfigArgs) => {
   const { walletsDataList } = getWalletsDataList({
