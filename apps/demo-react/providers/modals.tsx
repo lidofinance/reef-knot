@@ -8,7 +8,6 @@ import {
   PropsWithChildren,
 } from 'react';
 import WalletModal from 'components/walletModal';
-import { ConnectWalletModal } from 'components/connect-wallet-modal';
 
 export type ModalContextValue = {
   openModal: (modal: MODAL) => void;
@@ -49,7 +48,6 @@ const ModalProvider: FC<PropsWithChildren> = ({ children }) => {
     <ModalContext.Provider value={value}>
       {children}
       <WalletModal open={active === MODAL.wallet} {...common} />
-      <ConnectWalletModal />
     </ModalContext.Provider>
   );
 };

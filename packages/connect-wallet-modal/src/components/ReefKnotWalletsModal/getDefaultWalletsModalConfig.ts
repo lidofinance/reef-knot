@@ -1,4 +1,8 @@
 import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
+import type {
+  ButtonComponentsByConnectorId,
+  ReefKnotWalletsModalConfig,
+} from '@reef-knot/types';
 import {
   ConnectInjected,
   ConnectLedger,
@@ -7,10 +11,6 @@ import {
   ConnectBrowser,
   ConnectBinance,
 } from '../../connectButtons';
-import type {
-  ButtonComponentsByConnectorId,
-  ReefKnotWalletsModalProps,
-} from './types';
 
 export const WALLETS_MODAL_BUTTON_COMPONENTS_DEFAULT: ButtonComponentsByConnectorId =
   {
@@ -48,7 +48,7 @@ export const WALLETS_MODAL_PINNED_CONFIG_DEFAULT: WalletIdsEthereum[] = [
 ];
 
 export const getDefaultWalletsModalConfig = (): Pick<
-  ReefKnotWalletsModalProps<WalletIdsEthereum>,
+  ReefKnotWalletsModalConfig<WalletIdsEthereum>,
   'buttonComponentsByConnectorId' | 'walletsShown' | 'walletsPinned'
 > => ({
   buttonComponentsByConnectorId: WALLETS_MODAL_BUTTON_COMPONENTS_DEFAULT,

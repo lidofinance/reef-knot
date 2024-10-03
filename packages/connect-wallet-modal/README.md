@@ -31,11 +31,17 @@ const walletsModalDefaultConfig = getDefaultWalletsModalConfig();
 
 | Prop | Description |
 |------|-------------|
-| `buttonComponentsByConnectorId` | A map of `ConnectButton`s associated with a certain connector id or type. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
+| `config` | *A config object, see below.*  |
 | `darkThemeEnabled?` | Set to true for the dark color theme. <br /> ***Default**: `false`* |
 | `buttonsFullWidth?` | Specify connector buttons to render one per row. It could be handy if you are planning to use only few wallets in your dapp. |
+
+#### Config configuration list
+
+| Config | Description |
+|--------|-------------|
+| `buttonComponentsByConnectorId` | A map of `ConnectButton`s associated with a certain connector id or type. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
 | `walletsShown` | Controls displayed wallet connection buttons from the list of wallets in the modal. Wallets will be displayed in the specified sequence. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
 | `walletsPinned` | Pins certain wallets to display it at the top of the list. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
 | `walletsDisplayInitialCount?` | Connection buttons count to render before the "More wallets" button. <br /> ***Default**: `6`* |
-| `metrics?` | A map of the analytic events. |
-| `termsLink?` <br /> `privacyNoticeLink?` <br /> `linkDontHaveWallet?` | UI links. |
+| `metrics` | A map of the analytic events. |
+| `linkTerms?` <br /> `linkPrivacyNotice?` <br /> `linkDontHaveWallet?` | UI links. |

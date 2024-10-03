@@ -1,24 +1,29 @@
 import { http, Chain, Transport } from 'viem';
 import { createConfig, Storage } from 'wagmi';
-import type { WalletAdapterType } from '@reef-knot/types';
-import { getWalletsDataList } from './getWalletsDataList';
+import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
+import {
+  getWalletsDataList,
+  GetWalletsDataListArgs,
+} from './getWalletsDataList';
 import type { ReefKnotProviderConfig } from '../context/reefKnotContext';
 
 type RpcMap = Record<number, string>;
 type Transports = Record<number, Transport>;
 type Chains = readonly [Chain, ...Chain[]];
 
-type DefaultConfigArgs = {
-  rpc: Record<number, string>;
+type WagmiAllowedArgs = {
   chains: Chains;
-  defaultChain: Chain;
-  transports?: Transports;
-  walletconnectProjectId: string;
-  walletsList: Record<string, WalletAdapterType>;
-  autoConnect: boolean;
   ssr?: boolean;
+  transports?: Transports;
   storage?: Storage | null;
 };
+
+type DefaultConfigArgs<I extends string = string> =
+  ReefKnotWalletsModalConfig<I> &
+    GetWalletsDataListArgs &
+    WagmiAllowedArgs & {
+      autoConnect: boolean;
+    };
 
 const getDefaultTransports = (chains: Chains, rpc: RpcMap) =>
   chains.reduce<Transports>(
@@ -29,22 +34,37 @@ const getDefaultTransports = (chains: Chains, rpc: RpcMap) =>
     {},
   );
 
-export const getDefaultConfig = ({
+export const getDefaultConfig = <I extends string = string>({
+  // Reef-Knot config args
   rpc,
-  chains,
   defaultChain,
-  transports,
   walletconnectProjectId,
   walletsList,
-  autoConnect,
+  safeAllowedDomains,
+
+  // Wagmi config args
+  chains,
   ssr,
+  transports,
   storage,
-}: DefaultConfigArgs) => {
+  autoConnect,
+
+  // Wallets config args
+  buttonComponentsByConnectorId,
+  metrics,
+  walletsShown,
+  walletsPinned,
+  walletsDisplayInitialCount,
+  linkTerms,
+  linkPrivacyNotice,
+  linkDontHaveWallet,
+}: DefaultConfigArgs<I>) => {
   const { walletsDataList } = getWalletsDataList({
     rpc,
     defaultChain,
     walletsList,
     walletconnectProjectId,
+    safeAllowedDomains,
   });
 
   const reefKnotConfig: ReefKnotProviderConfig = {
@@ -55,14 +75,27 @@ export const getDefaultConfig = ({
   const wagmiConfig = createConfig({
     chains,
     ssr,
-    multiInjectedProviderDiscovery: false,
     transports: transports || getDefaultTransports(chains, rpc),
     storage,
+    multiInjectedProviderDiscovery: false,
   });
+
+  // TODO: We could use `getDefaultWalletsModalConfig` here, but it cause package dependency cycle rn
+  const walletsModalConfig: ReefKnotWalletsModalConfig = {
+    buttonComponentsByConnectorId,
+    metrics,
+    walletsShown,
+    walletsPinned,
+    walletsDisplayInitialCount,
+    linkTerms,
+    linkPrivacyNotice,
+    linkDontHaveWallet,
+  };
 
   return {
     wagmiConfig,
     reefKnotConfig,
     walletsDataList,
+    walletsModalConfig,
   };
 };
