@@ -4,19 +4,12 @@ import { useReefKnotModal } from '@reef-knot/core-react';
 import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
 import { TermsStyle, TermsTextStyle } from './styles';
 
-const TERMS_LINK_DEFAULT = 'https://lido.fi/terms-of-use';
-const PRIVACY_NOTICE_LINK_DEFAULT = 'https://lido.fi/privacy-notice';
-
 export type TermsProps = {
   config: ReefKnotWalletsModalConfig;
 };
 
 export const Terms: FC<TermsProps> = ({ config }) => {
-  const {
-    metrics,
-    linkTerms = TERMS_LINK_DEFAULT,
-    linkPrivacyNotice = PRIVACY_NOTICE_LINK_DEFAULT,
-  } = config;
+  const { metrics, linkTerms, linkPrivacyNotice } = config;
 
   const { setTermsChecked, termsChecked } = useReefKnotModal();
   const onClickTermsAccept =
