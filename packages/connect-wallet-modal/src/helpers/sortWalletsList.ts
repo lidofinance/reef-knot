@@ -1,10 +1,12 @@
-import type { WalletAdapterData } from '@reef-knot/types';
-import type { ReefKnotWalletsModalProps } from '../components/ReefKnotWalletsModal/types';
+import type {
+  ReefKnotWalletsModalConfig,
+  WalletAdapterData,
+} from '@reef-knot/types';
 
 type GetWalletsListArgs = {
   walletDataList: WalletAdapterData[];
-  walletsShown: ReefKnotWalletsModalProps['walletsShown'];
-  walletsPinned: ReefKnotWalletsModalProps['walletsPinned'];
+  walletsShown: ReefKnotWalletsModalConfig['walletsShown'];
+  walletsPinned: ReefKnotWalletsModalConfig['walletsPinned'];
 };
 
 type FilteredWalletData = {

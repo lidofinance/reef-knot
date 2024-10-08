@@ -6,7 +6,7 @@ import {
   ConnectButtonIconStyle,
   ConnectButtonTitleStyle,
 } from './styles';
-import { ConnectButtonBaseProps } from './types';
+import { ConnectButtonBaseProps } from '@reef-knot/types';
 import { isWalletAdapterIcons } from '../../helpers/isWalletAdapterIcons';
 
 export const ConnectButtonBase: FC<ConnectButtonBaseProps> = (props) => {

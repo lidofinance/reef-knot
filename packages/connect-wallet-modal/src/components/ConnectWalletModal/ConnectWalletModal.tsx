@@ -5,34 +5,32 @@ import {
   useReefKnotContext,
   useReefKnotModal,
 } from '@reef-knot/core-react';
+import type {
+  WalletAdapterData,
+  ReefKnotWalletsModalProps,
+} from '@reef-knot/types';
 
-import { ReefKnotWalletsModalProps } from '../ReefKnotWalletsModal/types';
-import { WalletModalConnectTermsProps } from '../Terms';
 import { ConnectWalletModalLayout } from '../ConnectWalletModalLayout';
 
 import { sortWalletsList } from '../../helpers/sortWalletsList';
-import type { WalletAdapterData } from '@reef-knot/types';
 
 type ConnectWalletModalProps = ReefKnotWalletsModalProps & {
   onCloseSuccess?: () => void;
   onCloseReject?: () => void;
-  termsProps: WalletModalConnectTermsProps;
 };
 
 export const ConnectWalletModal = ({
   onCloseSuccess,
-  onClickWalletsMore,
-  onClickWalletsLess,
   ...passedDownProps
 }: ConnectWalletModalProps) => {
+  const { config: modalConfig, darkThemeEnabled = false } = passedDownProps;
   const {
-    darkThemeEnabled = false,
     metrics,
     buttonComponentsByConnectorId,
     walletsShown,
     walletsPinned,
     walletsDisplayInitialCount = 6,
-  } = passedDownProps;
+  } = modalConfig;
 
   const config = useConfig();
   const { walletDataList, loadingWalletId } = useReefKnotContext();
@@ -52,15 +50,17 @@ export const ConnectWalletModal = ({
     setInputValue('');
   }, []);
 
+  const { walletsMore, walletsLess } = metrics?.events?.click?.handlers || {};
+
   const handleToggleWalletsList = useCallback(() => {
     const nextShownState = !isShownOtherWallets;
     setShowOtherWallets(nextShownState);
     if (nextShownState) {
-      onClickWalletsMore?.();
+      walletsMore?.();
     } else {
-      onClickWalletsLess?.();
+      walletsLess?.();
     }
-  }, [isShownOtherWallets, onClickWalletsMore, onClickWalletsLess]);
+  }, [isShownOtherWallets, walletsMore, walletsLess]);
 
   const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
     [],

@@ -1,20 +1,16 @@
 import React, { ChangeEvent, FC } from 'react';
 import { Checkbox, Link } from '@reef-knot/ui-react';
-import { TermsStyle, TermsTextStyle } from './styles';
-import type { MetricsProp } from '../ReefKnotWalletsModal';
 import { useReefKnotModal } from '@reef-knot/core-react';
+import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
+import { TermsStyle, TermsTextStyle } from './styles';
 
-export type WalletModalConnectTermsProps = {
-  metrics?: MetricsProp;
-  termsLink: string;
-  privacyNoticeLink: string;
+export type TermsProps = {
+  config: ReefKnotWalletsModalConfig;
 };
 
-export const Terms: FC<WalletModalConnectTermsProps> = ({
-  metrics,
-  termsLink,
-  privacyNoticeLink,
-}) => {
+export const Terms: FC<TermsProps> = ({ config }) => {
+  const { metrics, linkTerms, linkPrivacyNotice } = config;
+
   const { setTermsChecked, termsChecked } = useReefKnotModal();
   const onClickTermsAccept =
     metrics?.events?.click?.handlers.onClickTermsAccept;
@@ -31,8 +27,8 @@ export const Terms: FC<WalletModalConnectTermsProps> = ({
       <Checkbox onChange={handleCheckboxChange} checked={termsChecked} />
       <TermsTextStyle>
         I certify that I have read and accept the updated{' '}
-        <Link href={termsLink}>Terms&nbsp;of&nbsp;Use</Link> and{' '}
-        <Link href={privacyNoticeLink}>Privacy&nbsp;Notice</Link>.
+        <Link href={linkTerms}>Terms&nbsp;of&nbsp;Use</Link> and{' '}
+        <Link href={linkPrivacyNotice}>Privacy&nbsp;Notice</Link>.
       </TermsTextStyle>
     </TermsStyle>
   );

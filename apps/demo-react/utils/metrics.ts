@@ -12,6 +12,8 @@ const metrics: MetricsProp<WalletIdsEthereum> = {
   events: {
     click: {
       handlers: {
+        walletsMore: getClickHandler('More Wallets'),
+        walletsLess: getClickHandler('Less Wallets'),
         termsAccept: getClickHandler('Terms'),
         ambire: getClickHandler('ambire'),
         brave: getClickHandler('brave'),

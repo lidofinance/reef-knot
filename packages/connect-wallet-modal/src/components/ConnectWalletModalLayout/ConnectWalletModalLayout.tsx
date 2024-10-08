@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Modal } from '@reef-knot/ui-react';
+import type { ReefKnotWalletsModalProps } from '@reef-knot/types';
 import { EmptyWalletsList } from '../EmptyWalletsList';
 import {
   ContentWrapper,
@@ -15,10 +16,9 @@ import {
   IconMoreWallets,
   MEDIA_MOBILE_HEIGHT,
 } from './styles';
-import { Terms, WalletModalConnectTermsProps } from '../Terms';
+import { Terms } from '../Terms';
 
 import { isMobileOrTablet, isIOS, isIPad } from '@reef-knot/wallets-helpers';
-import type { ReefKnotWalletsModalProps } from '../ReefKnotWalletsModal/types';
 import { WalletModalInput } from '../WalletModalInput';
 
 // Additional check because `@supports selector(::-webkit-scrollbar)`
@@ -26,7 +26,6 @@ import { WalletModalInput } from '../WalletModalInput';
 const isSupportedCustomScrollbar = !isIOS && !isIPad;
 
 type ConnectWalletModalLayoutProps = ReefKnotWalletsModalProps & {
-  termsProps: WalletModalConnectTermsProps;
   inputValue: string;
   isEmptyWalletsList: boolean;
   isShownOtherWallets: boolean;
@@ -38,8 +37,7 @@ type ConnectWalletModalLayoutProps = ReefKnotWalletsModalProps & {
 };
 
 export const ConnectWalletModalLayout = ({
-  termsProps,
-  linkDontHaveWallet,
+  config,
   inputValue,
   onInputChange,
   onInputClear,
@@ -51,6 +49,7 @@ export const ConnectWalletModalLayout = ({
   children,
   ...passedDownProps
 }: ConnectWalletModalLayoutProps) => {
+  const { linkDontHaveWallet } = config;
   const { buttonsFullWidth = false, darkThemeEnabled } = passedDownProps;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -97,7 +96,7 @@ export const ConnectWalletModalLayout = ({
           $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
         >
           <ContentHeader>
-            <Terms {...termsProps} />
+            <Terms config={config} />
             <Subtitle>
               <span>Choose wallet </span>
               {linkDontHaveWallet && (
