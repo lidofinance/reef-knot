@@ -27,22 +27,21 @@ import type { UnsignedTransactionStrict } from './types';
 const defaultPath = "m/44'/60'/0'/0/0";
 
 export class LedgerHQSigner extends Signer implements TypedDataSigner {
-  readonly path: string;
-
   readonly provider: LedgerHQProvider;
 
-  _index = 0;
+  get path() {
+    if (typeof window !== 'undefined') {
+      return window.localStorage.getItem(LS_KEY_DERIVATION_PATH) || defaultPath;
+    }
+    return defaultPath;
+  }
 
+  // required by JsonRpcSigner type
+  _index = 0;
   _address = '';
 
-  constructor(provider: LedgerHQProvider, path = '') {
+  constructor(provider: LedgerHQProvider) {
     super();
-
-    let pathFromLS;
-    if (typeof window !== 'undefined') {
-      pathFromLS = window.localStorage.getItem(LS_KEY_DERIVATION_PATH);
-    }
-    this.path = path || pathFromLS || defaultPath;
     this.provider = provider;
   }
 
@@ -64,11 +63,8 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
   }
 
   async getAddress(): Promise<string> {
-    if (!this._address) {
-      const account = await this.withEthApp((eth) => eth.getAddress(this.path));
-      this._address = this.provider.formatter.address(account.address);
-    }
-
+    const account = await this.withEthApp((eth) => eth.getAddress(this.path));
+    this._address = this.provider.formatter.address(account.address);
     return this._address;
   }
 
@@ -133,7 +129,7 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
   }
 
   connect(provider: LedgerHQProvider): JsonRpcSigner {
-    return new LedgerHQSigner(provider, this.path);
+    return new LedgerHQSigner(provider);
   }
 
   // eslint-disable-next-line class-methods-use-this
