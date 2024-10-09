@@ -13,10 +13,8 @@ import { Chain } from 'wagmi/chains';
 import { getAddress } from '@ethersproject/address';
 import { hexValue } from '@ethersproject/bytes';
 import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
-import type {
-  IFrameEthereumProvider,
-  IFrameEthereumProviderOptions,
-} from '@ledgerhq/iframe-provider';
+import type { IFrameEthereumProviderOptions } from '@ledgerhq/iframe-provider';
+import type { LedgerIFrameProvider } from './provider';
 
 export const idLedgerLive = 'ledgerLive';
 export const name = 'Ledger Live';
@@ -31,9 +29,9 @@ export function ledgerLiveConnector({
   options,
   defaultChain,
 }: LedgerLiveConnectorArgs) {
-  const providers: Record<Chain['id'], IFrameEthereumProvider> = {};
+  const providers: Record<Chain['id'], LedgerIFrameProvider> = {};
 
-  return createConnector<IFrameEthereumProvider>(({ chains, emitter }) => ({
+  return createConnector<LedgerIFrameProvider>(({ chains, emitter }) => ({
     id: idLedgerLive,
     name,
     type: ledgerLiveConnector.type,
@@ -41,10 +39,8 @@ export function ledgerLiveConnector({
     async getProvider({ chainId } = {}) {
       const chain = chains.find((x) => x.id === chainId) ?? defaultChain;
       if (!providers[chain.id]) {
-        const { IFrameEthereumProvider } = await import(
-          '@ledgerhq/iframe-provider'
-        );
-        providers[chain.id] = new IFrameEthereumProvider(options);
+        const { LedgerIFrameProvider } = await import('./provider');
+        providers[chain.id] = new LedgerIFrameProvider(options);
       }
       return providers[chain.id];
     },
