@@ -1,5 +1,13 @@
 # reef-knot
 
+## 5.7.1
+
+### Patch Changes
+
+- Fix: wrap IFrameEthereumProvider in LedgerIFrameProvider with the "request" method, which is required for useWalletClient wagmi hook
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.1.1
+
 ## 5.7.0
 
 ### Minor Changes
