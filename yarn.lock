@@ -2673,15 +2673,14 @@
   dependencies:
     typescript "^4.7"
 
-"@lidofinance/lido-ethereum-sdk@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ethereum-sdk/-/lido-ethereum-sdk-3.1.1.tgz#7903ea512eed6d6658ab2a2d6731e41329e300bf"
-  integrity sha512-niZciaZTq8Lr3+U6Y61anVBnRSCWu0DCQKT9oJqPXP0MUBkqKsrFKYIV5BHXlEGHj5Z8UQbIm9fRm7iL7YZefw==
+"@lidofinance/lido-ethereum-sdk@3.5.0-alpha.3":
+  version "3.5.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ethereum-sdk/-/lido-ethereum-sdk-3.5.0-alpha.3.tgz#a503a0686f8e4e5438995149d1316b0c98d09cfe"
+  integrity sha512-FvrW7Dk5n802qES5F5nZo5NzTw+pWBh3jSMJltOYCtsaIO97bUXkqm6p4cfURnvj1coI5MH00BqJuUj7yDI2NQ==
   dependencies:
     "@ethersproject/bytes" "^5.7.0"
     graphql "^16.8.1"
     graphql-request "^6.1.0"
-    viem "^2.0.6"
 
 "@lidofinance/lido-ui@^3.18.0":
   version "3.18.2"
@@ -8292,11 +8291,6 @@ isomorphic-unfetch@3.1.0:
     node-fetch "^2.6.1"
     unfetch "^4.2.0"
 
-isows@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/isows/-/isows-1.0.3.tgz#93c1cf0575daf56e7120bab5c8c448b0809d0d74"
-  integrity sha512-2cKei4vlmg2cxEjm3wVSqn8pcoRF/LX/wpifuuNquFO4SQmPwarClT+SUCA2lt+l581tTeZIPIZuIDo2jWN1fg==
-
 isows@1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/isows/-/isows-1.0.4.tgz#810cd0d90cc4995c26395d2aa4cfa4037ebdf061"
@@ -11878,20 +11872,6 @@ viem@2.13.3:
     "@scure/bip39" "1.2.1"
     abitype "1.0.0"
     isows "1.0.4"
-    ws "8.13.0"
-
-viem@^2.0.6:
-  version "2.7.11"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-2.7.11.tgz#e432885f412c6faf2772a1e0569e8269b6ad93cb"
-  integrity sha512-qlEPF9YOgPVqjTyom73TVAekAYrIe68megO07u55p7pKWgLt0i9KD6Mrmiw7pd7oHh86vIppcygwQMDNGX1YAw==
-  dependencies:
-    "@adraffy/ens-normalize" "1.10.0"
-    "@noble/curves" "1.2.0"
-    "@noble/hashes" "1.3.2"
-    "@scure/bip32" "1.3.2"
-    "@scure/bip39" "1.2.1"
-    abitype "1.0.0"
-    isows "1.0.3"
     ws "8.13.0"
 
 viem@^2.1.1:

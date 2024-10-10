@@ -17,7 +17,7 @@
     "@lido-sdk/constants": "^3.2.1",
     "@lido-sdk/providers": "^1.4.14",
     "@lido-sdk/react": "2.0.2",
-    "@lidofinance/lido-ethereum-sdk": "^3.1.1",
+    "@lidofinance/lido-ethereum-sdk": "3.5.0-alpha.3",
     "@lidofinance/lido-ui": "^3.18.0",
     "@svgr/webpack": "^8.0.1",
     "@tanstack/react-query": "^5.29.0",

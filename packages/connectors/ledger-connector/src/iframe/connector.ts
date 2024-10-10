@@ -49,6 +49,7 @@ export function ledgerLiveConnector({
       try {
         const provider = await this.getProvider();
 
+        // works without bind because it's an obj created(scoped) in a function
         provider.on('accountsChanged', this.onAccountsChanged);
         provider.on('chainChanged', this.onChainChanged);
 
@@ -142,15 +143,16 @@ export function ledgerLiveConnector({
       }
     },
 
-    AccountsChanged(accounts: Address[]) {
+    onAccountsChanged(accounts: Address[]) {
       if (accounts.length === 0 || !accounts[0]) {
         emitter.emit('disconnect');
+        this.disconnect();
       } else {
         emitter.emit('change', { accounts });
       }
     },
 
-    ChainChanged(chainId: number | string) {
+    onChainChanged(chainId: number | string) {
       emitter.emit('change', { chainId: Number(chainId) });
     },
 
@@ -162,14 +164,6 @@ export function ledgerLiveConnector({
 
     onDisconnect() {
       emitter.emit('disconnect');
-    },
-
-    onAccountsChanged() {
-      // NOOP
-    },
-
-    onChainChanged() {
-      // NOOP
     },
   }));
 }
