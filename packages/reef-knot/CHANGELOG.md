@@ -1,5 +1,13 @@
 # reef-knot
 
+## 5.7.2
+
+### Patch Changes
+
+- Fix: onAccountsChanged, onChainChanged methods for ledgerLiveConnector
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.1.2
+
 ## 5.7.1
 
 ### Patch Changes
