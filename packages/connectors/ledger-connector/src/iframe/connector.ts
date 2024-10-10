@@ -146,7 +146,6 @@ export function ledgerLiveConnector({
     onAccountsChanged(accounts: Address[]) {
       if (accounts.length === 0 || !accounts[0]) {
         emitter.emit('disconnect');
-        this.disconnect();
       } else {
         emitter.emit('change', { accounts });
       }
