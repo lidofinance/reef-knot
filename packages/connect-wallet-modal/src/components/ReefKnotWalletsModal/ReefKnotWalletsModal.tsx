@@ -1,27 +1,16 @@
 import React from 'react';
 import { Modal } from '@reef-knot/ui-react';
-import { WalletsModalProps } from './types';
-import { Terms, WalletModalConnectTermsProps } from '../Terms';
-import { LedgerModal } from '../Ledger';
-import { EagerConnectModal } from './components/EagerConnectModal';
-import { ConnectWalletModal } from './components/ConnectWalletModal';
 import { useReefKnotModal } from '@reef-knot/core-react';
+import type { ReefKnotWalletsModalProps } from '@reef-knot/types';
+import { LedgerModal } from '../Ledger';
+import { EagerConnectModal } from '../EagerConnectModal';
+import { ConnectWalletModal } from '../ConnectWalletModal';
 
-export function WalletsModal({
-  children,
-  ...props
-}: React.PropsWithChildren<WalletsModalProps>) {
-  const { metrics, termsLink, privacyNoticeLink } = props;
-  const { onClickWalletsLess, onClickWalletsMore, ...passedDownProps } = props;
-
+export function ReefKnotWalletsModal<I extends string = string>(
+  props: ReefKnotWalletsModalProps<I>,
+) {
+  const { config } = props;
   const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
-
-  const termsProps: WalletModalConnectTermsProps = {
-    termsLink: termsLink || 'https://lido.fi/terms-of-use',
-    privacyNoticeLink: privacyNoticeLink || 'https://lido.fi/privacy-notice',
-    metrics,
-  };
-
   const onCloseSuccess = () => closeModal({ success: true });
   const onCloseReject = () => closeModal({ success: false });
   const onExit = () => forceCloseAllModals();
@@ -30,12 +19,9 @@ export function WalletsModal({
     case 'wallet': {
       return (
         <ConnectWalletModal
-          {...passedDownProps}
-          termsProps={termsProps}
+          {...props}
           onCloseSuccess={onCloseSuccess}
           onCloseReject={onCloseReject}
-          onClickWalletsLess={onClickWalletsLess}
-          onClickWalletsMore={onClickWalletsMore}
         />
       );
     }
@@ -43,12 +29,11 @@ export function WalletsModal({
     case 'ledger':
       return (
         <LedgerModal
-          {...passedDownProps} // the props are overridden here on purpose
+          {...props} // the props are overridden here on purpose
           open
           onClose={onCloseSuccess}
           onBack={onCloseReject}
           onExited={onExit}
-          metrics={metrics}
         />
       );
 
@@ -56,11 +41,10 @@ export function WalletsModal({
       const { tryConnection, initialError } = currentModal.props;
       return (
         <EagerConnectModal
+          config={config}
           tryConnection={tryConnection}
           initialError={initialError}
-        >
-          <Terms {...termsProps} />
-        </EagerConnectModal>
+        />
       );
     }
 
@@ -68,7 +52,7 @@ export function WalletsModal({
       const { icon: titleIcon, title, text: subtitle } = currentModal.props;
       return (
         <Modal
-          {...passedDownProps} // the props are overridden here on purpose
+          {...props} // the props are overridden here on purpose
           open
           center
           title={title}

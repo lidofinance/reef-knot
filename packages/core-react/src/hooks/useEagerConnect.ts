@@ -8,7 +8,7 @@ import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 
 import type { WalletAdapterData } from '@reef-knot/types';
 import type { Config, ConnectReturnType } from '@wagmi/core';
-import type { ReefKnotModalContextValue } from '../context';
+import type { ReefKnotModalContextValue } from '../context/reefKnotModalContext';
 
 type ConnectResult = ConnectReturnType;
 
