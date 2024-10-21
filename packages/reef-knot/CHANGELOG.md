@@ -1,5 +1,13 @@
 # reef-knot
 
+## 5.7.3
+
+### Patch Changes
+
+- Fix the issue with paused loading animation for ConnectButtonLoader
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.5.1
+
 ## 5.7.2
 
 ### Patch Changes
