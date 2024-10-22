@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 4.1.3
+
+### Patch Changes
+
+- 3bfcb7c: Fix Ledger reconnection: after explicit disconnect and after page reloading
+
 ## 4.1.2
 
 ### Patch Changes
