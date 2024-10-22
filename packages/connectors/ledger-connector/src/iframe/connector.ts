@@ -13,10 +13,8 @@ import { Chain } from 'wagmi/chains';
 import { getAddress } from '@ethersproject/address';
 import { hexValue } from '@ethersproject/bytes';
 import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
-import type {
-  IFrameEthereumProvider,
-  IFrameEthereumProviderOptions,
-} from '@ledgerhq/iframe-provider';
+import type { IFrameEthereumProviderOptions } from '@ledgerhq/iframe-provider';
+import type { LedgerIFrameProvider } from './provider';
 
 export const idLedgerLive = 'ledgerLive';
 export const name = 'Ledger Live';
@@ -31,9 +29,9 @@ export function ledgerLiveConnector({
   options,
   defaultChain,
 }: LedgerLiveConnectorArgs) {
-  const providers: Record<Chain['id'], IFrameEthereumProvider> = {};
+  const providers: Record<Chain['id'], LedgerIFrameProvider> = {};
 
-  return createConnector<IFrameEthereumProvider>(({ chains, emitter }) => ({
+  return createConnector<LedgerIFrameProvider>(({ chains, emitter }) => ({
     id: idLedgerLive,
     name,
     type: ledgerLiveConnector.type,
@@ -41,10 +39,8 @@ export function ledgerLiveConnector({
     async getProvider({ chainId } = {}) {
       const chain = chains.find((x) => x.id === chainId) ?? defaultChain;
       if (!providers[chain.id]) {
-        const { IFrameEthereumProvider } = await import(
-          '@ledgerhq/iframe-provider'
-        );
-        providers[chain.id] = new IFrameEthereumProvider(options);
+        const { LedgerIFrameProvider } = await import('./provider');
+        providers[chain.id] = new LedgerIFrameProvider(options);
       }
       return providers[chain.id];
     },
@@ -53,6 +49,7 @@ export function ledgerLiveConnector({
       try {
         const provider = await this.getProvider();
 
+        // works without bind because it's an obj created(scoped) in a function
         provider.on('accountsChanged', this.onAccountsChanged);
         provider.on('chainChanged', this.onChainChanged);
 
@@ -146,15 +143,16 @@ export function ledgerLiveConnector({
       }
     },
 
-    AccountsChanged(accounts: Address[]) {
+    onAccountsChanged(accounts: Address[]) {
       if (accounts.length === 0 || !accounts[0]) {
         emitter.emit('disconnect');
+        void this.disconnect();
       } else {
         emitter.emit('change', { accounts });
       }
     },
 
-    ChainChanged(chainId: number | string) {
+    onChainChanged(chainId: number | string) {
       emitter.emit('change', { chainId: Number(chainId) });
     },
 
@@ -166,14 +164,6 @@ export function ledgerLiveConnector({
 
     onDisconnect() {
       emitter.emit('disconnect');
-    },
-
-    onAccountsChanged() {
-      // NOOP
-    },
-
-    onChainChanged() {
-      // NOOP
     },
   }));
 }
