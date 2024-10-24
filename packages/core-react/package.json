@@ -45,7 +45,7 @@
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "viem": "2.13.3",
-    "wagmi": "2.11.2",
+    "wagmi": "2.12.25",
     "mipd": "0.0.7"
   },
   "peerDependencies": {
@@ -56,7 +56,7 @@
     "@reef-knot/wallets-helpers": "^2.0.2",
     "react": ">=18",
     "viem": "2.13.3",
-    "wagmi": "2.11.2",
+    "wagmi": "2.12.25",
     "@tanstack/react-query": "^5.29.0"
   }
 }
