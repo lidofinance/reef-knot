@@ -38,11 +38,9 @@ export const ConnectButtonLoaderStyle = styled.div<{ $isLoading: boolean }>`
 
   width: 100%;
   height: 100%;
-  animation-name: ${translation};
+  animation-name: ${({ $isLoading }) => ($isLoading ? translation : 'none')};
   animation-duration: 1s;
   animation-iteration-count: infinite;
-  animation-play-state: ${({ $isLoading }) =>
-    $isLoading ? 'running' : 'paused'};
   background-size: 300% 100%;
   background-position: 100% 0;
   background-image: linear-gradient(

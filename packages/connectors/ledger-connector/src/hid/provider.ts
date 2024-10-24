@@ -17,6 +17,15 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
     this.signer = this.getSigner();
   }
 
+  async loadTransport() {
+    if (!this.transport) {
+      const { default: TransportWebHID } = await import(
+        '@ledgerhq/hw-transport-webhid'
+      );
+      this.transport = TransportWebHID;
+    }
+  }
+
   getSigner(): LedgerHQSigner {
     return new LedgerHQSigner(this);
   }
@@ -30,7 +39,7 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
   }
 
   async getTransport(): Promise<TransportWebHID> {
-    invariant(this.transport, 'Transport is not defined');
+    await this.loadTransport();
 
     try {
       const transportInstance =
@@ -45,10 +54,7 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
 
   async enable(): Promise<string> {
     try {
-      const { default: TransportWebHID } = await import(
-        '@ledgerhq/hw-transport-webhid'
-      );
-      this.transport = TransportWebHID;
+      await this.loadTransport();
 
       const { hid } = window.navigator;
 
