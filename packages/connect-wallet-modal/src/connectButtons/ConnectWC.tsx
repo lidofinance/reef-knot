@@ -3,8 +3,8 @@ import { Connector, useConfig, useConnect } from 'wagmi';
 import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
-import { ConnectButton } from '../components/ConnectButton';
-import { openWindow } from '../helpers';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
+import { openWindow } from '../helpers/openWindow';
 import { ConnectWCProps } from './types';
 import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
 
@@ -24,8 +24,7 @@ const setRedirectionWindowLocation = (redirectLink: string, WCURI: string) => {
 export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const {
     onConnect,
-    onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     metrics,
     walletId,
     walletName,
@@ -62,7 +61,6 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       return; // A user was redirected to a wallet mobile app, no need to continue
     }
 
-    onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
 
@@ -105,16 +103,15 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     }
   }, [
     deeplink,
-    onBeforeConnect,
-    metricsOnClick,
     disconnect,
+    metricsOnClick,
+    WCURICloseRedirectionWindow,
     WCURICondition,
     WCURIConnectorFn,
     WCURIRedirectLink,
     onConnect,
     metricsOnConnect,
     connectAsync,
-    WCURICloseRedirectionWindow,
     config.chains,
     connectWithLoading,
     walletId,
@@ -122,16 +119,16 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   ]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}
     >
       {walletName}
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };
