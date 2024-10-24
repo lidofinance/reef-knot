@@ -4,7 +4,7 @@ import {
   createConnector,
 } from 'wagmi';
 import { Chain } from 'wagmi/chains';
-import { checkError } from '../hid/helpers';
+import { checkError, clearLedgerDerivationPath } from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
 
 export const idLedgerHid = 'ledgerHID';
@@ -57,9 +57,9 @@ export function ledgerHIDConnector({
 
     async disconnect() {
       // Handles programmatic disconnect.
-      // We don't need to do anything specific for HID Ledger connection in this case.
       const provider = await this.getProvider();
       provider.removeListener('disconnect', this.onDisconnect);
+      clearLedgerDerivationPath();
     },
 
     async getAccounts() {
@@ -81,7 +81,10 @@ export function ledgerHIDConnector({
         if (!provider) throw new ConnectorNotFoundError();
         const [account] = await this.getAccounts();
         return !!account;
-      } catch {
+      } catch (e) {
+        // The errors caught here are generally expected in most use cases.
+        // However, unexpected errors may still occur, so they should at least be logged to the console.
+        console.error(e);
         return false;
       }
     },

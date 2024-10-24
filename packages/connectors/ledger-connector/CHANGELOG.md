@@ -1,5 +1,23 @@
 # @reef-knot/ledger-connector
 
+## 4.1.3
+
+### Patch Changes
+
+- 3bfcb7c: Fix Ledger reconnection: after explicit disconnect and after page reloading
+
+## 4.1.2
+
+### Patch Changes
+
+- Fix: onAccountsChanged, onChainChanged methods for ledgerLiveConnector
+
+## 4.1.1
+
+### Patch Changes
+
+- Fix: wrap IFrameEthereumProvider in LedgerIFrameProvider with the "request" method, which is required for useWalletClient wagmi hook
+
 ## 4.1.0
 
 ### Minor Changes
