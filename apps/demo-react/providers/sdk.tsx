@@ -29,7 +29,7 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
       chainId: chainId as any,
       rpcUrls: [getBackendRPCPath(chainId)],
       web3Provider: client as any,
-      logMode: 'debug',
+      logMode: 'none',
     });
     // inject lido_sdk for console access
     if (typeof window !== 'undefined') (window as any).lido_sdk = sdk;

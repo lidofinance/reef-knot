@@ -1,5 +1,17 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.5.2
+
+### Patch Changes
+
+- 3bfcb7c: Fix modals props passing
+
+## 5.5.1
+
+### Patch Changes
+
+- Fix the issue with paused loading animation for ConnectButtonLoader
+
 ## 5.5.0
 
 ### Minor Changes

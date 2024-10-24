@@ -1,6 +1,7 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { resolveProperties } from '@ethersproject/properties';
 import { TransactionRequestExtended, UnsignedTransactionStrict } from './types';
+import { LS_KEY_DERIVATION_PATH } from './constants';
 
 export const isHIDSupported = () => {
   try {
@@ -81,4 +82,8 @@ export const checkError = (error: any): never => {
   }
 
   throw error;
+};
+
+export const clearLedgerDerivationPath = () => {
+  window?.localStorage.removeItem(LS_KEY_DERIVATION_PATH);
 };
