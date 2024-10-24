@@ -6,6 +6,7 @@ import {
   ConnectCoinbase,
   ConnectBrowser,
   ConnectBinance,
+  ConnectMetaMask,
 } from '../../connectButtons';
 import { WalletsModal } from './WalletsModal';
 import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
@@ -21,6 +22,7 @@ const buttonComponentsByConnectorId: WalletsModalEthProps['buttonComponentsByCon
     coinbaseWallet: ConnectCoinbase,
     ledgerHID: ConnectLedger,
     binanceWallet: ConnectBinance,
+    metaMask: ConnectMetaMask,
   };
 
 const WALLETS_DISPLAY_CONFIG_DEFAULT: WalletsModalEthProps['walletsShown'] = [
