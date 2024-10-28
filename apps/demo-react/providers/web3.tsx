@@ -12,7 +12,6 @@ import { CHAINS } from '@lido-sdk/constants';
 
 import { getBackendRPCPath } from 'config';
 import { useClientConfig } from 'providers/client-config';
-import { SDKLegacyProvider } from './sdk-legacy';
 
 type ChainsList = [wagmiChains.Chain, ...wagmiChains.Chain[]];
 
@@ -89,13 +88,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
           walletDataList={walletsDataList}
         >
           {isWalletConnectionAllowed && <AutoConnect autoConnect />}
-          <SDKLegacyProvider
-            defaultChainId={defaultChain.id}
-            supportedChains={supportedChains}
-            rpc={backendRPC}
-          >
-            {children}
-          </SDKLegacyProvider>
+          {children}
         </ReefKnot>
       </QueryClientProvider>
     </WagmiProvider>

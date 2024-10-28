@@ -6,9 +6,10 @@ import {
   Identicon,
   External,
   Copy,
+  Select,
+  Option,
 } from '@lidofinance/lido-ui';
-import { useEtherscanOpen } from '@lido-sdk/react';
-import { useWeb3 } from 'reef-knot/web3-react';
+
 import { useForceDisconnect, useConnectorInfo } from 'reef-knot/core-react';
 import { useCopyToClipboard } from 'hooks/useCopyToClipboard';
 import { FC, useCallback } from 'react';
@@ -21,10 +22,19 @@ import {
   WalletModalAddressStyle,
   WalletModalActionsStyle,
 } from './walletModalStyles';
+import { usePublicClient } from 'wagmi';
+import { useAccount } from 'wagmi';
+import { useChainId } from 'wagmi';
+import { useSwitchChain } from 'wagmi';
+import { useConnections } from 'wagmi';
 
 const WalletModal: FC<ModalProps> = (props) => {
   const { onClose } = props;
-  const { account } = useWeb3();
+  const chainId = useChainId();
+  const [connection] = useConnections();
+  const { chains, switchChain } = useSwitchChain();
+  const { address } = useAccount();
+  const client = usePublicClient();
   const { connectorName } = useConnectorInfo();
   const { forceDisconnect } = useForceDisconnect();
   const handleDisconnect = useCallback(() => {
@@ -32,9 +42,15 @@ const WalletModal: FC<ModalProps> = (props) => {
     onClose?.();
   }, [onClose, forceDisconnect]);
 
-  const handleCopy = useCopyToClipboard(account ?? '');
-  const handleEtherscan = useEtherscanOpen(account ?? '', 'address');
+  const handleCopy = useCopyToClipboard(address ?? '');
 
+  const handleEtherscan = () => {
+    if (address && client) {
+      window.open(
+        `${client.chain.blockExplorers?.default.url}/address/${address}`,
+      );
+    }
+  };
   return (
     <Modal title="Account" {...props}>
       <WalletModalContentStyle>
@@ -57,10 +73,27 @@ const WalletModal: FC<ModalProps> = (props) => {
         </WalletModalConnectedStyle>
 
         <WalletModalAccountStyle>
-          <Identicon address={account ?? ''} />
+          <Identicon address={address ?? ''} />
           <WalletModalAddressStyle>
-            <Address address={account ?? ''} symbols={6} />
+            <Address address={address ?? ''} symbols={6} />
           </WalletModalAddressStyle>
+        </WalletModalAccountStyle>
+
+        <WalletModalAccountStyle>
+          <Select
+            value={chainId}
+            disabled={!connection?.connector.switchChain}
+            onChange={(newChain) => {
+              switchChain({ chainId: Number(newChain) });
+            }}
+            fullwidth
+          >
+            {chains.map((chain) => (
+              <Option key={chain.id} value={chain.id}>
+                {chain.name}
+              </Option>
+            ))}
+          </Select>
         </WalletModalAccountStyle>
 
         <WalletModalActionsStyle>
