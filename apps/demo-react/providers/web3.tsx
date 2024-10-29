@@ -70,7 +70,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       }),
       {},
     );
-  }, [supportedChains]);
+  }, [supportedChains, backendRPC]);
 
   const { wagmiConfig, reefKnotConfig, walletsModalConfig } = useMemo(() => {
     return getDefaultConfig({
