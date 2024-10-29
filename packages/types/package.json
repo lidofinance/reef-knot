@@ -27,11 +27,13 @@
   },
   "devDependencies": {
     "react": "18.2.0",
-    "wagmi": "2.11.2"
+    "wagmi": "2.11.2",
+    "@reef-knot/ui-react": "^2.1.3"
   },
   "peerDependencies": {
     "react": ">=18",
     "wagmi": "2.11.2",
+    "@reef-knot/ui-react": "^2.1.3",
     "@tanstack/react-query": "^5.29.0"
   }
 }

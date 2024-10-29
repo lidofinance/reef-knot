@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import type { MetricsProp } from 'reef-knot/connect-wallet-modal';
+import type { MetricsProp } from '@reef-knot/types';
 import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 
 const getClickHandler = (walletName: string) => () =>
