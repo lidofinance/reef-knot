@@ -62,13 +62,15 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
     [supportedChainIds],
   );
 
-  const transports = supportedChains.reduce<Record<number, Transport>>(
-    (res, curr) => ({
-      ...res,
-      [curr.id]: http(backendRPC[curr.id], { batch: true }),
-    }),
-    {},
-  );
+  const transports = useMemo(() => {
+    return supportedChains.reduce<Record<number, Transport>>(
+      (res, curr) => ({
+        ...res,
+        [curr.id]: http(backendRPC[curr.id], { batch: true }),
+      }),
+      {},
+    );
+  }, [supportedChains]);
 
   const { wagmiConfig, reefKnotConfig, walletsModalConfig } = useMemo(() => {
     return getDefaultConfig({
