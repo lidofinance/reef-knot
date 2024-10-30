@@ -9,13 +9,11 @@ import { useReefKnotModal } from '@reef-knot/core-react';
 
 export function WalletsModal({
   children,
-  metrics,
-  termsLink,
-  privacyNoticeLink,
-  onClickWalletsLess,
-  onClickWalletsMore,
-  ...passedDownProps
+  ...props
 }: React.PropsWithChildren<WalletsModalProps>) {
+  const { metrics, termsLink, privacyNoticeLink } = props;
+  const { onClickWalletsLess, onClickWalletsMore, ...passedDownProps } = props;
+
   const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
 
   const termsProps: WalletModalConnectTermsProps = {
