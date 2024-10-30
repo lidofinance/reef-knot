@@ -1,5 +1,13 @@
 # reef-knot
 
+## 5.7.5
+
+### Patch Changes
+
+- Hotfix: wallets metrics in WalletsModal
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@5.5.3
+
 ## 5.7.4
 
 ### Patch Changes
