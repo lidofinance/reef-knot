@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-exodus",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -32,8 +32,8 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^2.1.0",
-    "@reef-knot/wallets-helpers": "^2.1.0",
+    "@reef-knot/types": "^2.1.1",
+    "@reef-knot/wallets-helpers": "^2.1.1",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
