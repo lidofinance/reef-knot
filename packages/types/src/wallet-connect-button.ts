@@ -10,12 +10,15 @@ export type ConnectButtonBaseProps = ButtonProps & {
   isLoading?: boolean;
 };
 
-export type ConnectWalletButtonProps = ButtonProps &
-  ConnectButtonBaseProps & {
-    disabled: boolean;
-    walletName: string;
-    onConnect?: () => void;
-    metrics?: MetricsProp;
-    connector: Connector | CreateConnectorFn;
-    detector?: WalletAdapterData['detector'];
-  };
+export type ConnectWalletButtonProps = ConnectButtonBaseProps & {
+  walletId: WalletAdapterData['walletId'];
+  walletName: WalletAdapterData['walletName'];
+  detector?: WalletAdapterData['detector'];
+  deeplink?: WalletAdapterData['deeplink'];
+  downloadURLs?: WalletAdapterData['downloadURLs'];
+  walletconnectExtras?: WalletAdapterData['walletconnectExtras'];
+  connector: Connector | CreateConnectorFn;
+  disabled: boolean;
+  metrics?: MetricsProp;
+  onConnect?: () => void;
+};
