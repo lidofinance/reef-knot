@@ -1,5 +1,11 @@
 # @reef-knot/core-react
 
+## 4.3.1
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 4.3.0
 
 ### Minor Changes

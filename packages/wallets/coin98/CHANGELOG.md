@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-coin98
 
+## 2.1.1
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 2.1.0
 
 ### Minor Changes

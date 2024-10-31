@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 4.1.4
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 4.1.3
 
 ### Patch Changes
