@@ -17,7 +17,7 @@
     "@lido-sdk/constants": "^3.2.1",
     "@lido-sdk/providers": "^1.4.14",
     "@lido-sdk/react": "2.0.2",
-    "@lidofinance/lido-ethereum-sdk": "3.5.0-alpha.3",
+    "@lidofinance/lido-ethereum-sdk": "4.0.0",
     "@lidofinance/lido-ui": "^3.18.0",
     "@svgr/webpack": "^8.0.1",
     "@tanstack/react-query": "^5.29.0",
@@ -33,8 +33,8 @@
     "swr": "^2.2.5",
     "tiny-invariant": "^1.3.1",
     "url-loader": "^4.1.1",
-    "viem": "2.13.3",
-    "wagmi": "2.11.2"
+    "viem": ">=2.21",
+    "wagmi": ">=2.12"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
