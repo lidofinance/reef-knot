@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 4.0.2
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 4.0.1
 
 ### Patch Changes

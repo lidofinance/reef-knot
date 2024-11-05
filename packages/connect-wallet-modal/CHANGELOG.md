@@ -1,5 +1,18 @@
 # @reef-knot/connect-wallet-modal
 
+## 5.5.4
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+  - @reef-knot/wallets-list@2.3.1
+
+## 5.5.3
+
+### Patch Changes
+
+- Hotfix: wallets metrics in WalletsModal
+
 ## 5.5.2
 
 ### Patch Changes

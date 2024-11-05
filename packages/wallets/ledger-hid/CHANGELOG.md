@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-ledger-hid
 
+## 3.0.2
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 3.0.1
 
 ### Patch Changes

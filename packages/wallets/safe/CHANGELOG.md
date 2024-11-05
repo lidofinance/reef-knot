@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-safe
 
+## 2.0.2
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 2.0.1
 
 ### Patch Changes
