@@ -1,5 +1,12 @@
 # @reef-knot/wallet-adapter-coinbase
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+
 ## 2.2.1
 
 ### Patch Changes

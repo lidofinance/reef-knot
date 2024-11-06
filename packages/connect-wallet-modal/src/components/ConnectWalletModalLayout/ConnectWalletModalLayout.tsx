@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Modal } from '@reef-knot/ui-react';
+import type { ReefKnotWalletsModalProps } from '@reef-knot/types';
 import { EmptyWalletsList } from '../EmptyWalletsList';
 import {
   ContentWrapper,
@@ -15,18 +16,16 @@ import {
   IconMoreWallets,
   MEDIA_MOBILE_HEIGHT,
 } from './styles';
-import { Terms, WalletModalConnectTermsProps } from '../../../Terms';
+import { Terms } from '../Terms';
 
 import { isMobileOrTablet, isIOS, isIPad } from '@reef-knot/wallets-helpers';
-import type { WalletsModalProps } from '../../types';
 import { WalletModalInput } from '../WalletModalInput';
 
 // Additional check because `@supports selector(::-webkit-scrollbar)`
 // passes as true on iOS/iPad devices, but styles will not really apply
 const isSupportedCustomScrollbar = !isIOS && !isIPad;
 
-type ConnectWalletModalLayoutProps = WalletsModalProps & {
-  termsProps: WalletModalConnectTermsProps;
+type ConnectWalletModalLayoutProps = ReefKnotWalletsModalProps & {
   inputValue: string;
   isEmptyWalletsList: boolean;
   isShownOtherWallets: boolean;
@@ -38,8 +37,7 @@ type ConnectWalletModalLayoutProps = WalletsModalProps & {
 };
 
 export const ConnectWalletModalLayout = ({
-  termsProps,
-  linkDontHaveWallet,
+  config,
   inputValue,
   onInputChange,
   onInputClear,
@@ -51,7 +49,8 @@ export const ConnectWalletModalLayout = ({
   children,
   ...passedDownProps
 }: ConnectWalletModalLayoutProps) => {
-  const { buttonsFullWidth = false, shouldInvertWalletIcon } = passedDownProps;
+  const { linkDontHaveWallet } = config;
+  const { buttonsFullWidth = false, darkThemeEnabled } = passedDownProps;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isMobileHeight, setIsMobileHeight] = useState(false);
@@ -97,7 +96,7 @@ export const ConnectWalletModalLayout = ({
           $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
         >
           <ContentHeader>
-            <Terms {...termsProps} />
+            <Terms config={config} />
             <Subtitle>
               <span>Choose wallet </span>
               {linkDontHaveWallet && (
@@ -124,7 +123,7 @@ export const ConnectWalletModalLayout = ({
             {isEmptyWalletsList && (
               <EmptyWalletsList
                 inputValue={inputValue}
-                shouldInvertColor={shouldInvertWalletIcon}
+                shouldInvertColor={darkThemeEnabled}
                 onClickClear={onInputClear}
               />
             )}

@@ -1,5 +1,12 @@
 # @reef-knot/wallet-adapter-coinbase-smart-wallet
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+
 ## 1.0.0
 
 ### Major Changes
