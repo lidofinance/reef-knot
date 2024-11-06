@@ -6,8 +6,6 @@
 
 - reef-knot setup reworked
 
-## 5.7.7
-
 ### Patch Changes
 
 - Updated dependencies
