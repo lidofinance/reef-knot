@@ -1,5 +1,5 @@
 import { http, Chain, Transport } from 'viem';
-import { createConfig, Storage } from 'wagmi';
+import { createConfig } from 'wagmi';
 import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
 import {
   getWalletsDataList,
