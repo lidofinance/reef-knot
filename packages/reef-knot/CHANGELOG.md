@@ -1,5 +1,12 @@
 # reef-knot
 
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@5.1.0
+
 ## 6.0.0
 
 ### Major Changes
