@@ -1,5 +1,18 @@
 # @reef-knot/wallet-adapter-imtoken
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+
+## 2.0.2
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 2.0.1
 
 ### Patch Changes

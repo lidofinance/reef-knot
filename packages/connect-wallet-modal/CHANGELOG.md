@@ -1,5 +1,32 @@
 # @reef-knot/connect-wallet-modal
 
+## 6.0.0
+
+### Major Changes
+
+- reef-knot setup rework
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@5.0.0
+  - @reef-knot/types@3.0.0
+  - @reef-knot/web3-react@5.0.0
+  - @reef-knot/wallets-list@3.0.0
+
+## 5.5.4
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+  - @reef-knot/wallets-list@2.3.1
+
+## 5.5.3
+
+### Patch Changes
+
+- Hotfix: wallets metrics in WalletsModal
+
 ## 5.5.2
 
 ### Patch Changes

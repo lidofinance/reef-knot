@@ -1,8 +1,5 @@
-import type {
-  ConnectWalletButtonProps,
-  WalletAdapterData,
-} from '@reef-knot/types';
+import type { ConnectWalletButtonProps } from '@reef-knot/types';
 
-export type ConnectInjectedProps = WalletAdapterData & ConnectWalletButtonProps;
-export type ConnectWCProps = WalletAdapterData & ConnectWalletButtonProps;
-export type ConnectLedgerProps = WalletAdapterData & ConnectWalletButtonProps;
+export type ConnectInjectedProps = ConnectWalletButtonProps;
+export type ConnectWCProps = ConnectWalletButtonProps;
+export type ConnectLedgerProps = ConnectWalletButtonProps;

@@ -141,6 +141,7 @@ export const ConnectWalletModal = ({
           <WalletComponent
             key={walletId}
             icon={walletData.icon}
+            walletId={walletId}
             walletName={walletData.walletName}
             disabled={!termsChecked || someWalletIsLoading}
             onConnect={() => handleConnectSuccess(walletId)}
@@ -149,6 +150,9 @@ export const ConnectWalletModal = ({
             isCompact={isShownOtherWallets}
             connector={walletData.createConnectorFn}
             detector={walletData.detector}
+            deeplink={walletData.deeplink}
+            downloadURLs={walletData.downloadURLs}
+            walletconnectExtras={walletData.walletconnectExtras}
           />
         );
       })}

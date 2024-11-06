@@ -1,5 +1,18 @@
 # @reef-knot/web3-react
 
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@5.0.0
+
+## 4.0.2
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 4.0.1
 
 ### Patch Changes

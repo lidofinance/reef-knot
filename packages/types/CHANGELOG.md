@@ -1,5 +1,17 @@
 # @reef-knot/types
 
+## 3.0.0
+
+### Major Changes
+
+- reef-knot setup rework
+
+## 2.1.1
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 2.1.0
 
 ### Minor Changes

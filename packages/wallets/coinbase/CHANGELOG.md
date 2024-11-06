@@ -1,5 +1,18 @@
 # @reef-knot/wallet-adapter-coinbase
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+
+## 2.2.1
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 2.2.0
 
 ### Minor Changes

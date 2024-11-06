@@ -1,5 +1,18 @@
 # @reef-knot/wallet-adapter-ledger-live
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+
+## 3.0.2
+
+### Patch Changes
+
+- accbcde: viem and wagmi versions updated with flexible declarations
+
 ## 3.0.1
 
 ### Patch Changes
