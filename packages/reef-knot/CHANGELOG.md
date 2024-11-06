@@ -1,5 +1,11 @@
 # reef-knot
 
+## 6.0.0
+
+### Major Changes
+
+- reef-knot setup reworked
+
 ## 5.7.7
 
 ### Patch Changes
