@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/connect-wallet-modal",
-  "version": "5.5.4",
+  "version": "6.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -41,16 +41,16 @@
     "@ledgerhq/hw-app-eth": "^6.37.1",
     "@ledgerhq/hw-transport-webhid": "^6.29.0",
     "@lidofinance/lido-ui": "^3.18.0",
-    "@reef-knot/wallets-list": "^2.3.1",
+    "@reef-knot/wallets-list": "^3.0.0",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17"
   },
   "devDependencies": {
-    "@reef-knot/core-react": "^4.3.1",
-    "@reef-knot/types": "^2.1.1",
+    "@reef-knot/core-react": "^5.0.0",
+    "@reef-knot/types": "^3.0.0",
     "@reef-knot/ui-react": "^2.1.5",
     "@reef-knot/wallets-helpers": "^2.1.1",
-    "@reef-knot/web3-react": "^4.0.2",
+    "@reef-knot/web3-react": "^5.0.0",
     "@reef-knot/ledger-connector": "^4.1.4",
     "eslint-config-custom": "*",
     "react": "18.2.0",
@@ -59,11 +59,11 @@
     "wagmi": ">=2.12"
   },
   "peerDependencies": {
-    "@reef-knot/core-react": "^4.0.0",
-    "@reef-knot/types": "^2.0.0",
+    "@reef-knot/core-react": "^5.0.0",
+    "@reef-knot/types": "^3.0.0",
     "@reef-knot/ui-react": "^2.0.0",
     "@reef-knot/wallets-helpers": "^2.0.0",
-    "@reef-knot/web3-react": "^4.0.0",
+    "@reef-knot/web3-react": "^5.0.0",
     "@reef-knot/ledger-connector": "^4.0.0",
     "react": ">=18",
     "@lidofinance/lido-ui": "^3.18.0",

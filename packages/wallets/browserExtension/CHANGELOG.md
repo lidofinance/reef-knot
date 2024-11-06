@@ -1,5 +1,12 @@
 # @reef-knot/wallet-adapter-browser-extension
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+
 ## 2.0.2
 
 ### Patch Changes

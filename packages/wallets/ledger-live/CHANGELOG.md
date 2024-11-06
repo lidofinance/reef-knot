@@ -1,5 +1,12 @@
 # @reef-knot/wallet-adapter-ledger-live
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+
 ## 3.0.2
 
 ### Patch Changes

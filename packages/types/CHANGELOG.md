@@ -1,5 +1,11 @@
 # @reef-knot/types
 
+## 3.0.0
+
+### Major Changes
+
+- reef-knot setup rework
+
 ## 2.1.1
 
 ### Patch Changes
