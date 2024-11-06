@@ -11,17 +11,19 @@ type RpcMap = Record<number, string>;
 type Transports = Record<number, Transport>;
 type Chains = readonly [Chain, ...Chain[]];
 
-type WagmiAllowedArgs = {
-  chains: Chains;
-  ssr?: boolean;
-  transports?: Transports;
-  storage?: Storage | null;
-};
+type WagmiConfigArgs = Omit<
+  Parameters<typeof createConfig>[0],
+  // Args `connectors` and `client` are disabled because reef-knot uses
+  // opinionated way to handle connectors and it is designed to utilize
+  // `transports` argument.
+  // It could be changed in future, if there will be such request.
+  'connectors' | 'client'
+>;
 
 type DefaultConfigArgs<I extends string = string> =
   ReefKnotWalletsModalConfig<I> &
     GetWalletsDataListArgs &
-    WagmiAllowedArgs & {
+    WagmiConfigArgs & {
       autoConnect: boolean;
     };
 
@@ -41,12 +43,8 @@ export const getDefaultConfig = <I extends string = string>({
   walletconnectProjectId,
   walletsList,
   safeAllowedDomains,
-
-  // Wagmi config args
   chains,
-  ssr,
   transports,
-  storage,
   autoConnect,
 
   // Wallets config args
@@ -58,6 +56,9 @@ export const getDefaultConfig = <I extends string = string>({
   linkTerms,
   linkPrivacyNotice,
   linkDontHaveWallet,
+
+  // Wagmi config args
+  ...wagmiArgs
 }: DefaultConfigArgs<I>) => {
   const { walletsDataList } = getWalletsDataList({
     rpc,
@@ -74,10 +75,9 @@ export const getDefaultConfig = <I extends string = string>({
 
   const wagmiConfig = createConfig({
     chains,
-    ssr,
     transports: transports || getDefaultTransports(chains, rpc),
-    storage,
     multiInjectedProviderDiscovery: false,
+    ...wagmiArgs,
   });
 
   // TODO: We could use `getDefaultWalletsModalConfig` here, but it cause package dependency cycle rn
