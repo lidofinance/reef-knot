@@ -5,34 +5,32 @@ import {
   useReefKnotContext,
   useReefKnotModal,
 } from '@reef-knot/core-react';
+import type {
+  WalletAdapterData,
+  ReefKnotWalletsModalProps,
+} from '@reef-knot/types';
 
-import { WalletsModalProps } from '../../types';
-import { WalletModalConnectTermsProps } from '../../../Terms';
 import { ConnectWalletModalLayout } from '../ConnectWalletModalLayout';
 
-import { sortWalletsList } from './sortWalletsList';
-import type { WalletAdapterData } from '@reef-knot/types';
+import { sortWalletsList } from '../../helpers/sortWalletsList';
 
-type ConnectWalletModalProps = WalletsModalProps & {
+type ConnectWalletModalProps = ReefKnotWalletsModalProps & {
   onCloseSuccess?: () => void;
   onCloseReject?: () => void;
-  termsProps: WalletModalConnectTermsProps;
 };
 
 export const ConnectWalletModal = ({
   onCloseSuccess,
-  onClickWalletsMore,
-  onClickWalletsLess,
   ...passedDownProps
 }: ConnectWalletModalProps) => {
+  const { config: modalConfig, darkThemeEnabled = false } = passedDownProps;
   const {
-    shouldInvertWalletIcon = false,
     metrics,
     buttonComponentsByConnectorId,
     walletsShown,
     walletsPinned,
     walletsDisplayInitialCount = 6,
-  } = passedDownProps;
+  } = modalConfig;
 
   const config = useConfig();
   const { walletDataList, loadingWalletId } = useReefKnotContext();
@@ -52,15 +50,17 @@ export const ConnectWalletModal = ({
     setInputValue('');
   }, []);
 
+  const { walletsMore, walletsLess } = metrics?.events?.click?.handlers || {};
+
   const handleToggleWalletsList = useCallback(() => {
     const nextShownState = !isShownOtherWallets;
     setShowOtherWallets(nextShownState);
     if (nextShownState) {
-      onClickWalletsMore?.();
+      walletsMore?.();
     } else {
-      onClickWalletsLess?.();
+      walletsLess?.();
     }
-  }, [isShownOtherWallets, onClickWalletsMore, onClickWalletsLess]);
+  }, [isShownOtherWallets, walletsMore, walletsLess]);
 
   const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
     [],
@@ -131,22 +131,28 @@ export const ConnectWalletModal = ({
       onToggleWalletsList={handleToggleWalletsList}
       {...passedDownProps}
     >
-      {walletsList.map((walletData) => {
+      {walletsList.map(({ type, walletId, ...walletData }) => {
         const WalletComponent =
-          buttonComponentsByConnectorId[walletData.walletId] ??
-          buttonComponentsByConnectorId[walletData.type] ??
+          buttonComponentsByConnectorId[walletId] ??
+          buttonComponentsByConnectorId[type] ??
           buttonComponentsByConnectorId.default;
         if (!WalletComponent) return null;
         return (
           <WalletComponent
-            key={walletData.walletId}
+            key={walletId}
+            icon={walletData.icon}
+            walletId={walletId}
+            walletName={walletData.walletName}
             disabled={!termsChecked || someWalletIsLoading}
-            onConnect={() => handleConnectSuccess(walletData.walletId)}
-            shouldInvertWalletIcon={shouldInvertWalletIcon}
+            onConnect={() => handleConnectSuccess(walletId)}
+            darkThemeEnabled={darkThemeEnabled}
             metrics={metrics}
             isCompact={isShownOtherWallets}
-            {...walletData}
             connector={walletData.createConnectorFn}
+            detector={walletData.detector}
+            deeplink={walletData.deeplink}
+            downloadURLs={walletData.downloadURLs}
+            walletconnectExtras={walletData.walletconnectExtras}
           />
         );
       })}

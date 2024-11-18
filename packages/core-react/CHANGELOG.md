@@ -1,5 +1,23 @@
 # @reef-knot/core-react
 
+## 5.1.0
+
+### Minor Changes
+
+- wagmi arguments pass through get default config
+
+## 5.0.0
+
+### Major Changes
+
+- reef-knot setup rework
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@3.0.0
+  - @reef-knot/wallets-list@3.0.0
+
 ## 4.3.1
 
 ### Patch Changes

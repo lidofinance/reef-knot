@@ -2,67 +2,41 @@
 
 Provides a modal window with buttons for connection with various crypto wallets.
 
-### Custom
-
-You can configure the list of wallets displayed in the modal.
-The package provides wallet connection buttons that are meant to be used inside the modal.
-You can use them, or you can make your own.
-
-Import the basic WalletsModal component with required wallet connection buttons:
+Import the basic ReefKnotWalletsModal component, default config getter, and the union type of connector identifiers:
 ```ts
-import { WalletsModal, ConnectMetamask, ConnectWalletConnect } from '@reef-knot/connect-wallet-modal'
+import { ReefKnotWalletsModal, getDefaultWalletsModalConfig } from '@reef-knot/connect-wallet-modal'
+import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 ```
 
 Use it like this:
 ```tsx
-<WalletsModal
-  open={isOpen}
-  onClose={handleClose}
-  shouldInvertWalletIcon={false} // set to true for the dark color theme
->
-  {(commonProps) => (
-    <>
-      <ConnectMetamask key='Metamask' {...commonProps} />
-      <ConnectWalletConnect key='WalletConnect' {...commonProps} />
-    </>
-  )}
-</WalletsModal>
-```
+const walletsModalDefaultConfig = getDefaultWalletsModalConfig();
 
-### For Ethereum
-
-The package provides the modal variant with the predefined list of wallets, which work with the Ethereum network.
-
-Import the component:
-```ts
-import { WalletsModalForEth } from '@reef-knot/connect-wallet-modal'
-```
-
-Use it like this:
-```tsx
-<WalletsModalForEth {...props} />
-```
-
-#### How to configure the wallets list
-You can control displayed wallet connection buttons from the list of wallets in the modal.
-Wallets will be displayed in the specified sequence.
-Use the `walletsShown` property like this:
-```tsx
-<WalletsModalForEth
+<ReefKnotWalletsModal<WalletIdsEthereum>
+  {...walletsModalDefaultConfig}
+  darkThemeEnabled={false}
   walletsShown={[
     'metaMask',
     'walletconnect',
     'brave',
     'dappBrowserInjected',
   ]}
-/>
-```
-
-#### How to pin certain wallet at top of the list
-You can pin certain wallets to display it at the top of the list.
-Use the `walletsPinned` property like this:
-```tsx
-<WalletsModalForEth
   walletsPinned={['dappBrowserInjected']}
 />
 ```
+
+> **Note:** The `WalletIdsEthereum` type being passed as a generic to the component will affect the type safety constrain of `walletsShown`, `walletsPinned` and `metrics` props.
+
+#### Props configuration list
+
+| Prop | Description |
+|------|-------------|
+| `darkThemeEnabled?` | Set to true for the dark color theme. <br /> ***Default**: `false`* |
+| `buttonsFullWidth?` | Specify connector buttons to render one per row. It could be handy if you are planning to use only few wallets in your dapp. |
+| `config` | *A config object, see the fields below.*  |
+| `config.buttonComponentsByConnectorId` | A map of `ConnectButton`s associated with a certain connector id or type. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
+| `config.walletsShown` | Controls displayed wallet connection buttons from the list of wallets in the modal. Wallets will be displayed in the specified sequence. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
+| `config.walletsPinned` | Pins certain wallets to display it at the top of the list. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
+| `config.walletsDisplayInitialCount?` | Connection buttons count to render before the "More wallets" button. <br /> ***Default**: `6`* |
+| `config.metrics` | A map of the analytic events. |
+| `config.linkTerms?` <br /> `config.linkPrivacyNotice?` <br /> `config.linkDontHaveWallet?` | UI links. |

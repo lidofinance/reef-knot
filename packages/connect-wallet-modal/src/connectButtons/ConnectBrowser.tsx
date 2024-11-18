@@ -2,7 +2,7 @@ import React, { ElementType, FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect, useReefKnotModal } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
-import { ConnectButton } from '../components/ConnectButton';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { ConnectInjectedProps } from './types';
 import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
@@ -11,8 +11,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     metrics,
     walletId,
     walletName,
@@ -33,7 +32,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     (WalletIcon as ElementType) || (WalletIcon as WalletAdapterIcons)?.light;
 
   const handleConnect = useCallback(async () => {
-    onBeforeConnect?.();
     metricsOnClick?.();
 
     if (web3ProviderIsDetected) {
@@ -60,7 +58,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     connector,
     disconnect,
     metricsOnClick,
-    onBeforeConnect,
     openModalAsync,
     web3ProviderIsDetected,
     onConnect,
@@ -68,15 +65,15 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   ]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       onClick={() => {
         void handleConnect();
       }}
     >
       {walletName}
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };

@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
+import { useConfig } from 'wagmi';
 import { Button, Modal } from '@reef-knot/ui-react';
-import { CommonButtonsContainer, ErrorBlock } from './styles';
 import {
-  useReefKnotContext,
+  useReefKnotModal,
   getUnsupportedChainError,
 } from '@reef-knot/core-react';
-import { useReefKnotModal } from '@reef-knot/core-react';
+import { ReefKnotWalletsModalConfig } from '@reef-knot/types';
+import { Terms } from '../Terms';
+import { CommonButtonsContainer, ErrorBlock } from './styles';
 
-export type AcceptTermsModalProps = React.PropsWithChildren<{
+type EagerConnectModalProps = {
+  config: ReefKnotWalletsModalConfig;
   tryConnection: () => Promise<any>;
   initialError: Error | undefined;
-}>;
+};
 
 export const EagerConnectModal = ({
+  config,
   tryConnection,
   initialError,
-  children,
-}: AcceptTermsModalProps) => {
+}: EagerConnectModalProps) => {
   const { termsChecked, closeModal } = useReefKnotModal();
-  const { chains: supportedChains } = useReefKnotContext();
+  const { chains: supportedChains } = useConfig();
 
   const [error, setError] = useState(initialError);
 
@@ -38,7 +41,7 @@ export const EagerConnectModal = ({
 
   return (
     <Modal title="Confirm connection" open={true}>
-      {children}
+      <Terms config={config} />
       {error && <ErrorBlock> {errorMessage} </ErrorBlock>}
       <CommonButtonsContainer>
         <Button

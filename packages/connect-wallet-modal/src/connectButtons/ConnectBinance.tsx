@@ -1,18 +1,17 @@
 import React, { FC, useCallback } from 'react';
 import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
-import { ConnectButton } from '../components/ConnectButton';
-import { ConnectInjectedProps } from './types';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
-import { openWindow } from '../helpers/index';
 import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
+import { ConnectButtonBase } from '../components/ConnectButtonBase';
+import { openWindow } from '../helpers/openWindow';
+import { ConnectInjectedProps } from './types';
 
 export const ConnectBinance: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
 ) => {
   const {
     onConnect,
-    onBeforeConnect,
-    shouldInvertWalletIcon,
+    darkThemeEnabled,
     metrics,
     walletId,
     walletName,
@@ -32,7 +31,6 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
-    onBeforeConnect?.();
     metricsOnClick?.();
     disconnect?.();
 
@@ -44,7 +42,6 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
       metricsOnConnect?.();
     }
   }, [
-    onBeforeConnect,
     metricsOnClick,
     disconnect,
     deeplink,
@@ -57,16 +54,16 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   ]);
 
   return (
-    <ConnectButton
+    <ConnectButtonBase
       {...rest}
       icon={WalletIcon}
-      shouldInvertWalletIcon={shouldInvertWalletIcon}
+      darkThemeEnabled={darkThemeEnabled}
       isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}
     >
       {walletName}
-    </ConnectButton>
+    </ConnectButtonBase>
   );
 };
