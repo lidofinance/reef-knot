@@ -5,7 +5,7 @@ import { createWalletClient, custom } from 'viem';
 
 import { LidoSDK } from '@lidofinance/lido-ethereum-sdk';
 import invariant from 'tiny-invariant';
-import { getBackendRPCPath } from 'config';
+import { useRpcUrls } from 'hooks/useRpcUrls';
 
 const context = createContext<LidoSDK | null>(null);
 
@@ -17,6 +17,7 @@ export const useLidoSDK = () => {
 
 export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { providerWeb3, chainId, account } = useSDK();
+  const rpcUrls = useRpcUrls();
   const value = useMemo(() => {
     const client =
       providerWeb3 && account
@@ -27,14 +28,14 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     const sdk = new LidoSDK({
       chainId: chainId as any,
-      rpcUrls: [getBackendRPCPath(chainId)],
+      rpcUrls: [rpcUrls[chainId]],
       web3Provider: client as any,
       logMode: 'none',
     });
     // inject lido_sdk for console access
     if (typeof window !== 'undefined') (window as any).lido_sdk = sdk;
     return sdk;
-  }, [providerWeb3, chainId, account]);
+  }, [providerWeb3, chainId, account, rpcUrls]);
 
   return <context.Provider value={value}>{children}</context.Provider>;
 };
