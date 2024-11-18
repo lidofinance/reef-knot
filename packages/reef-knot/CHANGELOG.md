@@ -1,5 +1,12 @@
 # reef-knot
 
+## 6.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.2.0
+
 ## 6.0.1
 
 ### Patch Changes

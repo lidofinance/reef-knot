@@ -1,6 +1,6 @@
 {
   "name": "reef-knot",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -48,7 +48,7 @@
     "@reef-knot/wallets-list": "3.0.0",
     "@reef-knot/wallets-helpers": "2.1.1",
     "@reef-knot/types": "3.0.0",
-    "@reef-knot/ledger-connector": "4.1.4"
+    "@reef-knot/ledger-connector": "4.2.0"
   },
   "peerDependencies": {
     "@lidofinance/lido-ui": "^3.18.0",
