@@ -15,7 +15,6 @@ import {
 import metrics from 'utils/metrics';
 import { getBackendRPCPath } from 'config';
 import { useClientConfig } from 'providers/client-config';
-import { SDKLegacyProvider } from './sdk-legacy';
 
 const LINK_DONT_HAVE_WALLET =
   'https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask';
@@ -110,13 +109,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
             config={walletsModalConfig}
             darkThemeEnabled={themeName === 'dark'}
           />
-          <SDKLegacyProvider
-            defaultChainId={defaultChain.id}
-            supportedChains={supportedChains}
-            rpc={backendRPC}
-          >
-            {children}
-          </SDKLegacyProvider>
+          {children}
         </ReefKnotProvider>
       </QueryClientProvider>
     </WagmiProvider>

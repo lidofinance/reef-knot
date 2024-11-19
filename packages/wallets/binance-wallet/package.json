@@ -40,7 +40,7 @@
   "peerDependencies": {
     "@reef-knot/types": "^3.0.0",
     "@reef-knot/wallets-helpers": "^2.0.0",
-    "wagmi": "2.10.2"
+    "wagmi": ">=2.12"
   },
   "dependencies": {
     "@binance/w3w-wagmi-connector-v2": "^1.2.3",
