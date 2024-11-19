@@ -1,38 +1,22 @@
-import React from 'react';
-import {
-  Loader,
-  Stack,
-  StackItem,
-  Text,
-  useBreakpoint,
-} from '@lidofinance/lido-ui';
-import { LedgerImageDefault } from './icons/LedgerImageDefault';
-import { LedgerImageDefaultMobile } from './icons/LedgerImageDefaultMobile';
-import { LedgerScreenContainerStyled } from './styles';
+import React, { FC } from 'react';
+import { Loader } from '@lidofinance/lido-ui';
 import { useLedgerContext } from './hooks';
+import { LedgerModalScreen } from './LedgerModalScreen';
+import { LedgerImageDefaultAdaptive } from './icons/LedgerImageDefaultAdaptive';
 
 export const LedgerConnectionScreen = () => {
   const { isLoadingLedgerLibs } = useLedgerContext();
+
+  const message = isLoadingLedgerLibs ? (
+    <Loader size="medium" color="secondary" />
+  ) : (
+    'Please connect your Ledger and launch Ethereum app on your device'
+  );
+
   return (
-    <LedgerScreenContainerStyled>
-      <Stack direction="column" spacing="xl" align="center">
-        <StackItem>
-          {useBreakpoint('md') ? (
-            <LedgerImageDefaultMobile />
-          ) : (
-            <LedgerImageDefault />
-          )}
-        </StackItem>
-        <StackItem>
-          {isLoadingLedgerLibs ? (
-            <Loader size="medium" color="secondary" />
-          ) : (
-            <Text color="secondary" size="xs">
-              Please connect your Ledger and launch Ethereum app on your device
-            </Text>
-          )}
-        </StackItem>
-      </Stack>
-    </LedgerScreenContainerStyled>
+    <LedgerModalScreen
+      icon={<LedgerImageDefaultAdaptive />}
+      message={message}
+    />
   );
 };
