@@ -46,6 +46,7 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
         }
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
   const contextValue = useMemo(() => {

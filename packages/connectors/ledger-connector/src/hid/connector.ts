@@ -92,14 +92,14 @@ export function ledgerHIDConnector({
       const id = chainId.toString(16);
 
       emitter.emit('change', { chainId: Number(chainId) });
-      return (
+      return Promise.resolve(
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
           nativeCurrency: { decimals: 18, name: 'Ether', symbol: 'ETH' },
           rpcUrls: { default: { http: [''] }, public: { http: [''] } },
-        }
+        },
       );
     },
 
