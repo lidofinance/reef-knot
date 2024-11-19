@@ -13,6 +13,12 @@ import type Transport from '@ledgerhq/hw-transport';
 import { helpers } from '@reef-knot/web3-react';
 import { getTransport, isHIDSupported } from './helpers';
 
+const USER_ACTIVATION_TIMEOUT = 5000;
+
+type EthConstructorType = new (
+  ...args: ConstructorParameters<typeof Eth>
+) => Eth;
+
 export interface LedgerContextProps {
   isActive: boolean;
   children?: ReactNode;
@@ -23,6 +29,7 @@ export type LedgerContextValue = {
   ledgerAppEth: MutableRefObject<Eth | null>;
   isTransportConnected: boolean;
   isLoadingLedgerLibs: boolean;
+  isUserActivationRequired: boolean;
   error: Error | null;
   setError: (e: Error | null) => void;
   connectTransport: () => Promise<void>;
@@ -40,8 +47,10 @@ export const LedgerContextProvider = ({
   // isTransportConnecting flag helps with react v18 strict mode in the dev mode,
   // which re-runs effects extra time, which breaks ledger connection process
   const isTransportConnecting = useRef(false);
+  const ledgerLibEth = useRef<EthConstructorType | null>(null);
   const ledgerAppEth = useRef<Eth | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [isUserActivationRequired, setUserActivationRequired] = useState(false);
   const [isTransportConnected, setIsTransportConnected] = useState(false);
   const [isLoadingLedgerLibs, setIsLoadingLedgerLibs] = useState(false);
   const [activeAccountsRequestsCounter, setActiveAccountsRequestsCounter] =
@@ -52,6 +61,7 @@ export const LedgerContextProvider = ({
       await transport?.current?.close();
       transport.current = null;
       ledgerAppEth.current = null;
+      setUserActivationRequired(false);
       if (!goingToReconnect) {
         setIsTransportConnected(false);
       }
@@ -60,9 +70,18 @@ export const LedgerContextProvider = ({
     }
   }, []);
 
+  const loadLedgerLibs = useCallback(async () => {
+    if (ledgerLibEth.current) return;
+    setIsLoadingLedgerLibs(true);
+    const { default: Eth } = await import('@ledgerhq/hw-app-eth');
+    ledgerLibEth.current = Eth;
+    setIsLoadingLedgerLibs(false);
+  }, []);
+
   const connectTransport = useCallback(async () => {
     if (isTransportConnecting.current || transport.current) return;
     setError(null);
+    setUserActivationRequired(false);
     isTransportConnecting.current = true;
 
     if (!isHIDSupported()) {
@@ -75,12 +94,17 @@ export const LedgerContextProvider = ({
     }
 
     try {
-      setIsLoadingLedgerLibs(true);
-      const { default: Eth } = await import('@ledgerhq/hw-app-eth');
-      setIsLoadingLedgerLibs(false);
+      const userActivationTime = Date.now();
+      await loadLedgerLibs();
+      const timePassedAfterUserActivation = Date.now() - userActivationTime;
+
+      if (timePassedAfterUserActivation > USER_ACTIVATION_TIMEOUT) {
+        setUserActivationRequired(true);
+        return;
+      }
 
       transport.current = await getTransport();
-      ledgerAppEth.current = new Eth(transport.current);
+      ledgerAppEth.current = new ledgerLibEth.current!(transport.current);
       await ledgerAppEth.current.getAppConfiguration();
       setIsTransportConnected(true);
     } catch (e: any) {
@@ -110,6 +134,7 @@ export const LedgerContextProvider = ({
       ledgerAppEth,
       isTransportConnected,
       isLoadingLedgerLibs,
+      isUserActivationRequired,
       error,
       setError,
       connectTransport,
@@ -121,6 +146,7 @@ export const LedgerContextProvider = ({
     [
       isTransportConnected,
       isLoadingLedgerLibs,
+      isUserActivationRequired,
       error,
       connectTransport,
       disconnectTransport,

@@ -33,21 +33,34 @@ export const LedgerModal = (props: LedgerModalProps) => {
 };
 
 export const LedgerScreen = ({ metrics, onClose }: LedgerModalProps) => {
-  const { error, reconnectTransport, isTransportConnected } =
-    useLedgerContext();
+  const {
+    error,
+    reconnectTransport,
+    isTransportConnected,
+    isUserActivationRequired,
+  } = useLedgerContext();
+
+  const handleClickRetry = useCallback(() => {
+    void reconnectTransport();
+  }, [reconnectTransport]);
 
   return (
     <LedgerModalInnerContainer>
       {error && (
         <LedgerErrorScreen
           message={error.message}
-          retry={() => void reconnectTransport()}
+          onClickRetry={handleClickRetry}
         />
       )}
       {!error && isTransportConnected && (
         <LedgerAccountScreen metrics={metrics} closeScreen={onClose} />
       )}
-      {!error && !isTransportConnected && <LedgerConnectionScreen />}
+      {!error && !isTransportConnected && (
+        <LedgerConnectionScreen
+          showConnectButton={isUserActivationRequired}
+          onClickConnect={handleClickRetry}
+        />
+      )}
     </LedgerModalInnerContainer>
   );
 };

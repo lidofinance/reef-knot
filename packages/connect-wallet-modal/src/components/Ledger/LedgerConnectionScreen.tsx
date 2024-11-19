@@ -4,7 +4,15 @@ import { useLedgerContext } from './hooks';
 import { LedgerModalScreen } from './LedgerModalScreen';
 import { LedgerImageDefaultAdaptive } from './icons/LedgerImageDefaultAdaptive';
 
-export const LedgerConnectionScreen = () => {
+type LedgerConnectionScreenProps = {
+  showConnectButton?: boolean;
+  onClickConnect?: () => void;
+};
+
+export const LedgerConnectionScreen: FC<LedgerConnectionScreenProps> = ({
+  showConnectButton,
+  onClickConnect,
+}) => {
   const { isLoadingLedgerLibs } = useLedgerContext();
 
   const message = isLoadingLedgerLibs ? (
@@ -17,6 +25,8 @@ export const LedgerConnectionScreen = () => {
     <LedgerModalScreen
       icon={<LedgerImageDefaultAdaptive />}
       message={message}
+      action={showConnectButton ? 'Connect' : undefined}
+      onClickAction={showConnectButton ? onClickConnect : undefined}
     />
   );
 };
