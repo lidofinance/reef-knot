@@ -13,7 +13,7 @@ import type Transport from '@ledgerhq/hw-transport';
 import { helpers } from '@reef-knot/web3-react';
 import { getTransport, isHIDSupported } from './helpers';
 
-const USER_ACTIVATION_TIMEOUT = 5000;
+const USER_ACTIVATION_TIMEOUT = 3000;
 
 type EthConstructorType = new (
   ...args: ConstructorParameters<typeof Eth>
