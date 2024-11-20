@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 6.0.1
+
+### Patch Changes
+
+- Coinbase Smart Wallet displayed by default
+
 ## 6.0.0
 
 ### Major Changes

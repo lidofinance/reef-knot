@@ -34,6 +34,7 @@ export const WALLETS_MODAL_DISPLAY_CONFIG_DEFAULT: WalletIdsEthereum[] = [
   'walletConnect',
   'binanceWallet',
   'coinbase',
+  'coinbaseSmartWallet',
   'trust',
   'exodus',
   'brave',
