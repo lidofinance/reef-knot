@@ -37,7 +37,7 @@ const WalletModal: FC<ModalProps> = (props) => {
 
   return (
     <Modal title="Account" {...props}>
-      <WalletModalContentStyle>
+      <WalletModalContentStyle data-testid='walletModal'>
         <WalletModalConnectedStyle>
           {connectorName && (
             <WalletModalConnectorStyle>
@@ -50,6 +50,7 @@ const WalletModal: FC<ModalProps> = (props) => {
               size="xs"
               variant="outlined"
               onClick={handleDisconnect}
+              data-testid='disconnectBtn'
             >
               Disconnect
             </WalletModalDisconnectStyle>

@@ -1,0 +1,9 @@
+node_modules
+dist
+playwright-report
+test-results
+
+/.jest
+
+/.yarn/*
+/.pnp.*

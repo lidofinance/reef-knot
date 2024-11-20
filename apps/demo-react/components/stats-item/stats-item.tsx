@@ -23,7 +23,7 @@ export const StatsItem: FC<StatsItemProps> = ({ value, token, loading }) => {
 
   return (
     <StatsWrapperStyle>
-      <ContentWrapperStyle>
+      <ContentWrapperStyle data-testid={token}>
         <StatsValueStyle>
           {loading ? <InlineLoaderStyle /> : shortValue}
         </StatsValueStyle>

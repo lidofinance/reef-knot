@@ -1,0 +1,20 @@
+{
+  "name": "reef-knot_playwright_test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test:reef-knot": "yarn playwright test"
+  },
+  "dependencies": {
+    "@lidofinance/lido-ethereum-sdk": "^4.0.1",
+    "@lidofinance/wallets-testing-extensions": "^1.0.3",
+    "@lidofinance/wallets-testing-wallets": "^1.16.0",
+    "@lidofinance/wallets-testing-widgets": "^1.1.48",
+    "@playwright/test": "^1.48.2",
+    "playwright-qase-reporter": "^2.0.16"
+  },
+  "packageManager": "yarn@1.22.19",
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
