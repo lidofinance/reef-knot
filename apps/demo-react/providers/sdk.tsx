@@ -52,14 +52,13 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const contextValue = useMemo(() => {
     // @ts-expect-error: typing (viem + LidoSDK)
     const sdk = new LidoSDK({
-      chainId: publicClient!.chain.id,
+      chainId: publicClient?.chain.id as any,
       logMode: 'none',
       rpcProvider: publicClient,
       web3Provider: walletClient,
     });
     // inject lido_sdk for console access
     if (typeof window !== 'undefined') (window as any).lido_sdk = sdk;
-
     return sdk;
   }, [publicClient, walletClient]);
 

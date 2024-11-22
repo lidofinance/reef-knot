@@ -12,6 +12,7 @@ import {
 } from './styles';
 import { Web3ProviderInfo } from './provider-info';
 import { useClientConfig } from 'providers/client-config';
+import { ChainsConfig } from './chains-config';
 
 export const WalletInfoContent = ({
   children,
@@ -96,6 +97,8 @@ export const WalletInfoContent = ({
           </DataTableRowStyle>
         </code>
       </div>
+
+      <ChainsConfig />
 
       {children}
     </div>

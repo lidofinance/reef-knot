@@ -17,17 +17,18 @@ import { CHAINS } from 'config/chains';
 import { parseEnvConfig } from 'utils/parse-env-config';
 
 type SavedClientConfig = {
+  defaultChain?: number;
   rpcUrls: Partial<Record<CHAINS, string>>;
 };
 
-type ClientConfigContext = EnvConfigParsed & {
-  savedClientConfig: SavedClientConfig;
-  setSavedClientConfig: (config: SavedClientConfig) => void;
-  isWalletConnectionAllowed: boolean;
-  setIsWalletConnectionAllowed: (isAllowed: boolean) => void;
-  setIsWalletInfoIsOpen: (isOpen: boolean) => void;
-  isWalletInfoIsOpen: boolean;
-};
+type ClientConfigContext = EnvConfigParsed &
+  SavedClientConfig & {
+    setSavedClientConfig: (config: Partial<SavedClientConfig>) => void;
+    isWalletConnectionAllowed: boolean;
+    setIsWalletConnectionAllowed: (isAllowed: boolean) => void;
+    setIsWalletInfoIsOpen: (isOpen: boolean) => void;
+    isWalletInfoIsOpen: boolean;
+  };
 
 export const ClientConfigContext = createContext<ClientConfigContext | null>(
   null,
@@ -56,19 +57,34 @@ export const ClientConfigProvider = ({ children }: PropsWithChildren) => {
     useState<SavedClientConfig>(restoredSettings);
 
   const setSavedConfigAndRemember = useCallback(
-    (config: SavedClientConfig) => {
-      setLocalStorage(config);
-      setSavedClientConfig(config);
+    (config: Partial<SavedClientConfig>) => {
+      const fullConfig = {
+        ...restoredSettings,
+        ...config,
+      };
+      setLocalStorage(fullConfig);
+      setSavedClientConfig(fullConfig);
     },
-    [setLocalStorage],
+    [restoredSettings, setLocalStorage, setSavedClientConfig],
   );
 
   const contextValue = useMemo(() => {
     const envConfig = parseEnvConfig(dynamics);
 
-    return {
+    const config = {
       ...envConfig,
-      savedClientConfig,
+      ...savedClientConfig,
+    };
+
+    const supportedChainIds = config.supportedChainIds.includes(
+      config.defaultChain,
+    )
+      ? config.supportedChainIds
+      : [...config.supportedChainIds, config.defaultChain];
+
+    return {
+      ...config,
+      supportedChainIds,
       setSavedClientConfig: setSavedConfigAndRemember,
       isWalletConnectionAllowed,
       setIsWalletConnectionAllowed,
