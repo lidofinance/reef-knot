@@ -65,7 +65,7 @@ export const ClientConfigProvider = ({ children }: PropsWithChildren) => {
       setLocalStorage(fullConfig);
       setSavedClientConfig(fullConfig);
     },
-    [restoredSettings, setLocalStorage],
+    [restoredSettings, setLocalStorage, setSavedClientConfig],
   );
 
   const contextValue = useMemo(() => {
