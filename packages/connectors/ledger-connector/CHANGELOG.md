@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 4.2.0
+
+### Minor Changes
+
+- add chainChange to ledger hardware connector
+
 ## 4.1.4
 
 ### Patch Changes

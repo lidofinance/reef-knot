@@ -13,7 +13,6 @@ import {
 
 import metrics from 'utils/metrics';
 import { useClientConfig } from 'providers/client-config';
-import { SDKLegacyProvider } from './sdk-legacy';
 import { useRpcUrls } from 'hooks/useRpcUrls';
 
 const LINK_DONT_HAVE_WALLET =
@@ -99,13 +98,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
             config={walletsModalConfig}
             darkThemeEnabled={themeName === 'dark'}
           />
-          <SDKLegacyProvider
-            defaultChainId={defaultChain.id}
-            supportedChains={supportedChains}
-            rpc={backendRPC}
-          >
-            {children}
-          </SDKLegacyProvider>
+          {children}
         </ReefKnotProvider>
       </QueryClientProvider>
     </WagmiProvider>

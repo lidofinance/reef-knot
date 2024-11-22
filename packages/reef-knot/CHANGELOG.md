@@ -1,5 +1,19 @@
 # reef-knot
 
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@6.0.1
+
+## 6.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.2.0
+
 ## 6.0.1
 
 ### Patch Changes

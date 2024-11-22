@@ -14,9 +14,12 @@ export const ChainsConfig = () => {
 
   const rpcUrls = useRpcUrls();
 
-  const onChangeDefaultChain = useCallback((chainId: number) => {
-    setSavedClientConfig({ defaultChain: chainId });
-  }, []);
+  const onChangeDefaultChain = useCallback(
+    (chainId: number) => {
+      setSavedClientConfig({ defaultChain: chainId });
+    },
+    [setSavedClientConfig],
+  );
 
   return (
     <>
