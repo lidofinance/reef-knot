@@ -71,7 +71,7 @@ export const ConnectWalletModal = ({
     (walletId: string) => {
       void config.storage?.setItem(LS_KEY_RECONNECT_WALLET_ID, walletId);
       onCloseSuccess?.();
-      onConnectSuccess?.(walletId);
+      onConnectSuccess?.({ walletId });
     },
     [onCloseSuccess, onConnectSuccess, config.storage],
   );
@@ -153,7 +153,7 @@ export const ConnectWalletModal = ({
             deeplink={walletData.deeplink}
             downloadURLs={walletData.downloadURLs}
             walletconnectExtras={walletData.walletconnectExtras}
-            onConnectStart={() => onConnectStart?.(walletId)}
+            onConnectStart={() => onConnectStart?.({ walletId })}
             onConnectSuccess={() => handleConnectSuccess(walletId)}
           />
         );

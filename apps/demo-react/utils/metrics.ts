@@ -12,11 +12,12 @@ type MetricProps = Pick<
 >;
 
 export const metricProps: MetricProps = {
-  onClickTermsAccept: (isAccepted) => {
+  onClickTermsAccept: ({ isAccepted }) => {
     if (isAccepted) console.log(`metrics: terms accept clicked`);
   },
   onClickWalletsMore: () => console.log(`metrics: more wallets clicked`),
   onClickWalletsLess: () => console.log(`metrics: less wallets clicked`),
-  onConnectStart: (walletId) => console.log(`metrics: ${walletId} clicked`),
-  onConnectSuccess: (walletId) => console.log(`metrics: ${walletId} connected`),
+  onConnectStart: ({ walletId }) => console.log(`metrics: ${walletId} clicked`),
+  onConnectSuccess: ({ walletId }) =>
+    console.log(`metrics: ${walletId} connected`),
 };

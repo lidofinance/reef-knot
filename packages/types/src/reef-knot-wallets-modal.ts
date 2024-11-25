@@ -14,9 +14,9 @@ export type ReefKnotWalletsModalConfig<I extends string = string> = {
   linkTerms?: string;
   linkPrivacyNotice?: string;
   linkDontHaveWallet?: string;
-  onConnectStart?: (walletId: I) => void;
-  onConnectSuccess?: (walletId: I) => void;
-  onClickTermsAccept?: (isAccepted: boolean) => void;
+  onConnectStart?: (args: { walletId: I }) => void;
+  onConnectSuccess?: (args: { walletId: I }) => void;
+  onClickTermsAccept?: (args: { isAccepted: boolean }) => void;
   onClickWalletsMore?: () => void;
   onClickWalletsLess?: () => void;
 };

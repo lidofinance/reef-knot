@@ -14,9 +14,10 @@ export const Terms: FC<TermsProps> = ({ config }) => {
 
   const handleCheckboxChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setTermsChecked(e.currentTarget.checked);
-      if (e.target.checked) {
-        onClickTermsAccept?.(e.target.checked);
+      const isAccepted = e.currentTarget.checked;
+      setTermsChecked(isAccepted);
+      if (isAccepted) {
+        onClickTermsAccept?.({ isAccepted });
       }
     },
     [setTermsChecked, onClickTermsAccept],
