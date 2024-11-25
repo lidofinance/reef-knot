@@ -49,13 +49,17 @@ export const getDefaultConfig = <I extends string = string>({
 
   // Wallets config args
   buttonComponentsByConnectorId,
-  metrics,
   walletsShown,
   walletsPinned,
   walletsDisplayInitialCount,
   linkTerms,
   linkPrivacyNotice,
   linkDontHaveWallet,
+  onClickTermsAccept,
+  onClickWalletsLess,
+  onClickWalletsMore,
+  onConnectStart,
+  onConnectSuccess,
 
   // Wagmi config args
   ...wagmiArgs
@@ -83,13 +87,17 @@ export const getDefaultConfig = <I extends string = string>({
   // TODO: We could use `getDefaultWalletsModalConfig` here, but it cause package dependency cycle rn
   const walletsModalConfig: ReefKnotWalletsModalConfig = {
     buttonComponentsByConnectorId,
-    metrics,
     walletsShown,
     walletsPinned,
     walletsDisplayInitialCount,
     linkTerms,
     linkPrivacyNotice,
     linkDontHaveWallet,
+    onClickTermsAccept,
+    onClickWalletsLess,
+    onClickWalletsMore,
+    onConnectStart,
+    onConnectSuccess,
   };
 
   return {

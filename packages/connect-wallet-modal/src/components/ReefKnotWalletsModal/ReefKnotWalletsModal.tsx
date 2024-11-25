@@ -31,7 +31,8 @@ export function ReefKnotWalletsModal<I extends string = string>(
         <LedgerModal
           {...props} // the props are overridden here on purpose
           open
-          onClose={onCloseSuccess}
+          onCloseSuccess={onCloseSuccess}
+          onCloseReject={onCloseReject}
           onBack={onCloseReject}
           onExited={onExit}
         />

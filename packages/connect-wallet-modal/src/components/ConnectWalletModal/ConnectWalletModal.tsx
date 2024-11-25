@@ -25,11 +25,14 @@ export const ConnectWalletModal = ({
 }: ConnectWalletModalProps) => {
   const { config: modalConfig, darkThemeEnabled = false } = passedDownProps;
   const {
-    metrics,
     buttonComponentsByConnectorId,
     walletsShown,
     walletsPinned,
     walletsDisplayInitialCount = 6,
+    onConnectStart,
+    onConnectSuccess,
+    onClickWalletsMore,
+    onClickWalletsLess,
   } = modalConfig;
 
   const config = useConfig();
@@ -50,17 +53,15 @@ export const ConnectWalletModal = ({
     setInputValue('');
   }, []);
 
-  const { walletsMore, walletsLess } = metrics?.events?.click?.handlers || {};
-
   const handleToggleWalletsList = useCallback(() => {
     const nextShownState = !isShownOtherWallets;
     setShowOtherWallets(nextShownState);
     if (nextShownState) {
-      walletsMore?.();
+      onClickWalletsMore?.();
     } else {
-      walletsLess?.();
+      onClickWalletsLess?.();
     }
-  }, [isShownOtherWallets, walletsMore, walletsLess]);
+  }, [isShownOtherWallets, onClickWalletsMore, onClickWalletsLess]);
 
   const [walletsListFull, setWalletsListFull] = useState<WalletAdapterData[]>(
     [],
@@ -70,8 +71,9 @@ export const ConnectWalletModal = ({
     (walletId: string) => {
       void config.storage?.setItem(LS_KEY_RECONNECT_WALLET_ID, walletId);
       onCloseSuccess?.();
+      onConnectSuccess?.(walletId);
     },
-    [onCloseSuccess, config.storage],
+    [onCloseSuccess, onConnectSuccess, config.storage],
   );
 
   useEffect(() => {
@@ -144,15 +146,15 @@ export const ConnectWalletModal = ({
             walletId={walletId}
             walletName={walletData.walletName}
             disabled={!termsChecked || someWalletIsLoading}
-            onConnect={() => handleConnectSuccess(walletId)}
             darkThemeEnabled={darkThemeEnabled}
-            metrics={metrics}
             isCompact={isShownOtherWallets}
             connector={walletData.createConnectorFn}
             detector={walletData.detector}
             deeplink={walletData.deeplink}
             downloadURLs={walletData.downloadURLs}
             walletconnectExtras={walletData.walletconnectExtras}
+            onConnectStart={() => onConnectStart?.(walletId)}
+            onConnectSuccess={() => handleConnectSuccess(walletId)}
           />
         );
       })}

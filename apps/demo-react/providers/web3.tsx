@@ -11,7 +11,7 @@ import {
   getDefaultWalletsModalConfig,
 } from 'reef-knot/connect-wallet-modal';
 
-import metrics from 'utils/metrics';
+import { metricProps } from 'utils/metrics';
 import { useClientConfig } from 'providers/client-config';
 import { useRpcUrls } from 'hooks/useRpcUrls';
 
@@ -77,7 +77,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       // Wallets config args
       // TODO: We could call `getDefaultWalletsModalConfig` inside `getDefaultConfig`, but it cause package dependency cycle rn
       ...getDefaultWalletsModalConfig(),
-      metrics,
+      ...metricProps,
       linkDontHaveWallet: LINK_DONT_HAVE_WALLET,
     });
   }, [

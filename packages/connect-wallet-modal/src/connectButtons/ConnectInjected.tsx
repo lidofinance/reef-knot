@@ -11,9 +11,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
 ) => {
   const {
-    onConnect,
     darkThemeEnabled,
-    metrics,
     walletId,
     walletName,
     icon: WalletIcon,
@@ -21,22 +19,21 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     detector,
     connector,
     deeplink,
+    onConnectStart,
+    onConnectSuccess,
     ...rest
   } = props;
-  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
-  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
-    metricsOnClick?.();
+    onConnectStart?.();
 
     if (await detector?.()) {
       disconnect?.();
       await connectAsync({ connector });
-      onConnect?.();
-      metricsOnConnect?.();
+      onConnectSuccess?.();
     } else if (isMobileOrTablet && deeplink) {
       openWindow(deeplink);
     } else if (downloadURLs) {
@@ -49,9 +46,8 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     detector,
     disconnect,
     downloadURLs,
-    metricsOnClick,
-    onConnect,
-    metricsOnConnect,
+    onConnectStart,
+    onConnectSuccess,
   ]);
 
   return (
