@@ -1,5 +1,12 @@
 # @reef-knot/wallet-adapter-okx
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@4.0.0
+
 ## 3.0.0
 
 ### Patch Changes

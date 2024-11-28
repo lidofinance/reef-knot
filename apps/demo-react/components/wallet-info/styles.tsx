@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DataTableRow, ButtonIcon } from '@lidofinance/lido-ui';
+import { DataTableRow, ButtonIcon, Button, Input } from '@lidofinance/lido-ui';
 
 export const ContainerStyle = styled.div`
   position: fixed;
@@ -40,6 +40,31 @@ export const HeadingStyle = styled.h4`
 
 export const DataTableRowStyle = styled(DataTableRow)`
   margin: 4px 0;
+  align-items: center;
+`;
+
+export const DataTableRowInput = styled(Input)`
+  width: 220px;
+
+  > span {
+    padding: 4px 10px;
+  }
+
+  input {
+    font-size: 12px;
+  }
+`;
+
+export const DataTableRowAction = styled(Button).attrs({
+  size: 'xs',
+})`
+  padding: 0;
+  min-width: auto;
+  margin-left: 6px;
+  border: none;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
 `;
 
 export const ProviderInfoRowStyle = styled(DataTableRowStyle)`

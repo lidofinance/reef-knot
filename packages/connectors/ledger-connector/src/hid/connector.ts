@@ -6,7 +6,6 @@ import {
 import { Chain } from 'wagmi/chains';
 import { checkError, clearLedgerDerivationPath } from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
-
 export const idLedgerHid = 'ledgerHID';
 export const name = 'Ledger';
 
@@ -89,6 +88,21 @@ export function ledgerHIDConnector({
       }
     },
 
+    async switchChain({ chainId }) {
+      const id = chainId.toString(16);
+
+      emitter.emit('change', { chainId: Number(chainId) });
+      return Promise.resolve(
+        chains.find((x) => x.id === chainId) ?? {
+          id: chainId,
+          name: `Chain ${id}`,
+          network: `${id}`,
+          nativeCurrency: { decimals: 18, name: 'Ether', symbol: 'ETH' },
+          rpcUrls: { default: { http: [''] }, public: { http: [''] } },
+        },
+      );
+    },
+
     onDisconnect() {
       // Is called when HID API emits 'disconnect' event for some reason.
       // For example, the device was manually unplugged.
@@ -98,10 +112,12 @@ export function ledgerHIDConnector({
 
     onAccountsChanged() {
       // NOOP
+      // HID Ledger cannot change account by itself
     },
 
     onChainChanged() {
       // NOOP
+      // HID Ledger cannot change chain by itself
     },
   }));
 }
