@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 7.0.1
+
+### Patch Changes
+
+- Ledger HID connection on slow network fixed
+
 ## 7.0.0
 
 ### Major Changes
