@@ -10,20 +10,18 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
 ) => {
   const {
-    onConnect,
     darkThemeEnabled,
-    metrics,
     walletId,
     walletName,
     icon: WalletIcon,
     connector,
+    onConnectStart,
+    onConnectSuccess,
     ...rest
   } = props;
   const { openModalAsync } = useReefKnotModal();
 
   const web3ProviderIsDetected = !!globalThis.window?.ethereum;
-  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
-  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
@@ -32,13 +30,12 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     (WalletIcon as ElementType) || (WalletIcon as WalletAdapterIcons)?.light;
 
   const handleConnect = useCallback(async () => {
-    metricsOnClick?.();
+    onConnectStart?.();
 
     if (web3ProviderIsDetected) {
       disconnect?.();
       await connectAsync({ connector });
-      onConnect?.();
-      metricsOnConnect?.();
+      onConnectSuccess?.();
     } else {
       await openModalAsync({
         type: 'requirements',
@@ -57,11 +54,10 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     connectAsync,
     connector,
     disconnect,
-    metricsOnClick,
     openModalAsync,
     web3ProviderIsDetected,
-    onConnect,
-    metricsOnConnect,
+    onConnectStart,
+    onConnectSuccess,
   ]);
 
   return (

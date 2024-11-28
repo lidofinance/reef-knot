@@ -6,25 +6,20 @@ import { useReefKnotModal } from '@reef-knot/core-react';
 export const ConnectLedger: FC<ConnectLedgerProps> = (props) => {
   const {
     walletId,
-    onConnect,
     darkThemeEnabled,
     icon: WalletIcon,
-    metrics,
+    onConnectStart,
+    onConnectSuccess,
     ...rest
   } = props;
 
   const { openModalAsync } = useReefKnotModal();
-  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
-  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
 
   const handleConnect = useCallback(async () => {
-    metricsOnClick?.();
+    onConnectStart?.();
     const result = await openModalAsync({ type: 'ledger' });
-    if (result.success) {
-      onConnect?.();
-      metricsOnConnect?.();
-    }
-  }, [openModalAsync, onConnect, metricsOnClick, metricsOnConnect]);
+    if (result.success) onConnectSuccess?.();
+  }, [openModalAsync, onConnectStart, onConnectSuccess]);
 
   return (
     <ConnectButtonBase

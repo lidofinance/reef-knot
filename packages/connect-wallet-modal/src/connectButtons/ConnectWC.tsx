@@ -23,9 +23,7 @@ const setRedirectionWindowLocation = (redirectLink: string, WCURI: string) => {
 
 export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   const {
-    onConnect,
     darkThemeEnabled,
-    metrics,
     walletId,
     walletName,
     icon: WalletIcon,
@@ -33,11 +31,10 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     connector,
     walletconnectExtras,
     deeplink,
+    onConnectStart,
+    onConnectSuccess,
     ...rest
   } = props;
-
-  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
-  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const config = useConfig();
   const { loadingWalletId } = useReefKnotContext();
@@ -61,12 +58,11 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
       return; // A user was redirected to a wallet mobile app, no need to continue
     }
 
-    metricsOnClick?.();
+    onConnectStart?.();
     disconnect?.();
 
     const onSuccess = () => {
-      onConnect?.();
-      metricsOnConnect?.();
+      onConnectSuccess?.();
     };
 
     if (WCURICondition && WCURIConnectorFn && WCURIRedirectLink) {
@@ -104,13 +100,12 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
   }, [
     deeplink,
     disconnect,
-    metricsOnClick,
     WCURICloseRedirectionWindow,
     WCURICondition,
     WCURIConnectorFn,
     WCURIRedirectLink,
-    onConnect,
-    metricsOnConnect,
+    onConnectStart,
+    onConnectSuccess,
     connectAsync,
     config.chains,
     connectWithLoading,

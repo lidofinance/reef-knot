@@ -10,9 +10,7 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
 ) => {
   const {
-    onConnect,
     darkThemeEnabled,
-    metrics,
     walletId,
     walletName,
     icon: WalletIcon,
@@ -20,37 +18,34 @@ export const ConnectBinance: FC<ConnectInjectedProps> = (
     detector,
     connector,
     deeplink,
+    onConnectStart,
+    onConnectSuccess,
     ...rest
   } = props;
-
-  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
-  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { loadingWalletId } = useReefKnotContext();
   const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
-    metricsOnClick?.();
+    onConnectStart?.();
     disconnect?.();
 
     if (isMobileOrTablet && deeplink && !detector?.()) {
       openWindow(deeplink);
     } else {
       await connectWithLoading(walletId, { connector });
-      onConnect?.();
-      metricsOnConnect?.();
+      onConnectSuccess?.();
     }
   }, [
-    metricsOnClick,
     disconnect,
     deeplink,
     detector,
     connectWithLoading,
     walletId,
     connector,
-    onConnect,
-    metricsOnConnect,
+    onConnectStart,
+    onConnectSuccess,
   ]);
 
   return (
