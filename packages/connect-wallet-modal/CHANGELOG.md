@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 6.0.2
+
+### Patch Changes
+
+- Ledger HID metrics fixed
+
 ## 6.0.1
 
 ### Patch Changes
