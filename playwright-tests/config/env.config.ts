@@ -11,19 +11,19 @@ export interface StandConfig {
   };
 }
 
-export const STAND_TYPE = {
+export const STAND_ENV = {
   testnet: 'testnet',
   mainnet: 'mainnet',
 };
 
 export const STAND_LINK = {
-  testnet: 'https://lidofinance.github.io/reef-knot/',
+  stand: 'https://lidofinance.github.io/reef-knot/',
   localhost: 'http://localhost:3000/',
 };
 
 export const STAND_CONFIGS = new Map<string, StandConfig>([
   [
-    STAND_TYPE.testnet,
+    STAND_ENV.testnet,
     {
       chainId: 17000,
       tokenSymbol: 'ETH',
@@ -38,7 +38,7 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
     },
   ],
   [
-    STAND_TYPE.mainnet,
+    STAND_ENV.mainnet,
     {
       chainId: 1,
       tokenSymbol: 'ETH',

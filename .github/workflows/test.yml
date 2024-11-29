@@ -3,8 +3,8 @@ name: Test ReefKnot
 on:
   workflow_dispatch:
     inputs:
-      STAND_TYPE:
-        description: 'Stand type'
+      STAND_ENV:
+        description: 'Stand env'
         required: true
         type: choice
         default: testnet
@@ -21,8 +21,8 @@ jobs:
       QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}
       WALLET_SECRET_PHRASE: ${{ secrets.WALLET_SECRET_PHRASE }}
       WALLET_PASSWORD: ${{ secrets.WALLET_PASSWORD }}
-      STAND_TYPE: ${{ github.event.inputs.STAND_TYPE }}
-      STAND_LINK_TYPE: testnet
+      STAND_ENV: ${{ github.event.inputs.STAND_ENV }}
+      STAND_TYPE: stand
       NODE_OPTIONS: --max-old-space-size=4096
 
     steps:
