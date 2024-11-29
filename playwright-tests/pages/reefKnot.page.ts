@@ -49,4 +49,10 @@ export class ReefKnotPage {
       await this.walletModal.disconnectButton.click();
     });
   }
+
+  async getStorageData(name: string) {
+    return await this.page.evaluate((names) => {
+      return localStorage.getItem(names);
+    }, name);
+  }
 }

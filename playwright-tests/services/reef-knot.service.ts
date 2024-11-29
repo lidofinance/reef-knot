@@ -22,7 +22,12 @@ export class ReefKnotService {
 
   async isConnectedWallet() {
     return test.step('Check wallet connection', async () => {
-      return this.reefKnotPage.header.isAccountSectionVisible();
+      const recentConnectorId = await this.reefKnotPage.getStorageData(
+        'wagmi.recentConnectorId',
+      );
+      return recentConnectorId !== ''
+        ? this.reefKnotPage.header.isAccountSectionVisible()
+        : false;
     });
   }
 

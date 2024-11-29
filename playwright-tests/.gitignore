@@ -3,5 +3,5 @@
 # playwright
 test-results/
 playwright-report/
-.browser_context
+.browser_context_*
 logs/
