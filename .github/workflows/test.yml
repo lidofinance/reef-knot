@@ -3,10 +3,6 @@ name: Test ReefKnot
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch'
-        required: true
-        default: 'main'
       STAND_ENV:
         description: 'Stand env'
         required: true
