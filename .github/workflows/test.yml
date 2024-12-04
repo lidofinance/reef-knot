@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: test
     env:
+      TEST_BRANCH: ${{ github.event.inputs.branch }}
       RPC_URL_KEY: ${{ secrets.RPC_URL_KEY }}
       QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}
       WALLET_SECRET_PHRASE: ${{ secrets.WALLET_SECRET_PHRASE }}
