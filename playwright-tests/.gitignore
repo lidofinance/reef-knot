@@ -5,3 +5,4 @@ test-results/
 playwright-report/
 .browser_context_*
 logs/
+.yalc

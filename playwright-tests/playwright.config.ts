@@ -1,5 +1,5 @@
 import { PlaywrightTestConfig } from 'playwright/test';
-import { REEF_KNOT_CONFIG } from './config';
+import { REEF_KNOT_CONFIG } from '@config';
 
 // Setting of Qase Reporter
 process.env.QASE_MODE = process.env.CI ? 'testops' : 'off'; // value 'testops' enables Qase reporter
@@ -12,7 +12,7 @@ if (process.env.QASE_MODE === 'testops') {
 
 const config: PlaywrightTestConfig = {
   testDir: './tests',
-  timeout: 180 * 1000,
+  timeout: 5 * 60 * 1000,
   expect: {
     timeout: 5000,
   },

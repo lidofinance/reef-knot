@@ -11,6 +11,9 @@ on:
         options:
           - mainnet
           - testnet
+  pull_request:
+    paths:
+      - 'playwright-tests/**'
 
 jobs:
   test:

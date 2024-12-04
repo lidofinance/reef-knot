@@ -101,10 +101,10 @@
     rxjs "^7.5.6"
     unzipper "^0.10.11"
 
-"@lidofinance/wallets-testing-wallets@1.16.0", "@lidofinance/wallets-testing-wallets@^1.16.0":
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.16.0.tgz#479c3b227b86685c5fefadbeba56883ab7fddd48"
-  integrity sha512-B10THWeq/XRqSgON27NmtM2AD5D6E6LOjMxid1pnK0ZCqDjd46eI9JoDvbCfBbvg8IdNYq3mtXR5zOl9m1cdxw==
+"@lidofinance/wallets-testing-wallets@1.17.0-alpha.6":
+  version "1.17.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.17.0-alpha.6.tgz#b18b6853d94fc775b883f7b0ed73bf1ac81b9a08"
+  integrity sha512-VFz2agffDuTFJ0ODRS33zdM26E649QxztJxUJtmfNO/K0IMHP6gcRUfi6x9eRpD274Ef+Jh0MeVAecHPLMvWyQ==
   dependencies:
     "@playwright/test" "^1.44.1"
     expect "^28.1.3"
@@ -112,12 +112,12 @@
     rxjs "^7.5.6"
     viem "^2.21.40"
 
-"@lidofinance/wallets-testing-widgets@^1.1.48":
-  version "1.1.48"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.1.48.tgz#ee61271641976ebb82951d72b3b2d48f02f4bf2d"
-  integrity sha512-zar8brcn1yPBwXC00lnM85lmqj3oR3CCvyYM0JbFpcj7cUXjN8QWRC+4+CHbfK1+ENwfHPuwjkBi/LUuw7D0+g==
+"@lidofinance/wallets-testing-widgets@1.1.50-alpha.6":
+  version "1.1.50-alpha.6"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.1.50-alpha.6.tgz#5f3aac0bb425dee1e6bb1f8aeabeceab778f3a12"
+  integrity sha512-s9B6+XF6Vyw0iEP4Kq7lYTsHgQ7UB7b9fTFtBQv93F71W5HZOl7+hfNCpv/5apT/aUPxeXASsV2XdjY2e0iowQ==
   dependencies:
-    "@lidofinance/wallets-testing-wallets" "1.16.0"
+    "@lidofinance/wallets-testing-wallets" "1.17.0-alpha.6"
     "@nestjs/common" "^8.2.5"
     "@nestjs/config" "^2.2.0"
     "@playwright/test" "^1.44.1"

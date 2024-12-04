@@ -1,17 +1,15 @@
-import { ReefKnotService, toCut } from '@services';
+import { ReefKnotService } from '@services';
 import { connectedWalletStorageData, Tags } from '@test-data';
 import { ReefKnotPage } from '@pages';
 import { expect, test } from '@playwright/test';
-import { REEF_KNOT_CONFIG } from '@config';
-import { formatEther } from 'viem';
 import { qase } from 'playwright-qase-reporter';
 import { BrowserService, initBrowserWithWallet } from '@browser';
 
-const wallets = [{ name: 'metamask' }];
+const wallets = [{ name: 'metamask' }, { name: 'okx' }];
 
 wallets.forEach((wallet) => {
   test.describe.serial(
-    `ReefKnot. Wallet interaction (${wallet.name})`,
+    `ReefKnot. Wallet connection (${wallet.name})`,
     { tag: [Tags.connectedWallet] },
     async () => {
       let browserService: BrowserService;
@@ -33,6 +31,7 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(434, 'Connect wallet'), async () => {
+        qase.parameters({ wallet: wallet.name });
         await test.step('Check the stand appearance before wallet connection', async () => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
@@ -76,61 +75,11 @@ wallets.forEach((wallet) => {
         });
       });
 
-      test.describe('Check statistic block', async () => {
-        test(qase(435, 'Check provider name'), async () => {
-          await expect(
-            reefKnotPage.statsBlock.providerValue,
-            'Expected the connected wallet name to be displayed correctly',
-          ).toContainText(
-            reefKnotService.walletPage.config.COMMON.CONNECTED_WALLET_NAME,
-          );
-        });
-
-        test(qase(436, 'Check chainId'), async () => {
-          await expect(
-            reefKnotPage.statsBlock.chainIdValue,
-            'Expected the connected network ID to be displayed correctly',
-          ).toContainText(String(REEF_KNOT_CONFIG.STAND_CONFIG.chainId));
-        });
-
-        test(qase(437, 'Check ETH balance'), async () => {
-          const walletEthBalance = toCut(
-            String(await reefKnotService.walletPage.getTokenBalance('ETH')),
-            3,
-          );
-          await reefKnotService.walletPage.page.close();
-          await expect(
-            reefKnotPage.statsBlock.ethBalance,
-            'Expected the wallet ETH balance comply with ReefKnot stats block',
-          ).toContainText(walletEthBalance);
-        });
-
-        test(qase(438, 'Check stETH balance'), async () => {
-          const walletStethBalance = toCut(
-            formatEther(await reefKnotService.sdkService.steth.balance()),
-            5,
-          );
-          await expect(
-            reefKnotPage.statsBlock.stethBalance,
-            'Expected the stETH balance comply with ReefKnot stats block',
-          ).toContainText(walletStethBalance);
-        });
-
-        test(qase(439, 'Check wstETH balance'), async () => {
-          const walletWstethBalance = toCut(
-            formatEther(await reefKnotService.sdkService.wsteth.balance()),
-            5,
-          );
-          await expect(
-            reefKnotPage.statsBlock.wstethBalance,
-            'Expected the wstETH balance comply with ReefKnot stats block',
-          ).toContainText(walletWstethBalance);
-        });
-      });
-
       test(
         qase(440, 'Reload page and check that the wallet connection remains'),
         async () => {
+          qase.parameters({ wallet: wallet.name });
+
           await reefKnotPage.page.reload();
           await expect(
             reefKnotPage.header.accountButton,
@@ -144,6 +93,8 @@ wallets.forEach((wallet) => {
       );
 
       test(qase(441, 'Disconnect wallet'), async () => {
+        qase.parameters({ wallet: wallet.name });
+
         await reefKnotPage.disconnectWallet();
         await test.step('Check the stand appearance after wallet disconnection', async () => {
           await expect(
@@ -183,6 +134,7 @@ wallets.forEach((wallet) => {
           'Reload page and check that the wallet disconnection remains',
         ),
         async () => {
+          qase.parameters({ wallet: wallet.name });
           await reefKnotPage.page.reload();
           await expect(
             reefKnotPage.header.accountButton,

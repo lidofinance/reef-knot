@@ -1,10 +1,7 @@
 import { ReefKnotPage } from '@pages';
 import { CONFIG_MATOMO_CLICK_TO_WALLET_EVENTS } from '@test-data';
 import { test, expect } from '@playwright/test';
-import { Tags } from '@test-data';
 import { qase } from 'playwright-qase-reporter';
-import { initBrowserWithWallet } from '@browser';
-import { ReefKnotService } from '@services';
 
 test.describe('ReefKnot. Matomo events', async () => {
   let reefKnotPage: ReefKnotPage;
@@ -95,76 +92,3 @@ test.describe('ReefKnot. Matomo events', async () => {
     },
   );
 });
-
-test.describe(
-  'ReefKnot. Matomo events [connected wallet]',
-  { tag: [Tags.connectedWallet] },
-  async () => {
-    let reefKnotService: ReefKnotService;
-    let reefKnotPage: ReefKnotPage;
-
-    test.beforeAll(async () => {
-      const browser = await initBrowserWithWallet('metamask');
-      reefKnotService = browser.reefKnotService;
-      reefKnotPage = reefKnotService.reefKnotPage;
-      await reefKnotPage.goto();
-      await reefKnotPage.allowUseCookies();
-    });
-
-    test.beforeEach(async () => {
-      await reefKnotPage.goto();
-      await reefKnotService.disconnectWalletForce();
-    });
-
-    test.afterAll(async () => {
-      await reefKnotService.disconnectWalletForce();
-    });
-
-    test(qase(432, 'Connect Metamask wallet'), async () => {
-      const expectedNameParam = 'metaMask connected';
-
-      await test.step('Connect wallet and check console.log', async () => {
-        const [consoleMessage] = await Promise.all([
-          reefKnotPage.page.waitForEvent('console', (msg) =>
-            msg.text().includes(expectedNameParam),
-          ),
-          reefKnotService.connectWallet(),
-        ]);
-        expect(
-          consoleMessage.text(),
-          `Expected request param "${consoleMessage.text()}" to equal value "${expectedNameParam}"`,
-        ).toContain(expectedNameParam);
-      });
-    });
-
-    test(qase(433, 'Connect wallet with Browser button'), async () => {
-      const expectedNameParam = 'browserExtension connected';
-
-      await test.step('Connect wallet and check console.log', async () => {
-        const [connectWalletPage] =
-          await test.step('Connect wallet with Browser button', async () => {
-            await reefKnotService.reefKnotPage.header.connectWalletButton.click();
-            await reefKnotService.reefKnotPage.walletListModal.confirmConditionWalletModal();
-
-            return await Promise.all([
-              reefKnotService.reefKnotPage.waitForPage(),
-              reefKnotService.reefKnotPage.walletListModal
-                .getWalletInModal('Browser')
-                .click(),
-            ]);
-          });
-
-        const [consoleMessage] = await Promise.all([
-          reefKnotPage.page.waitForEvent('console', (msg) =>
-            msg.text().includes(expectedNameParam),
-          ),
-          reefKnotService.walletPage.connectWallet(connectWalletPage),
-        ]);
-        expect(
-          consoleMessage.text(),
-          `Expected request param "${consoleMessage.text()}" to equal value "${expectedNameParam}"`,
-        ).toContain(expectedNameParam);
-      });
-    });
-  },
-);

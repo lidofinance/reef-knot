@@ -47,7 +47,9 @@ export class ReefKnotService {
       } else {
         try {
           const [connectWalletPage] = await Promise.all([
-            this.page.context().waitForEvent('page', { timeout: 5000 }),
+            this.page
+              .context()
+              .waitForEvent('page', { timeout: TIMEOUT.RPC_WAIT }),
             await walletIcon.click(),
           ]);
           await this.walletPage.connectWallet(connectWalletPage);
