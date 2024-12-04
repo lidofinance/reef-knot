@@ -1,5 +1,37 @@
 # @reef-knot/connect-wallet-modal
 
+## 7.0.1
+
+### Patch Changes
+
+- Ledger HID connection on slow network fixed
+
+## 7.0.0
+
+### Major Changes
+
+- Metrics config refactored, replaced with certain actions callbacks
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/core-react@6.0.0
+  - @reef-knot/types@4.0.0
+  - @reef-knot/web3-react@6.0.0
+  - @reef-knot/wallets-list@4.0.0
+
+## 6.0.2
+
+### Patch Changes
+
+- Ledger HID metrics fixed
+
+## 6.0.1
+
+### Patch Changes
+
+- Coinbase Smart Wallet displayed by default
+
 ## 6.0.0
 
 ### Major Changes

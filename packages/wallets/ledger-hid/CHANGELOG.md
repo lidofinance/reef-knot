@@ -1,5 +1,12 @@
 # @reef-knot/wallet-adapter-ledger-hid
 
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@4.0.0
+
 ## 4.0.0
 
 ### Patch Changes

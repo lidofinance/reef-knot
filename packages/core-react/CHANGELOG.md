@@ -1,5 +1,17 @@
 # @reef-knot/core-react
 
+## 6.0.0
+
+### Major Changes
+
+- Metrics config refactored, replaced with certain actions callbacks
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@4.0.0
+  - @reef-knot/wallets-list@4.0.0
+
 ## 5.1.0
 
 ### Minor Changes

@@ -1,50 +1,21 @@
 import React, { FC } from 'react';
-import {
-  Text,
-  Button,
-  Stack,
-  StackItem,
-  useBreakpoint,
-} from '@lidofinance/lido-ui';
-import styled from '@reef-knot/ui-react/styled-wrapper';
-import { LedgerScreenContainerStyled } from './styles';
-import { LedgerImageError } from './icons/LedgerImageError';
-import { LedgerImageErrorMobile } from './icons/LedgerImageErrorMobile';
+import { LedgerModalScreen } from './LedgerModalScreen';
+import { LedgerImageErrorAdaptive } from './icons/LedgerImageErrorAdaptive';
 
-const HeadingStyled = styled(Text)`
-  padding-bottom: 4px;
-`;
+type LedgerErrorScreenProps = {
+  message: React.ReactNode;
+  onClickRetry: () => void;
+};
 
-export const LedgerErrorScreen: FC<{ message: string; retry: () => void }> = ({
+export const LedgerErrorScreen: FC<LedgerErrorScreenProps> = ({
   message,
-  retry,
+  onClickRetry,
 }) => (
-  <LedgerScreenContainerStyled>
-    <Stack direction="column" spacing="xl" align="stretch">
-      <StackItem>
-        <Stack direction="column" spacing="xl" align="center">
-          <StackItem>
-            {useBreakpoint('md') ? (
-              <LedgerImageErrorMobile />
-            ) : (
-              <LedgerImageError />
-            )}
-          </StackItem>
-          <StackItem>
-            <HeadingStyled color="default" size="sm" strong>
-              Something went wrong
-            </HeadingStyled>
-            <Text color="secondary" size="xs">
-              {message}
-            </Text>
-          </StackItem>
-        </Stack>
-      </StackItem>
-      <StackItem>
-        <Button variant="ghost" fullwidth onClick={retry}>
-          Retry
-        </Button>
-      </StackItem>
-    </Stack>
-  </LedgerScreenContainerStyled>
+  <LedgerModalScreen
+    icon={<LedgerImageErrorAdaptive />}
+    heading="Something went wrong"
+    message={message}
+    action="Retry"
+    onClickAction={onClickRetry}
+  />
 );

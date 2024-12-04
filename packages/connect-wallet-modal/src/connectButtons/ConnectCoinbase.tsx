@@ -8,44 +8,33 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
 ) => {
   const {
-    onConnect,
     darkThemeEnabled,
-    metrics,
     walletId,
     walletName,
     icon: WalletIcon,
     downloadURLs,
     detector,
     connector,
+    onConnectStart,
+    onConnectSuccess,
     ...rest
   } = props;
-
-  const metricsOnConnect = metrics?.events?.connect?.handlers[walletId];
-  const metricsOnClick = metrics?.events?.click?.handlers[walletId];
 
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(() => {
-    metricsOnClick?.();
+    onConnectStart?.();
     disconnect?.();
     connect(
       { connector },
       {
         onSuccess: () => {
-          onConnect?.();
-          metricsOnConnect?.();
+          onConnectSuccess?.();
         },
       },
     );
-  }, [
-    connect,
-    connector,
-    disconnect,
-    metricsOnClick,
-    onConnect,
-    metricsOnConnect,
-  ]);
+  }, [connect, connector, disconnect, onConnectStart, onConnectSuccess]);
 
   return (
     <ConnectButtonBase

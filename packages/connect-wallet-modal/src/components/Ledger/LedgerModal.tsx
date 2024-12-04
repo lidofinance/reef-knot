@@ -5,49 +5,69 @@ import { LedgerContextProvider } from './LedgerContext';
 import { LedgerErrorScreen } from './LedgerErrorScreen';
 import { useLedgerContext } from './hooks';
 import { LedgerAccountScreen } from './LedgerAccountScreen';
-import type { MetricsProp } from '../ReefKnotWalletsModal';
 import { LedgerModalInnerContainer } from './styles';
 
 export type LedgerModalProps = ModalProps & {
-  metrics?: MetricsProp;
+  onCloseSuccess?: () => void;
+  onCloseReject?: () => void;
 };
 
-export const LedgerModal = (props: LedgerModalProps) => {
-  const { onClose } = props;
+export const LedgerModal = ({
+  onCloseSuccess,
+  onCloseReject,
+  ...props
+}: LedgerModalProps) => {
   const handleClose = useCallback(
     (event?: any) => {
       // hack needed to prevent the Modal closing on Select
       if (!event) return;
-      onClose?.();
+      onCloseReject?.();
     },
-    [onClose],
+    [onCloseReject],
   );
 
   return (
     <Modal title="Ledger connect" {...props} onClose={handleClose}>
       <LedgerContextProvider isActive={!!props.open}>
-        <LedgerScreen {...props} />
+        <LedgerScreen
+          onCloseSuccess={onCloseSuccess}
+          onCloseReject={onCloseReject}
+          {...props}
+        />
       </LedgerContextProvider>
     </Modal>
   );
 };
 
-export const LedgerScreen = ({ metrics, onClose }: LedgerModalProps) => {
-  const { error, reconnectTransport, isTransportConnected } =
-    useLedgerContext();
+export const LedgerScreen = ({ onCloseSuccess }: LedgerModalProps) => {
+  const {
+    error,
+    reconnectTransport,
+    isTransportConnected,
+    isUserActivationRequired,
+  } = useLedgerContext();
+
+  const handleClickRetry = useCallback(() => {
+    void reconnectTransport();
+  }, [reconnectTransport]);
 
   return (
     <LedgerModalInnerContainer>
       {error && (
         <LedgerErrorScreen
           message={error.message}
-          retry={() => void reconnectTransport()}
+          onClickRetry={handleClickRetry}
         />
       )}
       {!error && isTransportConnected && (
-        <LedgerAccountScreen metrics={metrics} closeScreen={onClose} />
+        <LedgerAccountScreen onConnectSuccess={onCloseSuccess} />
       )}
-      {!error && !isTransportConnected && <LedgerConnectionScreen />}
+      {!error && !isTransportConnected && (
+        <LedgerConnectionScreen
+          showConnectButton={isUserActivationRequired}
+          onClickConnect={handleClickRetry}
+        />
+      )}
     </LedgerModalInnerContainer>
   );
 };

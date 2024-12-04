@@ -1,5 +1,11 @@
 # @reef-knot/types
 
+## 4.0.0
+
+### Major Changes
+
+- Metrics config refactored, replaced with certain actions callbacks
+
 ## 3.0.0
 
 ### Major Changes

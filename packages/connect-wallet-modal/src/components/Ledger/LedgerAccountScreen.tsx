@@ -6,7 +6,6 @@ import { Pagination, Stack, StackItem } from '@lidofinance/lido-ui';
 import { AccountButton, AccountButtonSkeleton } from './LedgerAccountButton';
 import { useLedgerAccounts, useLedgerContext } from './hooks';
 import { getFirstIndexOnPage, saveLedgerDerivationPath } from './helpers';
-import type { MetricsProp } from '../ReefKnotWalletsModal';
 import { LedgerDerivationPathSelect } from './LedgerDerivationPathSelect';
 import { AccountRecord, AccountsStorage } from './types';
 import { DERIVATION_PATHS } from './constants';
@@ -23,14 +22,13 @@ const BoxWrapper = styled.div`
 `;
 
 type Props = {
-  metrics?: MetricsProp;
-  closeScreen?: () => void;
+  onConnectSuccess?: () => void;
 };
 
 const ACCOUNTS_PER_PAGE = 5;
 const ACCOUNTS_TOTAL_PAGES = 4;
 
-export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
+export const LedgerAccountScreen: FC<Props> = ({ onConnectSuccess }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [derivationPathTemplate, setDerivationPathTemplate] = useState<string>(
     DERIVATION_PATHS[0].template,
@@ -60,9 +58,7 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
     }
   }, [accountsForPage, accountsStorage, derivationPathTemplate]);
 
-  const metricsOnConnect = metrics?.events?.connect?.handlers.onConnectLedger;
-
-  const { connect } = useConnect();
+  const { connectAsync } = useConnect();
   const { walletDataList } = useReefKnotContext();
 
   const handleAccountButtonClick = useCallback(
@@ -74,27 +70,15 @@ export const LedgerAccountScreen: FC<Props> = ({ metrics, closeScreen }) => {
       saveLedgerDerivationPath(account.path);
       await disconnectTransport(true);
       try {
-        connect(
-          { connector: ledgerWalletData.createConnectorFn },
-          {
-            onSuccess: () => {
-              metricsOnConnect?.();
-            },
-          },
-        );
-        closeScreen?.();
+        await connectAsync({
+          connector: ledgerWalletData.createConnectorFn,
+        });
+        onConnectSuccess?.();
       } catch (e) {
         setError(helpers.interceptLedgerError(e as Error));
       }
     },
-    [
-      closeScreen,
-      connect,
-      disconnectTransport,
-      walletDataList,
-      setError,
-      metricsOnConnect,
-    ],
+    [disconnectTransport, walletDataList, setError, onConnectSuccess],
   );
 
   const handleDerivationPathSelect = useCallback((value: string) => {

@@ -1,38 +1,36 @@
-import React from 'react';
-import {
-  Loader,
-  Stack,
-  StackItem,
-  Text,
-  useBreakpoint,
-} from '@lidofinance/lido-ui';
-import { LedgerImageDefault } from './icons/LedgerImageDefault';
-import { LedgerImageDefaultMobile } from './icons/LedgerImageDefaultMobile';
-import { LedgerScreenContainerStyled } from './styles';
+import React, { FC } from 'react';
+import { Loader } from '@lidofinance/lido-ui';
 import { useLedgerContext } from './hooks';
+import { LedgerModalScreen } from './LedgerModalScreen';
+import { LedgerImageDefaultAdaptive } from './icons/LedgerImageDefaultAdaptive';
+import { LedgerScreenLoadingContainer } from './styles';
 
-export const LedgerConnectionScreen = () => {
+type LedgerConnectionScreenProps = {
+  showConnectButton?: boolean;
+  onClickConnect?: () => void;
+};
+
+export const LedgerConnectionScreen: FC<LedgerConnectionScreenProps> = ({
+  showConnectButton,
+  onClickConnect,
+}) => {
   const { isLoadingLedgerLibs } = useLedgerContext();
+
+  const message = isLoadingLedgerLibs ? (
+    <LedgerScreenLoadingContainer>
+      <Loader size="medium" color="secondary" />
+      <div>Loading connector...</div>
+    </LedgerScreenLoadingContainer>
+  ) : (
+    'Please connect your Ledger and launch Ethereum app on your device'
+  );
+
   return (
-    <LedgerScreenContainerStyled>
-      <Stack direction="column" spacing="xl" align="center">
-        <StackItem>
-          {useBreakpoint('md') ? (
-            <LedgerImageDefaultMobile />
-          ) : (
-            <LedgerImageDefault />
-          )}
-        </StackItem>
-        <StackItem>
-          {isLoadingLedgerLibs ? (
-            <Loader size="medium" color="secondary" />
-          ) : (
-            <Text color="secondary" size="xs">
-              Please connect your Ledger and launch Ethereum app on your device
-            </Text>
-          )}
-        </StackItem>
-      </Stack>
-    </LedgerScreenContainerStyled>
+    <LedgerModalScreen
+      icon={<LedgerImageDefaultAdaptive />}
+      message={message}
+      action={showConnectButton ? 'Connect' : undefined}
+      onClickAction={showConnectButton ? onClickConnect : undefined}
+    />
   );
 };

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC, useCallback } from 'react';
 import { Checkbox, Link } from '@reef-knot/ui-react';
 import { useReefKnotModal } from '@reef-knot/core-react';
 import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
@@ -9,18 +9,19 @@ export type TermsProps = {
 };
 
 export const Terms: FC<TermsProps> = ({ config }) => {
-  const { metrics, linkTerms, linkPrivacyNotice } = config;
-
+  const { linkTerms, linkPrivacyNotice, onClickTermsAccept } = config;
   const { setTermsChecked, termsChecked } = useReefKnotModal();
-  const onClickTermsAccept =
-    metrics?.events?.click?.handlers.onClickTermsAccept;
 
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTermsChecked(e.currentTarget.checked);
-    if (e.target.checked) {
-      onClickTermsAccept?.();
-    }
-  };
+  const handleCheckboxChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const isAccepted = e.currentTarget.checked;
+      setTermsChecked(isAccepted);
+      if (isAccepted) {
+        onClickTermsAccept?.({ isAccepted });
+      }
+    },
+    [setTermsChecked, onClickTermsAccept],
+  );
 
   return (
     <TermsStyle>
