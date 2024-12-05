@@ -79,10 +79,10 @@ test.describe(
       await browserService.teardown();
     });
 
-    test(qase(433, 'Connect wallet with Browser button'), async () => {
+    test(qase(432, 'Connect Browser wallet'), async () => {
       const expectedNameParam = 'browserExtension connected';
       await qase.groupParameters({
-        wallet: 'browser',
+        wallet: 'browser+metamask',
         eventName: expectedNameParam,
       });
 
