@@ -2,7 +2,10 @@ import { REEF_KNOT_CONFIG } from '@config';
 import { ReporterDescription } from '@playwright/test';
 
 const htmlReporter: ReporterDescription = ['html', { open: 'never' }];
-const consoleReporter: ReporterDescription = ['list', { printSteps: true }];
+const consoleReporter: ReporterDescription = [
+  'list',
+  { printSteps: !process.env.CI },
+];
 const githubReporter: ReporterDescription = ['github'];
 const qaseReporter: ReporterDescription = [
   'playwright-qase-reporter',
