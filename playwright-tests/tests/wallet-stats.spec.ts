@@ -12,7 +12,7 @@ const wallets = [{ name: 'metamask' }, { name: 'okx' }];
 wallets.forEach((wallet) => {
   test.describe(
     `ReefKnot. Check statistic (${wallet.name})`,
-    { tag: [Tags.connectedWallet, wallet.name] },
+    { tag: [Tags.connectedWallet, `@${wallet.name}`] },
     async () => {
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;

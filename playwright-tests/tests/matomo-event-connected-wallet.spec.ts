@@ -13,7 +13,7 @@ const wallets = [
 wallets.forEach((wallet) => {
   test.describe(
     `ReefKnot. Matomo events (${wallet.name})`,
-    { tag: [Tags.connectedWallet, wallet.name] },
+    { tag: [Tags.connectedWallet, `@${wallet.name}`] },
     async () => {
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
@@ -59,7 +59,7 @@ wallets.forEach((wallet) => {
 
 test.describe(
   `ReefKnot. Matomo events (Browser)`,
-  { tag: [Tags.connectedWallet] },
+  { tag: [Tags.connectedWallet, '@browser+metamask'] },
   async () => {
     let browserService: BrowserService;
     let reefKnotService: ReefKnotService;
