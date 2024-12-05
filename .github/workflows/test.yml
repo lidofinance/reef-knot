@@ -12,10 +12,10 @@ on:
           - mainnet
           - testnet
   pull_request:
-    branches:
-      - playwright-test
+    paths:
+      - 'playwright-tests/**'
 
-jobs:
+jobs: 
   test:
     runs-on: ubuntu-latest
     environment: test
