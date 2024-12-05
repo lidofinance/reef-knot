@@ -19,7 +19,7 @@ function getStandConfig() {
       return STAND_CONFIGS.get(STAND_ENV.testnet);
     default:
       throw Error(
-        `CONFIG_VALIDATION_ERROR: STAND_TYPE is not correctly defined (value is "${process.env.STAND_TYPE}")`,
+        `CONFIG_VALIDATION_ERROR: STAND_ENV is not correctly defined (value is "${process.env.STAND_ENV}")`,
       );
   }
 }
