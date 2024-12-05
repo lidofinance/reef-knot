@@ -13,7 +13,7 @@ const wallets = [
 wallets.forEach((wallet) => {
   test.describe(
     `ReefKnot. Matomo events (${wallet.name})`,
-    { tag: [Tags.connectedWallet] },
+    { tag: [Tags.connectedWallet, wallet.name] },
     async () => {
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
@@ -35,7 +35,7 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(432, `Connect ${wallet.name} wallet`), async () => {
-        qase.groupParameters({
+        await qase.groupParameters({
           wallet: wallet.name,
           eventName: wallet.expectedEvent,
         });
@@ -81,7 +81,10 @@ test.describe(
 
     test(qase(433, 'Connect wallet with Browser button'), async () => {
       const expectedNameParam = 'browserExtension connected';
-      qase.groupParameters({ wallet: 'browser', eventName: expectedNameParam });
+      await qase.groupParameters({
+        wallet: 'browser',
+        eventName: expectedNameParam,
+      });
 
       await test.step('Connect wallet and check console.log', async () => {
         const [connectWalletPage] =

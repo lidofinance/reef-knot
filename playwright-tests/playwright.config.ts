@@ -1,14 +1,5 @@
 import { PlaywrightTestConfig } from 'playwright/test';
-import { REEF_KNOT_CONFIG } from '@config';
-
-// Setting of Qase Reporter
-process.env.QASE_MODE = process.env.CI ? 'testops' : 'off'; // value 'testops' enables Qase reporter
-
-// Setting TestRun naming and QASE_ENVIRONMENT for reporter with CI test run
-if (process.env.QASE_MODE === 'testops') {
-  process.env.QASE_TESTOPS_RUN_TITLE = 'Auto Run [s:@All]';
-  process.env.QASE_ENVIRONMENT = REEF_KNOT_CONFIG.STAND_TYPE;
-}
+import { REEF_KNOT_CONFIG, REPORT_CONFIG } from '@config';
 
 const config: PlaywrightTestConfig = {
   testDir: './tests',
@@ -18,37 +9,9 @@ const config: PlaywrightTestConfig = {
   },
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  retries: 1,
   workers: 1,
-  reporter: process.env.CI
-    ? [
-        ['html', { open: 'never' }],
-        ['list'],
-        ['github'],
-        [
-          'playwright-qase-reporter',
-          {
-            debug: false,
-            testops: {
-              api: {
-                token: process.env.QASE_API_TOKEN,
-              },
-              project: 'REEFKNOT',
-              uploadAttachments: true,
-              run: {
-                complete: true,
-                description:
-                  `Stand url: ${REEF_KNOT_CONFIG.STAND_URL}\n` +
-                  `Env: ${REEF_KNOT_CONFIG.STAND_TYPE}`,
-              },
-              batch: {
-                size: 10,
-              },
-            },
-          },
-        ],
-      ]
-    : [['html', { open: 'never' }], ['list']],
+  reporter: REPORT_CONFIG(),
   use: {
     actionTimeout: 15000,
     screenshot: { fullPage: true, mode: 'only-on-failure' },

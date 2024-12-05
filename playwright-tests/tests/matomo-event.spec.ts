@@ -25,7 +25,7 @@ test.describe('ReefKnot. Matomo events', async () => {
 
   CONFIG_MATOMO_CLICK_TO_WALLET_EVENTS.forEach((event) => {
     test(qase(430, `Click to "${event.walletName}" wallet`), async () => {
-      qase.groupParameters({
+      await qase.groupParameters({
         wallet: event.walletName,
         event: event.eventMessage,
       });
@@ -58,6 +58,11 @@ test.describe('ReefKnot. Matomo events', async () => {
     async () => {
       const expectedMoreWalletsNameParam = 'more wallets clicked';
       const expectedLessWalletsNameParam = 'less wallets clicked';
+
+      await qase.groupParameters({
+        eventMoreWallet: expectedMoreWalletsNameParam,
+        eventLessWallet: expectedLessWalletsNameParam,
+      });
 
       await test.step('Open the wallet popup', async () => {
         await reefKnotPage.header.connectWalletButton.click();

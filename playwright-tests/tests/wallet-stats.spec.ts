@@ -12,7 +12,7 @@ const wallets = [{ name: 'metamask' }, { name: 'okx' }];
 wallets.forEach((wallet) => {
   test.describe(
     `ReefKnot. Check statistic (${wallet.name})`,
-    { tag: [Tags.connectedWallet] },
+    { tag: [Tags.connectedWallet, wallet.name] },
     async () => {
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
@@ -34,7 +34,7 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(435, 'Check provider name'), async () => {
-        qase.parameters({ wallet: wallet.name });
+        await qase.parameters({ wallet: wallet.name });
 
         await expect(
           reefKnotPage.statsBlock.providerValue,
@@ -45,7 +45,7 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(436, 'Check chainId'), async () => {
-        qase.parameters({ wallet: wallet.name });
+        await qase.parameters({ wallet: wallet.name });
 
         await expect(
           reefKnotPage.statsBlock.chainIdValue,
@@ -54,7 +54,7 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(437, 'Check ETH balance'), async () => {
-        qase.parameters({ wallet: wallet.name });
+        await qase.parameters({ wallet: wallet.name });
 
         const walletEthBalance = toCut(
           String(await reefKnotService.walletPage.getTokenBalance('ETH')),
@@ -68,7 +68,7 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(438, 'Check stETH balance'), async () => {
-        qase.parameters({ wallet: wallet.name });
+        await qase.parameters({ wallet: wallet.name });
 
         const walletStethBalance = toCut(
           formatEther(await reefKnotService.sdkService.steth.balance()),
@@ -81,7 +81,7 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(439, 'Check wstETH balance'), async () => {
-        qase.parameters({ wallet: wallet.name });
+        await qase.parameters({ wallet: wallet.name });
 
         const walletWstethBalance = toCut(
           formatEther(await reefKnotService.sdkService.wsteth.balance()),

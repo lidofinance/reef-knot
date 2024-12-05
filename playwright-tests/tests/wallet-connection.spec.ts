@@ -10,7 +10,7 @@ const wallets = [{ name: 'metamask' }, { name: 'okx' }];
 wallets.forEach((wallet) => {
   test.describe.serial(
     `ReefKnot. Wallet connection (${wallet.name})`,
-    { tag: [Tags.connectedWallet] },
+    { tag: [Tags.connectedWallet, wallet.name] },
     async () => {
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
@@ -31,7 +31,8 @@ wallets.forEach((wallet) => {
       });
 
       test(qase(434, 'Connect wallet'), async () => {
-        qase.parameters({ wallet: wallet.name });
+        await qase.parameters({ wallet: wallet.name });
+
         await test.step('Check the stand appearance before wallet connection', async () => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
@@ -78,7 +79,7 @@ wallets.forEach((wallet) => {
       test(
         qase(440, 'Reload page and check that the wallet connection remains'),
         async () => {
-          qase.parameters({ wallet: wallet.name });
+          await qase.parameters({ wallet: wallet.name });
 
           await reefKnotPage.page.reload();
           await expect(
@@ -93,7 +94,7 @@ wallets.forEach((wallet) => {
       );
 
       test(qase(441, 'Disconnect wallet'), async () => {
-        qase.parameters({ wallet: wallet.name });
+        await qase.parameters({ wallet: wallet.name });
 
         await reefKnotPage.disconnectWallet();
         await test.step('Check the stand appearance after wallet disconnection', async () => {
@@ -134,7 +135,8 @@ wallets.forEach((wallet) => {
           'Reload page and check that the wallet disconnection remains',
         ),
         async () => {
-          qase.parameters({ wallet: wallet.name });
+          await qase.parameters({ wallet: wallet.name });
+
           await reefKnotPage.page.reload();
           await expect(
             reefKnotPage.header.accountButton,
