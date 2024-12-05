@@ -11,6 +11,9 @@ on:
         options:
           - mainnet
           - testnet
+  pull_request:
+    branches:
+      - playwright-test
 
 jobs:
   test:
