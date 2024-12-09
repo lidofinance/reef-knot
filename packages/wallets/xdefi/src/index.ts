@@ -10,6 +10,9 @@ export const rdns = 'io.xdefi';
 export const id = 'xdefi';
 export const name = 'XDEFI';
 
+/**
+ * @deprecated Rebranded to Ctrl wallet. Use @reef-knot/wallet-adapter-ctrl instead.
+ */
 export const Xdefi: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
