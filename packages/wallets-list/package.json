@@ -49,7 +49,7 @@
     "@reef-knot/wallet-adapter-brave": "4.0.0",
     "@reef-knot/wallet-adapter-imtoken": "4.0.0",
     "@reef-knot/wallet-adapter-trust": "4.0.0",
-    "@reef-knot/wallet-adapter-xdefi": "4.0.0",
+    "@reef-knot/wallet-adapter-ctrl": "1.0.0",
     "@reef-knot/wallet-adapter-coinbase": "4.0.0",
     "@reef-knot/wallet-adapter-coinbase-smart-wallet": "3.0.0",
     "@reef-knot/wallet-adapter-ledger-hid": "5.0.0",
