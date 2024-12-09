@@ -15,7 +15,6 @@ import { Coin98, id as idCoin98 } from '@reef-knot/wallet-adapter-coin98';
 import { Brave, id as idBrave } from '@reef-knot/wallet-adapter-brave';
 import { ImToken, id as idImToken } from '@reef-knot/wallet-adapter-imtoken';
 import { Trust, id as idTrust } from '@reef-knot/wallet-adapter-trust';
-import { Xdefi, id as idXdefi } from '@reef-knot/wallet-adapter-xdefi';
 import { Coinbase, id as idCoinbase } from '@reef-knot/wallet-adapter-coinbase';
 import {
   CoinbaseSmartWallet,
@@ -35,6 +34,7 @@ import {
   BinanceWeb3Wallet,
   id as idBinanceWallet,
 } from '@reef-knot/wallet-adapter-binance-wallet';
+import { Ctrl, id as idCtrl } from '@reef-knot/wallet-adapter-ctrl';
 
 export const WalletsListEthereum = {
   [idBrowserExtension]: BrowserExtension,
@@ -50,7 +50,7 @@ export const WalletsListEthereum = {
   [idBrave]: Brave,
   [idImToken]: ImToken,
   [idTrust]: Trust,
-  [idXdefi]: Xdefi,
+  [idCtrl]: Ctrl,
   [idCoinbase]: Coinbase,
   [idCoinbaseSmartWallet]: CoinbaseSmartWallet,
   [idDAppBrowserInjected]: DAppBrowserInjected,

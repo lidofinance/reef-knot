@@ -1,7 +1,10 @@
-import { WalletAdapterType } from '@reef-knot/types';
+import type { WalletAdapterType } from '@reef-knot/types';
 import { injected } from 'wagmi/connectors';
+import {
+  getTargetEIP6963,
+  isProviderExistsEIP6963,
+} from '@reef-knot/wallets-helpers';
 import { WalletIcon } from './icons/index.js';
-import type { EIP1193Provider } from 'viem';
 
 // This generator is intended to be used for a wallet app working via EIP-6963
 // If the wallet you want to add uses a different technology, just change the code accordingly,
@@ -20,7 +23,7 @@ export const {{properCase walletName}}: WalletAdapterType = ({ providersStore })
   downloadURLs: {
     default: 'https://',
   },
-  connector: injected({
+  createConnectorFn: injected({
     target: getTargetEIP6963(providersStore, rdns),
   }),
 });
