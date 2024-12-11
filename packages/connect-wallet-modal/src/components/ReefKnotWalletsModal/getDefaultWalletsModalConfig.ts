@@ -39,7 +39,7 @@ export const WALLETS_MODAL_DISPLAY_CONFIG_DEFAULT: WalletIdsEthereum[] = [
   'exodus',
   'brave',
   'bitget',
-  'xdefi',
+  'ctrl',
   'imToken',
   'coin98',
   'ambire',

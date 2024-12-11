@@ -1,26 +1,23 @@
+import type { WalletAdapterType } from '@reef-knot/types';
 import { injected } from 'wagmi/connectors';
-import { WalletAdapterType } from '@reef-knot/types';
 import {
   getTargetEIP6963,
   isProviderExistsEIP6963,
 } from '@reef-knot/wallets-helpers';
 import { WalletIcon } from './icons/index.js';
 
+export const id = 'ctrl';
+export const name = 'Ctrl';
 export const rdns = 'io.xdefi';
-export const id = 'xdefi';
-export const name = 'XDEFI';
 
-/**
- * @deprecated Rebranded to Ctrl wallet. Use @reef-knot/wallet-adapter-ctrl instead.
- */
-export const Xdefi: WalletAdapterType = ({ providersStore }) => ({
-  walletName: name,
+export const Ctrl: WalletAdapterType = ({ providersStore }) => ({
   walletId: id,
+  walletName: name,
   type: injected.type,
   icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {
-    default: 'https://www.xdefi.io/',
+    default: 'https://ctrl.xyz/',
   },
   createConnectorFn: injected({
     target: () => getTargetEIP6963(providersStore, rdns),

@@ -1,5 +1,17 @@
 # reef-knot
 
+## 7.1.0
+
+### Minor Changes
+
+- Add Ctrl wallet, rm XDEFI wallet (rebranded into Ctrl)
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/connect-wallet-modal@7.1.0
+  - @reef-knot/wallets-list@4.1.0
+
 ## 7.0.1
 
 ### Patch Changes
