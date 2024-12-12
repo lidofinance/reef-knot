@@ -39,7 +39,7 @@ export class BrowserService {
   async initWalletSetup() {
     await this.setup(this.commonWalletConfig, this.standConfig);
     await this.walletPage.setupNetwork(REEF_KNOT_CONFIG.STAND_CONFIG);
-    await this.walletPage.switchNetwork(
+    await this.walletPage.changeNetwork(
       REEF_KNOT_CONFIG.STAND_CONFIG.chainName,
     );
     await this.browserContextService.closePages();
