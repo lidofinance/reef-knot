@@ -57,8 +57,6 @@ export class BrowserService {
       EXTENSION_PATH: process.env.EXTENSION_PATH,
     };
     await this.browserContextService.setup(this.walletConfig, {
-      // If fork was started we send to browserContextService set up separately context
-      // but, if fork wasn't started we send custom directory for create share context.
       contextDataDir: `${DEFAULT_BROWSER_CONTEXT_DIR_NAME}_${commonWalletConfig.WALLET_NAME}`,
     });
     const extension = new Extension(this.browserContextService.extensionId);

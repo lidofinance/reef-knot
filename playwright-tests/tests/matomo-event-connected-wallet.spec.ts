@@ -49,7 +49,7 @@ wallets.forEach((wallet) => {
           ]);
           expect(
             consoleMessage.text(),
-            `Expected request param "${consoleMessage.text()}" to equal value "${wallet.expectedEvent}"`,
+            `The request parameter "${consoleMessage.text()}" should match the value "${wallet.expectedEvent}"`,
           ).toContain(wallet.expectedEvent);
         });
       });
@@ -108,7 +108,7 @@ test.describe(
         ]);
         expect(
           consoleMessage.text(),
-          `Expected request param "${consoleMessage.text()}" to equal value "${expectedNameParam}"`,
+          `The request parameter "${consoleMessage.text()}" should match the value "${expectedNameParam}"`,
         ).toContain(expectedNameParam);
       });
     });

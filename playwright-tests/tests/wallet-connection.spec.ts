@@ -36,28 +36,28 @@ wallets.forEach((wallet) => {
         await test.step('Check the stand appearance before wallet connection', async () => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
-            'Expected the statistic block is not displayed before wallet connection',
+            'The statistic block should not be visible before the wallet is connected',
           ).not.toBeVisible();
           await expect(
             reefKnotPage.header.accountButton,
-            'Expected the account button is not displayed before wallet connection',
+            'The account button should not be visible before the wallet is connected',
           ).not.toBeVisible();
         });
         await reefKnotService.connectWallet();
         await test.step('Check the stand appearance after wallet connection', async () => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
-            'Expected the statistic block is displayed after wallet connection',
+            'The statistic block should be visible after the wallet is connected',
           ).toBeVisible();
           await expect(
             reefKnotPage.header.accountButton,
-            'Expected the account button is displayed after wallet connection',
+            'The account button should be visible after the wallet is connected',
           ).toBeVisible();
         });
         await test.step('Check local storage with connected', async () => {
           expect(
             await reefKnotPage.getStorageData('wagmi.recentConnectorId'),
-            'Expected the "wagmi.recentConnectorId" value to be equals the connected wallet',
+            'The value of "wagmi.recentConnectorId" should match the connected wallet',
           ).toBe(
             connectedWalletStorageData.get(
               browserService.commonWalletConfig.WALLET_NAME,
@@ -67,7 +67,7 @@ wallets.forEach((wallet) => {
             await reefKnotPage.getStorageData(
               'wagmi.reef-knot_reconnect-wallet-id',
             ),
-            'Expected the "wagmi.reef-knot_reconnect-wallet-id" value to be equals the connected wallet',
+            'The value of "wagmi.reef-knot_reconnect-wallet-id" should match the connected wallet',
           ).toBe(
             connectedWalletStorageData.get(
               browserService.commonWalletConfig.WALLET_NAME,
@@ -84,11 +84,11 @@ wallets.forEach((wallet) => {
           await reefKnotPage.page.reload();
           await expect(
             reefKnotPage.header.accountButton,
-            'Expected the account button is displayed after page reload',
+            'The account button should remain visible after the page is reloaded',
           ).toBeVisible();
           await expect(
             reefKnotPage.statsBlock.mainComponent,
-            'Expected the statistic block is displayed after page reload',
+            'The statistic block should remain visible after the page is reloaded',
           ).toBeVisible();
         },
       );
@@ -100,23 +100,23 @@ wallets.forEach((wallet) => {
         await test.step('Check the stand appearance after wallet disconnection', async () => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
-            'Expected the statistic block is not displayed after wallet disconnection',
+            'The statistic block should not be visible after the wallet is disconnected',
           ).not.toBeVisible();
           await expect(
             reefKnotPage.header.accountButton,
-            'Expected the account button is not displayed after wallet disconnection',
+            'The account button should not be visible after the wallet is disconnected',
           ).not.toBeVisible();
         });
         await test.step('Check local storage with connected', async () => {
           expect(
             await reefKnotPage.getStorageData('wagmi.recentConnectorId'),
-            'Expected the "wagmi.recentConnectorId" value to be NaN',
+            'The value of "wagmi.recentConnectorId" should be NaN',
           ).toBeNull();
           expect(
             await reefKnotPage.getStorageData(
               'wagmi.reef-knot_reconnect-wallet-id',
             ),
-            'Expected the "wagmi.reef-knot_reconnect-wallet-id" value to be NaN',
+            'The value of "wagmi.reef-knot_reconnect-wallet-id" should be NaN',
           ).toBeNull();
           expect(
             await reefKnotPage.getStorageData(
@@ -124,7 +124,7 @@ wallets.forEach((wallet) => {
                 browserService.commonWalletConfig.WALLET_NAME,
               ).disconnectWalletKey,
             ),
-            'Expected the recent wallet disconnection status is "true"',
+            'The recent wallet disconnection status should be "true"',
           ).toBe('true');
         });
       });
@@ -140,11 +140,11 @@ wallets.forEach((wallet) => {
           await reefKnotPage.page.reload();
           await expect(
             reefKnotPage.header.accountButton,
-            'Expected the account button is not displayed after page reload',
+            'The account button should not be visible after the page is reloaded',
           ).not.toBeVisible();
           await expect(
             reefKnotPage.statsBlock.mainComponent,
-            'Expected the statistic block is not displayed after page reload',
+            'The statistic block should not be visible after the page is reloaded',
           ).not.toBeVisible();
         },
       );

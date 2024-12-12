@@ -6,8 +6,8 @@ import * as path from 'path';
 import { WalletConfig } from '@lidofinance/wallets-testing-wallets';
 
 type OptionsBrowserContext = {
-  // If contextDataDir is undefined - will be created temp dir for context data.
-  // Else contextDataDir is not undefined - will be created user dir for context data in current folder.
+  // If contextDataDir is undefined, a temporary directory will be created for storing context data.
+  // If contextDataDir is defined, a user-specific directory will be created in the current folder for context data.
   contextDataDir: string;
 };
 

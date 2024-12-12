@@ -69,7 +69,6 @@ export class ReefKnotService {
   async disconnectWalletForce() {
     await test.step('Forcefully disconnect wallet', async () => {
       await this.page.evaluate(() => {
-        // Get all localStorage keys
         const localStorageKeys = Object.keys(localStorage);
 
         // Remove all keys starting with 'wagmi'

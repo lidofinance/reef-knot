@@ -47,7 +47,7 @@ test.describe('ReefKnot. Matomo events', async () => {
         ]);
         expect(
           consoleMessage.text(),
-          `Expected request param "${consoleMessage.text()}" to equal value "${event.eventMessage}"`,
+          `The request parameter "${consoleMessage.text()}" should match the value "${event.eventMessage}"`,
         ).toContain(event.eventMessage);
       });
     });
@@ -78,7 +78,7 @@ test.describe('ReefKnot. Matomo events', async () => {
         ]);
         expect(
           consoleMessage.text(),
-          `Expected request param "${consoleMessage.text()}" to equal value "${expectedMoreWalletsNameParam}"`,
+          `The request parameter "${consoleMessage.text()}" should match the value "${expectedMoreWalletsNameParam}"`,
         ).toContain(expectedMoreWalletsNameParam);
       });
 
@@ -91,7 +91,7 @@ test.describe('ReefKnot. Matomo events', async () => {
         ]);
         expect(
           consoleMessage.text(),
-          `Expected request param "${consoleMessage.text()}" to equal value "${expectedLessWalletsNameParam}"`,
+          `The request parameter "${consoleMessage.text()}" should match the value "${expectedLessWalletsNameParam}"`,
         ).toContain(expectedLessWalletsNameParam);
       });
     },

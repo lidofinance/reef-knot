@@ -38,7 +38,7 @@ wallets.forEach((wallet) => {
 
         await expect(
           reefKnotPage.statsBlock.providerValue,
-          'Expected the connected wallet name to be displayed correctly',
+          'The connected wallet name should be displayed correctly',
         ).toContainText(
           reefKnotService.walletPage.config.COMMON.CONNECTED_WALLET_NAME,
         );
@@ -49,7 +49,7 @@ wallets.forEach((wallet) => {
 
         await expect(
           reefKnotPage.statsBlock.chainIdValue,
-          'Expected the connected network ID to be displayed correctly',
+          'The connected network ID should be displayed correctly',
         ).toContainText(String(REEF_KNOT_CONFIG.STAND_CONFIG.chainId));
       });
 
@@ -63,7 +63,7 @@ wallets.forEach((wallet) => {
         await reefKnotService.walletPage.page.close();
         await expect(
           reefKnotPage.statsBlock.ethBalance,
-          'Expected the wallet ETH balance comply with ReefKnot stats block',
+          'The wallet’s ETH balance should match the value displayed in the ReefKnot stats block',
         ).toContainText(walletEthBalance);
       });
 
@@ -76,7 +76,7 @@ wallets.forEach((wallet) => {
         );
         await expect(
           reefKnotPage.statsBlock.stethBalance,
-          'Expected the stETH balance comply with ReefKnot stats block',
+          'The wallet’s stETH balance should match the value displayed in the ReefKnot stats block.',
         ).toContainText(walletStethBalance);
       });
 
@@ -89,7 +89,7 @@ wallets.forEach((wallet) => {
         );
         await expect(
           reefKnotPage.statsBlock.wstethBalance,
-          'Expected the wstETH balance comply with ReefKnot stats block',
+          'The wallet’s wstETH balance should match the value displayed in the ReefKnot stats block.',
         ).toContainText(walletWstethBalance);
       });
     },
