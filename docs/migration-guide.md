@@ -96,6 +96,16 @@ Follow the latest [installation instructions](README.md#installation) to properl
 
 ## Other Notes
 
+### Legacy Lido JS SDK
+
+The Lido JS SDK is a deprecated legacy web3 development kit for Lido projects.
+
+If your app still relies on it, you will need to configure its `ProviderSDK` React Context Provider.
+This configuration may require adjustments due to the update to wagmi v2.
+
+For an example of how to configure `ProviderSDK` in combination with wagmi v2 and ethers.js,
+refer to the Lido ETH Stake Widget: [ProviderSDK Configuration Example](https://github.com/lidofinance/ethereum-staking-widget/blob/c5bac490f92826abe9c12a34e751b004eca679ee/modules/web3/web3-provider/sdk-legacy.tsx).
+
 ### NoSSRWrapper
 
 If you are using reef-knot v0.x, then, most likely, your code already has some NoSSRWrapper usage.
