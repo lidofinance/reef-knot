@@ -57,7 +57,13 @@ import { WalletsListEthereum } from 'reef-knot/wallets';
 
 ### Configuration
 
-Reef Knot provides the `getDefaultConfig` helper function, which acts as a single entry point for configuring `wagmi` and Reef Knot:
+#### Example
+
+You can refer to [the code of the Reef Knot demo app](https://github.com/lidofinance/reef-knot/blob/main/apps/demo-react/providers/web3.tsx) as a reference for setting up the configuration.
+
+#### Description
+
+Reef Knot provides the `getDefaultConfig` helper function, which acts as a single entry point for configuring both `wagmi` and Reef Knot:
 
 ```typescript
 const { wagmiConfig, reefKnotConfig, walletsModalConfig } = getDefaultConfig({
