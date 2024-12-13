@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -42,7 +42,7 @@
     "@reef-knot/wallet-adapter-okx": "4.0.0",
     "@reef-knot/wallet-adapter-exodus": "4.0.0",
     "@reef-knot/wallet-adapter-walletconnect": "4.0.0",
-    "@reef-knot/wallet-adapter-ambire": "4.0.0",
+    "@reef-knot/wallet-adapter-ambire": "5.0.0",
     "@reef-knot/wallet-adapter-binance-wallet": "3.0.0",
     "@reef-knot/wallet-adapter-bitkeep": "4.0.0",
     "@reef-knot/wallet-adapter-coin98": "4.0.0",

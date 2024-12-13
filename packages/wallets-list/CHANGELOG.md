@@ -1,5 +1,12 @@
 # @reef-knot/wallets-list
 
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [c5965d1]
+  - @reef-knot/wallet-adapter-ambire@5.0.0
+
 ## 4.1.0
 
 ### Minor Changes
