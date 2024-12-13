@@ -1,5 +1,11 @@
 # reef-knot
 
+## 7.1.1
+
+### Patch Changes
+
+- @reef-knot/wallets-list@4.1.1
+
 ## 7.1.0
 
 ### Minor Changes
