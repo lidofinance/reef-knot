@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "ES2020",
+    "resolveJsonModule": true,
+    "composite": true,
+    "sourceMap": true,
+    "lib": [
+      "ES2020",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@test-data": ["test-data"],
+      "@config": ["config"],
+      "@pages": ["pages"],
+      "@services": ["services"],
+      "@browser": ["services/browser"]
+    }
+  },
+}
