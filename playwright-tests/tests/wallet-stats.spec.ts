@@ -57,8 +57,8 @@ wallets.forEach((wallet) => {
         await qase.parameters({ wallet: wallet.name });
 
         const walletEthBalance = toCut(
-          String(await reefKnotService.walletPage.getTokenBalance('ETH')),
-          3,
+          formatEther(await reefKnotService.sdkService.core.balanceETH()),
+          5,
         );
         await reefKnotService.walletPage.page.close();
         await expect(
