@@ -4,13 +4,9 @@ import { ReefKnotService } from '@services';
 import { ReefKnotPage } from '@pages';
 import { BrowserService, initBrowserWithWallet } from '@browser';
 import { qase } from 'playwright-qase-reporter';
+import { REEF_KNOT_CONFIG } from '@config';
 
-const wallets = [
-  { name: 'metamask', expectedEvent: 'metaMask connected' },
-  { name: 'okx', expectedEvent: 'okx connected' },
-];
-
-wallets.forEach((wallet) => {
+REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Matomo events (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
@@ -37,20 +33,20 @@ wallets.forEach((wallet) => {
       test(qase(432, `Connect ${wallet.name} wallet`), async () => {
         await qase.groupParameters({
           wallet: wallet.name,
-          eventName: wallet.expectedEvent,
+          eventName: wallet.connectWalletEvent,
         });
 
         await test.step('Connect wallet and check console.log', async () => {
           const [consoleMessage] = await Promise.all([
             reefKnotPage.page.waitForEvent('console', (msg) =>
-              msg.text().includes(wallet.expectedEvent),
+              msg.text().includes(wallet.connectWalletEvent),
             ),
             reefKnotService.connectWallet(),
           ]);
           expect(
             consoleMessage.text(),
-            `The request parameter "${consoleMessage.text()}" should match the value "${wallet.expectedEvent}"`,
-          ).toContain(wallet.expectedEvent);
+            `The request parameter "${consoleMessage.text()}" should match the value "${wallet.connectWalletEvent}"`,
+          ).toContain(wallet.connectWalletEvent);
         });
       });
     },

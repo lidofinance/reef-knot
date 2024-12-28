@@ -11,6 +11,16 @@ on:
         options:
           - mainnet
           - testnet
+      WALLETS:
+        description: 'Select wallet to run tests'
+        required: true
+        type: choice
+        default: All
+        options:
+          - All
+          - metamask
+          - okx
+
 
 jobs:
   test:
@@ -23,6 +33,7 @@ jobs:
       WALLET_SECRET_PHRASE: ${{ secrets.WALLET_SECRET_PHRASE }}
       WALLET_PASSWORD: ${{ secrets.WALLET_PASSWORD }}
       STAND_ENV: ${{ github.event.inputs.STAND_ENV || 'testnet' }}
+      WALLETS: ${{ github.event.inputs.WALLETS || 'All' }}
       STAND_TYPE: stand
       NODE_OPTIONS: --max-old-space-size=4096
 

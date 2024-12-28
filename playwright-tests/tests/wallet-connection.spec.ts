@@ -4,10 +4,9 @@ import { ReefKnotPage } from '@pages';
 import { expect, test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
 import { BrowserService, initBrowserWithWallet } from '@browser';
+import { REEF_KNOT_CONFIG } from '@config';
 
-const wallets = [{ name: 'metamask' }, { name: 'okx' }];
-
-wallets.forEach((wallet) => {
+REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe.serial(
     `ReefKnot. Wallet connection (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },

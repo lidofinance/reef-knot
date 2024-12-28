@@ -9,6 +9,7 @@ export class StatsBlock {
   ethBalance: Locator;
   stethBalance: Locator;
   wstethBalance: Locator;
+  amountInput: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -19,5 +20,6 @@ export class StatsBlock {
     this.ethBalance = this.mainComponent.getByTestId('ETH');
     this.stethBalance = this.mainComponent.getByTestId('stETH');
     this.wstethBalance = this.mainComponent.getByTestId('wstETH');
+    this.amountInput = this.mainComponent.getByTestId('amountInput');
   }
 }

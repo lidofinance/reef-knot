@@ -1,4 +1,10 @@
-import { STAND_CONFIGS, STAND_LINK, STAND_ENV } from './env.config';
+import {
+  STAND_CONFIGS,
+  STAND_LINK,
+  STAND_ENV,
+  WALLETS,
+  TestWalletConfig,
+} from './env.config';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
@@ -9,6 +15,7 @@ export const REEF_KNOT_CONFIG = {
   STAND_CONFIG: getStandConfig(),
   STAND_URL: getStandUrl(),
   STAND_ENV: process.env.STAND_ENV,
+  WALLETS: getWalletsForTestRun(),
 };
 
 function getStandConfig() {
@@ -35,4 +42,14 @@ function getStandUrl() {
         `CONFIG_VALIDATION_ERROR: STAND_TYPE is not correctly defined (value is "${process.env.STAND_TYPE}")`,
       );
   }
+}
+
+function getWalletsForTestRun() {
+  const wallets: TestWalletConfig[] = [];
+  if (!process.env.WALLETS || process.env.WALLETS === 'All') {
+    WALLETS.forEach((wallet) => wallets.push(wallet));
+  } else {
+    wallets.push(WALLETS.get(process.env.WALLETS));
+  }
+  return wallets;
 }

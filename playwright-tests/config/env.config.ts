@@ -53,3 +53,13 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
     },
   ],
 ]);
+
+export interface TestWalletConfig {
+  name: string;
+  connectWalletEvent: string;
+}
+
+export const WALLETS = new Map<string, TestWalletConfig>([
+  ['metamask', { name: 'metamask', connectWalletEvent: 'metaMask connected' }],
+  ['okx', { name: 'okx', connectWalletEvent: 'okx connected' }],
+]);
