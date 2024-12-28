@@ -33,7 +33,7 @@ const qaseReporter: ReporterDescription = [
   },
 ];
 
-export const REPORT_CONFIG: () => ReporterDescription[] = function () {
+export const getReportConfig: () => ReporterDescription[] = function () {
   const reporterConfig: ReporterDescription[] = [htmlReporter, consoleReporter];
   if (process.env.CI) {
     reporterConfig.push(githubReporter, qaseReporter);

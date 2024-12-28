@@ -1,5 +1,5 @@
 import { PlaywrightTestConfig } from 'playwright/test';
-import { REEF_KNOT_CONFIG, REPORT_CONFIG } from '@config';
+import { REEF_KNOT_CONFIG, getReportConfig } from '@config';
 
 const config: PlaywrightTestConfig = {
   testDir: './tests',
@@ -11,7 +11,7 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   retries: 1,
   workers: 1,
-  reporter: REPORT_CONFIG(),
+  reporter: getReportConfig(),
   use: {
     actionTimeout: 15000,
     screenshot: { fullPage: true, mode: 'only-on-failure' },
