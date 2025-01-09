@@ -8,7 +8,7 @@ import { REEF_KNOT_CONFIG } from '@config';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
-    `ReefKnot. Stake transaction progress (${wallet.name})`,
+    `ReefKnot. Stake ETH transaction (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
     async () => {
       const stakeAmount = '0.0003';

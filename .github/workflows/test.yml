@@ -21,10 +21,9 @@ on:
           - metamask
           - okx
 
-
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: test
     env:
       TEST_BRANCH: ${{ github.event.inputs.branch }}
