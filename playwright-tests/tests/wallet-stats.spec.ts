@@ -1,8 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
 import { REEF_KNOT_CONFIG } from '@config';
-import { ReefKnotService, toCut } from '@services';
-import { formatEther } from 'viem';
+import { ReefKnotService, sdkToken } from '@services';
 import { Tags } from '@test-data';
 import { BrowserService, initBrowserWithWallet } from '@browser';
 import { ReefKnotPage } from '@pages';
@@ -53,46 +52,39 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
 
       test(qase(437, 'Check ETH balance'), async () => {
         await qase.parameters({ wallet: wallet.name });
-
-        const walletEthBalance = toCut(
-          formatEther(await reefKnotService.sdkService.core.balanceETH()),
-          5,
-        );
-        await reefKnotService.walletPage.page.close();
         expect(
           await reefKnotPage.waitForBalance(reefKnotPage.statsBlock.ethBalance),
           'The address ETH balance should match the value displayed in the ReefKnot stats block',
-        ).toContain(walletEthBalance);
+        ).toContain(
+          await reefKnotService.sdkService.getBalanceByToken(sdkToken.ETH, 5),
+        );
       });
 
       test(qase(438, 'Check stETH balance'), async () => {
         await qase.parameters({ wallet: wallet.name });
-
-        const walletStethBalance = toCut(
-          formatEther(await reefKnotService.sdkService.steth.balance()),
-          5,
-        );
         expect(
           await reefKnotPage.waitForBalance(
             reefKnotPage.statsBlock.stethBalance,
           ),
           'The address stETH balance should match the value displayed in the ReefKnot stats block',
-        ).toContain(walletStethBalance);
+        ).toContain(
+          await reefKnotService.sdkService.getBalanceByToken(sdkToken.stETH, 5),
+        );
       });
 
       test(qase(439, 'Check wstETH balance'), async () => {
         await qase.parameters({ wallet: wallet.name });
-
-        const walletWstethBalance = toCut(
-          formatEther(await reefKnotService.sdkService.wsteth.balance()),
-          5,
-        );
         expect(
           await reefKnotPage.waitForBalance(
             reefKnotPage.statsBlock.wstethBalance,
           ),
           'The address wstETH balance should match the value displayed in the ReefKnot stats block',
-        ).toContain(walletWstethBalance);
+        ).toContain(
+          await reefKnotService.sdkService.getBalanceByToken(
+            sdkToken.wstETH,
+            5,
+          ),
+        );
       });
     },
   );

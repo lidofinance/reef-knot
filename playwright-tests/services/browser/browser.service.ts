@@ -11,6 +11,7 @@ import {
 } from './browser.constants';
 import { BrowserContextService } from './browser-context.service';
 import { REEF_KNOT_CONFIG } from '@config';
+import { pwReefKnotEnvs } from '../../config/env.validation';
 
 export class BrowserService {
   private walletPage: WalletPage;
@@ -51,8 +52,8 @@ export class BrowserService {
   ) {
     this.standConfig = widgetConfig;
     this.walletConfig = {
-      SECRET_PHRASE: process.env.WALLET_SECRET_PHRASE,
-      PASSWORD: process.env.WALLET_PASSWORD,
+      SECRET_PHRASE: pwReefKnotEnvs.WALLET_SECRET_PHRASE,
+      PASSWORD: pwReefKnotEnvs.WALLET_PASSWORD,
       COMMON: commonWalletConfig,
       EXTENSION_PATH: process.env.EXTENSION_PATH,
     };

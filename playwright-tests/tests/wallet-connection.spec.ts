@@ -7,10 +7,11 @@ import { BrowserService, initBrowserWithWallet } from '@browser';
 import { REEF_KNOT_CONFIG } from '@config';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
-  test.describe.serial(
+  test.describe(
     `ReefKnot. Wallet connection (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
     async () => {
+      test.describe.configure({ mode: 'serial' }); // Serial mode is used because the tests in this test.describe are related to each other.
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
       let reefKnotPage: ReefKnotPage;

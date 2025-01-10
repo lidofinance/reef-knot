@@ -1,3 +1,5 @@
+import { pwReefKnotEnvs } from './env.validation';
+
 export interface StandConfig {
   chainId: number;
   tokenSymbol: string;
@@ -34,7 +36,7 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
         wrap: '0x8d09a4502Cc8Cf1547aD300E066060D043f6982D',
         withdraw: '0xc7cc160b58F8Bb0baC94b80847E2CF2800565C50',
       },
-      rpcUrl: `https://lb.drpc.org/ogrpc?network=holesky&dkey=${process.env.RPC_URL_KEY}`,
+      rpcUrl: `https://lb.drpc.org/ogrpc?network=holesky&dkey=${pwReefKnotEnvs.RPC_URL_KEY}`,
     },
   ],
   [
@@ -49,7 +51,7 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
         wrap: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
         withdraw: '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1',
       },
-      rpcUrl: `https://lb.drpc.org/ogrpc?network=ethereum&dkey=${process.env.RPC_URL_KEY}`,
+      rpcUrl: `https://lb.drpc.org/ogrpc?network=ethereum&dkey=${pwReefKnotEnvs.RPC_URL_KEY}`,
     },
   ],
 ]);
