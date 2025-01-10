@@ -10,8 +10,7 @@ import {
   WALLET_PAGES,
 } from './browser.constants';
 import { BrowserContextService } from './browser-context.service';
-import { REEF_KNOT_CONFIG } from '@config';
-import { pwReefKnotEnvs } from '../../config/env.validation';
+import { REEF_KNOT_CONFIG, pwReefKnotEnvs } from '@config';
 
 export class BrowserService {
   private walletPage: WalletPage;
