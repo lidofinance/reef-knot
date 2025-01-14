@@ -92,7 +92,7 @@ import { useWeb3 } from 'reef-knot/web3-react';
 
 ### 3. Set Up Reef Knot
 
-Follow the latest [installation instructions](README.md#installation) to properly set up the updated version of Reef Knot in your project.
+Follow the latest [installation instructions](https://github.com/lidofinance/reef-knot/blob/main/README.md#installation) to properly set up the updated version of Reef Knot in your project.
 
 ## Other Notes
 
