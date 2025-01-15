@@ -52,8 +52,8 @@ export const CONFIG_MATOMO_CLICK_TO_WALLET_EVENTS = [
     walletName: 'imToken',
   },
   {
-    eventMessage: 'xdefi clicked',
-    walletName: 'XDEFI',
+    eventMessage: 'ctrl clicked',
+    walletName: 'Ctrl',
   },
   {
     eventMessage: 'binanceWallet clicked',
