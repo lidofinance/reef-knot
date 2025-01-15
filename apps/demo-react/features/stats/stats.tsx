@@ -42,7 +42,7 @@ const StatsComponent = () => {
     : formatEther(wstethBalance.data || BigInt(0));
 
   return (
-    <StatsWrapperStyle>
+    <StatsWrapperStyle data-testid="statsBlock">
       <LeftColumnStyle>
         <TokenInputWrapperStyle>
           <ThemeProvider theme={themeLight}>
@@ -51,6 +51,7 @@ const StatsComponent = () => {
               fullwidth
               onChange={setInputValue}
               value={inputValue}
+              data-testid="amountInput"
             />
           </ThemeProvider>
         </TokenInputWrapperStyle>
@@ -59,11 +60,11 @@ const StatsComponent = () => {
         <InfoWrapperStyle>
           <div>
             <WalletInfoTitleStyle>Provider:</WalletInfoTitleStyle>
-            <WalletInfoValueStyle>{connectorName}</WalletInfoValueStyle>
+            <WalletInfoValueStyle data-testid="providerName">{connectorName}</WalletInfoValueStyle>
           </div>
           <div>
             <WalletInfoTitleStyle>Network:</WalletInfoTitleStyle>
-            <WalletInfoValueStyle>{web3Info.chainId}</WalletInfoValueStyle>
+            <WalletInfoValueStyle data-testid="chainId">{web3Info.chainId}</WalletInfoValueStyle>
           </div>
         </InfoWrapperStyle>
         <BalancesWrapperStyle>

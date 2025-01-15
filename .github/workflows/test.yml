@@ -1,0 +1,68 @@
+name: Test ReefKnot
+
+on:
+  workflow_dispatch:
+    inputs:
+      STAND_ENV:
+        description: 'Stand env'
+        required: true
+        type: choice
+        default: testnet
+        options:
+          - mainnet
+          - testnet
+      WALLETS:
+        description: 'Select wallet to run tests'
+        required: true
+        type: choice
+        default: All
+        options:
+          - All
+          - metamask
+          - okx
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    environment: test
+    env:
+      TEST_BRANCH: ${{ github.event.inputs.branch }}
+      RPC_URL_KEY: ${{ secrets.RPC_URL_KEY }}
+      QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}
+      WALLET_SECRET_PHRASE: ${{ secrets.WALLET_SECRET_PHRASE }}
+      WALLET_PASSWORD: ${{ secrets.WALLET_PASSWORD }}
+      STAND_ENV: ${{ github.event.inputs.STAND_ENV || 'testnet' }}
+      WALLETS: ${{ github.event.inputs.WALLETS || 'All' }}
+      STAND_TYPE: stand
+      NODE_OPTIONS: --max-old-space-size=4096
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+        working-directory: playwright-tests
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install chromium --with-deps
+        working-directory: playwright-tests
+
+      - name: Run tests
+        working-directory: playwright-tests
+        run: |
+          echo "Running All tests"
+          xvfb-run --auto-servernum -- yarn test:reef-knot
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-tests/playwright-report/
+          retention-days: 30

@@ -12,7 +12,7 @@ export const ActionItem: FC<PropsWithChildren<ActionItemProps>> = (props) => {
 
   return (
     <WrapperStyle>
-      <ActionStyle title={title} walletAction action={action}>
+      <ActionStyle title={title} walletAction action={action} data-testid={title+'Block'}>
         {children}
       </ActionStyle>
     </WrapperStyle>

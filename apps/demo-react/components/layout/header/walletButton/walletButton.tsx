@@ -22,6 +22,7 @@ const WalletButton: FC<ButtonProps> = (props) => {
       variant="text"
       color="secondary"
       onClick={openModal}
+      data-testid="walletBtn"
       {...rest}
     >
       <WalletButtonWrapperStyle>
