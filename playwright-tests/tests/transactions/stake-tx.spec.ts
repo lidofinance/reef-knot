@@ -31,7 +31,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         await browserService.teardown();
       });
 
-      test(`Stake ${stakeAmount} ETH`, async () => {
+      test(qase(444, `Stake ${stakeAmount} ETH`), async () => {
         await qase.groupParameters({
           wallet: wallet.name,
           txAmount: stakeAmount,
@@ -44,7 +44,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
                 reefKnotPage.statsBlock.stethBalance,
               ),
             );
-            return toCut(String(stEthBalance + parseFloat(stakeAmount)), 4);
+            return toCut(stEthBalance + parseFloat(stakeAmount), 4);
           });
 
         const txPage =

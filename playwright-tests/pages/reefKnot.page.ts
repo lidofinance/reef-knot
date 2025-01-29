@@ -5,6 +5,7 @@ import {
   WalletModal,
   StakeBlock,
   Toast,
+  WrapUnwrapBlock,
 } from './components';
 import { Locator, Page, test } from '@playwright/test';
 import { TIMEOUT } from '@test-data';
@@ -16,6 +17,7 @@ export class ReefKnotPage {
   walletModal: WalletModal;
   statsBlock: StatsBlock;
   stakeBlock: StakeBlock;
+  wrapUnwrapBlock: WrapUnwrapBlock;
   walletListModal: WalletListModal;
   toast: Toast;
 
@@ -25,6 +27,7 @@ export class ReefKnotPage {
     this.walletModal = new WalletModal(this.page);
     this.statsBlock = new StatsBlock(this.page);
     this.stakeBlock = new StakeBlock(this.page);
+    this.wrapUnwrapBlock = new WrapUnwrapBlock(this.page);
     this.walletListModal = new WalletListModal(this.page);
     this.toast = new Toast(this.page);
   }
@@ -72,6 +75,22 @@ export class ReefKnotPage {
     const [txPage] = await Promise.all([
       this.waitForPage(TIMEOUT.RPC_WAIT),
       this.stakeBlock.stakeBtn.click(),
+    ]);
+    return txPage;
+  }
+
+  async clickWrapButton() {
+    const [txPage] = await Promise.all([
+      this.waitForPage(TIMEOUT.RPC_WAIT),
+      this.wrapUnwrapBlock.wrapBtn.click(),
+    ]);
+    return txPage;
+  }
+
+  async clickUnwrapButton() {
+    const [txPage] = await Promise.all([
+      this.waitForPage(TIMEOUT.RPC_WAIT),
+      this.wrapUnwrapBlock.unwrapBtn.click(),
     ]);
     return txPage;
   }

@@ -41,4 +41,28 @@ export class SdkService extends LidoSDK {
     }
     return toCut(balance, decimalPlaces);
   }
+
+  async exchangeEthToWstEth(amount: any) {
+    const wstethRate = formatEther(
+      await this.wrap.convertStethToWsteth(1000000000000000000n),
+    );
+    return parseFloat(wstethRate) * parseFloat(amount);
+  }
+
+  async exchangeWstEthToEth(amount: any) {
+    const wstethRate = formatEther(
+      await this.wrap.convertWstethToSteth(1000000000000000000n),
+    );
+    return parseFloat(wstethRate) * parseFloat(amount);
+  }
+
+  async getStEthAllowance() {
+    return parseFloat(
+      formatEther(
+        await this.steth.allowance({
+          to: `0x${REEF_KNOT_CONFIG.STAND_CONFIG.contracts.wrap.slice(2)}`,
+        }),
+      ),
+    );
+  }
 }
