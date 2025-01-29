@@ -100,7 +100,7 @@ export class ReefKnotPage {
       async (locator: Locator) => {
         return await locator.evaluate((element) => {
           const balance = parseFloat(element.textContent);
-          return String(balance) ? String(balance) : null;
+          return balance ? String(balance) : null;
         });
       },
       locator,
