@@ -4,15 +4,17 @@
  * Example:
  * ```ts
  * 0.12345 => toCut('0.12345', 3) => '0.123'
+ * 0.101 => toCut('0.101', 2, true) => '0.1'
  * ```
  */
-export function toCut(amount: any, decimalPlaces: number) {
-  const result = String(amount).split(/\./);
+export function toCut(amount: any, decimalPlaces: number, removeZero = false) {
+  const parts = String(amount).split(/\./);
   let respLength: number;
-  if (result.length === 2) {
-    respLength = result[0].length + 1 + decimalPlaces;
+  if (parts.length === 2) {
+    respLength = parts[0].length + 1 + decimalPlaces;
   }
-  return String(amount).slice(0, respLength);
+  const response = String(amount).slice(0, respLength);
+  return removeZero ? String(parseFloat(response)) : response;
 }
 
 /**

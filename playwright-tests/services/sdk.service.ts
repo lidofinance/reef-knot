@@ -26,6 +26,14 @@ export class SdkService extends LidoSDK {
     });
   }
 
+  /**
+   Get token balance from SDK without 0 in the end of number
+   Example:
+   ```ts
+   // ETH balance = 1.102
+   getBalanceByToken(stdToken.ETH, 2) => '1.1'
+   ```
+   */
   async getBalanceByToken(token: sdkToken, decimalPlaces: number) {
     let balance: string;
     switch (token) {
@@ -39,7 +47,7 @@ export class SdkService extends LidoSDK {
         balance = formatEther(await this.wsteth.balance());
         break;
     }
-    return toCut(balance, decimalPlaces);
+    return toCut(balance, decimalPlaces, true);
   }
 
   async exchangeEthToWstEth(amount: any) {
