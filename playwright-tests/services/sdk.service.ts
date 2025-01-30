@@ -1,8 +1,8 @@
 import { LidoSDK, VIEM_CHAINS } from '@lidofinance/lido-ethereum-sdk';
 import { HDAccount } from 'viem/accounts';
-import { createWalletClient, formatEther, http } from 'viem';
+import { createWalletClient, formatEther, http, type Address } from 'viem';
 import { REEF_KNOT_CONFIG } from '@config';
-import { toCut } from './helpers';
+import { toCutDecimalsDigit } from './helpers';
 
 global.fetch = fetch;
 
@@ -26,6 +26,14 @@ export class SdkService extends LidoSDK {
     });
   }
 
+  /**
+   Get token balance from SDK without 0 in the end of number
+   Example:
+   ```ts
+   // ETH balance = 1.102
+   getBalanceByToken(stdToken.ETH, 2) => '1.1'
+   ```
+   */
   async getBalanceByToken(token: sdkToken, decimalPlaces: number) {
     let balance: string;
     switch (token) {
@@ -39,6 +47,30 @@ export class SdkService extends LidoSDK {
         balance = formatEther(await this.wsteth.balance());
         break;
     }
-    return toCut(balance, decimalPlaces);
+    return toCutDecimalsDigit(balance, decimalPlaces, true);
+  }
+
+  async exchangeStEthToWstEth(amount: any) {
+    const wstethRate = formatEther(
+      await this.wrap.convertStethToWsteth(1000000000000000000n),
+    );
+    return parseFloat(wstethRate) * parseFloat(amount);
+  }
+
+  async exchangeWstEthToStEth(amount: any) {
+    const wstethRate = formatEther(
+      await this.wrap.convertWstethToSteth(1000000000000000000n),
+    );
+    return parseFloat(wstethRate) * parseFloat(amount);
+  }
+
+  async getStEthAllowance() {
+    return parseFloat(
+      formatEther(
+        await this.steth.allowance({
+          to: REEF_KNOT_CONFIG.STAND_CONFIG.contracts.wrap as Address,
+        }),
+      ),
+    );
   }
 }

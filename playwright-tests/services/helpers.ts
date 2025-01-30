@@ -3,16 +3,22 @@
  *
  * Example:
  * ```ts
- * 0.12345 => toCut('0.12345', 3) => '0.123'
+ * 0.12345 => toСutDecimalsDigit('0.12345', 3) => '0.123'
+ * 0.101 => toСutDecimalsDigit('0.101', 2, true) => '0.1'
  * ```
  */
-export function toCut(floatAmount: string, decimalPlaces: number) {
-  const result = floatAmount.split(/\./);
+export function toCutDecimalsDigit(
+  amount: any,
+  decimalPlaces: number,
+  removeZero = false,
+) {
+  const parts = String(amount).split(/\./);
   let respLength: number;
-  if (result.length === 2) {
-    respLength = result[0].length + 1 + decimalPlaces;
+  if (parts.length === 2) {
+    respLength = parts[0].length + 1 + decimalPlaces;
   }
-  return floatAmount.slice(0, respLength);
+  const response = String(amount).slice(0, respLength);
+  return removeZero ? String(parseFloat(response)) : response;
 }
 
 /**

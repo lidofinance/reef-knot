@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { Tags, TIMEOUT } from '@test-data';
 import { BrowserService, initBrowserWithWallet } from '@browser';
-import { ReefKnotService, toCut } from '@services';
+import { ReefKnotService, toCutDecimalsDigit } from '@services';
 import { ReefKnotPage } from '@pages';
 import { qase } from 'playwright-qase-reporter';
 import { REEF_KNOT_CONFIG } from '@config';
@@ -31,7 +31,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         await browserService.teardown();
       });
 
-      test(`Stake ${stakeAmount} ETH`, async () => {
+      test(qase(444, `Stake ${stakeAmount} ETH`), async () => {
         await qase.groupParameters({
           wallet: wallet.name,
           txAmount: stakeAmount,
@@ -39,12 +39,10 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
 
         const newStEthBalance =
           await test.step('Calculate the stETH amount result', async () => {
-            const stEthBalance = parseFloat(
-              await reefKnotPage.waitForBalance(
-                reefKnotPage.statsBlock.stethBalance,
-              ),
-            );
-            return toCut(String(stEthBalance + parseFloat(stakeAmount)), 4);
+            const stethResult =
+              parseFloat(await reefKnotPage.statsBlock.getStEthBalance()) +
+              parseFloat(stakeAmount);
+            return toCutDecimalsDigit(stethResult, 4);
           });
 
         const txPage =
