@@ -2,7 +2,7 @@ import { REEF_KNOT_CONFIG } from '@config';
 import { expect, test } from '@playwright/test';
 import { Tags, TIMEOUT } from '@test-data';
 import { BrowserService, initBrowserWithWallet } from '@browser';
-import { ReefKnotService, toCut } from '@services';
+import { ReefKnotService, toCutDecimalsDigit } from '@services';
 import { ReefKnotPage } from '@pages';
 import { qase } from 'playwright-qase-reporter';
 
@@ -41,18 +41,12 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
 
         const newWstEthBalance =
           await test.step('Calculate the wstETH amount result', async () => {
-            const wstEthBalance = parseFloat(
-              await reefKnotPage.waitForBalance(
-                reefKnotPage.statsBlock.wstethBalance,
-              ),
-            );
-            return toCut(
-              wstEthBalance +
-                (await reefKnotService.sdkService.exchangeEthToWstEth(
-                  wrapAmount,
-                )),
-              4,
-            );
+            const wstethResult =
+              parseFloat(await reefKnotPage.statsBlock.getWstEthBalance()) +
+              (await reefKnotService.sdkService.exchangeStEthToWstEth(
+                wrapAmount,
+              ));
+            return toCutDecimalsDigit(wstethResult, 4);
           });
 
         const txPage =
@@ -109,18 +103,12 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
 
         const newWstEthBalance =
           await test.step('Calculate the wstETH amount result', async () => {
-            const wstEthBalance = parseFloat(
-              await reefKnotPage.waitForBalance(
-                reefKnotPage.statsBlock.wstethBalance,
-              ),
-            );
-            return toCut(
-              wstEthBalance +
-                (await reefKnotService.sdkService.exchangeEthToWstEth(
-                  wrapAmount,
-                )),
-              4,
-            );
+            const wstethResult =
+              parseFloat(await reefKnotPage.statsBlock.getWstEthBalance()) +
+              (await reefKnotService.sdkService.exchangeStEthToWstEth(
+                wrapAmount,
+              ));
+            return toCutDecimalsDigit(wstethResult, 4);
           });
 
         let txPage =

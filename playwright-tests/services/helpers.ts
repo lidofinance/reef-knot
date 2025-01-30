@@ -3,11 +3,15 @@
  *
  * Example:
  * ```ts
- * 0.12345 => toCut('0.12345', 3) => '0.123'
- * 0.101 => toCut('0.101', 2, true) => '0.1'
+ * 0.12345 => toСutDecimalsDigit('0.12345', 3) => '0.123'
+ * 0.101 => toСutDecimalsDigit('0.101', 2, true) => '0.1'
  * ```
  */
-export function toCut(amount: any, decimalPlaces: number, removeZero = false) {
+export function toCutDecimalsDigit(
+  amount: any,
+  decimalPlaces: number,
+  removeZero = false,
+) {
   const parts = String(amount).split(/\./);
   let respLength: number;
   if (parts.length === 2) {

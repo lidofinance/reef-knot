@@ -7,9 +7,8 @@ import {
   Toast,
   WrapUnwrapBlock,
 } from './components';
-import { Locator, Page, test } from '@playwright/test';
+import { Page, test } from '@playwright/test';
 import { TIMEOUT } from '@test-data';
-import { waitForCallback } from '@services';
 
 export class ReefKnotPage {
   readonly page: Page;
@@ -93,18 +92,5 @@ export class ReefKnotPage {
       this.wrapUnwrapBlock.unwrapBtn.click(),
     ]);
     return txPage;
-  }
-
-  async waitForBalance(locator: Locator, timeout = TIMEOUT.RPC_WAIT) {
-    return await waitForCallback(
-      async (locator: Locator) => {
-        return await locator.evaluate((element) => {
-          const balance = parseFloat(element.textContent);
-          return balance ? String(balance) : null;
-        });
-      },
-      locator,
-      timeout,
-    );
   }
 }

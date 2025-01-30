@@ -1,8 +1,8 @@
 import { LidoSDK, VIEM_CHAINS } from '@lidofinance/lido-ethereum-sdk';
 import { HDAccount } from 'viem/accounts';
-import { createWalletClient, formatEther, http } from 'viem';
+import { createWalletClient, formatEther, http, type Address } from 'viem';
 import { REEF_KNOT_CONFIG } from '@config';
-import { toCut } from './helpers';
+import { toCutDecimalsDigit } from './helpers';
 
 global.fetch = fetch;
 
@@ -47,17 +47,17 @@ export class SdkService extends LidoSDK {
         balance = formatEther(await this.wsteth.balance());
         break;
     }
-    return toCut(balance, decimalPlaces, true);
+    return toCutDecimalsDigit(balance, decimalPlaces, true);
   }
 
-  async exchangeEthToWstEth(amount: any) {
+  async exchangeStEthToWstEth(amount: any) {
     const wstethRate = formatEther(
       await this.wrap.convertStethToWsteth(1000000000000000000n),
     );
     return parseFloat(wstethRate) * parseFloat(amount);
   }
 
-  async exchangeWstEthToEth(amount: any) {
+  async exchangeWstEthToStEth(amount: any) {
     const wstethRate = formatEther(
       await this.wrap.convertWstethToSteth(1000000000000000000n),
     );
@@ -68,7 +68,7 @@ export class SdkService extends LidoSDK {
     return parseFloat(
       formatEther(
         await this.steth.allowance({
-          to: `0x${REEF_KNOT_CONFIG.STAND_CONFIG.contracts.wrap.slice(2)}`,
+          to: REEF_KNOT_CONFIG.STAND_CONFIG.contracts.wrap as Address,
         }),
       ),
     );

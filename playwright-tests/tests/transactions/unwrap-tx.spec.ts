@@ -2,7 +2,7 @@ import { REEF_KNOT_CONFIG } from '@config';
 import { expect, test } from '@playwright/test';
 import { Tags, TIMEOUT } from '@test-data';
 import { BrowserService, initBrowserWithWallet } from '@browser';
-import { ReefKnotService, toCut } from '@services';
+import { ReefKnotService, toCutDecimalsDigit } from '@services';
 import { ReefKnotPage } from '@pages';
 import { qase } from 'playwright-qase-reporter';
 
@@ -41,18 +41,12 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
 
         const newStEthBalance =
           await test.step('Calculate the stETH amount result', async () => {
-            const stEthBalance = parseFloat(
-              await reefKnotPage.waitForBalance(
-                reefKnotPage.statsBlock.stethBalance,
-              ),
-            );
-            return toCut(
-              stEthBalance +
-                (await reefKnotService.sdkService.exchangeWstEthToEth(
-                  unwrapAmount,
-                )),
-              4,
-            );
+            const stEthResult =
+              parseFloat(await reefKnotPage.statsBlock.getStEthBalance()) +
+              (await reefKnotService.sdkService.exchangeWstEthToStEth(
+                unwrapAmount,
+              ));
+            return toCutDecimalsDigit(stEthResult, 4);
           });
 
         const txPage =

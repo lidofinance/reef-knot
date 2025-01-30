@@ -53,7 +53,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
       test(qase(437, 'Check ETH balance'), async () => {
         await qase.parameters({ wallet: wallet.name });
         expect(
-          await reefKnotPage.waitForBalance(reefKnotPage.statsBlock.ethBalance),
+          await reefKnotPage.statsBlock.getEthBalance(),
           'The address ETH balance should match the value displayed in the ReefKnot stats block',
         ).toContain(
           await reefKnotService.sdkService.getBalanceByToken(sdkToken.ETH, 5),
@@ -63,9 +63,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
       test(qase(438, 'Check stETH balance'), async () => {
         await qase.parameters({ wallet: wallet.name });
         expect(
-          await reefKnotPage.waitForBalance(
-            reefKnotPage.statsBlock.stethBalance,
-          ),
+          await reefKnotPage.statsBlock.getStEthBalance(),
           'The address stETH balance should match the value displayed in the ReefKnot stats block',
         ).toContain(
           await reefKnotService.sdkService.getBalanceByToken(sdkToken.stETH, 5),
@@ -75,9 +73,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
       test(qase(439, 'Check wstETH balance'), async () => {
         await qase.parameters({ wallet: wallet.name });
         expect(
-          await reefKnotPage.waitForBalance(
-            reefKnotPage.statsBlock.wstethBalance,
-          ),
+          await reefKnotPage.statsBlock.getWstEthBalance(),
           'The address wstETH balance should match the value displayed in the ReefKnot stats block',
         ).toContain(
           await reefKnotService.sdkService.getBalanceByToken(
