@@ -18,11 +18,9 @@
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-packages": "turbo run lint test --filter=./packages/**/*",
-    "release": "changeset publish",
     "new-wallet": "turbo gen wallet"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
     "@lidofinance/eslint-config": "^0.38.0",
     "@next/eslint-plugin-next": "^13.5.3",
     "@rollup/plugin-babel": "5.3.1",
