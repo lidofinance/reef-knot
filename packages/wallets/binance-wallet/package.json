@@ -43,7 +43,7 @@
     "wagmi": ">=2.14"
   },
   "dependencies": {
-    "@binance/w3w-wagmi-connector-v2": "^1.2.3",
-    "@binance/w3w-utils": "^1.1.6"
+    "@binance/w3w-utils": "^1.1.6",
+    "@binance/w3w-wagmi-connector-v2": "^1.2.3"
   }
 }
