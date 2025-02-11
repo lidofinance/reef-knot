@@ -38,5 +38,5 @@ const walletsModalDefaultConfig = getDefaultWalletsModalConfig();
 | `config.walletsShown` | Controls displayed wallet connection buttons from the list of wallets in the modal. Wallets will be displayed in the specified sequence. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
 | `config.walletsPinned` | Pins certain wallets to display it at the top of the list. <br /> ***Default**: Get with `getDefaultWalletsModalConfig()`* |
 | `config.walletsDisplayInitialCount?` | Connection buttons count to render before the "More wallets" button. <br /> ***Default**: `6`* |
-| `config.metrics` | A map of the analytic events. |
+| `config.onClickTermsAccept({ isAccepted })` <br /> `config.onClickWalletsMore()` <br /> `config.onClickWalletsLess()` <br /> `config.onConnectStart({ walletId })` <br /> `config.onConnectSuccess({ walletId })` | Event callbacks. |
 | `config.linkTerms?` <br /> `config.linkPrivacyNotice?` <br /> `config.linkDontHaveWallet?` | UI links. |

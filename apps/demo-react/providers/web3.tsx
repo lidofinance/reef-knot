@@ -5,17 +5,15 @@ import { WalletsListEthereum } from 'reef-knot/wallets';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http } from 'wagmi';
 import * as wagmiChains from 'wagmi/chains';
-import { CHAINS } from '@lido-sdk/constants';
 import type { Transport } from 'viem';
 import {
   ReefKnotWalletsModal,
   getDefaultWalletsModalConfig,
 } from 'reef-knot/connect-wallet-modal';
 
-import metrics from 'utils/metrics';
-import { getBackendRPCPath } from 'config';
+import { metricProps } from 'utils/metrics';
 import { useClientConfig } from 'providers/client-config';
-import { SDKLegacyProvider } from './sdk-legacy';
+import { useRpcUrls } from 'hooks/useRpcUrls';
 
 const LINK_DONT_HAVE_WALLET =
   'https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask';
@@ -50,17 +48,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
     };
   }, [defaultChainId, supportedChainIds]);
 
-  const backendRPC: Record<number, string> = useMemo(
-    () =>
-      supportedChainIds.reduce(
-        (res, curr) => ({ ...res, [curr]: getBackendRPCPath(curr) }),
-        {
-          // Mainnet RPC is always required for some requests, e.g. ETH to USD price, ENS lookup
-          [CHAINS.Mainnet]: getBackendRPCPath(CHAINS.Mainnet),
-        },
-      ),
-    [supportedChainIds],
-  );
+  const backendRPC = useRpcUrls();
 
   const transports = useMemo(() => {
     return supportedChains.reduce<Record<number, Transport>>(
@@ -89,7 +77,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       // Wallets config args
       // TODO: We could call `getDefaultWalletsModalConfig` inside `getDefaultConfig`, but it cause package dependency cycle rn
       ...getDefaultWalletsModalConfig(),
-      metrics,
+      ...metricProps,
       linkDontHaveWallet: LINK_DONT_HAVE_WALLET,
     });
   }, [
@@ -110,13 +98,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
             config={walletsModalConfig}
             darkThemeEnabled={themeName === 'dark'}
           />
-          <SDKLegacyProvider
-            defaultChainId={defaultChain.id}
-            supportedChains={supportedChains}
-            rpc={backendRPC}
-          >
-            {children}
-          </SDKLegacyProvider>
+          {children}
         </ReefKnotProvider>
       </QueryClientProvider>
     </WagmiProvider>

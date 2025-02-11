@@ -1,5 +1,18 @@
 # @reef-knot/wallet-adapter-xdefi
 
+## 4.1.0
+
+### Minor Changes
+
+- DEPRECATED: the wallet is rebranded to Ctrl wallet. Use @reef-knot/wallet-adapter-ctrl instead.
+
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@4.0.0
+
 ## 3.0.0
 
 ### Patch Changes

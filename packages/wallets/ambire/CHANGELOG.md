@@ -1,5 +1,18 @@
 # @reef-knot/wallet-adapter-ambire
 
+## 5.0.0
+
+### Major Changes
+
+- c5965d1: Migrate Ambire Wallet Connector to extension
+
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/types@4.0.0
+
 ## 3.0.0
 
 ### Patch Changes
