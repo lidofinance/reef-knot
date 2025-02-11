@@ -1,5 +1,23 @@
 # reef-knot
 
+## 7.2.0
+
+### Minor Changes
+
+- Update viem to v2.23 and wagmi to v2.14, so the @coinbase/wallet-sdk would be updated too, which fixes a dependabot issue
+
+### Patch Changes
+
+- Updated dependencies
+  - @reef-knot/ledger-connector@4.3.0
+  - @reef-knot/connect-wallet-modal@7.2.0
+  - @reef-knot/wallets-helpers@2.2.0
+  - @reef-knot/core-react@6.1.0
+  - @reef-knot/web3-react@6.1.0
+  - @reef-knot/ui-react@2.2.0
+  - @reef-knot/types@4.1.0
+  - @reef-knot/wallets-list@4.1.2
+
 ## 7.1.1
 
 ### Patch Changes
