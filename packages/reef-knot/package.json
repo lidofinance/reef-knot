@@ -56,8 +56,8 @@
     "react": ">=18",
     "react-dom": ">=18",
     "styled-components": "^5.3.5",
-    "viem": ">=2.21",
-    "wagmi": ">=2.12"
+    "viem": ">=2.23",
+    "wagmi": ">=2.14"
   },
   "devDependencies": {
     "eslint-config-custom": "*"
