@@ -1,4 +1,5 @@
-name: Publish Beta version to registry
+name: Publish Alpha Version to NPM
+
 on:
   workflow_dispatch:
 

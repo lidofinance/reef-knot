@@ -1,4 +1,4 @@
-name: Check packages and publish demo app
+name: Check packages and deploy Demo App
 
 on:
   workflow_dispatch:
