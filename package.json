@@ -18,13 +18,12 @@
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-packages": "turbo run lint test --filter=./packages/**/*",
-    "release": "changeset publish",
     "new-wallet": "turbo gen wallet"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
     "@lidofinance/eslint-config": "^0.38.0",
     "@next/eslint-plugin-next": "^13.5.3",
+    "@qiwi/multi-semantic-release": "7.1.2",
     "@rollup/plugin-babel": "5.3.1",
     "@rollup/plugin-commonjs": "21.1.0",
     "@rollup/plugin-json": "5.0.2",
@@ -58,9 +57,21 @@
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.9.0"
   },
-  "dependencies": {},
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "develop",
+        "channel": "alpha",
+        "prerelease": "alpha"
+      }
+    ]
+  },
+  "multi-release": {
+    "sequentialInit": true
+  },
   "engines": {
     "node": ">=20.0.0"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@4.6.0"
 }

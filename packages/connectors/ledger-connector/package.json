@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/ledger-connector",
-  "version": "4.3.0",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -33,20 +33,20 @@
   },
   "devDependencies": {
     "@types/w3c-web-hid": "^1.0.2",
+    "eslint-config-custom": "*",
     "viem": ">=2.23",
-    "wagmi": ">=2.14",
-    "eslint-config-custom": "*"
+    "wagmi": ">=2.14"
   },
   "dependencies": {
     "@ethersproject/abstract-signer": "^5.7.0",
+    "@ethersproject/address": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/hash": "^5.7.0",
     "@ethersproject/properties": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/strings": "^5.7.0",
     "@ethersproject/transactions": "^5.7.0",
-    "@ethersproject/hash": "^5.7.0",
-    "@ethersproject/address": "^5.7.0",
     "@ledgerhq/hw-app-eth": "^6.37.1",
     "@ledgerhq/hw-transport": "^6.31.0",
     "@ledgerhq/hw-transport-webhid": "^6.29.0",
@@ -56,8 +56,8 @@
     "tiny-invariant": "^1.2.0"
   },
   "peerDependencies": {
+    "@tanstack/react-query": "^5.29.0",
     "viem": ">=2.23",
-    "wagmi": ">=2.14",
-    "@tanstack/react-query": "^5.29.0"
+    "wagmi": ">=2.14"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallet-adapter-ledger-hid",
-  "version": "5.1.0",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -32,15 +32,15 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^4.1.0",
     "@reef-knot/ledger-connector": "^4.3.0",
+    "@reef-knot/types": "^4.1.0",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "wagmi": ">=2.14",
-    "@reef-knot/types": "^4.0.0",
     "@reef-knot/ledger-connector": "^4.0.0",
-    "@tanstack/react-query": "^5.29.0"
+    "@reef-knot/types": "^4.0.0",
+    "@tanstack/react-query": "^5.29.0",
+    "wagmi": ">=2.14"
   }
 }

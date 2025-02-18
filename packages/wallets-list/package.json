@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/wallets-list",
-  "version": "4.1.2",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -37,25 +37,25 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
-    "@reef-knot/wallet-adapter-browser-extension": "4.1.0",
-    "@reef-knot/wallet-adapter-metamask": "4.1.0",
-    "@reef-knot/wallet-adapter-okx": "4.1.0",
-    "@reef-knot/wallet-adapter-exodus": "4.1.0",
-    "@reef-knot/wallet-adapter-walletconnect": "4.1.0",
     "@reef-knot/wallet-adapter-ambire": "5.1.0",
     "@reef-knot/wallet-adapter-binance-wallet": "3.1.0",
     "@reef-knot/wallet-adapter-bitkeep": "4.1.0",
-    "@reef-knot/wallet-adapter-coin98": "4.1.0",
     "@reef-knot/wallet-adapter-brave": "4.1.0",
-    "@reef-knot/wallet-adapter-imtoken": "4.1.0",
-    "@reef-knot/wallet-adapter-trust": "4.1.0",
-    "@reef-knot/wallet-adapter-ctrl": "1.1.0",
+    "@reef-knot/wallet-adapter-browser-extension": "4.1.0",
+    "@reef-knot/wallet-adapter-coin98": "4.1.0",
     "@reef-knot/wallet-adapter-coinbase": "4.1.0",
     "@reef-knot/wallet-adapter-coinbase-smart-wallet": "3.1.0",
+    "@reef-knot/wallet-adapter-ctrl": "1.1.0",
+    "@reef-knot/wallet-adapter-dapp-browser-injected": "4.1.0",
+    "@reef-knot/wallet-adapter-exodus": "4.1.0",
+    "@reef-knot/wallet-adapter-imtoken": "4.1.0",
     "@reef-knot/wallet-adapter-ledger-hid": "5.1.0",
     "@reef-knot/wallet-adapter-ledger-live": "5.1.0",
-    "@reef-knot/wallet-adapter-dapp-browser-injected": "4.1.0",
-    "@reef-knot/wallet-adapter-safe": "4.1.0"
+    "@reef-knot/wallet-adapter-metamask": "4.1.0",
+    "@reef-knot/wallet-adapter-okx": "4.1.0",
+    "@reef-knot/wallet-adapter-safe": "4.1.0",
+    "@reef-knot/wallet-adapter-trust": "4.1.0",
+    "@reef-knot/wallet-adapter-walletconnect": "4.1.0"
   },
   "devDependencies": {
     "@reef-knot/types": "^4.1.0",

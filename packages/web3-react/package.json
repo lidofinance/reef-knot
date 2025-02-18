@@ -1,6 +1,6 @@
 {
   "name": "@reef-knot/web3-react",
-  "version": "6.1.0",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -65,8 +65,8 @@
     "@reef-knot/core-react": "^6.0.0",
     "@reef-knot/ledger-connector": "^4.0.0",
     "@reef-knot/wallets-helpers": "^2.0.0",
+    "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "wagmi": ">=2.14",
-    "@tanstack/react-query": "^5.29.0"
+    "wagmi": ">=2.14"
   }
 }
