@@ -69,13 +69,13 @@ jobs:
         run: |
           set +x
           if [[ "${{ github.event.inputs.SUITE }}" == "all" ]]; then
-            echo "::notice::### Running \033[34m@all\033[34m tests"
+            echo "::notice:: 🔹 Running @all tests"
             xvfb-run --auto-servernum -- yarn test:reef-knot
           elif [[ "${{ github.event.inputs.SUITE }}" == "transactions" ]]; then
-            echo "::notice::### Running \033[34m@transactions\033[34m tests"
+            echo "::notice:: 🔹 Running @transactions tests"
             xvfb-run --auto-servernum -- yarn test:reef-knot tests/transactions
           elif [[ "${{ github.event.inputs.SUITE }}" == "wallet-connection" ]]; then
-            echo "::notice::### Running \033[34m@wallet-connection\033[34m tests"
+            echo "::notice:: 🔹 Running @wallet-connection tests"
             xvfb-run --auto-servernum -- yarn test:reef-knot tests/wallet-connection.spec.ts
           fi
 
