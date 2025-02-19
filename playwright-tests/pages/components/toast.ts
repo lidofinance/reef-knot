@@ -1,12 +1,10 @@
 import { Locator, Page } from '@playwright/test';
 
 export class Toast {
-  page: Page;
   successToast: Locator;
   errorToast: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(public page: Page) {
     this.successToast = this.page.locator(
       '.Toastify__toast--success :has-text("Success")',
     );

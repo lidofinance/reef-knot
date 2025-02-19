@@ -54,7 +54,7 @@ export class ReefKnotService {
           ]);
           await this.walletPage.connectWallet(connectWalletPage);
         } catch {
-          console.error('Wallet page didnt open');
+          console.error('[INFO] Wallet page didnt open');
         }
       }
       const assertionMessage = expectConnectionState

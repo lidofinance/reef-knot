@@ -67,14 +67,15 @@ jobs:
       - name: Run tests
         working-directory: playwright-tests
         run: |
+          set +x
           if [[ "${{ github.event.inputs.SUITE }}" == "all" ]]; then
-            echo "::notice::Running all tests"
+            echo "::notice::### Running \033[34m@all\033[34m tests"
             xvfb-run --auto-servernum -- yarn test:reef-knot
           elif [[ "${{ github.event.inputs.SUITE }}" == "transactions" ]]; then
-            echo "::notice::Running transactions tests"
+            echo "::notice::### Running \033[34m@transactions\033[34m tests"
             xvfb-run --auto-servernum -- yarn test:reef-knot tests/transactions
           elif [[ "${{ github.event.inputs.SUITE }}" == "wallet-connection" ]]; then
-            echo "::notice::Running wallet connection tests"
+            echo "::notice::### Running \033[34m@wallet-connection\033[34m tests"
             xvfb-run --auto-servernum -- yarn test:reef-knot tests/wallet-connection.spec.ts
           fi
 
