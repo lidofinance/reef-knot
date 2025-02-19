@@ -101,10 +101,10 @@
     rxjs "^7.5.6"
     unzipper "^0.10.11"
 
-"@lidofinance/wallets-testing-wallets@1.23.0-alpha-trust-wallet.2":
-  version "1.23.0-alpha-trust-wallet.2"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.23.0-alpha-trust-wallet.2.tgz#9cd1ec631dbfdb729b2ec54f6d95d6f3c1cdad5f"
-  integrity sha512-RjhukE9dBKpeI2P4k0y4JBlCQQlmiKcTy0IJrfUaSPPDT+MssEA+HoyLT8cwBW8GrDpFE9ke8LQEiJImXRTJLQ==
+"@lidofinance/wallets-testing-wallets@1.23.0-alpha-trust-wallet.3":
+  version "1.23.0-alpha-trust-wallet.3"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.23.0-alpha-trust-wallet.3.tgz#cac3675bd67f4c5ee11fb8524ec8665d352e1ed8"
+  integrity sha512-tT0twhaf4oDLXkAn5i3TX/6dltdhmlIE7FvYJbRs4usn3fFacYkCMXtCIxpW1aGwW4MxC87NgwWbaM100MzgRw==
   dependencies:
     "@playwright/test" "^1.44.1"
     expect "^28.1.3"
@@ -112,12 +112,12 @@
     rxjs "^7.5.6"
     viem "^2.21.40"
 
-"@lidofinance/wallets-testing-widgets@1.1.58-alpha-trust-wallet.2":
-  version "1.1.58-alpha-trust-wallet.2"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.1.58-alpha-trust-wallet.2.tgz#d614020735824cf31640ac39a57345bad1db4bb0"
-  integrity sha512-cJAycGYJHgp5InSpmUM7NANoSOI9mqlMkb3KzLdN7ROqH+aOEK7Ok/acucHRBLSx+D9nCOEC2Yu2PtF4p3aKhw==
+"@lidofinance/wallets-testing-widgets@1.1.58-alpha-trust-wallet.3":
+  version "1.1.58-alpha-trust-wallet.3"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.1.58-alpha-trust-wallet.3.tgz#4c3adf1eacec6da87d78a65ec550ecc332cc014e"
+  integrity sha512-VPg5+enDuS4us+hGmbOyDDZYsrFjj98UvwyRJxsse9R0bwV7aNCXZjQAgpoxwcQuVK3rdRIWHYpXTNiLGZJLtA==
   dependencies:
-    "@lidofinance/wallets-testing-wallets" "1.23.0-alpha-trust-wallet.2"
+    "@lidofinance/wallets-testing-wallets" "1.23.0-alpha-trust-wallet.3"
     "@nestjs/common" "^8.2.5"
     "@nestjs/config" "^2.2.0"
     "@playwright/test" "^1.44.1"
