@@ -67,7 +67,6 @@ jobs:
       - name: Run tests
         working-directory: playwright-tests
         run: |
-          set +x
           if [[ "${{ github.event.inputs.SUITE }}" == "all" ]]; then
             echo "::notice:: 🔹 Running @all tests"
             xvfb-run --auto-servernum -- yarn test:reef-knot
