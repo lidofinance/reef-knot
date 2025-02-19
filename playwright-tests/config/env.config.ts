@@ -1,5 +1,5 @@
 import { NetworkConfig } from '@lidofinance/wallets-testing-wallets';
-import { NETWORKS_CONFIG } from '../.yalc/@lidofinance/wallets-testing-wallets';
+import { NETWORKS_CONFIG } from '@lidofinance/wallets-testing-wallets';
 import { WALLETS } from './wallet.config';
 import { REEF_KNOT_CONFIG } from './config';
 
