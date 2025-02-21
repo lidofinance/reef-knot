@@ -67,7 +67,9 @@ jobs:
       - name: Run tests
         working-directory: playwright-tests
         run: |
-          echo -e "::notice:: 🔹 Running \033[34m@${{ github.event.inputs.SUITE }}\033[0m tests with \033[34m${{ github.event.inputs.WALLETS }}\033[0m wallet(s)"
+          echo -e "\033[34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+          echo -e "🚀 Running \033[34m@${{ github.event.inputs.SUITE }}\033[0m tests with \033[34m${{ github.event.inputs.WALLETS }}\033[0m wallet(s)"
+          echo -e "\033[34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
           if [[ "${{ github.event.inputs.SUITE }}" == "all" ]]; then
             xvfb-run --auto-servernum -- yarn test:reef-knot
           elif [[ "${{ github.event.inputs.SUITE }}" == "transactions" ]]; then
