@@ -2,6 +2,7 @@ import { NetworkConfig } from '@lidofinance/wallets-testing-wallets';
 import { NETWORKS_CONFIG } from '@lidofinance/wallets-testing-wallets';
 import { WALLETS } from './wallet.config';
 import { REEF_KNOT_CONFIG } from './config';
+import { ENV_CONFIG } from './env.validation';
 
 export interface StandConfig {
   networkConfig: NetworkConfig;
@@ -55,5 +56,5 @@ export function getRpcByWallet(walletName: string) {
     return NETWORKS_CONFIG.Mainnet.ETHEREUM.rpcUrl;
   if (!WALLETS.get(walletName).canUseAnyRpc)
     return 'https://ethereum-holesky-rpc.publicnode.com';
-  return NETWORKS_CONFIG.Testnet.ETHEREUM_HOLESKY.rpcUrl;
+  return `https://lb.drpc.org/ogrpc?network=holesky&dkey=${ENV_CONFIG.RPC_URL_KEY}`;
 }
