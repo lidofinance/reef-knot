@@ -21,16 +21,15 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Enable Corepack
+        run: |
+          corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'yarn'
-
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          corepack prepare yarn@4.6.0 --activate
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
