@@ -6,15 +6,15 @@ import { HDAccount, mnemonicToAccount } from 'viem/accounts';
 import { SdkService } from './sdk.service';
 
 export class ReefKnotService {
-  page: Page;
-  public walletPage: WalletPage;
   reefKnotPage: ReefKnotPage;
   seedPhrase: HDAccount;
   sdkService: SdkService;
 
-  constructor(page: Page, walletPage: WalletPage, seedPhrase: string) {
-    this.page = page;
-    this.walletPage = walletPage;
+  constructor(
+    public page: Page,
+    public walletPage: WalletPage,
+    seedPhrase: string,
+  ) {
     this.reefKnotPage = new ReefKnotPage(this.page);
     this.seedPhrase = mnemonicToAccount(seedPhrase);
     this.sdkService = new SdkService(this.seedPhrase);
@@ -54,7 +54,7 @@ export class ReefKnotService {
           ]);
           await this.walletPage.connectWallet(connectWalletPage);
         } catch {
-          console.error('Wallet page didnt open');
+          console.error('[INFO] Wallet page didnt open');
         }
       }
       const assertionMessage = expectConnectionState
@@ -70,8 +70,6 @@ export class ReefKnotService {
     await test.step('Forcefully disconnect wallet', async () => {
       await this.page.evaluate(() => {
         const localStorageKeys = Object.keys(localStorage);
-
-        // Remove all keys starting with 'wagmi'
         localStorageKeys.forEach((key) => {
           if (key.startsWith('wagmi')) {
             localStorage.removeItem(key);

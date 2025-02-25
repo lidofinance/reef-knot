@@ -44,4 +44,4 @@ class ReefKnotEnvs {
   }
 }
 
-export const pwReefKnotEnvs = new ReefKnotEnvs();
+export const ENV_CONFIG = new ReefKnotEnvs();

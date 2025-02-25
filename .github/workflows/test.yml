@@ -9,17 +9,26 @@ on:
         type: choice
         default: testnet
         options:
-          - mainnet
           - testnet
       WALLETS:
         description: 'Select wallet to run tests'
         required: true
         type: choice
-        default: All
+        default: all
         options:
-          - All
+          - all
           - metamask
           - okx
+          - trust
+      SUITE:
+        description: 'Select suite for test run'
+        default: all
+        required: false
+        type: choice
+        options:
+          - all
+          - transactions
+          - wallet-connection
 
 jobs:
   test:
@@ -32,7 +41,8 @@ jobs:
       WALLET_SECRET_PHRASE: ${{ secrets.WALLET_SECRET_PHRASE }}
       WALLET_PASSWORD: ${{ secrets.WALLET_PASSWORD }}
       STAND_ENV: ${{ github.event.inputs.STAND_ENV || 'testnet' }}
-      WALLETS: ${{ github.event.inputs.WALLETS || 'All' }}
+      WALLETS: ${{ github.event.inputs.WALLETS || 'all' }}
+      TEST_SUITE: ${{ github.event.inputs.suite }}
       STAND_TYPE: stand
       NODE_OPTIONS: --max-old-space-size=4096
 
@@ -57,8 +67,16 @@ jobs:
       - name: Run tests
         working-directory: playwright-tests
         run: |
-          echo "Running All tests"
-          xvfb-run --auto-servernum -- yarn test:reef-knot
+          echo -e "\033[34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+          echo -e "🚀 Running \033[34m@${{ github.event.inputs.SUITE }}\033[0m tests with \033[34m${{ github.event.inputs.WALLETS }}\033[0m wallet(s)"
+          echo -e "\033[34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+          if [[ "${{ github.event.inputs.SUITE }}" == "all" ]]; then
+            xvfb-run --auto-servernum -- yarn test:reef-knot
+          elif [[ "${{ github.event.inputs.SUITE }}" == "transactions" ]]; then
+            xvfb-run --auto-servernum -- yarn test:reef-knot tests/transactions
+          elif [[ "${{ github.event.inputs.SUITE }}" == "wallet-connection" ]]; then
+            xvfb-run --auto-servernum -- yarn test:reef-knot tests/wallet-connection.spec.ts
+          fi
 
       - uses: actions/upload-artifact@v4
         if: always()

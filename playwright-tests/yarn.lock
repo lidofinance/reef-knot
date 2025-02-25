@@ -88,10 +88,10 @@
     graphql "^16.8.1"
     graphql-request "^6.1.0"
 
-"@lidofinance/wallets-testing-extensions@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-extensions/-/wallets-testing-extensions-1.0.3.tgz#315228545646cd46944a6fc9c9f6544b54b955e3"
-  integrity sha512-uvlHygXt2jpfkVA0Ig6Jtg/4aw96ypdCJDcCv9QuGnktwYV2gyk4rd1kEt8XUzp40CS0IvpgY2Lx+5LTq1IDPQ==
+"@lidofinance/wallets-testing-extensions@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-extensions/-/wallets-testing-extensions-1.0.4.tgz#cc5c672c04d88915387b8d5915faaad232a9fe45"
+  integrity sha512-SS8KvhTL4+/BHGEoFMTzYXuNwKJcLdrXooZaZOJ0huYl/gC1xKBEZanDWFpYdmqwDxKSs3ebO3f/lk6p5vcwtg==
   dependencies:
     "@nestjs/common" "^8.2.5"
     "@nestjs/config" "^2.2.0"
@@ -101,10 +101,10 @@
     rxjs "^7.5.6"
     unzipper "^0.10.11"
 
-"@lidofinance/wallets-testing-wallets@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.18.0.tgz#c29a37e1ca8884efba02dcc5e0012f8206d93c7a"
-  integrity sha512-dOvTABDlzF+MVTwdzp7Rpr2LYrLHuUGYzW8hjd13/aQP5gcsfw3t9WomPdm+GG6a0ttXZgsv0pwWkDsuwrccSA==
+"@lidofinance/wallets-testing-wallets@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.23.0.tgz#46d2849366d27b88dbec0375b8e11777bb8b451b"
+  integrity sha512-lfOHvIAIlQu9XwgMkCsP3lwj8SxLzOYAgk1S9ATG64pvjpo+Rm7ib+mkFtLm5KvKXQhXlo7o9XEpTpKwsfJkvQ==
   dependencies:
     "@playwright/test" "^1.44.1"
     expect "^28.1.3"
@@ -112,12 +112,12 @@
     rxjs "^7.5.6"
     viem "^2.21.40"
 
-"@lidofinance/wallets-testing-widgets@1.1.52":
-  version "1.1.52"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.1.52.tgz#f8933d285e034ca3063723b104a2b78d434e60a6"
-  integrity sha512-RIvKJUMynQd6qdyogmxeS01Gjs03/82InzQAH2DYYSdNtk6yWI1H5noHyeXpG/hT60UtgX1IEdNEXWfQFNGZCg==
+"@lidofinance/wallets-testing-widgets@1.1.61":
+  version "1.1.61"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.1.61.tgz#2575eb7d17985404e5511fb568d44f50eb3c7137"
+  integrity sha512-AMUkvEDtLXG79Lb33kXRK4LIMrgEJG5z/kGYbRRXQWNsj3llFnA4o9RLRKLwi6EqrInfwfqV7hMf4FWoYeUX9A==
   dependencies:
-    "@lidofinance/wallets-testing-wallets" "1.18.0"
+    "@lidofinance/wallets-testing-wallets" "1.23.0"
     "@nestjs/common" "^8.2.5"
     "@nestjs/config" "^2.2.0"
     "@playwright/test" "^1.44.1"

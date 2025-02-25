@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
 import { REEF_KNOT_CONFIG } from '@config';
-import { ReefKnotService, sdkToken } from '@services';
+import { ReefKnotService, sdkToken, initBrowserWithWallet } from '@services';
 import { Tags } from '@test-data';
-import { BrowserService, initBrowserWithWallet } from '@browser';
+import { BrowserService } from '@browser';
 import { ReefKnotPage } from '@pages';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
@@ -47,7 +47,9 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         await expect(
           reefKnotPage.statsBlock.chainIdValue,
           'The connected network ID should be displayed correctly',
-        ).toContainText(String(REEF_KNOT_CONFIG.STAND_CONFIG.chainId));
+        ).toContainText(
+          String(REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId),
+        );
       });
 
       test(qase(437, 'Check ETH balance'), async () => {

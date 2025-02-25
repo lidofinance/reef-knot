@@ -11,7 +11,6 @@ import { Page, test } from '@playwright/test';
 import { TIMEOUT } from '@test-data';
 
 export class ReefKnotPage {
-  readonly page: Page;
   header: Header;
   walletModal: WalletModal;
   statsBlock: StatsBlock;
@@ -20,8 +19,7 @@ export class ReefKnotPage {
   walletListModal: WalletListModal;
   toast: Toast;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(public page: Page) {
     this.header = new Header(this.page);
     this.walletModal = new WalletModal(this.page);
     this.statsBlock = new StatsBlock(this.page);
@@ -32,7 +30,9 @@ export class ReefKnotPage {
   }
 
   async goto(param = '') {
-    await this.page.goto(param);
+    await test.step('Open ReefKnot stand', async () => {
+      await this.page.goto(param);
+    });
   }
 
   async allowUseCookies() {
