@@ -54,7 +54,6 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
 export function getRpcByWallet(walletName: string) {
   if (REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId === 1)
     return NETWORKS_CONFIG.Mainnet.ETHEREUM.rpcUrl;
-  if (!WALLETS.get(walletName).canUseAnyRpc)
-    return 'https://ethereum-holesky-rpc.publicnode.com';
+  if (!WALLETS.get(walletName).canUseAnyRpc) return 'https://1rpc.io/holesky';
   return `https://lb.drpc.org/ogrpc?network=holesky&dkey=${ENV_CONFIG.RPC_URL_KEY}`;
 }
