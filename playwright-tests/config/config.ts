@@ -1,6 +1,6 @@
 import { STAND_CONFIGS, STAND_LINK, STAND_ENV } from './env.config';
 import { ENV_CONFIG } from './env.validation';
-import { WalletConfig, WALLETS } from './wallet.config';
+import { Wallet, WALLETS } from './wallet.config';
 
 export const REEF_KNOT_CONFIG = {
   STAND_TYPE: ENV_CONFIG.STAND_TYPE,
@@ -37,7 +37,7 @@ function getStandUrl() {
 }
 
 function getWalletsForTestRun() {
-  const wallets: WalletConfig[] = [];
+  const wallets: Wallet[] = [];
   if (ENV_CONFIG.WALLETS === 'all') {
     WALLETS.forEach((wallet) => wallets.push(wallet));
   } else {

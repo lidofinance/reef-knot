@@ -7,17 +7,23 @@ import {
   MetamaskPage,
   OkxPage,
   TrustWalletPage,
+  WalletConfig,
 } from '@lidofinance/wallets-testing-wallets';
+import { BrowserContext } from '@playwright/test';
 
-export interface WalletConfig {
+export interface Wallet {
   name: string;
   config: CommonWalletConfig;
-  app: new (...args: any[]) => WalletPage;
+  app: new (
+    browserContext: BrowserContext,
+    extensionUrl: string,
+    config: WalletConfig,
+  ) => WalletPage;
   connectWalletEvent: string;
   canUseAnyRpc: boolean; // Some wallet is error validating the drpc default link
 }
 
-export const WALLETS = new Map<string, WalletConfig>([
+export const WALLETS = new Map<string, Wallet>([
   [
     'metamask',
     {
