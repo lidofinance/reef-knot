@@ -1,6 +1,8 @@
 import { Locator, Page } from '@playwright/test';
+import { Logger } from '@nestjs/common';
 
 export class Header {
+  logger = new Logger('Header');
   header: Locator;
   connectWalletButton: Locator;
   accountButton: Locator;
@@ -18,7 +20,7 @@ export class Header {
         timeout: 3000,
       })
       .catch(() => {
-        console.log('[INFO] Account section is not visible');
+        this.logger.log('Account section is not visible');
       });
     return this.accountButton.isVisible();
   }

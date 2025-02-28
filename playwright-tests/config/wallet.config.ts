@@ -12,6 +12,7 @@ import {
 import { BrowserContext } from '@playwright/test';
 
 export interface Wallet {
+  name: string;
   config: CommonWalletConfig;
   app: new (
     browserContext: BrowserContext,
@@ -26,6 +27,7 @@ export const WALLETS = new Map<string, Wallet>([
   [
     'metamask',
     {
+      name: 'metamask',
       config: METAMASK_COMMON_CONFIG,
       app: MetamaskPage,
       connectWalletEvent: 'metaMask connected',
@@ -35,6 +37,7 @@ export const WALLETS = new Map<string, Wallet>([
   [
     'okx',
     {
+      name: 'okx',
       config: OKX_COMMON_CONFIG,
       app: OkxPage,
       connectWalletEvent: 'okx connected',
@@ -44,6 +47,7 @@ export const WALLETS = new Map<string, Wallet>([
   [
     'trust',
     {
+      name: 'trust',
       config: TRUST_WALLET_COMMON_CONFIG,
       app: TrustWalletPage,
       connectWalletEvent: 'trust connected',
