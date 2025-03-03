@@ -7,9 +7,9 @@
   },
   "dependencies": {
     "@lidofinance/lido-ethereum-sdk": "^4.0.1",
-    "@lidofinance/wallets-testing-extensions": "^1.0.4",
-    "@lidofinance/wallets-testing-wallets": "1.24.0",
-    "@lidofinance/wallets-testing-widgets": "1.2.0",
+    "@lidofinance/wallets-testing-extensions": "^1.0.5",
+    "@lidofinance/wallets-testing-wallets": "1.24.1",
+    "@lidofinance/wallets-testing-widgets": "1.2.2",
     "@playwright/test": "^1.48.2",
     "playwright-qase-reporter": "^2.0.16",
     "zod": "^3.24.1"
