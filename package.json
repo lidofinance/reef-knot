@@ -10,14 +10,14 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build-packages": "turbo run build --filter=./packages/**/*",
-    "build-apps": "turbo run build --filter=./apps/*",
+    "build-packages": "turbo run build --filter='./packages/**/*'",
+    "build-apps": "turbo run build --filter='./apps/*'",
     "dev": "turbo run dev --concurrency=100",
-    "dev-demo-react": "turbo run dev --filter=./apps/demo-react",
+    "dev-demo-react": "turbo run dev --filter='./apps/demo-react'",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-packages": "turbo run lint test --filter=./packages/**/*",
+    "check-packages": "turbo run lint test --filter='./packages/**/*'",
     "new-wallet": "turbo gen wallet"
   },
   "devDependencies": {
