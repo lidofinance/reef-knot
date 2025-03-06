@@ -3,7 +3,6 @@ import { TIMEOUT } from '@test-data';
 import { waitForCallback } from '@services';
 
 export class StatsBlock {
-  page: Page;
   mainComponent: Locator;
   input: Locator;
   providerValue: Locator;
@@ -13,8 +12,7 @@ export class StatsBlock {
   wstethBalance: Locator;
   amountInput: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(public page: Page) {
     this.mainComponent = this.page.getByTestId('statsBlock');
     this.input = this.mainComponent.getByTestId('amountInput');
     this.providerValue = this.mainComponent.getByTestId('providerName');

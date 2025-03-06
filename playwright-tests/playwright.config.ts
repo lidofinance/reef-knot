@@ -16,7 +16,7 @@ const config: PlaywrightTestConfig = {
     actionTimeout: 15000,
     screenshot: { fullPage: true, mode: 'only-on-failure' },
     baseURL: REEF_KNOT_CONFIG.STAND_URL,
-    trace: 'retain-on-failure',
+    trace: 'retain-on-first-failure',
     permissions: ['clipboard-read'],
     contextOptions: {
       reducedMotion: 'reduce',
