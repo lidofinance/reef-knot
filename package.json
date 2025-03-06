@@ -10,14 +10,14 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build-packages": "turbo run build --filter=./packages/**/*",
-    "build-apps": "turbo run build --filter=./apps/*",
+    "build-packages": "turbo run build --filter='./packages/**/*'",
+    "build-apps": "turbo run build --filter='./apps/*'",
     "dev": "turbo run dev --concurrency=100",
-    "dev-demo-react": "turbo run dev --filter=./apps/demo-react",
+    "dev-demo-react": "turbo run dev --filter='./apps/demo-react'",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-packages": "turbo run lint test --filter=./packages/**/*",
+    "check-packages": "turbo run lint test --filter='./packages/**/*'",
     "new-wallet": "turbo gen wallet"
   },
   "devDependencies": {
@@ -53,7 +53,7 @@
     "rollup-plugin-svg-import": "1.6.0",
     "rollup-plugin-typescript2": "0.34.1",
     "tslib": "2.5.0",
-    "turbo": "2.1.3",
+    "turbo": "^2.4.4",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.9.0"
   },
@@ -73,5 +73,5 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@3.8.7"
 }
