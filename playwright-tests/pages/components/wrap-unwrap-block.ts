@@ -1,14 +1,12 @@
 import { Locator, Page, test } from '@playwright/test';
 
 export class WrapUnwrapBlock {
-  page: Page;
   mainComponent: Locator;
   wrapBtn: Locator;
   unwrapBtn: Locator;
   txTypeSelector: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(public page: Page) {
     this.mainComponent = this.page
       .getByTestId('WrapBlock')
       .or(this.page.getByTestId('UnwrapBlock'));

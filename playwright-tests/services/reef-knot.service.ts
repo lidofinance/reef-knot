@@ -1,20 +1,22 @@
-import { expect, test, Page } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
 import { ReefKnotPage } from '@pages';
-import { WalletPage } from '@lidofinance/wallets-testing-wallets';
+import { WalletPage, WalletTypes } from '@lidofinance/wallets-testing-wallets';
 import { TIMEOUT } from '@test-data';
 import { HDAccount, mnemonicToAccount } from 'viem/accounts';
 import { SdkService } from './sdk.service';
+import { Logger } from '@nestjs/common';
 
 export class ReefKnotService {
-  page: Page;
-  public walletPage: WalletPage;
+  logger = new Logger('ReefKnotService');
   reefKnotPage: ReefKnotPage;
   seedPhrase: HDAccount;
   sdkService: SdkService;
 
-  constructor(page: Page, walletPage: WalletPage, seedPhrase: string) {
-    this.page = page;
-    this.walletPage = walletPage;
+  constructor(
+    public page: Page,
+    public walletPage: WalletPage,
+    seedPhrase: string,
+  ) {
     this.reefKnotPage = new ReefKnotPage(this.page);
     this.seedPhrase = mnemonicToAccount(seedPhrase);
     this.sdkService = new SdkService(this.seedPhrase);
@@ -39,12 +41,7 @@ export class ReefKnotService {
       const walletIcon = this.reefKnotPage.walletListModal.getWalletInModal(
         this.walletPage.config.COMMON.CONNECT_BUTTON_NAME,
       );
-      if (
-        (await walletIcon.isEnabled({ timeout: TIMEOUT.LOW })) &&
-        this.walletPage.config.COMMON.SIMPLE_CONNECT
-      ) {
-        await walletIcon.click();
-      } else {
+      if (this.walletPage.config.COMMON.WALLET_TYPE === WalletTypes.EOA) {
         try {
           const [connectWalletPage] = await Promise.all([
             this.page
@@ -54,8 +51,12 @@ export class ReefKnotService {
           ]);
           await this.walletPage.connectWallet(connectWalletPage);
         } catch {
-          console.error('Wallet page didnt open');
+          this.logger.log('Wallet page didnt open');
         }
+      } else {
+        this.logger.error(
+          `WALLET_TYPE is not supported (${this.walletPage.config.COMMON.WALLET_TYPE})`,
+        );
       }
       const assertionMessage = expectConnectionState
         ? 'Wallet should be connected'
@@ -70,8 +71,6 @@ export class ReefKnotService {
     await test.step('Forcefully disconnect wallet', async () => {
       await this.page.evaluate(() => {
         const localStorageKeys = Object.keys(localStorage);
-
-        // Remove all keys starting with 'wagmi'
         localStorageKeys.forEach((key) => {
           if (key.startsWith('wagmi')) {
             localStorage.removeItem(key);
