@@ -1,3 +1,5 @@
+import { Logger } from '@nestjs/common';
+
 /**
  * Function to trim digits after decimal point
  *
@@ -46,7 +48,7 @@ export async function waitForCallback<T>(
   let result;
   while (!shouldTerminate) {
     result = await callback(args).catch(() => {
-      console.error('Callback failed');
+      new Logger('waitForCallback').log('Callback failed');
     });
     if (result) return result;
   }

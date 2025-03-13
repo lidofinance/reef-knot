@@ -15,11 +15,11 @@ export enum sdkToken {
 export class SdkService extends LidoSDK {
   constructor(account: HDAccount) {
     super({
-      chainId: REEF_KNOT_CONFIG.STAND_CONFIG.chainId,
-      rpcUrls: [REEF_KNOT_CONFIG.STAND_CONFIG.rpcUrl],
+      chainId: REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId,
+      rpcUrls: [REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl],
       web3Provider: createWalletClient({
         account: account,
-        chain: VIEM_CHAINS[REEF_KNOT_CONFIG.STAND_CONFIG.chainId],
+        chain: VIEM_CHAINS[REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId],
         transport: http(),
       }),
       logMode: 'none',

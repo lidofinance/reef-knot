@@ -88,12 +88,12 @@
     graphql "^16.8.1"
     graphql-request "^6.1.0"
 
-"@lidofinance/wallets-testing-extensions@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-extensions/-/wallets-testing-extensions-1.0.3.tgz#315228545646cd46944a6fc9c9f6544b54b955e3"
-  integrity sha512-uvlHygXt2jpfkVA0Ig6Jtg/4aw96ypdCJDcCv9QuGnktwYV2gyk4rd1kEt8XUzp40CS0IvpgY2Lx+5LTq1IDPQ==
+"@lidofinance/wallets-testing-extensions@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-extensions/-/wallets-testing-extensions-1.0.6.tgz#fd225a7e64468a5b90f15c529c71f3bf3a20ee83"
+  integrity sha512-CqBTkMB87RiYbJpoh/Gh+Nwhwr9Y1mr6Yn9bDNdEpMILkecXOCd5soLio/59xQWlPrDWIgy55Qsc8DDO99HZ8w==
   dependencies:
-    "@nestjs/common" "^8.2.5"
+    "@nestjs/common" "^10.0.0"
     "@nestjs/config" "^2.2.0"
     "@playwright/test" "^1.44.1"
     axios "^0.27.2"
@@ -101,10 +101,10 @@
     rxjs "^7.5.6"
     unzipper "^0.10.11"
 
-"@lidofinance/wallets-testing-wallets@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.18.0.tgz#c29a37e1ca8884efba02dcc5e0012f8206d93c7a"
-  integrity sha512-dOvTABDlzF+MVTwdzp7Rpr2LYrLHuUGYzW8hjd13/aQP5gcsfw3t9WomPdm+GG6a0ttXZgsv0pwWkDsuwrccSA==
+"@lidofinance/wallets-testing-wallets@1.24.3":
+  version "1.24.3"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-wallets/-/wallets-testing-wallets-1.24.3.tgz#a4b26960c2c2ae834da1b6dc53ea868ea7db479a"
+  integrity sha512-MTtTONotnJcuGLTow9M+Gd2frUuS3UwnBLKD4jYOtTZSn82VJf5h9DPcoD6DZOJwnUDpd1jK7qN5ccNaCzLpKA==
   dependencies:
     "@playwright/test" "^1.44.1"
     expect "^28.1.3"
@@ -112,28 +112,32 @@
     rxjs "^7.5.6"
     viem "^2.21.40"
 
-"@lidofinance/wallets-testing-widgets@1.1.52":
-  version "1.1.52"
-  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.1.52.tgz#f8933d285e034ca3063723b104a2b78d434e60a6"
-  integrity sha512-RIvKJUMynQd6qdyogmxeS01Gjs03/82InzQAH2DYYSdNtk6yWI1H5noHyeXpG/hT60UtgX1IEdNEXWfQFNGZCg==
+"@lidofinance/wallets-testing-widgets@1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@lidofinance/wallets-testing-widgets/-/wallets-testing-widgets-1.2.4.tgz#5f1248ba703a15a01e3f0e93e1a75cd633d4f43d"
+  integrity sha512-338bAZQG5MThApJw5RohYeJApDsX0syyHYU3Z3rCgl27lrzRRn9XKdwMUhT8STz40llpvMi/O0fsoZMu3D3m6A==
   dependencies:
-    "@lidofinance/wallets-testing-wallets" "1.18.0"
-    "@nestjs/common" "^8.2.5"
+    "@lidofinance/wallets-testing-wallets" "1.24.3"
+    "@nestjs/common" "^10.0.0"
     "@nestjs/config" "^2.2.0"
     "@playwright/test" "^1.44.1"
     expect "^28.1.3"
     reflect-metadata "^0.1.13"
     rxjs "^7.5.6"
 
-"@nestjs/common@^8.2.5":
-  version "8.4.7"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-8.4.7.tgz#fc4a575b797e230bb5a0bcab6da8b796aa88d605"
-  integrity sha512-m/YsbcBal+gA5CFrDpqXqsSfylo+DIQrkFY3qhVIltsYRfu8ct8J9pqsTO6OPf3mvqdOpFGrV5sBjoyAzOBvsw==
+"@lukeed/csprng@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@lukeed/csprng/-/csprng-1.1.0.tgz#1e3e4bd05c1cc7a0b2ddbd8a03f39f6e4b5e6cfe"
+  integrity sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==
+
+"@nestjs/common@^10.0.0":
+  version "10.4.15"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-10.4.15.tgz#27c291466d9100eb86fdbe6f7bbb4d1a6ad55f70"
+  integrity sha512-vaLg1ZgwhG29BuLDxPA9OAcIlgqzp9/N8iG0wGapyUNTf4IY4O6zAHgN6QalwLhFxq7nOI021vdRojR1oF3bqg==
   dependencies:
-    axios "0.27.2"
+    uid "2.0.2"
     iterare "1.2.1"
-    tslib "2.4.0"
-    uuid "8.3.2"
+    tslib "2.8.1"
 
 "@nestjs/config@^2.2.0":
   version "2.3.4"
@@ -279,7 +283,7 @@ axios-retry@^3.5.0:
     "@babel/runtime" "^7.15.4"
     is-retry-allowed "^2.2.0"
 
-axios@0.27.2, axios@^0.27.2:
+axios@^0.27.2:
   version "0.27.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
   integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
@@ -1107,12 +1111,7 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.3.9.tgz#717b8f220cc0bb7b44e40514c22b2e8bbc70d8b9"
   integrity sha512-iawgk0hLP3SxGKDfnDJf8wTz4p2qImnyihM5Hh/sGvQ3K37dPi/w8sRhdNIxYA1TwFwc5mDhIJq+O0RsvXBKdQ==
 
-tslib@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
-  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
-
-tslib@^2.1.0:
+tslib@2.8.1, tslib@^2.1.0:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
@@ -1121,6 +1120,13 @@ type@^2.5.0, type@^2.7.2, type@^2.7.3:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/type/-/type-2.7.3.tgz#436981652129285cc3ba94f392886c2637ea0486"
   integrity sha512-8j+1QmAbPvLZow5Qpi6NCaN8FB60p/6x8/vfNqOk/hC+HuvFZhL4+WfekuhQLiqFZXOgQdrs3B+XxEmCc6b3FQ==
+
+uid@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/uid/-/uid-2.0.2.tgz#4b5782abf0f2feeefc00fa88006b2b3b7af3e3b9"
+  integrity sha512-u3xV3X7uzvi5b1MncmZo3i2Aw222Zk1keqLA1YkHldREkAhAqi65wuPfe7lHx8H/Wzy+8CE7S7uS3jekIM5s8g==
+  dependencies:
+    "@lukeed/csprng" "^1.0.0"
 
 undici-types@~6.19.8:
   version "6.19.8"
@@ -1154,11 +1160,6 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
-
-uuid@8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 uuid@9.0.0:
   version "9.0.0"

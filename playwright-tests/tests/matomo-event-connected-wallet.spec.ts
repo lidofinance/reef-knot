@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { Tags } from '@test-data';
-import { ReefKnotService } from '@services';
+import { ReefKnotService, initBrowserWithWallet } from '@services';
 import { ReefKnotPage } from '@pages';
-import { BrowserService, initBrowserWithWallet } from '@browser';
+import { BrowserService } from '@browser';
 import { qase } from 'playwright-qase-reporter';
 import { REEF_KNOT_CONFIG } from '@config';
 
@@ -55,16 +55,22 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
 
 test.describe(
   `ReefKnot. Matomo events (Browser)`,
-  { tag: [Tags.connectedWallet, '@browser+metamask'] },
+  { tag: [Tags.connectedWallet, '@browser'] },
   async () => {
     let browserService: BrowserService;
     let reefKnotService: ReefKnotService;
     let reefKnotPage: ReefKnotPage;
 
     test.beforeAll(async () => {
+      const browserWallet =
+        REEF_KNOT_CONFIG.WALLETS.length === 1
+          ? REEF_KNOT_CONFIG.WALLETS[0].name
+          : 'metamask';
+
       ({ browserService, reefKnotService } =
-        await initBrowserWithWallet('metamask'));
+        await initBrowserWithWallet(browserWallet));
       reefKnotPage = reefKnotService.reefKnotPage;
+
       await reefKnotPage.goto();
       await reefKnotPage.allowUseCookies();
       await reefKnotService.disconnectWalletForce();

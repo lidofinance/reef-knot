@@ -1,9 +1,9 @@
-import { ReefKnotService } from '@services';
+import { ReefKnotService, initBrowserWithWallet } from '@services';
 import { connectedWalletStorageData, Tags } from '@test-data';
 import { ReefKnotPage } from '@pages';
 import { expect, test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
-import { BrowserService, initBrowserWithWallet } from '@browser';
+import { BrowserService } from '@browser';
 import { REEF_KNOT_CONFIG } from '@config';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
