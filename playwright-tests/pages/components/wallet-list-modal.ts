@@ -1,14 +1,12 @@
 import { Page, Locator, test } from '@playwright/test';
 
 export class WalletListModal {
-  page: Page;
   modal: Locator;
   termAndPrivacyCheckbox: Locator;
   moreWalletsButton: Locator;
   lessWalletsButton: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(public page: Page) {
     this.modal = this.page.locator('div[role="dialog"]', {
       hasText: 'Connect wallet',
     });

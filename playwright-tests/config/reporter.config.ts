@@ -21,7 +21,7 @@ const qaseReporter: ReporterDescription = [
       uploadAttachments: true,
       run: {
         complete: true,
-        title: 'Auto Run [s:@All]',
+        title: `Auto Run [w:${process.env.WALLETS}][s:@${process.env.TEST_SUITE || '-'}]`,
         description:
           `Stand url: ${REEF_KNOT_CONFIG.STAND_URL}\n` +
           `Env: ${REEF_KNOT_CONFIG.STAND_ENV}`,

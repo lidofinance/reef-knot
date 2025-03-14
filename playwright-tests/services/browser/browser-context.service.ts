@@ -1,30 +1,33 @@
-import { Logger } from '@nestjs/common';
+import { ConsoleLogger } from '@nestjs/common';
 import { BrowserContext, chromium, Page } from '@playwright/test';
 import * as fs from 'fs/promises';
-import * as os from 'os';
 import * as path from 'path';
 import { WalletConfig } from '@lidofinance/wallets-testing-wallets';
-
-type OptionsBrowserContext = {
-  // If contextDataDir is undefined, a temporary directory will be created for storing context data.
-  // If contextDataDir is defined, a user-specific directory will be created in the current folder for context data.
-  contextDataDir: string;
-};
 
 export class BrowserContextService {
   page: Page;
   browserContext: BrowserContext = null;
   browserContextPaths: string[] = [];
-  walletConfig: WalletConfig;
-  options: OptionsBrowserContext;
   extensionId: string;
-  private readonly logger = new Logger(BrowserContextService.name);
+  browserConfig: any;
+  private readonly logger = new ConsoleLogger(BrowserContextService.name);
 
-  async setup(walletConfig: WalletConfig, options?: OptionsBrowserContext) {
-    this.walletConfig = walletConfig;
-    this.options = options;
-    await this.getBrowserContextPage();
+  constructor(
+    public walletConfig: WalletConfig,
+    public contextDataDir: string,
+  ) {
+    this.browserConfig = {
+      locale: 'en-us',
+      headless: false,
+      args: [
+        '--lang=en-US',
+        '--disable-dev-shm-usage',
+        `--disable-extensions-except=${this.walletConfig.EXTENSION_PATH}`,
+        '--js-flags="--max-old-space-size=2048"',
+      ],
+    };
   }
+
   async getBrowserContextPage() {
     if (!this.browserContext) {
       await this.initBrowserContext();
@@ -34,25 +37,15 @@ export class BrowserContextService {
 
   async initBrowserContext() {
     this.logger.debug('Starting a new browser context');
-    let browserContextPath;
-    let isCreated;
 
-    if (this.options.contextDataDir) {
-      browserContextPath = path.join(
-        process.cwd(),
-        this.options.contextDataDir,
-      );
-      isCreated = await fs.mkdir(browserContextPath, {
-        recursive: true,
-      });
-    } else {
-      browserContextPath = await fs.mkdtemp(os.tmpdir() + path.sep);
-      isCreated = true;
-    }
+    const browserContextPath = path.join(process.cwd(), this.contextDataDir);
+    const isCreated = await fs.mkdir(browserContextPath, {
+      recursive: true,
+    });
 
     this.browserContext = await chromium.launchPersistentContext(
       browserContextPath,
-      browserConfig(this.walletConfig.EXTENSION_PATH),
+      this.browserConfig,
     );
     if (isCreated) {
       await this.browserContext.waitForEvent('page');
@@ -91,17 +84,4 @@ export class BrowserContextService {
         .map((page) => page.close()),
     );
   }
-}
-
-function browserConfig(extensionPath: string) {
-  return {
-    locale: 'en-us',
-    headless: false,
-    args: [
-      '--lang=en-US',
-      '--disable-dev-shm-usage',
-      `--disable-extensions-except=${extensionPath}`,
-      '--js-flags="--max-old-space-size=2048"',
-    ],
-  };
 }

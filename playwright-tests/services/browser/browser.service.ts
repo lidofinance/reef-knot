@@ -2,65 +2,52 @@ import {
   CommonWalletConfig,
   WalletConfig,
   WalletPage,
+  WalletTypes,
 } from '@lidofinance/wallets-testing-wallets';
 import { Extension } from '@lidofinance/wallets-testing-extensions';
 import { WidgetConfig } from '@lidofinance/wallets-testing-widgets';
-import {
-  DEFAULT_BROWSER_CONTEXT_DIR_NAME,
-  WALLET_PAGES,
-} from './browser.constants';
 import { BrowserContextService } from './browser-context.service';
-import { REEF_KNOT_CONFIG, pwReefKnotEnvs } from '@config';
+import { REEF_KNOT_CONFIG, ENV_CONFIG, WALLETS } from '@config';
 
 export class BrowserService {
-  private walletPage: WalletPage;
-  private browserContextService: BrowserContextService;
-  private standConfig: WidgetConfig;
-  readonly commonWalletConfig: CommonWalletConfig;
-  public walletConfig: WalletConfig;
+  walletPage: WalletPage<WalletTypes.EOA>;
+  browserContextService: BrowserContextService;
+  walletConfig: WalletConfig;
+  browserContextFolderName = '.browser_context';
 
   constructor(
-    commonWalletConfig: CommonWalletConfig,
-    widgetConfig: WidgetConfig,
+    readonly commonWalletConfig: CommonWalletConfig,
+    private standConfig: WidgetConfig,
   ) {
-    this.browserContextService = new BrowserContextService();
-    this.commonWalletConfig = commonWalletConfig;
-    this.standConfig = widgetConfig;
-  }
-
-  getWalletPage() {
-    return this.walletPage;
-  }
-
-  async getBrowserContextPage() {
-    return await this.browserContextService.getBrowserContextPage();
+    this.walletConfig = {
+      SECRET_PHRASE: ENV_CONFIG.WALLET_SECRET_PHRASE,
+      PASSWORD: ENV_CONFIG.WALLET_PASSWORD,
+      COMMON: this.commonWalletConfig,
+      EXTENSION_PATH: process.env.EXTENSION_PATH,
+    };
+    this.browserContextService = new BrowserContextService(
+      this.walletConfig,
+      `${this.browserContextFolderName}_${this.commonWalletConfig.WALLET_NAME}`,
+    );
   }
 
   async initWalletSetup() {
-    await this.setup(this.commonWalletConfig, this.standConfig);
-    await this.walletPage.setupNetwork(REEF_KNOT_CONFIG.STAND_CONFIG);
+    await this.setup();
+    await this.walletPage.setupNetwork(
+      REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig,
+    );
     await this.walletPage.changeNetwork(
-      REEF_KNOT_CONFIG.STAND_CONFIG.chainName,
+      REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainName,
     );
     await this.browserContextService.closePages();
   }
 
-  async setup(
-    commonWalletConfig: CommonWalletConfig,
-    widgetConfig: WidgetConfig,
-  ) {
-    this.standConfig = widgetConfig;
-    this.walletConfig = {
-      SECRET_PHRASE: pwReefKnotEnvs.WALLET_SECRET_PHRASE,
-      PASSWORD: pwReefKnotEnvs.WALLET_PASSWORD,
-      COMMON: commonWalletConfig,
-      EXTENSION_PATH: process.env.EXTENSION_PATH,
-    };
-    await this.browserContextService.setup(this.walletConfig, {
-      contextDataDir: `${DEFAULT_BROWSER_CONTEXT_DIR_NAME}_${commonWalletConfig.WALLET_NAME}`,
-    });
+  async setup() {
+    await this.browserContextService.getBrowserContextPage();
     const extension = new Extension(this.browserContextService.extensionId);
-    this.walletPage = new WALLET_PAGES[commonWalletConfig.WALLET_NAME](
+    const wallet = WALLETS.get(this.commonWalletConfig.WALLET_NAME);
+
+    this.walletPage = new wallet.app(
       this.browserContextService.browserContext,
       extension.url,
       this.walletConfig,
