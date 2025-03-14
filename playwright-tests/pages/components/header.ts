@@ -1,8 +1,8 @@
 import { Locator, Page } from '@playwright/test';
-import { Logger } from '@nestjs/common';
+import { ConsoleLogger } from '@nestjs/common';
 
 export class Header {
-  logger = new Logger('Header');
+  logger = new ConsoleLogger('Header');
   header: Locator;
   connectWalletButton: Locator;
   accountButton: Locator;

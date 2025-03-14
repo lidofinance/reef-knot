@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { ConsoleLogger } from '@nestjs/common';
 import { BrowserContext, chromium, Page } from '@playwright/test';
 import * as fs from 'fs/promises';
 import * as path from 'path';
@@ -10,7 +10,7 @@ export class BrowserContextService {
   browserContextPaths: string[] = [];
   extensionId: string;
   browserConfig: any;
-  private readonly logger = new Logger(BrowserContextService.name);
+  private readonly logger = new ConsoleLogger(BrowserContextService.name);
 
   constructor(
     public walletConfig: WalletConfig,
