@@ -4,17 +4,17 @@ import { WalletPage, WalletTypes } from '@lidofinance/wallets-testing-wallets';
 import { TIMEOUT } from '@test-data';
 import { HDAccount, mnemonicToAccount } from 'viem/accounts';
 import { SdkService } from './sdk.service';
-import { Logger } from '@nestjs/common';
+import { ConsoleLogger } from '@nestjs/common';
 
 export class ReefKnotService {
-  logger = new Logger('ReefKnotService');
+  logger = new ConsoleLogger('ReefKnotService');
   reefKnotPage: ReefKnotPage;
   seedPhrase: HDAccount;
   sdkService: SdkService;
 
   constructor(
     public page: Page,
-    public walletPage: WalletPage,
+    public walletPage: WalletPage<WalletTypes.EOA>,
     seedPhrase: string,
   ) {
     this.reefKnotPage = new ReefKnotPage(this.page);
@@ -58,12 +58,14 @@ export class ReefKnotService {
           `WALLET_TYPE is not supported (${this.walletPage.config.COMMON.WALLET_TYPE})`,
         );
       }
-      const assertionMessage = expectConnectionState
-        ? 'Wallet should be connected'
-        : 'Wallet should be disconnected';
-      expect(await this.isConnectedWallet(), assertionMessage).toBe(
-        expectConnectionState,
-      );
+      await test.step('Check the wallet connect state', async () => {
+        const assertionMessage = expectConnectionState
+          ? 'Wallet should be connected'
+          : 'Wallet should be disconnected';
+        expect(await this.isConnectedWallet(), assertionMessage).toBe(
+          expectConnectionState,
+        );
+      });
     });
   }
 

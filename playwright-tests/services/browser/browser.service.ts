@@ -2,6 +2,7 @@ import {
   CommonWalletConfig,
   WalletConfig,
   WalletPage,
+  WalletTypes,
 } from '@lidofinance/wallets-testing-wallets';
 import { Extension } from '@lidofinance/wallets-testing-extensions';
 import { WidgetConfig } from '@lidofinance/wallets-testing-widgets';
@@ -9,7 +10,7 @@ import { BrowserContextService } from './browser-context.service';
 import { REEF_KNOT_CONFIG, ENV_CONFIG, WALLETS } from '@config';
 
 export class BrowserService {
-  walletPage: WalletPage;
+  walletPage: WalletPage<WalletTypes.EOA>;
   browserContextService: BrowserContextService;
   walletConfig: WalletConfig;
   browserContextFolderName = '.browser_context';
