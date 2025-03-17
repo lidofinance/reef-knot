@@ -1,8 +1,12 @@
 import { REEF_KNOT_CONFIG } from '@config';
 import { expect, test } from '@playwright/test';
 import { Tags, TIMEOUT } from '@test-data';
-import { BrowserService, initBrowserWithWallet } from '@browser';
-import { ReefKnotService, toCutDecimalsDigit } from '@services';
+import { BrowserService } from '@browser';
+import {
+  initBrowserWithWallet,
+  ReefKnotService,
+  toCutDecimalsDigit,
+} from '@services';
 import { ReefKnotPage } from '@pages';
 import { qase } from 'playwright-qase-reporter';
 

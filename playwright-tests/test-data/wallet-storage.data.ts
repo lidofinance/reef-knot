@@ -28,4 +28,12 @@ export const connectedWalletStorageData = new Map<string, WagmiStorageData>([
       disconnectWalletKey: 'wagmi.com.okex.wallet.disconnected',
     },
   ],
+  [
+    'trust',
+    {
+      recentConnectorId: '"com.trustwallet.app"', // wagmi.recentConnectorId
+      'reef-knot_reconnect-wallet-id': '"trust"', // wagmi.reef-knot_reconnect-wallet-id
+      disconnectWalletKey: 'wagmi.com.trustwallet.app.disconnected',
+    },
+  ],
 ]);
