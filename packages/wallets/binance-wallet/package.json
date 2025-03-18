@@ -32,14 +32,14 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^4.1.0",
-    "@reef-knot/wallets-helpers": "^2.2.0",
+    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "@reef-knot/types": "^4.0.0",
-    "@reef-knot/wallets-helpers": "^2.0.0",
+    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "wagmi": ">=2.14"
   },
   "dependencies": {

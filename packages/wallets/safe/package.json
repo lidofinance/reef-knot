@@ -32,12 +32,12 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^4.1.0",
+    "@reef-knot/types": "*",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "@reef-knot/types": "^4.0.0",
+    "@reef-knot/types": "*",
     "@tanstack/react-query": "^5.29.0",
     "viem": ">=2.23",
     "wagmi": ">=2.14"
