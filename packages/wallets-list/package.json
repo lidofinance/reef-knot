@@ -37,32 +37,35 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
-    "@reef-knot/wallet-adapter-ambire": "5.1.0",
-    "@reef-knot/wallet-adapter-binance-wallet": "3.1.0",
-    "@reef-knot/wallet-adapter-bitkeep": "4.1.0",
-    "@reef-knot/wallet-adapter-brave": "4.1.0",
-    "@reef-knot/wallet-adapter-browser-extension": "4.1.0",
-    "@reef-knot/wallet-adapter-coin98": "4.1.0",
-    "@reef-knot/wallet-adapter-coinbase": "4.1.0",
-    "@reef-knot/wallet-adapter-coinbase-smart-wallet": "3.1.0",
-    "@reef-knot/wallet-adapter-ctrl": "1.1.0",
-    "@reef-knot/wallet-adapter-dapp-browser-injected": "4.1.0",
-    "@reef-knot/wallet-adapter-exodus": "4.1.0",
-    "@reef-knot/wallet-adapter-imtoken": "4.1.0",
-    "@reef-knot/wallet-adapter-ledger-hid": "5.1.0",
-    "@reef-knot/wallet-adapter-ledger-live": "5.1.0",
-    "@reef-knot/wallet-adapter-metamask": "4.1.0",
-    "@reef-knot/wallet-adapter-okx": "4.1.0",
-    "@reef-knot/wallet-adapter-safe": "4.1.0",
-    "@reef-knot/wallet-adapter-trust": "4.1.0",
-    "@reef-knot/wallet-adapter-walletconnect": "4.1.0"
+    "@reef-knot/wallet-adapter-ambire": "*",
+    "@reef-knot/wallet-adapter-binance-wallet": "*",
+    "@reef-knot/wallet-adapter-bitkeep": "*",
+    "@reef-knot/wallet-adapter-brave": "*",
+    "@reef-knot/wallet-adapter-browser-extension": "*",
+    "@reef-knot/wallet-adapter-coin98": "*",
+    "@reef-knot/wallet-adapter-coinbase": "*",
+    "@reef-knot/wallet-adapter-coinbase-smart-wallet": "*",
+    "@reef-knot/wallet-adapter-ctrl": "*",
+    "@reef-knot/wallet-adapter-dapp-browser-injected": "*",
+    "@reef-knot/wallet-adapter-exodus": "*",
+    "@reef-knot/wallet-adapter-imtoken": "*",
+    "@reef-knot/wallet-adapter-ledger-hid": "*",
+    "@reef-knot/wallet-adapter-ledger-live": "*",
+    "@reef-knot/wallet-adapter-metamask": "*",
+    "@reef-knot/wallet-adapter-okx": "*",
+    "@reef-knot/wallet-adapter-safe": "*",
+    "@reef-knot/wallet-adapter-trust": "*",
+    "@reef-knot/wallet-adapter-walletconnect": "*"
   },
   "devDependencies": {
-    "@reef-knot/types": "^4.1.0",
+    "@reef-knot/types": "*",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "@reef-knot/types": "^4.0.0",
-    "react": ">=18"
+    "@reef-knot/types": "*",
+    "@tanstack/react-query": "^5.29.0",
+    "react": ">=18",
+    "viem": ">=2.23",
+    "wagmi": ">=2.14"
   }
 }

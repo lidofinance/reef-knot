@@ -32,14 +32,14 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/ledger-connector": "^4.3.0",
-    "@reef-knot/types": "^4.1.0",
+    "@reef-knot/ledger-connector": "*",
+    "@reef-knot/types": "*",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "@reef-knot/ledger-connector": "^4.0.0",
-    "@reef-knot/types": "^4.0.0",
+    "@reef-knot/ledger-connector": "*",
+    "@reef-knot/types": "*",
     "@tanstack/react-query": "^5.29.0",
     "wagmi": ">=2.14"
   }
