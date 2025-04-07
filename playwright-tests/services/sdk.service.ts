@@ -20,7 +20,7 @@ export class SdkService extends LidoSDK {
       web3Provider: createWalletClient({
         account: account,
         chain: VIEM_CHAINS[REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId],
-        transport: http(),
+        transport: http(REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl),
       }),
       logMode: 'none',
     });

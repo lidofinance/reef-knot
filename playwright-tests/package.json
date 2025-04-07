@@ -6,10 +6,10 @@
     "test:reef-knot": "yarn playwright test"
   },
   "dependencies": {
-    "@lidofinance/lido-ethereum-sdk": "^4.0.1",
+    "@lidofinance/lido-ethereum-sdk": "4.4.0-alpha.3",
     "@lidofinance/wallets-testing-extensions": "1.0.7",
-    "@lidofinance/wallets-testing-wallets": "1.26.0",
-    "@lidofinance/wallets-testing-widgets": "1.3.2",
+    "@lidofinance/wallets-testing-wallets": "^1.29.5",
+    "@lidofinance/wallets-testing-widgets": "^1.3.14",
     "@playwright/test": "^1.48.2",
     "playwright-qase-reporter": "^2.0.16",
     "viem": "^2.23.10",

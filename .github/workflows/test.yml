@@ -7,9 +7,10 @@ on:
         description: 'Stand env'
         required: true
         type: choice
-        default: testnet
+        default: testnetHolesky
         options:
-          - testnet
+          - testnetHolesky
+          - testnetHoodi
       WALLETS:
         description: 'Select wallet to run tests'
         required: true
