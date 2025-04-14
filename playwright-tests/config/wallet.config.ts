@@ -8,6 +8,7 @@ import {
   OkxPage,
   TrustWalletPage,
   WalletConfig,
+  WalletTypes,
 } from '@lidofinance/wallets-testing-wallets';
 import { BrowserContext } from '@playwright/test';
 
@@ -18,7 +19,7 @@ export interface Wallet {
     browserContext: BrowserContext,
     extensionUrl: string,
     config: WalletConfig,
-  ) => WalletPage;
+  ) => WalletPage<WalletTypes.EOA>;
   connectWalletEvent: string;
   canUseAnyRpc: boolean; // Some wallet is error validating the drpc default link
 }
