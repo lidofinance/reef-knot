@@ -129,16 +129,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/lido-ethereum-sdk@npm:4.4.0-alpha.3":
-  version: 4.4.0-alpha.3
-  resolution: "@lidofinance/lido-ethereum-sdk@npm:4.4.0-alpha.3"
+"@lidofinance/lido-ethereum-sdk@npm:4.4.0":
+  version: 4.4.0
+  resolution: "@lidofinance/lido-ethereum-sdk@npm:4.4.0"
   dependencies:
     "@ethersproject/bytes": ^5.7.0
     graphql: ^16.8.1
     graphql-request: ^6.1.0
   peerDependencies:
-    viem: ^2.22
-  checksum: 303c253ad63f25862bdb74074d4f181e9af71f7bcd8cfb370197f71ac71900895c14fb04afe9565888d6da35cc4ef52d5c8e036591ab5a74dd1c43a2417a4695
+    viem: ^2.26.0
+  checksum: 6e81cb5a52760c12069a16766e04e7039650e1a93559db71e6775ed4018cb027447e90845784d0c1cd08f6c6f243b08d4e686ebe60d52946abd7a0cf26edecf3
   languageName: node
   linkType: hard
 
@@ -156,30 +156,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/wallets-testing-wallets@npm:1.29.5, @lidofinance/wallets-testing-wallets@npm:^1.29.5":
-  version: 1.29.5
-  resolution: "@lidofinance/wallets-testing-wallets@npm:1.29.5"
+"@lidofinance/wallets-testing-wallets@npm:1.30.0, @lidofinance/wallets-testing-wallets@npm:^1.30.0":
+  version: 1.30.0
+  resolution: "@lidofinance/wallets-testing-wallets@npm:1.30.0"
   dependencies:
     "@playwright/test": ^1.44.1
     expect: ^28.1.3
     reflect-metadata: ^0.1.13
     rxjs: ^7.5.6
     viem: ^2.21.40
-  checksum: f30a47aebd73ecea1d2429928f7f1971623fc3d03fd16e3e2001e6cef4894228fc4381f7d1cec7797936aabb9f6ebe4d2d67c300b414f5ca2018e52f542682bb
+  checksum: 7a214c98b15fd24a0bc42c475db9252139101df6d6606667f0b195ac0589c8d21517980edeb93db88aff31dad3e2413d812e11edd433334e0de4460929c24dfd
   languageName: node
   linkType: hard
 
-"@lidofinance/wallets-testing-widgets@npm:^1.3.14":
-  version: 1.3.14
-  resolution: "@lidofinance/wallets-testing-widgets@npm:1.3.14"
+"@lidofinance/wallets-testing-widgets@npm:^1.3.16":
+  version: 1.3.16
+  resolution: "@lidofinance/wallets-testing-widgets@npm:1.3.16"
   dependencies:
-    "@lidofinance/wallets-testing-wallets": 1.29.5
+    "@lidofinance/wallets-testing-wallets": 1.30.0
     "@nestjs/common": ^10.0.0
     "@playwright/test": ^1.44.1
     expect: ^28.1.3
     reflect-metadata: ^0.1.13
     rxjs: ^7.5.6
-  checksum: 0b7a25f76ff0dbb57e728fad61dc6120571ad13c55f5b04fd26c5ed4a8c07c6588a6821f08c56fa1033d765d9fa4e4f6d5280c20f57089ad30bff404ca413ed6
+  checksum: 6e81a6b92a84a36e51203b2adb45d353b9ce966df9d3d64e4b9164b4ac56984d84f5404d3464d766e41471ca357e8974d0441548c96aff745bef9e54f29486ff
   languageName: node
   linkType: hard
 
@@ -1880,10 +1880,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "reef-knot_playwright_test@workspace:."
   dependencies:
-    "@lidofinance/lido-ethereum-sdk": 4.4.0-alpha.3
+    "@lidofinance/lido-ethereum-sdk": 4.4.0
     "@lidofinance/wallets-testing-extensions": 1.0.7
-    "@lidofinance/wallets-testing-wallets": ^1.29.5
-    "@lidofinance/wallets-testing-widgets": ^1.3.14
+    "@lidofinance/wallets-testing-wallets": ^1.30.0
+    "@lidofinance/wallets-testing-widgets": ^1.3.16
     "@playwright/test": ^1.48.2
     dotenv: ^16.4.5
     playwright-qase-reporter: ^2.0.16

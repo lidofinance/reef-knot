@@ -1,7 +1,6 @@
 import { NetworkConfig } from '@lidofinance/wallets-testing-wallets';
 import { NETWORKS_CONFIG } from '@lidofinance/wallets-testing-wallets';
-import { WALLETS } from './wallet.config';
-import { REEF_KNOT_CONFIG } from './config';
+import { Wallet } from './wallet.config';
 import { ENV_CONFIG } from './env.validation';
 
 export interface StandConfig {
@@ -14,8 +13,8 @@ export interface StandConfig {
 }
 
 export const STAND_ENV = {
-  testnetHolesky: 'testnetHolesky',
-  testnetHoodi: 'testnetHoodi',
+  holeskyTestnet: 'holesky-testnet',
+  hoodiTestnet: 'hoodi-testnet',
   mainnet: 'mainnet',
 };
 
@@ -26,7 +25,7 @@ export const STAND_LINK = {
 
 export const STAND_CONFIGS = new Map<string, StandConfig>([
   [
-    STAND_ENV.testnetHolesky,
+    STAND_ENV.holeskyTestnet,
     {
       networkConfig: NETWORKS_CONFIG.Testnet.ETHEREUM_HOLESKY,
       contracts: {
@@ -37,7 +36,7 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
     },
   ],
   [
-    STAND_ENV.testnetHoodi,
+    STAND_ENV.hoodiTestnet,
     {
       networkConfig: NETWORKS_CONFIG.Testnet.ETHEREUM_HOODI,
       contracts: {
@@ -63,28 +62,23 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
 /** Some wallets fail validation of the default drpc link because it has params.
  * So, we use free links for these wallets.
  * - function used only for testnet because the Ethereum mainnet network installed in the wallet permanently*/
-export function getRpcByWallet(walletName: string): string {
-  const wallet = WALLETS.get(walletName);
+export function getRpcByWallet(wallet: Wallet): string {
   const env = ENV_CONFIG.STAND_ENV;
 
   if (!wallet) {
-    throw new Error(`Wallet config not found for "${walletName}"`);
+    throw new Error(`Wallet config not found for "${wallet.name}"`);
   }
 
   switch (env) {
     case 'mainnet':
       return NETWORKS_CONFIG.Mainnet.ETHEREUM.rpcUrl;
 
-    case 'testnetHolesky':
+    case 'holesky-testnet':
       if (!wallet.canUseAnyRpc) return 'https://1rpc.io/holesky';
       return formatDrpc('holesky');
 
-    case 'testnetHoodi':
-      if (!wallet.canUseAnyRpc) {
-        throw new Error(
-          `Wallet "${walletName}" is not allowed to use custom RPC on ${env}`,
-        );
-      }
+    case 'hoodi-testnet':
+      if (!wallet.canUseAnyRpc) return 'https://0xrpc.io/hoodi';
       return formatDrpc('hoodi');
 
     default:
