@@ -38,7 +38,10 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
   [
     STAND_ENV.hoodiTestnet,
     {
-      networkConfig: NETWORKS_CONFIG.Testnet.ETHEREUM_HOODI,
+      networkConfig: {
+        ...NETWORKS_CONFIG.Testnet.ETHEREUM_HOODI,
+        rpcUrl: formatDrpc('hoodi'),
+      },
       contracts: {
         stake: '0x3508A952176b3c15387C97BE809eaffB1982176a',
         wrap: '0x7E99eE3C66636DE415D2d7C880938F2f40f94De4',

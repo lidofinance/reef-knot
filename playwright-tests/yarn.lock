@@ -142,44 +142,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/wallets-testing-extensions@npm:1.0.7":
-  version: 1.0.7
-  resolution: "@lidofinance/wallets-testing-extensions@npm:1.0.7"
+"@lidofinance/wallets-testing-extensions@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@lidofinance/wallets-testing-extensions@npm:1.2.0"
   dependencies:
     "@nestjs/common": ^10.0.0
-    "@playwright/test": ^1.44.1
+    "@playwright/test": ^1.51.1
     axios: ^0.27.2
     reflect-metadata: ^0.1.13
     rxjs: ^7.5.6
     unzipper: ^0.10.11
-  checksum: 9e69eae6236c5790a95dfb88676552002ecf2a015c088634de11dfd06c846deb6933921ee814433f342b648c112ebade81355ceb24906ffcebbfb07872a8b121
+  checksum: 9465fc00e68b43dfd0157d78e84e6f28d8f87e814fedda953d31f9708842313d906108c2097f1784b6b4b0db51834038fc3600f4d482c97a76c06fc1d9051e4c
   languageName: node
   linkType: hard
 
-"@lidofinance/wallets-testing-wallets@npm:1.30.0, @lidofinance/wallets-testing-wallets@npm:^1.30.0":
-  version: 1.30.0
-  resolution: "@lidofinance/wallets-testing-wallets@npm:1.30.0"
+"@lidofinance/wallets-testing-wallets@npm:1.31.1, @lidofinance/wallets-testing-wallets@npm:^1.31.1":
+  version: 1.31.1
+  resolution: "@lidofinance/wallets-testing-wallets@npm:1.31.1"
   dependencies:
-    "@playwright/test": ^1.44.1
+    "@playwright/test": ^1.51.1
     expect: ^28.1.3
     reflect-metadata: ^0.1.13
     rxjs: ^7.5.6
     viem: ^2.21.40
-  checksum: 7a214c98b15fd24a0bc42c475db9252139101df6d6606667f0b195ac0589c8d21517980edeb93db88aff31dad3e2413d812e11edd433334e0de4460929c24dfd
+  checksum: 9f2fdafed841573b75db7ebb3e157cb3d5d26eb16d8aa4e5215b5b1756fe2e49a9a3cddfb3844f1fcf445018b29d7c18266a69a9842b0e2895f1c13284610383
   languageName: node
   linkType: hard
 
-"@lidofinance/wallets-testing-widgets@npm:^1.3.16":
-  version: 1.3.16
-  resolution: "@lidofinance/wallets-testing-widgets@npm:1.3.16"
+"@lidofinance/wallets-testing-widgets@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@lidofinance/wallets-testing-widgets@npm:1.4.1"
   dependencies:
-    "@lidofinance/wallets-testing-wallets": 1.30.0
+    "@lidofinance/wallets-testing-wallets": 1.31.1
     "@nestjs/common": ^10.0.0
-    "@playwright/test": ^1.44.1
+    "@playwright/test": ^1.51.1
     expect: ^28.1.3
     reflect-metadata: ^0.1.13
     rxjs: ^7.5.6
-  checksum: 6e81a6b92a84a36e51203b2adb45d353b9ce966df9d3d64e4b9164b4ac56984d84f5404d3464d766e41471ca357e8974d0441548c96aff745bef9e54f29486ff
+  checksum: 07d6d80d4b87013e8d1b42c0c7aac219cc6c6a75811a24c6dbf25820909833e6ef68f5e6accc4cc609046b7274a3ee78d6e93dd7f8c6a6f026f46e4cf94024e3
   languageName: node
   linkType: hard
 
@@ -272,14 +272,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.44.1, @playwright/test@npm:^1.48.2":
-  version: 1.49.0
-  resolution: "@playwright/test@npm:1.49.0"
+"@playwright/test@npm:^1.51.1":
+  version: 1.51.1
+  resolution: "@playwright/test@npm:1.51.1"
   dependencies:
-    playwright: 1.49.0
+    playwright: 1.51.1
   bin:
     playwright: cli.js
-  checksum: f8477aa61d59fd22c6161c48221ab246340dc37bbe2804e1a7d1be8cbd0fd861747fcb7ca559f4bc7328226ff2c90ccb7efa588a7d7d7829f3e57902b28fe39a
+  checksum: c3c14f37451cc0323234e37fa559a075e5aee9f5e6ca06fa3b4a132ec6c809909b22877daca1fa48c95a1112d859346c10111e7003f44582a05100dd5385bbef
   languageName: node
   linkType: hard
 
@@ -1733,12 +1733,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.49.0":
-  version: 1.49.0
-  resolution: "playwright-core@npm:1.49.0"
+"playwright-core@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright-core@npm:1.51.1"
   bin:
     playwright-core: cli.js
-  checksum: d8423ad0cab2e672856529bf6b98b406e7e605da098b847b9b54ee8ebd8d716ed8880a9afff4b38f0a2e3f59b95661c74589116ce3ff2b5e0ae3561507086c94
+  checksum: 1eb37e22e97435a5ed6389b4caa666fbe618348861cae97e67586e20c8fed9ac3d3dc899ff3b9237d0ddfcf087d5b552b80be247e246fc45b75282f96be714bb
   languageName: node
   linkType: hard
 
@@ -1755,18 +1755,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.49.0":
-  version: 1.49.0
-  resolution: "playwright@npm:1.49.0"
+"playwright@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright@npm:1.51.1"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.49.0
+    playwright-core: 1.51.1
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: f1bfb2fff65cad2ce996edab74ec231dfd21aeb5961554b765ce1eaec27efb87eaba37b00e91ecd27727b82861e5d8c230abe4960e93f6ada8be5ad1020df306
+  checksum: 2d78f53eed438d26df9743f98227d2e33bb5a378c8d0144a4ed75b4010c9c517d5a6ee6c1c9245ad61dc615054c5e19d2ded5a6e285e35d2bca39b05bc9c4a35
   languageName: node
   linkType: hard
 
@@ -1881,13 +1881,13 @@ __metadata:
   resolution: "reef-knot_playwright_test@workspace:."
   dependencies:
     "@lidofinance/lido-ethereum-sdk": 4.4.0
-    "@lidofinance/wallets-testing-extensions": 1.0.7
-    "@lidofinance/wallets-testing-wallets": ^1.30.0
-    "@lidofinance/wallets-testing-widgets": ^1.3.16
-    "@playwright/test": ^1.48.2
+    "@lidofinance/wallets-testing-extensions": 1.2.0
+    "@lidofinance/wallets-testing-wallets": ^1.31.1
+    "@lidofinance/wallets-testing-widgets": ^1.4.1
+    "@playwright/test": ^1.51.1
     dotenv: ^16.4.5
     playwright-qase-reporter: ^2.0.16
-    viem: ^2.23.10
+    viem: ^2.26.0
     zod: ^3.24.1
   languageName: unknown
   linkType: soft
@@ -2317,9 +2317,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.23.10":
-  version: 2.23.10
-  resolution: "viem@npm:2.23.10"
+"viem@npm:^2.26.0":
+  version: 2.26.5
+  resolution: "viem@npm:2.26.5"
   dependencies:
     "@noble/curves": 1.8.1
     "@noble/hashes": 1.7.1
@@ -2334,7 +2334,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 979bcadacffe2a3e7a1140413872c7a3ee12ce741c64f9c5909fb418cf22421b83e24d8fa2a211f39e2b3200f34d8122ecb012ce83a82270bb45fc4565296837
+  checksum: 32d779469103d52156fb25a60c79fd53e3447f4d76ad4e1cec6f89156593c6a488bc9489856c7c503f4e508382620181df1a2161f554ebeafa0718238425cfa9
   languageName: node
   linkType: hard
 

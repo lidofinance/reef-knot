@@ -7,12 +7,12 @@
   },
   "dependencies": {
     "@lidofinance/lido-ethereum-sdk": "4.4.0",
-    "@lidofinance/wallets-testing-extensions": "1.0.7",
-    "@lidofinance/wallets-testing-wallets": "^1.30.0",
-    "@lidofinance/wallets-testing-widgets": "^1.3.16",
-    "@playwright/test": "^1.48.2",
+    "@lidofinance/wallets-testing-extensions": "1.2.0",
+    "@lidofinance/wallets-testing-wallets": "^1.31.1",
+    "@lidofinance/wallets-testing-widgets": "^1.4.1",
+    "@playwright/test": "^1.51.1",
     "playwright-qase-reporter": "^2.0.16",
-    "viem": "^2.23.10",
+    "viem": "^2.26.0",
     "zod": "^3.24.1"
   },
   "packageManager": "yarn@1.22.19",
