@@ -6,11 +6,13 @@ export class Header {
   header: Locator;
   connectWalletButton: Locator;
   accountButton: Locator;
+  walletInfoButton: Locator;
 
   constructor(public page: Page) {
     this.header = this.page.locator('header');
     this.connectWalletButton = this.header.getByTestId('connectBtn');
     this.accountButton = this.header.getByTestId('walletBtn');
+    this.walletInfoButton = this.header.getByTestId('walletInfoBtn');
   }
 
   async isAccountSectionVisible() {

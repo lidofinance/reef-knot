@@ -27,7 +27,10 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
   [
     STAND_ENV.holeskyTestnet,
     {
-      networkConfig: NETWORKS_CONFIG.Testnet.ETHEREUM_HOLESKY,
+      networkConfig: {
+        ...NETWORKS_CONFIG.Testnet.ETHEREUM_HOLESKY,
+        chainName: 'Holesky',
+      },
       contracts: {
         stake: '0x3F1c547b21f65e10480dE3ad8E19fAAC46C95034',
         wrap: '0x8d09a4502Cc8Cf1547aD300E066060D043f6982D',
@@ -41,6 +44,7 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
       networkConfig: {
         ...NETWORKS_CONFIG.Testnet.ETHEREUM_HOODI,
         rpcUrl: formatDrpc('hoodi'),
+        chainName: 'Hoodi',
       },
       contracts: {
         stake: '0x3508A952176b3c15387C97BE809eaffB1982176a',
@@ -81,7 +85,7 @@ export function getRpcByWallet(wallet: Wallet): string {
       return formatDrpc('holesky');
 
     case 'hoodi-testnet':
-      if (!wallet.canUseAnyRpc) return 'https://0xrpc.io/hoodi';
+      if (!wallet.canUseAnyRpc) return 'https://hoodi.drpc.org';
       return formatDrpc('hoodi');
 
     default:
