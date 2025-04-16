@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
-import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
+import type {
+  ReefKnotWalletsModalConfig,
+  ReefKnotConfig,
+} from '@reef-knot/types';
 import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
 
 type MetricProps = Pick<
@@ -9,7 +12,8 @@ type MetricProps = Pick<
   | 'onClickWalletsLess'
   | 'onConnectStart'
   | 'onConnectSuccess'
->;
+> &
+  Pick<ReefKnotConfig, 'onAutoConnect' | 'onReconnect'>;
 
 export const metricProps: MetricProps = {
   onClickTermsAccept: ({ isAccepted }) => {
@@ -20,4 +24,6 @@ export const metricProps: MetricProps = {
   onConnectStart: ({ walletId }) => console.log(`metrics: ${walletId} clicked`),
   onConnectSuccess: ({ walletId }) =>
     console.log(`metrics: ${walletId} connected`),
+  onAutoConnect: () => console.log(`metrics: onAutoConnect called`),
+  onReconnect: () => console.log(`metrics: onReconnect called`),
 };
