@@ -4,7 +4,7 @@ import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
 import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
-import { wrapWithCallback } from '../helpers/wrapWithCallback';
+import { withCallback } from '../helpers/withCallback';
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { storage } = useConfig();
@@ -47,9 +47,10 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
           // Without the delay, this code can be called from a browser's cache faster than wallet extension code
           await new Promise((resolve) => setTimeout(resolve, 100));
 
-          const reconnectWithCallback = onReconnect
-            ? wrapWithCallback(reconnectAsync, onReconnect)
-            : reconnectAsync;
+          const reconnectWithCallback = withCallback(
+            reconnectAsync,
+            onReconnect,
+          );
 
           await reconnectWithCallback({ connectors: [createConnectorFn] });
         }
