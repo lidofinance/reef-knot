@@ -26,7 +26,6 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         ));
         reefKnotPage = reefKnotService.reefKnotPage;
         await reefKnotPage.goto();
-        await reefKnotPage.allowUseCookies();
         await reefKnotService.connectWallet();
       });
 

@@ -8,8 +8,7 @@ import { getRpcByWallet, REEF_KNOT_CONFIG, WALLETS } from '@config';
 export async function initBrowserWithWallet(walletName: string) {
   return test.step(`Init browser with the ${walletName} extension`, async () => {
     const wallet = WALLETS.get(walletName);
-    REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl =
-      getRpcByWallet(walletName);
+    REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl = getRpcByWallet(wallet);
 
     process.env.EXTENSION_PATH =
       await new ExtensionService().getExtensionDirFromId(
