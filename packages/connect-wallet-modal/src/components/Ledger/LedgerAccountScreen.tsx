@@ -78,7 +78,13 @@ export const LedgerAccountScreen: FC<Props> = ({ onConnectSuccess }) => {
         setError(helpers.interceptLedgerError(e as Error));
       }
     },
-    [disconnectTransport, walletDataList, setError, onConnectSuccess],
+    [
+      disconnectTransport,
+      walletDataList,
+      setError,
+      connectAsync,
+      onConnectSuccess,
+    ],
   );
 
   const handleDerivationPathSelect = useCallback((value: string) => {

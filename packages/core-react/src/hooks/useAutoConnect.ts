@@ -4,13 +4,14 @@ import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
 import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
+import { withCallback } from '../helpers/withCallback';
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { storage } = useConfig();
   const { reconnectAsync } = useReconnect();
   const { isConnected } = useAccount();
   const { eagerConnect } = useEagerConnect();
-  const { walletDataList } = useReefKnotContext();
+  const { walletDataList, onReconnect } = useReefKnotContext();
 
   useEffect(() => {
     const tryReconnect = async () => {
@@ -46,7 +47,12 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
           // Without the delay, this code can be called from a browser's cache faster than wallet extension code
           await new Promise((resolve) => setTimeout(resolve, 100));
 
-          await reconnectAsync({ connectors: [createConnectorFn] });
+          const reconnectWithCallback = withCallback(
+            reconnectAsync,
+            onReconnect,
+          );
+
+          await reconnectWithCallback({ connectors: [createConnectorFn] });
         }
       }
     };
