@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-binance-wallet
 
+## 3.2.0
+
+### Minor Changes
+
+- Technical version update
+
 ## 3.1.0
 
 ### Minor Changes

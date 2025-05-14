@@ -1,5 +1,11 @@
 # @reef-knot/wallets-icons
 
+## 1.7.0
+
+### Minor Changes
+
+- Technical version update
+
 ## 1.6.0
 
 ### Minor Changes

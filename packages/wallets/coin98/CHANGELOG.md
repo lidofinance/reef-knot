@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-coin98
 
+## 4.2.0
+
+### Minor Changes
+
+- Technical version update
+
 ## 4.1.0
 
 ### Minor Changes
