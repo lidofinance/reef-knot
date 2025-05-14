@@ -1,5 +1,12 @@
 # reef-knot
 
+## 7.3.0
+
+### Minor Changes
+
+- Adds ability to pass onAutoConnect and onReconnect callbacks to the reef-knot config
+- Minor fixes and tech updates
+
 ## 7.2.0
 
 ### Minor Changes
