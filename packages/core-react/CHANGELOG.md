@@ -1,5 +1,12 @@
 # @reef-knot/core-react
 
+## 6.2.0
+
+### Minor Changes
+
+- Adds ability to pass onAutoConnect and onReconnect callbacks to the reef-knot config
+- Minor fixes and tech updates
+
 ## 6.1.0
 
 ### Minor Changes

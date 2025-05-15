@@ -1,5 +1,11 @@
 # @reef-knot/web3-react
 
+## 6.2.0
+
+### Minor Changes
+
+- Technical version update
+
 ## 6.1.0
 
 ### Minor Changes
