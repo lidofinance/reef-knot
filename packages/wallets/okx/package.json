@@ -22,6 +22,11 @@
   "bugs": {
     "url": "https://github.com/lidofinance/reef-knot/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/wallets/okx"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -32,14 +37,14 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "^4.1.0",
-    "@reef-knot/wallets-helpers": "^2.2.0",
+    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "@reef-knot/types": "^4.0.0",
-    "@reef-knot/wallets-helpers": "^2.0.2",
+    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@tanstack/react-query": "^5.29.0",
     "wagmi": ">=2.14"
   }

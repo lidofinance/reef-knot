@@ -1,5 +1,11 @@
 # @reef-knot/ui-react
 
+## 2.3.0
+
+### Minor Changes
+
+- Technical version update
+
 ## 2.2.0
 
 ### Minor Changes

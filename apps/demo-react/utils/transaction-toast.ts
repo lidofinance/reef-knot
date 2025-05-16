@@ -7,20 +7,29 @@ import { toast } from '@lidofinance/lido-ui';
 export const transactionToast: TransactionCallback = ({ stage }) => {
   switch (stage) {
     case TransactionCallbackStage.PERMIT:
-      return toast('Permit', { type: 'info', closeButton: false });
+      toast('Permit', { type: 'info', closeButton: false });
+      break;
     case TransactionCallbackStage.GAS_LIMIT:
-      return toast('Gas limit', { type: 'info', closeButton: false });
+      toast('Gas limit', { type: 'info', closeButton: false });
+      break;
     case TransactionCallbackStage.SIGN:
-      return toast('Signing', { type: 'info', closeButton: false });
+      toast('Signing', { type: 'info', closeButton: false });
+      break;
     case TransactionCallbackStage.RECEIPT:
-      return toast('Receipt', { type: 'info', closeButton: false });
+      toast('Receipt', { type: 'info', closeButton: false });
+      break;
     case TransactionCallbackStage.CONFIRMATION:
-      return toast('Confirmation', { type: 'success', closeButton: false });
+      toast('Confirmation', { type: 'success', closeButton: false });
+      break;
     case TransactionCallbackStage.ERROR:
-      return toast('Error', { type: 'error', closeButton: false });
+      toast('Error', { type: 'error', closeButton: false });
+      break;
     case TransactionCallbackStage.DONE:
-      return toast('Success', { type: 'success', closeButton: false });
+      toast('Success', { type: 'success', closeButton: false });
+      break;
     case TransactionCallbackStage.MULTISIG_DONE:
-      return toast('Multisig Success', { type: 'success', closeButton: false });
+      toast('Multisig Success', { type: 'success', closeButton: false });
+      break;
   }
+  return undefined;
 };
