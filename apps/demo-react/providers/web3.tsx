@@ -15,9 +15,6 @@ import { metricProps } from 'utils/metrics';
 import { useClientConfig } from 'providers/client-config';
 import { useRpcUrls } from 'hooks/useRpcUrls';
 
-const LINK_DONT_HAVE_WALLET =
-  'https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask';
-
 type ChainsList = [wagmiChains.Chain, ...wagmiChains.Chain[]];
 
 const wagmiChainsArray = Object.values(wagmiChains) as any as ChainsList;
@@ -78,7 +75,6 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       // TODO: We could call `getDefaultWalletsModalConfig` inside `getDefaultConfig`, but it cause package dependency cycle rn
       ...getDefaultWalletsModalConfig(),
       ...metricProps,
-      linkDontHaveWallet: LINK_DONT_HAVE_WALLET,
     });
   }, [
     backendRPC,
