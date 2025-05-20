@@ -14,8 +14,10 @@ function getStandConfig() {
   switch (ENV_CONFIG.STAND_ENV) {
     case 'mainnet':
       return STAND_CONFIGS.get(STAND_ENV.mainnet);
-    case 'testnet':
-      return STAND_CONFIGS.get(STAND_ENV.testnet);
+    case 'holesky-testnet':
+      return STAND_CONFIGS.get(STAND_ENV.holeskyTestnet);
+    case 'hoodi-testnet':
+      return STAND_CONFIGS.get(STAND_ENV.hoodiTestnet);
     default:
       throw new Error(
         `CONFIG_VALIDATION_ERROR: STAND_ENV is not correctly defined (value is "${ENV_CONFIG.STAND_ENV}"). Please fix in the .env file`,
