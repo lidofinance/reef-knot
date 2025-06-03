@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
-import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/core-react';
+import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
+import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
 import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { ConnectInjectedProps } from './types';
 
@@ -21,16 +21,17 @@ export const ConnectMetaMask: FC<ConnectInjectedProps> = (
     ...rest
   } = props;
 
-  const { connectAsync } = useConnect();
+  const { loadingWalletId } = useReefKnotContext();
+  const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {
     onConnectStart?.();
     disconnect?.();
-    await connectAsync({ connector });
+    await connectWithLoading(walletId, { connector });
     onConnectSuccess?.();
   }, [
-    connectAsync,
+    connectWithLoading,
     connector,
     deeplink,
     detector,
@@ -45,6 +46,7 @@ export const ConnectMetaMask: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       darkThemeEnabled={darkThemeEnabled}
+      isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}
