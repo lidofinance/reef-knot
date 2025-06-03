@@ -13,7 +13,7 @@ const getSafeConnector = ({ allowedDomains = [] }: GetSafeConnectorArgs) =>
   safe({
     allowedDomains: [
       /app.safe.global$/,
-      /holesky-safe.protofire.io$/,
+      /app.safe.protofire.io$/,
       ...allowedDomains,
     ],
     debug: false,
