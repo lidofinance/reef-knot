@@ -1,5 +1,16 @@
 # reef-knot
 
+## 7.4.0
+
+### Features
+
+- Use MetaMask SDK
+
+### Fixes
+
+- Update allowed domain for safe connector
+- ConnectMetaMask – use connectWithLoading for improved connection handling
+
 ## 7.3.0
 
 ### Minor Changes
