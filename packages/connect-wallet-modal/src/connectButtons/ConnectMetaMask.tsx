@@ -39,6 +39,7 @@ export const ConnectMetaMask: FC<ConnectInjectedProps> = (
     downloadURLs,
     onConnectStart,
     onConnectSuccess,
+    walletId,
   ]);
 
   return (
