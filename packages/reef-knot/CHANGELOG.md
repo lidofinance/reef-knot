@@ -8,8 +8,8 @@
 
 ### Fixes
 
-- Update allowed domain for safe connector
-- ConnectMetaMask – use connectWithLoading for improved connection handling
+- Update allowed domain for safe connector;
+- ConnectMetaMask – use connectWithLoading for improved connection handling;
 
 ## 7.3.0
 
