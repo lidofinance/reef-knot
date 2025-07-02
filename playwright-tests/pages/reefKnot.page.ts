@@ -49,13 +49,14 @@ export class ReefKnotPage {
       if (await this.getCookieData('cookie-allowed')) {
         return;
       }
-      if (
+      try {
         await this.page
           .getByRole('button')
           .getByText('Allow')
-          .isVisible({ timeout: 3000 })
-      ) {
+          .waitFor({ state: 'visible', timeout: 3000 });
         await this.page.getByRole('button').getByText('Allow').click();
+      } catch {
+        // Cookies banner is not visible
       }
     });
   }

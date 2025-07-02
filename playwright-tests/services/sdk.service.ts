@@ -1,8 +1,8 @@
 import { LidoSDK, VIEM_CHAINS } from '@lidofinance/lido-ethereum-sdk';
-import { HDAccount } from 'viem/accounts';
 import { createWalletClient, formatEther, http, type Address } from 'viem';
-import { REEF_KNOT_CONFIG } from '@config';
+import { ENV_CONFIG, REEF_KNOT_CONFIG } from '@config';
 import { toCutDecimalsDigit } from './helpers';
+import { mnemonicToAccount } from 'viem/accounts';
 
 global.fetch = fetch;
 
@@ -13,12 +13,12 @@ export enum sdkToken {
 }
 
 export class SdkService extends LidoSDK {
-  constructor(account: HDAccount) {
+  constructor() {
     super({
       chainId: REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId,
       rpcUrls: [REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl],
       web3Provider: createWalletClient({
-        account: account,
+        account: mnemonicToAccount(ENV_CONFIG.WALLET_SECRET_PHRASE),
         chain: VIEM_CHAINS[REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId],
         transport: http(REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl),
       }),

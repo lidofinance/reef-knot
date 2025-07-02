@@ -16,10 +16,6 @@ export const CONFIG_MATOMO_CLICK_TO_WALLET_EVENTS = [
     walletName: 'WalletConnect',
   },
   {
-    eventMessage: 'exodus clicked',
-    walletName: 'Exodus',
-  },
-  {
     eventMessage: 'ambire clicked',
     walletName: 'Ambire',
   },
@@ -28,36 +24,12 @@ export const CONFIG_MATOMO_CLICK_TO_WALLET_EVENTS = [
     walletName: 'Bitget',
   },
   {
-    eventMessage: 'coin98 clicked',
-    walletName: 'Coin98',
-  },
-  {
-    eventMessage: 'brave clicked',
-    walletName: 'Brave',
-  },
-  {
-    eventMessage: 'coinbase clicked',
-    walletName: 'Coinbase',
-  },
-  {
     eventMessage: 'coinbaseSmartWallet clicked',
     walletName: 'Coinbase Smart Wallet',
   },
   {
-    eventMessage: 'trust clicked',
-    walletName: 'Trust',
-  },
-  {
     eventMessage: 'imToken clicked',
     walletName: 'imToken',
-  },
-  {
-    eventMessage: 'ctrl clicked',
-    walletName: 'Ctrl',
-  },
-  {
-    eventMessage: 'binanceWallet clicked',
-    walletName: 'Binance Web3 Wallet',
   },
   {
     eventMessage: 'browserExtension clicked',

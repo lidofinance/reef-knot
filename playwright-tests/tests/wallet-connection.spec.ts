@@ -3,8 +3,8 @@ import { connectedWalletStorageData, Tags } from '@test-data';
 import { ReefKnotPage } from '@pages';
 import { expect, test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
-import { BrowserService } from '@browser';
 import { REEF_KNOT_CONFIG } from '@config';
+import { BrowserService } from '@lidofinance/browser-service';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
@@ -57,20 +57,16 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
           expect(
             await reefKnotPage.getStorageData('wagmi.recentConnectorId'),
             'The value of "wagmi.recentConnectorId" should match the connected wallet',
-          ).toBe(
-            connectedWalletStorageData.get(
-              browserService.commonWalletConfig.WALLET_NAME,
-            ).recentConnectorId,
-          );
+          ).toBe(connectedWalletStorageData.get(wallet.name).recentConnectorId);
           expect(
             await reefKnotPage.getStorageData(
               'wagmi.reef-knot_reconnect-wallet-id',
             ),
             'The value of "wagmi.reef-knot_reconnect-wallet-id" should match the connected wallet',
           ).toBe(
-            connectedWalletStorageData.get(
-              browserService.commonWalletConfig.WALLET_NAME,
-            )['reef-knot_reconnect-wallet-id'],
+            connectedWalletStorageData.get(wallet.name)[
+              'reef-knot_reconnect-wallet-id'
+            ],
           );
         });
       });
@@ -119,9 +115,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
           ).toBeNull();
           expect(
             await reefKnotPage.getStorageData(
-              connectedWalletStorageData.get(
-                browserService.commonWalletConfig.WALLET_NAME,
-              ).disconnectWalletKey,
+              connectedWalletStorageData.get(wallet.name).disconnectWalletKey,
             ),
             'The recent wallet disconnection status should be "true"',
           ).toBe('true');

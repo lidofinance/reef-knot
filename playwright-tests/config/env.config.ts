@@ -20,7 +20,7 @@ export const STAND_ENV = {
 
 export const STAND_LINK = {
   stand: 'https://lidofinance.github.io/reef-knot/',
-  localhost: 'http://localhost:3000/',
+  localhost: 'http://localhost:3001/',
 };
 
 export const STAND_CONFIGS = new Map<string, StandConfig>([
@@ -28,7 +28,8 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
     STAND_ENV.holeskyTestnet,
     {
       networkConfig: {
-        ...NETWORKS_CONFIG.Testnet.ETHEREUM_HOLESKY,
+        ...NETWORKS_CONFIG.testnet.ETHEREUM_HOLESKY,
+        rpcUrl: formatDrpc('holesky'),
         chainName: 'Holesky',
       },
       contracts: {
@@ -42,7 +43,7 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
     STAND_ENV.hoodiTestnet,
     {
       networkConfig: {
-        ...NETWORKS_CONFIG.Testnet.ETHEREUM_HOODI,
+        ...NETWORKS_CONFIG.testnet.ETHEREUM_HOODI,
         rpcUrl: formatDrpc('hoodi'),
         chainName: 'Hoodi',
       },
@@ -56,7 +57,7 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
   [
     STAND_ENV.mainnet,
     {
-      networkConfig: NETWORKS_CONFIG.Mainnet.ETHEREUM,
+      networkConfig: NETWORKS_CONFIG.mainnet.ETHEREUM,
       contracts: {
         stake: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
         wrap: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
@@ -65,35 +66,6 @@ export const STAND_CONFIGS = new Map<string, StandConfig>([
     },
   ],
 ]);
-
-/** Some wallets fail validation of the default drpc link because it has params.
- * So, we use free links for these wallets.
- * - function used only for testnet because the Ethereum mainnet network installed in the wallet permanently*/
-export function getRpcByWallet(wallet: Wallet): string {
-  const env = ENV_CONFIG.STAND_ENV;
-
-  if (!wallet) {
-    throw new Error(`Wallet config not found for "${wallet.name}"`);
-  }
-
-  switch (env) {
-    case 'mainnet':
-      return NETWORKS_CONFIG.Mainnet.ETHEREUM.rpcUrl;
-
-    case 'holesky-testnet':
-      if (!wallet.canUseAnyRpc) return 'https://1rpc.io/holesky';
-      return formatDrpc('holesky');
-
-    case 'hoodi-testnet':
-      if (!wallet.canUseAnyRpc) return 'https://hoodi.drpc.org';
-      return formatDrpc('hoodi');
-
-    default:
-      throw new Error(
-        `CONFIG_VALIDATION_ERROR: Unknown STAND_ENV value "${env}". Please fix your .env`,
-      );
-  }
-}
 
 function formatDrpc(chainName: string): string {
   return `https://lb.drpc.org/ogrpc?network=${chainName}&dkey=${ENV_CONFIG.RPC_URL_KEY}`;
