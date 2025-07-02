@@ -9,7 +9,6 @@ on:
         type: choice
         default: hoodi-testnet
         options:
-          - holesky-testnet
           - hoodi-testnet
       WALLETS:
         description: 'Select wallet to run tests'
@@ -20,7 +19,6 @@ on:
           - all
           - metamask
           - okx
-          - trust
       SUITE:
         description: 'Select suite for test run'
         default: all
