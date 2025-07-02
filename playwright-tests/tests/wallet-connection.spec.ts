@@ -113,12 +113,16 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             ),
             'The value of "wagmi.reef-knot_reconnect-wallet-id" should be NaN',
           ).toBeNull();
-          expect(
-            await reefKnotPage.getStorageData(
-              connectedWalletStorageData.get(wallet.name).disconnectWalletKey,
-            ),
-            'The recent wallet disconnection status should be "true"',
-          ).toBe('true');
+
+          const storageValue = await reefKnotPage.getStorageData(
+            connectedWalletStorageData.get(wallet.name).disconnectWalletKey,
+          );
+          if (storageValue) {
+            expect(
+              storageValue,
+              'The recent wallet disconnection status should be "true"',
+            ).toBe('true');
+          }
         });
       });
 

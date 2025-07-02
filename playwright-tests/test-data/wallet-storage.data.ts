@@ -7,7 +7,7 @@ export const connectedWalletStorageData = new Map<string, WagmiStorageData>([
   [
     'metamask',
     {
-      recentConnectorId: '"io.metamask"', // wagmi.recentConnectorId
+      recentConnectorId: '"metaMaskSDK"', // wagmi.recentConnectorId
       'reef-knot_reconnect-wallet-id': '"metaMask"', // wagmi.reef-knot_reconnect-wallet-id
       disconnectWalletKey: 'wagmi.io.metamask.disconnected',
     },
