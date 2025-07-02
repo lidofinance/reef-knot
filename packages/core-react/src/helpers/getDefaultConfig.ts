@@ -1,11 +1,14 @@
 import { http, Chain, Transport } from 'viem';
 import { createConfig } from 'wagmi';
-import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
+import type {
+  ReefKnotWalletsModalConfig,
+  ReefKnotProviderConfig,
+  ReefKnotConfig,
+} from '@reef-knot/types';
 import {
   getWalletsDataList,
   GetWalletsDataListArgs,
 } from './getWalletsDataList';
-import type { ReefKnotProviderConfig } from '../context/reefKnotContext';
 
 type RpcMap = Record<number, string>;
 type Transports = Record<number, Transport>;
@@ -20,12 +23,10 @@ type WagmiConfigArgs = Omit<
   'connectors' | 'client'
 >;
 
-type DefaultConfigArgs<I extends string = string> =
+type DefaultConfigArgs<I extends string = string> = ReefKnotConfig &
   ReefKnotWalletsModalConfig<I> &
-    GetWalletsDataListArgs &
-    WagmiConfigArgs & {
-      autoConnect: boolean;
-    };
+  GetWalletsDataListArgs &
+  WagmiConfigArgs;
 
 const getDefaultTransports = (chains: Chains, rpc: RpcMap) =>
   chains.reduce<Transports>(
@@ -46,6 +47,8 @@ export const getDefaultConfig = <I extends string = string>({
   chains,
   transports,
   autoConnect,
+  onAutoConnect,
+  onReconnect,
 
   // Wallets config args
   buttonComponentsByConnectorId,
@@ -75,6 +78,8 @@ export const getDefaultConfig = <I extends string = string>({
   const reefKnotConfig: ReefKnotProviderConfig = {
     autoConnect,
     walletDataList: walletsDataList,
+    onAutoConnect,
+    onReconnect,
   };
 
   const wagmiConfig = createConfig({

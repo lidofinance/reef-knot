@@ -10,6 +10,7 @@ import {
   ConnectCoinbase,
   ConnectBrowser,
   ConnectBinance,
+  ConnectMetaMask,
 } from '../../connectButtons';
 
 const TERMS_LINK_DEFAULT = 'https://lido.fi/terms-of-use';
@@ -23,6 +24,7 @@ export const WALLETS_MODAL_BUTTON_COMPONENTS_DEFAULT: ButtonComponentsByConnecto
     coinbaseWallet: ConnectCoinbase,
     ledgerHID: ConnectLedger,
     binanceWallet: ConnectBinance,
+    metaMask: ConnectMetaMask,
   };
 
 export const WALLETS_MODAL_DISPLAY_CONFIG_DEFAULT: WalletIdsEthereum[] = [

@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-ctrl
 
+## 1.2.0
+
+### Minor Changes
+
+- Technical version update
+
 ## 1.1.0
 
 ### Minor Changes

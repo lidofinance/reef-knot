@@ -114,7 +114,7 @@ export const LedgerContextProvider = ({
     } finally {
       isTransportConnecting.current = false;
     }
-  }, [disconnectTransport]);
+  }, [disconnectTransport, loadLedgerLibs]);
 
   const reconnectTransport = useCallback(async () => {
     await disconnectTransport(true);

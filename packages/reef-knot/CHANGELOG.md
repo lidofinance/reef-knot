@@ -1,5 +1,23 @@
 # reef-knot
 
+## 7.4.0
+
+### Features
+
+- Use MetaMask SDK
+
+### Fixes
+
+- Update allowed domain for safe connector;
+- ConnectMetaMask – use connectWithLoading for improved connection handling;
+
+## 7.3.0
+
+### Minor Changes
+
+- Adds ability to pass onAutoConnect and onReconnect callbacks to the reef-knot config
+- Minor fixes and tech updates
+
 ## 7.2.0
 
 ### Minor Changes

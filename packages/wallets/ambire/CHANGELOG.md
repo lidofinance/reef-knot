@@ -1,5 +1,11 @@
 # @reef-knot/wallet-adapter-ambire
 
+## 5.2.0
+
+### Minor Changes
+
+- Technical version update
+
 ## 5.1.0
 
 ### Minor Changes
