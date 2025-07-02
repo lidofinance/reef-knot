@@ -1,6 +1,5 @@
 import { NetworkConfig } from '@lidofinance/wallets-testing-wallets';
 import { NETWORKS_CONFIG } from '@lidofinance/wallets-testing-wallets';
-import { Wallet } from './wallet.config';
 import { ENV_CONFIG } from './env.validation';
 
 export interface StandConfig {
@@ -20,7 +19,7 @@ export const STAND_ENV = {
 
 export const STAND_LINK = {
   stand: 'https://lidofinance.github.io/reef-knot/',
-  localhost: 'http://localhost:3001/',
+  localhost: 'http://localhost:3000/',
 };
 
 export const STAND_CONFIGS = new Map<string, StandConfig>([
