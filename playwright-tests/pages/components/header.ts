@@ -22,7 +22,7 @@ export class Header {
         timeout: 3000,
       })
       .catch(() => {
-        this.logger.log('Account section is not visible');
+        // Account section is not visible
       });
     return this.accountButton.isVisible();
   }

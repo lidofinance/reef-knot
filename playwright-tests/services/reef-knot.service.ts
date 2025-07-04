@@ -52,11 +52,24 @@ export class ReefKnotService {
         WalletConnectTypes.EOA
       ) {
         try {
-          const [connectWalletPage] = await Promise.all([
-            this.page.context().waitForEvent('page', { timeout: TIMEOUT.HIGH }),
+          const [result] = await Promise.all([
+            Promise.race([
+              this.page
+                .context()
+                .waitForEvent('page', { timeout: TIMEOUT.HIGH })
+                .then((page) => ({ type: 'page' as const, value: page })),
+              this.page
+                .waitForSelector('[data-testid="walletBtn"]', {
+                  timeout: TIMEOUT.HIGH,
+                })
+                .then((el) => ({ type: 'error' as const, value: el })),
+            ]),
             await walletIcon.click(),
           ]);
-          await this.walletPage.connectWallet(connectWalletPage);
+
+          if (result.type === 'page') {
+            await this.walletPage.connectWallet(result.value);
+          }
         } catch {
           this.logger.log('Wallet page didnt open');
         }
