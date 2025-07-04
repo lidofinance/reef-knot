@@ -24,18 +24,23 @@ export async function initBrowserWithWallet(walletName: string) {
     await context.route(
       /.*\/\/rpc\.hoodi\.ethpandaops\.io\//,
       async (route) => {
-        const response = await context.request.fetch(
-          REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl,
-          {
-            method: route.request().method(),
-            headers: route.request().headers(),
-            data: route.request().postData(),
-          },
-        );
+        try {
+          const response = await context.request.fetch(
+            REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl,
+            {
+              method: route.request().method(),
+              headers: route.request().headers(),
+              data: route.request().postData(),
+            },
+          );
 
-        await route.fulfill({
-          response: response,
-        });
+          await route.fulfill({
+            response: response,
+          });
+        } catch (err) {
+          console.error('Error proxying request:', err);
+          await route.abort();
+        }
       },
     );
 
