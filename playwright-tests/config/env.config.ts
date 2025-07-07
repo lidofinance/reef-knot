@@ -12,7 +12,6 @@ export interface StandConfig {
 }
 
 export const STAND_ENV = {
-  holeskyTestnet: 'holesky-testnet',
   hoodiTestnet: 'hoodi-testnet',
   mainnet: 'mainnet',
 };
@@ -23,21 +22,6 @@ export const STAND_LINK = {
 };
 
 export const STAND_CONFIGS = new Map<string, StandConfig>([
-  [
-    STAND_ENV.holeskyTestnet,
-    {
-      networkConfig: {
-        ...NETWORKS_CONFIG.testnet.ETHEREUM_HOLESKY,
-        rpcUrl: formatDrpc('holesky'),
-        chainName: 'Holesky',
-      },
-      contracts: {
-        stake: '0x3F1c547b21f65e10480dE3ad8E19fAAC46C95034',
-        wrap: '0x8d09a4502Cc8Cf1547aD300E066060D043f6982D',
-        withdraw: '0xc7cc160b58F8Bb0baC94b80847E2CF2800565C50',
-      },
-    },
-  ],
   [
     STAND_ENV.hoodiTestnet,
     {

@@ -14,8 +14,6 @@ function getStandConfig() {
   switch (ENV_CONFIG.STAND_ENV) {
     case 'mainnet':
       return STAND_CONFIGS.get(STAND_ENV.mainnet);
-    case 'holesky-testnet':
-      return STAND_CONFIGS.get(STAND_ENV.holeskyTestnet);
     case 'hoodi-testnet':
       return STAND_CONFIGS.get(STAND_ENV.hoodiTestnet);
     default:
