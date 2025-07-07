@@ -2,9 +2,9 @@ import { expect, test } from '@playwright/test';
 import { Tags } from '@test-data';
 import { ReefKnotService, initBrowserWithWallet } from '@services';
 import { ReefKnotPage } from '@pages';
-import { BrowserService } from '@browser';
 import { qase } from 'playwright-qase-reporter';
 import { REEF_KNOT_CONFIG } from '@config';
+import { BrowserService } from '@lidofinance/browser-service';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
@@ -21,7 +21,6 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         ));
         reefKnotPage = reefKnotService.reefKnotPage;
         await reefKnotPage.goto();
-        await reefKnotPage.allowUseCookies();
         await reefKnotService.disconnectWalletForce();
       });
 
@@ -72,7 +71,6 @@ test.describe(
       reefKnotPage = reefKnotService.reefKnotPage;
 
       await reefKnotPage.goto();
-      await reefKnotPage.allowUseCookies();
       await reefKnotService.disconnectWalletForce();
     });
 
@@ -89,24 +87,11 @@ test.describe(
       });
 
       await test.step('Connect wallet and check console.log', async () => {
-        const [connectWalletPage] =
-          await test.step('Connect wallet with Browser button', async () => {
-            await reefKnotService.reefKnotPage.header.connectWalletButton.click();
-            await reefKnotService.reefKnotPage.walletListModal.confirmConditionWalletModal();
-
-            return await Promise.all([
-              reefKnotService.reefKnotPage.waitForPage(),
-              reefKnotService.reefKnotPage.walletListModal
-                .getWalletInModal('Browser')
-                .click(),
-            ]);
-          });
-
         const [consoleMessage] = await Promise.all([
           reefKnotPage.page.waitForEvent('console', (msg) =>
             msg.text().includes(expectedNameParam),
           ),
-          reefKnotService.walletPage.connectWallet(connectWalletPage),
+          reefKnotService.connectWallet('Browser'),
         ]);
         expect(
           consoleMessage.text(),

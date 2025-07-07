@@ -1,7 +1,6 @@
 import { REEF_KNOT_CONFIG } from '@config';
 import { expect, test } from '@playwright/test';
 import { Tags, TIMEOUT } from '@test-data';
-import { BrowserService } from '@browser';
 import {
   initBrowserWithWallet,
   ReefKnotService,
@@ -9,6 +8,7 @@ import {
 } from '@services';
 import { ReefKnotPage } from '@pages';
 import { qase } from 'playwright-qase-reporter';
+import { BrowserService } from '@lidofinance/browser-service';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
@@ -26,7 +26,6 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         ));
         reefKnotPage = reefKnotService.reefKnotPage;
         await reefKnotPage.goto();
-        await reefKnotPage.allowUseCookies();
         await reefKnotService.connectWallet();
       });
 
