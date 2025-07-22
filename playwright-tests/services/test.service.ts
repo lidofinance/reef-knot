@@ -15,6 +15,7 @@ export async function initBrowserWithWallet(walletName: string) {
       },
       walletConfig: wallet.config,
       nodeConfig: null,
+      standUrl: null,
     });
 
     await browserService.initWalletSetup();
