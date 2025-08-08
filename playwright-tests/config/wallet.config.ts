@@ -17,8 +17,8 @@ export const WALLETS = new Map<string, Wallet>([
       name: 'metamask',
       config: {
         ...METAMASK_COMMON_CONFIG,
-        // LATEST_STABLE_DOWNLOAD_LINK:
-        //   'https://github.com/MetaMask/metamask-extension/releases/download/v12.10.4/metamask-chrome-12.10.4.zip',
+        LATEST_STABLE_DOWNLOAD_LINK:
+          'https://github.com/MetaMask/metamask-extension/releases/download/v12.22.2/metamask-chrome-12.22.2.zip',
       },
       connectWalletEvent: 'metaMask connected',
     },
