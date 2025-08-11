@@ -61,9 +61,9 @@
     "branches": [
       "main",
       {
-        "name": "test/debug-wallet-connection",
-        "channel": "qa-debug-alpha",
-        "prerelease": "qa-debug-alpha"
+        "name": "develop",
+        "channel": "alpha",
+        "prerelease": "alpha"
       }
     ]
   },
