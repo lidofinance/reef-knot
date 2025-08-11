@@ -75,25 +75,11 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         qase(440, 'Reload page and check that the wallet connection remains'),
         async () => {
           await qase.parameters({ wallet: wallet.name });
-
-          console.log(
-            `[DEBUG] [Before the page reload] - wagmi.store: ${await reefKnotPage.getStorageData(
-              'wagmi.store',
-            )}`,
-          );
           await reefKnotPage.page.reload();
-
-          await expect
-            .soft(
-              reefKnotPage.header.accountButton,
-              'The account button should remain visible after the page is reloaded',
-            )
-            .toBeVisible();
-          console.log(
-            `[DEBUG] [After the page reload] - wagmi.store: ${await reefKnotPage.getStorageData(
-              'wagmi.store',
-            )}`,
-          );
+          await expect(
+            reefKnotPage.header.accountButton,
+            'The account button should remain visible after the page is reloaded',
+          ).toBeVisible();
           await expect(
             reefKnotPage.statsBlock.mainComponent,
             'The statistic block should remain visible after the page is reloaded',
