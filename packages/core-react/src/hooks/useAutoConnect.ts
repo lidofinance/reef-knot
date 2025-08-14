@@ -45,7 +45,8 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
 
           // Wait for all EIP-6963 wallets to load their code and fire "eip6963:announceProvider" event
           // Without the delay, this code can be called from a browser's cache faster than wallet extension code
-          await new Promise((resolve) => setTimeout(resolve, 200));
+          await new Promise((resolve) => setTimeout(resolve, 300));
+          console.log('Timeout before wallet reconnect is increased');
 
           const reconnectWithCallback = withCallback(
             reconnectAsync,

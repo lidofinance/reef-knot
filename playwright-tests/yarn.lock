@@ -544,16 +544,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/browser-service@npm:1.5.0-alpha-mm-change-network.1":
-  version: 1.5.0-alpha-mm-change-network.1
-  resolution: "@lidofinance/browser-service@npm:1.5.0-alpha-mm-change-network.1"
+"@lidofinance/browser-service@npm:1.5.0-alpha-mm-change-network.6":
+  version: 1.5.0-alpha-mm-change-network.6
+  resolution: "@lidofinance/browser-service@npm:1.5.0-alpha-mm-change-network.6"
   dependencies:
     "@lidofinance/wallets-testing-extensions": 1.3.1
     "@lidofinance/wallets-testing-nodes": 1.4.0
-    "@lidofinance/wallets-testing-wallets": 1.37.0-alpha-mm-change-network.1
+    "@lidofinance/wallets-testing-wallets": 1.37.0-alpha-mm-change-network.6
   peerDependencies:
     "@playwright/test": ^1.51.1
-  checksum: 2a26e465127e628628a58dfadbf17ed0d304bad1af8e5bb8aee706ea06ebdb261b9f97a1e7473a3872cac58bcf2f0c91562a3010edec95e91f8e8a039274ff5c
+  checksum: afdaa184fd0be5c3a873ae4f1a11258d5e9d92d3f231ec89d08ad772062165c2656beb465efb8ff5730298919a995a10a0899f678aeb837d1f6a7fab42b424a4
   languageName: node
   linkType: hard
 
@@ -601,9 +601,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/wallets-testing-wallets@npm:1.37.0-alpha-mm-change-network.1":
-  version: 1.37.0-alpha-mm-change-network.1
-  resolution: "@lidofinance/wallets-testing-wallets@npm:1.37.0-alpha-mm-change-network.1"
+"@lidofinance/wallets-testing-wallets@npm:1.37.0-alpha-mm-change-network.6":
+  version: 1.37.0-alpha-mm-change-network.6
+  resolution: "@lidofinance/wallets-testing-wallets@npm:1.37.0-alpha-mm-change-network.6"
   dependencies:
     big.js: ^6.2.1
     expect: ^28.1.3
@@ -612,7 +612,7 @@ __metadata:
     viem: ^2.28.4
   peerDependencies:
     "@playwright/test": ^1.51.1
-  checksum: 7fb5593494a7867a770ebd354cf0778d0d4361ca388acbd5c5af69c45e99227a2bc6f002c36f5f0788c1e20eedc2b4fa00559e93fc818615b3bddbcff8f16b32
+  checksum: c1d97fa368c4292fb0e667d38dccf654a8f28b75510c7e128a864ee7a7237eb1a79f6fbba39e25daca8a8110b5b632440457bf3b4ca5de0386787c28949f54df
   languageName: node
   linkType: hard
 
@@ -2535,10 +2535,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "reef-knot_playwright_test@workspace:."
   dependencies:
-    "@lidofinance/browser-service": 1.5.0-alpha-mm-change-network.1
+    "@lidofinance/browser-service": 1.5.0-alpha-mm-change-network.6
     "@lidofinance/lido-ethereum-sdk": 4.4.0
     "@lidofinance/wallets-testing-extensions": 1.3.1
-    "@lidofinance/wallets-testing-wallets": 1.37.0-alpha-mm-change-network.1
+    "@lidofinance/wallets-testing-wallets": 1.37.0-alpha-mm-change-network.6
     "@playwright/test": ^1.51.1
     dotenv: ^16.4.5
     playwright-qase-reporter: ^2.1.2
