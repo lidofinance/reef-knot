@@ -9,7 +9,6 @@ test.describe('ReefKnot. Matomo events', async () => {
   test.beforeAll(async ({ browser }) => {
     reefKnotPage = new ReefKnotPage(await browser.newPage());
     await reefKnotPage.goto();
-    await reefKnotPage.allowUseCookies();
   });
 
   test.beforeEach(async () => {

@@ -49,6 +49,7 @@ export const WalletInfoContent = ({
           size="xs"
           variant="outlined"
           color="secondary"
+          data-testid="closeWalletInfoBtn"
           onClick={() => setIsWalletInfoIsOpen(false)}
         />
       </WalletInfoHeaderStyles>

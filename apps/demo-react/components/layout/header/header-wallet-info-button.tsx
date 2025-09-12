@@ -7,7 +7,7 @@ export const HeaderWalletInfoButton = () => {
   const { setIsWalletInfoIsOpen } = useClientConfig();
 
   return (
-    <HeaderControlButton onClick={() => setIsWalletInfoIsOpen(true)}>
+    <HeaderControlButton onClick={() => setIsWalletInfoIsOpen(true)} data-testid='walletInfoBtn'>
       <GearIcon />
     </HeaderControlButton>
   );

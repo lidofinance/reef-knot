@@ -30,6 +30,7 @@ export const ChainsConfig = () => {
             <DataTableRowStyle
               key={chainId}
               highlight
+              data-testid={'chain-'+chainId}
               title={
                 <>
                   {chainId}

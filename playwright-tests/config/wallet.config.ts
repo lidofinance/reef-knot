@@ -1,26 +1,13 @@
 import {
   METAMASK_COMMON_CONFIG,
   OKX_COMMON_CONFIG,
-  TRUST_WALLET_COMMON_CONFIG,
   CommonWalletConfig,
-  WalletPage,
-  MetamaskPage,
-  OkxPage,
-  TrustWalletPage,
-  WalletConfig,
 } from '@lidofinance/wallets-testing-wallets';
-import { BrowserContext } from '@playwright/test';
 
 export interface Wallet {
   name: string;
   config: CommonWalletConfig;
-  app: new (
-    browserContext: BrowserContext,
-    extensionUrl: string,
-    config: WalletConfig,
-  ) => WalletPage;
   connectWalletEvent: string;
-  canUseAnyRpc: boolean; // Some wallet is error validating the drpc default link
 }
 
 export const WALLETS = new Map<string, Wallet>([
@@ -28,10 +15,12 @@ export const WALLETS = new Map<string, Wallet>([
     'metamask',
     {
       name: 'metamask',
-      config: METAMASK_COMMON_CONFIG,
-      app: MetamaskPage,
+      config: {
+        ...METAMASK_COMMON_CONFIG,
+        LATEST_STABLE_DOWNLOAD_LINK:
+          'https://github.com/MetaMask/metamask-extension/releases/download/v12.10.4/metamask-chrome-12.10.4.zip',
+      },
       connectWalletEvent: 'metaMask connected',
-      canUseAnyRpc: true,
     },
   ],
   [
@@ -39,19 +28,7 @@ export const WALLETS = new Map<string, Wallet>([
     {
       name: 'okx',
       config: OKX_COMMON_CONFIG,
-      app: OkxPage,
       connectWalletEvent: 'okx connected',
-      canUseAnyRpc: true,
-    },
-  ],
-  [
-    'trust',
-    {
-      name: 'trust',
-      config: TRUST_WALLET_COMMON_CONFIG,
-      app: TrustWalletPage,
-      connectWalletEvent: 'trust connected',
-      canUseAnyRpc: false,
     },
   ],
 ]);

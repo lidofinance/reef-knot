@@ -1,25 +1,30 @@
 import { expect, Page, test } from '@playwright/test';
 import { ReefKnotPage } from '@pages';
-import { WalletPage, WalletTypes } from '@lidofinance/wallets-testing-wallets';
+import {
+  WalletPage,
+  WalletConnectTypes,
+} from '@lidofinance/wallets-testing-wallets';
 import { TIMEOUT } from '@test-data';
 import { HDAccount, mnemonicToAccount } from 'viem/accounts';
 import { SdkService } from './sdk.service';
 import { ConsoleLogger } from '@nestjs/common';
+import { BrowserService } from '@lidofinance/browser-service';
+import { ENV_CONFIG } from '@config';
 
 export class ReefKnotService {
   logger = new ConsoleLogger('ReefKnotService');
+  walletPage: WalletPage<WalletConnectTypes.EOA>;
+  page: Page;
   reefKnotPage: ReefKnotPage;
   seedPhrase: HDAccount;
   sdkService: SdkService;
 
-  constructor(
-    public page: Page,
-    public walletPage: WalletPage<WalletTypes.EOA>,
-    seedPhrase: string,
-  ) {
+  constructor(public browserService: BrowserService) {
+    this.page = browserService.getBrowserContextPage();
+    this.walletPage = browserService.getWalletPage();
     this.reefKnotPage = new ReefKnotPage(this.page);
-    this.seedPhrase = mnemonicToAccount(seedPhrase);
-    this.sdkService = new SdkService(this.seedPhrase);
+    this.seedPhrase = mnemonicToAccount(ENV_CONFIG.WALLET_SECRET_PHRASE);
+    this.sdkService = new SdkService();
   }
 
   async isConnectedWallet() {
@@ -33,38 +38,51 @@ export class ReefKnotService {
     });
   }
 
-  async connectWallet(expectConnectionState = true) {
+  async connectWallet(
+    walletButton = this.walletPage.options.walletConfig.CONNECT_BUTTON_NAME,
+  ) {
     await test.step('Connect wallet', async () => {
       if (await this.isConnectedWallet()) return;
       await this.reefKnotPage.header.connectWalletButton.click();
       await this.reefKnotPage.walletListModal.confirmConditionWalletModal();
-      const walletIcon = this.reefKnotPage.walletListModal.getWalletInModal(
-        this.walletPage.config.COMMON.CONNECT_BUTTON_NAME,
-      );
-      if (this.walletPage.config.COMMON.WALLET_TYPE === WalletTypes.EOA) {
+      const walletIcon =
+        this.reefKnotPage.walletListModal.getWalletInModal(walletButton);
+      if (
+        this.walletPage.options.walletConfig.WALLET_TYPE ===
+        WalletConnectTypes.EOA
+      ) {
         try {
-          const [connectWalletPage] = await Promise.all([
-            this.page
-              .context()
-              .waitForEvent('page', { timeout: TIMEOUT.RPC_WAIT }),
+          const [result] = await Promise.all([
+            Promise.race([
+              this.page
+                .context()
+                .waitForEvent('page', { timeout: TIMEOUT.HIGH })
+                .then((page) => ({ type: 'page' as const, value: page })),
+              this.page
+                .waitForSelector('[data-testid="walletBtn"]', {
+                  timeout: TIMEOUT.HIGH,
+                })
+                .then((el) => ({ type: 'error' as const, value: el })),
+            ]),
             await walletIcon.click(),
           ]);
-          await this.walletPage.connectWallet(connectWalletPage);
+
+          if (result.type === 'page') {
+            await this.walletPage.connectWallet(result.value);
+          }
         } catch {
           this.logger.log('Wallet page didnt open');
         }
       } else {
         this.logger.error(
-          `WALLET_TYPE is not supported (${this.walletPage.config.COMMON.WALLET_TYPE})`,
+          `WALLET_TYPE is not supported (${this.walletPage.options.walletConfig.WALLET_TYPE})`,
         );
       }
       await test.step('Check the wallet connect state', async () => {
-        const assertionMessage = expectConnectionState
-          ? 'Wallet should be connected'
-          : 'Wallet should be disconnected';
-        expect(await this.isConnectedWallet(), assertionMessage).toBe(
-          expectConnectionState,
-        );
+        expect(
+          await this.isConnectedWallet(),
+          'Wallet should be connected',
+        ).toBe(true);
       });
     });
   }

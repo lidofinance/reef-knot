@@ -3,8 +3,8 @@ import { qase } from 'playwright-qase-reporter';
 import { REEF_KNOT_CONFIG } from '@config';
 import { ReefKnotService, sdkToken, initBrowserWithWallet } from '@services';
 import { Tags } from '@test-data';
-import { BrowserService } from '@browser';
 import { ReefKnotPage } from '@pages';
+import { BrowserService } from '@lidofinance/browser-service';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
@@ -37,7 +37,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
           reefKnotPage.statsBlock.providerValue,
           'The connected wallet name should be displayed correctly',
         ).toContainText(
-          reefKnotService.walletPage.config.COMMON.CONNECTED_WALLET_NAME,
+          reefKnotService.walletPage.options.walletConfig.CONNECTED_WALLET_NAME,
         );
       });
 
