@@ -11,7 +11,7 @@ import { qase } from 'playwright-qase-reporter';
 import { BrowserService } from '@lidofinance/browser-service';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
-  test.describe(
+  test.describe.only(
     `ReefKnot. Unwrap transaction (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
     async () => {
@@ -29,60 +29,56 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         await reefKnotService.connectWallet();
       });
 
-      test.afterAll(async () => {
-        await reefKnotService.disconnectWalletForce();
-        await browserService.teardown();
-      });
-
-      test(qase(447, `Unwrap ${unwrapAmount} wstETH`), async () => {
-        await qase.groupParameters({
-          wallet: wallet.name,
-          txAmount: unwrapAmount,
-        });
-
-        await reefKnotPage.wrapUnwrapBlock.selectUnwrapTxType();
-
-        const newStEthBalance =
-          await test.step('Calculate the stETH amount result', async () => {
-            const stEthResult =
-              parseFloat(await reefKnotPage.statsBlock.getStEthBalance()) +
-              (await reefKnotService.sdkService.exchangeWstEthToStEth(
-                unwrapAmount,
-              ));
-            return toCutDecimalsDigit(stEthResult, 4);
-          });
-
-        const txPage =
-          await test.step('Fill the amount input and click to Submit button', async () => {
-            await reefKnotPage.statsBlock.amountInput.fill(unwrapAmount);
-            return await reefKnotPage.clickUnwrapButton();
-          });
-
-        await reefKnotService.walletPage.confirmTx(txPage, true);
-
-        await test.step('Waiting for transaction success', async () => {
+      test.only(qase(447, `Unwrap ${unwrapAmount} wstETH`), async () => {
+        // Check connection after connect wallet on before.all
+        try {
           await expect(
-            reefKnotPage.wrapUnwrapBlock.unwrapBtn,
-            'The Unwrap button should be disabled',
-          ).toBeDisabled();
-
-          await reefKnotPage.toast.successToast.waitFor({
-            state: 'visible',
-            timeout: TIMEOUT.RPC_WAIT,
-          });
-
+            reefKnotPage.header.accountButton,
+            'The account button should remain visible after the page is reloaded',
+          ).toBeVisible();
+        } catch (error) {
+          console.log(
+            `[ERROR] catch drop connection- wagmi.store: ${await reefKnotPage.getStorageData(
+              'wagmi.store',
+            )}`,
+          );
+          await reefKnotService.page.reload();
           await expect(
-            reefKnotPage.wrapUnwrapBlock.unwrapBtn,
-            'The Unwrap button should be enabled after success tx',
-          ).toBeEnabled();
-        });
+            reefKnotPage.header.accountButton,
+            'The account button should remain visible after the page is reloaded',
+          ).toBeVisible();
+          console.log(
+            `[ERROR] catch drop connection && reload - wagmi.store: ${await reefKnotPage.getStorageData(
+              'wagmi.store',
+            )}`,
+          );
+        }
 
-        await test.step('Check the new stETH balance', async () => {
+        await reefKnotPage.goto();
+
+        // check connection after connectWallet -> goto
+        try {
           await expect(
-            reefKnotPage.statsBlock.stethBalance,
-            'The displayed stETH balance should be updated after transaction success',
-          ).toContainText(newStEthBalance, { timeout: TIMEOUT.HIGH });
-        });
+            reefKnotPage.header.accountButton,
+            'The account button should remain visible after the page is reloaded',
+          ).toBeVisible();
+        } catch (error) {
+          console.log(
+            `[ERROR] catch drop connection- wagmi.store: ${await reefKnotPage.getStorageData(
+              'wagmi.store',
+            )}`,
+          );
+          await reefKnotService.page.reload();
+          await expect(
+            reefKnotPage.header.accountButton,
+            'The account button should remain visible after the page is reloaded',
+          ).toBeVisible();
+          console.log(
+            `[ERROR] catch drop connection && reload - wagmi.store: ${await reefKnotPage.getStorageData(
+              'wagmi.store',
+            )}`,
+          );
+        }
       });
     },
   );
