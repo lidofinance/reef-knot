@@ -544,16 +544,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/browser-service@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@lidofinance/browser-service@npm:1.6.0"
+"@lidofinance/browser-service@npm:1.6.1-debug-test.1":
+  version: 1.6.1-debug-test.1
+  resolution: "@lidofinance/browser-service@npm:1.6.1-debug-test.1"
   dependencies:
     "@lidofinance/wallets-testing-extensions": 1.3.1
     "@lidofinance/wallets-testing-nodes": 1.5.0
-    "@lidofinance/wallets-testing-wallets": 1.37.0
+    "@lidofinance/wallets-testing-wallets": 1.38.0-debug-test.1
   peerDependencies:
     "@playwright/test": ^1.51.1
-  checksum: c834ebf06e539a682c062d03a976002512ba64b0856075e8779f8066aafbd155caf4de211b7cc2e4f33596583cbd4b78c3ab181234579e8adcd40ce34a9ade7e
+  checksum: 200526fdc24e3e8bda032938b2456aae3ddee31773ecbb53b2b03fcab95a3637c0f3475ffaf06bf5ae810a70187ec9312971d3925ec93c93d2da433df11364b7
   languageName: node
   linkType: hard
 
@@ -601,9 +601,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/wallets-testing-wallets@npm:1.37.0, @lidofinance/wallets-testing-wallets@npm:^1.37.0":
-  version: 1.37.0
-  resolution: "@lidofinance/wallets-testing-wallets@npm:1.37.0"
+"@lidofinance/wallets-testing-wallets@npm:1.38.0-debug-test.1":
+  version: 1.38.0-debug-test.1
+  resolution: "@lidofinance/wallets-testing-wallets@npm:1.38.0-debug-test.1"
   dependencies:
     big.js: ^6.2.1
     expect: ^28.1.3
@@ -612,7 +612,7 @@ __metadata:
     viem: ^2.28.4
   peerDependencies:
     "@playwright/test": ^1.51.1
-  checksum: e72c38a7ce8de3aaaa72d340caf3df1a525056f50f9b02204a98da9261b36c8bcfd6be355bc7fa87a6da3d1f06051aa25dd659fcac07f1e71e5e0e3f88787fbb
+  checksum: 263acd6860763a88430fe95119cf5e5bbe1667c363ea3d02b0c1565688ce967d849ca57439c302579b4c444631b967191b53909ba60af26e8159d0fd1d7f8730
   languageName: node
   linkType: hard
 
@@ -2535,10 +2535,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "reef-knot_playwright_test@workspace:."
   dependencies:
-    "@lidofinance/browser-service": ^1.6.0
+    "@lidofinance/browser-service": 1.6.1-debug-test.1
     "@lidofinance/lido-ethereum-sdk": 4.4.0
     "@lidofinance/wallets-testing-extensions": 1.3.1
-    "@lidofinance/wallets-testing-wallets": ^1.37.0
+    "@lidofinance/wallets-testing-wallets": 1.38.0-debug-test.1
     "@playwright/test": ^1.51.1
     dotenv: ^16.4.5
     playwright-qase-reporter: ^2.1.2
