@@ -53,9 +53,13 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             )}`,
           );
         }
+        await test.step('Go to the page',async()=>{
+          await reefKnotPage.goto();
+          })
 
-        await reefKnotPage.goto();
-
+        await test.step('Go to the page',async()=>{
+          await reefKnotPage.goto();
+        })
         // check connection after connectWallet -> goto
         try {
           await expect(
@@ -68,7 +72,11 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
               'wagmi.store',
             )}`,
           );
-          await reefKnotService.page.reload();
+          await test.step('Reload to the page',async()=>{
+            await reefKnotService.page.reload();
+          })
+
+
           await expect(
             reefKnotPage.header.accountButton,
             'The account button should remain visible after the page is reloaded',
