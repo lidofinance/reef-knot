@@ -7,7 +7,7 @@ import {
 import WalletIcon from './icons/bitget.svg';
 
 export const id = 'bitget';
-export const name = 'Bitget';
+export const name = 'Bitget Wallet';
 export const rdns = 'com.bitget.web3';
 const currentHref = globalThis.window
   ? encodeURIComponent(globalThis.window.location.href)
