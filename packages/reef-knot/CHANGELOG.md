@@ -1,5 +1,17 @@
 # reef-knot
 
+## 7.5.0
+
+- Add support for personal_sign and eth_sign methods in LedgerHQProvider
+
+## 7.4.2
+
+- Update Bitget wallet name: "Bitget" -> "Bitget Wallet"
+
+## 7.4.1
+
+- Update Bitget wallet logo
+
 ## 7.4.0
 
 ### Features
