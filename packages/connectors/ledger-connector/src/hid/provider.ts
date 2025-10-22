@@ -1,6 +1,7 @@
 import invariant from 'tiny-invariant';
 import { JsonRpcBatchProvider, Network } from '@ethersproject/providers';
 import type TransportWebHID from '@ledgerhq/hw-transport-webhid';
+import { arrayify } from '@ethersproject/bytes';
 import { LedgerHQSigner } from './signer';
 import { checkError, convertToUnsigned } from './helpers';
 import { TransactionRequestExtended } from './types';
@@ -109,6 +110,20 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
           primaryType: payload.primaryType,
           message: payload.message,
         });
+      }
+      case 'personal_sign': {
+        const messageHex = params[0];
+        if (typeof messageHex !== 'string')
+          throw new Error('personal_sign message must be a string');
+        const messageBytes = arrayify(messageHex);
+        return await this.signer.signMessage(messageBytes);
+      }
+      case 'eth_sign': {
+        const messageHex = params[1];
+        if (typeof messageHex !== 'string')
+          throw new Error('eth_sign message must be a string');
+        const messageBytes = arrayify(messageHex);
+        return await this.signer.signMessage(messageBytes);
       }
       default:
         return this.send(method, params);
