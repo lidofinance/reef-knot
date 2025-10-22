@@ -75,7 +75,6 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         qase(440, 'Reload page and check that the wallet connection remains'),
         async () => {
           await qase.parameters({ wallet: wallet.name });
-
           await reefKnotPage.page.reload();
           await expect(
             reefKnotPage.header.accountButton,
