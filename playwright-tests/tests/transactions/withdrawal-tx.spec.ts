@@ -11,7 +11,7 @@ import { REEF_KNOT_CONFIG } from '@config';
 import { BrowserService } from '@lidofinance/browser-service';
 
 REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
-  test.describe.only(
+  test.describe(
     `ReefKnot. Request withdraw transaction (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
     async () => {
