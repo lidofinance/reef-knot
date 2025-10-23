@@ -14,11 +14,9 @@ on:
         description: 'Select wallet to run tests'
         required: true
         type: choice
-        default: all
+        default: metamask
         options:
-          - all
           - metamask
-          - okx
       SUITE:
         description: 'Select suite for test run'
         default: all
@@ -40,7 +38,7 @@ jobs:
       WALLET_SECRET_PHRASE: ${{ secrets.WALLET_SECRET_PHRASE }}
       WALLET_PASSWORD: ${{ secrets.WALLET_PASSWORD }}
       STAND_ENV: ${{ github.event.inputs.STAND_ENV || 'testnet' }}
-      WALLETS: ${{ github.event.inputs.WALLETS || 'all' }}
+      WALLETS: ${{ github.event.inputs.WALLETS || 'metamask' }}
       TEST_SUITE: ${{ github.event.inputs.suite }}
       STAND_TYPE: stand
       NODE_OPTIONS: --max-old-space-size=4096

@@ -6,6 +6,7 @@ import {
   StakeBlock,
   Toast,
   WrapUnwrapBlock,
+  WithdrawBlock,
 } from './components';
 import { Page, test } from '@playwright/test';
 import { TIMEOUT } from '@test-data';
@@ -19,6 +20,7 @@ export class ReefKnotPage {
   statsBlock: StatsBlock;
   stakeBlock: StakeBlock;
   wrapUnwrapBlock: WrapUnwrapBlock;
+  withdrawBlock: WithdrawBlock;
   walletListModal: WalletListModal;
   walletInfo: WalletInfo;
   toast: Toast;
@@ -30,6 +32,7 @@ export class ReefKnotPage {
     this.stakeBlock = new StakeBlock(this.page);
     this.wrapUnwrapBlock = new WrapUnwrapBlock(this.page);
     this.walletListModal = new WalletListModal(this.page);
+    this.withdrawBlock = new WithdrawBlock(this.page);
     this.walletInfo = new WalletInfo(this.page);
     this.toast = new Toast(this.page);
   }
@@ -109,6 +112,14 @@ export class ReefKnotPage {
     const [txPage] = await Promise.all([
       this.waitForPage(TIMEOUT.RPC_WAIT),
       this.wrapUnwrapBlock.unwrapBtn.click(),
+    ]);
+    return txPage;
+  }
+
+  async clickWithdrawButton() {
+    const [txPage] = await Promise.all([
+      this.waitForPage(TIMEOUT.RPC_WAIT),
+      this.withdrawBlock.withdrawBtn.click(),
     ]);
     return txPage;
   }
