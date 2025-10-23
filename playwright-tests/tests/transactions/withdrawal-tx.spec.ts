@@ -113,12 +113,12 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         await test.step('Confirm permit signing', async () => {
           [txPage] = await Promise.all([
             reefKnotPage.waitForPage(TIMEOUT.RPC_WAIT),
-            reefKnotService.walletPage.confirmTx(txPage, true),
+            reefKnotService.walletPage.confirmTx(txPage),
           ]);
         });
 
         await test.step('Confirm withdraw request tx', async () => {
-          await reefKnotService.walletPage.confirmTx(txPage);
+          await reefKnotService.walletPage.confirmTx(txPage, true);
         });
 
         await test.step('Waiting for transaction success', async () => {
