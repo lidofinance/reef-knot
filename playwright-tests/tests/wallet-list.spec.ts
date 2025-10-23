@@ -16,7 +16,7 @@ test.describe(`ReefKnot. Wallet list`, async () => {
   });
 
   test(
-    qase(0, 'Check the count of the available options to connect wallet'),
+    qase(450, 'Check the count of the available options to connect wallet'),
     async () => {
       await test.step('Open the wallet list', async () => {
         await reefKnotPage.header.connectWalletButton.click();
