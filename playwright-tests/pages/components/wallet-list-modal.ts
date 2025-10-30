@@ -5,6 +5,7 @@ export class WalletListModal {
   termAndPrivacyCheckbox: Locator;
   moreWalletsButton: Locator;
   lessWalletsButton: Locator;
+  walletList: Locator;
 
   constructor(public page: Page) {
     this.modal = this.page.locator('div[role="dialog"]', {
@@ -15,6 +16,9 @@ export class WalletListModal {
       .locator('..');
     this.moreWalletsButton = this.modal.getByText('More wallets');
     this.lessWalletsButton = this.modal.getByText('Less wallets');
+    this.walletList = this.modal
+      .getByRole('button', { name: 'Browser' })
+      .locator('..');
   }
 
   async confirmConditionWalletModal() {
