@@ -25,6 +25,18 @@ export default withBundleAnalyzer({
         test: /\.svg$/,
         use: ['@svgr/webpack', 'url-loader'],
       },
+      // Handle JSON imports with 'with' assertions from node_modules
+      {
+        test: /node_modules\/@base-org\/account.*\.js$/,
+        use: {
+          loader: 'string-replace-loader',
+          options: {
+            search: 'with\\s*\\{\\s*type:\\s*[\'"]json[\'"]\\s*\\}',
+            replace: '',
+            flags: 'g',
+          },
+        },
+      },
     );
 
     return config;
