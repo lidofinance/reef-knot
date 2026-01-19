@@ -1,6 +1,5 @@
 import React from 'react';
-import { useAccount } from 'wagmi';
-import { useCapabilities } from 'wagmi/experimental';
+import { useAccount, useCapabilities } from 'wagmi';
 import { Close } from '@lidofinance/lido-ui';
 import { useWeb3, useSupportedChains } from 'reef-knot/web3-react';
 import { useConnectorInfo } from 'reef-knot/core-react';
