@@ -38,13 +38,17 @@
   },
   "devDependencies": {
     "@reef-knot/types": "*",
+    "@safe-global/safe-apps-provider": "^0.18.6",
+    "@safe-global/safe-apps-sdk": "^9.1.0",
     "@svgr/rollup": "^6.5.1",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
     "@reef-knot/types": "*",
+    "@safe-global/safe-apps-provider": "^0.18.6",
+    "@safe-global/safe-apps-sdk": "^9.1.0",
     "@tanstack/react-query": "^5.29.0",
-    "viem": ">=2.23",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   }
 }
