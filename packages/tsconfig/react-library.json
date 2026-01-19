@@ -3,9 +3,9 @@
   "display": "React Library",
   "extends": "./base.json",
   "compilerOptions": {
-    "target": "ES6",
-    "module": "ES2020",
-    "jsx": "react",
+    "target": "es2020",
+    "module": "es2020",
+    "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
     "noImplicitReturns": true,
     "noImplicitThis": true,
