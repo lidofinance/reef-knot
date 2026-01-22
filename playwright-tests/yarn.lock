@@ -729,14 +729,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.51.1":
-  version: 1.51.1
-  resolution: "@playwright/test@npm:1.51.1"
+"@playwright/test@npm:^1.57.0":
+  version: 1.57.0
+  resolution: "@playwright/test@npm:1.57.0"
   dependencies:
-    playwright: 1.51.1
+    playwright: 1.57.0
   bin:
     playwright: cli.js
-  checksum: c3c14f37451cc0323234e37fa559a075e5aee9f5e6ca06fa3b4a132ec6c809909b22877daca1fa48c95a1112d859346c10111e7003f44582a05100dd5385bbef
+  checksum: 1a84783a240d69c2c8081a127b446f812a8dc86fe6f60a9511dd501cc0e6229cbec7e7753972678f3f063ad2bebb2cedbe9caebc5faa41014aebed35773ea242
   languageName: node
   linkType: hard
 
@@ -967,7 +967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^8.0.0, ajv@npm:^8.12.0":
+"ajv@npm:^8.0.0, ajv@npm:^8.17.1":
   version: 8.17.1
   resolution: "ajv@npm:8.17.1"
   dependencies:
@@ -1057,25 +1057,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.10.0":
-  version: 1.12.2
-  resolution: "axios@npm:1.12.2"
+"axios@npm:^1.10.0, axios@npm:^1.13.2":
+  version: 1.13.2
+  resolution: "axios@npm:1.13.2"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.4
     proxy-from-env: ^1.1.0
-  checksum: f0331594fe053a4bbff04104edb073973a3aabfad2e56b0aa18de82428aa63f6f0839ca3d837258ec739cb4528014121793b1649a21e5115ffb2bf8237eadca3
-  languageName: node
-  linkType: hard
-
-"axios@npm:^1.8.2":
-  version: 1.9.0
-  resolution: "axios@npm:1.9.0"
-  dependencies:
-    follow-redirects: ^1.15.6
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: 631f02c9c279f2ae90637a4989cc9d75c1c27aefd16b6e8eb90f98a4d0bddaccfd1cb1387be12101d1ab0f9bbf0c47e2451b4de0cf2870462a7d9ed3de8da3f2
+  checksum: 057d0204d5930e2969f0bccb9f0752745b1524a36994667833195e7e1a82f245d660752ba8517b2dbea17e9e4ed0479f10b80c5fe45edd0b5a0df645c0060386
   languageName: node
   linkType: hard
 
@@ -1440,7 +1429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"env-schema@npm:^5.2.0":
+"env-schema@npm:^5.2.1":
   version: 5.2.1
   resolution: "env-schema@npm:5.2.1"
   dependencies:
@@ -1627,17 +1616,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "form-data@npm:4.0.1"
-  dependencies:
-    asynckit: ^0.4.0
-    combined-stream: ^1.0.8
-    mime-types: ^2.1.12
-  checksum: ccee458cd5baf234d6b57f349fe9cc5f9a2ea8fd1af5ecda501a18fd1572a6dd3bf08a49f00568afd995b6a65af34cb8dec083cf9d582c4e621836499498dd84
-  languageName: node
-  linkType: hard
-
 "form-data@npm:^4.0.4":
   version: 4.0.4
   resolution: "form-data@npm:4.0.4"
@@ -1648,6 +1626,19 @@ __metadata:
     hasown: ^2.0.2
     mime-types: ^2.1.12
   checksum: 9b7788836df9fa5a6999e0c02515b001946b2a868cfe53f026c69e2c537a2ff9fbfb8e9d2b678744628f3dc7a2d6e14e4e45dfaf68aa6239727f0bdb8ce0abf2
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "form-data@npm:4.0.5"
+  dependencies:
+    asynckit: ^0.4.0
+    combined-stream: ^1.0.8
+    es-set-tostringtag: ^2.1.0
+    hasown: ^2.0.2
+    mime-types: ^2.1.12
+  checksum: af8328413c16d0cded5fccc975a44d227c5120fd46a9e81de8acf619d43ed838414cc6d7792195b30b248f76a65246949a129a4dadd148721948f90cd6d4fb69
   languageName: node
   linkType: hard
 
@@ -1744,8 +1735,8 @@ __metadata:
   linkType: hard
 
 "glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
-  version: 10.4.5
-  resolution: "glob@npm:10.4.5"
+  version: 10.5.0
+  resolution: "glob@npm:10.5.0"
   dependencies:
     foreground-child: ^3.1.0
     jackspeak: ^3.1.2
@@ -1755,7 +1746,7 @@ __metadata:
     path-scurry: ^1.11.1
   bin:
     glob: dist/esm/bin.mjs
-  checksum: 0bc725de5e4862f9f387fd0f2b274baf16850dcd2714502ccf471ee401803997983e2c05590cb65f9675a3c6f2a58e7a53f9e365704108c6ad3cbf1d60934c4a
+  checksum: cda96c074878abca9657bd984d2396945cf0d64283f6feeb40d738fe2da642be0010ad5210a1646244a5fc3511b0cab5a374569b3de5a12b8a63d392f18c6043
   languageName: node
   linkType: hard
 
@@ -2196,7 +2187,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12, mime-types@npm:^2.1.33":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.35":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -2321,6 +2312,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minizlib@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "minizlib@npm:3.1.0"
+  dependencies:
+    minipass: ^7.1.2
+  checksum: a15e6f0128f514b7d41a1c68ce531155447f4669e32d279bba1c1c071ef6c2abd7e4d4579bb59ccc2ed1531346749665968fdd7be8d83eb6b6ae2fe1f3d370a7
+  languageName: node
+  linkType: hard
+
 "mkdirp@npm:>=0.5 0":
   version: 0.5.6
   resolution: "mkdirp@npm:0.5.6"
@@ -2329,15 +2329,6 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: 0c91b721bb12c3f9af4b77ebf73604baf350e64d80df91754dc509491ae93bf238581e59c7188360cec7cb62fc4100959245a42cfe01834efedc5e9d068376c2
-  languageName: node
-  linkType: hard
-
-"mkdirp@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "mkdirp@npm:3.0.1"
-  bin:
-    mkdirp: dist/cjs/src/bin.js
-  checksum: 972deb188e8fb55547f1e58d66bd6b4a3623bf0c7137802582602d73e6480c1c2268dcbafbfb1be466e00cc7e56ac514d7fd9334b7cf33e3e2ab547c16f83a8d
   languageName: node
   linkType: hard
 
@@ -2544,40 +2535,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.51.1":
-  version: 1.51.1
-  resolution: "playwright-core@npm:1.51.1"
+"playwright-core@npm:1.57.0":
+  version: 1.57.0
+  resolution: "playwright-core@npm:1.57.0"
   bin:
     playwright-core: cli.js
-  checksum: 1eb37e22e97435a5ed6389b4caa666fbe618348861cae97e67586e20c8fed9ac3d3dc899ff3b9237d0ddfcf087d5b552b80be247e246fc45b75282f96be714bb
+  checksum: 960e80d6ec06305b11a3ca9e78e8e4201cc17f37dd37279cb6fece4df43d74bf589833f4f94535fadd284b427f98c5f1cf09368e22f0f00b6a9477571ce6b03b
   languageName: node
   linkType: hard
 
-"playwright-qase-reporter@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "playwright-qase-reporter@npm:2.1.2"
+"playwright-qase-reporter@npm:^2.1.7":
+  version: 2.1.7
+  resolution: "playwright-qase-reporter@npm:2.1.7"
   dependencies:
     chalk: ^4.1.2
-    qase-javascript-commons: ~2.3.1
-    uuid: ^9.0.0
+    qase-javascript-commons: ~2.4.16
+    uuid: ^9.0.1
   peerDependencies:
     "@playwright/test": ">=1.16.3"
-  checksum: 079223c6eeb3f5df4be4bf140bcf159b54630e53dc5a044aa0b87c7852deba173fc408a988c3fe5d5fe03724ee19b4425a3f03c3304b7ebd937ae4a512ec751f
+  checksum: 82d2c7a655ed0dccd742e5982ee4a1b442ae1f8297601487b81aab8254955b71237a0b59d3bc41e24c481a90c5d1975129c7f3ed47a0b25a525d734c444c4590
   languageName: node
   linkType: hard
 
-"playwright@npm:1.51.1":
-  version: 1.51.1
-  resolution: "playwright@npm:1.51.1"
+"playwright@npm:1.57.0":
+  version: 1.57.0
+  resolution: "playwright@npm:1.57.0"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.51.1
+    playwright-core: 1.57.0
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 2d78f53eed438d26df9743f98227d2e33bb5a378c8d0144a4ed75b4010c9c517d5a6ee6c1c9245ad61dc615054c5e19d2ded5a6e285e35d2bca39b05bc9c4a35
+  checksum: 176fd9fd890f390e0aa00d42697b70072d534243b15467d9430f3af329e77b3225b67a0afa12ea76fb440300dabd92d4cf040baf5edceee8eeff0ee1590ae5b7
   languageName: node
   linkType: hard
 
@@ -2624,44 +2615,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qase-api-client@npm:~1.0.1":
-  version: 1.0.2
-  resolution: "qase-api-client@npm:1.0.2"
+"qase-api-client@npm:~1.1.1":
+  version: 1.1.1
+  resolution: "qase-api-client@npm:1.1.1"
   dependencies:
-    axios: ^1.8.2
+    axios: ^1.13.2
     axios-retry: ^4.5.0
-  checksum: 223b3ca5e67d61c66cda06b446b480eea58252398719de1c0e9c87b670de6c2b8952b1193d9f49a5c68920809c4d24c701bb8e9ed594d6f4eb46d5151d432eab
+  checksum: 5e5a873bf764a0d7b76a21e4b399d254bb3ce6e1e8f21ee389a178b1ac23c302cb7f219bfbbc7643c0ef50a3c70f89a7c9bec07067f915885aaad0560c95f3bb
   languageName: node
   linkType: hard
 
-"qase-api-v2-client@npm:~1.0.1":
-  version: 1.0.2
-  resolution: "qase-api-v2-client@npm:1.0.2"
+"qase-api-v2-client@npm:~1.0.4":
+  version: 1.0.4
+  resolution: "qase-api-v2-client@npm:1.0.4"
   dependencies:
-    axios: ^1.8.2
+    axios: ^1.13.2
     axios-retry: ^4.5.0
-  checksum: c766feb9ecef6425d6250d5f17364b877af82c5e0d6f0f9a6dda4f07ae092382f356c58f5a9ee4e1b688a50a6cd3b2886dc05203102a3f886f2ab40bf63c8719
+  checksum: 9a73d642fed3992293810cd01107c523854e6f7c72c4473f8d4363a18b689d8876af34bc9247db4dbd69dc252d437246e4a7b9aef7d690157179b7d31b246c91
   languageName: node
   linkType: hard
 
-"qase-javascript-commons@npm:~2.3.1":
-  version: 2.3.2
-  resolution: "qase-javascript-commons@npm:2.3.2"
+"qase-javascript-commons@npm:~2.4.16":
+  version: 2.4.16
+  resolution: "qase-javascript-commons@npm:2.4.16"
   dependencies:
-    ajv: ^8.12.0
+    ajv: ^8.17.1
     async-mutex: ~0.5.0
     chalk: ^4.1.2
-    env-schema: ^5.2.0
-    form-data: ^4.0.0
+    env-schema: ^5.2.1
+    form-data: ^4.0.5
     lodash.get: ^4.4.2
     lodash.merge: ^4.6.2
     lodash.mergewith: ^4.6.2
-    mime-types: ^2.1.33
-    qase-api-client: ~1.0.1
-    qase-api-v2-client: ~1.0.1
+    mime-types: ^2.1.35
+    qase-api-client: ~1.1.1
+    qase-api-v2-client: ~1.0.4
     strip-ansi: ^6.0.1
-    uuid: ^9.0.0
-  checksum: acbe89fb9a0caf4d98b5e6bdd0d5d128cd234b9b516411de3dd574972d7d620ccf82698f4a4d9b36f98b5a9764d150d2642d4a36dbd9a5ba4cd6ef5722de26ff
+    uuid: ^9.0.1
+  checksum: 49e60d2a5ccbeb0ac48e08bdf96e9a561e6a6cccc381dfaf3ec89c2eabbbd469f45e50043ee089a4fbc9a475e6a4643d3f29c6e92855df7b29ddb333f5c35d09
   languageName: node
   linkType: hard
 
@@ -2706,9 +2697,9 @@ __metadata:
     "@lidofinance/lido-ethereum-sdk": 4.5.1
     "@lidofinance/wallets-testing-extensions": 1.3.1
     "@lidofinance/wallets-testing-wallets": 1.38.0
-    "@playwright/test": ^1.51.1
+    "@playwright/test": ^1.57.0
     dotenv: ^16.4.5
-    playwright-qase-reporter: ^2.1.2
+    playwright-qase-reporter: ^2.1.7
     viem: ^2.26.0
     zod: ^3.24.1
   languageName: unknown
@@ -2989,16 +2980,15 @@ __metadata:
   linkType: hard
 
 "tar@npm:^7.4.3":
-  version: 7.4.3
-  resolution: "tar@npm:7.4.3"
+  version: 7.5.6
+  resolution: "tar@npm:7.5.6"
   dependencies:
     "@isaacs/fs-minipass": ^4.0.0
     chownr: ^3.0.0
     minipass: ^7.1.2
-    minizlib: ^3.0.1
-    mkdirp: ^3.0.1
+    minizlib: ^3.1.0
     yallist: ^5.0.0
-  checksum: 8485350c0688331c94493031f417df069b778aadb25598abdad51862e007c39d1dd5310702c7be4a6784731a174799d8885d2fde0484269aea205b724d7b2ffa
+  checksum: 3d0c4940b78908cf7a796fcc7c05a804f5019e74526cbce7a094d381983393a994ae7521830f36156c369bc8a1e2da0dba8f41e9eb8eb090fce1c2a2025bc505
   languageName: node
   linkType: hard
 
@@ -3108,7 +3098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^9.0.0":
+"uuid@npm:^9.0.1":
   version: 9.0.1
   resolution: "uuid@npm:9.0.1"
   bin:
