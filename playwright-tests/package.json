@@ -15,7 +15,7 @@
     "viem": "^2.26.0",
     "zod": "^3.24.1"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@3.8.7",
   "devDependencies": {
     "dotenv": "^16.4.5"
   }
