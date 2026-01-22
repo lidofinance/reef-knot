@@ -34,7 +34,7 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const wagmiConfig = useConfig();
   const { mutate: switchChain } = useSwitchChain();
-  
+
   useEffect(() => {
     if (isConnected) {
       return () => {

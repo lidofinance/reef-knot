@@ -9,7 +9,7 @@ module.exports = {
     node: true,
   },
   extends: ['turbo', '@lidofinance', 'prettier'],
-  plugins: ['prettier', '@typescript-eslint', 'react'],
+  plugins: ['prettier', '@typescript-eslint', 'react', 'react-hooks'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -32,5 +32,6 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    'react/react-in-jsx-scope': 'off',
   },
 };
