@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi';
+import { useConnection } from 'wagmi';
 import { idLedgerHid, idLedgerLive } from '@reef-knot/ledger-connector';
 import {
   hasInjected,
@@ -15,7 +15,7 @@ type ConnectorInfo = {
 };
 
 export const useConnectorInfo = (): ConnectorInfo => {
-  const { connector } = useAccount();
+  const { connector } = useConnection();
 
   // These checks are working only for connected wallets! There is no connector if a wallet is not connected yet.
   const isLedger = Boolean(connector?.id === idLedgerHid);

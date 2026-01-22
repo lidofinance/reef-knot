@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
@@ -24,7 +24,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     ...rest
   } = props;
 
-  const { connectAsync } = useConnect();
+  const { mutateAsync: connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(async () => {

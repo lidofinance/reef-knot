@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import {
-  useAccount,
+  useConnection,
   useConfig,
   useDisconnect as useDisconnectWagmi,
 } from 'wagmi';
@@ -10,7 +10,7 @@ import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
 
 const useDisconnectCleaningStorage = () => {
   const { storage } = useConfig();
-  const { disconnect } = useDisconnectWagmi();
+  const { mutate: disconnect } = useDisconnectWagmi();
 
   return useCallback(
     (...args: Parameters<typeof disconnect>) => {
@@ -38,7 +38,7 @@ export const useDisconnect = (): {
   disconnect?: () => void;
   isDisconnectMakesSense: boolean;
 } => {
-  const { isConnected, connector } = useAccount();
+  const { isConnected, connector } = useConnection();
   const disconnect = useDisconnectCleaningStorage();
   const { walletDataList } = useReefKnotContext();
 

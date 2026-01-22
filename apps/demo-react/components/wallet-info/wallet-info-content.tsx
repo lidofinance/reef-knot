@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAccount, useCapabilities } from 'wagmi';
+import { useConnection, useCapabilities } from 'wagmi';
 import { Close } from '@lidofinance/lido-ui';
 import { useWeb3, useSupportedChains } from 'reef-knot/web3-react';
 import { useConnectorInfo } from 'reef-knot/core-react';
@@ -38,7 +38,7 @@ export const WalletInfoContent = ({
     isConnected: wagmiIsConnected,
     connector,
     chain,
-  } = useAccount();
+  } = useConnection();
 
   return (
     <div>

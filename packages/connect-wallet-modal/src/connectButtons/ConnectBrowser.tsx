@@ -23,7 +23,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
 
   const web3ProviderIsDetected = !!globalThis.window?.ethereum;
 
-  const { connectAsync } = useConnect();
+  const { mutateAsync: connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
   const ButtonIcon: ElementType =

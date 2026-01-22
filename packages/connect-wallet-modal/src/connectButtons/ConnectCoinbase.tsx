@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect } from '@reef-knot/core-react';
 import { ConnectButtonBase } from '../components/ConnectButtonBase';
@@ -20,7 +20,7 @@ export const ConnectCoinbase: FC<ConnectInjectedProps> = (
     ...rest
   } = props;
 
-  const { connect } = useConnect();
+  const { mutate: connect } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = useCallback(() => {
