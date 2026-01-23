@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useAccount } from 'wagmi';
+import { useConnection } from 'wagmi';
 import { ThemeToggler } from '@lidofinance/lido-ui';
 
 import WalletButton from 'components/layout/header/walletButton';
@@ -11,7 +11,7 @@ import { getChainColor } from 'utils/getChainColor';
 import { HeaderWalletChainStyle } from './headerWalletStyles';
 
 const HeaderWallet: FC = () => {
-  const { chain, chainId, isConnected } = useAccount();
+  const { chain, chainId, isConnected } = useConnection();
 
   return (
     <>

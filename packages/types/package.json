@@ -28,12 +28,14 @@
   "devDependencies": {
     "@reef-knot/ui-react": "*",
     "react": "18.2.0",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   },
   "peerDependencies": {
     "@reef-knot/ui-react": "*",
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   }
 }

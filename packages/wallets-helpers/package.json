@@ -42,11 +42,11 @@
   },
   "devDependencies": {
     "eslint-config-custom": "*",
-    "wagmi": ">=2.14"
+    "wagmi": ">=3.3"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "wagmi": ">=2.14"
+    "wagmi": ">=3.3"
   }
 }

@@ -58,7 +58,7 @@ export const LedgerAccountScreen: FC<Props> = ({ onConnectSuccess }) => {
     }
   }, [accountsForPage, accountsStorage, derivationPathTemplate]);
 
-  const { connectAsync } = useConnect();
+  const { mutateAsync: connectAsync } = useConnect();
   const { walletDataList } = useReefKnotContext();
 
   const handleAccountButtonClick = useCallback(

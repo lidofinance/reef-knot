@@ -1,11 +1,11 @@
 import useSWR from 'swr';
-import { useAccount } from 'wagmi';
+import { useConnection } from 'wagmi';
 
 import { useLidoSDK } from 'providers/sdk';
 
 export const useWstETHBalance = () => {
   const { wsteth } = useLidoSDK();
-  const { address: account, isConnected, chain } = useAccount();
+  const { address: account, isConnected, chain } = useConnection();
 
   return useSWR(
     ['swr:wsteth_balance', chain?.id],

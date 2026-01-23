@@ -1,5 +1,12 @@
 # reef-knot
 
+## 8.0.0
+
+- Build using node 24 and yarn 3.8.7
+- Update dependencies: wagmi 3.3.4 (BREAKING), viem 2.44.4, typescript 5.7.3, tslib 2.8.1, turbo 2.7.5
+- Update other dependencies suggested by dependabot
+- Fix eslint issues
+
 ## 7.5.0
 
 - Add support for personal_sign and eth_sign methods in LedgerHQProvider

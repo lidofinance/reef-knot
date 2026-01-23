@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { Connector, useConfig, useConnect } from 'wagmi';
 import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
@@ -38,7 +38,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
 
   const config = useConfig();
   const { loadingWalletId } = useReefKnotContext();
-  const { connectAsync } = useConnect();
+  const { mutateAsync: connectAsync } = useConnect();
   const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
