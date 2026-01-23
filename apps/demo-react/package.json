@@ -29,7 +29,7 @@
     "@walletconnect/ethereum-provider": "^2.21.1",
     "copy-to-clipboard": "^3.3.3",
     "fs-extra": "^11.2.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "next": "12.3.4",
     "porto": "~0.2.35",
     "react": "18.2.0",
