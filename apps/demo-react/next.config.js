@@ -39,6 +39,13 @@ export default withBundleAnalyzer({
       },
     );
 
+    config.resolve.fallback = {
+      porto: false,
+      '@gemini-wallet/core': false,
+      '@base-org/account': false,
+      '@react-native-async-storage/async-storage': false,
+    };
+
     return config;
   },
   async headers() {
