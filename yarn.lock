@@ -2257,23 +2257,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@base-org/account@npm:^2.5.1":
-  version: 2.5.1
-  resolution: "@base-org/account@npm:2.5.1"
-  dependencies:
-    "@coinbase/cdp-sdk": ^1.0.0
-    brotli-wasm: ^3.0.0
-    clsx: 1.2.1
-    eventemitter3: 5.0.1
-    idb-keyval: 6.2.1
-    ox: 0.6.9
-    preact: 10.24.2
-    viem: ^2.31.7
-    zustand: 5.0.3
-  checksum: 25be3d5c44b45a40742e0a2f77f85e3f438922712940b9e7d3a3241e10f8e1fd1fd7248daadeee59e51368860eae3cba2b27224bd3a1ad5d02de1573b468099c
-  languageName: node
-  linkType: hard
-
 "@binance/w3w-core@npm:1.1.7":
   version: 1.1.7
   resolution: "@binance/w3w-core@npm:1.1.7"
@@ -3016,18 +2999,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gemini-wallet/core@npm:~0.3.1":
-  version: 0.3.2
-  resolution: "@gemini-wallet/core@npm:0.3.2"
-  dependencies:
-    "@metamask/rpc-errors": 7.0.2
-    eventemitter3: 5.0.1
-  peerDependencies:
-    viem: ">=2.0.0"
-  checksum: a74a60548a7e35ae6b3c1a0a4a1289baa7b646be5846508e432cc87735691994de806c7dca4961b5d77ee04652fa0cc18e3a67376da886aeebb5d4a5409c96be
-  languageName: node
-  linkType: hard
-
 "@graphql-typed-document-node/core@npm:^3.2.0":
   version: 3.2.0
   resolution: "@graphql-typed-document-node/core@npm:3.2.0"
@@ -3538,16 +3509,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/rpc-errors@npm:7.0.2":
-  version: 7.0.2
-  resolution: "@metamask/rpc-errors@npm:7.0.2"
-  dependencies:
-    "@metamask/utils": ^11.0.1
-    fast-safe-stringify: ^2.0.6
-  checksum: 262a1ab57121e277eb979325d8e4335b9f4194c5acd0138ee0032db35b4e20ea0423badb5dad4bdf6abb85d22b476377f17911a54f82b3b1a2bdffc36654d028
-  languageName: node
-  linkType: hard
-
 "@metamask/rpc-errors@npm:^6.2.1":
   version: 6.4.0
   resolution: "@metamask/rpc-errors@npm:6.4.0"
@@ -3635,25 +3596,6 @@ __metadata:
   version: 3.2.1
   resolution: "@metamask/superstruct@npm:3.2.1"
   checksum: 194e4afc4df89f347e4dd16db8f8dfcbf7990ff82169c3bd43b98ecff2f1ef09488b987af612cc1ea2689826e8460bb2b01e1a3a340383420115b3a90aa68465
-  languageName: node
-  linkType: hard
-
-"@metamask/utils@npm:^11.0.1":
-  version: 11.9.0
-  resolution: "@metamask/utils@npm:11.9.0"
-  dependencies:
-    "@ethereumjs/tx": ^4.2.0
-    "@metamask/superstruct": ^3.1.0
-    "@noble/hashes": ^1.3.1
-    "@scure/base": ^1.1.3
-    "@types/debug": ^4.1.7
-    "@types/lodash": ^4.17.20
-    debug: ^4.3.4
-    lodash: ^4.17.21
-    pony-cause: ^2.1.10
-    semver: ^7.5.4
-    uuid: ^9.0.1
-  checksum: 467d9c1835dfe9bf9f67af0e0a472ca1805aa7f7a3969f439e4d14d9db2fa9c8da7611c8299c81f65ef6a63cb72725b227bac28080ed467375115c3ad6227d7a
   languageName: node
   linkType: hard
 
@@ -6911,13 +6853,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.17.20":
-  version: 4.17.23
-  resolution: "@types/lodash@npm:4.17.23"
-  checksum: 38638641526759688656b9930c0a2714536bdc2b84d5a2d4dc4b7825ba39a74ceedcc9971a9c7511189dad987426135b647616e4f49f2d67893617bdb7c85f84
-  languageName: node
-  linkType: hard
-
 "@types/minimatch@npm:*":
   version: 5.1.2
   resolution: "@types/minimatch@npm:5.1.2"
@@ -8862,13 +8797,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brotli-wasm@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "brotli-wasm@npm:3.0.1"
-  checksum: 48191b27265de8ffc59c940f9efef3a931448b6a15c26a4e360192fc3f0968e073c11fe0926510d019c305cc1d9c6d65df4d3e5752648a91cb0bbcccff7a8460
-  languageName: node
-  linkType: hard
-
 "browserslist@npm:^4.22.2, browserslist@npm:^4.22.3":
   version: 4.23.0
   resolution: "browserslist@npm:4.23.0"
@@ -10279,12 +10207,10 @@ __metadata:
   resolution: "demo-react@workspace:apps/demo-react"
   dependencies:
     "@babel/core": ^7.0.0
-    "@base-org/account": ^2.5.1
     "@coinbase/wallet-sdk": ^4.3.6
     "@ethersproject/bytes": ^5.7.0
     "@ethersproject/constants": ^5.7.0
     "@ethersproject/providers": ^5.7.2
-    "@gemini-wallet/core": ~0.3.1
     "@lido-sdk/constants": ^3.2.1
     "@lido-sdk/react": 2.0.2
     "@lidofinance/lido-ethereum-sdk": 4.4.0-alpha.2
@@ -10305,7 +10231,6 @@ __metadata:
     lodash: ^4.17.23
     next: 12.3.4
     next-transpile-modules: 9.0.0
-    porto: ~0.2.35
     react: 18.2.0
     react-dom: 18.2.0
     react-json-view: ^1.21.3
@@ -12783,13 +12708,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.10.3":
-  version: 4.11.7
-  resolution: "hono@npm:4.11.7"
-  checksum: 6dc49cc1ac8ae597bd7c67e317dbb3a04c12c02841d6b56735df6be1876700daaedebe16554422f90d99a1d8b7a8479af8d1572a6b77e6ce0957e7e3cd8fd529
-  languageName: node
-  linkType: hard
-
 "hook-std@npm:^3.0.0":
   version: 3.0.0
   resolution: "hook-std@npm:3.0.0"
@@ -15111,7 +15029,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mipd@npm:0.0.7, mipd@npm:^0.0.7":
+"mipd@npm:0.0.7":
   version: 0.0.7
   resolution: "mipd@npm:0.0.7"
   peerDependencies:
@@ -16135,27 +16053,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ox@npm:^0.9.6":
-  version: 0.9.17
-  resolution: "ox@npm:0.9.17"
-  dependencies:
-    "@adraffy/ens-normalize": ^1.11.0
-    "@noble/ciphers": ^1.3.0
-    "@noble/curves": 1.9.1
-    "@noble/hashes": ^1.8.0
-    "@scure/bip32": ^1.7.0
-    "@scure/bip39": ^1.6.0
-    abitype: ^1.0.9
-    eventemitter3: 5.0.1
-  peerDependencies:
-    typescript: ">=5.4.0"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: d5ec8d0d6f141a5e7b52613050dd95a745dc751b689e4f5a6faf99e16fc9b5193241e92aa1cd127351769968b41db1718c4738b210464bffa0538aa300a50a07
-  languageName: node
-  linkType: hard
-
 "p-each-series@npm:^3.0.0":
   version: 3.0.0
   resolution: "p-each-series@npm:3.0.0"
@@ -16644,50 +16541,6 @@ __metadata:
   version: 2.1.11
   resolution: "pony-cause@npm:2.1.11"
   checksum: 4aaa9ddab8f8225b5cbb32f7329a71b73679074579fa91f9e9d6853d398f3c2872de979519e1525c0c91d53afc82c32fddb76e379d19157e69ef1f7064523dfa
-  languageName: node
-  linkType: hard
-
-"porto@npm:~0.2.35":
-  version: 0.2.37
-  resolution: "porto@npm:0.2.37"
-  dependencies:
-    hono: ^4.10.3
-    idb-keyval: ^6.2.1
-    mipd: ^0.0.7
-    ox: ^0.9.6
-    zod: ^4.1.5
-    zustand: ^5.0.1
-  peerDependencies:
-    "@tanstack/react-query": ">=5.59.0"
-    "@wagmi/core": ">=2.16.3"
-    expo-auth-session: ">=7.0.8"
-    expo-crypto: ">=15.0.7"
-    expo-web-browser: ">=15.0.8"
-    react: ">=18"
-    react-native: ">=0.81.4"
-    typescript: ">=5.4.0"
-    viem: ">=2.37.0"
-    wagmi: ">=2.0.0"
-  peerDependenciesMeta:
-    "@tanstack/react-query":
-      optional: true
-    expo-auth-session:
-      optional: true
-    expo-crypto:
-      optional: true
-    expo-web-browser:
-      optional: true
-    react:
-      optional: true
-    react-native:
-      optional: true
-    typescript:
-      optional: true
-    wagmi:
-      optional: true
-  bin:
-    porto: dist/cli/bin/index.js
-  checksum: 35c8721b971bd9ee6d629a447a60c37ed2533fe4377f8b50344fe8cfd91f6749e2ec2aee5c81289ad788fdb8c2e83dbc488917769cb7b21e912416e02f2eb9d4
   languageName: node
   linkType: hard
 
@@ -20896,13 +20749,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^4.1.5":
-  version: 4.3.5
-  resolution: "zod@npm:4.3.5"
-  checksum: 68691183a91c67c4102db20139f3b5af288c59b4b11eb2239d712aae99dc6c1cecaeebcb0c012b44489771be05fecba21e79f65af4b3163b220239ef0af3ec49
-  languageName: node
-  linkType: hard
-
 "zustand@npm:5.0.0":
   version: 5.0.0
   resolution: "zustand@npm:5.0.0"
@@ -20942,26 +20788,5 @@ __metadata:
     use-sync-external-store:
       optional: true
   checksum: 72da39ac3017726c3562c615a0f76cee0c9ea678d664f82ee7669f8cb5e153ee81059363473094e4154d73a2935ee3459f6792d1ec9d08d2e72ebe641a16a6ba
-  languageName: node
-  linkType: hard
-
-"zustand@npm:^5.0.1":
-  version: 5.0.10
-  resolution: "zustand@npm:5.0.10"
-  peerDependencies:
-    "@types/react": ">=18.0.0"
-    immer: ">=9.0.6"
-    react: ">=18.0.0"
-    use-sync-external-store: ">=1.2.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    immer:
-      optional: true
-    react:
-      optional: true
-    use-sync-external-store:
-      optional: true
-  checksum: 52d39ad5a0a496a443ced50e773a47df4bda4f718c96e45a08c92675e45d7ac77ce75903b8e3754f17a2e99c71f5864ae8c2b2477aeb4c6f5c2a19e3e64e57ba
   languageName: node
   linkType: hard
