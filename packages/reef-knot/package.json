@@ -38,7 +38,8 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@reef-knot/connect-wallet-modal": "*",

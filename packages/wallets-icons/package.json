@@ -42,7 +42,8 @@
   "scripts": {
     "build": "yarn run -T tsdown && cp src/svg/*.svg dist/svg/",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": ">=18"

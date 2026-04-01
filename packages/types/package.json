@@ -23,7 +23,8 @@
   },
   "scripts": {
     "build": "yarn run -T tsdown",
-    "dev": "yarn run -T tsdown --watch"
+    "dev": "yarn run -T tsdown --watch",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@reef-knot/ui-react": "*",

@@ -16,8 +16,9 @@
     "dev-demo-react": "turbo run dev --filter='./apps/demo-react'",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "typecheck": "turbo run typecheck --continue",
+    "check-packages": "turbo run typecheck lint test --filter='./packages/**/*'",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-packages": "turbo run lint test --filter='./packages/**/*'",
     "new-wallet": "turbo gen wallet"
   },
   "devDependencies": {
