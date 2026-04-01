@@ -40,7 +40,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "yarn run -T tsdown && (yarn run -T tsc --noEmit false --emitDeclarationOnly --noEmitOnError false --declarationMap --outDir dist || true) && cp src/svg/*.svg dist/svg/",
+    "build": "yarn run -T tsdown && cp src/svg/*.svg dist/svg/",
     "dev": "yarn run -T tsdown --watch",
     "lint": "eslint --ext ts,tsx,js,mjs .",
     "typecheck": "tsc --noEmit"
