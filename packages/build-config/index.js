@@ -23,7 +23,8 @@ export function defineStandardConfig(overrides = {}) {
     target: 'es2020',
     platform: 'browser',
     unbundle: true,
-    dts: true,
+    // rolldown-plugin-dts drops `export default` — use tsc for declarations instead
+    dts: false,
     clean: true,
     // treat all non-relative imports as external
     external: isExternal,
