@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 export const useEscape = (callback?: () => void): void => {
   const handleKeyDown = useCallback(
-    (event) => {
+    (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         callback?.();
       }

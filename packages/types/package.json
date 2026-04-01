@@ -22,11 +22,12 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w"
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch"
   },
   "devDependencies": {
     "@reef-knot/ui-react": "*",
+    "build-config": "*",
     "react": "18.2.0",
     "viem": ">=2.44",
     "wagmi": ">=3.3"

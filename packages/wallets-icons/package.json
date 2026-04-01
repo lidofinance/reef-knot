@@ -40,15 +40,15 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
+    "build": "yarn run -T tsdown && cp src/svg/*.svg dist/svg/",
+    "dev": "yarn run -T tsdown --watch",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "peerDependencies": {
     "react": ">=18"
   },
   "devDependencies": {
-    "@svgr/rollup": "^6.5.1",
+    "build-config": "*",
     "eslint-config-custom": "*",
     "react": "18.2.0"
   }

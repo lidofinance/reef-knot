@@ -32,8 +32,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "dependencies": {
@@ -41,6 +41,7 @@
     "ua-parser-js": "1.0.37"
   },
   "devDependencies": {
+    "build-config": "*",
     "eslint-config-custom": "*",
     "wagmi": ">=3.3"
   },

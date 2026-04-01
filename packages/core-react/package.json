@@ -32,8 +32,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
@@ -42,6 +42,7 @@
     "@reef-knot/ui-react": "*",
     "@reef-knot/wallets-helpers": "*",
     "@reef-knot/wallets-list": "*",
+    "build-config": "*",
     "eslint-config-custom": "*",
     "mipd": "0.0.7",
     "react": "18.2.0",

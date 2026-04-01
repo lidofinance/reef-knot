@@ -32,17 +32,19 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
     "@reef-knot/types": "*",
-    "@svgr/rollup": "^6.5.1",
+    "@reef-knot/wallets-helpers": "*",
+    "build-config": "*",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
     "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@tanstack/react-query": "^5.29.0",
     "wagmi": ">=3.3"
   }

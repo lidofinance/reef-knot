@@ -1,0 +1,13 @@
+{
+  "name": "build-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "dependencies": {
+    "@svgr/rollup": "^6.5.1"
+  }
+}
