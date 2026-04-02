@@ -1,10 +1,13 @@
+import { EIP1193Provider } from 'viem';
+import { injected } from 'wagmi/connectors';
 import { WalletAdapterType } from '@reef-knot/types';
 import { WalletIcon } from './icons/index.js';
-import { injected } from 'wagmi/connectors';
 
-declare module '@wagmi/core' {
-  interface Ethereum {
-    isImToken?: true;
+declare global {
+  interface Window {
+    ethereum?: EIP1193Provider & {
+      isImToken?: true;
+    };
   }
 }
 

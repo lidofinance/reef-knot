@@ -38,17 +38,21 @@ export function ledgerHIDConnector({
       return providers[chain.id];
     },
 
-    async connect() {
+    async connect(_parameters?: {
+      chainId?: number;
+      isReconnecting?: boolean;
+      withCapabilities?: boolean;
+    }) {
       try {
-        const provider = await this.getProvider();
+        const provider = (await this.getProvider()) as LedgerHQProvider;
         provider.on('disconnect', this.onDisconnect);
         const account = (await provider.enable()) as `0x${string}`;
         const chainId = await this.getChainId();
 
         return {
-          accounts: [account],
+          accounts: [account] as readonly `0x${string}`[],
           chainId,
-        };
+        } as any;
       } catch (error) {
         return checkError(error);
       }
@@ -56,19 +60,19 @@ export function ledgerHIDConnector({
 
     async disconnect() {
       // Handles programmatic disconnect.
-      const provider = await this.getProvider();
+      const provider = (await this.getProvider()) as LedgerHQProvider;
       provider.removeListener('disconnect', this.onDisconnect);
       clearLedgerDerivationPath();
     },
 
     async getAccounts() {
-      const provider = await this.getProvider();
+      const provider = (await this.getProvider()) as LedgerHQProvider;
       const address = (await provider.getAddress()) as `0x${string}`;
       return [address];
     },
 
     async getChainId() {
-      const provider = await this.getProvider();
+      const provider = (await this.getProvider()) as LedgerHQProvider;
       const { chainId } = await provider.getNetwork();
       if (chainId) return chainId;
       throw new ChainNotConfiguredError();

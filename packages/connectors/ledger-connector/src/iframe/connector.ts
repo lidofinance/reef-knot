@@ -45,9 +45,9 @@ export function ledgerLiveConnector({
       return providers[chain.id];
     },
 
-    async connect({ chainId } = {}) {
+    async connect({ chainId }: { chainId?: number; isReconnecting?: boolean; withCapabilities?: boolean } = {}) {
       try {
-        const provider = await this.getProvider();
+        const provider = (await this.getProvider()) as LedgerIFrameProvider;
 
         // works without bind because it's an obj created(scoped) in a function
         provider.on('accountsChanged', this.onAccountsChanged);
@@ -66,7 +66,7 @@ export function ledgerLiveConnector({
         return {
           accounts,
           chainId: currentChainId,
-        };
+        } as any;
       } catch (error) {
         if (error instanceof Error) {
           if ((error as ProviderRpcError).code === 4001) {
@@ -80,7 +80,7 @@ export function ledgerLiveConnector({
     },
 
     async switchChain({ chainId }) {
-      const provider = await this.getProvider();
+      const provider = (await this.getProvider()) as LedgerIFrameProvider;
       const id = hexValue(chainId);
 
       try {
@@ -110,14 +110,14 @@ export function ledgerLiveConnector({
     },
 
     async getAccounts() {
-      const provider = await this.getProvider();
+      const provider = (await this.getProvider()) as LedgerIFrameProvider;
       const accounts = await provider.send('eth_requestAccounts');
       // return checksum address
       return accounts.map(getAddress);
     },
 
     async getChainId() {
-      const provider = await this.getProvider();
+      const provider = (await this.getProvider()) as LedgerIFrameProvider;
       const chainId = await provider.send('eth_chainId');
       return Number(chainId);
     },
@@ -134,7 +134,7 @@ export function ledgerLiveConnector({
 
     async isAuthorized() {
       try {
-        const provider = await this.getProvider();
+        const provider = (await this.getProvider()) as LedgerIFrameProvider;
         const accounts = await provider.send('eth_accounts');
         const account = accounts[0];
         return !!account;
@@ -157,7 +157,7 @@ export function ledgerLiveConnector({
     },
 
     async disconnect() {
-      const provider = await this.getProvider();
+      const provider = (await this.getProvider()) as LedgerIFrameProvider;
       provider.removeListener('accountsChanged', this.onAccountsChanged);
       provider.removeListener('chainChanged', this.onChainChanged);
     },
