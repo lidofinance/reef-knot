@@ -40,11 +40,13 @@
   "devDependencies": {
     "@reef-knot/types": "*",
     "build-config": "*",
-    "eslint-config-custom": "*"
+    "eslint-config-custom": "*",
+    "viem": ">=2.44"
   },
   "peerDependencies": {
     "@reef-knot/types": "*",
     "@tanstack/react-query": "^5.29.0",
+    "viem": ">=2.44",
     "wagmi": ">=3.3"
   }
 }

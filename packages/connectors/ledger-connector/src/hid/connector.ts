@@ -44,7 +44,7 @@ export function ledgerHIDConnector({
       withCapabilities?: boolean;
     }) {
       try {
-        const provider = (await this.getProvider()) as LedgerHQProvider;
+        const provider = await this.getProvider();
         provider.on('disconnect', this.onDisconnect);
         const account = (await provider.enable()) as `0x${string}`;
         const chainId = await this.getChainId();
@@ -60,19 +60,19 @@ export function ledgerHIDConnector({
 
     async disconnect() {
       // Handles programmatic disconnect.
-      const provider = (await this.getProvider()) as LedgerHQProvider;
+      const provider = await this.getProvider();
       provider.removeListener('disconnect', this.onDisconnect);
       clearLedgerDerivationPath();
     },
 
     async getAccounts() {
-      const provider = (await this.getProvider()) as LedgerHQProvider;
+      const provider = await this.getProvider();
       const address = (await provider.getAddress()) as `0x${string}`;
       return [address];
     },
 
     async getChainId() {
-      const provider = (await this.getProvider()) as LedgerHQProvider;
+      const provider = await this.getProvider();
       const { chainId } = await provider.getNetwork();
       if (chainId) return chainId;
       throw new ChainNotConfiguredError();
@@ -96,6 +96,7 @@ export function ledgerHIDConnector({
       const id = chainId.toString(16);
 
       emitter.emit('change', { chainId: Number(chainId) });
+      // eslint-disable-next-line unicorn/no-useless-promise-resolve-reject
       return Promise.resolve(
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
