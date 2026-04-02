@@ -17353,7 +17353,7 @@ __metadata:
     rollup: 3.29.5
     rollup-plugin-delete: 2.0.0
     rollup-plugin-svg-import: 1.6.0
-    rollup-plugin-typescript2: 0.34.1
+    rollup-plugin-typescript2: 0.37.0
     tslib: 2.8.1
     turbo: ^2.7.5
     typescript: ~5.7
@@ -17673,19 +17673,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-typescript2@npm:0.34.1":
-  version: 0.34.1
-  resolution: "rollup-plugin-typescript2@npm:0.34.1"
+"rollup-plugin-typescript2@npm:0.37.0":
+  version: 0.37.0
+  resolution: "rollup-plugin-typescript2@npm:0.37.0"
   dependencies:
-    "@rollup/pluginutils": "npm:^4.1.2"
-    find-cache-dir: "npm:^3.3.2"
-    fs-extra: "npm:^10.0.0"
-    semver: "npm:^7.3.7"
-    tslib: "npm:^2.4.0"
+    "@rollup/pluginutils": ^4.1.2
+    find-cache-dir: ^3.3.2
+    fs-extra: ^10.0.0
+    semver: ^7.5.4
+    tslib: ^2.6.2
   peerDependencies:
     rollup: ">=1.26.3"
     typescript: ">=2.4.0"
-  checksum: 107e66b9ab1aaf4b237564e500ea9de9f2d3f0a81be5139dc753fc76bbf00a1a2230eb1ec59145d2dfc4c4da9be8211f1f3e1370007efe1e24ce45a00905e558
+  checksum: 650a8a5fe821eb9911aa74156df648bff3d5767fb3d9ff323f1ac1b42bbc576615600996715372274eb1fa3c951c359b7b575dd116aadccd0720e757cba56360
   languageName: node
   linkType: hard
 
