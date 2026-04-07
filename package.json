@@ -70,6 +70,24 @@
   "multi-release": {
     "sequentialInit": true
   },
+  "resolutions": {
+    "minimatch@^3": "^3.1.5",
+    "minimatch@^5": "^5.1.8",
+    "minimatch@^9": "^9.0.7",
+    "minimatch@9.0.0": "^9.0.7",
+    "basic-ftp@^5": "^5.2.0",
+    "tar@^7": "^7.5.11",
+    "lodash@^4": "^4.18.0",
+    "picomatch@^2": "^2.3.2",
+    "axios@^1": "^1.14.0",
+    "axios@^0": "^0.30.3",
+    "defu@^6": "^6.1.5",
+    "bn.js@^4": "^4.12.3",
+    "bn.js@^5": "^5.2.3",
+    "ajv@^8": "^8.18.0",
+    "js-yaml@^4": "^4.1.1",
+    "yaml@^2": "^2.8.3"
+  },
   "engines": {
     "node": ">=24.0.0"
   },
