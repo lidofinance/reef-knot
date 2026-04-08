@@ -4,6 +4,7 @@ import {
   createConnector,
 } from 'wagmi';
 import { Chain } from 'wagmi/chains';
+import type { Address } from 'viem';
 import { checkError, clearLedgerDerivationPath } from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
 export const idLedgerHid = 'ledgerHID';
@@ -38,21 +39,25 @@ export function ledgerHIDConnector({
       return providers[chain.id];
     },
 
-    async connect(_parameters?: {
+    async connect({
+      withCapabilities = false,
+    }: {
       chainId?: number;
       isReconnecting?: boolean;
       withCapabilities?: boolean;
-    }) {
+    } = {}) {
       try {
         const provider = await this.getProvider();
         provider.on('disconnect', this.onDisconnect);
-        const account = (await provider.enable()) as `0x${string}`;
+        const account = (await provider.enable()) as Address;
         const chainId = await this.getChainId();
 
         return {
-          accounts: [account] as readonly `0x${string}`[],
+          accounts: (withCapabilities
+            ? [{ address: account, capabilities: {} }]
+            : [account]) as never,
           chainId,
-        } as any;
+        };
       } catch (error) {
         return checkError(error);
       }
@@ -67,7 +72,7 @@ export function ledgerHIDConnector({
 
     async getAccounts() {
       const provider = await this.getProvider();
-      const address = (await provider.getAddress()) as `0x${string}`;
+      const address = (await provider.getAddress()) as Address;
       return [address];
     },
 

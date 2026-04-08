@@ -4,7 +4,7 @@ import {
   Connector,
 } from 'wagmi';
 import {
-  Address,
+  type Address,
   ProviderRpcError,
   UserRejectedRequestError,
   ResourceUnavailableRpcError,
@@ -47,6 +47,7 @@ export function ledgerLiveConnector({
 
     async connect({
       chainId,
+      withCapabilities,
     }: {
       chainId?: number;
       isReconnecting?: boolean;
@@ -70,9 +71,11 @@ export function ledgerLiveConnector({
         }
 
         return {
-          accounts,
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
           chainId: currentChainId,
-        } as any;
+        };
       } catch (error) {
         if (error instanceof Error) {
           if ((error as ProviderRpcError).code === 4001) {
