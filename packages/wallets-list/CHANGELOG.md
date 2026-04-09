@@ -2,9 +2,9 @@
 
 ## 5.0.0
 
-### BREAKING CHANGES
-
-- Removed wallet adapters: binanceWallet, coinbase, trust, exodus, brave, ctrl, coin98
+- Build using node 24, yarn 3.8.7
+- Replace rollup bundler with tsdown based on rolldown, all packages are rebuild
+- Update dependencies: wagmi 3.3.4 (BREAKING), viem 2.44.4, typescript 5.7.3, tslib 2.8.1, turbo 2.7.5
 
 ## 4.2.0
 
