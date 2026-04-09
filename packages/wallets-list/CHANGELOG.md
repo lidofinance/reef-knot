@@ -1,5 +1,11 @@
 # @reef-knot/wallets-list
 
+## 5.0.0
+
+### BREAKING CHANGES
+
+- Removed wallet adapters: binanceWallet, coinbase, trust, exodus, brave, ctrl, coin98
+
 ## 4.2.0
 
 ### Minor Changes

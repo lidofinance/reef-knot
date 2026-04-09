@@ -39,23 +39,16 @@
   },
   "dependencies": {
     "@reef-knot/wallet-adapter-ambire": "*",
-    "@reef-knot/wallet-adapter-binance-wallet": "*",
     "@reef-knot/wallet-adapter-bitkeep": "*",
-    "@reef-knot/wallet-adapter-brave": "*",
     "@reef-knot/wallet-adapter-browser-extension": "*",
-    "@reef-knot/wallet-adapter-coin98": "*",
-    "@reef-knot/wallet-adapter-coinbase": "*",
     "@reef-knot/wallet-adapter-coinbase-smart-wallet": "*",
-    "@reef-knot/wallet-adapter-ctrl": "*",
     "@reef-knot/wallet-adapter-dapp-browser-injected": "*",
-    "@reef-knot/wallet-adapter-exodus": "*",
     "@reef-knot/wallet-adapter-imtoken": "*",
     "@reef-knot/wallet-adapter-ledger-hid": "*",
     "@reef-knot/wallet-adapter-ledger-live": "*",
     "@reef-knot/wallet-adapter-metamask": "*",
     "@reef-knot/wallet-adapter-okx": "*",
     "@reef-knot/wallet-adapter-safe": "*",
-    "@reef-knot/wallet-adapter-trust": "*",
     "@reef-knot/wallet-adapter-walletconnect": "*"
   },
   "devDependencies": {

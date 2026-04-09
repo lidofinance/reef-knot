@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 8.0.0
+
+### BREAKING CHANGES
+
+- Removed wallet adapters: binanceWallet, coinbase, trust, exodus, brave, ctrl, coin98
+
 ## 7.3.0
 
 ### Minor Changes
