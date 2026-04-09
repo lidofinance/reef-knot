@@ -9,7 +9,7 @@ export const rdns = 'com.coinbase.wallet';
 
 export const getCoinbaseConnector = () =>
   coinbaseWallet({
-    preference: 'eoaOnly',
+    preference: { options: 'eoaOnly' },
     appName: globalThis.window?.location?.hostname,
   });
 

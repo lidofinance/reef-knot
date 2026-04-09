@@ -4,6 +4,7 @@ import {
   createConnector,
 } from 'wagmi';
 import { Chain } from 'wagmi/chains';
+import type { Address } from 'viem';
 import { checkError, clearLedgerDerivationPath } from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
 export const idLedgerHid = 'ledgerHID';
@@ -38,15 +39,23 @@ export function ledgerHIDConnector({
       return providers[chain.id];
     },
 
-    async connect() {
+    async connect({
+      withCapabilities = false,
+    }: {
+      chainId?: number;
+      isReconnecting?: boolean;
+      withCapabilities?: boolean;
+    } = {}) {
       try {
         const provider = await this.getProvider();
         provider.on('disconnect', this.onDisconnect);
-        const account = (await provider.enable()) as `0x${string}`;
+        const account = (await provider.enable()) as Address;
         const chainId = await this.getChainId();
 
         return {
-          accounts: [account],
+          accounts: (withCapabilities
+            ? [{ address: account, capabilities: {} }]
+            : [account]) as never,
           chainId,
         };
       } catch (error) {
@@ -63,7 +72,7 @@ export function ledgerHIDConnector({
 
     async getAccounts() {
       const provider = await this.getProvider();
-      const address = (await provider.getAddress()) as `0x${string}`;
+      const address = (await provider.getAddress()) as Address;
       return [address];
     },
 
@@ -92,6 +101,7 @@ export function ledgerHIDConnector({
       const id = chainId.toString(16);
 
       emitter.emit('change', { chainId: Number(chainId) });
+      // eslint-disable-next-line unicorn/no-useless-promise-resolve-reject
       return Promise.resolve(
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,

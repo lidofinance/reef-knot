@@ -19,7 +19,7 @@ module.exports = {
     sourceType: 'module',
     project: project,
   },
-  ignorePatterns: ['*.js', 'dist/', 'node_modules/'],
+  ignorePatterns: ['*.js', '*.config.ts', 'dist/', 'node_modules/'],
   settings: {
     react: {
       version: 'detect',

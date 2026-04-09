@@ -1,10 +1,10 @@
-import React, { ElementType, FC, useCallback } from 'react';
+import 'viem/window'; // for window.ethereum?: EIP1193Provider
+import { ElementType, FC, useCallback } from 'react';
 import { useConnect } from 'wagmi';
 import { useDisconnect, useReefKnotModal } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { ConnectInjectedProps } from './types';
-import 'viem/window'; // for window.ethereum?: EIP1193Provider
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,

@@ -32,9 +32,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@reef-knot/wallet-adapter-ambire": "*",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "@reef-knot/types": "*",
+    "build-config": "*",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
