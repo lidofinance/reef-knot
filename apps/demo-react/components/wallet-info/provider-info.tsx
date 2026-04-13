@@ -5,19 +5,25 @@ const HIDDEN_KEYS = ['_jsonRpcConnection'];
 
 const stringify = (obj: object) => {
   let cache: unknown[] | null = [];
-  const str = JSON.stringify(obj, function (_key, value) {
-    if (typeof value === 'object' && value !== null) {
-      if (cache?.indexOf(value) !== -1) {
-        // Circular reference found, discard key
-        return;
+  try {
+    return JSON.stringify(obj, function (_key, value) {
+      if (typeof value === 'object' && value !== null) {
+        if (cache?.indexOf(value) !== -1) {
+          // Circular reference found, discard key
+          return;
+        }
+        // Store value in our collection
+        cache?.push(value);
       }
-      // Store value in our collection
-      cache?.push(value);
-    }
-    return value;
-  });
-  cache = null; // reset the cache
-  return str;
+      return value;
+    });
+  } catch {
+    // Some wallet extensions (e.g. OKX) inject Proxy objects into
+    // window.ethereum whose get trap throws when accessed by JSON.stringify
+    return '[unserializable]';
+  } finally {
+    cache = null; // reset the cache
+  }
 };
 
 export const Web3ProviderInfo = () => {
