@@ -9,7 +9,6 @@ import {
   ConnectWC,
   ConnectCoinbase,
   ConnectBrowser,
-  ConnectBinance,
   ConnectMetaMask,
 } from '../../connectButtons';
 
@@ -23,7 +22,6 @@ export const WALLETS_MODAL_BUTTON_COMPONENTS_DEFAULT: ButtonComponentsByConnecto
     walletConnect: ConnectWC,
     coinbaseWallet: ConnectCoinbase,
     ledgerHID: ConnectLedger,
-    binanceWallet: ConnectBinance,
     metaMask: ConnectMetaMask,
   };
 
