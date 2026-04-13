@@ -4,7 +4,7 @@ import { qase } from 'playwright-qase-reporter';
 
 test.describe(`ReefKnot. Wallet list`, async () => {
   let reefKnotPage: ReefKnotPage;
-  const expectedWalletCount = 16;
+  const expectedWalletCount = 9;
 
   test.beforeAll(async ({ browser }) => {
     reefKnotPage = new ReefKnotPage(await browser.newPage());
