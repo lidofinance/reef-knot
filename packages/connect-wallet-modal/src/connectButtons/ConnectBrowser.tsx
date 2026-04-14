@@ -55,14 +55,15 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       });
     }
   }, [
-    ButtonIcon,
-    connectWithLoading,
-    connector,
-    disconnect,
-    openModalAsync,
-    web3ProviderIsDetected,
     onConnectStart,
+    web3ProviderIsDetected,
+    disconnect,
+    connectWithLoading,
+    walletId,
+    connector,
     onConnectSuccess,
+    openModalAsync,
+    ButtonIcon,
   ]);
 
   return (
