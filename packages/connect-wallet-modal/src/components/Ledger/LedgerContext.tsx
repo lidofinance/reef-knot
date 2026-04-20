@@ -104,6 +104,7 @@ export const LedgerContextProvider = ({
       }
 
       transport.current = await getTransport();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ledgerAppEth.current = new ledgerLibEth.current!(transport.current);
       await ledgerAppEth.current.getAppConfiguration();
       setIsTransportConnected(true);

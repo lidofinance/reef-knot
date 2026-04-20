@@ -4,6 +4,13 @@
 import { execSync } from 'node:child_process';
 import svgr from '@svgr/rollup';
 
+// In watch mode all packages start simultaneously, so dist/ must not be cleaned
+// on startup — doing so would create a race condition where tsc in one package
+// runs while another package's .d.ts files are temporarily deleted.
+// The .d.ts files are preserved from the preceding `build` step (guaranteed by
+// turbo's "dependsOn": ["^build"] on the dev task).
+const isWatchMode = process.argv.includes('--watch');
+
 /**
  * @param {string} id
  * @returns {boolean}
@@ -56,7 +63,7 @@ export function defineStandardConfig(overrides = {}) {
     unbundle: true,
     // rolldown-plugin-dts drops `export default` — use tsc for declarations instead, see hooks
     dts: false,
-    clean: true,
+    clean: !isWatchMode,
     // treat all non-relative imports as external
     external: isExternal,
     hooks: tscDeclarationsHook(),
