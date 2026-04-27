@@ -9,7 +9,6 @@ import {
   ConnectWC,
   ConnectCoinbase,
   ConnectBrowser,
-  ConnectBinance,
   ConnectMetaMask,
 } from '../../connectButtons';
 
@@ -23,7 +22,6 @@ export const WALLETS_MODAL_BUTTON_COMPONENTS_DEFAULT: ButtonComponentsByConnecto
     walletConnect: ConnectWC,
     coinbaseWallet: ConnectCoinbase,
     ledgerHID: ConnectLedger,
-    binanceWallet: ConnectBinance,
     metaMask: ConnectMetaMask,
   };
 
@@ -34,16 +32,9 @@ export const WALLETS_MODAL_DISPLAY_CONFIG_DEFAULT: WalletIdsEthereum[] = [
   'ledgerHID',
   'ledgerLive',
   'walletConnect',
-  'binanceWallet',
-  'coinbase',
   'coinbaseSmartWallet',
-  'trust',
-  'exodus',
-  'brave',
   'bitget',
-  'ctrl',
   'imToken',
-  'coin98',
   'ambire',
   'safe',
   'dappBrowserInjected',

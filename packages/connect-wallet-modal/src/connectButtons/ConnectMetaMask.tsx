@@ -33,10 +33,7 @@ export const ConnectMetaMask: FC<ConnectInjectedProps> = (
   }, [
     connectWithLoading,
     connector,
-    deeplink,
-    detector,
     disconnect,
-    downloadURLs,
     onConnectStart,
     onConnectSuccess,
     walletId,

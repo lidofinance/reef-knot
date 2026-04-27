@@ -12,12 +12,17 @@
       ]
     },
     "dev": {
+      "dependsOn": ["^build"],
       "cache": false
     },
     "lint": {
       "outputs": []
     },
     "test": {
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
       "outputs": []
     }
   }

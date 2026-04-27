@@ -1,5 +1,12 @@
 # @reef-knot/connect-wallet-modal
 
+## 8.0.0
+
+- Build using node 24, yarn 3.8.7
+- Replace rollup bundler with tsdown based on rolldown, all packages are rebuild
+- Update dependencies: wagmi 3.3.4 (BREAKING), viem 2.44.4, typescript 5.7.3, tslib 2.8.1, turbo 2.7.5
+- Removed wallet adapters: binanceWallet, coinbase, trust, exodus, brave, ctrl, coin98
+
 ## 7.3.0
 
 ### Minor Changes

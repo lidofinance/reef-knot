@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lidofinance/reef-knot.git",
+    "url": "git+https://github.com/lidofinance/reef-knot.git",
     "directory": "packages/wallets/browserExtension"
   },
   "publishConfig": {
@@ -32,18 +32,21 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@reef-knot/types": "*",
-    "@svgr/rollup": "^6.5.1",
-    "eslint-config-custom": "*"
+    "build-config": "*",
+    "eslint-config-custom": "*",
+    "viem": ">=2.44"
   },
   "peerDependencies": {
     "@reef-knot/types": "*",
     "@tanstack/react-query": "^5.29.0",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   }
 }

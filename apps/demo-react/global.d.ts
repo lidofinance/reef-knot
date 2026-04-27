@@ -1,3 +1,7 @@
+interface Window {
+  ethereum?: Record<string, unknown>;
+}
+
 declare module '*.svg' {
   /**
    * Use `any` to avoid conflicts with

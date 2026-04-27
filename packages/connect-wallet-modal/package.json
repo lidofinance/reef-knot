@@ -21,7 +21,7 @@
   "homepage": "https://github.com/lidofinance/reef-knot",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lidofinance/reef-knot.git",
+    "url": "git+https://github.com/lidofinance/reef-knot.git",
     "directory": "packages/connect-wallet-modal"
   },
   "bugs": {
@@ -32,9 +32,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@ledgerhq/hw-app-eth": "^6.37.1",
@@ -52,11 +53,12 @@
     "@reef-knot/ui-react": "*",
     "@reef-knot/wallets-helpers": "*",
     "@reef-knot/web3-react": "*",
+    "build-config": "*",
     "eslint-config-custom": "*",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
-    "viem": ">=2.23",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   },
   "peerDependencies": {
     "@lidofinance/lido-ui": "^3.18.0",
@@ -68,7 +70,7 @@
     "@reef-knot/web3-react": "*",
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "viem": ">=2.23",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   }
 }

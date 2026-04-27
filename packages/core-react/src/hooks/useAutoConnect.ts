@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useConfig, useAccount, useReconnect } from 'wagmi';
+import { useConfig, useConnection, useReconnect } from 'wagmi';
 import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
@@ -8,8 +8,8 @@ import { withCallback } from '../helpers/withCallback';
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { storage } = useConfig();
-  const { reconnectAsync } = useReconnect();
-  const { isConnected } = useAccount();
+  const { mutateAsync: reconnectAsync } = useReconnect();
+  const { isConnected } = useConnection();
   const { eagerConnect } = useEagerConnect();
   const { walletDataList, onReconnect } = useReefKnotContext();
 

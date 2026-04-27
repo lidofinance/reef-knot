@@ -11,7 +11,7 @@ import invariant from 'tiny-invariant';
 import {
   useWalletClient,
   usePublicClient,
-  useAccount,
+  useConnection,
   useConfig,
   useSwitchChain,
 } from 'wagmi';
@@ -30,10 +30,10 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
   // reset internal wagmi state after disconnect
-  const { isConnected } = useAccount();
+  const { isConnected } = useConnection();
 
   const wagmiConfig = useConfig();
-  const { switchChain } = useSwitchChain();
+  const { mutate: switchChain } = useSwitchChain();
 
   useEffect(() => {
     if (isConnected) {

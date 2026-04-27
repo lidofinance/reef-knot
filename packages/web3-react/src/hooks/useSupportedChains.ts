@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { getNetwork, Network } from '@ethersproject/providers';
-import { useAccount, useConfig } from 'wagmi';
+import { useConnection, useConfig } from 'wagmi';
 
 export const useSupportedChains = (): {
   isUnsupported: boolean;
   supportedChains: Network[];
 } => {
-  const { chainId } = useAccount();
+  const { chainId } = useConnection();
   const { chains } = useConfig();
 
   const isUnsupported = useMemo(() => {

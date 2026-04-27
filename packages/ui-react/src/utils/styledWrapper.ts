@@ -11,4 +11,5 @@ import _styled, { StyledInterface } from 'styled-components';
 const styled: StyledInterface = _styled.default || _styled;
 
 export * from 'styled-components';
+export { styled };
 export default styled;

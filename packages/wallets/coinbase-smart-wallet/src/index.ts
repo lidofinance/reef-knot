@@ -11,7 +11,7 @@ type ConfigType = Parameters<ReturnType<typeof coinbaseWallet>>[0];
 
 export const getCoinbaseSmartWalletConnector = (config: ConfigType) => {
   const coinbaseCreateConnectorFn = coinbaseWallet({
-    preference: 'smartWalletOnly',
+    preference: { options: 'smartWalletOnly' },
     appName: globalThis.window?.location?.hostname,
   });
 

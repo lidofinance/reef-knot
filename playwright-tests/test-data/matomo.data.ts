@@ -21,7 +21,7 @@ export const CONFIG_MATOMO_CLICK_TO_WALLET_EVENTS = [
   },
   {
     eventMessage: 'bitget clicked',
-    walletName: 'Bitget',
+    walletName: 'Bitget Wallet',
   },
   {
     eventMessage: 'coinbaseSmartWallet clicked',

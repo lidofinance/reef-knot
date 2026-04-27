@@ -32,15 +32,17 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/w3c-web-hid": "^1.0.2",
+    "build-config": "*",
     "eslint-config-custom": "*",
-    "viem": ">=2.23",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   },
   "dependencies": {
     "@ethersproject/abstract-signer": "^5.7.0",
@@ -62,7 +64,7 @@
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.29.0",
-    "viem": ">=2.23",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   }
 }

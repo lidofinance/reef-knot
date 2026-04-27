@@ -25,7 +25,26 @@ export default withBundleAnalyzer({
         test: /\.svg$/,
         use: ['@svgr/webpack', 'url-loader'],
       },
+      // Handle JSON imports with 'with' assertions from node_modules
+      {
+        test: /node_modules\/@base-org\/account.*\.js$/,
+        use: {
+          loader: 'string-replace-loader',
+          options: {
+            search: 'with\\s*\\{\\s*type:\\s*[\'"]json[\'"]\\s*\\}',
+            replace: '',
+            flags: 'g',
+          },
+        },
+      },
     );
+
+    config.resolve.fallback = {
+      porto: false,
+      '@gemini-wallet/core': false,
+      '@base-org/account': false,
+      '@react-native-async-storage/async-storage': false,
+    };
 
     return config;
   },

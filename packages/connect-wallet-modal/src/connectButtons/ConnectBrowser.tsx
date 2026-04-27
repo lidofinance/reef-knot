@@ -1,10 +1,14 @@
-import React, { ElementType, FC, useCallback } from 'react';
-import { useConnect } from 'wagmi';
-import { useDisconnect, useReefKnotModal } from '@reef-knot/core-react';
+import 'viem/window'; // for window.ethereum?: EIP1193Provider
+import { ElementType, FC, useCallback } from 'react';
+import {
+  useDisconnect,
+  useReefKnotContext,
+  useReefKnotModal,
+} from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
 import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { ConnectInjectedProps } from './types';
-import 'viem/window'; // for window.ethereum?: EIP1193Provider
+import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -23,7 +27,8 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
 
   const web3ProviderIsDetected = !!globalThis.window?.ethereum;
 
-  const { connectAsync } = useConnect();
+  const { loadingWalletId } = useReefKnotContext();
+  const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
 
   const ButtonIcon: ElementType =
@@ -34,7 +39,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
 
     if (web3ProviderIsDetected) {
       disconnect?.();
-      await connectAsync({ connector });
+      await connectWithLoading(walletId, { connector });
       onConnectSuccess?.();
     } else {
       await openModalAsync({
@@ -50,14 +55,15 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       });
     }
   }, [
-    ButtonIcon,
-    connectAsync,
-    connector,
-    disconnect,
-    openModalAsync,
-    web3ProviderIsDetected,
     onConnectStart,
+    web3ProviderIsDetected,
+    disconnect,
+    connectWithLoading,
+    walletId,
+    connector,
     onConnectSuccess,
+    openModalAsync,
+    ButtonIcon,
   ]);
 
   return (
@@ -65,6 +71,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       darkThemeEnabled={darkThemeEnabled}
+      isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}

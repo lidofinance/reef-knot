@@ -25,7 +25,7 @@
   "homepage": "https://github.com/lidofinance/reef-knot",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lidofinance/reef-knot.git",
+    "url": "git+https://github.com/lidofinance/reef-knot.git",
     "directory": "packages/reef-knot"
   },
   "bugs": {
@@ -36,9 +36,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "dev=on rollup -c -w",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@reef-knot/connect-wallet-modal": "*",
@@ -56,10 +57,11 @@
     "react": ">=18",
     "react-dom": ">=18",
     "styled-components": "^5.3.5",
-    "viem": ">=2.23",
-    "wagmi": ">=2.14"
+    "viem": ">=2.44",
+    "wagmi": ">=3.3"
   },
   "devDependencies": {
+    "build-config": "*",
     "eslint-config-custom": "*"
   }
 }

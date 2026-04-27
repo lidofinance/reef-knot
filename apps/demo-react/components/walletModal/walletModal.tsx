@@ -1,3 +1,4 @@
+import { FC, useCallback } from 'react';
 import {
   Address,
   ButtonIcon,
@@ -9,10 +10,17 @@ import {
   Select,
   Option,
 } from '@lidofinance/lido-ui';
+import {
+  usePublicClient,
+  useConnection,
+  useChainId,
+  useChains,
+  useSwitchChain,
+  useConnections
+} from 'wagmi';
 
 import { useForceDisconnect, useConnectorInfo } from 'reef-knot/core-react';
 import { useCopyToClipboard } from 'hooks/useCopyToClipboard';
-import { FC, useCallback } from 'react';
 import {
   WalletModalContentStyle,
   WalletModalConnectedStyle,
@@ -22,18 +30,14 @@ import {
   WalletModalAddressStyle,
   WalletModalActionsStyle,
 } from './walletModalStyles';
-import { usePublicClient } from 'wagmi';
-import { useAccount } from 'wagmi';
-import { useChainId } from 'wagmi';
-import { useSwitchChain } from 'wagmi';
-import { useConnections } from 'wagmi';
 
 const WalletModal: FC<ModalProps> = (props) => {
   const { onClose } = props;
   const chainId = useChainId();
   const [connection] = useConnections();
-  const { chains, switchChain } = useSwitchChain();
-  const { address } = useAccount();
+  const chains = useChains();
+  const { mutate: switchChain } = useSwitchChain();
+  const { address } = useConnection();
   const client = usePublicClient();
   const { connectorName } = useConnectorInfo();
   const { forceDisconnect } = useForceDisconnect();

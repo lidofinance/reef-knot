@@ -1,4 +1,4 @@
-import { useAccount, useConnect } from 'wagmi';
+import { useConnection, useConnect } from 'wagmi';
 import { useSupportedChains } from './useSupportedChains';
 
 export interface Web3ReactManagerFunctions {
@@ -24,7 +24,7 @@ export interface Web3ReactContextInterface<T = any>
 // This is a legacy hook for getting data and methods from web3-react library.
 // Because of migration to wagmi library, this method now returns values from wagmi and is left here for backwards compatibility.
 export function useWeb3<T = any>(_key?: string): Web3ReactContextInterface<T> {
-  const wagmiAccount = useAccount();
+  const wagmiAccount = useConnection();
   const { error: wagmiError } = useConnect();
   const account = wagmiAccount?.address;
 
