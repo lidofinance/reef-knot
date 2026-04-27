@@ -25,6 +25,10 @@ import {
   id as idDAppBrowserInjected,
 } from '@reef-knot/wallet-adapter-dapp-browser-injected';
 import { Safe, id as idSafe } from '@reef-knot/wallet-adapter-safe';
+import {
+  AnchorageDigital,
+  id as idAnchorageDigital,
+} from '@reef-knot/wallet-adapter-anchorage-digital';
 
 export const WalletsListEthereum = {
   [idBrowserExtension]: BrowserExtension,
@@ -33,6 +37,7 @@ export const WalletsListEthereum = {
   [idWalletConnect]: WalletConnect,
   [idLedger]: Ledger,
   [idLedgerLive]: LedgerLive,
+  [idAnchorageDigital]: AnchorageDigital,
   [idAmbire]: Ambire,
   [idBitKeep]: BitKeep,
   [idImToken]: ImToken,

@@ -4009,6 +4009,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@reef-knot/wallet-adapter-anchorage-digital@*, @reef-knot/wallet-adapter-anchorage-digital@workspace:packages/wallets/anchorageDigital":
+  version: 0.0.0-use.local
+  resolution: "@reef-knot/wallet-adapter-anchorage-digital@workspace:packages/wallets/anchorageDigital"
+  dependencies:
+    "@reef-knot/types": "*"
+    "@reef-knot/wallets-helpers": "*"
+    build-config: "*"
+    eslint-config-custom: "*"
+  peerDependencies:
+    "@reef-knot/types": "*"
+    "@reef-knot/wallets-helpers": "*"
+    wagmi: ">=3.3"
+  languageName: unknown
+  linkType: soft
+
 "@reef-knot/wallet-adapter-bitkeep@*, @reef-knot/wallet-adapter-bitkeep@workspace:packages/wallets/bitkeep":
   version: 0.0.0-use.local
   resolution: "@reef-knot/wallet-adapter-bitkeep@workspace:packages/wallets/bitkeep"
@@ -4223,6 +4238,7 @@ __metadata:
   dependencies:
     "@reef-knot/types": "*"
     "@reef-knot/wallet-adapter-ambire": "*"
+    "@reef-knot/wallet-adapter-anchorage-digital": "*"
     "@reef-knot/wallet-adapter-bitkeep": "*"
     "@reef-knot/wallet-adapter-browser-extension": "*"
     "@reef-knot/wallet-adapter-coinbase-smart-wallet": "*"
