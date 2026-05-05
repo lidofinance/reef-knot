@@ -18,7 +18,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@lido-sdk/constants": "^3.2.1",
     "@lido-sdk/react": "2.0.2",
-    "@lidofinance/lido-ethereum-sdk": "4.4.0-alpha.2",
+    "@lidofinance/lido-ethereum-sdk": "4.7.0",
     "@lidofinance/lido-ui": "^3.18.0",
     "@metamask/sdk": "~0.33.1",
     "@safe-global/safe-apps-provider": "^0.18.6",
