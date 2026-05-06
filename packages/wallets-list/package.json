@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@reef-knot/wallet-adapter-ambire": "*",
+    "@reef-knot/wallet-adapter-anchorage-digital": "*",
     "@reef-knot/wallet-adapter-bitkeep": "*",
     "@reef-knot/wallet-adapter-browser-extension": "*",
     "@reef-knot/wallet-adapter-coinbase-smart-wallet": "*",

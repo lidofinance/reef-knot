@@ -35,6 +35,7 @@ export const WALLETS_MODAL_DISPLAY_CONFIG_DEFAULT: WalletIdsEthereum[] = [
   'coinbaseSmartWallet',
   'bitget',
   'imToken',
+  'anchorageDigital',
   'ambire',
   'safe',
   'dappBrowserInjected',

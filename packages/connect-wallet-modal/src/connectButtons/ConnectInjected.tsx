@@ -1,11 +1,11 @@
 import { FC, useCallback } from 'react';
-import { useConnect } from 'wagmi';
-import { useDisconnect } from '@reef-knot/core-react';
+import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { ConnectButtonBase } from '../components/ConnectButtonBase';
 import { suggestApp } from '../helpers/suggestApp';
 import { openWindow } from '../helpers/openWindow';
 import { ConnectInjectedProps } from './types';
+import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
 
 export const ConnectInjected: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -24,15 +24,16 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     ...rest
   } = props;
 
-  const { mutateAsync: connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
+  const { loadingWalletId } = useReefKnotContext();
+  const { connectWithLoading } = useConnectWithLoading();
 
   const handleConnect = useCallback(async () => {
     onConnectStart?.();
 
     if (await detector?.()) {
       disconnect?.();
-      await connectAsync({ connector });
+      await connectWithLoading(walletId, { connector });
       onConnectSuccess?.();
     } else if (isMobileOrTablet && deeplink) {
       openWindow(deeplink);
@@ -40,7 +41,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
       suggestApp(downloadURLs);
     }
   }, [
-    connectAsync,
+    connectWithLoading,
     connector,
     deeplink,
     detector,
@@ -48,6 +49,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
     downloadURLs,
     onConnectStart,
     onConnectSuccess,
+    walletId,
   ]);
 
   return (
@@ -55,6 +57,7 @@ export const ConnectInjected: FC<ConnectInjectedProps> = (
       {...rest}
       icon={WalletIcon}
       darkThemeEnabled={darkThemeEnabled}
+      isLoading={loadingWalletId === walletId}
       onClick={() => {
         void handleConnect();
       }}
