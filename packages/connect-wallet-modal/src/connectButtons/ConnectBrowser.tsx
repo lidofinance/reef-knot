@@ -25,7 +25,8 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   } = props;
   const { openModalAsync } = useReefKnotModal();
 
-  const web3ProviderIsDetected = !!globalThis.window?.ethereum;
+  const web3ProviderIsDetected =
+    typeof globalThis.window?.ethereum?.request === 'function';
 
   const { loadingWalletId } = useReefKnotContext();
   const { connectWithLoading } = useConnectWithLoading();
