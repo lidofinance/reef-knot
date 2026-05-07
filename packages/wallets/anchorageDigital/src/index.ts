@@ -24,6 +24,6 @@ export const AnchorageDigital: WalletAdapterType = ({ providersStore }) => ({
     default: 'https://www.anchorage.com/',
   },
   createConnectorFn: injected({
-    target: getTargetEIP6963(providersStore, rdns),
+    target: () => getTargetEIP6963(providersStore, rdns),
   }),
 });
