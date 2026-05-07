@@ -1,5 +1,5 @@
 {
-  "name": "@reef-knot/wallet-adapter-{{kebabCase walletId}}",
+  "name": "@reef-knot/wallet-adapter-anchorage-digital",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lidofinance/reef-knot.git",
-    "directory": "packages/wallets/{{kebabCase walletId}}"
+    "directory": "packages/wallets/anchorage-digital"
   },
   "bugs": {
     "url": "https://github.com/lidofinance/reef-knot/issues"
@@ -43,8 +43,8 @@
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "wagmi": ">=3.3",
     "@reef-knot/types": "*",
-    "@reef-knot/wallets-helpers": "*"
+    "@reef-knot/wallets-helpers": "*",
+    "wagmi": ">=3.3"
   }
 }

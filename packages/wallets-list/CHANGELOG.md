@@ -1,5 +1,9 @@
 # @reef-knot/wallets-list
 
+## 5.1.0
+
+- Add support for Anchorage Digital wallet
+
 ## 5.0.0
 
 - Build using node 24, yarn 3.8.7

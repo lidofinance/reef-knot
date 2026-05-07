@@ -1,0 +1,29 @@
+import type { WalletAdapterType } from '@reef-knot/types';
+import { injected } from 'wagmi/connectors';
+import {
+  getTargetEIP6963,
+  isProviderExistsEIP6963,
+} from '@reef-knot/wallets-helpers';
+import { WalletIcon } from './icons/index.js';
+
+// This generator is intended to be used for a wallet app working via EIP-6963
+// If the wallet you want to add uses a different technology, just change the code accordingly,
+// use other adapters as examples.
+
+export const id = 'anchorageDigital';
+export const name = 'Anchorage Digital';
+export const rdns = 'com.anchorage.connect';
+
+export const AnchorageDigital: WalletAdapterType = ({ providersStore }) => ({
+  walletId: id,
+  walletName: name,
+  type: injected.type,
+  icon: WalletIcon,
+  detector: () => isProviderExistsEIP6963(providersStore, rdns),
+  downloadURLs: {
+    default: 'https://www.anchorage.com/',
+  },
+  createConnectorFn: injected({
+    target: () => getTargetEIP6963(providersStore, rdns),
+  }),
+});
