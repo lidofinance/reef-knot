@@ -13,6 +13,11 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 export default withBundleAnalyzer({
   reactStrictMode: true,
   basePath,
+  experimental: {
+    // Packages live in ../../packages/ (outside this app's root), so webpack
+    // needs externalDir to watch and compile their dist files for HMR to work.
+    externalDir: true,
+  },
   compiler: {
     styledComponents: {
       ssr: true,
