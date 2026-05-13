@@ -1,5 +1,9 @@
 # @reef-knot/ui-react
 
+## 3.1.0
+
+- Add accessible labels to modal close and back icon buttons.
+
 ## 3.0.0
 
 - Build using node 24, yarn 3.8.7

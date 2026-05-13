@@ -1,5 +1,9 @@
 # reef-knot
 
+## 8.2.0
+
+- Add EIP-6963 browser wallet provider selection when multiple injected providers are detected.
+
 ## 8.1.1
 
 - Add noopener and noreferrer to WalletConnect redirect popup
