@@ -39,7 +39,9 @@ function Modal(props: ModalProps, ref?: ForwardedRef<HTMLDivElement>) {
 
   const modalHeader = (
     <ModalHeaderStyle $short={!title}>
-      {withBackButton && <ModalBackStyle onClick={onBack} />}
+      {withBackButton && (
+        <ModalBackStyle onClick={onBack} aria-label="Go back" />
+      )}
       <ModalTitleStyle
         $center={center}
         $withTitleIcon={withTitleIcon}
@@ -53,7 +55,9 @@ function Modal(props: ModalProps, ref?: ForwardedRef<HTMLDivElement>) {
         )}
         <ModalTitleTextStyle>{title}</ModalTitleTextStyle>
       </ModalTitleStyle>
-      {withCloseButton && <ModalCloseStyle onClick={onClose} />}
+      {withCloseButton && (
+        <ModalCloseStyle onClick={onClose} aria-label="Close" />
+      )}
     </ModalHeaderStyle>
   );
 

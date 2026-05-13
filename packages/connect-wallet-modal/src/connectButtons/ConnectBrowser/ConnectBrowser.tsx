@@ -1,14 +1,18 @@
 import 'viem/window'; // for window.ethereum?: EIP1193Provider
 import { ElementType, FC, useCallback } from 'react';
+import { injected } from 'wagmi/connectors';
 import {
   useDisconnect,
   useReefKnotContext,
   useReefKnotModal,
+  useEIP6963Providers,
 } from '@reef-knot/core-react';
+import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
-import { ConnectButtonBase } from '../components/ConnectButtonBase';
-import { ConnectInjectedProps } from './types';
-import { useConnectWithLoading } from '../hooks/useConnectWithLoading';
+import { ConnectButtonBase } from '../../components/ConnectButtonBase';
+import { ConnectInjectedProps } from '../types';
+import { useConnectWithLoading } from '../../hooks/useConnectWithLoading';
+import { BrowserWalletIconsGrid } from '../../components/BrowserWalletIconsGrid';
 
 export const ConnectBrowser: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
@@ -23,7 +27,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     onConnectSuccess,
     ...rest
   } = props;
-  const { openModalAsync } = useReefKnotModal();
+  const { openModal, openModalAsync } = useReefKnotModal();
 
   const web3ProviderIsDetected =
     typeof globalThis.window?.ethereum?.request === 'function';
@@ -31,13 +35,47 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const { loadingWalletId } = useReefKnotContext();
   const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
+  const detectedProviders = useEIP6963Providers();
 
   const ButtonIcon: ElementType =
     (WalletIcon as ElementType) || (WalletIcon as WalletAdapterIcons)?.light;
 
+  const connectToEIP6963Provider = useCallback(
+    async (provider: EIP6963ProviderDetail) => {
+      const connectorFn = injected({
+        target: {
+          id: provider.info.rdns,
+          name: provider.info.name,
+          provider: () => provider.provider,
+        },
+      });
+      disconnect?.();
+      await connectWithLoading(provider.info.rdns, { connector: connectorFn });
+      onConnectSuccess?.();
+    },
+    [connectWithLoading, disconnect, onConnectSuccess],
+  );
+
   const handleConnect = useCallback(async () => {
     onConnectStart?.();
 
+    if (detectedProviders.length === 1) {
+      await connectToEIP6963Provider(detectedProviders[0]);
+      return;
+    }
+
+    if (detectedProviders.length >= 2) {
+      openModal({
+        type: 'eip6963',
+        props: {
+          providers: detectedProviders,
+          onSelect: connectToEIP6963Provider,
+        },
+      });
+      return;
+    }
+
+    // No EIP-6963 wallets detected — fall back to legacy window.ethereum
     if (web3ProviderIsDetected) {
       disconnect?.();
       await connectWithLoading(walletId, { connector });
@@ -57,6 +95,9 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     }
   }, [
     onConnectStart,
+    detectedProviders,
+    connectToEIP6963Provider,
+    openModal,
     web3ProviderIsDetected,
     disconnect,
     connectWithLoading,
@@ -70,7 +111,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   return (
     <ConnectButtonBase
       {...rest}
-      icon={WalletIcon}
+      icon={BrowserWalletIconsGrid}
       darkThemeEnabled={darkThemeEnabled}
       isLoading={loadingWalletId === walletId}
       onClick={() => {

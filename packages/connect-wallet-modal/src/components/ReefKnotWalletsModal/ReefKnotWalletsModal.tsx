@@ -5,6 +5,7 @@ import type { ReefKnotWalletsModalProps } from '@reef-knot/types';
 import { LedgerModal } from '../Ledger';
 import { EagerConnectModal } from '../EagerConnectModal';
 import { ConnectWalletModal } from '../ConnectWalletModal';
+import { EIP6963WalletsList } from '../EIP6963WalletsList';
 
 export function ReefKnotWalletsModal<I extends string = string>(
   props: ReefKnotWalletsModalProps<I>,
@@ -65,6 +66,29 @@ export function ReefKnotWalletsModal<I extends string = string>(
         />
       );
     }
+
+    case 'eip6963': {
+      const { providers, onSelect } = currentModal.props;
+      return (
+        <Modal
+          open
+          title="Connect wallet"
+          center={false}
+          omitContentStyle
+          widthClamp={660}
+          onClose={onCloseSuccess}
+          onExited={onExit}
+        >
+          <EIP6963WalletsList
+            config={config}
+            providers={providers}
+            onSelect={onSelect}
+            onBack={onCloseReject}
+          />
+        </Modal>
+      );
+    }
+
     default:
       return null;
   }
