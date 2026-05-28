@@ -68,7 +68,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
     if (WCURICondition && WCURIConnectorFn && WCURIRedirectLink) {
       // BEGIN Handle connection via redirect using WC Pairing URI (without WalletConnect QR modal)
       // Because of popup blockers, window.open must be called directly from onclick handler
-      redirectionWindow = window.open('', '_blank');
+      redirectionWindow = window.open('', '_blank', 'noopener,noreferrer');
       redirectionWindow?.document.write(getRedirectionLoadingHTML());
 
       await Promise.all([
