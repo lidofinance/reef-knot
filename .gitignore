@@ -40,6 +40,13 @@ yarn-error.log*
 .idea
 .vscode
 
+# local AI agent files
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.claude/
+.codex/
+
 # Yarn
 .pnp.*
 .yarn/*
