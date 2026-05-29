@@ -1,8 +1,12 @@
 # @reef-knot/connect-wallet-modal
 
-## 8.0.1
+## 8.1.1
 
 - Add noopener and noreferrer to WalletConnect redirect popup
+
+## 8.1.0
+
+- Add Anchorage Digital wallet support
 
 ## 8.0.0
 
