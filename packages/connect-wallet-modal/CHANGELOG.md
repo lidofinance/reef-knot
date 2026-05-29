@@ -1,5 +1,9 @@
 # @reef-knot/connect-wallet-modal
 
+## 8.0.1
+
+- Add noopener and noreferrer to WalletConnect redirect popup
+
 ## 8.0.0
 
 - Build using node 24, yarn 3.8.7
