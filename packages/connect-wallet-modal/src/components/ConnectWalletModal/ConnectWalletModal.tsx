@@ -154,7 +154,11 @@ export const ConnectWalletModal = ({
             downloadURLs={walletData.downloadURLs}
             walletconnectExtras={walletData.walletconnectExtras}
             onConnectStart={() => onConnectStart?.({ walletId })}
-            onConnectSuccess={() => handleConnectSuccess(walletId)}
+            onConnectSuccess={(reconnectId) =>
+              // reconnectId is set by EIP-6963 buttons to the provider rdns;
+              // falls back to the static adapter walletId for legacy connectors
+              handleConnectSuccess(reconnectId ?? walletId)
+            }
           />
         );
       })}

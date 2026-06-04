@@ -19,5 +19,5 @@ export type ConnectWalletButtonProps = ConnectButtonBaseProps & {
   connector: Connector | CreateConnectorFn;
   disabled: boolean;
   onConnectStart?: () => void;
-  onConnectSuccess?: () => void;
+  onConnectSuccess?: (reconnectId?: string) => void;
 };

@@ -51,7 +51,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       });
       disconnect?.();
       await connectWithLoading(provider.info.rdns, { connector: connectorFn });
-      onConnectSuccess?.();
+      onConnectSuccess?.(provider.info.rdns);
     },
     [connectWithLoading, disconnect, onConnectSuccess],
   );
