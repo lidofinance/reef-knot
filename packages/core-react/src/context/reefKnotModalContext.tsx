@@ -109,8 +109,8 @@ export const ReefKnotModalContextProvider = ({
         const next = old.slice(0, -1);
 
         modalStackRef.current = next;
-        modal?.onClose(result);
         updateModalStack(next);
+        modal?.onClose(result);
       },
       forceCloseAllModals: () => {
         const old = modalStackRef.current;
