@@ -10,6 +10,7 @@ import {
 } from '../ConnectWalletModalLayout/styles';
 import { WalletIconImg, BackButton } from './styles';
 import { ConnectButtonBase } from '../ConnectButtonBase';
+import { validateIcon } from '../../helpers/validateIcon';
 
 type EIP6963WalletsListProps = {
   providers: readonly EIP6963ProviderDetail[];
@@ -53,7 +54,12 @@ export const EIP6963WalletsList = ({
         providers.map((p) => [
           p.info.uuid,
           function ProviderIcon() {
-            return <WalletIconImg src={p.info.icon} alt={p.info.name} />;
+            return (
+              <WalletIconImg
+                src={validateIcon(p.info.icon)}
+                alt={p.info.name}
+              />
+            );
           },
         ]),
       ) as Record<string, ElementType>,

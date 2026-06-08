@@ -6,6 +6,7 @@ import RabbyIcon from './icons/rabby.svg';
 import BraveIcon from './icons/brave.svg';
 import ZerionIcon from './icons/zerion.svg';
 import { Grid, DefaultSvgIcon, IconImg } from './styles';
+import { validateIcon } from '../../helpers/validateIcon';
 
 const DEFAULT_WALLETS = [
   { id: 'trust', name: 'Trust', Icon: TrustIcon },
@@ -74,7 +75,7 @@ export const BrowserWalletIconsGrid: FC = () => {
     <Grid>
       {slots.map((slot) =>
         slot.kind === 'detected' ? (
-          <IconImg key={slot.key} src={slot.icon} alt={slot.name} />
+          <IconImg key={slot.key} src={validateIcon(slot.icon)} alt={slot.name} />
         ) : (
           <DefaultSvgIcon key={slot.id} as={slot.Icon} />
         ),
