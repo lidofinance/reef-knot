@@ -1,5 +1,5 @@
 import 'viem/window'; // for window.ethereum?: EIP1193Provider
-import { ElementType, FC, useCallback } from 'react';
+import { ElementType, FC, useCallback, useMemo } from 'react';
 import { injected } from 'wagmi/connectors';
 import {
   useDisconnect,
@@ -32,10 +32,19 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const web3ProviderIsDetected =
     typeof globalThis.window?.ethereum?.request === 'function';
 
-  const { loadingWalletId } = useReefKnotContext();
+  const { loadingWalletId, walletDataList } = useReefKnotContext();
   const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
-  const detectedProviders = useEIP6963Providers();
+  const allDetectedProviders = useEIP6963Providers();
+
+  const adapterRdnsSet = useMemo(
+    () => new Set(walletDataList.flatMap((w) => (w.rdns ? [w.rdns] : []))),
+    [walletDataList],
+  );
+  const detectedProviders = useMemo(
+    () => allDetectedProviders.filter((p) => !adapterRdnsSet.has(p.info.rdns)),
+    [allDetectedProviders, adapterRdnsSet],
+  );
 
   const isEIP6963ProviderLoading = detectedProviders.some(
     (p) => p.info.rdns === loadingWalletId,
