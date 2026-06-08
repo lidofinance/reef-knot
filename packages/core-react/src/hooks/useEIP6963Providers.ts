@@ -10,6 +10,7 @@ export const useEIP6963Providers = (): readonly EIP6963ProviderDetail[] => {
   useEffect(() => {
     return providersStore.subscribe(
       (providerDetails) => setProviders(providerDetails),
+      // Sync state with any providers added between initial render and effect subscription
       { emitImmediately: true },
     );
   }, []);
