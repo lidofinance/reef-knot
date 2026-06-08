@@ -75,7 +75,11 @@ export const BrowserWalletIconsGrid: FC = () => {
     <Grid>
       {slots.map((slot) =>
         slot.kind === 'detected' ? (
-          <IconImg key={slot.key} src={validateIcon(slot.icon)} alt={slot.name} />
+          <IconImg
+            key={slot.key}
+            src={validateIcon(slot.icon)}
+            alt={slot.name}
+          />
         ) : (
           <DefaultSvgIcon key={slot.id} as={slot.Icon} />
         ),
