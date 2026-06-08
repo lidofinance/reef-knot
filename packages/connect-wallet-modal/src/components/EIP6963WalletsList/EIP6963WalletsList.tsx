@@ -1,5 +1,5 @@
 import { MouseEvent, useMemo, ElementType } from 'react';
-import { useReefKnotModal } from '@reef-knot/core-react';
+import { useReefKnotContext, useReefKnotModal } from '@reef-knot/core-react';
 import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
 import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
 import { Terms } from '../Terms';
@@ -25,12 +25,20 @@ export const EIP6963WalletsList = ({
   onBack,
 }: EIP6963WalletsListProps) => {
   const { closeModal, termsChecked } = useReefKnotModal();
+  const { loadingWalletId } = useReefKnotContext();
 
-  const handleSelect = (provider: EIP6963ProviderDetail) => {
-    if (!termsChecked) return;
+  const someProviderIsLoading = loadingWalletId != null;
 
-    closeModal({ success: true });
-    void onSelect(provider);
+  const handleSelect = async (provider: EIP6963ProviderDetail) => {
+    if (!termsChecked || someProviderIsLoading) return;
+    try {
+      await onSelect(provider);
+      // onSelect calls onConnectSuccess → onCloseSuccess which closes the eip6963 modal;
+      // close the remaining wallet list modal here (both updates are batched by React 18)
+      closeModal({ success: true });
+    } catch {
+      // stay open on rejection so the user can retry
+    }
   };
 
   const handleBack = (event: MouseEvent<HTMLButtonElement>) => {
@@ -71,8 +79,9 @@ export const EIP6963WalletsList = ({
             key={provider.info.uuid}
             icon={providerIcons[provider.info.uuid]}
             isCompact
-            disabled={!termsChecked}
-            onClick={() => handleSelect(provider)}
+            disabled={!termsChecked || someProviderIsLoading}
+            isLoading={loadingWalletId === provider.info.rdns}
+            onClick={() => void handleSelect(provider)}
           >
             {provider.info.name}
           </ConnectButtonBase>

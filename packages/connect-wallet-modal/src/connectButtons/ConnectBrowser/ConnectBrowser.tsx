@@ -37,6 +37,10 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const { disconnect } = useDisconnect();
   const detectedProviders = useEIP6963Providers();
 
+  const isEIP6963ProviderLoading = detectedProviders.some(
+    (p) => p.info.rdns === loadingWalletId,
+  );
+
   const ButtonIcon: ElementType =
     (WalletIcon as ElementType) || (WalletIcon as WalletAdapterIcons)?.light;
 
@@ -113,7 +117,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       {...rest}
       icon={BrowserWalletIconsGrid}
       darkThemeEnabled={darkThemeEnabled}
-      isLoading={loadingWalletId === walletId}
+      isLoading={loadingWalletId === walletId || isEIP6963ProviderLoading}
       onClick={() => {
         void handleConnect();
       }}
