@@ -1,14 +1,14 @@
 import 'viem/window'; // for window.ethereum?: EIP1193Provider
-import { ElementType, FC, useCallback, useMemo } from 'react';
+import { ElementType, FC, useCallback } from 'react';
 import { injected } from 'wagmi/connectors';
 import {
   useDisconnect,
   useReefKnotContext,
   useReefKnotModal,
-  useEIP6963Providers,
 } from '@reef-knot/core-react';
-import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
 import { WalletAdapterIcons } from '@reef-knot/types';
+import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
+import { useEIP6963ProvidersWithoutAdapters } from '../../hooks/useEIP6963ProvidersWithoutAdapters';
 import { ConnectButtonBase } from '../../components/ConnectButtonBase';
 import { ConnectInjectedProps } from '../types';
 import { useConnectWithLoading } from '../../hooks/useConnectWithLoading';
@@ -32,19 +32,10 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const web3ProviderIsDetected =
     typeof globalThis.window?.ethereum?.request === 'function';
 
-  const { loadingWalletId, walletDataList } = useReefKnotContext();
+  const { loadingWalletId } = useReefKnotContext();
   const { connectWithLoading } = useConnectWithLoading();
   const { disconnect } = useDisconnect();
-  const allDetectedProviders = useEIP6963Providers();
-
-  const adapterRdnsSet = useMemo(
-    () => new Set(walletDataList.flatMap((w) => (w.rdns ? [w.rdns] : []))),
-    [walletDataList],
-  );
-  const detectedProviders = useMemo(
-    () => allDetectedProviders.filter((p) => !adapterRdnsSet.has(p.info.rdns)),
-    [allDetectedProviders, adapterRdnsSet],
-  );
+  const detectedProviders = useEIP6963ProvidersWithoutAdapters();
 
   const isEIP6963ProviderLoading = detectedProviders.some(
     (p) => p.info.rdns === loadingWalletId,
