@@ -5,7 +5,7 @@ import RabbyIcon from './icons/rabby.svg';
 import BraveIcon from './icons/brave.svg';
 import ZerionIcon from './icons/zerion.svg';
 import { Grid, DefaultSvgIcon, IconImg } from './styles';
-import { validateIcon } from '../../helpers/validateIcon';
+import { validateIcon, FALLBACK_WALLET_ICON } from '../../helpers/validateIcon';
 import { useEIP6963ProvidersWithoutAdapters } from '../../hooks/useEIP6963ProvidersWithoutAdapters';
 
 const DEFAULT_WALLETS = [
@@ -74,8 +74,11 @@ export const BrowserWalletIconsGrid: FC = () => {
         slot.kind === 'detected' ? (
           <IconImg
             key={slot.key}
-            src={validateIcon(slot.icon)}
+            src={validateIcon(slot.icon) ?? FALLBACK_WALLET_ICON}
             alt={slot.name}
+            onError={(e) => {
+              e.currentTarget.src = FALLBACK_WALLET_ICON;
+            }}
           />
         ) : (
           <DefaultSvgIcon key={slot.id} as={slot.Icon} />

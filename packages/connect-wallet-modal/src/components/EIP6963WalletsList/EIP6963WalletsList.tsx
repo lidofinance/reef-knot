@@ -12,7 +12,7 @@ import {
 } from '../ConnectWalletModalLayout/styles';
 import { WalletIconImg, BackButton } from './styles';
 import { ConnectButtonBase } from '../ConnectButtonBase';
-import { validateIcon } from '../../helpers/validateIcon';
+import { validateIcon, FALLBACK_WALLET_ICON } from '../../helpers/validateIcon';
 
 type EIP6963WalletsListProps = {
   providers: readonly EIP6963ProviderDetail[];
@@ -63,8 +63,11 @@ export const EIP6963WalletsList = ({
           function ProviderIcon() {
             return (
               <WalletIconImg
-                src={validateIcon(p.info.icon)}
+                src={validateIcon(p.info.icon) ?? FALLBACK_WALLET_ICON}
                 alt={p.info.name}
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK_WALLET_ICON;
+                }}
               />
             );
           },
