@@ -42,7 +42,9 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   );
 
   const ButtonIcon: ElementType =
-    (WalletIcon as ElementType) || (WalletIcon as WalletAdapterIcons)?.light;
+    typeof WalletIcon === 'function'
+      ? WalletIcon
+      : (WalletIcon as WalletAdapterIcons | undefined)?.light ?? 'span';
 
   const connectToEIP6963Provider = useCallback(
     async (provider: EIP6963ProviderDetail) => {
