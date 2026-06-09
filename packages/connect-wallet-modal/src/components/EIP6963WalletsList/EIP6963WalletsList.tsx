@@ -43,8 +43,9 @@ export const EIP6963WalletsList = ({
       // onSelect calls onConnectSuccess → onCloseSuccess which closes the eip6963 modal;
       // close the remaining wallet list modal here (both updates are batched by React 18)
       closeModal({ success: true });
-    } catch {
-      // stay open on rejection so the user can retry
+    } catch (error) {
+      // stay open on rejection so the user can retry, log error for debugging
+      console.warn('EIP6963WalletsList: wallet connection failed', error);
     }
   };
 
