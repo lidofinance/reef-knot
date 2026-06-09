@@ -2,11 +2,13 @@ import { MouseEvent, useMemo, ElementType } from 'react';
 import { useReefKnotContext, useReefKnotModal } from '@reef-knot/core-react';
 import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
 import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
+import { isIOS, isIPad } from '@reef-knot/wallets-helpers';
 import { Terms } from '../Terms';
 import {
   ContentHeader,
   Subtitle,
   WalletsButtonsContainer,
+  WalletsButtonsScrollBox,
 } from '../ConnectWalletModalLayout/styles';
 import { WalletIconImg, BackButton } from './styles';
 import { ConnectButtonBase } from '../ConnectButtonBase';
@@ -18,6 +20,10 @@ type EIP6963WalletsListProps = {
   config: ReefKnotWalletsModalConfig;
   onBack: () => void;
 };
+
+// Additional check because `@supports selector(::-webkit-scrollbar)`
+// passes as true on iOS/iPad devices, but styles will not really apply
+const isSupportedCustomScrollbar = !isIOS && !isIPad;
 
 export const EIP6963WalletsList = ({
   providers,
@@ -75,24 +81,29 @@ export const EIP6963WalletsList = ({
           <span>Select browser wallet</span>
         </Subtitle>
       </ContentHeader>
-      <WalletsButtonsContainer
-        $buttonsFullWidth
+      <WalletsButtonsScrollBox
         $isCompact
-        $isSupportedCustomScrollbar={false}
+        $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
       >
-        {providers.map((provider) => (
-          <ConnectButtonBase
-            key={provider.info.uuid}
-            icon={providerIcons[provider.info.uuid]}
-            isCompact
-            disabled={!termsChecked || someProviderIsLoading}
-            isLoading={loadingWalletId === provider.info.rdns}
-            onClick={() => void handleSelect(provider)}
-          >
-            {provider.info.name}
-          </ConnectButtonBase>
-        ))}
-      </WalletsButtonsContainer>
+        <WalletsButtonsContainer
+          $buttonsFullWidth
+          $isCompact
+          $isSupportedCustomScrollbar={isSupportedCustomScrollbar}
+        >
+          {providers.map((provider) => (
+            <ConnectButtonBase
+              key={provider.info.uuid}
+              icon={providerIcons[provider.info.uuid]}
+              isCompact
+              disabled={!termsChecked || someProviderIsLoading}
+              isLoading={loadingWalletId === provider.info.rdns}
+              onClick={() => void handleSelect(provider)}
+            >
+              {provider.info.name}
+            </ConnectButtonBase>
+          ))}
+        </WalletsButtonsContainer>
+      </WalletsButtonsScrollBox>
     </>
   );
 };
