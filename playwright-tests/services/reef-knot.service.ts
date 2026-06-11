@@ -1,10 +1,6 @@
 import { expect, Page, test } from '@playwright/test';
 import { ReefKnotPage } from '@pages';
-import {
-  WalletPage,
-  WalletConnectTypes,
-} from '@lidofinance/wallets-testing-wallets';
-import { TIMEOUT } from '@test-data';
+import { WalletPage } from '@lidofinance/wallets-testing-wallets';
 import { HDAccount, mnemonicToAccount } from 'viem/accounts';
 import { SdkService } from './sdk.service';
 import { ConsoleLogger } from '@nestjs/common';
@@ -13,7 +9,7 @@ import { ENV_CONFIG } from '@config';
 
 export class ReefKnotService {
   logger = new ConsoleLogger('ReefKnotService');
-  walletPage: WalletPage<WalletConnectTypes.EOA>;
+  walletPage: WalletPage;
   page: Page;
   reefKnotPage: ReefKnotPage;
   seedPhrase: HDAccount;
@@ -47,37 +43,11 @@ export class ReefKnotService {
       await this.reefKnotPage.walletListModal.confirmConditionWalletModal();
       const walletIcon =
         this.reefKnotPage.walletListModal.getWalletInModal(walletButton);
-      if (
-        this.walletPage.options.walletConfig.WALLET_TYPE ===
-        WalletConnectTypes.EOA
-      ) {
-        try {
-          const [result] = await Promise.all([
-            Promise.race([
-              this.page
-                .context()
-                .waitForEvent('page', { timeout: TIMEOUT.HIGH })
-                .then((page) => ({ type: 'page' as const, value: page })),
-              this.page
-                .waitForSelector('[data-testid="walletBtn"]', {
-                  timeout: TIMEOUT.HIGH,
-                })
-                .then((el) => ({ type: 'error' as const, value: el })),
-            ]),
-            await walletIcon.click(),
-          ]);
 
-          if (result.type === 'page') {
-            await this.walletPage.connectWallet(result.value);
-          }
-        } catch {
-          this.logger.log('Wallet page didnt open');
-        }
-      } else {
-        this.logger.error(
-          `WALLET_TYPE is not supported (${this.walletPage.options.walletConfig.WALLET_TYPE})`,
-        );
-      }
+      await walletIcon.click();
+      if (await this.isConnectedWallet()) return;
+
+      await this.walletPage.connectWallet();
       await test.step('Check the wallet connect state', async () => {
         expect(
           await this.isConnectedWallet(),

@@ -52,13 +52,12 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             return toCutDecimalsDigit(wstethResult, 4);
           });
 
-        const txPage =
-          await test.step('Fill the amount input and click to Submit button', async () => {
-            await reefKnotPage.statsBlock.amountInput.fill(wrapAmount);
-            return await reefKnotPage.clickWrapButton();
-          });
+        await test.step('Fill the amount input and click to Submit button', async () => {
+          await reefKnotPage.statsBlock.amountInput.fill(wrapAmount);
+          await reefKnotPage.wrapUnwrapBlock.wrapBtn.click();
+        });
 
-        await reefKnotService.walletPage.confirmTx(txPage, true);
+        await reefKnotService.walletPage.confirmTx(true);
 
         await test.step('Waiting for transaction success', async () => {
           await expect(
@@ -114,14 +113,13 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             return toCutDecimalsDigit(wstethResult, 4);
           });
 
-        let txPage =
-          await test.step('Fill the amount input and click to Submit button', async () => {
-            await reefKnotPage.statsBlock.amountInput.fill(wrapAmount);
-            return await reefKnotPage.clickWrapButton();
-          });
+        await test.step('Fill the amount input and click to Submit button', async () => {
+          await reefKnotPage.statsBlock.amountInput.fill(wrapAmount);
+          await reefKnotPage.wrapUnwrapBlock.wrapBtn.click();
+        });
 
         await test.step('Confirm tx of stETH approval', async () => {
-          await reefKnotService.walletPage.approveTokenTx(txPage);
+          await reefKnotService.walletPage.confirmTx();
         });
 
         await test.step('Waiting for the approval success', async () => {
@@ -130,14 +128,10 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             'The Wrap button should be disabled',
           ).toBeDisabled();
 
-          [txPage] = await Promise.all([
-            reefKnotPage.waitForPage(TIMEOUT.RPC_WAIT),
-            reefKnotPage.toast.successToast.waitFor({
-              state: 'visible',
-              timeout: TIMEOUT.RPC_WAIT,
-            }),
-          ]);
-
+          reefKnotPage.toast.successToast.waitFor({
+            state: 'visible',
+            timeout: TIMEOUT.RPC_WAIT,
+          });
           await test.step('Wait for the toast to be disappeared', async () => {
             await reefKnotPage.toast.successToast.waitFor({
               state: 'hidden',
@@ -147,7 +141,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         });
 
         await test.step('Confirm tx of stETH wrapping', async () => {
-          await reefKnotService.walletPage.confirmTx(txPage);
+          await reefKnotService.walletPage.confirmTx();
         });
 
         await test.step('Waiting for the wrapping success', async () => {
@@ -164,7 +158,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
           await expect(
             reefKnotPage.wrapUnwrapBlock.wrapBtn,
             'The Wrap button should be enabled after success tx',
-          ).toBeEnabled();
+          ).toBeEnabled({ timeout: TIMEOUT.RPC_WAIT });
         });
 
         await test.step('Check the new wstETH balance', async () => {

@@ -52,13 +52,12 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             return toCutDecimalsDigit(stEthResult, 4);
           });
 
-        const txPage =
-          await test.step('Fill the amount input and click to Submit button', async () => {
-            await reefKnotPage.statsBlock.amountInput.fill(unwrapAmount);
-            return await reefKnotPage.clickUnwrapButton();
-          });
+        await test.step('Fill the amount input and click to Submit button', async () => {
+          await reefKnotPage.statsBlock.amountInput.fill(unwrapAmount);
+          await reefKnotPage.wrapUnwrapBlock.unwrapBtn.click();
+        });
 
-        await reefKnotService.walletPage.confirmTx(txPage, true);
+        await reefKnotService.walletPage.confirmTx(true);
 
         await test.step('Waiting for transaction success', async () => {
           await expect(

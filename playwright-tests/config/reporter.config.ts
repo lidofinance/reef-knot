@@ -38,5 +38,19 @@ export const getReportConfig: () => ReporterDescription[] = function () {
   if (process.env.CI) {
     reporterConfig.push(githubReporter, qaseReporter);
   }
+  return [
+    [
+      '@lidofinance/secret-guard-reporter',
+      {
+        reporters: reporterConfig,
+        sensitiveEnvKeys: [
+          'WALLET_SECRET_PHRASE',
+          'WALLET_PASSWORD',
+          'RPC_URL_KEY',
+          'QASE_API_TOKEN',
+        ],
+      },
+    ],
+  ];
   return reporterConfig;
 };
