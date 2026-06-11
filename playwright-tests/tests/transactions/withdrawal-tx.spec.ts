@@ -48,22 +48,18 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             return toCutDecimalsDigit(stethResult, 4);
           });
 
-        let txPage =
-          await test.step('Fill the amount input and click to Submit button', async () => {
-            await reefKnotPage.withdrawBlock.selectToken('stETH');
-            await reefKnotPage.statsBlock.amountInput.fill(txAmount);
-            return await reefKnotPage.clickWithdrawButton();
-          });
+        await test.step('Fill the amount input and click to Submit button', async () => {
+          await reefKnotPage.withdrawBlock.selectToken('stETH');
+          await reefKnotPage.statsBlock.amountInput.fill(txAmount);
+          await reefKnotPage.withdrawBlock.withdrawBtn.click();
+        });
 
         await test.step('Confirm permit signing', async () => {
-          [txPage] = await Promise.all([
-            reefKnotPage.waitForPage(TIMEOUT.RPC_WAIT),
-            reefKnotService.walletPage.confirmTx(txPage),
-          ]);
+          await reefKnotService.walletPage.confirmTx();
         });
 
         await test.step('Confirm withdraw request tx', async () => {
-          await reefKnotService.walletPage.confirmTx(txPage, true);
+          await reefKnotService.walletPage.confirmTx(true);
         });
 
         await test.step('Waiting for transaction success', async () => {
@@ -103,22 +99,18 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             return toCutDecimalsDigit(wstethResult, 4);
           });
 
-        let txPage =
-          await test.step('Fill the amount input and click to Submit button', async () => {
-            await reefKnotPage.withdrawBlock.selectToken('wstETH');
-            await reefKnotPage.statsBlock.amountInput.fill(txAmount);
-            return await reefKnotPage.clickWithdrawButton();
-          });
+        await test.step('Fill the amount input and click to Submit button', async () => {
+          await reefKnotPage.withdrawBlock.selectToken('wstETH');
+          await reefKnotPage.statsBlock.amountInput.fill(txAmount);
+          await reefKnotPage.withdrawBlock.withdrawBtn.click();
+        });
 
         await test.step('Confirm permit signing', async () => {
-          [txPage] = await Promise.all([
-            reefKnotPage.waitForPage(TIMEOUT.RPC_WAIT),
-            reefKnotService.walletPage.confirmTx(txPage),
-          ]);
+          await reefKnotService.walletPage.confirmTx();
         });
 
         await test.step('Confirm withdraw request tx', async () => {
-          await reefKnotService.walletPage.confirmTx(txPage, true);
+          await reefKnotService.walletPage.confirmTx(true);
         });
 
         await test.step('Waiting for transaction success', async () => {

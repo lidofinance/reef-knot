@@ -14,35 +14,19 @@ export async function initBrowserWithWallet(walletName: string) {
         PASSWORD: ENV_CONFIG.WALLET_PASSWORD,
       },
       walletConfig: wallet.config,
-      nodeConfig: null,
+      nodeConfig: {
+        rpcUrl: REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl,
+        mockConfig: {
+          rpcUrlToMock: ['.*//rpc.hoodi.ethpandaops.io/'],
+          mockEnabled: true,
+        },
+      },
+      browserOptions: {
+        cookies: [],
+      },
     });
 
     await browserService.initWalletSetup();
-
-    // mock the default reef-knot rpc url to avoid flaky tests
-    const context = browserService.getBrowserContextPage().context();
-    await context.route(
-      /.*\/\/rpc\.hoodi\.ethpandaops\.io\//,
-      async (route) => {
-        try {
-          const response = await context.request.fetch(
-            REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl,
-            {
-              method: route.request().method(),
-              headers: route.request().headers(),
-              data: route.request().postData(),
-            },
-          );
-
-          await route.fulfill({
-            response: response,
-          });
-        } catch (err) {
-          console.error('Error proxying request:', err);
-          await route.abort();
-        }
-      },
-    );
 
     const reefKnotService = new ReefKnotService(browserService);
 
