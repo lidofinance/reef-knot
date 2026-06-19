@@ -85,6 +85,7 @@ export const ModalHeaderStyle = styled.div<{
     min-height: 32px;
     display: flex;
     align-items: flex-start;
+    gap: ${spaceMap.xxl}px;
     margin-bottom: ${$short ? -spaceMap.md : 0}px;
     padding: ${spaceMap.xl}px ${spaceMap.xxl}px;
     font-size: ${fontSizesMap.md}px;
@@ -117,7 +118,7 @@ export const ModalTitleStyle = styled.div<{
     margin-right: ${$center && !$withCloseButton ? spaceMap.xxl : '0'}px;
     padding-top: ${$withTitleIcon ? spaceMap.sm : '0'}px;
     padding-left: 0;
-    padding-right: ${spaceMap.sm}px;
+    padding-right: 0;
     flex-grow: 1;
     align-self: center;
 

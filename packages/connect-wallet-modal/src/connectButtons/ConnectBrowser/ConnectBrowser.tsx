@@ -21,7 +21,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     darkThemeEnabled,
     walletId,
     walletName,
-    icon: WalletIcon,
     connector,
     onConnectStart,
     onConnectSuccess,
@@ -40,11 +39,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
   const isEIP6963ProviderLoading = detectedProviders.some(
     (p) => p.info.rdns === loadingWalletId,
   );
-
-  const ButtonIcon: ElementType =
-    typeof WalletIcon === 'function'
-      ? WalletIcon
-      : (WalletIcon as WalletAdapterIcons | undefined)?.light ?? 'span';
 
   const connectToEIP6963Provider = useCallback(
     async (provider: EIP6963ProviderDetail) => {
@@ -90,12 +84,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       await openModalAsync({
         type: 'requirements',
         props: {
-          icon: <ButtonIcon />,
-          title: 'No wallets have been detected',
-          text:
-            'This button is intended for generic connection of browser extension wallets,' +
-            ' but no default injected web3 provider has been detected.' +
-            ' Please install a suitable browser extension wallet or ensure that it is enabled, and reload the page.',
+          title: 'No wallets detected',
         },
       });
     }
@@ -111,7 +100,6 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
     connector,
     onConnectSuccess,
     openModalAsync,
-    ButtonIcon,
   ]);
 
   return (
