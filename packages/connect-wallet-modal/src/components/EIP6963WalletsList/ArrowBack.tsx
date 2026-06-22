@@ -17,7 +17,7 @@ const ArrowBack = React.forwardRef(function ArrowBack(
       <path
         fill="none"
         d="M13 5.5L1 5.5"
-        stroke="#7A8AA0"
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -25,7 +25,7 @@ const ArrowBack = React.forwardRef(function ArrowBack(
       <path
         fill="none"
         d="M5.5 10L1 5.5L5.5 1"
-        stroke="#7A8AA0"
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
