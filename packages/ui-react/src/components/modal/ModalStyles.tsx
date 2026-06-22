@@ -85,7 +85,7 @@ export const ModalHeaderStyle = styled.div<{
     min-height: 32px;
     display: flex;
     align-items: flex-start;
-    gap: ${spaceMap.xxl}px;
+    gap: ${spaceMap.md}px;
     margin-bottom: ${$short ? -spaceMap.md : 0}px;
     padding: ${spaceMap.xl}px ${spaceMap.xxl}px;
     font-size: ${fontSizesMap.md}px;
@@ -190,12 +190,11 @@ export const ModalBackStyle = styled(ButtonIcon).attrs({
   color: 'secondary',
   variant: 'ghost',
   size: 'xs',
+  square: true,
 })`
-  ${({ theme: { colors, spaceMap } }) => css`
-    color: ${colors.textSecondary};
-    flex-shrink: 0;
-    margin: 0 ${spaceMap.sm}px 0 -6px;
-    border-radius: 50%;
-    background: transparent !important;
-  `}
+  margin: 0 0 0 -6px;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: transparent !important;
 `;

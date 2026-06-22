@@ -44,12 +44,9 @@ export const BackButton = styled(ButtonIcon).attrs({
   size: 'xs',
   square: true,
 })`
-  ${({ theme: { colors } }) => css`
-    color: ${colors.textSecondary};
-    flex-shrink: 0;
-    margin: 0 12px 0 0;
-    padding: 6px;
-    border-radius: 50%;
-    background: transparent !important;
-  `}
+  color: ${({ theme }) => theme.colors.textSecondary};
+  flex-shrink: 0;
+  padding: 6px;
+  border-radius: 50%;
+  background: transparent !important;
 `;
