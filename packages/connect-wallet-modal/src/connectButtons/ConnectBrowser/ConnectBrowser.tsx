@@ -1,12 +1,11 @@
 import 'viem/window'; // for window.ethereum?: EIP1193Provider
-import { ElementType, FC, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { injected } from 'wagmi/connectors';
 import {
   useDisconnect,
   useReefKnotContext,
   useReefKnotModal,
 } from '@reef-knot/core-react';
-import { WalletAdapterIcons } from '@reef-knot/types';
 import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
 import { useEIP6963ProvidersWithoutAdapters } from '../../hooks/useEIP6963ProvidersWithoutAdapters';
 import { ConnectButtonBase } from '../../components/ConnectButtonBase';
