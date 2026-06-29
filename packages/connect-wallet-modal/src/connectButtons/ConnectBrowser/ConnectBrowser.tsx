@@ -7,6 +7,7 @@ import {
   useReefKnotModal,
 } from '@reef-knot/core-react';
 import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
+import { Warning } from '@reef-knot/ui-react';
 import { useEIP6963ProvidersWithoutAdapters } from '../../hooks/useEIP6963ProvidersWithoutAdapters';
 import { ConnectButtonBase } from '../../components/ConnectButtonBase';
 import { ConnectInjectedProps } from '../types';
@@ -83,6 +84,7 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       await openModalAsync({
         type: 'requirements',
         props: {
+          icon: <Warning />,
           title: 'No wallets detected',
         },
       });
