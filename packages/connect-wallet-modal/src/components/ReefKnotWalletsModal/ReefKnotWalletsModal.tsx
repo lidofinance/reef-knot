@@ -77,13 +77,13 @@ export function ReefKnotWalletsModal<I extends string = string>(
           omitContentStyle
           widthClamp={660}
           onClose={onCloseSuccess}
+          onBack={onCloseReject}
           onExited={onExit}
         >
           <EIP6963WalletsList
             config={config}
             providers={providers}
             onSelect={onSelect}
-            onBack={onCloseReject}
           />
         </Modal>
       );

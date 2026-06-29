@@ -1,4 +1,4 @@
-import { MouseEvent, useMemo, ElementType } from 'react';
+import { useMemo, ElementType } from 'react';
 import { useReefKnotContext, useReefKnotModal } from '@reef-knot/core-react';
 import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
 import type { ReefKnotWalletsModalConfig } from '@reef-knot/types';
@@ -10,7 +10,7 @@ import {
   WalletsButtonsContainer,
   WalletsButtonsScrollBox,
 } from '../ConnectWalletModalLayout/styles';
-import { WalletIconImg, BackButton } from './styles';
+import { WalletIconImg } from './styles';
 import { ConnectButtonBase } from '../ConnectButtonBase';
 import { validateIcon, FALLBACK_WALLET_ICON } from '../../helpers/validateIcon';
 
@@ -18,7 +18,6 @@ type EIP6963WalletsListProps = {
   providers: readonly EIP6963ProviderDetail[];
   onSelect: (provider: EIP6963ProviderDetail) => void | Promise<void>;
   config: ReefKnotWalletsModalConfig;
-  onBack: () => void;
 };
 
 // Additional check because `@supports selector(::-webkit-scrollbar)`
@@ -29,7 +28,6 @@ export const EIP6963WalletsList = ({
   providers,
   onSelect,
   config,
-  onBack,
 }: EIP6963WalletsListProps) => {
   const { closeModal, termsChecked } = useReefKnotModal();
   const { loadingWalletId } = useReefKnotContext();
@@ -47,12 +45,6 @@ export const EIP6963WalletsList = ({
       // stay open on rejection so the user can retry, log error for debugging
       console.warn('EIP6963WalletsList: wallet connection failed', error);
     }
-  };
-
-  const handleBack = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    onBack();
   };
 
   const providerIcons = useMemo(
@@ -81,7 +73,6 @@ export const EIP6963WalletsList = ({
       <ContentHeader>
         <Terms config={config} />
         <Subtitle>
-          <BackButton onClick={handleBack} aria-label="Go back" />
           <span>Select browser wallet</span>
         </Subtitle>
       </ContentHeader>
