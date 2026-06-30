@@ -60,6 +60,7 @@ export function ReefKnotWalletsModal<I extends string = string>(
           title={title}
           subtitle={subtitle}
           titleIcon={titleIcon}
+          widthClamp={480}
           onClose={onCloseSuccess}
           onBack={onCloseReject}
           onExited={onExit}
