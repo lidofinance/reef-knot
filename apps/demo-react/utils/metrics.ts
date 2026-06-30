@@ -22,8 +22,10 @@ export const metricProps: MetricProps = {
   onClickWalletsMore: () => console.log(`metrics: more wallets clicked`),
   onClickWalletsLess: () => console.log(`metrics: less wallets clicked`),
   onConnectStart: ({ walletId }) => console.log(`metrics: ${walletId} clicked`),
-  onConnectSuccess: ({ walletId }) =>
-    console.log(`metrics: ${walletId} connected`),
+  onConnectSuccess: ({ walletId, rdns }) => {
+    const rdnsSuffix = rdns ? ` (rdns: ${rdns})` : '';
+    console.log(`metrics: ${walletId} connected${rdnsSuffix}`);
+  },
   onAutoConnect: () => console.log(`metrics: onAutoConnect called`),
   onReconnect: () => console.log(`metrics: onReconnect called`),
 };
