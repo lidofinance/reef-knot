@@ -27,6 +27,7 @@ export const CoinbaseSmartWallet: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: coinbaseWallet.type,
+  rdns,
   icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
   createConnectorFn: getCoinbaseSmartWalletConnector,

@@ -4,6 +4,8 @@ import {
   hasInjected,
   isDappBrowserProvider,
 } from '../helpers/providerDetectors';
+import { getConnectedProviderName } from '../helpers/getConnectedProviderName';
+import { useReefKnotContext } from './useReefKnotContext';
 
 type ConnectorInfo = {
   connectorName?: string;
@@ -16,6 +18,7 @@ type ConnectorInfo = {
 
 export const useConnectorInfo = (): ConnectorInfo => {
   const { connector } = useConnection();
+  const { walletDataList } = useReefKnotContext();
 
   // These checks are working only for connected wallets! There is no connector if a wallet is not connected yet.
   const isLedger = Boolean(connector?.id === idLedgerHid);
@@ -27,7 +30,9 @@ export const useConnectorInfo = (): ConnectorInfo => {
   // Do not set connector's name if the app is opened in a mobile wallet dapp browser,
   // because we use a generic injected connector for this case and proper detection is hard.
   // Also, it will be easy for a user to understand which wallet app is being used for connection.
-  const connectorName = isDappBrowser ? undefined : connector?.name;
+  const connectorName = isDappBrowser
+    ? undefined
+    : getConnectedProviderName({ connector, walletDataList });
 
   return {
     connectorName,

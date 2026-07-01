@@ -14,6 +14,7 @@ export const Ambire: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: injected.type,
+  rdns,
   icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {

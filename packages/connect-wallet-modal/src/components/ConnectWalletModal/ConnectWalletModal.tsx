@@ -68,10 +68,13 @@ export const ConnectWalletModal = ({
   );
 
   const handleConnectSuccess = useCallback(
-    (walletId: string) => {
-      void config.storage?.setItem(LS_KEY_RECONNECT_WALLET_ID, walletId);
+    (walletId: string, rdns?: string) => {
+      void config.storage?.setItem(
+        LS_KEY_RECONNECT_WALLET_ID,
+        rdns ?? walletId,
+      );
       onCloseSuccess?.();
-      onConnectSuccess?.({ walletId });
+      onConnectSuccess?.({ walletId, rdns });
     },
     [onCloseSuccess, onConnectSuccess, config.storage],
   );
@@ -154,7 +157,11 @@ export const ConnectWalletModal = ({
             downloadURLs={walletData.downloadURLs}
             walletconnectExtras={walletData.walletconnectExtras}
             onConnectStart={() => onConnectStart?.({ walletId })}
-            onConnectSuccess={() => handleConnectSuccess(walletId)}
+            onConnectSuccess={(args) =>
+              // reconnectId is set by EIP-6963 buttons to the provider rdns;
+              // falls back to the static adapter walletId for legacy connectors
+              handleConnectSuccess(args?.reconnectId ?? walletId, args?.rdns)
+            }
           />
         );
       })}

@@ -106,7 +106,8 @@ export const ContentHeader = styled.div`
 export const Subtitle = styled.div`
   ${({ theme }) => css`
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    gap: 12px;
     font-size: ${theme.fontSizesMap.xs}px;
     font-weight: 700;
   `}

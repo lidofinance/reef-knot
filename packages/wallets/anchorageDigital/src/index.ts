@@ -18,6 +18,7 @@ export const AnchorageDigital: WalletAdapterType = ({ providersStore }) => ({
   walletId: id,
   walletName: name,
   type: injected.type,
+  rdns,
   icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
   downloadURLs: {

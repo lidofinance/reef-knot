@@ -16,6 +16,11 @@ export type WalletAdapterData = {
   // Example values are: 'injected', 'walletConnect'
   type: string;
 
+  // EIP-6963 Reverse Domain Name System identifier.
+  // Set this for adapters that use EIP-6963 provider discovery so that
+  // the generic Browser Wallet picker can exclude them from its list.
+  rdns?: string;
+
   // Icons for the light and dark color themes.
   // You can use different icons or the same icon for both cases.
   icon?: ElementType | WalletAdapterIcons;
