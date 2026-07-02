@@ -3098,9 +3098,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lidofinance/multi-semantic-release@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@lidofinance/multi-semantic-release@npm:1.0.1"
+"@lidofinance/multi-semantic-release@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@lidofinance/multi-semantic-release@npm:1.0.2"
   dependencies:
     "@semrel-extra/topo": ^1.14.1
     "@types/git-log-parser": ^1.2.3
@@ -3118,7 +3118,7 @@ __metadata:
     winston: ^3.17.0
   bin:
     multi-semantic-release: dist/cli.js
-  checksum: 587dc252a281a186161bf8d0d1240d91f900841ca2caeb18109f73b0359180af3b960d7073684ad6aa7ce1ce6fa88d6a25f1ee02d776e1c70ff2b8bf623b8967
+  checksum: b81ffa2b898897428e8d3f8504568de311bdbd61cab9e24ab149f2c691b36899ea37250aaa5730306e811c21f12e992bfdd76e98a27fb119aa5469586c012a58
   languageName: node
   linkType: hard
 
@@ -16672,7 +16672,7 @@ __metadata:
   resolution: "reef-knot_root@workspace:."
   dependencies:
     "@lidofinance/eslint-config": ^0.38.0
-    "@lidofinance/multi-semantic-release": ^1.0.1
+    "@lidofinance/multi-semantic-release": ^1.0.2
     "@next/eslint-plugin-next": ^13.5.3
     "@turbo/gen": 2.7.5
     "@types/react": 18.2.45

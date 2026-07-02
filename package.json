@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@lidofinance/eslint-config": "^0.38.0",
-    "@lidofinance/multi-semantic-release": "^1.0.1",
+    "@lidofinance/multi-semantic-release": "^1.0.2",
     "@next/eslint-plugin-next": "^13.5.3",
     "@turbo/gen": "2.7.5",
     "@types/react": "18.2.45",
@@ -59,6 +59,18 @@
         "channel": "alpha",
         "prerelease": "alpha"
       }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "successComment": false,
+          "failComment": false
+        }
+      ]
     ]
   },
   "multi-release": {
