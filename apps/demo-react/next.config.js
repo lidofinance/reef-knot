@@ -85,6 +85,7 @@ export default withReefKnotPackages(
         '@gemini-wallet/core': false,
         '@base-org/account': false,
         '@react-native-async-storage/async-storage': false,
+        accounts: false,
       };
 
       return config;
