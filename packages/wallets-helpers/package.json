@@ -44,11 +44,11 @@
   "devDependencies": {
     "build-config": "*",
     "eslint-config-custom": "*",
-    "wagmi": ">=3.3"
+    "wagmi": ">=3.6"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "wagmi": ">=3.3"
+    "wagmi": ">=3.6"
   }
 }

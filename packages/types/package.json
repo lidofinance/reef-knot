@@ -30,14 +30,14 @@
     "@reef-knot/ui-react": "*",
     "build-config": "*",
     "react": "18.2.0",
-    "viem": ">=2.44",
-    "wagmi": ">=3.3"
+    "viem": ">=2.50",
+    "wagmi": ">=3.6"
   },
   "peerDependencies": {
     "@reef-knot/ui-react": "*",
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "viem": ">=2.44",
-    "wagmi": ">=3.3"
+    "viem": ">=2.50",
+    "wagmi": ">=3.6"
   }
 }
