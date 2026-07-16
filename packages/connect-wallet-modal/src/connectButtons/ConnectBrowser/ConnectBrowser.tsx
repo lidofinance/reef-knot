@@ -8,13 +8,14 @@ import {
 } from '@reef-knot/core-react';
 import type { EIP6963ProviderDetail } from '@reef-knot/core-react';
 import { Warning } from '@reef-knot/ui-react';
+import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { useEIP6963ProvidersWithoutAdapters } from '../../hooks/useEIP6963ProvidersWithoutAdapters';
 import { ConnectButtonBase } from '../../components/ConnectButtonBase';
 import { ConnectInjectedProps } from '../types';
 import { useConnectWithLoading } from '../../hooks/useConnectWithLoading';
 import { BrowserWalletIconsGrid } from '../../components/BrowserWalletIconsGrid';
 
-export const ConnectBrowser: FC<ConnectInjectedProps> = (
+const ConnectBrowserButton: FC<ConnectInjectedProps> = (
   props: ConnectInjectedProps,
 ) => {
   const {
@@ -116,4 +117,11 @@ export const ConnectBrowser: FC<ConnectInjectedProps> = (
       {walletName}
     </ConnectButtonBase>
   );
+};
+
+export const ConnectBrowser: FC<ConnectInjectedProps> = (props) => {
+  // There is no point in showing this button on mobile or tablet devices
+  if (isMobileOrTablet) return null;
+
+  return <ConnectBrowserButton {...props} />;
 };
