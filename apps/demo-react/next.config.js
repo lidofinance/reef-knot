@@ -56,6 +56,10 @@ export default withReefKnotPackages(
       },
     },
     webpack(config) {
+      // Fixes an issue with ox package which is a part of viem
+      // ox contains dynamic imports and webpack throws a warning for this type of imports
+      config.module.exprContextCritical = false;
+
       config.module.rules.push(
         // Teach webpack to import svg and md files
         {
@@ -81,6 +85,7 @@ export default withReefKnotPackages(
         '@gemini-wallet/core': false,
         '@base-org/account': false,
         '@react-native-async-storage/async-storage': false,
+        accounts: false,
       };
 
       return config;

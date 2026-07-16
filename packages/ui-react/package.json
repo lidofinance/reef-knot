@@ -49,8 +49,8 @@
     "react": ">=18",
     "react-dom": ">=18",
     "styled-components": "5",
-    "viem": ">=2.44",
-    "wagmi": ">=3.3"
+    "viem": ">=2.50",
+    "wagmi": ">=3.6"
   },
   "devDependencies": {
     "@tanstack/react-query": "^5.29.0",
@@ -60,7 +60,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.6",
-    "viem": ">=2.44",
-    "wagmi": ">=3.3"
+    "viem": ">=2.50",
+    "wagmi": ">=3.6"
   }
 }

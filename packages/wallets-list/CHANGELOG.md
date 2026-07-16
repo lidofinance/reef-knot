@@ -1,5 +1,10 @@
 # @reef-knot/wallets-list
 
+## 5.2.0
+
+- Update viem to 2.51.3, wagmi to 3.6.21
+- Update peerDependencies requirements: viem >=2.50, wagmi >=3.6
+
 ## 5.1.0
 
 - Add support for Anchorage Digital wallet
