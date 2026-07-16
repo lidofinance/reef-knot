@@ -6,3 +6,4 @@ export * from './useDisconnect';
 export * from './useConnectorInfo';
 export * from './useConnect';
 export * from './useReefKnotModal';
+export * from './useEIP6963Providers';

@@ -4,6 +4,9 @@ export const LS_KEY_TERMS_ACCEPTANCE = 'reef-knot_accept-terms_n2';
 
 // Storage key for restoring connector after page refresh
 // `/packages/core-react/src/hooks/useAutoConnect.ts`
-// It keeps association with the reef-knot `WalletAdapterData['walletId']` metadata
-// from the `ReefKnotContextValue['walletDataList']` instead of wagmi's `config.connectors` for better reliability
+// Stores either:
+//   • a reef-knot `WalletAdapterData['walletId']` (for wallets in `walletDataList`), or
+//   • an EIP-6963 `provider.info.rdns` (for wallets discovered via eip6963:announceProvider
+//     that are not in `walletDataList`).
+// On reconnect both paths are tried: walletDataList lookup first, then EIP-6963 rdns match.
 export const LS_KEY_RECONNECT_WALLET_ID = 'reef-knot_reconnect-wallet-id';

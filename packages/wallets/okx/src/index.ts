@@ -21,6 +21,7 @@ export const Okx: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
   walletId: id,
   type: injected.type,
+  rdns,
   icon: {
     light: WalletIcon,
     dark: WalletIconInverted,

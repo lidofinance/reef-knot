@@ -1,6 +1,13 @@
-import React, { ReactNode, createContext, useMemo, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useLocalStorage } from '../helpers/useLocalStorage';
 import { LS_KEY_TERMS_ACCEPTANCE } from '../constants';
+import type { EIP6963ProviderDetail } from '../eip6963';
 
 /// MODAL STATE
 
@@ -8,6 +15,11 @@ type RequirementsData = {
   icon?: ReactNode;
   title?: string;
   text?: ReactNode;
+};
+
+type EIP6963ModalData = {
+  providers: readonly EIP6963ProviderDetail[];
+  onSelect: (provider: EIP6963ProviderDetail) => void | Promise<void>;
 };
 
 type ModalTypes =
@@ -25,6 +37,10 @@ type ModalTypes =
   | {
       type: 'requirements';
       props: RequirementsData;
+    }
+  | {
+      type: 'eip6963';
+      props: EIP6963ModalData;
     };
 
 type ModalResult = {
@@ -66,36 +82,44 @@ export const ReefKnotModalContextProvider = ({
     false,
   );
   const [modalStack, updateModalStack] = useState<ModalStateEntry[]>([]);
+  const modalStackRef = useRef<ModalStateEntry[]>([]);
   const stableCallbacks = useMemo(
     () => ({
       openModal: ({ onClose = NOOP, ...props }: ModalOpenParams) => {
-        updateModalStack((old) => [...old, { ...props, onClose }]);
+        const next = [...modalStackRef.current, { ...props, onClose }];
+
+        modalStackRef.current = next;
+        updateModalStack(next);
       },
       openModalAsync: async ({ type, props }: AsyncModalOpenParams) => {
         return new Promise<ModalResult>((resolve) => {
-          updateModalStack((old) => [
+          const next = [
             // for some reason TS cannot match type and props here
-            ...old,
+            ...modalStackRef.current,
             { type, props: props as any, onClose: resolve },
-          ]);
+          ];
+
+          modalStackRef.current = next;
+          updateModalStack(next);
         });
       },
       closeModal: (result: ModalResult) => {
-        updateModalStack((old) => {
-          const modal = old.pop();
-          modal?.onClose(result);
-          return [...old];
-        });
+        const old = modalStackRef.current;
+        const modal = old[old.length - 1];
+        const next = old.slice(0, -1);
+
+        modalStackRef.current = next;
+        updateModalStack(next);
+        modal?.onClose(result);
       },
       forceCloseAllModals: () => {
-        updateModalStack((old) => {
-          let modal = old.pop();
-          while (modal) {
-            modal?.onClose({ success: false });
-            modal = old.pop();
-          }
-          return [];
-        });
+        const old = modalStackRef.current;
+
+        modalStackRef.current = [];
+        for (let i = old.length - 1; i >= 0; i -= 1) {
+          old[i]?.onClose({ success: false });
+        }
+        updateModalStack([]);
       },
     }),
     [],

@@ -92,38 +92,6 @@ export class ReefKnotPage {
     );
   }
 
-  async clickStakeButton() {
-    const [txPage] = await Promise.all([
-      this.waitForPage(TIMEOUT.RPC_WAIT),
-      this.stakeBlock.stakeBtn.click(),
-    ]);
-    return txPage;
-  }
-
-  async clickWrapButton() {
-    const [txPage] = await Promise.all([
-      this.waitForPage(TIMEOUT.RPC_WAIT),
-      this.wrapUnwrapBlock.wrapBtn.click(),
-    ]);
-    return txPage;
-  }
-
-  async clickUnwrapButton() {
-    const [txPage] = await Promise.all([
-      this.waitForPage(TIMEOUT.RPC_WAIT),
-      this.wrapUnwrapBlock.unwrapBtn.click(),
-    ]);
-    return txPage;
-  }
-
-  async clickWithdrawButton() {
-    const [txPage] = await Promise.all([
-      this.waitForPage(TIMEOUT.RPC_WAIT),
-      this.withdrawBlock.withdrawBtn.click(),
-    ]);
-    return txPage;
-  }
-
   async selectDefaultNetwork(network: NetworkConfig) {
     await test.step(`Select the ${network.chainName} network by default`, async () => {
       await this.header.walletInfoButton.click();

@@ -1,5 +1,10 @@
 # @reef-knot/core-react
 
+## 7.1.0
+
+- Export EIP-6963 provider store, provider type, and `useEIP6963Providers` hook for tracking announced browser wallet providers.
+- Add modal stack support for the EIP-6963 provider selection view.
+
 ## 7.0.0
 
 - Build using node 24, yarn 3.8.7

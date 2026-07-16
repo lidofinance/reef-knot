@@ -68,25 +68,25 @@ export const ConnectButtonTitleStyle = styled.div`
 
 export const ConnectButtonIconStyle = styled.span<{ $isCompact?: boolean }>`
   ${({ theme, $isCompact }) => css`
+    --connect-button-icon-size: ${$isCompact ? 40 : 48}px;
+
     display: flex;
     margin-right: 12px;
 
-    svg {
-      border-radius: 50%;
-      ${$isCompact
-        ? css`
-            width: 40px;
-            height: 40px;
-          `
-        : css`
-            width: 48px;
-            height: 48px;
-          `}
+    ${theme.mediaQueries.md} {
+      --connect-button-icon-size: 40px;
+    }
 
-      ${theme.mediaQueries.md} {
-        width: 40px;
-        height: 40px;
-      }
+    & > * {
+      max-width: var(--connect-button-icon-size);
+      max-height: var(--connect-button-icon-size);
+    }
+
+    & > svg,
+    & > img {
+      border-radius: 50%;
+      width: var(--connect-button-icon-size);
+      height: var(--connect-button-icon-size);
     }
   `}
 `;

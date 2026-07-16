@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { useConfig, useConnection, useReconnect } from 'wagmi';
+import { injected } from 'wagmi/connectors';
 import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
 import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
 import { withCallback } from '../helpers/withCallback';
+import { providersStore } from '../eip6963';
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { storage } = useConfig();
@@ -36,6 +38,12 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
         const walletData = walletDataList.find(
           (data) => data.walletId === savedReconnectWalletId,
         );
+        // Wait for all EIP-6963 wallets to load their code and fire "eip6963:announceProvider" event
+        // Without the delay, this code can be called from a browser's cache faster than wallet extension code
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
+        const reconnectWithCallback = withCallback(reconnectAsync, onReconnect);
+
         if (walletData) {
           let createConnectorFn = walletData.createConnectorFn;
           if (walletData?.walletconnectExtras?.connectionViaURI?.condition) {
@@ -43,16 +51,22 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
               walletData.walletconnectExtras.connectionViaURI.createConnectorFn;
           }
 
-          // Wait for all EIP-6963 wallets to load their code and fire "eip6963:announceProvider" event
-          // Without the delay, this code can be called from a browser's cache faster than wallet extension code
-          await new Promise((resolve) => setTimeout(resolve, 100));
-
-          const reconnectWithCallback = withCallback(
-            reconnectAsync,
-            onReconnect,
-          );
-
           await reconnectWithCallback({ connectors: [createConnectorFn] });
+        } else {
+          const eip6963Provider = providersStore
+            .getProviders()
+            .find((p) => p.info.rdns === savedReconnectWalletId);
+
+          if (eip6963Provider) {
+            const createConnectorFn = injected({
+              target: {
+                id: eip6963Provider.info.rdns,
+                name: eip6963Provider.info.name,
+                provider: () => eip6963Provider.provider,
+              },
+            });
+            await reconnectWithCallback({ connectors: [createConnectorFn] });
+          }
         }
       }
     };

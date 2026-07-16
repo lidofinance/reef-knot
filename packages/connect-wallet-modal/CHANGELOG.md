@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 8.2.0
+
+- Add EIP-6963 browser wallet provider selection when multiple injected providers are detected.
+- Add a browser wallet icon grid that reflects detected providers and falls back to known browser wallet icons.
+- Update the browser wallet connection flow to connect to the selected EIP-6963 provider, with fallback to the legacy injected provider when no EIP-6963 providers are available.
+
 ## 8.1.1
 
 - Add noopener and noreferrer to WalletConnect redirect popup

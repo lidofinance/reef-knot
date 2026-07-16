@@ -23,8 +23,8 @@
   },
   "devDependencies": {
     "@lidofinance/eslint-config": "^0.38.0",
+    "@lidofinance/multi-semantic-release": "^1.0.2",
     "@next/eslint-plugin-next": "^13.5.3",
-    "@qiwi/multi-semantic-release": "7.1.2",
     "@turbo/gen": "2.7.5",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17",
@@ -59,6 +59,18 @@
         "channel": "alpha",
         "prerelease": "alpha"
       }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "successComment": false,
+          "failComment": false
+        }
+      ]
     ]
   },
   "multi-release": {
@@ -66,22 +78,17 @@
   },
   "resolutions": {
     "minimatch@^3": "^3.1.5",
-    "minimatch@^5": "^5.1.8",
     "minimatch@^9": "^9.0.7",
-    "minimatch@9.0.0": "^9.0.7",
-    "basic-ftp@^5": "^5.2.0",
+    "basic-ftp": "^5.3.1",
     "tar@^7": "^7.5.11",
     "lodash@^4": "^4.18.0",
     "picomatch@^2": "^2.3.2",
     "axios@^1": "^1.14.0",
-    "@json-rpc-tools/provider/axios": "^0.30.3",
     "defu@^6": "^6.1.5",
     "bn.js@^4": "^4.12.3",
     "bn.js@^5": "^5.2.3",
     "ajv@^8": "^8.18.0",
-    "js-yaml@4.1.0": "4.1.1",
-    "js-yaml@^4": "^4.1.1",
-    "yaml@^2": "^2.8.3"
+    "js-yaml": "^4.2.0"
   },
   "engines": {
     "node": ">=24.0.0"
