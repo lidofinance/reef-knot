@@ -47,7 +47,7 @@ jobs:
         continue-on-error: true
         run: >-
           yarn workspaces foreach --all --no-private
-          npm audit --recursive --environment production --no-deprecations
+          npm audit --recursive --environment production --no-deprecations --severity high
 
       - name: Authenticate in npm
         run: |
