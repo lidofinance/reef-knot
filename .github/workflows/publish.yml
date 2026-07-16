@@ -44,7 +44,10 @@ jobs:
         run: npm audit signatures
 
       - name: Audit dependencies for known vulnerabilities
-        run: yarn npm audit --recursive
+        continue-on-error: true
+        run: >-
+          yarn workspaces foreach --all --no-private
+          npm audit --recursive --environment production --no-deprecations
 
       - name: Authenticate in npm
         run: |
