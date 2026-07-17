@@ -42,7 +42,7 @@
     "wagmi": "^3.3.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.29.6",
     "@next/bundle-analyzer": "^14.0.4",
     "@types/lodash": "^4.14.196",
     "@types/node": "^17.0.12",
