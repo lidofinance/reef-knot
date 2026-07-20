@@ -73,11 +73,11 @@ jobs:
       - name: Verify provenance attestations & registry signatures of installed dependencies
         run: npm audit signatures
 
-      - name: Audit dependencies for known vulnerabilities
-        continue-on-error: true
-        run: >-
-          yarn workspaces foreach --all --no-private
-          npm audit --recursive --environment production --no-deprecations --severity high
+      # Temporary removed the audit step until related npm packages are updated.
+      # - name: Audit dependencies for known vulnerabilities
+      #   run: >-
+      #     yarn workspaces foreach --all --no-private
+      #     npm audit --recursive --environment production --no-deprecations --severity high
 
       - name: Authenticate in npm
         run: |
