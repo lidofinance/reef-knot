@@ -44,12 +44,12 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=4096
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'yarn'
