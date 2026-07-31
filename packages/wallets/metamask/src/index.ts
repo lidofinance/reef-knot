@@ -1,7 +1,7 @@
 import { injected, metaMask } from 'wagmi/connectors';
 import type { WalletAdapterType } from '@reef-knot/types';
 import { isProviderExistsEIP6963 } from '@reef-knot/wallets-helpers';
-import { WalletIcon, WalletIconInverted } from './icons/index.js';
+import { WalletIcon } from './icons/index.js';
 
 export const id = 'metaMask';
 export const name = 'MetaMask';
@@ -12,10 +12,7 @@ export const MetaMask: WalletAdapterType = ({ providersStore }) => ({
   walletId: id,
   type: injected.type,
   rdns,
-  icon: {
-    light: WalletIcon,
-    dark: WalletIconInverted,
-  },
+  icon: WalletIcon,
   detector: () => isProviderExistsEIP6963(providersStore, rdns),
   createConnectorFn: metaMask(),
 });

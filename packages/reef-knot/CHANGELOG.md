@@ -1,5 +1,11 @@
 # reef-knot
 
+## 8.3.0
+
+- MetaMask now uses @metamask/connect-evm for connection, @metamask/sdk is deprecated. wagmi update is required for this reason.
+- Update viem to 2.51.3, wagmi to 3.6.21
+- Update peerDependencies requirements: viem >=2.50, wagmi >=3.6
+
 ## 8.2.0
 
 - Add EIP-6963 browser wallet provider selection when multiple injected providers are detected.

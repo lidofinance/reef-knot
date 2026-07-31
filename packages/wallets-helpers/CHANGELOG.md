@@ -1,5 +1,10 @@
 # @reef-knot/wallets-helpers
 
+## 3.1.0
+
+- Update wagmi to 3.6.21
+- Update peerDependencies requirements: wagmi >=3.6
+
 ## 3.0.0
 
 - Build using node 24, yarn 3.8.7
