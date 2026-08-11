@@ -8,11 +8,10 @@ import {
   ProviderRpcError,
   UserRejectedRequestError,
   ResourceUnavailableRpcError,
+  getAddress,
+  numberToHex,
 } from 'viem';
 import { Chain } from 'wagmi/chains';
-import { getAddress } from '@ethersproject/address';
-import { hexValue } from '@ethersproject/bytes';
-import { Web3Provider, ExternalProvider } from '@ethersproject/providers';
 import type { IFrameEthereumProviderOptions } from '@ledgerhq/iframe-provider';
 import type { LedgerIFrameProvider } from './provider';
 
@@ -90,7 +89,7 @@ export function ledgerLiveConnector({
 
     async switchChain({ chainId }) {
       const provider = await this.getProvider();
-      const id = hexValue(chainId);
+      const id = numberToHex(chainId);
 
       try {
         await provider.send('wallet_switchEthereumChain', [{ chainId: id }]);
@@ -129,16 +128,6 @@ export function ledgerLiveConnector({
       const provider = await this.getProvider();
       const chainId = await provider.send('eth_chainId');
       return Number(chainId);
-    },
-
-    async getSigner() {
-      const [provider, accounts] = await Promise.all([
-        this.getProvider(),
-        this.getAccounts(),
-      ]);
-      return new Web3Provider(
-        provider as unknown as ExternalProvider,
-      ).getSigner(accounts[0]);
     },
 
     async isAuthorized() {

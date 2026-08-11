@@ -4,7 +4,7 @@ import {
   createConnector,
 } from 'wagmi';
 import { Chain } from 'wagmi/chains';
-import { type Address, SwitchChainError } from 'viem';
+import { SwitchChainError } from 'viem';
 import { checkError, clearLedgerDerivationPath } from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
 export const idLedgerHid = 'ledgerHID';
@@ -32,12 +32,10 @@ export function ledgerHIDConnector({
         defaultChain;
       if (!providers[chain.id]) {
         const { LedgerHQProvider } = await import('./provider');
-        providers[chain.id] = new LedgerHQProvider(
-          {
-            url: rpc?.[chain.id],
-          },
-          chain.id,
-        );
+        providers[chain.id] = new LedgerHQProvider({
+          chain,
+          rpcUrl: rpc?.[chain.id],
+        });
       }
       return providers[chain.id];
     },
@@ -54,7 +52,7 @@ export function ledgerHIDConnector({
         currentChainId = chainId;
         const provider = await this.getProvider({ chainId });
         provider.on('disconnect', this.onDisconnect);
-        const account = (await provider.enable()) as Address;
+        const account = await provider.enable();
         const connectedChainId = await this.getChainId();
         currentChainId = connectedChainId;
 
@@ -84,15 +82,13 @@ export function ledgerHIDConnector({
 
     async getAccounts() {
       const provider = await this.getProvider();
-      const address = (await provider.getAddress()) as Address;
+      const address = await provider.getAddress();
       return [address];
     },
 
     async getChainId() {
       const provider = await this.getProvider();
-      const { chainId } = await provider.getNetwork();
-      if (chainId) return chainId;
-      throw new ChainNotConfiguredError();
+      return provider.chain.id;
     },
 
     async isAuthorized() {

@@ -8,7 +8,7 @@ import {
 } from 'react';
 import invariant from 'tiny-invariant';
 
-import { useLocalStorage } from '@lido-sdk/react';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 
 import { dynamics } from 'config';
 import { STORAGE_CLIENT_CONFIG } from 'config/storage';
