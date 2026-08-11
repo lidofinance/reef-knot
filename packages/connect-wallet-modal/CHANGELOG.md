@@ -1,5 +1,11 @@
 # @reef-knot/connect-wallet-modal
 
+## 8.3.0
+
+- Update viem to 2.51.3, wagmi to 3.6.21
+- Update peerDependencies requirements: viem >=2.50, wagmi >=3.6
+- Update WalletConnect connector to support new provider API with providersStore
+
 ## 8.2.0
 
 - Add EIP-6963 browser wallet provider selection when multiple injected providers are detected.

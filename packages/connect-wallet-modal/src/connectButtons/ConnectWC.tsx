@@ -1,6 +1,10 @@
 import { FC, useCallback } from 'react';
 import { Connector, useConfig, useConnect } from 'wagmi';
-import { useDisconnect, useReefKnotContext } from '@reef-knot/core-react';
+import {
+  providersStore,
+  useDisconnect,
+  useReefKnotContext,
+} from '@reef-knot/core-react';
 import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 import { getWalletConnectUri } from '@reef-knot/wallets-helpers';
 import { ConnectButtonBase } from '../components/ConnectButtonBase';
@@ -79,6 +83,7 @@ export const ConnectWC: FC<ConnectWCProps> = (props: ConnectWCProps) => {
           const connectorDisposable = WCURIConnectorFn({
             chains: config.chains,
             emitter: {} as any,
+            providers: providersStore.getProviders(),
           }) as Connector;
           // Wait for WalletConnect Pairing URI to arrive
           const wcUri = await getWalletConnectUri(connectorDisposable);
