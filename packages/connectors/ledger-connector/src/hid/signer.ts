@@ -46,20 +46,22 @@ export class LedgerHQSigner extends Signer implements TypedDataSigner {
   }
 
   async withEthApp<T>(callback: (eth: Eth) => T): Promise<T> {
-    const transport = await this.provider.getTransport();
+    return this.provider.withDeviceSession(async () => {
+      const transport = await this.provider.getTransport();
 
-    try {
-      const { default: Eth } = await import('@ledgerhq/hw-app-eth');
-      const eth = new Eth(transport);
-      await eth.getAppConfiguration();
+      try {
+        const { default: Eth } = await import('@ledgerhq/hw-app-eth');
+        const eth = new Eth(transport);
+        await eth.getAppConfiguration();
 
-      // eslint-disable-next-line @typescript-eslint/await-thenable
-      return await callback(eth);
-    } catch (error) {
-      return checkError(error);
-    } finally {
-      await transport.close();
-    }
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        return await callback(eth);
+      } catch (error) {
+        return checkError(error);
+      } finally {
+        await transport.close();
+      }
+    });
   }
 
   async getAddress(): Promise<string> {

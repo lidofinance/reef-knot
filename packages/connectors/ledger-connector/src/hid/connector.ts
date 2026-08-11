@@ -4,7 +4,7 @@ import {
   createConnector,
 } from 'wagmi';
 import { Chain } from 'wagmi/chains';
-import type { Address } from 'viem';
+import { type Address, SwitchChainError } from 'viem';
 import { checkError, clearLedgerDerivationPath } from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
 export const idLedgerHid = 'ledgerHID';
@@ -19,6 +19,7 @@ export function ledgerHIDConnector({
   defaultChain: Chain;
 }) {
   const providers: Record<Chain['id'], LedgerHQProvider> = {};
+  let currentChainId: number | undefined;
 
   return createConnector<LedgerHQProvider>(({ chains, emitter }) => ({
     id: idLedgerHid,
@@ -26,7 +27,9 @@ export function ledgerHIDConnector({
     type: ledgerHIDConnector.type,
 
     async getProvider({ chainId } = {}) {
-      const chain = chains.find((x) => x.id === chainId) ?? defaultChain;
+      const chain =
+        chains.find((x) => x.id === (chainId ?? currentChainId)) ??
+        defaultChain;
       if (!providers[chain.id]) {
         const { LedgerHQProvider } = await import('./provider');
         providers[chain.id] = new LedgerHQProvider(
@@ -40,6 +43,7 @@ export function ledgerHIDConnector({
     },
 
     async connect({
+      chainId,
       withCapabilities = false,
     }: {
       chainId?: number;
@@ -47,26 +51,34 @@ export function ledgerHIDConnector({
       withCapabilities?: boolean;
     } = {}) {
       try {
-        const provider = await this.getProvider();
+        currentChainId = chainId;
+        const provider = await this.getProvider({ chainId });
         provider.on('disconnect', this.onDisconnect);
         const account = (await provider.enable()) as Address;
-        const chainId = await this.getChainId();
+        const connectedChainId = await this.getChainId();
+        currentChainId = connectedChainId;
 
         return {
           accounts: (withCapabilities
             ? [{ address: account, capabilities: {} }]
             : [account]) as never,
-          chainId,
+          chainId: connectedChainId,
         };
       } catch (error) {
         return checkError(error);
       }
     },
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     async disconnect() {
       // Handles programmatic disconnect.
-      const provider = await this.getProvider();
-      provider.removeListener('disconnect', this.onDisconnect);
+      // The 'disconnect' listener is attached to the provider active at
+      // connect time, which may differ from the current one after a chain
+      // switch, so remove it from every provider created so far.
+      Object.values(providers).forEach((provider) =>
+        provider.removeListener('disconnect', this.onDisconnect),
+      );
+      currentChainId = undefined;
       clearLedgerDerivationPath();
     },
 
@@ -97,20 +109,14 @@ export function ledgerHIDConnector({
       }
     },
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     async switchChain({ chainId }) {
-      const id = chainId.toString(16);
+      const chain = chains.find((x) => x.id === chainId);
+      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError());
 
-      emitter.emit('change', { chainId: Number(chainId) });
-      // eslint-disable-next-line unicorn/no-useless-promise-resolve-reject
-      return Promise.resolve(
-        chains.find((x) => x.id === chainId) ?? {
-          id: chainId,
-          name: `Chain ${id}`,
-          network: `${id}`,
-          nativeCurrency: { decimals: 18, name: 'Ether', symbol: 'ETH' },
-          rpcUrls: { default: { http: [''] }, public: { http: [''] } },
-        },
-      );
+      currentChainId = chainId;
+      emitter.emit('change', { chainId });
+      return chain;
     },
 
     onDisconnect() {

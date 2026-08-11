@@ -6,6 +6,8 @@ import { LedgerHQSigner } from './signer';
 import { checkError, convertToUnsigned } from './helpers';
 import { TransactionRequestExtended } from './types';
 
+const NOOP = () => {};
+
 export class LedgerHQProvider extends JsonRpcBatchProvider {
   public signer?: LedgerHQSigner;
 
@@ -25,6 +27,18 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
       );
       this.transport = TransportWebHID;
     }
+  }
+
+  private _deviceSessionLock: Promise<void> = Promise.resolve();
+
+  // Serializes whole device sessions (open → APDU exchange → close): WebHID
+  // rejects open() while the device is already open, and ethers' transaction
+  // population resolves nonce and gasLimit in parallel, each opening its own
+  // session through the signer.
+  withDeviceSession<T>(fn: () => Promise<T>): Promise<T> {
+    const result = this._deviceSessionLock.then(fn);
+    this._deviceSessionLock = result.then(NOOP, NOOP);
+    return result;
   }
 
   getSigner(): LedgerHQSigner {
