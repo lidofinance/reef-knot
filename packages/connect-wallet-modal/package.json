@@ -38,9 +38,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ledgerhq/hw-app-eth": "^7.8.12",
-    "@ledgerhq/hw-transport": "^6.35.7",
-    "@ledgerhq/hw-transport-webhid": "^6.36.0",
+    "@ledgerhq/hw-app-eth": "7.8.12",
+    "@ledgerhq/hw-transport": "6.35.7",
+    "@ledgerhq/hw-transport-webhid": "6.36.0",
     "@lidofinance/lido-ui": "^3.18.0",
     "@reef-knot/wallets-list": "*",
     "@types/react": "18.2.45",

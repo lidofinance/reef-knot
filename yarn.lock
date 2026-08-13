@@ -2639,7 +2639,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-app-eth@npm:^7.8.12":
+"@ledgerhq/hw-app-eth@npm:7.8.12":
   version: 7.8.12
   resolution: "@ledgerhq/hw-app-eth@npm:7.8.12"
   dependencies:
@@ -2670,7 +2670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-webhid@npm:^6.36.0":
+"@ledgerhq/hw-transport-webhid@npm:6.36.0":
   version: 6.36.0
   resolution: "@ledgerhq/hw-transport-webhid@npm:6.36.0"
   dependencies:
@@ -2694,7 +2694,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:6.35.7, @ledgerhq/hw-transport@npm:^6.35.7":
+"@ledgerhq/hw-transport@npm:6.35.7":
   version: 6.35.7
   resolution: "@ledgerhq/hw-transport@npm:6.35.7"
   dependencies:
@@ -3865,9 +3865,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-knot/connect-wallet-modal@workspace:packages/connect-wallet-modal"
   dependencies:
-    "@ledgerhq/hw-app-eth": "npm:^7.8.12"
-    "@ledgerhq/hw-transport": "npm:^6.35.7"
-    "@ledgerhq/hw-transport-webhid": "npm:^6.36.0"
+    "@ledgerhq/hw-app-eth": "npm:7.8.12"
+    "@ledgerhq/hw-transport": "npm:6.35.7"
+    "@ledgerhq/hw-transport-webhid": "npm:6.36.0"
     "@lidofinance/lido-ui": "npm:^3.18.0"
     "@reef-knot/core-react": "npm:*"
     "@reef-knot/ledger-connector": "npm:*"
@@ -3931,9 +3931,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-knot/ledger-connector@workspace:packages/connectors/ledger-connector"
   dependencies:
-    "@ledgerhq/hw-app-eth": "npm:^7.8.12"
-    "@ledgerhq/hw-transport": "npm:^6.35.7"
-    "@ledgerhq/hw-transport-webhid": "npm:^6.36.0"
+    "@ledgerhq/hw-app-eth": "npm:7.8.12"
+    "@ledgerhq/hw-transport": "npm:6.35.7"
+    "@ledgerhq/hw-transport-webhid": "npm:6.36.0"
     "@ledgerhq/iframe-provider": "npm:^0.4.3"
     "@types/w3c-web-hid": "npm:^1.0.2"
     build-config: "npm:*"
