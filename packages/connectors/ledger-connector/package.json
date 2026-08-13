@@ -45,9 +45,9 @@
     "wagmi": ">=3.6"
   },
   "dependencies": {
-    "@ledgerhq/hw-app-eth": "^7.8.12",
-    "@ledgerhq/hw-transport": "^6.35.7",
-    "@ledgerhq/hw-transport-webhid": "^6.36.0",
+    "@ledgerhq/hw-app-eth": "7.8.12",
+    "@ledgerhq/hw-transport": "6.35.7",
+    "@ledgerhq/hw-transport-webhid": "6.36.0",
     "@ledgerhq/iframe-provider": "^0.4.3"
   },
   "peerDependencies": {

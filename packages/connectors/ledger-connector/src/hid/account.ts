@@ -47,8 +47,11 @@ export const createLedgerAccount = (
       { serializer = serializeTransaction } = {},
     ) {
       const unsignedRawTx = (await serializer(transaction)).slice(2);
+      // throwOnError: a clear-signing resolution failure (e.g. Ledger's
+      // descriptor service is unreachable) fails the transaction instead of
+      // silently degrading to blind signing over undecoded calldata.
       const { r, s, v } = await withEthApp((eth) =>
-        eth.clearSignTransaction(path, unsignedRawTx, RESOLUTION_CONFIG),
+        eth.clearSignTransaction(path, unsignedRawTx, RESOLUTION_CONFIG, true),
       );
 
       // For typed transactions the device returns the yParity (0/1),

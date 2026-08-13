@@ -120,8 +120,9 @@ export function ledgerLiveConnector({
     async getAccounts() {
       const provider = await this.getProvider();
       const accounts = await provider.send('eth_requestAccounts');
-      // return checksum address
-      return accounts.map(getAddress);
+      // Checksum each address; the explicit lambda keeps Array.map's index
+      // out of getAddress's second (chainId, EIP-1191) parameter.
+      return accounts.map((account: string) => getAddress(account));
     },
 
     async getChainId() {

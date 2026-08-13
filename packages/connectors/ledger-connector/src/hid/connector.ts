@@ -63,6 +63,7 @@ export function ledgerHIDConnector({
           chainId: connectedChainId,
         };
       } catch (error) {
+        currentChainId = undefined;
         return checkError(error);
       }
     },
@@ -72,10 +73,13 @@ export function ledgerHIDConnector({
       // Handles programmatic disconnect.
       // The 'disconnect' listener is attached to the provider active at
       // connect time, which may differ from the current one after a chain
-      // switch, so remove it from every provider created so far.
-      Object.values(providers).forEach((provider) =>
-        provider.removeListener('disconnect', this.onDisconnect),
-      );
+      // switch, so remove it from every provider created so far. Cached
+      // accounts are dropped everywhere too: the next connect may happen
+      // with a different device.
+      Object.values(providers).forEach((provider) => {
+        provider.removeListener('disconnect', this.onDisconnect);
+        provider.resetAccount();
+      });
       currentChainId = undefined;
       clearLedgerDerivationPath();
     },

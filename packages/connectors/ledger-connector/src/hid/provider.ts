@@ -7,7 +7,9 @@ import {
   hexToBigInt,
   hexToNumber,
   http,
+  isAddress,
   isAddressEqual,
+  isHex,
   numberToHex,
   type Address,
   type Chain,
@@ -24,6 +26,23 @@ import { LS_KEY_DERIVATION_PATH } from './constants';
 const NOOP = () => {};
 
 const DEFAULT_DERIVATION_PATH = "m/44'/60'/0'/0/0";
+
+const TX_TYPES = {
+  '0x0': 'legacy',
+  '0x1': 'eip2930',
+  '0x2': 'eip1559',
+} as const;
+
+// The Ledger is one physical device, while providers exist per chain — the
+// session lock lives at module scope so sessions never overlap across
+// provider instances. WebHID rejects open() while the device is already open.
+let deviceSessionLock: Promise<void> = Promise.resolve();
+
+const withDeviceSession = <T>(fn: () => Promise<T>): Promise<T> => {
+  const result = deviceSessionLock.then(fn);
+  deviceSessionLock = result.then(NOOP, NOOP);
+  return result;
+};
 
 type RequestArguments = {
   method: string;
@@ -44,6 +63,8 @@ export class LedgerHQProvider {
 
   private account?: LocalAccount;
 
+  private accountPath?: string;
+
   private publicClient?: PublicClient;
 
   private walletClient?: WalletClient;
@@ -53,6 +74,14 @@ export class LedgerHQProvider {
   constructor({ chain, rpcUrl }: { chain: Chain; rpcUrl?: string }) {
     this.chain = chain;
     this.rpcUrl = rpcUrl;
+
+    if (!rpcUrl) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[reef-knot] No RPC URL configured for chain ${chain.id} (${chain.name}), ` +
+          `falling back to its default public RPC endpoint`,
+      );
+    }
   }
 
   // --- events (the EIP-1193 subset the connector relies on) ---
@@ -104,19 +133,8 @@ export class LedgerHQProvider {
     }
   }
 
-  private deviceSessionLock: Promise<void> = Promise.resolve();
-
-  // Serializes whole device sessions (open → APDU exchange → close): WebHID
-  // rejects open() while the device is already open, and dapp code may issue
-  // several device-touching requests at once.
-  private withDeviceSession<T>(fn: () => Promise<T>): Promise<T> {
-    const result = this.deviceSessionLock.then(fn);
-    this.deviceSessionLock = result.then(NOOP, NOOP);
-    return result;
-  }
-
   withEthApp<T>(callback: (eth: Eth) => T | Promise<T>): Promise<T> {
-    return this.withDeviceSession(async () => {
+    return withDeviceSession(async () => {
       const transport = await this.getTransport();
 
       try {
@@ -150,9 +168,9 @@ export class LedgerHQProvider {
 
       hid.addEventListener('disconnect', onDisconnect);
 
-      // The derivation path may have changed since the previous connect,
-      // so the account is always re-read from the device here.
-      this.account = undefined;
+      // The device or the derivation path may have changed since the
+      // previous connect, so the account is always re-read here.
+      this.resetAccount();
 
       return await this.getAddress();
     } catch (error) {
@@ -160,14 +178,24 @@ export class LedgerHQProvider {
     }
   }
 
+  resetAccount() {
+    this.account = undefined;
+    this.accountPath = undefined;
+    this.walletClient = undefined;
+  }
+
   async getAccount(): Promise<LocalAccount> {
-    if (!this.account) {
-      const path = this.derivationPath;
+    const path = this.derivationPath;
+
+    // The cache is keyed by derivation path: when the user picks another
+    // account, providers of other chains see the path change and re-read.
+    if (!this.account || this.accountPath !== path) {
       const { address } = await this.withEthApp((eth) => eth.getAddress(path));
 
       this.account = createLedgerAccount(getAddress(address), path, (cb) =>
         this.withEthApp(cb),
       );
+      this.accountPath = path;
       this.walletClient = undefined;
     }
     return this.account;
@@ -204,8 +232,16 @@ export class LedgerHQProvider {
     const walletClient = await this.getWalletClient();
     const account = walletClient.account as LocalAccount;
 
-    if (transaction.from && !isAddressEqual(transaction.from, account.address))
+    if (
+      transaction.from &&
+      (!isAddress(transaction.from) ||
+        !isAddressEqual(transaction.from, account.address))
+    )
       throw new Error('from address mismatch');
+
+    const type = transaction.type
+      ? TX_TYPES[transaction.type as keyof typeof TX_TYPES]
+      : undefined;
 
     // Missing fields (nonce, fees, gas) are populated by viem sequentially,
     // so transaction preparation never races on the device.
@@ -218,23 +254,47 @@ export class LedgerHQProvider {
       gas: transaction.gas ? hexToBigInt(transaction.gas) : undefined,
       nonce:
         transaction.nonce != null ? hexToNumber(transaction.nonce) : undefined,
-      accessList: transaction.accessList,
     };
+    // Not part of `request`: the legacy transaction type forbids accessList.
+    const accessList = transaction.accessList;
 
-    return transaction.gasPrice
-      ? walletClient.sendTransaction({
-          ...request,
-          gasPrice: hexToBigInt(transaction.gasPrice),
-        })
-      : walletClient.sendTransaction({
-          ...request,
-          maxFeePerGas: transaction.maxFeePerGas
-            ? hexToBigInt(transaction.maxFeePerGas)
-            : undefined,
-          maxPriorityFeePerGas: transaction.maxPriorityFeePerGas
-            ? hexToBigInt(transaction.maxPriorityFeePerGas)
-            : undefined,
-        });
+    // An explicitly requested pre-1559 type must survive even without
+    // gasPrice — viem then populates legacy fees instead of EIP-1559 ones.
+    // The branches are spelled out because viem's transaction-request union
+    // needs a literal `type` in each call.
+    const gasPrice = transaction.gasPrice
+      ? hexToBigInt(transaction.gasPrice)
+      : undefined;
+
+    if (type === 'legacy')
+      return walletClient.sendTransaction({
+        ...request,
+        type: 'legacy',
+        gasPrice,
+      });
+
+    if (type === 'eip2930')
+      return walletClient.sendTransaction({
+        ...request,
+        type: 'eip2930',
+        gasPrice,
+        accessList,
+      });
+
+    if (!type && gasPrice)
+      return walletClient.sendTransaction({ ...request, gasPrice, accessList });
+
+    return walletClient.sendTransaction({
+      ...request,
+      type,
+      accessList,
+      maxFeePerGas: transaction.maxFeePerGas
+        ? hexToBigInt(transaction.maxFeePerGas)
+        : undefined,
+      maxPriorityFeePerGas: transaction.maxPriorityFeePerGas
+        ? hexToBigInt(transaction.maxPriorityFeePerGas)
+        : undefined,
+    });
   }
 
   async request({ method, params = [] }: RequestArguments): Promise<unknown> {
@@ -251,18 +311,18 @@ export class LedgerHQProvider {
 
       case 'personal_sign': {
         const messageHex = params[0];
-        if (typeof messageHex !== 'string')
-          throw new Error('personal_sign message must be a string');
+        if (!isHex(messageHex))
+          throw new Error('personal_sign message must be a hex string');
         const account = await this.getAccount();
-        return account.signMessage({ message: { raw: messageHex as Hex } });
+        return account.signMessage({ message: { raw: messageHex } });
       }
 
       case 'eth_sign': {
         const messageHex = params[1];
-        if (typeof messageHex !== 'string')
-          throw new Error('eth_sign message must be a string');
+        if (!isHex(messageHex))
+          throw new Error('eth_sign message must be a hex string');
         const account = await this.getAccount();
-        return account.signMessage({ message: { raw: messageHex as Hex } });
+        return account.signMessage({ message: { raw: messageHex } });
       }
 
       case 'eth_signTypedData_v4': {
