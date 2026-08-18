@@ -1,5 +1,10 @@
 # @reef-knot/core-react
 
+## 7.2.0
+
+- Update viem to 2.51.3, wagmi to 3.6.21
+- Update peerDependencies requirements: viem >=2.50, wagmi >=3.6
+
 ## 7.1.0
 
 - Export EIP-6963 provider store, provider type, and `useEIP6963Providers` hook for tracking announced browser wallet providers.

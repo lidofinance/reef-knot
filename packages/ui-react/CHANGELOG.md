@@ -1,5 +1,10 @@
 # @reef-knot/ui-react
 
+## 3.2.0
+
+- Update viem to 2.51.3, wagmi to 3.6.21
+- Update peerDependencies requirements: viem >=2.50, wagmi >=3.6
+
 ## 3.1.0
 
 - Add accessible labels to modal close and back icon buttons.

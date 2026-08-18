@@ -61,7 +61,7 @@
     "@reef-knot/types": "*",
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "viem": ">=2.44",
-    "wagmi": ">=3.3"
+    "viem": ">=2.50",
+    "wagmi": ">=3.6"
   }
 }
