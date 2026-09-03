@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 5.2.0
+
+- Updated @ledgerhq/hw-app-eth to 7.8.12, @ledgerhq/hw-transport to 6.35.7, @ledgerhq/hw-transport-webhid to 6.36.0, @ledgerhq/iframe-provider to 0.4.3
+- Rewrote using connector without @ethers packages
+- Fix chain switch and race condition during transaction build on ledger HID connector
+
 ## 5.1.0
 
 - Update viem to 2.51.3, wagmi to 3.6.21

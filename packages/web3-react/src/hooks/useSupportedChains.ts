@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
-import { getNetwork, Network } from '@ethersproject/providers';
 import { useConnection, useConfig } from 'wagmi';
+
+// Kept shape-compatible with the ethers `Network` type this hook used to return
+export type Network = {
+  chainId: number;
+  name: string;
+};
 
 export const useSupportedChains = (): {
   isUnsupported: boolean;
@@ -14,7 +19,7 @@ export const useSupportedChains = (): {
   }, [chainId, chains]);
 
   const supportedChains = useMemo(() => {
-    return chains.map((c) => getNetwork(c.id));
+    return chains.map((c) => ({ chainId: c.id, name: c.name }));
   }, [chains]);
 
   return {

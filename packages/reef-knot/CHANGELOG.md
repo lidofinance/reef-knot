@@ -1,5 +1,9 @@
 # reef-knot
 
+## 8.3.1
+
+- Update @reef-knot/ledger-connector with support of newer libs and fixes to HID connector
+
 ## 8.3.0
 
 - MetaMask now uses @metamask/connect-evm for connection, @metamask/sdk is deprecated. wagmi update is required for this reason.
