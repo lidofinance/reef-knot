@@ -25,7 +25,7 @@
     "@lidofinance/eslint-config": "^0.38.0",
     "@lidofinance/multi-semantic-release": "^1.0.2",
     "@next/eslint-plugin-next": "^13.5.3",
-    "@turbo/gen": "2.7.5",
+    "@turbo/gen": "2.10.12",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17",
     "@types/styled-components": "5.1.12",
@@ -77,18 +77,17 @@
     "sequentialInit": true
   },
   "resolutions": {
-    "minimatch@^3": "^3.1.5",
-    "minimatch@^9": "^9.0.7",
     "basic-ftp": "^5.3.1",
-    "tar@^7": "^7.5.11",
-    "lodash@^4": "^4.18.0",
-    "picomatch@^2": "^2.3.2",
-    "axios@^1": "^1.14.0",
-    "defu@^6": "^6.1.5",
-    "bn.js@^4": "^4.12.3",
-    "bn.js@^5": "^5.2.3",
-    "ajv@^8": "^8.18.0",
-    "js-yaml": "^4.3.1"
+    "axios": "^1.18.0",
+    "js-yaml": "^4.3.1",
+    "ws@^7.3.1": "^7.5.13",
+    "ws@^7.5.1": "^7.5.13",
+    "ws@^7.5.10": "^7.5.13",
+    "ws@8.20.1": "^8.21.0",
+    "ws@^8.5.0": "^8.21.0",
+    "ws@^8.18.3": "^8.21.0",
+    "ws@^8.19.0": "^8.21.0",
+    "undici@^7.0.0": "^7.29.0"
   },
   "engines": {
     "node": ">=24.0.0"
