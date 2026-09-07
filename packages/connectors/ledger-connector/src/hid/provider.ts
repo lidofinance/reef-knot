@@ -10,6 +10,7 @@ import {
   isAddress,
   isAddressEqual,
   isHex,
+  MethodNotSupportedRpcError,
   numberToHex,
   type Address,
   type Chain,
@@ -19,7 +20,12 @@ import {
   type RpcTransactionRequest,
   type WalletClient,
 } from 'viem';
-import { checkError } from './helpers';
+import {
+  checkError,
+  isLockedDeviceError,
+  restoreLedgerAccount,
+  saveLedgerAccount,
+} from './helpers';
 import { createLedgerAccount } from './account';
 import { LS_KEY_DERIVATION_PATH } from './constants';
 
@@ -32,6 +38,19 @@ const TX_TYPES = {
   '0x1': 'eip2930',
   '0x2': 'eip1559',
 } as const;
+
+// Wallet-addressed methods outside the wallet_* namespace that this provider
+// does not implement. They must fail closed like wallet_* methods do — the
+// RPC node cannot serve them and would produce a confusing error.
+const UNSUPPORTED_WALLET_METHODS = new Set([
+  'eth_signTransaction',
+  'eth_signTypedData',
+  'eth_signTypedData_v1',
+  'eth_signTypedData_v3',
+  'eth_decrypt',
+  'eth_getEncryptionPublicKey',
+  'personal_ecRecover',
+]);
 
 // The Ledger is one physical device, while providers exist per chain — the
 // session lock lives at module scope so sessions never overlap across
@@ -190,7 +209,7 @@ export class LedgerHQProvider {
     // The cache is keyed by derivation path: when the user picks another
     // account, providers of other chains see the path change and re-read.
     if (!this.account || this.accountPath !== path) {
-      const { address } = await this.withEthApp((eth) => eth.getAddress(path));
+      const address = await this.readAddress(path);
 
       this.account = createLedgerAccount(getAddress(address), path, (cb) =>
         this.withEthApp(cb),
@@ -199,6 +218,23 @@ export class LedgerHQProvider {
       this.walletClient = undefined;
     }
     return this.account;
+  }
+
+  private async readAddress(path: string): Promise<Address> {
+    try {
+      const { address } = await this.withEthApp((eth) => eth.getAddress(path));
+      saveLedgerAccount({ address: getAddress(address), path });
+      return address as Address;
+    } catch (error) {
+      // A locked device is not a disconnect — the user is expected to keep
+      // using the UI while the device locks itself. Fall back to the account
+      // persisted on the last successful read; the lock error still surfaces
+      // on any device action (signing) where the UI handles it specially.
+      const persisted = restoreLedgerAccount();
+      if (isLockedDeviceError(error) && persisted?.path === path)
+        return persisted.address;
+      return checkError(error);
+    }
   }
 
   async getAddress(): Promise<Address> {
@@ -333,6 +369,21 @@ export class LedgerHQProvider {
       }
 
       default: {
+        // wallet_* methods (e.g. EIP-5792 wallet_getCapabilities) are
+        // addressed to the wallet, not the node — an HTTP RPC endpoint
+        // cannot answer them, so they must not fall through.
+        // MethodNotSupportedRpcError (-32004) rather than the EIP-1193 4200
+        // error: viem's sendCalls experimental_fallback recognizes it by name
+        // and degrades to eth_sendTransaction instead of failing.
+        if (
+          method.startsWith('wallet_') ||
+          UNSUPPORTED_WALLET_METHODS.has(method)
+        )
+          throw new MethodNotSupportedRpcError(
+            new Error(`The method ${method} is not supported`),
+            { method },
+          );
+
         const rpcRequest = this.getPublicClient().request as (
           args: RequestArguments,
         ) => Promise<unknown>;

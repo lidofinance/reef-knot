@@ -5,7 +5,14 @@ import {
 } from 'wagmi';
 import { Chain } from 'wagmi/chains';
 import { SwitchChainError } from 'viem';
-import { checkError, clearLedgerDerivationPath } from '../hid/helpers';
+import {
+  checkError,
+  clearLedgerAccount,
+  clearLedgerChainId,
+  clearLedgerDerivationPath,
+  restoreLedgerChainId,
+  saveLedgerChainId,
+} from '../hid/helpers';
 import type { LedgerHQProvider } from './provider';
 export const idLedgerHid = 'ledgerHID';
 export const name = 'Ledger';
@@ -19,7 +26,9 @@ export function ledgerHIDConnector({
   defaultChain: Chain;
 }) {
   const providers: Record<Chain['id'], LedgerHQProvider> = {};
-  let currentChainId: number | undefined;
+  // The chain chosen by the user is persisted in localStorage so that a
+  // reconnect after a page reload lands on the same chain.
+  let currentChainId: number | undefined = restoreLedgerChainId();
 
   return createConnector<LedgerHQProvider>(({ chains, emitter }) => ({
     id: idLedgerHid,
@@ -49,12 +58,15 @@ export function ledgerHIDConnector({
       withCapabilities?: boolean;
     } = {}) {
       try {
-        currentChainId = chainId;
-        const provider = await this.getProvider({ chainId });
+        // On reconnect wagmi calls connect() without a chainId — keep the
+        // restored one instead of falling back to the default chain.
+        currentChainId = chainId ?? currentChainId;
+        const provider = await this.getProvider({ chainId: currentChainId });
         provider.on('disconnect', this.onDisconnect);
         const account = await provider.enable();
         const connectedChainId = await this.getChainId();
         currentChainId = connectedChainId;
+        saveLedgerChainId(connectedChainId);
 
         return {
           accounts: (withCapabilities
@@ -63,7 +75,8 @@ export function ledgerHIDConnector({
           chainId: connectedChainId,
         };
       } catch (error) {
-        currentChainId = undefined;
+        // Revert the optimistic assignment above to the last persisted chain.
+        currentChainId = restoreLedgerChainId();
         return checkError(error);
       }
     },
@@ -82,6 +95,8 @@ export function ledgerHIDConnector({
       });
       currentChainId = undefined;
       clearLedgerDerivationPath();
+      clearLedgerChainId();
+      clearLedgerAccount();
     },
 
     async getAccounts() {
@@ -115,6 +130,7 @@ export function ledgerHIDConnector({
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError());
 
       currentChainId = chainId;
+      saveLedgerChainId(chainId);
       emitter.emit('change', { chainId });
       return chain;
     },
