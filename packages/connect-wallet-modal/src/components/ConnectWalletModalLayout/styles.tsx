@@ -19,33 +19,35 @@ const scrollBoxCss = css<ScrollbarProps>`
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 
-    ${$isSupportedCustomScrollbar &&
-    css`
-      @supports selector(::-webkit-scrollbar) {
-        &::-webkit-scrollbar-track {
-          border-radius: 30px;
-          background-color: transparent;
-        }
+    ${
+      $isSupportedCustomScrollbar &&
+      css`
+        @supports selector(::-webkit-scrollbar) {
+          &::-webkit-scrollbar-track {
+            border-radius: 30px;
+            background-color: transparent;
+          }
 
-        &::-webkit-scrollbar {
-          width: ${SCROLLBAR_WIDTH}px;
-          background-color: transparent;
-        }
+          &::-webkit-scrollbar {
+            width: ${SCROLLBAR_WIDTH}px;
+            background-color: transparent;
+          }
 
-        &::-webkit-scrollbar-thumb {
-          border-style: solid;
-          border-color: transparent;
-          border-width: 2px;
-          border-radius: 5px;
-          background-clip: content-box;
-          background-color: ${theme.colors.border};
+          &::-webkit-scrollbar-thumb {
+            border-style: solid;
+            border-color: transparent;
+            border-width: 2px;
+            border-radius: 5px;
+            background-clip: content-box;
+            background-color: ${theme.colors.border};
 
-          &:hover {
-            border-width: 0;
+            &:hover {
+              border-width: 0;
+            }
           }
         }
-      }
-    `}
+      `
+    }
   `}
 `;
 
@@ -127,13 +129,15 @@ export const WalletsButtonsScrollBox = styled.div<WalletsButtonsScrollBox>`
 
     @media ${MEDIA_DESKTOP_HEIGHT} {
       ${scrollBoxCss}
-      ${$isCompact
-        ? css`
-            max-height: 350px;
-          `
-        : css`
-            height: 298px;
-          `}
+      ${
+        $isCompact
+          ? css`
+              max-height: 350px;
+            `
+          : css`
+              height: 298px;
+            `
+      }
     }
   `}
 `;
@@ -150,16 +154,18 @@ export const WalletsButtonsContainer = styled.div<WalletsButtonsContainerProps>`
     $isCompact,
     $isSupportedCustomScrollbar,
   }) => css`
-    ${$isSupportedCustomScrollbar &&
-    css`
-      @media ${MEDIA_DESKTOP_HEIGHT} {
-        padding-right: calc(${theme.spaceMap.xxl}px - ${SCROLLBAR_WIDTH}px);
+    ${
+      $isSupportedCustomScrollbar &&
+      css`
+        @media ${MEDIA_DESKTOP_HEIGHT} {
+          padding-right: calc(${theme.spaceMap.xxl}px - ${SCROLLBAR_WIDTH}px);
 
-        ${theme.mediaQueries.md} {
-          padding-right: calc(${theme.spaceMap.lg}px - ${SCROLLBAR_WIDTH}px);
+          ${theme.mediaQueries.md} {
+            padding-right: calc(${theme.spaceMap.lg}px - ${SCROLLBAR_WIDTH}px);
+          }
         }
-      }
-    `}
+      `
+    }
 
     padding-bottom: ${theme.spaceMap.xxl}px;
     height: fit-content;
