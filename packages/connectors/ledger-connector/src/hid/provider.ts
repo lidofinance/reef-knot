@@ -22,6 +22,7 @@ import {
 } from 'viem';
 import {
   checkError,
+  clearLedgerAccount,
   isLockedDeviceError,
   restoreLedgerAccount,
   saveLedgerAccount,
@@ -208,22 +209,45 @@ export class LedgerHQProvider {
     // The cache is keyed by derivation path: when the user picks another
     // account, providers of other chains see the path change and re-read.
     if (!this.account || this.accountPath !== path) {
-      const address = await this.readAddress(path);
+      const { address, verifiedByDevice } = await this.readAddress(path);
+      let verified = verifiedByDevice;
 
-      this.account = createLedgerAccount(getAddress(address), path, (cb) =>
-        this.withEthApp(cb),
-      );
+      // An address restored from localStorage while the device was locked is
+      // not yet proved by the device that will sign — the attached device may
+      // not be the one the address was persisted from. Verify it inside the
+      // first signing session and fail closed on mismatch.
+      const withVerifyingEthApp = <T>(cb: (eth: Eth) => T | Promise<T>) =>
+        this.withEthApp(async (eth) => {
+          if (!verified) {
+            const actual = await eth.getAddress(path);
+            if (!isAddressEqual(getAddress(actual.address), address)) {
+              clearLedgerAccount();
+              this.resetAccount();
+              this.emit('disconnect');
+              throw new Error(
+                'The connected account does not match the device. Please reconnect.',
+              );
+            }
+            verified = true;
+          }
+          return cb(eth);
+        });
+
+      this.account = createLedgerAccount(address, path, withVerifyingEthApp);
       this.accountPath = path;
       this.walletClient = undefined;
     }
     return this.account;
   }
 
-  private async readAddress(path: string): Promise<Address> {
+  private async readAddress(
+    path: string,
+  ): Promise<{ address: Address; verifiedByDevice: boolean }> {
     try {
       const { address } = await this.withEthApp((eth) => eth.getAddress(path));
-      saveLedgerAccount({ address: getAddress(address), path });
-      return address as Address;
+      const checksummed = getAddress(address);
+      saveLedgerAccount({ address: checksummed, path });
+      return { address: checksummed, verifiedByDevice: true };
     } catch (error) {
       // A locked device is not a disconnect — the user is expected to keep
       // using the UI while the device locks itself. Fall back to the account
@@ -231,7 +255,7 @@ export class LedgerHQProvider {
       // on any device action (signing) where the UI handles it specially.
       const persisted = restoreLedgerAccount();
       if (isLockedDeviceError(error) && persisted?.path === path)
-        return persisted.address;
+        return { address: persisted.address, verifiedByDevice: false };
       return checkError(error);
     }
   }
