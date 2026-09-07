@@ -38,7 +38,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/w3c-web-hid": "^1.0.2",
+    "@types/w3c-web-hid": "^1.0.7",
     "build-config": "*",
     "eslint-config-custom": "*",
     "viem": ">=2.50",
