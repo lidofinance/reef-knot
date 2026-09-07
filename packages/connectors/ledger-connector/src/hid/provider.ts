@@ -131,9 +131,8 @@ export class LedgerHQProvider {
 
   async loadTransport() {
     if (!this.transport) {
-      const { default: TransportWebHID } = await import(
-        '@ledgerhq/hw-transport-webhid'
-      );
+      const { default: TransportWebHID } =
+        await import('@ledgerhq/hw-transport-webhid');
       this.transport = TransportWebHID;
     }
   }

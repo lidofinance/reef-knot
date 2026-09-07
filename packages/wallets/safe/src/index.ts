@@ -47,9 +47,8 @@ export const Safe: WalletAdapterType = ({ safeAllowedDomains }) => ({
     try {
       // It is a dependency of @wagmi/connectors
       // eslint-disable-next-line import/no-extraneous-dependencies
-      const { default: SafeAppsSDK } = await import(
-        '@safe-global/safe-apps-sdk'
-      );
+      const { default: SafeAppsSDK } =
+        await import('@safe-global/safe-apps-sdk');
 
       let SDK: typeof SafeAppsSDK;
       if (
@@ -74,9 +73,8 @@ export const Safe: WalletAdapterType = ({ safeAllowedDomains }) => ({
 
       // It is a dependency of @wagmi/connectors
       // eslint-disable-next-line import/no-extraneous-dependencies
-      const { SafeAppProvider } = await import(
-        '@safe-global/safe-apps-provider'
-      );
+      const { SafeAppProvider } =
+        await import('@safe-global/safe-apps-provider');
       const provider = new SafeAppProvider(safeSdk, sdk);
       return !!provider;
     } catch {

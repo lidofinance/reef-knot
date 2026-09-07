@@ -11,8 +11,9 @@ export interface Web3ReactManagerFunctions {
   deactivate: () => void;
 }
 
-export interface Web3ReactContextInterface<T = any>
-  extends Web3ReactManagerFunctions {
+export interface Web3ReactContextInterface<
+  T = any,
+> extends Web3ReactManagerFunctions {
   connector?: undefined; // AbstractConnector changed to undefined here
   library?: T;
   chainId?: number;
