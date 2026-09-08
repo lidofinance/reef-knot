@@ -44,6 +44,7 @@ export function ledgerHIDConnector({
         providers[chain.id] = new LedgerHQProvider({
           chain,
           rpcUrl: rpc?.[chain.id],
+          supportedChainIds: chains.map((x) => x.id),
         });
       }
       return providers[chain.id];

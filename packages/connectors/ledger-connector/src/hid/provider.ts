@@ -91,9 +91,22 @@ export class LedgerHQProvider {
 
   private listeners: Partial<Record<ProviderEvent, Set<Listener>>> = {};
 
-  constructor({ chain, rpcUrl }: { chain: Chain; rpcUrl?: string }) {
+  // All chains the wallet (connector) is configured with, not just this
+  // provider's chain — wallet_getCapabilities answers for the whole wallet.
+  private readonly supportedChainIds: number[];
+
+  constructor({
+    chain,
+    rpcUrl,
+    supportedChainIds,
+  }: {
+    chain: Chain;
+    rpcUrl?: string;
+    supportedChainIds?: number[];
+  }) {
     this.chain = chain;
     this.rpcUrl = rpcUrl;
+    this.supportedChainIds = supportedChainIds ?? [chain.id];
 
     if (!rpcUrl) {
       // eslint-disable-next-line no-console
@@ -391,10 +404,27 @@ export class LedgerHQProvider {
         return account.signTypedData(JSON.parse(params[1]));
       }
 
+      case 'wallet_getCapabilities': {
+        // EIP-5792: an empty capability set is a valid success response, and
+        // unsupported chains MUST be omitted from the response rather than
+        // answered with an error.
+        const requested = Array.isArray(params[1])
+          ? (params[1] as unknown[])
+              .filter((value): value is Hex => isHex(value))
+              .map((value) => hexToNumber(value))
+          : undefined;
+        const chainIds = (requested ?? this.supportedChainIds).filter(
+          (chainId) => this.supportedChainIds.includes(chainId),
+        );
+        return Object.fromEntries(
+          chainIds.map((chainId) => [numberToHex(chainId), {}]),
+        );
+      }
+
       default: {
-        // wallet_* methods (e.g. EIP-5792 wallet_getCapabilities) are
-        // addressed to the wallet, not the node — an HTTP RPC endpoint
-        // cannot answer them, so they must not fall through.
+        // wallet_* methods (e.g. EIP-5792 wallet_sendCalls) are addressed
+        // to the wallet, not the node — an HTTP RPC endpoint cannot answer
+        // them, so they must not fall through.
         // MethodNotSupportedRpcError (-32004) rather than the EIP-1193 4200
         // error: viem's sendCalls experimental_fallback recognizes it by name
         // and degrades to eth_sendTransaction instead of failing.
