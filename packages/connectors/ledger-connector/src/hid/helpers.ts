@@ -35,7 +35,9 @@ export const checkError = (error: any): never => {
 };
 
 export const clearLedgerDerivationPath = () => {
-  window?.localStorage.removeItem(LS_KEY_DERIVATION_PATH);
+  // `window?.` is not enough: an undeclared identifier still throws in SSR.
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(LS_KEY_DERIVATION_PATH);
 };
 
 export const saveLedgerChainId = (chainId: number) => {
