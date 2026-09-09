@@ -38,10 +38,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ledgerhq/hw-app-eth": "7.8.12",
+    "@ledgerhq/hw-app-eth": "7.8.16",
     "@ledgerhq/hw-transport": "6.35.7",
     "@ledgerhq/hw-transport-webhid": "6.36.0",
-    "@lidofinance/lido-ui": "^3.18.0",
+    "@lidofinance/lido-ui": "^3.43.0",
     "@reef-knot/wallets-list": "*",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17"
@@ -55,13 +55,13 @@
     "@reef-knot/web3-react": "*",
     "build-config": "*",
     "eslint-config-custom": "*",
-    "react": "18.2.0",
-    "react-dom": "^18.2.0",
-    "viem": ">=2.50",
-    "wagmi": ">=3.6"
+    "react": "18.3.1",
+    "react-dom": "^18.3.1",
+    "viem": ">=2.56",
+    "wagmi": ">=3.7"
   },
   "peerDependencies": {
-    "@lidofinance/lido-ui": "^3.18.0",
+    "@lidofinance/lido-ui": "^3.43.0",
     "@reef-knot/core-react": "*",
     "@reef-knot/ledger-connector": "*",
     "@reef-knot/types": "*",
@@ -70,7 +70,7 @@
     "@reef-knot/web3-react": "*",
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "viem": ">=2.50",
-    "wagmi": ">=3.6"
+    "viem": ">=2.56",
+    "wagmi": ">=3.7"
   }
 }
