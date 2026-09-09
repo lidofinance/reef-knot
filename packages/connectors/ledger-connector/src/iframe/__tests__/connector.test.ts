@@ -217,6 +217,83 @@ describe('host events', () => {
   });
 });
 
+describe('listener lifecycle', () => {
+  const connect = async () => {
+    const context = setup({
+      eth_requestAccounts: () => [LOWERCASE],
+      eth_chainId: () => '0x1',
+    });
+    await context.connector.connect({});
+    context.emitter.emit.mockClear();
+    return context;
+  };
+
+  it('stops forwarding host events after disconnect', async () => {
+    const { connector, host, emitter } = await connect();
+
+    await connector.disconnect();
+    emitter.emit.mockClear();
+
+    host.emitEvent('accountsChanged', [[LOWERCASE]]);
+    host.emitEvent('chainChanged', ['0xa']);
+    expect(emitter.emit).not.toHaveBeenCalled();
+  });
+
+  it('resumes forwarding after reconnecting', async () => {
+    const { connector, host, emitter } = await connect();
+
+    await connector.disconnect();
+    await connector.connect({ isReconnecting: true });
+    emitter.emit.mockClear();
+
+    host.emitEvent('accountsChanged', [[LOWERCASE]]);
+    expect(emitter.emit).toHaveBeenCalledTimes(1);
+    expect(emitter.emit).toHaveBeenCalledWith('change', {
+      accounts: [LOWERCASE],
+    });
+  });
+
+  it('does not stack listeners across repeated connects', async () => {
+    const { connector, host, emitter } = await connect();
+
+    // wagmi may call connect() again on the live connector (reconnects).
+    await connector.connect({});
+    emitter.emit.mockClear();
+
+    host.emitEvent('accountsChanged', [[LOWERCASE]]);
+    expect(emitter.emit).toHaveBeenCalledTimes(1);
+  });
+
+  it('exposes working wagmi delegate methods', async () => {
+    const { connector, emitter } = await connect();
+
+    connector.onAccountsChanged([LOWERCASE]);
+    expect(emitter.emit).toHaveBeenCalledWith('change', {
+      accounts: [LOWERCASE],
+    });
+
+    connector.onChainChanged('0xa');
+    expect(emitter.emit).toHaveBeenCalledWith('change', {
+      chainId: optimism.id,
+    });
+
+    connector.onDisconnect?.(new Error('closed'));
+    expect(emitter.emit).toHaveBeenCalledWith('disconnect');
+  });
+
+  it('disconnects via the delegate when accounts empty out', async () => {
+    const { connector, host, emitter } = await connect();
+
+    connector.onAccountsChanged([]);
+    expect(emitter.emit).toHaveBeenCalledWith('disconnect');
+
+    // The delegate detaches the host listeners too.
+    emitter.emit.mockClear();
+    host.emitEvent('chainChanged', ['0xa']);
+    expect(emitter.emit).not.toHaveBeenCalled();
+  });
+});
+
 describe('provider', () => {
   it('exposes an EIP-1193 request wrapper over send', async () => {
     const { connector } = setup({ eth_chainId: () => '0x1' });

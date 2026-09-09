@@ -2,25 +2,34 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { serializeTransaction, stringToHex } from 'viem';
 import { mainnet, optimism } from 'viem/chains';
 import { LedgerHQProvider } from '../provider';
-import { LS_KEY_ACCOUNT } from '../constants';
+import { LS_KEY_ACCOUNT, LS_KEY_DERIVATION_PATH } from '../constants';
 import {
   ADDRESS_A,
   ADDRESS_B,
   APP_CONFIG,
   DERIVATION_PATH,
+  DERIVATION_PATH_B,
   DEVICE_LOCKED,
   EIP712_HASHED,
   EIP712_REJECT,
   getAddressExchange,
+  FILLED_LEGACY_TX,
+  getAddressExchangeForPathB,
   injectReplayer,
+  injectReplayerWithDevice,
   LEGACY_TX,
   MESSAGE_SIGNATURE,
   PERSONAL_SIGN,
   PERSONAL_SIGN_MESSAGE,
   SIGN_TX,
+  SIGN_TX_1559,
+  SIGN_TX_2930,
+  SIGN_TX_FILLED,
   SIGNATURE_R,
   SIGNATURE_S,
   stubHid,
+  TX_1559,
+  TX_2930,
   TYPED_DATA,
 } from './fixtures';
 
@@ -294,6 +303,194 @@ describe('signing', () => {
     store.ensureQueueEmpty();
   });
 
+  it('rejects eth_signTypedData_v4 with a non-string payload', async () => {
+    const provider = createProvider();
+    await expect(
+      provider.request({
+        method: 'eth_signTypedData_v4',
+        params: [ADDRESS_A, { not: 'a string' }],
+      }),
+    ).rejects.toThrow('eth_signTypedData_v4 arg 1 is not a string');
+  });
+
+  it('signs and broadcasts EIP-1559 transactions', async () => {
+    const { calls } = stubRpc({
+      eth_chainId: () => '0x1',
+      eth_sendRawTransaction: () => '0xtxhash',
+    });
+    const provider = createProvider();
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+      SIGN_TX_1559,
+    );
+
+    await expect(
+      provider.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: ADDRESS_A,
+            to: TX_1559.to,
+            value: '0x1',
+            gas: '0x5208',
+            maxFeePerGas: '0x77359400',
+            maxPriorityFeePerGas: '0x3b9aca00',
+            nonce: '0x0',
+            type: '0x2',
+          },
+        ],
+      }),
+    ).resolves.toBe('0xtxhash');
+
+    const expectedRaw = serializeTransaction(TX_1559, {
+      r: SIGNATURE_R,
+      s: SIGNATURE_S,
+      v: 0n,
+    });
+    expect(calls).toContainEqual({
+      method: 'eth_sendRawTransaction',
+      params: [expectedRaw],
+    });
+    store.ensureQueueEmpty();
+  });
+
+  it('signs and broadcasts EIP-2930 transactions with an access list', async () => {
+    const { calls } = stubRpc({
+      eth_chainId: () => '0x1',
+      eth_sendRawTransaction: () => '0xtxhash',
+    });
+    const provider = createProvider();
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+      SIGN_TX_2930,
+    );
+
+    await expect(
+      provider.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: ADDRESS_A,
+            to: TX_2930.to,
+            value: '0x1',
+            gas: '0x5208',
+            gasPrice: '0x3b9aca00',
+            nonce: '0x0',
+            type: '0x1',
+            accessList: [],
+          },
+        ],
+      }),
+    ).resolves.toBe('0xtxhash');
+
+    const expectedRaw = serializeTransaction(TX_2930, {
+      r: SIGNATURE_R,
+      s: SIGNATURE_S,
+      v: 0n,
+    });
+    expect(calls).toContainEqual({
+      method: 'eth_sendRawTransaction',
+      params: [expectedRaw],
+    });
+    store.ensureQueueEmpty();
+  });
+
+  it('treats an untyped transaction with gasPrice as legacy', async () => {
+    const { calls } = stubRpc({
+      eth_chainId: () => '0x1',
+      eth_sendRawTransaction: () => '0xtxhash',
+    });
+    const provider = createProvider();
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+      SIGN_TX,
+    );
+
+    await expect(
+      provider.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: ADDRESS_A,
+            to: LEGACY_TX.to,
+            value: '0x1',
+            gas: '0x5208',
+            gasPrice: '0x3b9aca00',
+            nonce: '0x0',
+          },
+        ],
+      }),
+    ).resolves.toBe('0xtxhash');
+
+    const expectedRaw = serializeTransaction(LEGACY_TX, {
+      r: SIGNATURE_R,
+      s: SIGNATURE_S,
+      v: 37n,
+    });
+    expect(calls).toContainEqual({
+      method: 'eth_sendRawTransaction',
+      params: [expectedRaw],
+    });
+    store.ensureQueueEmpty();
+  });
+
+  it('fills nonce, fees and gas from the node when missing', async () => {
+    const { calls } = stubRpc({
+      eth_chainId: () => '0x1',
+      eth_getTransactionCount: () => '0x0',
+      eth_gasPrice: () => '0x3b9aca00',
+      eth_estimateGas: () => '0x5208',
+      eth_getBlockByNumber: () => ({
+        number: '0x1',
+        timestamp: '0x0',
+        gasLimit: '0x1c9c380',
+        gasUsed: '0x0',
+        baseFeePerGas: null,
+        transactions: [],
+      }),
+      eth_sendRawTransaction: () => '0xtxhash',
+    });
+    const provider = createProvider();
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+      SIGN_TX_FILLED,
+    );
+
+    await expect(
+      provider.request({
+        method: 'eth_sendTransaction',
+        params: [
+          { from: ADDRESS_A, to: LEGACY_TX.to, value: '0x1', type: '0x0' },
+        ],
+      }),
+    ).resolves.toBe('0xtxhash');
+
+    // The filled fields produce exactly the fixture transaction, with
+    // viem's 1.2 legacy fee multiplier applied to the node's gas price.
+    const expectedRaw = serializeTransaction(FILLED_LEGACY_TX, {
+      r: SIGNATURE_R,
+      s: SIGNATURE_S,
+      v: 37n,
+    });
+    expect(calls).toContainEqual({
+      method: 'eth_sendRawTransaction',
+      params: [expectedRaw],
+    });
+    store.ensureQueueEmpty();
+  });
+
   it('rejects eth_sendTransaction from a foreign address', async () => {
     const provider = createProvider();
     injectReplayer(provider, APP_CONFIG, getAddressExchange(ADDRESS_A));
@@ -304,6 +501,87 @@ describe('signing', () => {
         params: [{ from: ADDRESS_B, to: ADDRESS_A, value: '0x1' }],
       }),
     ).rejects.toThrow('from address mismatch');
+  });
+});
+
+describe('device lifecycle', () => {
+  it('re-reads the account when the derivation path changes', async () => {
+    const provider = createProvider();
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+      getAddressExchangeForPathB(ADDRESS_B),
+    );
+
+    await expect(provider.request({ method: 'eth_accounts' })).resolves.toEqual(
+      [ADDRESS_A],
+    );
+
+    // The user picked another account in the wallet modal.
+    window.localStorage.setItem(LS_KEY_DERIVATION_PATH, DERIVATION_PATH_B);
+
+    await expect(provider.request({ method: 'eth_accounts' })).resolves.toEqual(
+      [ADDRESS_B],
+    );
+    expect(
+      JSON.parse(window.localStorage.getItem(LS_KEY_ACCOUNT) ?? ''),
+    ).toEqual({ address: ADDRESS_B, path: DERIVATION_PATH_B });
+    store.ensureQueueEmpty();
+  });
+
+  it('emits disconnect when the connected device is unplugged', async () => {
+    const hid = stubHid();
+    const device = {} as HIDDevice;
+    const provider = createProvider();
+    injectReplayerWithDevice(
+      provider,
+      device,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+    );
+    const onDisconnect = vi.fn();
+    provider.on('disconnect', onDisconnect);
+    await provider.enable();
+
+    // Some other HID device disappearing is not our disconnect.
+    hid.unplug({} as HIDDevice);
+    expect(onDisconnect).not.toHaveBeenCalled();
+
+    hid.unplug(device);
+    expect(onDisconnect).toHaveBeenCalledTimes(1);
+
+    // The listener removed itself after firing.
+    hid.unplug(device);
+    expect(onDisconnect).toHaveBeenCalledTimes(1);
+  });
+
+  it('serializes concurrent device sessions', async () => {
+    const provider = createProvider();
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      // Two strictly sequential signing sessions: interleaved transport
+      // opens would consume the recorded exchanges out of order.
+      APP_CONFIG,
+      PERSONAL_SIGN,
+      APP_CONFIG,
+      PERSONAL_SIGN,
+    );
+    await provider.enable();
+
+    const sign = () =>
+      provider.request({
+        method: 'personal_sign',
+        params: [stringToHex(PERSONAL_SIGN_MESSAGE), ADDRESS_A],
+      });
+    await expect(Promise.all([sign(), sign()])).resolves.toEqual([
+      MESSAGE_SIGNATURE,
+      MESSAGE_SIGNATURE,
+    ]);
+    store.ensureQueueEmpty();
   });
 });
 

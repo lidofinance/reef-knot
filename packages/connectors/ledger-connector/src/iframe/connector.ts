@@ -82,6 +82,10 @@ export function ledgerLiveConnector({
         try {
           const provider = await this.getProvider();
 
+          // eventemitter3 stacks duplicate listeners, and wagmi may call
+          // connect() repeatedly on a live connector — detach first so every
+          // host event is forwarded exactly once.
+          handlers.detach();
           provider.on('accountsChanged', handlers.onAccountsChanged);
           provider.on('chainChanged', handlers.onChainChanged);
 
@@ -103,7 +107,7 @@ export function ledgerLiveConnector({
           };
         } catch (error) {
           if (error instanceof Error) {
-            if ((error as ProviderRpcError).code === 4001) {
+            if ((error as ProviderRpcError)?.code === 4001) {
               throw new UserRejectedRequestError(error);
             }
             throw new ResourceUnavailableRpcError(error);

@@ -72,11 +72,13 @@ describe('device errors', () => {
     expect(isLockedDeviceError(undefined)).toBe(false);
   });
 
-  it('rewrites known transport status messages', () => {
-    const error = Object.assign(new Error('raw'), {
-      statusText: 'CONDITIONS_OF_USE_NOT_SATISFIED',
-    });
-    expect(() => checkError(error)).toThrow('User rejected the request');
+  it.each([
+    ['CONDITIONS_OF_USE_NOT_SATISFIED', 'User rejected the request'],
+    ['INS_NOT_SUPPORTED', 'Device is not supported'],
+    ['UNKNOWN_ERROR', 'Unknown error. Make sure the device is connected'],
+  ])('rewrites the %s transport status message', (statusText, message) => {
+    const error = Object.assign(new Error('raw'), { statusText });
+    expect(() => checkError(error)).toThrow(message);
   });
 
   it('rethrows unknown errors untouched', () => {
