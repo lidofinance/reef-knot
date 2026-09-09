@@ -39,16 +39,16 @@
   },
   "dependencies": {
     "@types/ua-parser-js": "0.7.39",
-    "ua-parser-js": "1.0.37"
+    "ua-parser-js": "1.0.41"
   },
   "devDependencies": {
     "build-config": "*",
     "eslint-config-custom": "*",
-    "wagmi": ">=3.6"
+    "wagmi": ">=3.7"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "wagmi": ">=3.6"
+    "wagmi": ">=3.7"
   }
 }
