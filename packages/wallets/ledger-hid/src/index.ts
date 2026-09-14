@@ -5,7 +5,11 @@ import { ledgerHIDConnector } from '@reef-knot/ledger-connector';
 export const id = 'ledgerHID';
 export const name = 'Ledger';
 
-export const Ledger: WalletAdapterType = ({ defaultChain, rpc }) => ({
+export const Ledger: WalletAdapterType = ({
+  defaultChain,
+  rpc,
+  ledgerForceClearSign,
+}) => ({
   walletName: name,
   walletId: id,
   type: ledgerHIDConnector.type,
@@ -16,5 +20,6 @@ export const Ledger: WalletAdapterType = ({ defaultChain, rpc }) => ({
   createConnectorFn: ledgerHIDConnector({
     rpc,
     defaultChain,
+    forceClearSign: ledgerForceClearSign,
   }),
 });

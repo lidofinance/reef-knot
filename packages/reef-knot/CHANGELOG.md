@@ -2,8 +2,9 @@
 
 ## 8.4.0
 
+- Add `ledgerForceClearSign` config option for the Ledger HID wallet
 - Update @reef-knot/ledger-connector with support of newer libs and fixes to HID connector
-- Update @reef-knot/wallet-adapter-safe with harden default
+- Update @reef-knot/wallet-adapter-safe with hardened default allowed domains
 
 ## 8.3.0
 

@@ -68,6 +68,7 @@ export interface WalletAdapterArgs {
   defaultChain: Chain;
   walletconnectProjectId?: string;
   safeAllowedDomains?: RegExp[];
+  ledgerForceClearSign?: boolean;
   providersStore: ProvidersStore;
 }
 export type WalletAdapterType = (args: WalletAdapterArgs) => WalletAdapterData;

@@ -10,9 +10,7 @@ const GENUINE_ORIGINS = [
   'https://app.safe.protofire.io',
 ];
 
-// Every one of these must be rejected: the Safe SDK matches the patterns
-// against the full `MessageEvent.origin`, so a loose pattern lets a page on an
-// attacker-controlled origin pose as the Safe wallet transport.
+// Must all be rejected.
 const SPOOFED_ORIGINS = [
   // unescaped dot acting as a wildcard
   'https://app0safe.global',
@@ -80,8 +78,7 @@ describe('getSafeAllowedDomains', () => {
 });
 
 describe('Safe Apps SDK message validation with the default domains', () => {
-  // The communicator is private in the SDK typings; reach in to test the real
-  // origin check rather than a re-implementation of it.
+  // `communicator` is private in the SDK typings.
   const getValidator = () => {
     const sdk = new SafeAppsSDK({
       allowedDomains: getSafeAllowedDomains(),

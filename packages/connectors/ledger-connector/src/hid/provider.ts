@@ -72,6 +72,13 @@ type RequestArguments = {
 type ProviderEvent = 'disconnect';
 type Listener = () => void;
 
+type LedgerHQProviderOptions = {
+  chain: Chain;
+  rpcUrl?: string;
+  supportedChainIds?: number[];
+  forceClearSign?: boolean;
+};
+
 export class LedgerHQProvider {
   readonly chain: Chain;
 
@@ -95,18 +102,18 @@ export class LedgerHQProvider {
   // provider's chain — wallet_getCapabilities answers for the whole wallet.
   private readonly supportedChainIds: number[];
 
+  private readonly forceClearSign: boolean;
+
   constructor({
     chain,
     rpcUrl,
     supportedChainIds,
-  }: {
-    chain: Chain;
-    rpcUrl?: string;
-    supportedChainIds?: number[];
-  }) {
+    forceClearSign = false,
+  }: LedgerHQProviderOptions) {
     this.chain = chain;
     this.rpcUrl = rpcUrl;
     this.supportedChainIds = supportedChainIds ?? [chain.id];
+    this.forceClearSign = forceClearSign;
 
     if (!rpcUrl) {
       // eslint-disable-next-line no-console
@@ -246,7 +253,9 @@ export class LedgerHQProvider {
           return cb(eth);
         });
 
-      this.account = createLedgerAccount(address, path, withVerifyingEthApp);
+      this.account = createLedgerAccount(address, path, withVerifyingEthApp, {
+        forceClearSign: this.forceClearSign,
+      });
       this.accountPath = path;
       this.walletClient = undefined;
     }
@@ -311,9 +320,14 @@ export class LedgerHQProvider {
     )
       throw new Error('from address mismatch');
 
-    const type = transaction.type
-      ? TX_TYPES[transaction.type as keyof typeof TX_TYPES]
-      : undefined;
+    // Only the types the device can sign; anything else must not be
+    // reinterpreted as one of them.
+    const type =
+      transaction.type != null
+        ? TX_TYPES[transaction.type as keyof typeof TX_TYPES]
+        : undefined;
+    if (transaction.type != null && !type)
+      throw new Error(`Unsupported transaction type ${transaction.type}`);
 
     // Missing fields (nonce, fees, gas) are populated by viem sequentially,
     // so transaction preparation never races on the device.

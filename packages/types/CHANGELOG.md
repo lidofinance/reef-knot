@@ -1,5 +1,9 @@
 # @reef-knot/types
 
+## 5.2.0
+
+- Add `ledgerForceClearSign` to `WalletAdapterArgs`
+
 ## 5.1.0
 
 - Update viem to 2.51.3, wagmi to 3.6.21

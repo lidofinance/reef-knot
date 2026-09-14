@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { serializeTransaction, stringToHex } from 'viem';
+import { serializeTransaction, stringToHex, type BaseError } from 'viem';
 import { mainnet, optimism } from 'viem/chains';
+import { ledgerService } from '@ledgerhq/hw-app-eth';
 import { LedgerHQProvider } from '../provider';
 import { LS_KEY_ACCOUNT, LS_KEY_DERIVATION_PATH } from '../constants';
 import {
@@ -35,11 +36,46 @@ import {
 
 const RPC_URL = 'https://rpc.test.local';
 
-const createProvider = () =>
+const createProvider = ({ forceClearSign = false } = {}) =>
   new LedgerHQProvider({
     chain: mainnet,
     rpcUrl: RPC_URL,
     supportedChainIds: [mainnet.id, optimism.id],
+    forceClearSign,
+  });
+
+const EMPTY_RESOLUTION = {
+  erc20Tokens: [],
+  nfts: [],
+  externalPlugin: [],
+  plugin: [],
+  domains: [],
+};
+
+// ERC-20 transfer(ADDRESS_A, 1): calldata the device needs metadata for.
+const ERC20_TRANSFER_CALLDATA = `0xa9059cbb${ADDRESS_A.slice(2)
+  .toLowerCase()
+  .padStart(64, '0')}${'1'.padStart(64, '0')}` as const;
+
+const send1559 = (
+  provider: LedgerHQProvider,
+  overrides: Record<string, unknown> = {},
+) =>
+  provider.request({
+    method: 'eth_sendTransaction',
+    params: [
+      {
+        from: ADDRESS_A,
+        to: TX_1559.to,
+        value: '0x1',
+        gas: '0x5208',
+        maxFeePerGas: '0x77359400',
+        maxPriorityFeePerGas: '0x3b9aca00',
+        nonce: '0x0',
+        type: '0x2',
+        ...overrides,
+      },
+    ],
   });
 
 type RpcHandlers = Record<string, (params: unknown[]) => unknown>;
@@ -87,6 +123,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 describe('request routing', () => {
@@ -491,6 +528,40 @@ describe('signing', () => {
     store.ensureQueueEmpty();
   });
 
+  it.each(['0x3', '0x4', '0x7e'])(
+    'rejects eth_sendTransaction with unsupported type %s',
+    async (type) => {
+      const { calls } = stubRpc({ eth_chainId: () => '0x1' });
+      const provider = createProvider();
+      const store = injectReplayer(
+        provider,
+        APP_CONFIG,
+        getAddressExchange(ADDRESS_A),
+      );
+
+      await expect(
+        provider.request({
+          method: 'eth_sendTransaction',
+          params: [
+            {
+              from: ADDRESS_A,
+              to: ADDRESS_A,
+              value: '0x1',
+              maxFeePerGas: '0x77359400',
+              maxPriorityFeePerGas: '0x3b9aca00',
+              type,
+            },
+          ],
+        }),
+      ).rejects.toThrow(`Unsupported transaction type ${type}`);
+
+      expect(calls.map((call) => call.method)).not.toContain(
+        'eth_sendRawTransaction',
+      );
+      store.ensureQueueEmpty();
+    },
+  );
+
   it('rejects eth_sendTransaction from a foreign address', async () => {
     const provider = createProvider();
     injectReplayer(provider, APP_CONFIG, getAddressExchange(ADDRESS_A));
@@ -501,6 +572,101 @@ describe('signing', () => {
         params: [{ from: ADDRESS_B, to: ADDRESS_A, value: '0x1' }],
       }),
     ).rejects.toThrow('from address mismatch');
+  });
+});
+
+describe('clear signing', () => {
+  it('falls back to blind signing when metadata resolution fails', async () => {
+    vi.spyOn(ledgerService, 'resolveTransaction').mockRejectedValue(
+      new Error('network down'),
+    );
+    const { calls } = stubRpc({
+      eth_chainId: () => '0x1',
+      eth_sendRawTransaction: () => '0xtxhash',
+    });
+    const provider = createProvider();
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+      SIGN_TX_1559,
+    );
+
+    await expect(send1559(provider)).resolves.toBe('0xtxhash');
+    expect(calls.map((call) => call.method)).toContain(
+      'eth_sendRawTransaction',
+    );
+    store.ensureQueueEmpty();
+  });
+
+  it('forceClearSign propagates a metadata resolution failure', async () => {
+    vi.spyOn(ledgerService, 'resolveTransaction').mockRejectedValue(
+      new Error('network down'),
+    );
+    const { calls } = stubRpc({ eth_chainId: () => '0x1' });
+    const provider = createProvider({ forceClearSign: true });
+    // No signing exchange: the device must never be asked to sign.
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+    );
+
+    await expect(send1559(provider)).rejects.toThrow('network down');
+    expect(calls.map((call) => call.method)).not.toContain(
+      'eth_sendRawTransaction',
+    );
+    store.ensureQueueEmpty();
+  });
+
+  it('forceClearSign rejects calldata without any descriptors', async () => {
+    vi.spyOn(ledgerService, 'resolveTransaction').mockResolvedValue(
+      EMPTY_RESOLUTION,
+    );
+    const { calls } = stubRpc({ eth_chainId: () => '0x1' });
+    const provider = createProvider({ forceClearSign: true });
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+    );
+
+    // viem wraps signer errors; the original is reachable through the causes.
+    await expect(
+      send1559(provider, { data: ERC20_TRANSFER_CALLDATA, value: '0x0' }),
+    ).rejects.toSatisfy(
+      (error: BaseError) =>
+        error.walk((e) => (e as Error).name === 'ClearSignUnavailableError') !==
+        null,
+    );
+    expect(calls.map((call) => call.method)).not.toContain(
+      'eth_sendRawTransaction',
+    );
+    store.ensureQueueEmpty();
+  });
+
+  it('forceClearSign still signs a plain transfer', async () => {
+    const { calls } = stubRpc({
+      eth_chainId: () => '0x1',
+      eth_sendRawTransaction: () => '0xtxhash',
+    });
+    const provider = createProvider({ forceClearSign: true });
+    const store = injectReplayer(
+      provider,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+      APP_CONFIG,
+      SIGN_TX_1559,
+    );
+
+    await expect(send1559(provider)).resolves.toBe('0xtxhash');
+    expect(calls.map((call) => call.method)).toContain(
+      'eth_sendRawTransaction',
+    );
+    store.ensureQueueEmpty();
   });
 });
 
