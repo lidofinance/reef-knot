@@ -8,6 +8,7 @@ export interface GetWalletsDataListArgs {
   defaultChain: Chain;
   walletconnectProjectId?: string;
   safeAllowedDomains?: RegExp[];
+  ledgerForceClearSign?: boolean;
 }
 
 export const getWalletsDataList = ({
@@ -16,6 +17,7 @@ export const getWalletsDataList = ({
   defaultChain,
   walletconnectProjectId,
   safeAllowedDomains,
+  ledgerForceClearSign,
 }: GetWalletsDataListArgs) => {
   const walletAdapters = Object.values(walletsList);
 
@@ -29,6 +31,7 @@ export const getWalletsDataList = ({
       defaultChain,
       walletconnectProjectId,
       safeAllowedDomains,
+      ledgerForceClearSign,
       providersStore,
     }),
   );

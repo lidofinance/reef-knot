@@ -13,6 +13,7 @@ import {
   DEVICE_LOCKED,
   getAddressExchange,
   injectReplayer,
+  injectReplayerWithDevice,
   stubHid,
 } from './fixtures';
 
@@ -27,9 +28,11 @@ const setup = () => {
   return { connector, emitter };
 };
 
+let hid: ReturnType<typeof stubHid>;
+
 beforeEach(() => {
   window.localStorage.clear();
-  stubHid();
+  hid = stubHid();
 });
 
 describe('chain selection', () => {
@@ -148,5 +151,31 @@ describe('connect', () => {
     expect(window.localStorage.getItem(LS_KEY_ACCOUNT)).toBeNull();
     expect(window.localStorage.getItem(LS_KEY_DERIVATION_PATH)).toBeNull();
     await expect(connector.getChainId()).resolves.toBe(mainnet.id);
+  });
+
+  it('unplugging the device forgets the session like disconnect does', async () => {
+    const { connector, emitter } = setup();
+    const device = {} as HIDDevice;
+    const provider = await connector.getProvider({ chainId: optimism.id });
+    injectReplayerWithDevice(
+      provider,
+      device,
+      APP_CONFIG,
+      getAddressExchange(ADDRESS_A),
+    );
+    await connector.connect({ chainId: optimism.id });
+    window.localStorage.setItem(LS_KEY_DERIVATION_PATH, "m/44'/60'/1'/0/0");
+
+    hid.unplug(device);
+
+    expect(emitter.emit).toHaveBeenCalledWith('disconnect');
+    expect(window.localStorage.getItem(LS_KEY_CHAIN_ID)).toBeNull();
+    expect(window.localStorage.getItem(LS_KEY_ACCOUNT)).toBeNull();
+    expect(window.localStorage.getItem(LS_KEY_DERIVATION_PATH)).toBeNull();
+    await expect(connector.getChainId()).resolves.toBe(mainnet.id);
+
+    // Without a device and no persisted account there is nothing to restore.
+    injectReplayer(provider, DEVICE_LOCKED);
+    await expect(connector.isAuthorized()).resolves.toBe(false);
   });
 });

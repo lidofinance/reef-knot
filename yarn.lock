@@ -5164,6 +5164,8 @@ __metadata:
     "@safe-global/safe-apps-sdk": "npm:^9.1.0"
     build-config: "npm:*"
     eslint-config-custom: "npm:*"
+    happy-dom: "npm:^20.0.0"
+    vitest: "npm:^4.1.11"
   peerDependencies:
     "@reef-knot/types": "*"
     "@safe-global/safe-apps-provider": ^0.18.6

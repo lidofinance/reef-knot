@@ -5,6 +5,7 @@
 - Updated @ledgerhq/hw-app-eth to 7.8.12, @ledgerhq/hw-transport to 6.35.7, @ledgerhq/hw-transport-webhid to 6.36.0, @ledgerhq/iframe-provider to 0.4.3
 - Rewrote using connector without @ethers packages
 - Fix chain switch and race condition during transaction build on ledger HID connector
+- Add `forceClearSign` option to `ledgerHIDConnector`: reject contract calls the device cannot clear sign
 
 ## 5.1.0
 

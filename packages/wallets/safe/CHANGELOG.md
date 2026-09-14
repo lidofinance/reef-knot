@@ -1,5 +1,9 @@
 # @reef-knot/wallet-adapter-safe
 
+## 5.1.1
+
+- Harden default allowed Safe domains
+
 ## 5.1.0
 
 - Update viem to 2.51.3, wagmi to 3.6.21

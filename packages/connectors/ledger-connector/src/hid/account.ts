@@ -8,6 +8,7 @@ import {
   serializeTransaction,
   stringToHex,
   type Address,
+  type Hex,
   type LocalAccount,
   type TypedDataDefinition,
   type TypedDataDomain,
@@ -18,6 +19,34 @@ type EIP712Message = Parameters<Eth['signEIP712Message']>[1];
 export type WithEthApp = <T>(
   callback: (eth: Eth) => T | Promise<T>,
 ) => Promise<T>;
+
+export type LedgerAccountOptions = {
+  // Refuse to sign a contract call the device cannot clear sign.
+  forceClearSign?: boolean;
+};
+
+type TransactionResolution = Awaited<
+  ReturnType<Eth['ledgerService']['resolveTransaction']>
+>;
+
+export class ClearSignUnavailableError extends Error {
+  override name = 'ClearSignUnavailableError';
+
+  constructor() {
+    super('The transaction cannot be clear signed on the device.');
+  }
+}
+
+const hasCalldata = (data?: Hex) => !!data && data !== '0x';
+
+const isEmptyResolution = (resolution: TransactionResolution | null) =>
+  !resolution ||
+  [
+    resolution.erc20Tokens,
+    resolution.nfts,
+    resolution.externalPlugin,
+    resolution.plugin,
+  ].every((descriptors) => descriptors.length === 0);
 
 // What the Ledger service should try to resolve for clear signing.
 const RESOLUTION_CONFIG = {
@@ -38,6 +67,7 @@ export const createLedgerAccount = (
   address: Address,
   path: string,
   withEthApp: WithEthApp,
+  { forceClearSign = false }: LedgerAccountOptions = {},
 ): LocalAccount =>
   toAccount({
     address,
@@ -47,12 +77,23 @@ export const createLedgerAccount = (
       { serializer = serializeTransaction } = {},
     ) {
       const unsignedRawTx = (await serializer(transaction)).slice(2);
-      // throwOnError: a clear-signing resolution failure (e.g. Ledger's
-      // descriptor service is unreachable) fails the transaction instead of
-      // silently degrading to blind signing over undecoded calldata.
-      const { r, s, v } = await withEthApp((eth) =>
-        eth.clearSignTransaction(path, unsignedRawTx, RESOLUTION_CONFIG, true),
-      );
+      const { r, s, v } = await withEthApp(async (eth) => {
+        // Metadata fetch failures are swallowed by the Ledger service and
+        // surface as an empty resolution, which the device blind signs.
+        const resolution = await eth.ledgerService
+          .resolveTransaction(unsignedRawTx, eth.loadConfig, RESOLUTION_CONFIG)
+          .catch((error: unknown) => {
+            if (forceClearSign) throw error;
+            return null;
+          });
+        if (
+          forceClearSign &&
+          hasCalldata(transaction.data) &&
+          isEmptyResolution(resolution)
+        )
+          throw new ClearSignUnavailableError();
+        return eth.signTransaction(path, unsignedRawTx, resolution);
+      });
 
       // For typed transactions the device returns the yParity (0/1),
       // for legacy ones — the full EIP-155 `v`; viem accepts both.

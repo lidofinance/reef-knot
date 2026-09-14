@@ -35,6 +35,7 @@
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
     "lint": "eslint --ext ts,tsx,js,mjs .",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
@@ -42,7 +43,9 @@
     "@safe-global/safe-apps-provider": "^0.18.6",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "build-config": "*",
-    "eslint-config-custom": "*"
+    "eslint-config-custom": "*",
+    "happy-dom": "^20.0.0",
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
     "@reef-knot/types": "*",
