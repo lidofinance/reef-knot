@@ -1,6 +1,6 @@
 # reef-knot
 
-## 8.3.1
+## 8.4.0
 
 - Update @reef-knot/ledger-connector with support of newer libs and fixes to HID connector
 
