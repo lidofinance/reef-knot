@@ -3,6 +3,7 @@
 ## 8.4.0
 
 - Update @reef-knot/ledger-connector with support of newer libs and fixes to HID connector
+- Update @reef-knot/wallet-adapter-safe with harden default
 
 ## 8.3.0
 
