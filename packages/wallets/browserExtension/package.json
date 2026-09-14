@@ -41,12 +41,12 @@
     "@reef-knot/types": "*",
     "build-config": "*",
     "eslint-config-custom": "*",
-    "viem": ">=2.50"
+    "viem": ">=2.56"
   },
   "peerDependencies": {
     "@reef-knot/types": "*",
     "@tanstack/react-query": "^5.29.0",
-    "viem": ">=2.50",
+    "viem": ">=2.56",
     "wagmi": ">=3.6"
   }
 }
