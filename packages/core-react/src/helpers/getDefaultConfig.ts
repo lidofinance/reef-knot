@@ -44,6 +44,7 @@ export const getDefaultConfig = <I extends string = string>({
   walletconnectProjectId,
   walletsList,
   safeAllowedDomains,
+  ledgerForceClearSign,
   chains,
   transports,
   autoConnect,
@@ -73,6 +74,7 @@ export const getDefaultConfig = <I extends string = string>({
     walletsList,
     walletconnectProjectId,
     safeAllowedDomains,
+    ledgerForceClearSign,
   });
 
   const reefKnotConfig: ReefKnotProviderConfig = {

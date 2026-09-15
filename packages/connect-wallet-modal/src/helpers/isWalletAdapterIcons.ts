@@ -6,6 +6,6 @@ export const isWalletAdapterIcons = (
 ): icon is WalletAdapterIcons =>
   Boolean(
     icon &&
-      (icon as WalletAdapterIcons).light &&
-      (icon as WalletAdapterIcons).dark,
+    (icon as WalletAdapterIcons).light &&
+    (icon as WalletAdapterIcons).dark,
   );

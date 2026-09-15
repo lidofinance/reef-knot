@@ -129,8 +129,7 @@ export const ReefKnotModalContextProvider = ({
     () => ({
       modalStack,
       currentModal: modalStack[modalStack.length - 1] as
-        | ModalStateEntry
-        | undefined,
+        ModalStateEntry | undefined,
       termsChecked,
       setTermsChecked,
       ...stableCallbacks,

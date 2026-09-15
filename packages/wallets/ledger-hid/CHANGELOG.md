@@ -1,5 +1,9 @@
 # @reef-knot/wallet-adapter-ledger-hid
 
+## 6.2.0
+
+- Pass `ledgerForceClearSign` to the HID connector as `forceClearSign`
+
 ## 6.1.0
 
 - Update wagmi to 3.6.21

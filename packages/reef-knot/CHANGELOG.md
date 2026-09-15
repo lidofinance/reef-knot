@@ -1,5 +1,11 @@
 # reef-knot
 
+## 8.4.0
+
+- Add `ledgerForceClearSign` config option for the Ledger HID wallet
+- Update @reef-knot/ledger-connector with support of newer libs and fixes to HID connector
+- Update @reef-knot/wallet-adapter-safe with hardened default allowed domains
+
 ## 8.3.0
 
 - MetaMask now uses @metamask/connect-evm for connection, @metamask/sdk is deprecated. wagmi update is required for this reason.

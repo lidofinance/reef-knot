@@ -1,10 +1,15 @@
+import type Transport from '@ledgerhq/hw-transport';
 import { LS_KEY_DERIVATION_PATH } from '@reef-knot/ledger-connector';
 import { LedgerContextValue } from './LedgerContext';
 import { DERIVATION_PATHS } from './constants';
 
-export const getTransport = async () => {
+// The explicit annotation keeps the return type from being inferred through
+// a potentially nested copy of @ledgerhq/hw-transport (TS2742).
+export const getTransport = async (): Promise<Transport> => {
   try {
-    return (await import('@ledgerhq/hw-transport-webhid')).default.create();
+    return await (
+      await import('@ledgerhq/hw-transport-webhid')
+    ).default.create();
   } catch (e) {
     throw new Error('Connection error');
   }

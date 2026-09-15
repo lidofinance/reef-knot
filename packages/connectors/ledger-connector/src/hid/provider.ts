@@ -1,42 +1,161 @@
-import invariant from 'tiny-invariant';
-import { JsonRpcBatchProvider, Network } from '@ethersproject/providers';
+import type Eth from '@ledgerhq/hw-app-eth';
 import type TransportWebHID from '@ledgerhq/hw-transport-webhid';
-import { arrayify } from '@ethersproject/bytes';
-import { LedgerHQSigner } from './signer';
-import { checkError, convertToUnsigned } from './helpers';
-import { TransactionRequestExtended } from './types';
+import {
+  createPublicClient,
+  createWalletClient,
+  getAddress,
+  hexToBigInt,
+  hexToNumber,
+  http,
+  isAddress,
+  isAddressEqual,
+  isHex,
+  MethodNotSupportedRpcError,
+  numberToHex,
+  type Address,
+  type Chain,
+  type Hex,
+  type LocalAccount,
+  type PublicClient,
+  type RpcTransactionRequest,
+  type WalletClient,
+} from 'viem';
+import {
+  checkError,
+  clearLedgerAccount,
+  isLockedDeviceError,
+  restoreLedgerAccount,
+  saveLedgerAccount,
+} from './helpers';
+import { createLedgerAccount } from './account';
+import { LS_KEY_DERIVATION_PATH } from './constants';
 
-export class LedgerHQProvider extends JsonRpcBatchProvider {
-  public signer?: LedgerHQSigner;
+const NOOP = () => {};
+
+const DEFAULT_DERIVATION_PATH = "m/44'/60'/0'/0/0";
+
+const TX_TYPES = {
+  '0x0': 'legacy',
+  '0x1': 'eip2930',
+  '0x2': 'eip1559',
+} as const;
+
+// Wallet-addressed methods outside the wallet_* namespace that this provider
+// does not implement. They must fail closed like wallet_* methods do — the
+// RPC node cannot serve them and would produce a confusing error.
+const UNSUPPORTED_WALLET_METHODS = new Set([
+  'eth_signTransaction',
+  'eth_signTypedData',
+  'eth_signTypedData_v1',
+  'eth_signTypedData_v3',
+  'eth_decrypt',
+  'eth_getEncryptionPublicKey',
+  'personal_ecRecover',
+]);
+
+// The Ledger is one physical device, while providers exist per chain — the
+// session lock lives at module scope so sessions never overlap across
+// provider instances. WebHID rejects open() while the device is already open.
+let deviceSessionLock: Promise<void> = Promise.resolve();
+
+const withDeviceSession = <T>(fn: () => Promise<T>): Promise<T> => {
+  const result = deviceSessionLock.then(fn);
+  deviceSessionLock = result.then(NOOP, NOOP);
+  return result;
+};
+
+type RequestArguments = {
+  method: string;
+  params?: unknown[];
+};
+
+type ProviderEvent = 'disconnect';
+type Listener = () => void;
+
+type LedgerHQProviderOptions = {
+  chain: Chain;
+  rpcUrl?: string;
+  supportedChainIds?: number[];
+  forceClearSign?: boolean;
+};
+
+export class LedgerHQProvider {
+  readonly chain: Chain;
 
   public device?: HIDDevice;
 
   public transport?: typeof TransportWebHID;
 
-  constructor(...args: any[]) {
-    super(...args);
-    this.signer = this.getSigner();
+  private readonly rpcUrl?: string;
+
+  private account?: LocalAccount;
+
+  private accountPath?: string;
+
+  private publicClient?: PublicClient;
+
+  private walletClient?: WalletClient;
+
+  private listeners: Partial<Record<ProviderEvent, Set<Listener>>> = {};
+
+  // All chains the wallet (connector) is configured with, not just this
+  // provider's chain — wallet_getCapabilities answers for the whole wallet.
+  private readonly supportedChainIds: number[];
+
+  private readonly forceClearSign: boolean;
+
+  constructor({
+    chain,
+    rpcUrl,
+    supportedChainIds,
+    forceClearSign = false,
+  }: LedgerHQProviderOptions) {
+    this.chain = chain;
+    this.rpcUrl = rpcUrl;
+    this.supportedChainIds = supportedChainIds ?? [chain.id];
+    this.forceClearSign = forceClearSign;
+
+    if (!rpcUrl) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[reef-knot] No RPC URL configured for chain ${chain.id} (${chain.name}), ` +
+          `falling back to its default public RPC endpoint`,
+      );
+    }
+  }
+
+  // --- events (the EIP-1193 subset the connector relies on) ---
+
+  on(event: ProviderEvent, listener: Listener) {
+    (this.listeners[event] ??= new Set()).add(listener);
+  }
+
+  removeListener(event: ProviderEvent, listener: Listener) {
+    this.listeners[event]?.delete(listener);
+  }
+
+  emit(event: ProviderEvent) {
+    this.listeners[event]?.forEach((listener) => listener());
+  }
+
+  // --- device transport ---
+
+  get derivationPath() {
+    if (typeof window !== 'undefined') {
+      return (
+        window.localStorage.getItem(LS_KEY_DERIVATION_PATH) ||
+        DEFAULT_DERIVATION_PATH
+      );
+    }
+    return DEFAULT_DERIVATION_PATH;
   }
 
   async loadTransport() {
     if (!this.transport) {
-      const { default: TransportWebHID } = await import(
-        '@ledgerhq/hw-transport-webhid'
-      );
+      const { default: TransportWebHID } =
+        await import('@ledgerhq/hw-transport-webhid');
       this.transport = TransportWebHID;
     }
-  }
-
-  getSigner(): LedgerHQSigner {
-    return new LedgerHQSigner(this);
-  }
-
-  listAccounts(): Promise<Array<string>> {
-    throw new Error('method is not implemented');
-  }
-
-  detectNetwork(): Promise<Network> {
-    return Promise.resolve(this._network);
   }
 
   async getTransport(): Promise<TransportWebHID> {
@@ -53,7 +172,27 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
     }
   }
 
-  async enable(): Promise<string> {
+  withEthApp<T>(callback: (eth: Eth) => T | Promise<T>): Promise<T> {
+    return withDeviceSession(async () => {
+      const transport = await this.getTransport();
+
+      try {
+        const { default: Eth } = await import('@ledgerhq/hw-app-eth');
+        const eth = new Eth(transport);
+        await eth.getAppConfiguration();
+
+        return await callback(eth);
+      } catch (error) {
+        return checkError(error);
+      } finally {
+        await transport.close();
+      }
+    });
+  }
+
+  // --- account ---
+
+  async enable(): Promise<Address> {
     try {
       await this.loadTransport();
 
@@ -68,9 +207,9 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
 
       hid.addEventListener('disconnect', onDisconnect);
 
-      if (!this.signer) {
-        this.signer = this.getSigner();
-      }
+      // The device or the derivation path may have changed since the
+      // previous connect, so the account is always re-read here.
+      this.resetAccount();
 
       return await this.getAddress();
     } catch (error) {
@@ -78,55 +217,245 @@ export class LedgerHQProvider extends JsonRpcBatchProvider {
     }
   }
 
-  async getAddress(): Promise<string> {
-    invariant(this.signer, 'Signer is not defined');
-    return await this.signer.getAddress();
+  resetAccount() {
+    this.account = undefined;
+    this.accountPath = undefined;
+    this.walletClient = undefined;
   }
 
-  async request({
-    method,
-    params,
-  }: {
-    method: string;
-    params: Array<unknown>;
-  }): Promise<unknown> {
-    invariant(this.signer, 'Signer is not defined');
+  async getAccount(): Promise<LocalAccount> {
+    const path = this.derivationPath;
+
+    // The cache is keyed by derivation path: when the user picks another
+    // account, providers of other chains see the path change and re-read.
+    if (!this.account || this.accountPath !== path) {
+      const { address, verifiedByDevice } = await this.readAddress(path);
+      let verified = verifiedByDevice;
+
+      // An address restored from localStorage while the device was locked is
+      // not yet proved by the device that will sign — the attached device may
+      // not be the one the address was persisted from. Verify it inside the
+      // first signing session and fail closed on mismatch.
+      const withVerifyingEthApp = <T>(cb: (eth: Eth) => T | Promise<T>) =>
+        this.withEthApp(async (eth) => {
+          if (!verified) {
+            const actual = await eth.getAddress(path);
+            if (!isAddressEqual(getAddress(actual.address), address)) {
+              clearLedgerAccount();
+              this.resetAccount();
+              this.emit('disconnect');
+              throw new Error(
+                'The connected account does not match the device. Please reconnect.',
+              );
+            }
+            verified = true;
+          }
+          return cb(eth);
+        });
+
+      this.account = createLedgerAccount(address, path, withVerifyingEthApp, {
+        forceClearSign: this.forceClearSign,
+      });
+      this.accountPath = path;
+      this.walletClient = undefined;
+    }
+    return this.account;
+  }
+
+  private async readAddress(
+    path: string,
+  ): Promise<{ address: Address; verifiedByDevice: boolean }> {
+    try {
+      const { address } = await this.withEthApp((eth) => eth.getAddress(path));
+      const checksummed = getAddress(address);
+      saveLedgerAccount({ address: checksummed, path });
+      return { address: checksummed, verifiedByDevice: true };
+    } catch (error) {
+      // A locked device is not a disconnect — the user is expected to keep
+      // using the UI while the device locks itself. Fall back to the account
+      // persisted on the last successful read; the lock error still surfaces
+      // on any device action (signing) where the UI handles it specially.
+      const persisted = restoreLedgerAccount();
+      if (isLockedDeviceError(error) && persisted?.path === path)
+        return { address: persisted.address, verifiedByDevice: false };
+      return checkError(error);
+    }
+  }
+
+  async getAddress(): Promise<Address> {
+    const { address } = await this.getAccount();
+    return address;
+  }
+
+  // --- RPC ---
+
+  private getPublicClient(): PublicClient {
+    this.publicClient ??= createPublicClient({
+      chain: this.chain,
+      transport: http(this.rpcUrl, { batch: true }),
+    });
+    return this.publicClient;
+  }
+
+  private async getWalletClient(): Promise<WalletClient> {
+    const account = await this.getAccount();
+    this.walletClient ??= createWalletClient({
+      account,
+      chain: this.chain,
+      transport: http(this.rpcUrl, { batch: true }),
+    });
+    return this.walletClient;
+  }
+
+  private async sendTransaction(
+    transaction: RpcTransactionRequest,
+  ): Promise<Hex> {
+    const walletClient = await this.getWalletClient();
+    const account = walletClient.account as LocalAccount;
+
+    if (
+      transaction.from &&
+      (!isAddress(transaction.from) ||
+        !isAddressEqual(transaction.from, account.address))
+    )
+      throw new Error('from address mismatch');
+
+    // Only the types the device can sign; anything else must not be
+    // reinterpreted as one of them.
+    const type =
+      transaction.type != null
+        ? TX_TYPES[transaction.type as keyof typeof TX_TYPES]
+        : undefined;
+    if (transaction.type != null && !type)
+      throw new Error(`Unsupported transaction type ${transaction.type}`);
+
+    // Missing fields (nonce, fees, gas) are populated by viem sequentially,
+    // so transaction preparation never races on the device.
+    const request = {
+      account,
+      chain: this.chain,
+      to: transaction.to ?? undefined,
+      data: transaction.data,
+      value: transaction.value ? hexToBigInt(transaction.value) : undefined,
+      gas: transaction.gas ? hexToBigInt(transaction.gas) : undefined,
+      nonce:
+        transaction.nonce != null ? hexToNumber(transaction.nonce) : undefined,
+    };
+    // Not part of `request`: the legacy transaction type forbids accessList.
+    const accessList = transaction.accessList;
+
+    // An explicitly requested pre-1559 type must survive even without
+    // gasPrice — viem then populates legacy fees instead of EIP-1559 ones.
+    // The branches are spelled out because viem's transaction-request union
+    // needs a literal `type` in each call.
+    const gasPrice = transaction.gasPrice
+      ? hexToBigInt(transaction.gasPrice)
+      : undefined;
+
+    if (type === 'legacy')
+      return walletClient.sendTransaction({
+        ...request,
+        type: 'legacy',
+        gasPrice,
+      });
+
+    if (type === 'eip2930')
+      return walletClient.sendTransaction({
+        ...request,
+        type: 'eip2930',
+        gasPrice,
+        accessList,
+      });
+
+    if (!type && gasPrice)
+      return walletClient.sendTransaction({ ...request, gasPrice, accessList });
+
+    return walletClient.sendTransaction({
+      ...request,
+      type,
+      accessList,
+      maxFeePerGas: transaction.maxFeePerGas
+        ? hexToBigInt(transaction.maxFeePerGas)
+        : undefined,
+      maxPriorityFeePerGas: transaction.maxPriorityFeePerGas
+        ? hexToBigInt(transaction.maxPriorityFeePerGas)
+        : undefined,
+    });
+  }
+
+  async request({ method, params = [] }: RequestArguments): Promise<unknown> {
     switch (method) {
-      case 'eth_sendTransaction': {
-        const sourceTx = params[0] as TransactionRequestExtended;
-        const unsignedTx = await convertToUnsigned(sourceTx);
-        const signedTx = await this.signer.signTransaction(unsignedTx);
-        return this.send('eth_sendRawTransaction', [signedTx]);
-      }
+      case 'eth_chainId':
+        return numberToHex(this.chain.id);
+
       case 'eth_accounts':
+      case 'eth_requestAccounts':
         return [await this.getAddress()];
+
+      case 'eth_sendTransaction':
+        return this.sendTransaction(params[0] as RpcTransactionRequest);
+
+      case 'personal_sign': {
+        const messageHex = params[0];
+        if (!isHex(messageHex))
+          throw new Error('personal_sign message must be a hex string');
+        const account = await this.getAccount();
+        return account.signMessage({ message: { raw: messageHex } });
+      }
+
+      case 'eth_sign': {
+        const messageHex = params[1];
+        if (!isHex(messageHex))
+          throw new Error('eth_sign message must be a hex string');
+        const account = await this.getAccount();
+        return account.signMessage({ message: { raw: messageHex } });
+      }
+
       case 'eth_signTypedData_v4': {
         if (typeof params[1] !== 'string')
           throw new Error('eth_signTypedData_v4 arg 1 is not a string');
-        const payload = JSON.parse(params[1]);
-        return await this.signer.__signEIP712Message({
-          domain: payload.domain,
-          types: payload.types,
-          primaryType: payload.primaryType,
-          message: payload.message,
-        });
+        const account = await this.getAccount();
+        return account.signTypedData(JSON.parse(params[1]));
       }
-      case 'personal_sign': {
-        const messageHex = params[0];
-        if (typeof messageHex !== 'string')
-          throw new Error('personal_sign message must be a string');
-        const messageBytes = arrayify(messageHex);
-        return await this.signer.signMessage(messageBytes);
+
+      case 'wallet_getCapabilities': {
+        // EIP-5792: an empty capability set is a valid success response, and
+        // unsupported chains MUST be omitted from the response rather than
+        // answered with an error.
+        const requested = Array.isArray(params[1])
+          ? (params[1] as unknown[])
+              .filter((value): value is Hex => isHex(value))
+              .map((value) => hexToNumber(value))
+          : undefined;
+        const chainIds = (requested ?? this.supportedChainIds).filter(
+          (chainId) => this.supportedChainIds.includes(chainId),
+        );
+        return Object.fromEntries(
+          chainIds.map((chainId) => [numberToHex(chainId), {}]),
+        );
       }
-      case 'eth_sign': {
-        const messageHex = params[1];
-        if (typeof messageHex !== 'string')
-          throw new Error('eth_sign message must be a string');
-        const messageBytes = arrayify(messageHex);
-        return await this.signer.signMessage(messageBytes);
+
+      default: {
+        // wallet_* methods (e.g. EIP-5792 wallet_sendCalls) are addressed
+        // to the wallet, not the node — an HTTP RPC endpoint cannot answer
+        // them, so they must not fall through.
+        // MethodNotSupportedRpcError (-32004) rather than the EIP-1193 4200
+        // error: viem's sendCalls experimental_fallback recognizes it by name
+        // and degrades to eth_sendTransaction instead of failing.
+        if (
+          method.startsWith('wallet_') ||
+          UNSUPPORTED_WALLET_METHODS.has(method)
+        )
+          throw new MethodNotSupportedRpcError(
+            new Error(`The method ${method} is not supported`),
+            { method },
+          );
+
+        const rpcRequest = this.getPublicClient().request as (
+          args: RequestArguments,
+        ) => Promise<unknown>;
+        return rpcRequest({ method, params });
       }
-      default:
-        return this.send(method, params);
     }
   }
 }

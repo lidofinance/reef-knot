@@ -37,15 +37,17 @@ export const ModalStyle = styled.div<ModalStyeProps>`
     $center,
     $width,
   }) => css`
-    ${$width
-      ? css`
-          width: ${$width}px;
-          max-width: 100%;
-        `
-      : css`
-          width: 100%;
-          min-width: 280px;
-        `}
+    ${
+      $width
+        ? css`
+            width: ${$width}px;
+            max-width: 100%;
+          `
+        : css`
+            width: 100%;
+            min-width: 280px;
+          `
+    }
     font-weight: 400;
     font-size: ${fontSizesMap.xs}px;
     line-height: 1.5em;

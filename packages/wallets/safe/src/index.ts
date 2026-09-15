@@ -9,13 +9,18 @@ type GetSafeConnectorArgs = {
   allowedDomains?: RegExp[];
 };
 
-const getSafeConnector = ({ allowedDomains = [] }: GetSafeConnectorArgs) =>
+export const SAFE_DEFAULT_ALLOWED_DOMAINS: readonly RegExp[] = [
+  /^https:\/\/app\.safe\.global$/,
+  /^https:\/\/app\.safe\.protofire\.io$/,
+];
+
+export const getSafeAllowedDomains = (
+  allowedDomains: readonly RegExp[] = [],
+): RegExp[] => [...SAFE_DEFAULT_ALLOWED_DOMAINS, ...allowedDomains];
+
+const getSafeConnector = ({ allowedDomains }: GetSafeConnectorArgs) =>
   safe({
-    allowedDomains: [
-      /app.safe.global$/,
-      /app.safe.protofire.io$/,
-      ...allowedDomains,
-    ],
+    allowedDomains: getSafeAllowedDomains(allowedDomains),
     debug: false,
   });
 
@@ -47,9 +52,8 @@ export const Safe: WalletAdapterType = ({ safeAllowedDomains }) => ({
     try {
       // It is a dependency of @wagmi/connectors
       // eslint-disable-next-line import/no-extraneous-dependencies
-      const { default: SafeAppsSDK } = await import(
-        '@safe-global/safe-apps-sdk'
-      );
+      const { default: SafeAppsSDK } =
+        await import('@safe-global/safe-apps-sdk');
 
       let SDK: typeof SafeAppsSDK;
       if (
@@ -61,7 +65,7 @@ export const Safe: WalletAdapterType = ({ safeAllowedDomains }) => ({
         SDK = SafeAppsSDK;
       }
       const parameters: ConstructorParameters<typeof SafeAppsSDK>[0] = {
-        allowedDomains: safeAllowedDomains,
+        allowedDomains: getSafeAllowedDomains(safeAllowedDomains),
       };
       const sdk = new SDK(parameters);
 
@@ -74,9 +78,8 @@ export const Safe: WalletAdapterType = ({ safeAllowedDomains }) => ({
 
       // It is a dependency of @wagmi/connectors
       // eslint-disable-next-line import/no-extraneous-dependencies
-      const { SafeAppProvider } = await import(
-        '@safe-global/safe-apps-provider'
-      );
+      const { SafeAppProvider } =
+        await import('@safe-global/safe-apps-provider');
       const provider = new SafeAppProvider(safeSdk, sdk);
       return !!provider;
     } catch {

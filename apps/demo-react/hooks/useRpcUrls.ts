@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { CHAINS } from '@lido-sdk/constants';
+import { CHAINS } from 'config/chains';
 import { useClientConfig } from 'providers/client-config';
 import { getBackendRPCPath } from 'config';
 

@@ -1,0 +1,64 @@
+version: 2
+
+updates:
+  # --- GitHub Actions ---
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
+      include: scope
+    # Skip releases published just moments ago. Only default-days is
+    # supported for github-actions; the semver-* keys are not.
+    cooldown:
+      default-days: 7
+    groups:
+      # Batch minor/patch into a single PR. Majors are deliberately left
+      # ungrouped so each one gets its own PR and changelog review.
+      actions-minor:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
+
+  # --- npm (yarn 4) ---
+  # Two independent lockfiles: the root workspaces and playwright-tests.
+  - package-ecosystem: npm
+    directories:
+      - /
+      - /playwright-tests
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      include: scope
+    # Majors (React 19, viem 3, ...) are raised deliberately, with a test
+    # run, not by a bot. Security updates are unaffected by this ignore:
+    # they are a separate mechanism and do not read this file.
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - version-update:semver-major
+    # Must stay above npmMinimalAgeGate (480 min = 8 h) in .yarnrc.yml,
+    # otherwise yarn quarantines the fresh version right in CI.
+    cooldown:
+      default-days: 7
+    groups:
+      prod-minor:
+        dependency-type: production
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
+      dev-minor:
+        dependency-type: development
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch

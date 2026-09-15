@@ -1,67 +1,17 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
-import { resolveProperties } from '@ethersproject/properties';
-import { TransactionRequestExtended, UnsignedTransactionStrict } from './types';
-import { LS_KEY_DERIVATION_PATH } from './constants';
+import { isAddress, type Address } from 'viem';
+import {
+  LS_KEY_ACCOUNT,
+  LS_KEY_CHAIN_ID,
+  LS_KEY_DERIVATION_PATH,
+} from './constants';
 
-export const isHIDSupported = () => {
-  try {
-    return 'hid' in window.navigator;
-  } catch (error) {
-    return false;
-  }
+export type PersistedLedgerAccount = {
+  address: Address;
+  path: string;
 };
 
-export const hasEIP1559 = (tx: {
-  type?: number;
-  maxFeePerGas?: BigNumberish;
-  maxPriorityFeePerGas?: BigNumberish;
-}) => {
-  return (
-    tx.type === 2 || tx.maxFeePerGas != null || tx.maxPriorityFeePerGas != null
-  );
-};
-
-export const toNumber = (
-  value: BigNumberish | undefined | null,
-): number | undefined => {
-  return value == null ? undefined : BigNumber.from(value).toNumber();
-};
-
-export const convertToUnsigned = async (
-  tx: TransactionRequestExtended,
-): Promise<UnsignedTransactionStrict> => {
-  const resolvedTx = await resolveProperties(tx);
-
-  const { chainId, data, gasLimit, gas, gasPrice, value, to } = resolvedTx;
-  const nonce = toNumber(resolvedTx.nonce);
-  const type = toNumber(resolvedTx.type);
-
-  // Allowed transaction keys for Legacy and EIP-155 Transactions
-  const baseTx: UnsignedTransactionStrict = {
-    gasLimit: gasLimit || gas,
-    type: type ?? 2,
-    chainId,
-    gasPrice,
-    nonce,
-    value,
-    data,
-    to,
-  };
-
-  // EIP-2930
-  if (tx.accessList != null) {
-    baseTx.accessList = tx.accessList;
-  }
-
-  // EIP-1559
-  if (hasEIP1559(tx)) {
-    baseTx.maxFeePerGas = tx.maxFeePerGas;
-    baseTx.maxPriorityFeePerGas = tx.maxPriorityFeePerGas;
-    baseTx.type = 2;
-  }
-
-  return baseTx;
-};
+export const isLockedDeviceError = (error: unknown): boolean =>
+  (error as { name?: string } | null)?.name === 'LockedDeviceError';
 
 export const checkError = (error: any): never => {
   if (error.statusText === 'INS_NOT_SUPPORTED') {
@@ -85,5 +35,51 @@ export const checkError = (error: any): never => {
 };
 
 export const clearLedgerDerivationPath = () => {
-  window?.localStorage.removeItem(LS_KEY_DERIVATION_PATH);
+  // `window?.` is not enough: an undeclared identifier still throws in SSR.
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(LS_KEY_DERIVATION_PATH);
+};
+
+export const saveLedgerChainId = (chainId: number) => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(LS_KEY_CHAIN_ID, String(chainId));
+};
+
+export const restoreLedgerChainId = (): number | undefined => {
+  if (typeof window === 'undefined') return undefined;
+  const stored = window.localStorage.getItem(LS_KEY_CHAIN_ID);
+  if (!stored) return undefined;
+  const chainId = Number(stored);
+  return Number.isInteger(chainId) && chainId > 0 ? chainId : undefined;
+};
+
+export const clearLedgerChainId = () => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(LS_KEY_CHAIN_ID);
+};
+
+export const saveLedgerAccount = (account: PersistedLedgerAccount) => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(LS_KEY_ACCOUNT, JSON.stringify(account));
+};
+
+export const restoreLedgerAccount = (): PersistedLedgerAccount | undefined => {
+  if (typeof window === 'undefined') return undefined;
+  const stored = window.localStorage.getItem(LS_KEY_ACCOUNT);
+  if (!stored) return undefined;
+  try {
+    const { address, path } = JSON.parse(
+      stored,
+    ) as Partial<PersistedLedgerAccount>;
+    if (address && isAddress(address) && typeof path === 'string')
+      return { address, path };
+  } catch {
+    // A malformed record is the same as no record.
+  }
+  return undefined;
+};
+
+export const clearLedgerAccount = () => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(LS_KEY_ACCOUNT);
 };
