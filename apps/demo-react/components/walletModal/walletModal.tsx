@@ -19,7 +19,7 @@ import {
   useConnections
 } from 'wagmi';
 
-import { useForceDisconnect, useConnectorInfo } from 'reef-knot/core-react';
+import { useForceDisconnect, useConnectorInfo } from 'reef-knot';
 import { useCopyToClipboard } from 'hooks/useCopyToClipboard';
 import {
   WalletModalContentStyle,

@@ -74,7 +74,12 @@
     ]
   },
   "multi-release": {
-    "sequentialInit": true
+    "sequentialInit": true,
+    "deps": {
+      "bump": "override",
+      "prefix": "",
+      "release": "patch"
+    }
   },
   "resolutions": {
     "basic-ftp": "^5.3.1",

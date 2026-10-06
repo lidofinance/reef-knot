@@ -1,4 +1,4 @@
-import type { WalletAdapterType } from '@reef-knot/types';
+import type { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/okx.svg';
 import WalletIconInverted from './icons/okx-inverted.svg';

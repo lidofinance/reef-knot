@@ -1,6 +1,6 @@
 import { safe } from 'wagmi/connectors';
 import { withTimeout } from 'viem';
-import type { WalletAdapterType } from '@reef-knot/types';
+import type { WalletAdapterType } from '@reef-knot/wallets-helpers';
 
 export const id = 'safe';
 export const name = 'Safe';

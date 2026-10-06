@@ -1,15 +1,16 @@
 import { FC, PropsWithChildren, useMemo } from 'react';
 import { useThemeToggle } from '@lidofinance/lido-ui';
-import { ReefKnotProvider, getDefaultConfig } from 'reef-knot/core-react';
-import { WalletsListEthereum } from 'reef-knot/wallets';
+import {
+  ReefKnotProvider,
+  ReefKnotWalletsModal,
+  WalletsListEthereum,
+  getDefaultConfig,
+  getDefaultWalletsModalConfig,
+} from 'reef-knot';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http } from 'wagmi';
 import * as wagmiChains from 'wagmi/chains';
 import type { Transport } from 'viem';
-import {
-  ReefKnotWalletsModal,
-  getDefaultWalletsModalConfig,
-} from 'reef-knot/connect-wallet-modal';
 
 import { metricProps } from 'utils/metrics';
 import { useClientConfig } from 'providers/client-config';

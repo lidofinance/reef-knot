@@ -37,13 +37,11 @@
     "lint": "eslint --ext ts,tsx,js,mjs ."
   },
   "devDependencies": {
-    "@reef-knot/types": "*",
     "@reef-knot/wallets-helpers": "*",
     "build-config": "*",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
-    "@reef-knot/types": "*",
     "@reef-knot/wallets-helpers": "*",
     "wagmi": ">=3.6"
   }

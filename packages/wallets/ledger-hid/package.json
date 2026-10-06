@@ -39,13 +39,13 @@
   },
   "devDependencies": {
     "@reef-knot/ledger-connector": "*",
-    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "build-config": "*",
     "eslint-config-custom": "*"
   },
   "peerDependencies": {
     "@reef-knot/ledger-connector": "*",
-    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@tanstack/react-query": "^5.29.0",
     "wagmi": ">=3.6"
   }

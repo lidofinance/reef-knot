@@ -39,7 +39,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@safe-global/safe-apps-provider": "^0.18.6",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "build-config": "*",
@@ -48,7 +48,7 @@
     "vitest": "^4.1.11"
   },
   "peerDependencies": {
-    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@safe-global/safe-apps-provider": "^0.18.6",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "@tanstack/react-query": "^5.29.0",

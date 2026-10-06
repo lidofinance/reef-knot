@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { Button, ButtonProps } from '@lidofinance/lido-ui';
-import { useConnect } from 'reef-knot/core-react';
+import { useConnect } from 'reef-knot';
 
 import { useClientConfig } from 'providers/client-config';
 

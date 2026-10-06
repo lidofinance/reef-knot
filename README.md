@@ -42,12 +42,13 @@ For an example of Reef Knot setup and configuration, check out [this demo app](h
 To set up Reef Knot, you’ll need the following imports:
 
 ```typescript
-import { ReefKnotProvider, getDefaultConfig } from 'reef-knot/core-react';
 import {
+  ReefKnotProvider,
   ReefKnotWalletsModal,
+  WalletsListEthereum,
+  getDefaultConfig,
   getDefaultWalletsModalConfig,
-} from 'reef-knot/connect-wallet-modal';
-import { WalletsListEthereum } from 'reef-knot/wallets';
+} from 'reef-knot';
 ```
 
 ### Setting Up Providers
@@ -81,7 +82,7 @@ The `getDefaultWalletsModalConfig` function provides default configuration optio
 - The wallets to display or pin
 - Links to the terms of service and privacy policy
 
-For more details, refer to the `connect-wallet-modal` package's [README](packages/connect-wallet-modal/README.md)
+All providers, hooks, UI components, configuration types, and the default wallet list are exported from `reef-knot`.
 
 ### WalletsListEthereum
 
@@ -114,7 +115,7 @@ To open the Wallet Connection Modal, use the `useConnect` hook provided by Reef 
 #### Import the Hook
 
 ```typescript
-import { useConnect } from 'reef-knot/core-react';
+import { useConnect } from 'reef-knot';
 ```
 
 #### Use the Hook

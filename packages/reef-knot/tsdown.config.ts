@@ -1,4 +1,4 @@
 import { defineConfig } from 'tsdown';
-import { defineStandardConfig } from 'build-config';
+import { defineSvgConfig } from 'build-config';
 
-export default defineConfig(defineStandardConfig());
+export default defineConfig(defineSvgConfig({ memo: true }));

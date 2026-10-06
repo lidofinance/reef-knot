@@ -1,4 +1,4 @@
-import { WalletAdapterType } from '@reef-knot/types';
+import { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { getWalletConnectConnector } from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/wallet-connect-circle.svg';
 

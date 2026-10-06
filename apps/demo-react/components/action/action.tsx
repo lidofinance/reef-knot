@@ -4,7 +4,8 @@ import { Button } from '@lidofinance/lido-ui';
 import { PropsWithChildren, useReducer } from 'react';
 import { type SDKError } from '@lidofinance/lido-ethereum-sdk';
 
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnection } from 'wagmi';
+import { useSupportedChains } from 'hooks/useSupportedChains';
 import { Accordion } from 'components';
 import {
   ActionBlock,
@@ -130,7 +131,9 @@ export const Action = <TResult,>({
   children,
   ...rest
 }: ActionProps<TResult>) => {
-  const { active } = useWeb3();
+  const { isConnected } = useConnection();
+  const { isUnsupported } = useSupportedChains();
+  const active = isConnected && !isUnsupported;
   const [{ result, error, loading }, dispatch] = useReducer(
     reducer<TResult>,
     {

@@ -26,13 +26,13 @@ The current version of Reef Knot uses `wagmi` for all wallet connections.
 
 Since Reef Knot also depends on TypeScript v5, you will need to upgrade your TypeScript version if your dApp is currently using TypeScript v4.
 
-### 2. Update wagmi to v2, add viem, @tanstack/react-query
+### 2. Update wagmi to v3, add viem, @tanstack/react-query
 
 There is a chance, that your app is using wagmi v0.12.x, which is not maintained anymore.
 
-The current version of Reef Knot is built on wagmi v2.x.
+The current version of Reef Knot is built on wagmi v3.x.
 There were a lot of [breaking changes between 0.x and 1.x versions](https://1.x.wagmi.sh/react/migration-guide),
-and then [between 1.x and 2.x](https://wagmi.sh/react/guides/migrate-from-v1-to-v2).
+followed by further changes in wagmi v2 and v3.
 
 The good news is that most of this changes were handled inside reef-knot and doesn't require a lot of actions on a dApp side.
 
@@ -40,7 +40,7 @@ Use [manual installation instructions](https://wagmi.sh/react/getting-started#ma
 
 Basically, you will need to:
 
-1. Update the `wagmi` dependency to the latest 2.x version
+1. Update the `wagmi` dependency to a compatible 3.x version
 2. Add `viem` v2.x and `@tanstack/react-query` v5.x
 3. Update config for `WagmiProvider`
 
@@ -62,15 +62,15 @@ If your app is using React v17, you will likely need to upgrade it to React v18.
 
 Use the latest available version – v7.x at the moment of writing.
 
-### 6. reef-knot subpackages
+### 6. reef-knot packages
 
-Ensure that the project depends on 'reef-knot' package only and there are no dependencies on '@reef-knot/\*' subpackages.
+Applications should depend on `reef-knot` only. Wallet adapter packages remain available for custom wallet catalogs, and adapter authors use `@reef-knot/wallets-helpers` for the shared adapter contract and helpers.
 
 ## Code changes
 
 ### 1. reef-knot imports
 
-Ensure your code does not contain direct imports from Reef Knot subpackages. If found, simply remove the `@` sign to correct the import.
+All application-facing exports now come from the root `reef-knot` entry point. Imports from the former `core-react`, `connect-wallet-modal`, `ui-react`, `types`, `wallets`, and `web3-react` entry points must be updated.
 
 **BAD:**
 
@@ -81,7 +81,7 @@ import { useWeb3 } from '@reef-knot/web3-react';
 **GOOD:**
 
 ```ts
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnect } from 'reef-knot';
 ```
 
 ### 2. Remove deprecated code
@@ -120,8 +120,7 @@ Previously, it played a crucial role by returning information from either the we
 depending on the connected wallet. However, since the web3-react library has been removed from Reef Knot,
 the current version is based solely on wagmi.
 
-As a result, the useWeb3 hook now acts as a redundant proxy for wagmi hooks. While it will continue to function,
-it is recommended to replace it with standard wagmi hooks to avoid unnecessary abstractions.
+The `useWeb3` compatibility hook has now been removed. Replace it with standard wagmi hooks such as `useConnection`, `useConnect`, and `useConfig`.
 
 ### Additional references
 

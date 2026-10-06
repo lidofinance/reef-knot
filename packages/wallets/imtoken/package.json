@@ -38,13 +38,13 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "build-config": "*",
     "eslint-config-custom": "*",
     "viem": ">=2.50"
   },
   "peerDependencies": {
-    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@tanstack/react-query": "^5.29.0",
     "viem": ">=2.50",
     "wagmi": ">=3.6"
