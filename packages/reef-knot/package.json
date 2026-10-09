@@ -4,7 +4,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "typesVersions": {
     "*": {
@@ -34,14 +37,14 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs .",
-    "typecheck": "tsc --noEmit"
+    "lint": "yarn run -T eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "yarn run -T tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@ledgerhq/hw-app-eth": "7.8.12",
     "@ledgerhq/hw-transport": "6.35.7",
     "@ledgerhq/hw-transport-webhid": "6.36.0",
-    "@lidofinance/lido-ui": "^3.18.0",
     "@reef-knot/ledger-connector": "*",
     "@reef-knot/wallet-adapter-ambire": "*",
     "@reef-knot/wallet-adapter-anchorage-digital": "*",
@@ -57,29 +60,26 @@
     "@reef-knot/wallet-adapter-safe": "*",
     "@reef-knot/wallet-adapter-walletconnect": "*",
     "@reef-knot/wallets-helpers": "*",
-    "mipd": "0.0.7",
-    "react-transition-group": "4",
-    "use-callback-ref": "1.2.5"
+    "mipd": "0.0.7"
   },
   "peerDependencies": {
-    "@lidofinance/lido-ui": "^3.18.0",
     "@tanstack/react-query": "^5.51.1",
     "react": ">=18",
     "react-dom": ">=18",
-    "styled-components": "^5.3.5",
     "viem": ">=2.50",
     "wagmi": ">=3.6"
   },
   "devDependencies": {
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17",
-    "@types/react-transition-group": "4.4.12",
     "build-config": "*",
     "eslint-config-custom": "*",
+    "happy-dom": "^20.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "styled-components": "^5.3.6",
+    "tsconfig": "*",
     "viem": ">=2.50",
+    "vitest": "^4.1.11",
     "wagmi": ">=3.6"
   }
 }

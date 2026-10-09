@@ -1,0 +1,492 @@
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  useConfig,
+  useConnect as useWagmiConnect,
+  type Connector,
+} from 'wagmi';
+import { injected } from 'wagmi/connectors';
+import {
+  getWalletConnectUri,
+  isMobileOrTablet,
+  type WalletAdapterData,
+} from '@reef-knot/wallets-helpers';
+import {
+  LS_KEY_RECONNECT_WALLET_ID,
+  providersStore,
+  useDisconnect,
+  useEIP6963Providers,
+  useReefKnotContext,
+  useReefKnotModal,
+} from '../core-react';
+import type { EIP6963ProviderDetail } from '../core-react';
+import type { ReefKnotWalletsModalConfig } from '../types/reef-knot-wallets-modal';
+import { sortWalletsList } from './helpers/sortWalletsList';
+import { openWindow } from './helpers/openWindow';
+import { suggestApp } from './helpers/suggestApp';
+
+export type WalletPickerState = {
+  wallets: WalletAdapterData[];
+  allWallets: WalletAdapterData[];
+  search: string;
+  expanded: boolean;
+  showToggle: boolean;
+  isDiscovering: boolean;
+  error: Error | null;
+  setSearch: (value: string) => void;
+  clearSearch: () => void;
+  toggleExpanded: () => void;
+};
+
+type ConnectionContextValue = {
+  config: ReefKnotWalletsModalConfig;
+  picker: WalletPickerState;
+  error: Error | null;
+  busy: boolean;
+  connectWallet: (wallet: WalletAdapterData) => Promise<void>;
+  selectProvider: (provider: EIP6963ProviderDetail) => Promise<void>;
+  complete: (walletId: string, rdns?: string) => void;
+  notifyStart: (id: string) => void;
+  setConsent: (checked: boolean) => void;
+  run: (id: string, action: () => Promise<void>) => Promise<void>;
+};
+const ConnectionContext = createContext<ConnectionContextValue | null>(null);
+
+export const useConnectionContext = (config?: ReefKnotWalletsModalConfig) => {
+  const value = useContext(ConnectionContext);
+  if (!value)
+    throw new Error('Headless connection hooks require ReefKnotUIProvider.');
+  if (config && config !== value.config)
+    throw new Error(
+      'Pass the same config object to headless hooks and ReefKnotUIProvider.',
+    );
+  return value;
+};
+
+/** One owner for discovery and connection actions, shared by every view. */
+export function ReefKnotUIProvider({
+  config: modalConfig,
+  children,
+}: React.PropsWithChildren<{ config: ReefKnotWalletsModalConfig }>) {
+  const config = useConfig();
+  const { mutateAsync: connectAsync } = useWagmiConnect();
+  const { disconnect } = useDisconnect();
+  const { walletDataList, loadingWalletId, setLoadingWalletId } =
+    useReefKnotContext();
+  const {
+    termsChecked,
+    setTermsChecked,
+    currentModal,
+    modalStack,
+    closeModal,
+    openModalAsync,
+    openModal,
+  } = useReefKnotModal();
+  const allProviders = useEIP6963Providers();
+  const [allWallets, setAllWallets] = useState<WalletAdapterData[]>([]);
+  const [search, setSearch] = useState('');
+  const [expanded, setExpanded] = useState(false);
+  const [isDiscovering, setDiscovering] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const locked = useRef(false);
+  const ledgerOpening = useRef(false);
+  const providerOpening = useRef(false);
+  const actionModal = useRef(currentModal);
+  const completedModal = useRef<typeof currentModal>();
+  const alive = useRef(true);
+  const current = useRef({ termsChecked, modalStack, closeModal, modalConfig });
+  current.current = { termsChecked, modalStack, closeModal, modalConfig };
+
+  useEffect(() => {
+    alive.current = true;
+    return () => {
+      alive.current = false;
+    };
+  }, []);
+
+  const inPicker = currentModal?.type === 'wallet';
+  useEffect(() => {
+    let active = true;
+    setDiscovering(true);
+    void sortWalletsList({
+      walletDataList,
+      walletsShown: modalConfig.walletsShown,
+      walletsPinned: modalConfig.walletsPinned,
+    })
+      .then((wallets) => {
+        if (active) setAllWallets(wallets);
+      })
+      .catch((e: unknown) => {
+        if (active) setError(e instanceof Error ? e : new Error(String(e)));
+      })
+      .finally(() => {
+        if (active) setDiscovering(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [
+    inPicker,
+    walletDataList,
+    modalConfig.walletsShown,
+    modalConfig.walletsPinned,
+    allProviders,
+  ]);
+
+  useEffect(() => {
+    if (currentModal?.type !== 'eip6963') providerOpening.current = false;
+    if (!currentModal) {
+      setSearch('');
+      setExpanded(false);
+      setError(null);
+    } else if (currentModal.type === 'eager')
+      setError(currentModal.props.initialError ?? null);
+  }, [currentModal]);
+
+  const complete = useCallback(
+    (walletId: string, rdns?: string) => {
+      const stack = current.current.modalStack;
+      const target = actionModal.current ?? stack[stack.length - 1];
+      if (target && completedModal.current === target) return;
+      completedModal.current = target;
+      void config.storage?.setItem(
+        LS_KEY_RECONNECT_WALLET_ID,
+        rdns ?? walletId,
+      );
+      // EIP-6963 completes its own screen and the underlying wallet picker.
+      const nested = stack[stack.length - 1]?.type;
+      const count =
+        (nested === 'eip6963' || nested === 'ledger') &&
+        stack[stack.length - 2]?.type === 'wallet'
+          ? 2
+          : 1;
+      if (stack[stack.length - 1] === target) {
+        for (let i = 0; i < count; i += 1)
+          current.current.closeModal({ success: true });
+      }
+      current.current.modalConfig.onConnectSuccess?.({ walletId, rdns });
+    },
+    [config.storage],
+  );
+
+  const notifyStart = useCallback((walletId: string) => {
+    actionModal.current =
+      current.current.modalStack[current.current.modalStack.length - 1];
+    current.current.modalConfig.onConnectStart?.({ walletId });
+  }, []);
+  const run = useCallback(
+    async (id: string, action: () => Promise<void>) => {
+      if (!current.current.termsChecked || locked.current) return;
+      locked.current = true;
+      actionModal.current =
+        current.current.modalStack[current.current.modalStack.length - 1];
+      setLoadingWalletId(id);
+      setError(null);
+      try {
+        await action();
+      } catch (e) {
+        if (alive.current)
+          setError(e instanceof Error ? e : new Error(String(e)));
+      } finally {
+        locked.current = false;
+        setLoadingWalletId(null);
+      }
+    },
+    [setLoadingWalletId],
+  );
+
+  const connectProvider = useCallback(
+    async (provider: EIP6963ProviderDetail) => {
+      disconnect?.();
+      await connectAsync({
+        connector: injected({
+          target: {
+            id: provider.info.rdns,
+            name: provider.info.name,
+            provider: () => provider.provider,
+          },
+        }),
+      });
+    },
+    [disconnect, connectAsync],
+  );
+  const selectProvider = useCallback(
+    async (provider: EIP6963ProviderDetail) => {
+      await run(provider.info.rdns, async () => {
+        const screen =
+          current.current.modalStack[current.current.modalStack.length - 1];
+        if (screen?.type === 'eip6963') await screen.props.onSelect(provider);
+        else await connectProvider(provider);
+        complete('browserExtension', provider.info.rdns);
+      });
+    },
+    [run, connectProvider, complete],
+  );
+
+  const connectWallet = useCallback(
+    async (wallet: WalletAdapterData) => {
+      if (
+        !current.current.termsChecked ||
+        locked.current ||
+        ledgerOpening.current ||
+        providerOpening.current ||
+        loadingWalletId != null
+      )
+        return;
+      // Mobile deeplinks do not start a wagmi connection.
+      if (
+        wallet.type === 'walletConnect' &&
+        isMobileOrTablet &&
+        wallet.deeplink
+      ) {
+        openWindow(wallet.deeplink);
+        return;
+      }
+      modalConfig.onConnectStart?.({ walletId: wallet.walletId });
+      if (wallet.type === 'ledgerHID') {
+        ledgerOpening.current = true;
+        try {
+          await openModalAsync({ type: 'ledger' });
+        } finally {
+          ledgerOpening.current = false;
+        }
+        return; // The Ledger flow owns completion and the callback.
+      }
+      if (wallet.walletId === 'browserExtension') {
+        const known = new Set(walletDataList.map((w) => w.rdns));
+        const providers = allProviders.filter((p) => !known.has(p.info.rdns));
+        if (providers.length === 1) {
+          await selectProvider(providers[0]);
+          return;
+        }
+        if (providers.length > 1) {
+          providerOpening.current = true;
+          openModal({
+            type: 'eip6963',
+            props: { providers, onSelect: connectProvider },
+          });
+          return;
+        }
+        if (typeof globalThis.window?.ethereum?.request !== 'function') {
+          openModal({
+            type: 'requirements',
+            props: { kind: 'no-wallets', title: 'No wallets detected' },
+          });
+          return;
+        }
+      }
+      await run(wallet.walletId, async () => {
+        if (
+          wallet.type === 'injected' &&
+          wallet.walletId !== 'metaMask' &&
+          wallet.walletId !== 'browserExtension' &&
+          !(await wallet.detector?.())
+        ) {
+          if (isMobileOrTablet && wallet.deeplink) openWindow(wallet.deeplink);
+          else if (wallet.downloadURLs) suggestApp(wallet.downloadURLs);
+          return;
+        }
+        disconnect?.();
+        const uri = wallet.walletconnectExtras?.connectionViaURI;
+        if (wallet.type === 'walletConnect' && uri?.condition) {
+          // Keep the popup in the user gesture; sever opener after obtaining its handle.
+          const popup = window.open('', '_blank');
+          if (popup) {
+            popup.opener = null;
+            popup.document.write(
+              '<!doctype html><html><head><meta name="referrer" content="no-referrer"><title>Wallet loading</title></head><body>Wallet loading</body></html>',
+            );
+          }
+          try {
+            await Promise.all([
+              connectAsync({ connector: uri.createConnectorFn }),
+              (async () => {
+                const disposable = uri.createConnectorFn({
+                  chains: config.chains,
+                  emitter: {} as any,
+                  providers: providersStore.getProviders(),
+                }) as Connector;
+                const pairingUri = await getWalletConnectUri(disposable);
+                if (popup)
+                  popup.location.href = `${uri.redirectLink}${encodeURIComponent(pairingUri)}`;
+              })(),
+            ]);
+          } finally {
+            if (uri.closeRedirectionWindow ?? true) popup?.close();
+          }
+        } else {
+          await connectAsync({ connector: wallet.createConnectorFn });
+        }
+        complete(wallet.walletId);
+      });
+    },
+    [
+      loadingWalletId,
+      modalConfig,
+      openModalAsync,
+      walletDataList,
+      allProviders,
+      selectProvider,
+      connectProvider,
+      openModal,
+      run,
+      disconnect,
+      config.chains,
+      connectAsync,
+      complete,
+    ],
+  );
+
+  const clearSearch = useCallback(() => setSearch(''), []);
+  const setConsent = useCallback(
+    (checked: boolean) => {
+      if (current.current.termsChecked === checked) return;
+      current.current.termsChecked = checked;
+      setTermsChecked(checked);
+      if (checked)
+        current.current.modalConfig.onClickTermsAccept?.({
+          isAccepted: checked,
+        });
+    },
+    [setTermsChecked],
+  );
+  const toggleExpanded = useCallback(() => {
+    const next = !expanded;
+    setExpanded(next);
+    if (!next) setSearch('');
+    if (next) modalConfig.onClickWalletsMore?.();
+    else modalConfig.onClickWalletsLess?.();
+  }, [expanded, modalConfig]);
+  const wallets = useMemo(
+    () =>
+      search
+        ? allWallets.filter((wallet) =>
+            wallet.walletName.toLowerCase().includes(search.toLowerCase()),
+          )
+        : expanded
+          ? allWallets
+          : allWallets.slice(0, modalConfig.walletsDisplayInitialCount ?? 6),
+    [allWallets, search, expanded, modalConfig.walletsDisplayInitialCount],
+  );
+  const picker = useMemo(
+    () => ({
+      wallets,
+      allWallets,
+      search,
+      expanded,
+      isDiscovering,
+      error,
+      showToggle: expanded || allWallets.length > wallets.length,
+      setSearch,
+      clearSearch,
+      toggleExpanded,
+    }),
+    [
+      wallets,
+      allWallets,
+      search,
+      expanded,
+      isDiscovering,
+      error,
+      toggleExpanded,
+      clearSearch,
+    ],
+  );
+  const value = useMemo(
+    () => ({
+      config: modalConfig,
+      setConsent,
+      notifyStart,
+      picker,
+      error,
+      busy: loadingWalletId != null,
+      connectWallet,
+      selectProvider,
+      complete,
+      run,
+    }),
+    [
+      modalConfig,
+      setConsent,
+      notifyStart,
+      picker,
+      error,
+      loadingWalletId,
+      connectWallet,
+      selectProvider,
+      complete,
+      run,
+    ],
+  );
+  return (
+    <ConnectionContext.Provider value={value}>
+      {children}
+    </ConnectionContext.Provider>
+  );
+}
+
+export function useWalletPicker(
+  config?: ReefKnotWalletsModalConfig,
+): WalletPickerState {
+  return useConnectionContext(config).picker;
+}
+
+export function useWalletConnection(
+  walletId: string,
+  config?: ReefKnotWalletsModalConfig,
+) {
+  const flow = useConnectionContext(config);
+  const { walletDataList, loadingWalletId } = useReefKnotContext();
+  const { termsChecked } = useReefKnotModal();
+  const wallet = walletDataList.find((entry) => entry.walletId === walletId);
+  return {
+    wallet,
+    isVisible:
+      !!wallet &&
+      !wallet.autoConnectOnly &&
+      !(wallet.walletId === 'browserExtension' && isMobileOrTablet),
+    disabled: !termsChecked || flow.busy,
+    isLoading:
+      loadingWalletId === walletId ||
+      (walletId === 'browserExtension' && !!loadingWalletId?.includes('.')),
+    error: flow.error,
+    complete: (reconnectId?: string, rdns?: string) =>
+      flow.complete(reconnectId ?? walletId, rdns),
+    notifyStart: () => flow.notifyStart(walletId),
+    connect: () => (wallet ? flow.connectWallet(wallet) : Promise.resolve()),
+  };
+}
+
+export function useTerms(config?: ReefKnotWalletsModalConfig) {
+  const flow = useConnectionContext(config);
+  const { termsChecked } = useReefKnotModal();
+  const settings = config ?? flow.config;
+  return {
+    checked: termsChecked,
+    linkTerms: settings.linkTerms,
+    linkPrivacyNotice: settings.linkPrivacyNotice,
+    setChecked: flow.setConsent,
+  };
+}
+
+export function useEIP6963Picker(config?: ReefKnotWalletsModalConfig) {
+  const flow = useConnectionContext(config);
+  const { currentModal } = useReefKnotModal();
+  const { loadingWalletId } = useReefKnotContext();
+  const { termsChecked } = useReefKnotModal();
+  return {
+    providers:
+      currentModal?.type === 'eip6963' ? currentModal.props.providers : [],
+    disabled: !termsChecked || flow.busy,
+    loadingWalletId,
+    error: flow.error,
+    select: flow.selectProvider,
+  };
+}

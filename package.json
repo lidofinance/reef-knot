@@ -17,9 +17,10 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck --continue",
-    "check-packages": "turbo run typecheck lint test --filter='./packages/**/*'",
+    "check-packages": "turbo run typecheck lint test --filter='./packages/**/*' && yarn check-ui-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "new-wallet": "turbo gen wallet"
+    "new-wallet": "turbo gen wallet",
+    "check-ui-types": "tsc -p tsconfig.ui-tests.json --noEmit"
   },
   "devDependencies": {
     "@lidofinance/eslint-config": "^0.63.0",

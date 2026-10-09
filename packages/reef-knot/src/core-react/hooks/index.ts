@@ -5,5 +5,6 @@ export * from './useEagerConnect';
 export * from './useDisconnect';
 export * from './useConnectorInfo';
 export * from './useConnect';
+export * from './useConnectionFlow';
 export * from './useReefKnotModal';
 export * from './useEIP6963Providers';

@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": [
+    "custom"
+  ],
+  "ignorePatterns": [
+    "**/*.test.*",
+    "test-ui/"
+  ]
+}

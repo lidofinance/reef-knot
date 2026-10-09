@@ -1,7 +1,8 @@
 import React, { ReactNode, useMemo, useState } from 'react';
 import { ReefKnotModalContextProvider } from './reefKnotModalContext';
-import { ReefKnotContext, ReefKnotProviderConfig } from './reefKnotContext';
+import { ReefKnotContext } from './reefKnotContext';
 import { AutoConnect } from '../components/AutoConnect';
+import { ReefKnotProviderConfig } from '../../types';
 
 export interface ReefKnotProviderProps {
   config: ReefKnotProviderConfig;

@@ -2715,6 +2715,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lidofinance/lido-app-ui@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@lidofinance/lido-app-ui@npm:1.4.0"
+  dependencies:
+    "@lidofinance/lido-shared-ui": "npm:^1.1.3"
+    classnames: "npm:2.5.1"
+    react-jazzicon: "npm:1.0.4"
+  peerDependencies:
+    react: ^18
+    react-dom: ^18
+  checksum: 10/32f08b66d95327723d74f870ab51538dc31410a4fc67bf1a8ef8d4409b47c348ce325770982de9600cc722e374585f166ae070b89fe84bf20367bc74f3c7df41
+  languageName: node
+  linkType: hard
+
 "@lidofinance/lido-ethereum-sdk@npm:4.7.0":
   version: 4.7.0
   resolution: "@lidofinance/lido-ethereum-sdk@npm:4.7.0"
@@ -2729,6 +2743,19 @@ __metadata:
   peerDependencies:
     viem: ^2.45.0
   checksum: 10/81c7c990e931ece4aed6c52b99c755ee454ffeb31ea6e5efde2a6421141c0550f6d74746c346ce535d112ad0cfd703e3b451296324bf217f63875571d77e6aae
+  languageName: node
+  linkType: hard
+
+"@lidofinance/lido-shared-ui@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@lidofinance/lido-shared-ui@npm:1.1.3"
+  dependencies:
+    classnames: "npm:2.5.1"
+    ua-parser-js: "npm:2.0.3"
+  peerDependencies:
+    react: ^18
+    react-dom: ^18
+  checksum: 10/c565cb4eeb5d3bcc8b867173201eb24a7c10170ccce1fec8da08e92bc878fce48f6fc214e6dea8648a80e23a57909488efd969cab60f512a6af73bd95babf619
   languageName: node
   linkType: hard
 
@@ -3781,6 +3808,61 @@ __metadata:
     "@tanstack/react-query": ^5.29.0
     viem: ">=2.50"
     wagmi: ">=3.6"
+  languageName: unknown
+  linkType: soft
+
+"@reef-knot/ui-lido-legacy@npm:*, @reef-knot/ui-lido-legacy@workspace:packages/ui-lido-legacy":
+  version: 0.0.0-use.local
+  resolution: "@reef-knot/ui-lido-legacy@workspace:packages/ui-lido-legacy"
+  dependencies:
+    "@lidofinance/lido-ui": "npm:^3.18.0"
+    "@tanstack/react-query": "npm:^5.51.1"
+    "@types/react": "npm:18.2.45"
+    "@types/react-dom": "npm:18.2.17"
+    "@types/react-transition-group": "npm:4.4.12"
+    build-config: "npm:*"
+    eslint-config-custom: "npm:*"
+    happy-dom: "npm:^20.0.0"
+    react: "npm:18.2.0"
+    react-dom: "npm:18.2.0"
+    react-transition-group: "npm:4"
+    reef-knot: "npm:*"
+    styled-components: "npm:^5.3.6"
+    tsconfig: "npm:*"
+    use-callback-ref: "npm:1.2.5"
+    viem: "npm:>=2.50"
+    vitest: "npm:^4.1.11"
+    wagmi: "npm:>=3.6"
+  peerDependencies:
+    "@lidofinance/lido-ui": ^3.18.0
+    react: ">=18"
+    react-dom: ">=18"
+    reef-knot: "*"
+    styled-components: ^5.3.5
+  languageName: unknown
+  linkType: soft
+
+"@reef-knot/ui-lido@npm:*, @reef-knot/ui-lido@workspace:packages/ui-lido":
+  version: 0.0.0-use.local
+  resolution: "@reef-knot/ui-lido@workspace:packages/ui-lido"
+  dependencies:
+    "@lidofinance/lido-app-ui": "npm:1.4.0"
+    "@tanstack/react-query": "npm:^5.51.1"
+    "@types/react": "npm:18.2.45"
+    "@types/react-dom": "npm:18.2.17"
+    build-config: "npm:*"
+    eslint-config-custom: "npm:*"
+    happy-dom: "npm:^20.0.0"
+    react: "npm:18.2.0"
+    react-dom: "npm:18.2.0"
+    reef-knot: "npm:*"
+    tsconfig: "npm:*"
+    vitest: "npm:^4.1.11"
+  peerDependencies:
+    "@lidofinance/lido-app-ui": ^1.4.0
+    react: ^18
+    react-dom: ^18
+    reef-knot: "*"
   languageName: unknown
   linkType: soft
 
@@ -5886,21 +5968,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.51.15":
-  version: 5.51.15
-  resolution: "@tanstack/query-core@npm:5.51.15"
-  checksum: 10/66d319e29891a1bcb8c3800ad69e11941d8aff64687dd3e042e1f6ccc73917d47bdab4dc04d3d7536211a5ff9f4e7e9b0b47d4f438f44db0d0a7d4d91a1ccc02
+"@tanstack/query-core@npm:5.104.1":
+  version: 5.104.1
+  resolution: "@tanstack/query-core@npm:5.104.1"
+  checksum: 10/05a4410e32e91eb471a7ca1f420c839b49a11367e15a3cebe8ca94e6bfdfbd3bf75a8c22da664746032113419da95d4a37a3be18471fab009d94601d9295d890
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.29.0":
-  version: 5.51.15
-  resolution: "@tanstack/react-query@npm:5.51.15"
+"@tanstack/react-query@npm:^5.51.1":
+  version: 5.104.1
+  resolution: "@tanstack/react-query@npm:5.104.1"
   dependencies:
-    "@tanstack/query-core": "npm:5.51.15"
+    "@tanstack/query-core": "npm:5.104.1"
   peerDependencies:
-    react: ^18.0.0
-  checksum: 10/637a79951d35f9bc28eb6667f4d7936436e80b2e51377cce3dafe83a21ba65575272036e980f6bf755b5b4b4cde2e35cddb9c0d14c5ed9a83a15b68372fced72
+    react: ^18 || ^19
+  checksum: 10/845b0e7549bce8b85adeb8d092bbdf749b8215296420a02023f2abcee3b350e5d54fcc5aaf396eff617a86581da8313652c3e4de2f6d30848424c1f201409c86
   languageName: node
   linkType: hard
 
@@ -6084,6 +6166,16 @@ __metadata:
   version: 2.1.0
   resolution: "@types/ms@npm:2.1.0"
   checksum: 10/532d2ebb91937ccc4a89389715e5b47d4c66e708d15942fe6cc25add6dc37b2be058230a327dd50f43f89b8b6d5d52b74685a9e8f70516edfc9bdd6be910eff4
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.6.12":
+  version: 2.6.13
+  resolution: "@types/node-fetch@npm:2.6.13"
+  dependencies:
+    "@types/node": "npm:*"
+    form-data: "npm:^4.0.4"
+  checksum: 10/944d52214791ebba482ca1393a4f0d62b0dbac5f7343ff42c128b75d5356d8bcefd4df77771b55c1acd19d118e16e9bd5d2792819c51bc13402d1c87c0975435
   languageName: node
   linkType: hard
 
@@ -8528,6 +8620,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"classnames@npm:2.5.1":
+  version: 2.5.1
+  resolution: "classnames@npm:2.5.1"
+  checksum: 10/58eb394e8817021b153bb6e7d782cfb667e4ab390cb2e9dac2fc7c6b979d1cc2b2a733093955fc5c94aa79ef5c8c89f11ab77780894509be6afbb91dddd79d15
+  languageName: node
+  linkType: hard
+
 "clean-regexp@npm:^1.0.0":
   version: 1.0.0
   resolution: "clean-regexp@npm:1.0.0"
@@ -9318,14 +9417,17 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.29.7"
     "@coinbase/wallet-sdk": "npm:^4.3.6"
+    "@lidofinance/lido-app-ui": "npm:1.4.0"
     "@lidofinance/lido-ethereum-sdk": "npm:4.7.0"
     "@lidofinance/lido-ui": "npm:^3.18.0"
     "@metamask/connect-evm": "npm:^2.1.0"
     "@next/bundle-analyzer": "npm:^14.2.35"
+    "@reef-knot/ui-lido": "npm:*"
+    "@reef-knot/ui-lido-legacy": "npm:*"
     "@safe-global/safe-apps-provider": "npm:^0.18.6"
     "@safe-global/safe-apps-sdk": "npm:^9.1.0"
     "@svgr/webpack": "npm:^8.0.1"
-    "@tanstack/react-query": "npm:^5.29.0"
+    "@tanstack/react-query": "npm:^5.51.1"
     "@types/lodash": "npm:^4.17.25"
     "@types/node": "npm:^17.0.12"
     "@types/react": "npm:18.2.45"
@@ -9364,6 +9466,13 @@ __metadata:
   version: 5.3.0
   resolution: "detect-browser@npm:5.3.0"
   checksum: 10/4a8551e1f5170633c9aa976f16c57f81f1044d071b2eb853c572bd817bf9cd0cc90c9c520d950edb5accd31b1b0c8ddb7a96e82040b0b5579f9f09c77446a117
+  languageName: node
+  linkType: hard
+
+"detect-europe-js@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "detect-europe-js@npm:0.1.2"
+  checksum: 10/3d6dcf6ac451baa3050ff00e05cf1841e208bc4f27c69ec2c8df5fdf2375403cf2911f8059c9c18f258d7e176c8d308e4e0e8552500d0e30a9e95a514366ef13
   languageName: node
   linkType: hard
 
@@ -10991,7 +11100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.6":
+"form-data@npm:^4.0.4, form-data@npm:^4.0.6":
   version: 4.0.6
   resolution: "form-data@npm:4.0.6"
   dependencies:
@@ -12346,6 +12455,13 @@ __metadata:
   dependencies:
     call-bound: "npm:^1.0.3"
   checksum: 10/0380d7c60cc692856871526ffcd38a8133818a2ee42d47bb8008248a0cd2121d8c8b5f66b6da3cac24bc5784553cacb6faaf678f66bc88c6615b42af2825230e
+  languageName: node
+  linkType: hard
+
+"is-standalone-pwa@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "is-standalone-pwa@npm:0.1.1"
+  checksum: 10/bbd2ee7cbea985139f66fe8785e7699f52311e9c14d74190659885222b79dd1e8845b02f69b9221a23a2b4b00e8d4bea0a5a2603b2f26cb6d2071d46093ccf84
   languageName: node
   linkType: hard
 
@@ -15586,7 +15702,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-jazzicon@npm:^1.0.4":
+"react-jazzicon@npm:1.0.4, react-jazzicon@npm:^1.0.4":
   version: 1.0.4
   resolution: "react-jazzicon@npm:1.0.4"
   dependencies:
@@ -15817,7 +15933,6 @@ __metadata:
     "@ledgerhq/hw-app-eth": "npm:7.8.12"
     "@ledgerhq/hw-transport": "npm:6.35.7"
     "@ledgerhq/hw-transport-webhid": "npm:6.36.0"
-    "@lidofinance/lido-ui": "npm:^3.18.0"
     "@reef-knot/ledger-connector": "npm:*"
     "@reef-knot/wallet-adapter-ambire": "npm:*"
     "@reef-knot/wallet-adapter-anchorage-digital": "npm:*"
@@ -15835,23 +15950,20 @@ __metadata:
     "@reef-knot/wallets-helpers": "npm:*"
     "@types/react": "npm:18.2.45"
     "@types/react-dom": "npm:18.2.17"
-    "@types/react-transition-group": "npm:4.4.12"
     build-config: "npm:*"
     eslint-config-custom: "npm:*"
+    happy-dom: "npm:^20.0.0"
     mipd: "npm:0.0.7"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    react-transition-group: "npm:4"
-    styled-components: "npm:^5.3.6"
-    use-callback-ref: "npm:1.2.5"
+    tsconfig: "npm:*"
     viem: "npm:>=2.50"
+    vitest: "npm:^4.1.11"
     wagmi: "npm:>=3.6"
   peerDependencies:
-    "@lidofinance/lido-ui": ^3.18.0
     "@tanstack/react-query": ^5.51.1
     react: ">=18"
     react-dom: ">=18"
-    styled-components: ^5.3.5
     viem: ">=2.50"
     wagmi: ">=3.6"
   languageName: unknown
@@ -18100,10 +18212,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ua-is-frozen@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "ua-is-frozen@npm:0.1.2"
+  checksum: 10/0113bed77d437a3752323175f01057dd01911506225e9d33799799188a89a230ab63d2445b096d4399ea8eb94e3163608f7ac2425fb8edd0844d891490607e14
+  languageName: node
+  linkType: hard
+
 "ua-parser-js@npm:1.0.37, ua-parser-js@npm:^1.0.35":
   version: 1.0.37
   resolution: "ua-parser-js@npm:1.0.37"
   checksum: 10/56508f2428ebac64382c4d41da14189e5013e3e2a5f5918aff4bee3ba77df1f4eaad6f81f90c24999f1cf12cc1596764684497fec07e0ff5182ce9a323a8c05b
+  languageName: node
+  linkType: hard
+
+"ua-parser-js@npm:2.0.3":
+  version: 2.0.3
+  resolution: "ua-parser-js@npm:2.0.3"
+  dependencies:
+    "@types/node-fetch": "npm:^2.6.12"
+    detect-europe-js: "npm:^0.1.2"
+    is-standalone-pwa: "npm:^0.1.1"
+    node-fetch: "npm:^2.7.0"
+    ua-is-frozen: "npm:^0.1.2"
+  bin:
+    ua-parser-js: script/cli.js
+  checksum: 10/f181f1c976d67a2a8cdd396f8c5cecc8bfe4ada7183e7ef06a81a09aa9dc98480048380240f6374189cf2ab7e6275b711f9732e26b7ed2a14f3e4fe3576b8842
   languageName: node
   linkType: hard
 

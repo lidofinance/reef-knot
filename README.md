@@ -9,7 +9,8 @@ Web3 Wallets Connection Library
 ## Documentation
 
 - [How to add a wallet](docs/how-to-add-a-wallet.md)
-- [Migration guide](docs/migration-guide.md)
+- [Migration guide: 0.x → latest](docs/migration-guide-0.x-to-latest.md)
+- [Migration guide: 8.x → 9](docs/migration-guide-8.x-to-9.md)
 
 ---
 
@@ -20,13 +21,13 @@ Web3 Wallets Connection Library
 #### Using NPM
 
 ```bash
-npm install reef-knot
+npm install reef-knot @reef-knot/ui-lido-legacy
 ```
 
 #### Using Yarn
 
 ```bash
-yarn add reef-knot
+yarn add reef-knot @reef-knot/ui-lido-legacy
 ```
 
 ### Wagmi and Viem
@@ -44,11 +45,11 @@ To set up Reef Knot, you’ll need the following imports:
 ```typescript
 import {
   ReefKnotProvider,
-  ReefKnotWalletsModal,
   WalletsListEthereum,
   getDefaultConfig,
   getDefaultWalletsModalConfig,
 } from 'reef-knot';
+import { ReefKnotWalletsModal } from '@reef-knot/ui-lido-legacy';
 ```
 
 ### Setting Up Providers
@@ -82,7 +83,7 @@ The `getDefaultWalletsModalConfig` function provides default configuration optio
 - The wallets to display or pin
 - Links to the terms of service and privacy policy
 
-All providers, hooks, UI components, configuration types, and the default wallet list are exported from `reef-knot`.
+Providers, headless hooks, configuration types and the default wallet list are exported from `reef-knot`. UI components are exported from `@reef-knot/ui-lido-legacy` or `@reef-knot/ui-lido`. See [headless UI and migration](docs/headless-ui.md).
 
 ### WalletsListEthereum
 
@@ -106,29 +107,29 @@ The `walletsShown` prop is an array of wallet IDs. Simply remove the desired wal
 
 #### Dark Theme
 
-To enable a dark theme for the Wallet Connection Modal, use the `darkThemeEnabled` prop on the `<ReefKnotWalletsModal>` component.
+The legacy UI skin accepts `darkThemeEnabled`. The Lido App UI skin accepts `theme="light"` or `theme="dark"`.
 
-### Triggering the Wallet Connection Modal
+### Starting the Wallet Connection Flow
 
-To open the Wallet Connection Modal, use the `useConnect` hook provided by Reef Knot.
+To start eager connection or open the wallet picker, use the `useConnectionFlow` hook provided by Reef Knot.
 
 #### Import the Hook
 
 ```typescript
-import { useConnect } from 'reef-knot';
+import { useConnectionFlow } from 'reef-knot';
 ```
 
 #### Use the Hook
 
-Call the `useConnect` hook to get the `connect` callback:
+Call the `useConnectionFlow` hook to get the `startConnection` callback:
 
 ```typescript
-const { connect } = useConnect();
+const { startConnection } = useConnectionFlow();
 ```
 
-#### How `connect` Works
+#### How `startConnection` Works
 
-The `connect` callback determines the current environment (e.g., desktop browser, mobile wallet app, iframe) and behaves accordingly:
+The `startConnection` callback determines the current environment (e.g., desktop browser, mobile wallet app, iframe) and behaves accordingly:
 
 - If the dApp is opened inside a wallet's dApp browser, it attempts an automatic connection with this specific wallet.
 - Otherwise, it opens the Wallet Connection Modal for manual wallet selection.

@@ -23,7 +23,7 @@ type WagmiConfigArgs = Omit<
   'connectors' | 'client'
 >;
 
-type DefaultConfigArgs<I extends string = string> = ReefKnotConfig &
+export type DefaultConfigArgs<I extends string = string> = ReefKnotConfig &
   ReefKnotWalletsModalConfig<I> &
   GetWalletsDataListArgs &
   WagmiConfigArgs;
@@ -52,7 +52,6 @@ export const getDefaultConfig = <I extends string = string>({
   onReconnect,
 
   // Wallets config args
-  buttonComponentsByConnectorId,
   walletsShown,
   walletsPinned,
   walletsDisplayInitialCount,
@@ -91,9 +90,7 @@ export const getDefaultConfig = <I extends string = string>({
     ...wagmiArgs,
   });
 
-  // TODO: We could use `getDefaultWalletsModalConfig` here, but it cause package dependency cycle rn
-  const walletsModalConfig: ReefKnotWalletsModalConfig = {
-    buttonComponentsByConnectorId,
+  const walletsModalConfig: ReefKnotWalletsModalConfig<I> = {
     walletsShown,
     walletsPinned,
     walletsDisplayInitialCount,

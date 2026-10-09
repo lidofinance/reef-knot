@@ -16,6 +16,9 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 // Next's webpack graph, so package rebuilds invalidate Fast Refresh/HMR.
 const withReefKnotPackages = nextTranspileModules([
   'reef-knot',
+  '@reef-knot/ui-lido-legacy',
+  '@reef-knot/ui-lido',
+  '@lidofinance/lido-app-ui',
   '@reef-knot/ledger-connector',
   '@reef-knot/wallet-adapter-ambire',
   '@reef-knot/wallet-adapter-anchorage-digital',
@@ -85,6 +88,10 @@ export default withReefKnotPackages(
     },
     async headers() {
       return [
+        {
+          source: '/runtime/window-env.js',
+          headers: [{ key: 'Cache-Control', value: 'no-store' }],
+        },
         {
           // required for Gnosis Safe apps
           source: '/manifest.json',

@@ -11,7 +11,8 @@ import type { EIP6963ProviderDetail } from '../eip6963';
 
 /// MODAL STATE
 
-type RequirementsData = {
+export type RequirementsData = {
+  kind?: 'no-wallets';
   icon?: ReactNode;
   title?: string;
   text?: ReactNode;
@@ -22,7 +23,7 @@ type EIP6963ModalData = {
   onSelect: (provider: EIP6963ProviderDetail) => void | Promise<void>;
 };
 
-type ModalTypes =
+export type ModalTypes =
   | {
       type: 'wallet' | 'ledger';
       props?: undefined;
@@ -43,11 +44,11 @@ type ModalTypes =
       props: EIP6963ModalData;
     };
 
-type ModalResult = {
+export type ModalResult = {
   success: boolean;
 };
 
-type ModalStateEntry = {
+export type ModalStateEntry = {
   onClose: (props: ModalResult) => void;
 } & ModalTypes;
 

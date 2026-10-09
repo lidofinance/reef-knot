@@ -1,18 +1,18 @@
 import { FC, useCallback } from 'react';
 import { Button, ButtonProps } from '@lidofinance/lido-ui';
-import { useConnect } from 'reef-knot';
+import { useConnectionFlow } from 'reef-knot';
 
 import { useClientConfig } from 'providers/client-config';
 
 const WalletConnect: FC<ButtonProps> = (props) => {
   const { isWalletConnectionAllowed } = useClientConfig();
   const { onClick, ...rest } = props;
-  const { connect } = useConnect();
+  const { startConnection } = useConnectionFlow();
 
   const handleClick = useCallback(() => {
     if (!isWalletConnectionAllowed) return;
-    void connect();
-  }, [isWalletConnectionAllowed, connect]);
+    void startConnection();
+  }, [isWalletConnectionAllowed, startConnection]);
 
   return (
     <Button

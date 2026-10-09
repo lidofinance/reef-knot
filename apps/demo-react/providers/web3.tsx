@@ -2,11 +2,11 @@ import { FC, PropsWithChildren, useMemo } from 'react';
 import { useThemeToggle } from '@lidofinance/lido-ui';
 import {
   ReefKnotProvider,
-  ReefKnotWalletsModal,
   WalletsListEthereum,
   getDefaultConfig,
   getDefaultWalletsModalConfig,
 } from 'reef-knot';
+import { WalletUIProvider } from '../features/wallet-ui/wallet-ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http } from 'wagmi';
 import * as wagmiChains from 'wagmi/chains';
@@ -73,7 +73,6 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       ssr: true,
 
       // Wallets config args
-      // TODO: We could call `getDefaultWalletsModalConfig` inside `getDefaultConfig`, but it cause package dependency cycle rn
       ...getDefaultWalletsModalConfig(),
       ...metricProps,
     });
@@ -91,11 +90,12 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
     <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
       <QueryClientProvider client={queryClient}>
         <ReefKnotProvider config={reefKnotConfig}>
-          <ReefKnotWalletsModal
+          <WalletUIProvider
             config={walletsModalConfig}
-            darkThemeEnabled={themeName === 'dark'}
-          />
-          {children}
+            theme={themeName === 'dark' ? 'dark' : 'light'}
+          >
+            {children}
+          </WalletUIProvider>
         </ReefKnotProvider>
       </QueryClientProvider>
     </WagmiProvider>

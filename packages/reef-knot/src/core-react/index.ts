@@ -5,5 +5,11 @@ export * from './context/reefKnotContext';
 export * from './context/reefKnotProvider';
 export { ReefKnotModalContextProvider } from './context/reefKnotModalContext';
 export type { ReefKnotModalContextValue } from './context/reefKnotModalContext';
+export type {
+  ModalTypes,
+  ModalResult,
+  ModalStateEntry,
+  RequirementsData,
+} from './context/reefKnotModalContext';
 export { providersStore } from './eip6963';
 export type { EIP6963ProviderDetail } from './eip6963';
