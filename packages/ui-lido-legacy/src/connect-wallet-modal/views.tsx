@@ -10,6 +10,7 @@ import {
   type WalletPickerViewProps,
   type EagerConnectViewProps,
   type RequirementsViewProps,
+  type ConnectionErrorViewProps,
   type EIP6963PickerViewProps,
   type LedgerViewProps,
 } from 'reef-knot';
@@ -85,7 +86,6 @@ function Picker(props: WalletPickerViewProps) {
       config={{
         walletsShown: [],
         walletsPinned: [],
-        linkDontHaveWallet: props.linkDontHaveWallet,
       }}
       terms={props.terms}
       inputValue={state.search}
@@ -169,6 +169,19 @@ function Requirements(_props: RequirementsViewProps) {
   return null;
 }
 
+function ConnectionError({ errorMessage, onBack }: ConnectionErrorViewProps) {
+  return (
+    <>
+      <ErrorBlock role="alert">{errorMessage}</ErrorBlock>
+      <CommonButtonsContainer>
+        <Button fullwidth onClick={onBack}>
+          Back to wallets
+        </Button>
+      </CommonButtonsContainer>
+    </>
+  );
+}
+
 function EIP6963Picker({ terms, children, error }: EIP6963PickerViewProps) {
   return (
     <>
@@ -232,6 +245,7 @@ export const LEGACY_COMPONENTS: ReefKnotUIComponents = {
   WalletPicker: Picker,
   EagerConnect,
   Requirements,
+  ConnectionError,
   EIP6963Picker,
   LedgerConnection,
   LedgerAccounts,

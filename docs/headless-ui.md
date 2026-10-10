@@ -84,7 +84,7 @@ Run `yarn build-packages`, then `yarn workspace demo-react dev`. The existing th
 
 ## Replace visual parts
 
-Both UI skins accept `components?: Partial<ReefKnotUIComponents>`. Omitted components retain the UI skin defaults. Replace `ModalContainer`, `WalletButton`, `Terms`, `WalletPicker`, `EagerConnect`, `Requirements`, `EIP6963Picker`, `LedgerConnection`, `LedgerAccounts` or `LedgerError`.
+Both UI skins accept `components?: Partial<ReefKnotUIComponents>`. Omitted components retain the UI skin defaults. Replace `ModalContainer`, `WalletButton`, `Terms`, `WalletPicker`, `EagerConnect`, `Requirements`, `ConnectionError`, `EIP6963Picker`, `LedgerConnection`, `LedgerAccounts` or `LedgerError`.
 
 ```tsx
 <ReefKnotWalletsModal
@@ -112,3 +112,13 @@ The split does not migrate storage keys or invalidate Terms acceptance. Reconnec
 ## Validation
 
 Run `yarn check-packages` for package TypeScript, lint and scenario tests. The gate also checks the TypeScript of the headless/UI tests and build configurations.
+
+Connection failures in the wallet picker and EIP-6963 picker replace the current
+view with `components.ConnectionError`. Its props contain the original `error`, a prepared `errorMessage`, and an
+`onBack` action. The message uses a non-empty viem/wagmi `shortMessage`, falling
+back to `Error.message` for other errors. Back, Close and Escape dismiss the error without completing or
+cancelling the underlying connection flow; search, expansion, consent and nested
+screens are preserved. Custom interfaces can dismiss errors through
+`useWalletPicker().dismissError()` or `useEIP6963Picker().dismissError()`.
+Ledger retains its dedicated error screen, and eager connection retains its
+inline error and retry action.

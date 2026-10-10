@@ -16,7 +16,6 @@ export type WalletPickerProps = {
  * buttons. Search, ordering and expansion are handled by useWalletPicker.
  */
 export function WalletPicker({
-  config,
   components,
   theme,
   buttonsFullWidth,
@@ -26,7 +25,6 @@ export function WalletPicker({
     <components.WalletPicker
       state={state}
       terms={<Terms components={components} />}
-      linkDontHaveWallet={config.linkDontHaveWallet}
       theme={theme}
       buttonsFullWidth={buttonsFullWidth}
     >

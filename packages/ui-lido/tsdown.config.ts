@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { cpSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { defineConfig } from 'tsdown';
 import { defineStandardConfig } from 'build-config';
@@ -26,6 +26,7 @@ export default defineConfig({
         'dist/styles.css',
         `.rk-lido-overlay[data-lido-theme="light"] {${lightColors.join('')}}\n${readFileSync('src/styles.css', 'utf8')}`,
       );
+      cpSync('src/assets', 'dist/assets', { recursive: true });
     },
   },
 });

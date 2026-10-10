@@ -45,7 +45,6 @@ export type WalletPickerViewProps = {
   state: WalletPickerState;
   children?: ReactNode;
   terms: ReactNode;
-  linkDontHaveWallet?: string;
   theme?: ReefKnotTheme;
   buttonsFullWidth?: boolean;
 };
@@ -54,6 +53,12 @@ export type EagerConnectViewProps = {
   terms: ReactNode;
 };
 export type RequirementsViewProps = { requirements: RequirementsData };
+export type ConnectionErrorViewProps = {
+  error: Error;
+  /** Concise shortMessage from viem/wagmi, falling back to Error.message. */
+  errorMessage: string;
+  onBack: () => void;
+};
 export type EIP6963PickerViewProps = {
   providers: readonly EIP6963ProviderDetail[];
   terms: ReactNode;
@@ -68,6 +73,7 @@ export type ReefKnotUIComponents = {
   WalletPicker: ComponentType<WalletPickerViewProps>;
   EagerConnect: ComponentType<EagerConnectViewProps>;
   Requirements: ComponentType<RequirementsViewProps>;
+  ConnectionError: ComponentType<ConnectionErrorViewProps>;
   EIP6963Picker: ComponentType<EIP6963PickerViewProps>;
   LedgerConnection: ComponentType<LedgerViewProps>;
   LedgerAccounts: ComponentType<LedgerViewProps>;

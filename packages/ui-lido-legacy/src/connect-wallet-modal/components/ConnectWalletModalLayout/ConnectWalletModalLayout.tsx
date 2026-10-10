@@ -9,7 +9,6 @@ import {
   WalletsButtonsContainer,
   Subtitle,
   ContentHeader,
-  NoWalletLink,
   MoreWalletsToggleButton,
   MoreWalletsText,
   IconMoreWallets,
@@ -48,7 +47,6 @@ export const ConnectWalletModalLayout = ({
   children,
   ...passedDownProps
 }: ConnectWalletModalLayoutProps) => {
-  const { linkDontHaveWallet } = config;
   const { buttonsFullWidth = false, darkThemeEnabled } = passedDownProps;
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -73,11 +71,6 @@ export const ConnectWalletModalLayout = ({
           {terms}
           <Subtitle>
             <span>Choose wallet </span>
-            {linkDontHaveWallet && (
-              <NoWalletLink href={linkDontHaveWallet}>
-                I don&apos;t have a wallet
-              </NoWalletLink>
-            )}
           </Subtitle>
           {isShownOtherWallets && (
             <WalletModalInput

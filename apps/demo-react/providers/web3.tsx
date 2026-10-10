@@ -41,7 +41,11 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       supportedChains[0]; // first supported chain as fallback
 
     return {
-      supportedChains: supportedChains as ChainsList,
+      // Wagmi initializes its active chain from chains[0] when no state is saved.
+      supportedChains: [
+        defaultChain,
+        ...supportedChains.filter((chain) => chain.id !== defaultChain.id),
+      ] as ChainsList,
       defaultChain,
     };
   }, [defaultChainId, supportedChainIds]);

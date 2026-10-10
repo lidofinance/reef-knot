@@ -41,6 +41,7 @@ export type WalletPickerState = {
   isDiscovering: boolean;
   error: Error | null;
   setSearch: (value: string) => void;
+  dismissError: () => void;
   clearSearch: () => void;
   toggleExpanded: () => void;
 };
@@ -50,6 +51,7 @@ type ConnectionContextValue = {
   picker: WalletPickerState;
   error: Error | null;
   busy: boolean;
+  dismissError: () => void;
   connectWallet: (wallet: WalletAdapterData) => Promise<void>;
   selectProvider: (provider: EIP6963ProviderDetail) => Promise<void>;
   complete: (walletId: string, rdns?: string) => void;
@@ -95,6 +97,7 @@ export function ReefKnotUIProvider({
   const [expanded, setExpanded] = useState(false);
   const [isDiscovering, setDiscovering] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const dismissError = useCallback(() => setError(null), []);
   const locked = useRef(false);
   const ledgerOpening = useRef(false);
   const providerOpening = useRef(false);
@@ -387,6 +390,7 @@ export function ReefKnotUIProvider({
       setSearch,
       clearSearch,
       toggleExpanded,
+      dismissError,
     }),
     [
       wallets,
@@ -397,6 +401,7 @@ export function ReefKnotUIProvider({
       error,
       toggleExpanded,
       clearSearch,
+      dismissError,
     ],
   );
   const value = useMemo(
@@ -407,6 +412,7 @@ export function ReefKnotUIProvider({
       picker,
       error,
       busy: loadingWalletId != null,
+      dismissError,
       connectWallet,
       selectProvider,
       complete,
@@ -419,6 +425,7 @@ export function ReefKnotUIProvider({
       picker,
       error,
       loadingWalletId,
+      dismissError,
       connectWallet,
       selectProvider,
       complete,
@@ -488,5 +495,6 @@ export function useEIP6963Picker(config?: ReefKnotWalletsModalConfig) {
     loadingWalletId,
     error: flow.error,
     select: flow.selectProvider,
+    dismissError: flow.dismissError,
   };
 }

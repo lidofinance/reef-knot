@@ -3,6 +3,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { mainnet } from 'viem/chains';
+import { BaseError } from 'viem';
 import {
   ReefKnotProvider,
   useReefKnotModal,
@@ -122,8 +123,81 @@ export function runUISuite(
         'User rejected',
       );
       expect(modal.currentModal?.type).toBe('wallet');
+      expect(walletButton()).toBeUndefined();
+      const back = Array.from(document.querySelectorAll('button')).find(
+        (button) => button.textContent === 'Back to wallets',
+      )!;
+      await act(async () => back.click());
+      expect(walletButton().disabled).toBe(false);
+      expect(document.querySelector('[role="alert"]')).toBeNull();
       await act(async () => walletButton().click());
       expect(modal.modalStack).toHaveLength(0);
+    });
+    it('displays the viem shortMessage without technical details', async () => {
+      mocks.connect.mockRejectedValueOnce(
+        new BaseError('Connection declined', {
+          details: 'Technical RPC details',
+        }),
+      );
+      await mount(dark);
+      await act(async () =>
+        (
+          document.querySelector('input[type="checkbox"]') as HTMLInputElement
+        ).click(),
+      );
+      await act(async () => walletButton().click());
+      expect(document.querySelector('[role="alert"]')?.textContent).toBe(
+        'Connection declined',
+      );
+    });
+    it('preserves picker search, expansion and consent after an error', async () => {
+      mocks.connect.mockRejectedValueOnce(new Error('Connection failed'));
+      const success = await mount(dark, {
+        WalletPicker: ({ state, terms, children }) => (
+          <>
+            {terms}
+            <output data-testid="picker-state">
+              {state.search}:{String(state.expanded)}
+            </output>
+            <button
+              onClick={() => {
+                state.toggleExpanded();
+                state.setSearch('Meta');
+              }}
+            >
+              Prepare search
+            </button>
+            {children}
+          </>
+        ),
+      });
+      await act(async () =>
+        Array.from(document.querySelectorAll('button'))
+          .find((button) => button.textContent === 'Prepare search')!
+          .click(),
+      );
+      await act(async () =>
+        (
+          document.querySelector('input[type="checkbox"]') as HTMLInputElement
+        ).click(),
+      );
+      await act(async () => walletButton().click());
+      expect(success).not.toHaveBeenCalled();
+      expect(mocks.setItem).not.toHaveBeenCalled();
+      await act(async () =>
+        Array.from(document.querySelectorAll('button'))
+          .find((button) => button.textContent === 'Back to wallets')!
+          .click(),
+      );
+      expect(
+        document.querySelector('[data-testid="picker-state"]')?.textContent,
+      ).toBe('Meta:true');
+      expect(
+        (document.querySelector('input[type="checkbox"]') as HTMLInputElement)
+          .checked,
+      ).toBe(true);
+      expect(modal.modalStack).toHaveLength(1);
+      expect(walletButton().disabled).toBe(false);
     });
     it('renders the eager retry screen on the same consent and error contract', async () => {
       await mount(dark);
@@ -189,6 +263,49 @@ export function runUISuite(
       expect(select).toHaveBeenCalledExactlyOnceWith(provider);
       expect(success).toHaveBeenCalledOnce();
       expect(modal.modalStack).toHaveLength(0);
+    });
+    it('returns from an EIP-6963 error without completing either screen', async () => {
+      const success = await mount(dark);
+      const select = vi
+        .fn()
+        .mockRejectedValueOnce(new Error('Provider failed'));
+      const provider = {
+        info: {
+          uuid: 'failed-provider',
+          name: 'Discovered wallet',
+          rdns: 'org.example.wallet',
+          icon: 'data:image/png;base64,AA' as const,
+        },
+        provider: { request: vi.fn(), on: vi.fn(), removeListener: vi.fn() },
+      };
+      await act(async () =>
+        modal.openModal({
+          type: 'eip6963',
+          props: { providers: [provider], onSelect: select },
+        }),
+      );
+      await act(async () =>
+        (
+          document.querySelector('input[type="checkbox"]') as HTMLInputElement
+        ).click(),
+      );
+      const button = () =>
+        Array.from(document.querySelectorAll('button')).find((item) =>
+          item.textContent?.includes('Discovered wallet'),
+        )!;
+      await act(async () => button().click());
+      expect(document.querySelector('[role="alert"]')?.textContent).toContain(
+        'Provider failed',
+      );
+      const back = Array.from(document.querySelectorAll('button')).find(
+        (item) => item.textContent === 'Back to wallets',
+      )!;
+      await act(async () => back.click());
+      expect(modal.modalStack).toHaveLength(2);
+      expect(modal.currentModal?.type).toBe('eip6963');
+      expect(button().disabled).toBe(false);
+      expect(success).not.toHaveBeenCalled();
+      expect(mocks.setItem).not.toHaveBeenCalled();
     });
     if (LedgerAccounts)
       it('uses Ledger Select without dismissing the surrounding dialog', async () => {

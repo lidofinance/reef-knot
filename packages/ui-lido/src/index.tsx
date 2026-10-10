@@ -1,13 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { LedgerImage } from './components/LedgerImage';
+import { LedgerAccountIcon } from './components/LedgerAccountIcon';
+import { BrowserWalletIconsGrid } from './components/BrowserWalletIconsGrid';
 import {
   Button,
   Checkbox,
   Input,
   Modal,
   IconButton,
-  IconArrowLeft,
+  IconChevronDown,
+  IconChevronUp,
+  IconChevronRight,
   TokenSelector,
+  IconSearch,
 } from '@lidofinance/lido-app-ui';
 import {
   ReefKnotModalRenderer,
@@ -16,6 +22,7 @@ import {
   useModalFocus,
   useModalClose,
   FALLBACK_WALLET_ICON,
+  useReefKnotModal,
 } from 'reef-knot';
 import type {
   ModalContainerProps,
@@ -24,6 +31,7 @@ import type {
   WalletPickerViewProps,
   EagerConnectViewProps,
   RequirementsViewProps,
+  ConnectionErrorViewProps,
   EIP6963PickerViewProps,
   LedgerViewProps,
   ReefKnotUIComponents,
@@ -39,10 +47,11 @@ function PortalDialog({
   theme = 'light',
   onClose,
   onBack,
-  widthClamp,
+  widthClamp: _widthClamp,
   className,
   ...rest
 }: ModalContainerProps) {
+  const { currentModal } = useReefKnotModal();
   useEscape(onClose);
   useLockScroll();
   const focusRef = useModalFocus();
@@ -52,6 +61,7 @@ function PortalDialog({
       {...rest}
       className="rk-lido-overlay"
       data-lido-theme={theme}
+      data-screen={currentModal?.type}
       onClick={handleClick}
       ref={(node) => {
         const dialog =
@@ -66,26 +76,16 @@ function PortalDialog({
           dialog;
       }}
     >
-      <div
-        className="rk-lido-dialog-container"
-        style={{ maxWidth: widthClamp ?? 660 }}
-      >
+      <div className="rk-lido-dialog-container" style={{ maxWidth: 500 }}>
         <Modal
           className={`rk-lido-dialog ${className ?? ''}`}
           onClose={onClose}
           subtitle={subtitle}
+          bodyFill
           title={
             <span className="rk-lido-title">
-              {onBack && (
-                <IconButton
-                  variant="ghost"
-                  icon={<IconArrowLeft />}
-                  onClick={onBack}
-                  aria-label="Go back"
-                />
-              )}
               {titleIcon}
-              {title}
+              <span className="rk-lido-heading">{title}</span>
             </span>
           }
         >
@@ -123,6 +123,7 @@ export function ModalContainer({
 }
 
 export function WalletButton({
+  walletId,
   name,
   icon,
   iconUrl,
@@ -139,10 +140,10 @@ export function WalletButton({
       : icon;
   return (
     <Button
-      variant="subtle"
+      variant="outline"
       className="rk-lido-wallet"
       disabled={disabled || isLoading}
-      loading={isLoading}
+      aria-busy={isLoading || undefined}
       onClick={onConnect}
     >
       <span className="rk-lido-wallet-icon">
@@ -154,6 +155,8 @@ export function WalletButton({
               event.currentTarget.src = FALLBACK_WALLET_ICON;
             }}
           />
+        ) : walletId === 'browserExtension' ? (
+          <BrowserWalletIconsGrid />
         ) : Icon ? (
           <Icon />
         ) : (
@@ -161,6 +164,7 @@ export function WalletButton({
         )}
       </span>
       <span className="rk-lido-wallet-name">{name}</span>
+      {isLoading && <span className="rk-lido-connecting">Connecting…</span>}
     </Button>
   );
 }
@@ -202,66 +206,68 @@ export function WalletPicker({
   state,
   children,
   terms,
-  linkDontHaveWallet,
-  buttonsFullWidth,
 }: WalletPickerViewProps) {
+  const listRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    // A new search or list mode starts at the first matching wallet.
+    if (listRef.current) listRef.current.scrollTop = 0;
+    setIsScrolled(false);
+  }, [state.search, state.expanded]);
+
   return (
     <section className="rk-lido-picker">
       {terms}
-      <div className="rk-lido-subtitle">
-        <span>Choose wallet</span>
-        {linkDontHaveWallet && (
-          <a
-            href={linkDontHaveWallet}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            I don&apos;t have a wallet
-          </a>
-        )}
-      </div>
-      {state.expanded && (
-        <div className="rk-lido-search">
-          <Input
-            value={state.search}
-            onChange={(event) => state.setSearch(event.currentTarget.value)}
-            placeholder="Search wallets"
-            aria-label="Search wallets"
-            size="default"
-          />
-          <Button variant="ghost" size="small" onClick={state.clearSearch}>
-            Clear
-          </Button>
-        </div>
-      )}
-      <div
-        className={`rk-lido-wallets ${state.expanded || buttonsFullWidth ? 'rk-lido-fullwidth' : ''}`}
-      >
-        {state.isDiscovering && state.wallets.length === 0 && (
-          <p role="status">Discovering wallets…</p>
-        )}
-        {!state.isDiscovering && state.wallets.length === 0 && (
-          <div>
-            <p>No wallets found</p>
-            <Button onClick={state.clearSearch}>Clear search</Button>
+      <div className="rk-lido-picker-content">
+        {state.expanded && (
+          <div className="rk-lido-search">
+            <Input
+              icon={<IconSearch />}
+              value={state.search}
+              onChange={(event) => state.setSearch(event.currentTarget.value)}
+              placeholder="Search wallets"
+              aria-label="Search wallets"
+              size="small"
+            />
           </div>
         )}
-        {children}
-      </div>
-      {state.error && (
-        <p className="rk-lido-error" role="alert">
-          {state.error.message}
-        </p>
-      )}
-      {state.showToggle && (
-        <Button
-          variant="ghost"
-          className="rk-lido-toggle"
-          onClick={state.toggleExpanded}
+        <div
+          ref={listRef}
+          className="rk-lido-picker-list"
+          data-scrolled={isScrolled}
+          data-expanded={state.expanded}
+          onScroll={(event) => setIsScrolled(event.currentTarget.scrollTop > 0)}
         >
-          {state.expanded ? 'Less wallets' : 'More wallets'}
-        </Button>
-      )}
+          <div className="rk-lido-wallets">
+            {state.isDiscovering && state.wallets.length === 0 && (
+              <p role="status">Discovering wallets…</p>
+            )}
+            {!state.isDiscovering && state.wallets.length === 0 && (
+              <div>
+                <p>No wallets found</p>
+                <Button onClick={state.clearSearch}>Clear search</Button>
+              </div>
+            )}
+            {children}
+          </div>
+          {state.error && (
+            <p className="rk-lido-error" role="alert">
+              {state.error.message}
+            </p>
+          )}
+          {state.showToggle && (
+            <Button
+              variant="ghost"
+              className="rk-lido-toggle"
+              onClick={state.toggleExpanded}
+            >
+              {state.expanded ? 'Less wallets' : 'More wallets'}
+              {state.expanded ? <IconChevronUp /> : <IconChevronDown />}
+            </Button>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
@@ -289,13 +295,45 @@ export function EagerConnect({ state, terms }: EagerConnectViewProps) {
 }
 
 export function Requirements({ requirements }: RequirementsViewProps) {
+  const { closeModal } = useReefKnotModal();
+  const noWallets = requirements.kind === 'no-wallets';
   return (
-    <section className="rk-lido-screen">
-      {requirements.icon}
-      {requirements.kind === 'no-wallets' && (
-        <p>Install a browser wallet to connect.</p>
-      )}
-      {requirements.text}
+    <section className="rk-lido-requirements">
+      <div className="rk-lido-requirements-content">
+        {noWallets ? (
+          <span className="rk-lido-requirements-icon" aria-hidden="true" />
+        ) : (
+          requirements.icon
+        )}
+        <h2>{noWallets ? 'No browser wallet detected' : requirements.title}</h2>
+        <div className="rk-lido-description">
+          {noWallets
+            ? "This connection method requires a browser wallet. Install a compatible wallet extension or enable it if it's already installed, then reload the page."
+            : requirements.text}
+        </div>
+      </div>
+      <Button
+        className="rk-lido-action"
+        onClick={() => closeModal({ success: false })}
+      >
+        Select another wallet
+      </Button>
+    </section>
+  );
+}
+
+export function ConnectionError({
+  errorMessage,
+  onBack,
+}: ConnectionErrorViewProps) {
+  return (
+    <section className="rk-lido-screen rk-lido-connection-error">
+      <p className="rk-lido-description" role="alert">
+        {errorMessage}
+      </p>
+      <Button className="rk-lido-action" onClick={onBack}>
+        Back to wallets
+      </Button>
     </section>
   );
 }
@@ -308,8 +346,7 @@ export function EIP6963Picker({
   return (
     <section className="rk-lido-picker">
       {terms}
-      <p>Select browser wallet</p>
-      <div className="rk-lido-wallets rk-lido-fullwidth">{children}</div>
+      <div className="rk-lido-wallets">{children}</div>
       {error && (
         <p className="rk-lido-error" role="alert">
           {error.message}
@@ -321,8 +358,9 @@ export function EIP6963Picker({
 
 export function LedgerConnection({ state }: LedgerViewProps) {
   return (
-    <section className="rk-lido-screen">
-      <p role="status">
+    <section className="rk-lido-screen rk-lido-ledger-connection">
+      <LedgerImage />
+      <p className="rk-lido-description" role="status">
         {state.isLoadingLedgerLibs
           ? 'Loading connector…'
           : 'Please connect your Ledger and launch Ethereum app on your device'}
@@ -342,7 +380,7 @@ export function LedgerConnection({ state }: LedgerViewProps) {
 
 export function LedgerAccounts({ state }: LedgerViewProps) {
   return (
-    <section className="rk-lido-screen">
+    <section className="rk-lido-screen rk-lido-ledger-accounts">
       <fieldset
         className="rk-lido-path"
         disabled={state.isLoading}
@@ -359,6 +397,7 @@ export function LedgerAccounts({ state }: LedgerViewProps) {
       >
         <legend>Select HD derivation path</legend>
         <TokenSelector
+          size="small"
           value={state.derivationPath}
           options={state.derivationPaths.map((path) => ({
             value: path.template,
@@ -374,15 +413,20 @@ export function LedgerAccounts({ state }: LedgerViewProps) {
           state.accounts.map((account) => (
             <Button
               key={account.path}
-              variant="subtle"
+              variant="outline"
               className="rk-lido-account"
               disabled={state.isLoading}
               onClick={() => {
                 void state.selectAccount(account);
               }}
             >
-              <code>{account.address}</code>
-              <span>
+              <span className="rk-lido-account-icon">
+                <LedgerAccountIcon />
+              </span>
+              <span className="rk-lido-account-address" title={account.address}>
+                {account.address.slice(0, 8)}…{account.address.slice(-8)}
+              </span>
+              <span className="rk-lido-account-balance">
                 {account.balance} {account.token}
               </span>
             </Button>
@@ -390,17 +434,41 @@ export function LedgerAccounts({ state }: LedgerViewProps) {
         )}
       </div>
       <nav className="rk-lido-pagination" aria-label="Ledger account pages">
-        {Array.from({ length: state.pagesCount }, (_, i) => (
-          <Button
-            key={i}
-            size="small"
-            variant={state.currentPage === i + 1 ? 'primary' : 'ghost'}
-            aria-current={state.currentPage === i + 1 ? 'page' : undefined}
-            onClick={() => state.setPage(i + 1)}
-          >
-            {i + 1}
-          </Button>
-        ))}
+        <IconButton
+          variant="ghost"
+          icon={<IconChevronRight className="rk-lido-previous-page-icon" />}
+          aria-label="Previous page"
+          disabled={state.isLoading || state.currentPage <= 1}
+          onClick={() => state.setPage(state.currentPage - 1)}
+        />
+        <label className="rk-lido-page-label">
+          Page
+          <input
+            type="number"
+            aria-label="Ledger account page"
+            min={1}
+            max={state.pagesCount}
+            value={state.currentPage}
+            disabled={state.isLoading}
+            onChange={(event) => {
+              const page = event.currentTarget.valueAsNumber;
+              if (
+                Number.isInteger(page) &&
+                page >= 1 &&
+                page <= state.pagesCount
+              )
+                state.setPage(page);
+            }}
+          />
+          <span>/ {state.pagesCount}</span>
+        </label>
+        <IconButton
+          variant="ghost"
+          icon={<IconChevronRight />}
+          aria-label="Next page"
+          disabled={state.isLoading || state.currentPage >= state.pagesCount}
+          onClick={() => state.setPage(state.currentPage + 1)}
+        />
       </nav>
     </section>
   );
@@ -408,17 +476,19 @@ export function LedgerAccounts({ state }: LedgerViewProps) {
 
 export function LedgerError({ state }: LedgerViewProps) {
   return (
-    <section className="rk-lido-screen">
-      <h3>Something went wrong</h3>
-      <p className="rk-lido-error" role="alert">
+    <section className="rk-lido-screen rk-lido-ledger-connection">
+      <LedgerImage error />
+      <p className="rk-lido-description" role="alert">
         {state.error?.message}
       </p>
       <Button
+        className="rk-lido-action"
+        variant="outline"
         onClick={() => {
           void state.retry();
         }}
       >
-        Retry
+        Try again
       </Button>
     </section>
   );
@@ -431,6 +501,7 @@ export const LIDO_COMPONENTS: ReefKnotUIComponents = {
   WalletPicker,
   EagerConnect,
   Requirements,
+  ConnectionError,
   EIP6963Picker,
   LedgerConnection,
   LedgerAccounts,
