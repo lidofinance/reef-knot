@@ -139,3 +139,29 @@ it('retries a failed transport and releases the connected device on exit', async
   await act(async () => root.render(<span />));
   expect(mocks.close).toHaveBeenCalledOnce();
 });
+
+it('preserves the accounts screen when releasing the transport for connector handoff', async () => {
+  mocks.acquire.mockResolvedValueOnce({ close: mocks.close });
+  let context!: ReturnType<typeof useLedgerContext>;
+  function Probe() {
+    context = useLedgerContext();
+    return null;
+  }
+  await act(async () =>
+    root.render(
+      <LedgerContextProvider isActive>
+        <Probe />
+      </LedgerContextProvider>,
+    ),
+  );
+  expect(context.isTransportConnected).toBe(true);
+  await act(async () => context.disconnectTransport(true));
+  expect(mocks.close).toHaveBeenCalledOnce();
+  expect(context.transport.current).toBeNull();
+  expect(context.ledgerAppEth.current).toBeNull();
+  expect(context.isTransportConnected).toBe(true);
+
+  await act(async () => context.disconnectTransport());
+  expect(context.isTransportConnected).toBe(false);
+  expect(mocks.close).toHaveBeenCalledOnce();
+});

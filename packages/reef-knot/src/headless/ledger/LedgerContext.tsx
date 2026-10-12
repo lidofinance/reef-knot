@@ -57,13 +57,15 @@ export const LedgerContextProvider = ({
   const [isTransportConnected, setIsTransportConnected] = useState(false);
   const [isLoadingLedgerLibs, setIsLoadingLedgerLibs] = useState(false);
 
-  const disconnectTransport = useCallback(async (_goingToReconnect = false) => {
+  const disconnectTransport = useCallback(async (goingToReconnect = false) => {
     try {
       await transport?.current?.close();
       transport.current = null;
       ledgerAppEth.current = null;
       setUserActivationRequired(false);
-      setIsTransportConnected(false);
+      // Keep the accounts screen while handing the device over to the connector.
+      // A regular disconnect resets the screen to the connection step.
+      if (!goingToReconnect) setIsTransportConnected(false);
     } catch (e: unknown) {
       setError(interceptLedgerError(e as Error));
     }
