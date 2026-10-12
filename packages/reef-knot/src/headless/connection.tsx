@@ -188,14 +188,18 @@ export function ReefKnotUIProvider({
     async (id: string, action: () => Promise<void>) => {
       if (!current.current.termsChecked || locked.current) return;
       locked.current = true;
-      actionModal.current =
+      const attemptModal =
         current.current.modalStack[current.current.modalStack.length - 1];
+      actionModal.current = attemptModal;
       setLoadingWalletId(id);
       setError(null);
       try {
         await action();
       } catch (e) {
-        if (alive.current)
+        // A late rejection belongs to the screen that started the attempt,
+        // never to a picker opened after that screen was dismissed.
+        const stack = current.current.modalStack;
+        if (alive.current && stack[stack.length - 1] === attemptModal)
           setError(e instanceof Error ? e : new Error(String(e)));
       } finally {
         locked.current = false;

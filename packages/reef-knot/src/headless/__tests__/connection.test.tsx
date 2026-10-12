@@ -188,6 +188,86 @@ describe('public headless connection flow', () => {
     });
     expect(success).toHaveBeenCalledOnce();
   });
+  it.each([false, true])(
+    'ignores a late rejection after closing the picker (reopen before rejection: %s)',
+    async (reopenBeforeRejection) => {
+      let rejectConnection!: (error: Error) => void;
+      mocks.connect.mockImplementationOnce(
+        () =>
+          new Promise<void>((_resolve, reject) => {
+            rejectConnection = reject;
+          }),
+      );
+      const success = vi.fn();
+      await mount({ onConnectSuccess: success });
+      await act(async () => terms.setChecked(true));
+      let pending!: Promise<void>;
+      await act(async () => {
+        pending = connection.connect();
+      });
+      expect(connection.isLoading).toBe(true);
+      await act(async () => modal.closeModal({ success: false }));
+      if (reopenBeforeRejection)
+        await act(async () => modal.openModal({ type: 'wallet' }));
+
+      await act(async () => {
+        rejectConnection(new Error('Late rejection'));
+        await pending;
+      });
+      expect(connection.error).toBeNull();
+      expect(connection.isLoading).toBe(false);
+      expect(success).not.toHaveBeenCalled();
+      expect(mocks.setItem).not.toHaveBeenCalled();
+
+      if (!reopenBeforeRejection)
+        await act(async () => modal.openModal({ type: 'wallet' }));
+      expect(modal.currentModal?.type).toBe('wallet');
+      expect(picker.error).toBeNull();
+      expect(connection.disabled).toBe(false);
+      await act(async () => connection.connect());
+      expect(success).toHaveBeenCalledOnce();
+      expect(mocks.connect).toHaveBeenCalledTimes(2);
+    },
+  );
+  it('ignores a late EIP-6963 rejection after returning to the underlying picker', async () => {
+    let rejectConnection!: (error: Error) => void;
+    const onSelect = vi.fn(
+      () =>
+        new Promise<void>((_resolve, reject) => {
+          rejectConnection = reject;
+        }),
+    );
+    await mount();
+    await act(async () => terms.setChecked(true));
+    const provider = {
+      info: {
+        uuid: 'test-id',
+        name: 'Test wallet',
+        rdns: 'org.test.wallet',
+        icon: 'data:image/png;base64,AA' as const,
+      },
+      provider: { request: vi.fn(), on: vi.fn(), removeListener: vi.fn() },
+    };
+    await act(async () =>
+      modal.openModal({
+        type: 'eip6963',
+        props: { providers: [provider], onSelect },
+      }),
+    );
+    let pending!: Promise<void>;
+    await act(async () => {
+      pending = providers.select(provider);
+    });
+    await act(async () => modal.closeModal({ success: false }));
+    await act(async () => {
+      rejectConnection(new Error('Late provider rejection'));
+      await pending;
+    });
+    expect(modal.currentModal?.type).toBe('wallet');
+    expect(picker.error).toBeNull();
+    expect(connection.disabled).toBe(false);
+    expect(mocks.setItem).not.toHaveBeenCalled();
+  });
   it('shares search, expansion and callbacks without rerunning discovery per consumer', async () => {
     const more = vi.fn();
     const less = vi.fn();
