@@ -52,15 +52,28 @@ Install `reef-knot@^9` and its connection peers without either UI skin. Implemen
 
 ## Update imports and configuration
 
+Version 9 removes all `reef-knot/*` subpath exports. Imports such as `reef-knot/core-react`, `reef-knot/wallets` and `reef-knot/web3-react` no longer resolve. The root entry also changes from namespace exports (`CoreReact`, `WalletsList`, `ConnectWalletModal`, `UIReact`, `Web3React`, `Connectors`) to named exports.
+
+| Old import path in 8.x           | New import path or replacement in 9                                                                                   |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `reef-knot/core-react`           | `reef-knot` for providers, configuration and connection hooks                                                         |
+| `reef-knot/wallets`              | `reef-knot` for `WalletsListEthereum`                                                                                 |
+| `reef-knot/connectors`           | `reef-knot` or `@reef-knot/ledger-connector` for the Ledger connectors                                                |
+| `reef-knot/types`                | `reef-knot` for retained core types; removed visual types have no direct replacement                                  |
+| `reef-knot/connect-wallet-modal` | `@reef-knot/ui-lido-legacy` or `@reef-knot/ui-lido` for `ReefKnotWalletsModal`; `reef-knot` for configuration helpers |
+| `reef-knot/ui-react`             | `@reef-knot/ui-lido-legacy` for retained legacy UI primitives                                                         |
+| `reef-knot/web3-react`           | Removed; replace individual hooks as described [below](#replace-removed-web3-react-hooks)                             |
+
+Apply the same migration to direct imports from the former `@reef-knot/core-react`, `@reef-knot/wallets-list`, `@reef-knot/types`, `@reef-knot/connect-wallet-modal`, `@reef-knot/ui-react` and `@reef-knot/web3-react` packages. These packages are not continued as part of v9.
+
 Before:
 
 ```tsx
+import { ReefKnotProvider, getDefaultConfig } from 'reef-knot/core-react';
 import {
-  ReefKnotProvider,
   ReefKnotWalletsModal,
-  getDefaultConfig,
   getDefaultWalletsModalConfig,
-} from 'reef-knot';
+} from 'reef-knot/connect-wallet-modal';
 ```
 
 After, for the legacy skin:
@@ -76,7 +89,9 @@ import { ReefKnotWalletsModal } from '@reef-knot/ui-lido-legacy';
 
 For the Lido App UI skin, import the modal from `@reef-knot/ui-lido` instead. UI primitives such as `Modal`, `Button` and `ConnectButtonBase`, and their visual prop types, move to the legacy skin if your application still uses them. `ButtonComponentsByConnectorId`, `ConnectWalletButtonProps`, `WALLETS_MODAL_BUTTON_COMPONENTS_DEFAULT` and wallet-specific `Connect*` components are removed.
 
-Configuration helpers remain in the core. Remove `buttonComponentsByConnectorId` from arguments passed to `getDefaultConfig` and from modal configuration; `getDefaultWalletsModalConfig()` no longer returns it. Keep your wallet catalog, list settings, links and connection callbacks.
+Configuration helpers remain in the core. Remove `buttonComponentsByConnectorId` from arguments passed to `getDefaultConfig` and from modal configuration; `getDefaultWalletsModalConfig()` no longer returns it. Keep your wallet catalog, list settings, `linkTerms`, `linkPrivacyNotice` and connection callbacks.
+
+`linkDontHaveWallet` is also removed from modal configuration in v9. The legacy skin no longer renders the configurable “Don't have a wallet?” link from 8.x, and neither skin provides a replacement configuration option. Remove this property from your configuration. If your application still needs the link, render it in your application or add it through a custom `components.WalletPicker` view.
 
 The root `reef-knot` entry point is the supported import path for core APIs. Update old package or deep imports instead of importing files from `reef-knot/dist` or `reef-knot/src`.
 
@@ -116,7 +131,7 @@ With the Lido App UI skin, replace the modal props with:
 Before:
 
 ```tsx
-import { useConnect } from 'reef-knot';
+import { useConnect } from 'reef-knot/core-react';
 const { connect } = useConnect();
 await connect();
 ```
@@ -130,6 +145,28 @@ const result = await startConnection(); // { success: boolean }
 ```
 
 This starts eager connection or opens the picker and waits for the scenario's result. `useConnect().connect()` remains available as a deprecated compatibility wrapper, so this rename can be migrated separately from the required UI import changes. Wagmi's `useConnect` is unchanged and does not replace the Reef Knot entry point.
+
+## Replace removed web3-react hooks
+
+`useWeb3` and `useSupportedChains` are removed in v9, including their exports from `reef-knot/web3-react` and `@reef-knot/web3-react`. Neither hook moves to the root entry point.
+
+Replace `useWeb3` by responsibility: read address, chain ID and connection status with `useConnection` from `wagmi`, access the wallet client with `useWalletClient` from `wagmi`, and use Reef Knot's `useConnectionFlow` and `useDisconnect` for its connection scenario and storage cleanup. See the [field-by-field migration guidance](migration-guide-0.x-to-latest.md#4-replace-useweb3-by-responsibility). The old shim reported `active: false` and `chainId: undefined` for unsupported chains; wagmi exposes the actual chain ID and connection status, so preserve that filtering explicitly if your application relies on it.
+
+Replace `useSupportedChains` with wagmi's `useConfig().chains` and `useConnection().chainId`:
+
+```tsx
+import { useConfig, useConnection } from 'wagmi';
+
+const { chains } = useConfig();
+const { chainId } = useConnection();
+const isUnsupported = !chainId || !chains.some((chain) => chain.id === chainId);
+const supportedChains = chains.map((chain) => ({
+  chainId: chain.id,
+  name: chain.name,
+}));
+```
+
+This preserves the previous hook's result shape, including treating a missing chain ID as unsupported. If you need the helper in multiple components, keep it in your application; see [the demo's local implementation](../apps/demo-react/hooks/useSupportedChains.ts).
 
 ## Replace custom connect buttons
 

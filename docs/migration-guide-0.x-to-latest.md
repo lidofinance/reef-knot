@@ -36,6 +36,8 @@ The legacy skin is the simplest starting point for preserving the previous appea
 
 Use the [v9 migration guide](migration-guide-8.x-to-9.md) for installation, imports, CSS and configuration examples. Use the [headless API guide](headless-ui.md) for custom interfaces and component replacements.
 
+Version 9 removes all `reef-knot/*` subpath imports and the root namespace exports. If your integration uses intermediate releases with paths such as `reef-knot/core-react`, `reef-knot/wallets` or `reef-knot/web3-react`, follow the [old path → new path table](migration-guide-8.x-to-9.md#update-imports-and-configuration).
+
 ## 3. Replace the old provider setup
 
 Remove the old `ProviderWeb3`, `WalletsModalForEth` and standalone auto-connect wiring where present. Integrations copied from intermediate v2–v5 releases may also contain the former `ReefKnot` provider and `AutoConnect` component.
@@ -61,6 +63,8 @@ Set `autoConnect` in the Reef Knot config according to your application requirem
 
 `useWeb3` is no longer exported. It previously combined state from multiple connection libraries; there is no single replacement for every field it returned.
 
+`useSupportedChains` is also removed. Use `useConfig().chains` and `useConnection().chainId` from wagmi, or keep a local helper. See [the replacement example and unsupported-chain behavior](migration-guide-8.x-to-9.md#replace-removed-web3-react-hooks).
+
 | Application task                             | Current API                                             |
 | -------------------------------------------- | ------------------------------------------------------- |
 | Read address, chain and connection status    | `useConnection` from `wagmi`                            |
@@ -84,6 +88,8 @@ const { startConnection } = useConnectionFlow();
 Use `WalletsListEthereum` as the current default catalog or compose a custom catalog from supported wallet adapters. Old wallet IDs may no longer exist. Version 8.0 removed the `binanceWallet`, `coinbase`, `trust`, `exodus`, `brave`, `ctrl` and `coin98` adapters; review saved configuration and `walletsShown` / `walletsPinned` against the current catalog.
 
 The `buttonComponentsByConnectorId` registry and wallet-specific `Connect*` components are removed in v9. Use `components.WalletButton` or the public headless hooks, as described in [8.x → 9](migration-guide-8.x-to-9.md#replace-custom-connect-buttons).
+
+The modal configuration option `linkDontHaveWallet` is also removed, including its link in the legacy skin. Remove it from your configuration; keep `linkTerms` and `linkPrivacyNotice`. If you need a wallet help link, render it in your application or a custom `components.WalletPicker` view.
 
 ## 6. Review SSR and unrelated legacy SDK code
 
