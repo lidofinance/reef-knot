@@ -109,7 +109,7 @@ With the Lido App UI skin, replace the modal props with:
 />
 ```
 
-`theme` is required. The skin applies `data-lido-theme` inside its portal. Switching to this skin does not automatically restyle the rest of the application.
+`theme` is required and should follow the current application theme. The skin applies `data-lido-theme` inside its portal and inherits the page's App UI CSS variables. Switching to this skin does not automatically restyle the rest of the application.
 
 ## Update the connection entry point
 

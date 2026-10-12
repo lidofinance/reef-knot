@@ -36,7 +36,7 @@ import '@reef-knot/ui-lido/styles.css';
 <ReefKnotWalletsModal config={walletsModalConfig} theme="dark" />
 ```
 
-The UI skin applies `data-lido-theme` inside its portal. It does not depend on the portal being a DOM descendant of the application's theme wrapper.
+Pass the current application theme to the UI skin. It applies `data-lido-theme` inside its portal and inherits the page's App UI CSS variables; a separate light palette is not generated for the modal.
 
 Start the connection flow from your connect button:
 
