@@ -171,16 +171,26 @@ It is a known issue, and we are working on removing the need for such wrapping.
 
 ### Initial setup
 
-Install the dependencies, build everything:
+Use Node.js 24.11 or later within the 24.x line (or Node.js 26+) and the pinned Yarn 4.17.1 through Corepack. Install the dependencies and build everything:
 
+```bash
+yarn install --immutable && yarn build
 ```
-yarn install & yarn build
-```
+
+### TypeScript and bundling
+
+Packages and the separate `playwright-tests/` project use the native TypeScript 7.0.2 compiler (`tsc`). The `@typescript/native` dependency aliases the stable `typescript` package. The `typescript` dependency aliases `@typescript/typescript6`, preserving the TypeScript 6 JS Compiler API for ESLint and Next.js and providing `tsc6` without a binary-name collision.
+
+The Next.js 12 demo uses `tsc6` for its CLI check and TypeScript 6 for `next build`. Its `ignoreDeprecations: "6.0"` is local: Next.js 12 requires legacy module resolution, and the demo still uses `baseUrl` imports. Packages use `bundler` resolution; Playwright uses `NodeNext` with its existing CommonJS package scope. `types: ["*"]` preserves the global types loaded before TypeScript 6 changed the default.
+
+tsdown 0.23.1 builds ES2020 ESM with external dependencies and unbundled output. Its built-in `tsgo` generator emits declarations and declaration maps through native TypeScript 7. The compiler path is resolved explicitly from `@typescript/native` because `typescript` supplies the TS 6 API. Declaration-generation failures fail the build; `yarn typecheck` remains the type-error gate. Legacy UI checks map `@lidofinance/lido-ui` to its existing declarations because that dependency's exports omit its types. tslib remains at 2.8.1.
+
+Validation covered a clean build of all 18 packages, package type/lint/test gates, UI/configuration type checks, the Next.js demo build, watch rebuilding, and Playwright type/lint/test discovery (28 tests; no transactions executed). All 18 declaration entrypoints compile with TypeScript 5.9.3 using both `node10` and `bundler` resolution; the latter needs the same legacy Lido UI type mapping. Declaration maps, default exports, SVG output and UI CSS/assets were checked. The built-in generator preserves public entrypoint exports and default exports. Re-export-only declaration files do not require maps; concrete declarations retain source maps. OKX uses an explicit `rootDir: "src"` to preserve its declaration entrypoint. This development-tool upgrade does not raise the consumer TypeScript minimum (5.9.3).
 
 ### Commands
 
 - `yarn dev` runs the `dev` script for all apps and packages.
-  Usually apps are launched using `next dev` and packages are built using rollup with `--watch` flag, which rebuilds the bundle when its source files change on disk.
+  Usually apps are launched using `next dev` and packages are built using tsdown with `--watch`, which rebuilds the bundle when its source files change on disk.
 - `yarn build` - Build all apps and packages.
 - `yarn build-apps` - Build apps only.
 - `yarn build-packages` - Build packages only.

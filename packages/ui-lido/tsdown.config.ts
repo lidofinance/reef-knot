@@ -7,11 +7,7 @@ export default defineConfig({
   ...config,
   entry: ['src/index.tsx'],
   hooks: {
-    ...config.hooks,
-    'build:done': async (ctx) => {
-      if (config.hooks && typeof config.hooks !== 'function') {
-        await config.hooks['build:done']?.(ctx);
-      }
+    'build:done': () => {
       // App UI 1.4 defines light colors on :root only. Reset them in the portal
       // so an explicit light theme also works under a dark document theme.
       const require = createRequire(import.meta.url);

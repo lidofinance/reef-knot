@@ -9,7 +9,7 @@
     "build:analyze": "ANALYZE_BUNDLE=true next build",
     "start": "next start",
     "lint": "yarn run -T eslint .",
-    "typecheck": "yarn run -T tsc --noEmit"
+    "typecheck": "yarn run -T tsc6 --noEmit"
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "^4.3.6",
@@ -50,6 +50,6 @@
     "string-replace-loader": "^3.3.0",
     "tsconfig": "*",
     "typechain": "^8.3.0",
-    "typescript": "~5.9"
+    "typescript": "npm:@typescript/typescript6@6.0.2"
   }
 }

@@ -2,12 +2,11 @@
   "extends": "./packages/tsconfig/react-library.json",
   "compilerOptions": {
     "rootDir": ".",
-    "baseUrl": ".",
-    "moduleResolution": "node",
     "paths": {
-      "reef-knot": ["packages/reef-knot/src/index.ts"],
-      "vitest": ["node_modules/vitest/dist/index.d.ts"],
-      "vitest/config": ["node_modules/vitest/dist/config.d.ts"]
+      "@lidofinance/lido-ui": ["./node_modules/@lidofinance/lido-ui/dist/types/index.d.ts"],
+      "reef-knot": ["./packages/reef-knot/src/index.ts"],
+      "vitest": ["./node_modules/vitest/dist/index.d.ts"],
+      "vitest/config": ["./node_modules/vitest/dist/config.d.ts"]
     }
   },
   "include": [
