@@ -38,6 +38,8 @@ const withReefKnotPackages = nextTranspileModules([
 
 export default withReefKnotPackages(
   withBundleAnalyzer({
+    // Next 12 uses the removed legacy API.
+    eslint: { ignoreDuringBuilds: true },
     reactStrictMode: true,
     basePath,
     experimental: {

@@ -11,7 +11,6 @@ import {
   type Hex,
   type LocalAccount,
   type TypedDataDefinition,
-  type TypedDataDomain,
 } from 'viem';
 
 type EIP712Message = Parameters<Eth['signEIP712Message']>[1];
@@ -135,7 +134,7 @@ export const createLedgerAccount = (
         } catch (error) {
           if (!shouldFallbackToHashedSigning(error)) throw error;
 
-          const typedDataDomain = domain as TypedDataDomain;
+          const typedDataDomain = domain;
           const domainSeparator = hashStruct({
             data: typedDataDomain,
             primaryType: 'EIP712Domain',

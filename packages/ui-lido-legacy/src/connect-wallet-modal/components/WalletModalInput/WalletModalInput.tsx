@@ -17,7 +17,7 @@ type WalletModalInputProps = {
 export const WalletModalInput = forwardRef<
   HTMLInputElement,
   WalletModalInputProps
->(function WalletModalInput({ value, onChange, onClear }, inputRef) {
+>(function WalletModalInputRender({ value, onChange, onClear }, inputRef) {
   return (
     <WalletInput
       ref={inputRef}

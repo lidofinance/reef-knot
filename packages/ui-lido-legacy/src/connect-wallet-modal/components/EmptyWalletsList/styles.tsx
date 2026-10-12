@@ -1,3 +1,4 @@
+import { ThemeName } from '@lidofinance/lido-ui';
 import React from 'react';
 import styled, { css } from '../../../ui-react/utils/styledWrapper';
 
@@ -14,7 +15,7 @@ export const Wrap = styled.div`
 
     svg {
       display: block;
-      fill: ${theme.name === 'dark' ? '#27272E' : '#EFF2F6'};
+      fill: ${theme.name === ThemeName.dark ? '#27272E' : '#EFF2F6'};
     }
   `}
 `;

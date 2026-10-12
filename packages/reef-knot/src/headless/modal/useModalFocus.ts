@@ -1,5 +1,4 @@
-import React from 'react';
-import { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useInterceptFocus } from './useInterceptFocus';
 import { FOCUSABLE_ELEMENTS } from './constants';
 

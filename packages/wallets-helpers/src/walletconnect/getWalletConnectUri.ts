@@ -1,8 +1,9 @@
 import type { Connector } from 'wagmi';
 
 export const getWalletConnectUri = async (connector: Connector) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const provider: any = await connector.getProvider();
+  const provider = (await connector.getProvider()) as {
+    once: (event: 'display_uri', listener: (uri: string) => void) => void;
+  };
   return new Promise<string>((resolve) => {
     provider.once('display_uri', resolve);
   });

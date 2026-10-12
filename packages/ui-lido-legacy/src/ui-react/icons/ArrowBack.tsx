@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ArrowBack = React.forwardRef(function ArrowBack(
+const ArrowBack = React.forwardRef(function ArrowBackRender(
   props: React.SVGProps<SVGSVGElement>,
   svgRef?: React.Ref<SVGSVGElement>,
 ) {

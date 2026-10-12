@@ -1,5 +1,7 @@
-import { WalletAdapterType } from '@reef-knot/wallets-helpers';
-import { getWalletConnectConnector } from '@reef-knot/wallets-helpers';
+import {
+  WalletAdapterType,
+  getWalletConnectConnector,
+} from '@reef-knot/wallets-helpers';
 import WalletIcon from './icons/wallet-connect-circle.svg';
 
 export const id = 'walletConnect';

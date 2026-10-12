@@ -2,7 +2,11 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { afterEach, expect, it, vi } from 'vitest';
-import { LedgerContext, LedgerContextProvider } from '../ledger/LedgerContext';
+import {
+  LedgerContext,
+  LedgerContextProvider,
+  type LedgerContextValue,
+} from '../ledger/LedgerContext';
 import { useLedgerContext, useLedgerAccounts } from '../ledger/hooks';
 
 const mocks = vi.hoisted(() => ({
@@ -39,11 +43,11 @@ afterEach(async () => {
 });
 
 it('releases a transport acquired after the Ledger screen has closed', async () => {
-  let resolve!: (transport: any) => void;
+  let resolveTransport!: (transport: { close: typeof mocks.close }) => void;
   mocks.acquire.mockImplementationOnce(
     () =>
-      new Promise((r) => {
-        resolve = r;
+      new Promise<{ close: typeof mocks.close }>((resolve) => {
+        resolveTransport = resolve;
       }),
   );
   await act(async () =>
@@ -60,28 +64,29 @@ it('releases a transport acquired after the Ledger screen has closed', async () 
       </LedgerContextProvider>,
     ),
   );
-  await act(async () => resolve({ close: mocks.close }));
+  await act(async () => resolveTransport({ close: mocks.close }));
   expect(mocks.acquire).toHaveBeenCalledOnce();
   expect(mocks.close).toHaveBeenCalledOnce();
 });
 
 it('serializes page requests and loads the latest page after rapid navigation', async () => {
-  let resolve!: (address: { address: string }) => void;
+  let resolveAddress!: (address: { address: string }) => void;
   mocks.address.mockImplementationOnce(
     () =>
-      new Promise((r) => {
-        resolve = r;
+      new Promise<{ address: string }>((resolve) => {
+        resolveAddress = resolve;
       }),
   );
   mocks.address.mockResolvedValue({ address: '0x123' });
   let accounts: ReturnType<typeof useLedgerAccounts> = {};
-  const context = {
+  const partialContext = {
     isActive: true,
     isTransportConnected: true,
     ledgerAppEth: { current: { getAddress: mocks.address } },
     transport: { current: {} },
     setError: vi.fn(),
-  } as any;
+  };
+  const context = partialContext as unknown as LedgerContextValue;
   function Probe({ page }: { page: number }) {
     accounts = useLedgerAccounts({
       derivationPathTemplate: "m/44'/60'/x'/0/0",
@@ -104,10 +109,10 @@ it('serializes page requests and loads the latest page after rapid navigation', 
     render(3);
   });
   expect(mocks.address).toHaveBeenCalledOnce();
-  await act(async () => resolve({ address: '0x123' }));
+  await act(async () => resolveAddress({ address: '0x123' }));
   expect(Object.keys(accounts)).toEqual(['4', '5']);
   expect(mocks.address).toHaveBeenCalledTimes(3);
-  expect(context.setError).not.toHaveBeenCalled();
+  expect(partialContext.setError).not.toHaveBeenCalled();
 });
 
 it('retries a failed transport and releases the connected device on exit', async () => {

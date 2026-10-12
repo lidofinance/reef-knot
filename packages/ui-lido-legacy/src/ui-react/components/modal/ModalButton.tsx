@@ -32,8 +32,9 @@ function ModalButton(
 ) {
   const { size = 'md', loading = false, children, icon } = props;
 
+  const iconProps = icon.props as React.SVGProps<SVGSVGElement>;
   const AdaptiveIconProps =
-    icon.props.width || icon.props.height ? icon.props : { ...iconSize[size] };
+    iconProps.width || iconProps.height ? iconProps : { ...iconSize[size] };
   const AdaptiveIcon = React.cloneElement(icon, AdaptiveIconProps);
 
   return (

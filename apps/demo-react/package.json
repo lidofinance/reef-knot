@@ -8,7 +8,7 @@
     "build": "next build",
     "build:analyze": "ANALYZE_BUNDLE=true next build",
     "start": "next start",
-    "lint": "yarn run -T eslint --ext ts,tsx,js,mjs .",
+    "lint": "yarn run -T eslint .",
     "typecheck": "yarn run -T tsc --noEmit"
   },
   "dependencies": {

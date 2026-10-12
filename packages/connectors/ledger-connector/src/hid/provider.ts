@@ -116,7 +116,6 @@ export class LedgerHQProvider {
     this.forceClearSign = forceClearSign;
 
     if (!rpcUrl) {
-      // eslint-disable-next-line no-console
       console.warn(
         `[reef-knot] No RPC URL configured for chain ${chain.id} (${chain.name}), ` +
           `falling back to its default public RPC endpoint`,
@@ -415,7 +414,9 @@ export class LedgerHQProvider {
         if (typeof params[1] !== 'string')
           throw new Error('eth_signTypedData_v4 arg 1 is not a string');
         const account = await this.getAccount();
-        return account.signTypedData(JSON.parse(params[1]));
+        return account.signTypedData(
+          JSON.parse(params[1]) as Parameters<typeof account.signTypedData>[0],
+        );
       }
 
       case 'wallet_getCapabilities': {

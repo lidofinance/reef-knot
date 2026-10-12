@@ -102,7 +102,8 @@ const defaultRenderError = (error: SDKError) => {
 const defaultRenderResult = <TResult,>(result: TResult) => {
   const stringfyed = JSON.stringify(
     result,
-    (_, value) => (typeof value === 'bigint' ? value.toString() : value),
+    (_, value: unknown) =>
+      typeof value === 'bigint' ? value.toString() : value,
     2,
   );
 
@@ -115,7 +116,7 @@ const defaultRenderResult = <TResult,>(result: TResult) => {
         theme="pop"
         name={null}
         displayDataTypes={false}
-        src={JSON.parse(stringfyed)}
+        src={JSON.parse(stringfyed) as object}
         collapseStringsAfterLength={30}
       />
     </Accordion>
@@ -147,10 +148,9 @@ export const Action = <TResult,>({
   const startLoading = async () => {
     try {
       dispatch({ type: 'loading' });
-      const result = await action();
+      const actionResult = await action();
 
-      dispatch({ type: 'success', result });
-      // eslint-disable-next-line @typescript-eslint/no-shadow
+      dispatch({ type: 'success', result: actionResult });
     } catch (error) {
       console.error(error);
       dispatch({ type: 'error', error: error as SDKError });
@@ -165,7 +165,9 @@ export const Action = <TResult,>({
           <Button
             disabled={walletAction && !active}
             loading={loading}
-            onClick={startLoading}
+            onClick={() => {
+              void startLoading();
+            }}
             fullwidth
           >
             {title}

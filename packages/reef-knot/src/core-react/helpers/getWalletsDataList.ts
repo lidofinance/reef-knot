@@ -22,7 +22,7 @@ export const getWalletsDataList = ({
   const walletAdapters = Object.values(walletsList);
 
   if (!rpc[defaultChain.id]) {
-    throw 'RPC for default chain must be provided';
+    throw new Error('RPC for default chain must be provided');
   }
 
   const walletsDataList = walletAdapters.map((walletAdapter) =>

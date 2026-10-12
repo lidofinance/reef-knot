@@ -9,7 +9,7 @@ export const getTransport = async (): Promise<Transport> => {
       await import('@ledgerhq/hw-transport-webhid')
     ).default.create();
   } catch (e) {
-    throw new Error('Connection error');
+    throw new Error('Connection error', { cause: e });
   }
 };
 
@@ -37,7 +37,7 @@ export const getFirstIndexOnPage = (page: number, accountsPerPage: number) =>
 export const isHIDSupported = () => {
   try {
     return 'hid' in window.navigator;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

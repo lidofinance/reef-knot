@@ -64,8 +64,8 @@ export const LedgerContextProvider = ({
       ledgerAppEth.current = null;
       setUserActivationRequired(false);
       setIsTransportConnected(false);
-    } catch (e: any) {
-      setError(interceptLedgerError(e));
+    } catch (e: unknown) {
+      setError(interceptLedgerError(e as Error));
     }
   }, []);
 
@@ -111,15 +111,15 @@ export const LedgerContextProvider = ({
         return;
       }
       transport.current = acquired;
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       ledgerAppEth.current = new ledgerLibEth.current!(transport.current);
       await ledgerAppEth.current.getAppConfiguration();
       if (active.current) setIsTransportConnected(true);
       else await disconnectTransport();
-    } catch (e: any) {
+    } catch (e: unknown) {
       await disconnectTransport(true);
       setIsLoadingLedgerLibs(false);
-      setError(interceptLedgerError(e));
+      setError(interceptLedgerError(e as Error));
     } finally {
       isTransportConnecting.current = false;
     }

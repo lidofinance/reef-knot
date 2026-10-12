@@ -18,7 +18,18 @@
       "cache": false
     },
     "lint": {
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/eslint.config.mjs",
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/.prettierrc",
+        "$TURBO_ROOT$/tsconfig.ui-tests.json",
+        "$TURBO_ROOT$/packages/tsconfig/**"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
     },
     "test": {
       "outputs": [],

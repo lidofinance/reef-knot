@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-types */
-
 export type CommonComponentProps<
   T extends keyof JSX.IntrinsicElements,
-  Props extends object = {},
+  Props extends object = NonNullable<unknown>,
 > = Props &
   Omit<
     JSX.IntrinsicElements[T] & {

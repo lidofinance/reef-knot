@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useMemo } from 'react';
-import { useThemeToggle } from '@lidofinance/lido-ui';
+import { useThemeToggle, ThemeName } from '@lidofinance/lido-ui';
 import {
   ReefKnotProvider,
   WalletsListEthereum,
@@ -18,7 +18,7 @@ import { useRpcUrls } from 'hooks/useRpcUrls';
 
 type ChainsList = [wagmiChains.Chain, ...wagmiChains.Chain[]];
 
-const wagmiChainsArray = Object.values(wagmiChains) as any as ChainsList;
+const wagmiChainsArray = Object.values(wagmiChains) as unknown as ChainsList;
 
 const queryClient = new QueryClient();
 
@@ -96,7 +96,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
         <ReefKnotProvider config={reefKnotConfig}>
           <WalletUIProvider
             config={walletsModalConfig}
-            theme={themeName === 'dark' ? 'dark' : 'light'}
+            theme={themeName === ThemeName.dark ? 'dark' : 'light'}
           >
             {children}
           </WalletUIProvider>

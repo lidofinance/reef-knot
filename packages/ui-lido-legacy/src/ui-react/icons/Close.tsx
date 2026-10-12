@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Close = React.forwardRef(function Close(
+const Close = React.forwardRef(function CloseRender(
   props: React.SVGProps<SVGSVGElement>,
   svgRef?: React.Ref<SVGSVGElement>,
 ) {

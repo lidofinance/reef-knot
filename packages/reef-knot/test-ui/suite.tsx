@@ -10,6 +10,7 @@ import {
   type ReefKnotUIComponents,
   type LedgerViewProps,
   type ReefKnotWalletsModalConfig,
+  type WalletAdapterData,
 } from 'reef-knot';
 
 const mocks = vi.hoisted(() => ({ connect: vi.fn(), setItem: vi.fn() }));
@@ -54,11 +55,12 @@ export function runUISuite(
       linkPrivacyNotice: 'https://example.com/privacy',
       onConnectSuccess,
     };
-    const wallet = {
+    const wallet: WalletAdapterData = {
       walletId: 'metaMask',
       walletName: 'MetaMask',
       type: 'injected',
-      createConnectorFn: (() => ({})) as any,
+      createConnectorFn:
+        (() => ({})) as unknown as WalletAdapterData['createConnectorFn'],
     };
     await act(async () =>
       root.render(

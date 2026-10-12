@@ -3,7 +3,7 @@ import { CONFIG_MATOMO_CLICK_TO_WALLET_EVENTS } from '@test-data';
 import { test, expect } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe('ReefKnot. Matomo events', async () => {
+test.describe('ReefKnot. Matomo events', () => {
   let reefKnotPage: ReefKnotPage;
 
   test.beforeAll(async ({ browser }) => {

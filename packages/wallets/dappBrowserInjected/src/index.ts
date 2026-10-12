@@ -1,7 +1,9 @@
 import 'viem/window';
-import { WalletAdapterType } from '@reef-knot/wallets-helpers';
+import {
+  WalletAdapterType,
+  isMobileOrTablet,
+} from '@reef-knot/wallets-helpers';
 import { injected } from 'wagmi/connectors';
-import { isMobileOrTablet } from '@reef-knot/wallets-helpers';
 
 export const id = 'dappBrowserInjected';
 export const name = 'DAppBrowser';

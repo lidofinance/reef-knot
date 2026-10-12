@@ -60,6 +60,7 @@ function PortalDialog({
     <div
       {...rest}
       className="rk-lido-overlay"
+      role="presentation"
       data-lido-theme={theme}
       data-screen={currentModal?.type}
       onClick={handleClick}
@@ -381,6 +382,8 @@ export function LedgerConnection({ state }: LedgerViewProps) {
 export function LedgerAccounts({ state }: LedgerViewProps) {
   return (
     <section className="rk-lido-screen rk-lido-ledger-accounts">
+      {/* Escape only dismisses the focused dropdown; the fieldset remains a semantic group. */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <fieldset
         className="rk-lido-path"
         disabled={state.isLoading}

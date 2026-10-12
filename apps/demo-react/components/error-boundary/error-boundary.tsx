@@ -3,11 +3,7 @@ import React from 'react';
 export class ErrorBoundary extends React.Component<{
   children: React.ReactNode;
 }> {
-  constructor(props: any) {
-    super(props);
-  }
-
-  componentDidCatch(error: any, info: any) {
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error(
       'ErrorBoundary catched an error:',
       error,

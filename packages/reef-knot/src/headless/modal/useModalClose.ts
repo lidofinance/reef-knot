@@ -1,5 +1,4 @@
-import React from 'react';
-import { useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 
 export const useModalClose = <T extends HTMLDivElement>(
   callback?: () => void,

@@ -31,6 +31,7 @@ export type ModalTypes =
   | {
       type: 'eager';
       props: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         tryConnection: () => Promise<any>;
         initialError?: Error;
       };
@@ -92,12 +93,16 @@ export const ReefKnotModalContextProvider = ({
         modalStackRef.current = next;
         updateModalStack(next);
       },
-      openModalAsync: async ({ type, props }: AsyncModalOpenParams) => {
+      openModalAsync: async (params: AsyncModalOpenParams) => {
         return new Promise<ModalResult>((resolve) => {
           const next = [
-            // for some reason TS cannot match type and props here
             ...modalStackRef.current,
-            { type, props: props as any, onClose: resolve },
+            // Omit does not preserve the discriminated union in AsyncModalOpenParams.
+            {
+              type: params.type,
+              props: params.props,
+              onClose: resolve,
+            } as ModalStateEntry,
           ];
 
           modalStackRef.current = next;
@@ -129,8 +134,7 @@ export const ReefKnotModalContextProvider = ({
   const contextValue = useMemo(
     () => ({
       modalStack,
-      currentModal: modalStack[modalStack.length - 1] as
-        ModalStateEntry | undefined,
+      currentModal: modalStack[modalStack.length - 1],
       termsChecked,
       setTermsChecked,
       ...stableCallbacks,

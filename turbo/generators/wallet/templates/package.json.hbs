@@ -30,12 +30,11 @@
   "scripts": {
     "build": "yarn run -T tsdown && yarn run -T tsc --noEmit false --noEmitOnError false --emitDeclarationOnly --outDir dist || true",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "lint": "yarn run -T eslint ."
   },
   "devDependencies": {
     "@reef-knot/wallets-helpers": "*",
-    "build-config": "*",
-    "eslint-config-custom": "*"
+    "build-config": "*"
   },
   "peerDependencies": {
     "wagmi": ">=3.6",

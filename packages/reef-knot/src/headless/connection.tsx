@@ -313,7 +313,9 @@ export function ReefKnotUIProvider({
               (async () => {
                 const disposable = uri.createConnectorFn({
                   chains: config.chains,
-                  emitter: {} as any,
+                  emitter: {} as Parameters<
+                    typeof uri.createConnectorFn
+                  >[0]['emitter'],
                   providers: providersStore.getProviders(),
                 }) as Connector;
                 const pairingUri = await getWalletConnectUri(disposable);

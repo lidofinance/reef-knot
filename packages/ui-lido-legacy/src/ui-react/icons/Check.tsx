@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Check = React.forwardRef(function Check(
+const Check = React.forwardRef(function CheckRender(
   props: React.SVGProps<SVGSVGElement>,
   svgRef?: React.Ref<SVGSVGElement>,
 ) {

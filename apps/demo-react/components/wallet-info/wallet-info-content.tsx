@@ -92,11 +92,16 @@ export const WalletInfoContent = ({
           </DataTableRowStyle>
           {capabilities.data &&
             Object.entries(capabilities.data)
-              .filter(([chain]) => supportedChainIds.includes(Number(chain)))
-              .map(([chain, enabledCapabilties]) => (
-                <DataTableRowStyle key="chain" title={chain} highlight>
+              .filter(([chainKey]) =>
+                supportedChainIds.includes(Number(chainKey)),
+              )
+              .map(([chainKey, enabledCapabilties]) => (
+                <DataTableRowStyle key="chain" title={chainKey} highlight>
                   {Object.entries(enabledCapabilties)
-                    .filter(([, capability]) => capability.supported)
+                    .filter(
+                      ([, capability]: [string, { supported?: boolean }]) =>
+                        capability.supported,
+                    )
                     .map(([capabilityTitle]) => capabilityTitle)
                     .join(',')}
                 </DataTableRowStyle>

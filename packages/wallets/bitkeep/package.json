@@ -34,13 +34,12 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "lint": "yarn run -T eslint .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@reef-knot/wallets-helpers": "*",
-    "build-config": "*",
-    "eslint-config-custom": "*"
+    "build-config": "*"
   },
   "peerDependencies": {
     "@reef-knot/wallets-helpers": "*",

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Warning = React.forwardRef(function Warning(
+const Warning = React.forwardRef(function WarningRender(
   props: React.SVGProps<SVGSVGElement>,
   svgRef?: React.Ref<SVGSVGElement>,
 ) {

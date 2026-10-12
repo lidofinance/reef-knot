@@ -10,7 +10,7 @@ import { ConsoleLogger } from '@nestjs/common';
  * ```
  */
 export function toCutDecimalsDigit(
-  amount: any,
+  amount: string | number | bigint,
   decimalPlaces: number,
   removeZero = false,
 ) {
@@ -35,27 +35,31 @@ export function toCutDecimalsDigit(
  *
  * @template T - The type of the arguments to be passed to the callback function.
  */
-export async function waitForCallback<T>(
-  callback: (args: T) => Promise<any>,
+export async function waitForCallback<T, TResult>(
+  callback: (args: T) => Promise<TResult>,
   args: T,
   timeout: number,
-): Promise<any> {
+): Promise<NonNullable<TResult>> {
   let shouldTerminate = false;
-  setTimeout(() => {
+  const timeoutId = setTimeout(() => {
     shouldTerminate = true;
   }, timeout);
 
-  let result;
-  while (!shouldTerminate) {
-    result = await callback(args).catch(() => {
-      new ConsoleLogger('waitForCallback').log('Callback failed');
-    });
-    if (result) return result;
-  }
+  let result: TResult | void;
+  try {
+    while (!shouldTerminate) {
+      result = await callback(args).catch(() => {
+        new ConsoleLogger('waitForCallback').log('Callback failed');
+      });
+      if (result) return result;
+    }
 
-  throw new Error(
-    `callback still not done after ${
-      timeout / 1000
-    } sec.\nCallback result: ${result}`,
-  );
+    throw new Error(
+      `callback still not done after ${
+        timeout / 1000
+      } sec.\nCallback result: ${String(result)}`,
+    );
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }

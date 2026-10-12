@@ -37,7 +37,7 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "yarn run -T eslint --ext ts,tsx,js,mjs .",
+    "lint": "yarn run -T eslint .",
     "typecheck": "yarn run -T tsc --noEmit",
     "test": "vitest run"
   },
@@ -59,7 +59,6 @@
     "@types/react-dom": "18.2.17",
     "@types/react-transition-group": "4.4.12",
     "build-config": "*",
-    "eslint-config-custom": "*",
     "happy-dom": "^20.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
