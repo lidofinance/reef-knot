@@ -10,7 +10,7 @@ A UI skin supplies the visual components for the connection screens. Wallet adap
 | `@reef-knot/ui-lido-legacy` | lido-ui v3 and styled-components 5                 |
 | `@reef-knot/ui-lido`        | lido-app-ui (React 18)                             |
 
-The `@reef-knot/ui-lido` UI skin uses `@lidofinance/lido-app-ui@1.4.0`, developed on the [app-ui branch](https://github.com/lidofinance/ui/tree/app-ui). Its React and React DOM peers match the UI kit: React 18. One application uses one UI skin.
+The `@reef-knot/ui-lido` UI skin is verified with `@lidofinance/lido-app-ui@1.4.0`, developed on the [app-ui branch](https://github.com/lidofinance/ui/tree/app-ui). Its peer range is `~1.4.0` because some CSS overrides target the kit's internal Modal and TokenSelector CSS-module class names. Check these overrides before expanding support to another minor version; internal class names can also change in patch releases. Its React and React DOM peers match the UI kit: React 18. One application uses one UI skin.
 
 ## Ready-made UI
 
