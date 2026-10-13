@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   useWalletPicker,
   useReefKnotModal,
@@ -36,19 +36,24 @@ import { LedgerModalInnerContainer } from './components/Ledger/styles';
 import { BrowserWalletIconsGrid } from './components/BrowserWalletIconsGrid';
 
 export function WalletButton(props: WalletButtonViewProps) {
-  const Icon = props.iconUrl
-    ? () => (
-        <img
-          src={props.iconUrl}
-          alt=""
-          onError={(e) => {
-            e.currentTarget.src = FALLBACK_WALLET_ICON;
-          }}
-        />
-      )
-    : props.walletId === 'browserExtension'
-      ? BrowserWalletIconsGrid
-      : props.icon;
+  const { iconUrl, walletId, icon } = props;
+  const Icon = useMemo(
+    () =>
+      iconUrl
+        ? () => (
+            <img
+              src={iconUrl}
+              alt=""
+              onError={(e) => {
+                e.currentTarget.src = FALLBACK_WALLET_ICON;
+              }}
+            />
+          )
+        : walletId === 'browserExtension'
+          ? BrowserWalletIconsGrid
+          : icon,
+    [iconUrl, walletId, icon],
+  );
   return (
     <ConnectButtonBase
       icon={Icon}
