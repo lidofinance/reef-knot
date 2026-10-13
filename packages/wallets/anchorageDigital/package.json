@@ -34,7 +34,8 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "yarn run -T eslint ."
+    "lint": "yarn run -T eslint .",
+    "typecheck": "yarn run -T tsc --noEmit"
   },
   "devDependencies": {
     "@reef-knot/wallets-helpers": "*",

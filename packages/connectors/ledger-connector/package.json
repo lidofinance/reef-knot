@@ -36,7 +36,7 @@
     "dev": "yarn run -T tsdown --watch",
     "lint": "yarn run -T eslint .",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "yarn run -T tsc --noEmit"
   },
   "devDependencies": {
     "@ledgerhq/hw-transport-mocker": "6.34.7",

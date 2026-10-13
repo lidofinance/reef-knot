@@ -35,7 +35,7 @@
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
     "lint": "yarn run -T eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "yarn run -T tsc --noEmit"
   },
   "dependencies": {
     "@types/ua-parser-js": "0.7.39",
