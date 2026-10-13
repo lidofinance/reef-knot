@@ -1,6 +1,7 @@
 import type Eth from '@ledgerhq/hw-app-eth';
 import { toAccount } from 'viem/accounts';
 import {
+  BaseError,
   bytesToHex,
   getTypesForEIP712Domain,
   hashStruct,
@@ -20,6 +21,7 @@ export type WithEthApp = <T>(
 ) => Promise<T>;
 
 export type LedgerAccountOptions = {
+  chainId: number;
   // Refuse to sign a contract call the device cannot clear sign.
   forceClearSign?: boolean;
 };
@@ -66,7 +68,7 @@ export const createLedgerAccount = (
   address: Address,
   path: string,
   withEthApp: WithEthApp,
-  { forceClearSign = false }: LedgerAccountOptions = {},
+  { chainId, forceClearSign = false }: LedgerAccountOptions,
 ): LocalAccount =>
   toAccount({
     address,
@@ -75,6 +77,12 @@ export const createLedgerAccount = (
       transaction,
       { serializer = serializeTransaction } = {},
     ) {
+      // RPC filling can replace chainId even when the request pinned it.
+      // Fail before serialization, metadata resolution or any device action.
+      if (transaction.chainId !== chainId)
+        throw new BaseError(
+          'Transaction chain ID does not match the configured Ledger chain.',
+        );
       const unsignedRawTx = (await serializer(transaction)).slice(2);
       const { r, s, v } = await withEthApp(async (eth) => {
         // Metadata fetch failures are swallowed by the Ledger service and

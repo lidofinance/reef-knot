@@ -1,6 +1,7 @@
 import type Eth from '@ledgerhq/hw-app-eth';
 import type TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import {
+  ChainMismatchError,
   createPublicClient,
   createWalletClient,
   getAddress,
@@ -68,6 +69,10 @@ type RequestArguments = {
   method: string;
   params?: unknown[];
 };
+
+// Some callers include chainId in eth_sendTransaction, although viem's RPC
+// request union does not include it for every transaction type.
+type LedgerTransactionRequest = RpcTransactionRequest & { chainId?: Hex };
 
 type ProviderEvent = 'disconnect';
 type Listener = () => void;
@@ -253,6 +258,7 @@ export class LedgerHQProvider {
         });
 
       this.account = createLedgerAccount(address, path, withVerifyingEthApp, {
+        chainId: this.chain.id,
         forceClearSign: this.forceClearSign,
       });
       this.accountPath = path;
@@ -307,8 +313,16 @@ export class LedgerHQProvider {
   }
 
   private async sendTransaction(
-    transaction: RpcTransactionRequest,
+    transaction: LedgerTransactionRequest,
   ): Promise<Hex> {
+    if (transaction.chainId != null) {
+      const chainId = hexToNumber(transaction.chainId);
+      if (chainId !== this.chain.id)
+        throw new ChainMismatchError({
+          chain: this.chain,
+          currentChainId: chainId,
+        });
+    }
     const walletClient = await this.getWalletClient();
     const account = walletClient.account as LocalAccount;
 
@@ -333,6 +347,7 @@ export class LedgerHQProvider {
     const request = {
       account,
       chain: this.chain,
+      chainId: this.chain.id,
       to: transaction.to ?? undefined,
       data: transaction.data,
       value: transaction.value ? hexToBigInt(transaction.value) : undefined,
@@ -392,7 +407,7 @@ export class LedgerHQProvider {
         return [await this.getAddress()];
 
       case 'eth_sendTransaction':
-        return this.sendTransaction(params[0] as RpcTransactionRequest);
+        return this.sendTransaction(params[0] as LedgerTransactionRequest);
 
       case 'personal_sign': {
         const messageHex = params[0];
