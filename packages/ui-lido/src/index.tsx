@@ -229,7 +229,12 @@ export function WalletPicker({
   terms,
 }: WalletPickerViewProps) {
   const listRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (state.expanded) searchRef.current?.focus();
+  }, [state.expanded]);
 
   useEffect(() => {
     // A new search or list mode starts at the first matching wallet.
@@ -244,6 +249,7 @@ export function WalletPicker({
         {state.expanded && (
           <div className="rk-lido-search">
             <Input
+              ref={searchRef}
               icon={<IconSearch />}
               value={state.search}
               onChange={(event) => state.setSearch(event.currentTarget.value)}

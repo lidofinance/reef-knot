@@ -191,6 +191,11 @@
   padding: 0;
   gap: 12px;
 }
+.rk-lido-dialog .rk-lido-wallet:focus-visible,
+.rk-lido-dialog .rk-lido-account:focus-visible {
+  outline: 2px solid var(--lido-app-ui-color-border-active);
+  outline-offset: -2px;
+}
 .rk-lido-dialog .rk-lido-wallet:disabled,
 .rk-lido-dialog .rk-lido-account:disabled {
   background: transparent;

@@ -131,7 +131,8 @@ export const useLedgerAccounts = ({
             );
           }
         }
-      } catch {
+      } catch (error) {
+        console.error(error);
         if (!active) return;
         setError(
           new Error(

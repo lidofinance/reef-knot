@@ -6,8 +6,6 @@
     "packages/**/test-ui/**/*.ts",
     "packages/**/test-ui/**/*.tsx",
     "packages/**/*.config.ts",
-    "packages/ui-lido-legacy/src/declarations.d.ts",
-    "packages/reef-knot/src/declarations.d.ts",
     "packages/ui-lido-legacy/src/connect-wallet-modal/custom.d.ts",
     "turbo/generators/**/*.ts"
   ],

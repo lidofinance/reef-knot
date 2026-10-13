@@ -41,7 +41,7 @@ where <wallet-id> corresponds to the ID you've specified.
 To display the wallet in the Wallet Connection Modal, its `id` must be included in the `walletsShown` prop of the `ReefKnotWalletsModal` component.
 
 This can be achieved by modifying the `walletsShown` prop at the application level. Additionally, you may consider editing the `WALLETS_MODAL_DISPLAY_CONFIG_DEFAULT` constant, located at:  
-`packages/reef-knot/src/connect-wallet-modal/components/ReefKnotWalletsModal/getDefaultWalletsModalConfig.ts`.
+`packages/reef-knot/src/headless/getDefaultWalletsModalConfig.ts`.
 
 ### 5. Configure the adapter
 

@@ -39,11 +39,11 @@
   },
   "dependencies": {
     "@types/ua-parser-js": "0.7.39",
+    "mipd": "0.0.7",
     "ua-parser-js": "1.0.37"
   },
   "devDependencies": {
     "build-config": "*",
-    "mipd": "0.0.7",
     "react": "18.2.0",
     "wagmi": ">=3.6"
   },

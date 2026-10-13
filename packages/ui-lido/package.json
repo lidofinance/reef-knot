@@ -47,7 +47,7 @@
     "@lidofinance/lido-app-ui": "~1.4.0",
     "react": "^18",
     "react-dom": "^18",
-    "reef-knot": "*"
+    "reef-knot": "^9"
   },
   "devDependencies": {
     "@lidofinance/lido-app-ui": "1.4.0",

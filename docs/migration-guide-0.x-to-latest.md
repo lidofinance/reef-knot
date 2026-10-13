@@ -93,7 +93,7 @@ The modal configuration option `linkDontHaveWallet` is also removed, including i
 
 ## 6. Review SSR and unrelated legacy SDK code
 
-Do not assume that a `NoSSRWrapper` is required for every new integration. Server rendering of the Lido App UI skin has been verified with a bundled application. Browser interactions and wallet connection still run on the client. Keep any existing client-only boundary until you have checked your framework's SSR and hydration setup; see the [headless API guide](headless-ui.md) for the direct Node.js import limitation.
+Do not assume that a `NoSSRWrapper` is required for every new integration. Server rendering of the Lido App UI skin has been verified with a bundled application. Browser interactions and wallet connection still run on the client. Keep any existing client-only boundary until you have checked your framework's SSR and hydration setup.
 
 A legacy Lido JS SDK integration is a separate migration. If the application still uses its `ProviderSDK` or ethers-based code, review those dependencies independently; removing Reef Knot's old web3-react layer does not prove that the rest of the application no longer needs them.
 
