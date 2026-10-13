@@ -3,6 +3,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mainnet } from 'viem/chains';
+import type { CreateConnectorFn } from 'wagmi';
 import { ReefKnotProvider } from '../../core-react/context/reefKnotProvider';
 import { useReefKnotModal } from '../../core-react/hooks/useReefKnotModal';
 import {
@@ -22,19 +23,52 @@ import type { WalletAdapterData } from '@reef-knot/wallets-helpers';
 import type { ReefKnotWalletsModalConfig } from '../../types/reef-knot-wallets-modal';
 
 const mocks = vi.hoisted(() => ({
-  connect: vi.fn(),
+  connect: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
   setItem: vi.fn(),
   removeItem: vi.fn(),
+  disconnect: vi.fn(),
+  skipCommit: false,
+  state: {
+    status: 'disconnected',
+    current: null as string | null,
+    connections: new Map<string, { connector: { id: string; uid: string } }>(),
+  },
 }));
 vi.mock('wagmi', async (importOriginal) => ({
   ...(await importOriginal<typeof import('wagmi')>()),
   useConfig: () => ({
     chains: [mainnet],
     storage: { setItem: mocks.setItem, removeItem: mocks.removeItem },
+    state: mocks.state,
   }),
-  useConnect: () => ({ mutateAsync: mocks.connect }),
-  useConnection: () => ({ isConnected: false }),
-  useDisconnect: () => ({ mutate: vi.fn() }),
+  useConnect: () => ({
+    mutateAsync: async ({ connector }: { connector: CreateConnectorFn }) => {
+      const uid = `selected-${mocks.connect.mock.calls.length}`;
+      const instance = connector({
+        emitter: { uid },
+        chains: [mainnet],
+        providers: [],
+      } as unknown as Parameters<CreateConnectorFn>[0]);
+      const result = await mocks.connect({ connector });
+      if (!mocks.skipCommit) {
+        mocks.state.status = 'connected';
+        mocks.state.current = uid;
+        mocks.state.connections.set(uid, {
+          connector: { id: instance.id ?? 'metaMask', uid },
+        });
+      }
+      return result;
+    },
+  }),
+  useConnection: () => ({
+    isConnected: mocks.state.status === 'connected',
+    connector: mocks.state.connections.get(mocks.state.current ?? '')
+      ?.connector,
+  }),
+  useDisconnect: () => ({
+    mutate: mocks.disconnect,
+    mutateAsync: mocks.disconnect,
+  }),
 }));
 
 const wallet: WalletAdapterData = {
@@ -103,6 +137,11 @@ beforeEach(() => {
   Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
   vi.clearAllMocks();
   mocks.connect.mockResolvedValue({});
+  mocks.disconnect.mockResolvedValue(undefined);
+  mocks.skipCommit = false;
+  mocks.state.status = 'disconnected';
+  mocks.state.current = null;
+  mocks.state.connections.clear();
   localStorage.clear();
   container = document.createElement('div');
   document.body.append(container);
@@ -114,6 +153,112 @@ afterEach(async () => {
 });
 
 describe('public headless connection flow', () => {
+  it('waits for the old wallet disconnect and storage cleanup before connecting its replacement', async () => {
+    mocks.state.status = 'connected';
+    mocks.state.current = 'old';
+    mocks.state.connections.set('old', {
+      connector: { id: 'old-wallet', uid: 'old' },
+    });
+    let finishDisconnect!: () => void;
+    mocks.disconnect.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finishDisconnect = () => {
+            mocks.state.status = 'disconnected';
+            mocks.state.current = null;
+            mocks.state.connections.clear();
+            resolve();
+          };
+        }),
+    );
+    let finishCleanup!: () => void;
+    mocks.removeItem.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finishCleanup = resolve;
+        }),
+    );
+    const success = vi.fn();
+    await mount({ onConnectSuccess: success });
+    await act(async () => terms.setChecked(true));
+    let pending!: Promise<void>;
+    await act(async () => {
+      pending = connection.connect();
+    });
+    expect(mocks.disconnect).toHaveBeenCalledOnce();
+    expect(mocks.connect).not.toHaveBeenCalled();
+    expect(connection.isLoading).toBe(true);
+    expect(success).not.toHaveBeenCalled();
+
+    await act(async () => finishDisconnect());
+    expect(mocks.removeItem).toHaveBeenCalledWith('recentConnectorId');
+    expect(mocks.removeItem).toHaveBeenCalledWith(LS_KEY_RECONNECT_WALLET_ID);
+    expect(mocks.connect).not.toHaveBeenCalled();
+    await act(async () => {
+      finishCleanup();
+      await pending;
+    });
+    expect(mocks.state.status).toBe('connected');
+    expect(mocks.state.current).toBe('selected-0');
+    expect(mocks.connect).toHaveBeenCalledOnce();
+    expect(success).toHaveBeenCalledExactlyOnceWith({
+      walletId: 'metaMask',
+      rdns: undefined,
+    });
+    expect(mocks.setItem).toHaveBeenCalledWith(
+      LS_KEY_RECONNECT_WALLET_ID,
+      'metaMask',
+    );
+    expect(modal.currentModal).toBeUndefined();
+  });
+  it('does not start a replacement connection if disconnect fails', async () => {
+    mocks.state.status = 'connected';
+    mocks.state.current = 'old';
+    mocks.state.connections.set('old', {
+      connector: { id: 'old-wallet', uid: 'old' },
+    });
+    mocks.disconnect.mockRejectedValueOnce(new Error('Disconnect failed'));
+    const success = vi.fn();
+    await mount({ onConnectSuccess: success });
+    await act(async () => terms.setChecked(true));
+    await act(async () => {
+      await connection.connect();
+    });
+    expect(connection.error?.message).toBe('Disconnect failed');
+    expect(mocks.connect).not.toHaveBeenCalled();
+    expect(mocks.setItem).not.toHaveBeenCalled();
+    expect(success).not.toHaveBeenCalled();
+    expect(modal.currentModal?.type).toBe('wallet');
+  });
+  it.each(['disconnected', 'another-instance'])(
+    'does not commit success when the selected connector is %s',
+    async (outcome) => {
+      mocks.skipCommit = true;
+      if (outcome === 'another-instance') {
+        mocks.connect.mockImplementationOnce(async () => {
+          mocks.state.status = 'connected';
+          mocks.state.current = 'other';
+          // Same wallet id, different connector instance.
+          mocks.state.connections.set('other', {
+            connector: { id: 'metaMask', uid: 'other' },
+          });
+        });
+      }
+      const success = vi.fn();
+      await mount({ onConnectSuccess: success });
+      await act(async () => terms.setChecked(true));
+      await act(async () => {
+        await connection.connect();
+      });
+      expect(connection.error?.message).toBe(
+        'The selected wallet is no longer connected. Please retry.',
+      );
+      expect(mocks.setItem).not.toHaveBeenCalled();
+      expect(success).not.toHaveBeenCalled();
+      expect(modal.currentModal?.type).toBe('wallet');
+      expect(connection.isLoading).toBe(false);
+    },
+  );
   it('guards Terms in the action, then stores reconnect and calls success once', async () => {
     const success = vi.fn();
     const start = vi.fn();
@@ -326,7 +471,16 @@ describe('public headless connection flow', () => {
     await act(async () =>
       modal.openModal({
         type: 'eip6963',
-        props: { providers: [provider], onSelect: () => {} },
+        props: {
+          providers: [provider],
+          onSelect: () => {
+            mocks.state.status = 'connected';
+            mocks.state.current = 'eip6963';
+            mocks.state.connections.set('eip6963', {
+              connector: { id: provider.info.rdns, uid: 'eip6963' },
+            });
+          },
+        },
       }),
     );
     await act(async () => {

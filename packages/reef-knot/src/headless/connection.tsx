@@ -10,6 +10,7 @@ import React, {
 import {
   useConfig,
   useConnect as useWagmiConnect,
+  type CreateConnectorFn,
   type Connector,
 } from 'wagmi';
 import { injected } from 'wagmi/connectors';
@@ -54,7 +55,8 @@ type ConnectionContextValue = {
   dismissError: () => void;
   connectWallet: (wallet: WalletAdapterData) => Promise<void>;
   selectProvider: (provider: EIP6963ProviderDetail) => Promise<void>;
-  complete: (walletId: string, rdns?: string) => void;
+  connectConnector: (connector: CreateConnectorFn) => Promise<void>;
+  completeConnection: (walletId: string, rdns?: string) => void;
   notifyStart: (id: string) => void;
   setConsent: (checked: boolean) => void;
   run: (id: string, action: () => Promise<void>) => Promise<void>;
@@ -79,7 +81,7 @@ export function ReefKnotUIProvider({
 }: React.PropsWithChildren<{ config: ReefKnotWalletsModalConfig }>) {
   const config = useConfig();
   const { mutateAsync: connectAsync } = useWagmiConnect();
-  const { disconnect } = useDisconnect();
+  const { disconnectAsync } = useDisconnect();
   const { walletDataList, loadingWalletId, setLoadingWalletId } =
     useReefKnotContext();
   const {
@@ -102,7 +104,9 @@ export function ReefKnotUIProvider({
   const ledgerOpening = useRef(false);
   const providerOpening = useRef(false);
   const actionModal = useRef(currentModal);
-  const completedModal = useRef<typeof currentModal>();
+  // Remember the completed screen to prevent duplicate success callbacks and closes.
+  const completedConnectionModal = useRef<typeof currentModal>();
+  const connectedConnectorUid = useRef<string>();
   const alive = useRef(true);
   const current = useRef({ termsChecked, modalStack, closeModal, modalConfig });
   current.current = { termsChecked, modalStack, closeModal, modalConfig };
@@ -153,12 +157,26 @@ export function ReefKnotUIProvider({
       setError(currentModal.props.initialError ?? null);
   }, [currentModal]);
 
-  const complete = useCallback(
+  // Commit a successful connection: save reconnect, close its screens and notify the app.
+  // This runs after connecting; it does not initiate a wallet connection.
+  const completeConnection = useCallback(
     (walletId: string, rdns?: string) => {
+      const { status, current: uid, connections } = config.state;
+      const connector = uid ? connections.get(uid)?.connector : undefined;
+      if (
+        status !== 'connected' ||
+        !connector ||
+        (connectedConnectorUid.current
+          ? uid !== connectedConnectorUid.current
+          : rdns && connector.id !== rdns)
+      )
+        throw new Error(
+          'The selected wallet is no longer connected. Please retry.',
+        );
       const stack = current.current.modalStack;
       const target = actionModal.current ?? stack[stack.length - 1];
-      if (target && completedModal.current === target) return;
-      completedModal.current = target;
+      if (target && completedConnectionModal.current === target) return;
+      completedConnectionModal.current = target;
       void config.storage?.setItem(
         LS_KEY_RECONNECT_WALLET_ID,
         rdns ?? walletId,
@@ -176,7 +194,7 @@ export function ReefKnotUIProvider({
       }
       current.current.modalConfig.onConnectSuccess?.({ walletId, rdns });
     },
-    [config.storage],
+    [config],
   );
 
   const notifyStart = useCallback((walletId: string) => {
@@ -188,6 +206,7 @@ export function ReefKnotUIProvider({
     async (id: string, action: () => Promise<void>) => {
       if (!current.current.termsChecked || locked.current) return;
       locked.current = true;
+      connectedConnectorUid.current = undefined;
       const attemptModal =
         current.current.modalStack[current.current.modalStack.length - 1];
       actionModal.current = attemptModal;
@@ -209,20 +228,38 @@ export function ReefKnotUIProvider({
     [setLoadingWalletId],
   );
 
+  const connectConnector = useCallback(
+    async (createConnector: CreateConnectorFn) => {
+      await disconnectAsync?.();
+      let connectorUid: string | undefined;
+      await connectAsync({
+        connector: (args) => {
+          connectorUid = args.emitter.uid;
+          return createConnector(args);
+        },
+      });
+      // Track the instance, not its id: two instances can describe the same wallet.
+      connectedConnectorUid.current = connectorUid;
+      if (!connectorUid)
+        throw new Error(
+          'The selected wallet connection could not be verified.',
+        );
+    },
+    [disconnectAsync, connectAsync],
+  );
   const connectProvider = useCallback(
     async (provider: EIP6963ProviderDetail) => {
-      disconnect?.();
-      await connectAsync({
-        connector: injected({
+      await connectConnector(
+        injected({
           target: {
             id: provider.info.rdns,
             name: provider.info.name,
             provider: () => provider.provider,
           },
         }),
-      });
+      );
     },
-    [disconnect, connectAsync],
+    [connectConnector],
   );
   const selectProvider = useCallback(
     async (provider: EIP6963ProviderDetail) => {
@@ -231,10 +268,10 @@ export function ReefKnotUIProvider({
           current.current.modalStack[current.current.modalStack.length - 1];
         if (screen?.type === 'eip6963') await screen.props.onSelect(provider);
         else await connectProvider(provider);
-        complete('browserExtension', provider.info.rdns);
+        completeConnection('browserExtension', provider.info.rdns);
       });
     },
-    [run, connectProvider, complete],
+    [run, connectProvider, completeConnection],
   );
 
   const connectWallet = useCallback(
@@ -300,7 +337,6 @@ export function ReefKnotUIProvider({
           else if (wallet.downloadURLs) suggestApp(wallet.downloadURLs);
           return;
         }
-        disconnect?.();
         const uri = wallet.walletconnectExtras?.connectionViaURI;
         if (wallet.type === 'walletConnect' && uri?.condition) {
           // Keep the popup in the user gesture; sever opener after obtaining its handle.
@@ -313,7 +349,7 @@ export function ReefKnotUIProvider({
           }
           try {
             await Promise.all([
-              connectAsync({ connector: uri.createConnectorFn }),
+              connectConnector(uri.createConnectorFn),
               (async () => {
                 const disposable = uri.createConnectorFn({
                   chains: config.chains,
@@ -331,9 +367,9 @@ export function ReefKnotUIProvider({
             if (uri.closeRedirectionWindow ?? true) popup?.close();
           }
         } else {
-          await connectAsync({ connector: wallet.createConnectorFn });
+          await connectConnector(wallet.createConnectorFn);
         }
-        complete(wallet.walletId);
+        completeConnection(wallet.walletId);
       });
     },
     [
@@ -346,10 +382,9 @@ export function ReefKnotUIProvider({
       connectProvider,
       openModal,
       run,
-      disconnect,
       config.chains,
-      connectAsync,
-      complete,
+      connectConnector,
+      completeConnection,
     ],
   );
 
@@ -421,7 +456,8 @@ export function ReefKnotUIProvider({
       dismissError,
       connectWallet,
       selectProvider,
-      complete,
+      connectConnector,
+      completeConnection,
       run,
     }),
     [
@@ -434,7 +470,8 @@ export function ReefKnotUIProvider({
       dismissError,
       connectWallet,
       selectProvider,
-      complete,
+      connectConnector,
+      completeConnection,
       run,
     ],
   );
@@ -470,8 +507,8 @@ export function useWalletConnection(
       loadingWalletId === walletId ||
       (walletId === 'browserExtension' && !!loadingWalletId?.includes('.')),
     error: flow.error,
-    complete: (reconnectId?: string, rdns?: string) =>
-      flow.complete(reconnectId ?? walletId, rdns),
+    completeConnection: (reconnectId?: string, rdns?: string) =>
+      flow.completeConnection(reconnectId ?? walletId, rdns),
     notifyStart: () => flow.notifyStart(walletId),
     connect: () => (wallet ? flow.connectWallet(wallet) : Promise.resolve()),
   };

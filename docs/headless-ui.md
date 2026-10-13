@@ -74,6 +74,8 @@ Render `ReefKnotLedgerProvider` only while displaying the Ledger flow, inside `R
 
 Connection actions enforce consent and serialize requests. They own reconnect persistence, callback delivery and completion of nested screens. Failed manual actions leave the screen open and expose an `error`; callers should render it and allow retry. Deeplink/install actions open the wallet and do not report a successful connection.
 
+When replacing a wallet, connection actions await the previous wallet's disconnect and storage cleanup. Before persisting the reconnect ID or reporting success, they verify that the selected connector instance is still active. `useDisconnect()` also exposes an optional `disconnectAsync()` for callers that need to await disconnection; `disconnect()` remains available for ordinary disconnect buttons. Both actions are unavailable when disconnecting does not make sense, such as for auto-connect-only wallets.
+
 For a custom dialog, reuse `useModalFocus`, `useEscape`, `useLockScroll` and `useModalClose`, or implement equivalent accessibility behavior. The API deliberately does not dictate DOM structure. `ReefKnotModalRenderer` is an optional composition helper; it requires a complete `ReefKnotUIComponents` map and has no default visuals.
 
 The `apps/demo-react` playground has a **Wallet UI** selector: **Legacy**, **Lido App UI**, and **Custom**. It changes only the wallet dialog, using one wallet catalog and one connection configuration. Legacy is the default; selection resets on reload. Switching is disabled while a wallet screen or connection is active and preserves an already connected account.

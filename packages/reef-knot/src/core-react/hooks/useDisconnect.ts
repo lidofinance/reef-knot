@@ -10,9 +10,9 @@ import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
 
 const useDisconnectCleaningStorage = () => {
   const { storage } = useConfig();
-  const { mutate: disconnect } = useDisconnectWagmi();
+  const { mutate: disconnect, mutateAsync } = useDisconnectWagmi();
 
-  return useCallback(
+  const disconnectCleaningStorage = useCallback(
     (...args: Parameters<typeof disconnect>) => {
       disconnect(...args);
       void storage?.removeItem('recentConnectorId');
@@ -20,10 +20,23 @@ const useDisconnectCleaningStorage = () => {
     },
     [disconnect, storage],
   );
+  const disconnectAsync = useCallback(
+    async (...args: Parameters<typeof mutateAsync>) => {
+      await mutateAsync(...args);
+      // Wagmi may write recentConnectorId while finishing disconnect.
+      // Finish cleanup before a replacement connection writes its own keys.
+      await Promise.all([
+        storage?.removeItem('recentConnectorId'),
+        storage?.removeItem(LS_KEY_RECONNECT_WALLET_ID),
+      ]);
+    },
+    [mutateAsync, storage],
+  );
+  return { disconnect: disconnectCleaningStorage, disconnectAsync };
 };
 
 export const useForceDisconnect = () => {
-  const disconnect = useDisconnectCleaningStorage();
+  const { disconnect } = useDisconnectCleaningStorage();
   const { forceCloseAllModals } = useReefKnotModal();
 
   const forceDisconnect = useCallback(() => {
@@ -36,10 +49,11 @@ export const useForceDisconnect = () => {
 
 export const useDisconnect = (): {
   disconnect?: () => void;
+  disconnectAsync?: () => Promise<void>;
   isDisconnectMakesSense: boolean;
 } => {
   const { isConnected, connector } = useConnection();
-  const disconnect = useDisconnectCleaningStorage();
+  const { disconnect, disconnectAsync } = useDisconnectCleaningStorage();
   const { walletDataList } = useReefKnotContext();
 
   const isDisconnectMakesSense = useMemo(() => {
@@ -53,6 +67,7 @@ export const useDisconnect = (): {
 
   return {
     disconnect: isDisconnectMakesSense ? disconnect : undefined,
+    disconnectAsync: isDisconnectMakesSense ? disconnectAsync : undefined,
     isDisconnectMakesSense,
   };
 };

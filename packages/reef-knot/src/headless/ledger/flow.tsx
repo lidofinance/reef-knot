@@ -6,7 +6,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { useConnect } from 'wagmi';
 import { idLedgerHid } from '@reef-knot/ledger-connector';
 import { interceptLedgerError } from '../../core-react/helpers';
 import { useReefKnotContext } from '../../core-react';
@@ -43,7 +42,6 @@ function LedgerFlowOwner({ children }: React.PropsWithChildren) {
   const transport = useLedgerContext();
   const flow = useConnectionContext();
   const { walletDataList } = useReefKnotContext();
-  const { mutateAsync: connectAsync } = useConnect();
   const [currentPage, setPage] = useState(1);
   const [derivationPath, setPath] = useState(DERIVATION_PATHS[0].template);
   const [accountsStorage, setStorage] = useState<AccountsStorage>({});
@@ -82,14 +80,14 @@ function LedgerFlowOwner({ children }: React.PropsWithChildren) {
         saveLedgerDerivationPath(account.path);
         await transport.disconnectTransport(true);
         try {
-          await connectAsync({ connector: wallet.createConnectorFn });
-          flow.complete(wallet.walletId);
+          await flow.connectConnector(wallet.createConnectorFn);
+          flow.completeConnection(wallet.walletId);
         } catch (e) {
           transport.setError(interceptLedgerError(e as Error));
         }
       });
     },
-    [accounts, flow, walletDataList, transport, connectAsync],
+    [accounts, flow, walletDataList, transport],
   );
   const value: LedgerFlowState = {
     screen: transport.error

@@ -3,6 +3,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { mainnet } from 'viem/chains';
+import type { CreateConnectorFn } from 'wagmi';
 import { BaseError } from 'viem';
 import {
   ReefKnotProvider,
@@ -13,16 +14,41 @@ import {
   type WalletAdapterData,
 } from 'reef-knot';
 
-const mocks = vi.hoisted(() => ({ connect: vi.fn(), setItem: vi.fn() }));
+const mocks = vi.hoisted(() => ({
+  connect: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
+  setItem: vi.fn(),
+  state: {
+    status: 'disconnected',
+    current: null as string | null,
+    connections: new Map<string, { connector: { id: string; uid: string } }>(),
+  },
+}));
 vi.mock('wagmi', async (importOriginal) => ({
   ...(await importOriginal<typeof import('wagmi')>()),
   useConfig: () => ({
     chains: [mainnet],
     storage: { setItem: mocks.setItem, removeItem: vi.fn() },
+    state: mocks.state,
   }),
-  useConnect: () => ({ mutateAsync: mocks.connect }),
+  useConnect: () => ({
+    mutateAsync: async ({ connector }: { connector: CreateConnectorFn }) => {
+      const uid = 'selected';
+      const instance = connector({
+        emitter: { uid },
+        chains: [mainnet],
+        providers: [],
+      } as unknown as Parameters<CreateConnectorFn>[0]);
+      const result = await mocks.connect({ connector });
+      mocks.state.status = 'connected';
+      mocks.state.current = uid;
+      mocks.state.connections.set(uid, {
+        connector: { id: instance.id ?? 'metaMask', uid },
+      });
+      return result;
+    },
+  }),
   useConnection: () => ({ isConnected: false }),
-  useDisconnect: () => ({ mutate: vi.fn() }),
+  useDisconnect: () => ({ mutate: vi.fn(), mutateAsync: vi.fn() }),
 }));
 type TestModalProps = {
   config: ReefKnotWalletsModalConfig;
@@ -82,6 +108,9 @@ export function runUISuite(
     Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
     vi.clearAllMocks();
     mocks.connect.mockResolvedValue({});
+    mocks.state.status = 'disconnected';
+    mocks.state.current = null;
+    mocks.state.connections.clear();
     localStorage.clear();
     container = document.createElement('div');
     document.body.append(container);
@@ -237,7 +266,13 @@ export function runUISuite(
     });
     it('selects an EIP-6963 provider and completes both nested screens once', async () => {
       const success = await mount(dark);
-      const select = vi.fn();
+      const select = vi.fn(() => {
+        mocks.state.status = 'connected';
+        mocks.state.current = 'eip6963';
+        mocks.state.connections.set('eip6963', {
+          connector: { id: 'org.example.wallet', uid: 'eip6963' },
+        });
+      });
       const provider = {
         info: {
           uuid: 'test-provider',
