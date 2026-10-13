@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { LedgerImage } from './components/LedgerImage';
 import { LedgerAccountIcon } from './components/LedgerAccountIcon';
@@ -7,7 +7,7 @@ import {
   Button,
   Checkbox,
   Input,
-  Modal,
+  IconCross,
   IconButton,
   IconChevronDown,
   IconChevronUp,
@@ -46,12 +46,14 @@ function PortalDialog({
   children,
   theme = 'light',
   onClose,
-  onBack,
+  onBack: _onBack,
   widthClamp: _widthClamp,
   className,
   ...rest
 }: ModalContainerProps) {
   const { currentModal } = useReefKnotModal();
+  const titleId = useId();
+  const subtitleId = useId();
   useEscape(onClose);
   useLockScroll();
   const focusRef = useModalFocus();
@@ -78,20 +80,38 @@ function PortalDialog({
       }}
     >
       <div className="rk-lido-dialog-container" style={{ maxWidth: 500 }}>
-        <Modal
+        <div
           className={`rk-lido-dialog ${className ?? ''}`}
-          onClose={onClose}
-          subtitle={subtitle}
-          bodyFill
-          title={
-            <span className="rk-lido-title">
-              {titleIcon}
-              <span className="rk-lido-heading">{title}</span>
-            </span>
-          }
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={title != null ? titleId : undefined}
+          aria-label={title == null ? 'Wallet connection' : undefined}
+          aria-describedby={subtitle != null ? subtitleId : undefined}
+          tabIndex={-1}
         >
-          {children}
-        </Modal>
+          <div className="rk-lido-header-group">
+            <div className="rk-lido-header">
+              <h2 className="rk-lido-title" id={titleId}>
+                {titleIcon}
+                <span className="rk-lido-heading">{title}</span>
+              </h2>
+              {onClose && (
+                <IconButton
+                  variant="outline"
+                  aria-label="Close"
+                  icon={<IconCross />}
+                  onClick={onClose}
+                />
+              )}
+            </div>
+            {subtitle != null && (
+              <p className="rk-lido-subtitle" id={subtitleId}>
+                {subtitle}
+              </p>
+            )}
+          </div>
+          <div className="rk-lido-body">{children}</div>
+        </div>
       </div>
     </div>
   );
@@ -404,7 +424,7 @@ export function LedgerAccounts({ state }: LedgerViewProps) {
           value={state.derivationPath}
           options={state.derivationPaths.map((path) => ({
             value: path.template,
-            label: path.title,
+            label: <span className="rk-lido-path-label">{path.title}</span>,
           }))}
           onChange={state.setDerivationPath}
         />

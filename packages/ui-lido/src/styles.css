@@ -1,4 +1,4 @@
-/* Overrides stay inside the portal, including App UI component internals. */
+/* Styles stay scoped to the UI skin's portal. */
 .rk-lido-overlay {
   position: fixed;
   inset: 0;
@@ -23,6 +23,12 @@
   margin: auto;
 }
 .rk-lido-dialog-container .rk-lido-dialog {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow: clip;
+  background: var(--lido-app-ui-color-background-surface);
   width: 100%;
   padding: 32px;
   border: 0;
@@ -30,10 +36,17 @@
   gap: 20px;
   outline: none;
 }
-.rk-lido-dialog [class*='Modal-module_header__'] {
+.rk-lido-header-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rk-lido-header {
+  display: flex;
+  gap: 12px;
   align-items: center;
 }
-.rk-lido-dialog [class*='Modal-module_title__'],
+.rk-lido-title,
 .rk-lido-requirements h2 {
   font-size: 24px;
   font-weight: 500;
@@ -41,9 +54,24 @@
   letter-spacing: -0.84px;
 }
 .rk-lido-title {
+  margin: 0;
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
   display: flex;
   align-items: center;
   gap: 12px;
+}
+.rk-lido-subtitle {
+  color: var(--lido-app-ui-color-text-secondary);
+  font-size: var(--lido-app-ui-font-size-label);
+  font-weight: var(--lido-app-ui-font-weight-regular);
+  line-height: var(--lido-app-ui-line-height-label);
+  letter-spacing: var(--lido-app-ui-letter-spacing-label);
+}
+.rk-lido-body {
+  display: flex;
+  flex-direction: column;
 }
 .rk-lido-pagination button {
   width: 24px;
@@ -257,14 +285,10 @@
   border-radius: 8px;
   padding: 6px 16px;
 }
-.rk-lido-path [class*='TokenSelector-module_label__'] {
+.rk-lido-path-label {
   font-size: 14px;
   line-height: 22px;
   font-weight: 400;
-}
-.rk-lido-path [class*='TokenSelector-module_chevron__'] {
-  width: 20px;
-  height: 20px;
 }
 .rk-lido-ledger-accounts {
   gap: 24px;
@@ -410,7 +434,7 @@
     min-height: 100dvh;
     border-radius: 0;
   }
-  .rk-lido-dialog [class*='Modal-module_body__'] {
+  .rk-lido-body {
     flex: 1;
     min-height: 0;
   }
