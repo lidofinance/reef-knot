@@ -111,8 +111,14 @@ export function ReefKnotUIProvider({
   const completedConnectionModal = useRef<typeof currentModal>();
   const connectedConnectorUid = useRef<string>();
   const alive = useRef(true);
-  const current = useRef({ termsChecked, modalStack, closeModal, modalConfig });
-  current.current = { termsChecked, modalStack, closeModal, modalConfig };
+  // Refreshed every render, so stable callbacks read the current modal state without re-creating.
+  const modalStateRef = useRef({
+    termsChecked,
+    modalStack,
+    closeModal,
+    modalConfig,
+  });
+  modalStateRef.current = { termsChecked, modalStack, closeModal, modalConfig };
 
   useEffect(() => {
     alive.current = true;
@@ -178,7 +184,9 @@ export function ReefKnotUIProvider({
         );
       const target =
         actionModal.current ??
-        current.current.modalStack[current.current.modalStack.length - 1];
+        modalStateRef.current.modalStack[
+          modalStateRef.current.modalStack.length - 1
+        ];
       if (target && completedConnectionModal.current === target) return;
       completedConnectionModal.current = target;
       const reconnectWallet: ReconnectWalletRecord = {
@@ -195,7 +203,7 @@ export function ReefKnotUIProvider({
         // The connection itself succeeded. Auto-connect skips a stale record,
         // because its `connectorId` does not match the new `recentConnectorId`.
       }
-      const stack = current.current.modalStack;
+      const stack = modalStateRef.current.modalStack;
       // EIP-6963 completes its own screen and the underlying wallet picker.
       const nested = stack[stack.length - 1]?.type;
       const count =
@@ -205,25 +213,29 @@ export function ReefKnotUIProvider({
           : 1;
       if (stack[stack.length - 1] === target) {
         for (let i = 0; i < count; i += 1)
-          current.current.closeModal({ success: true });
+          modalStateRef.current.closeModal({ success: true });
       }
-      current.current.modalConfig.onConnectSuccess?.({ walletId, rdns });
+      modalStateRef.current.modalConfig.onConnectSuccess?.({ walletId, rdns });
     },
     [config],
   );
 
   const notifyStart = useCallback((walletId: string) => {
     actionModal.current =
-      current.current.modalStack[current.current.modalStack.length - 1];
-    current.current.modalConfig.onConnectStart?.({ walletId });
+      modalStateRef.current.modalStack[
+        modalStateRef.current.modalStack.length - 1
+      ];
+    modalStateRef.current.modalConfig.onConnectStart?.({ walletId });
   }, []);
   const run = useCallback(
     async (id: string, action: () => Promise<void>) => {
-      if (!current.current.termsChecked || locked.current) return;
+      if (!modalStateRef.current.termsChecked || locked.current) return;
       locked.current = true;
       connectedConnectorUid.current = undefined;
       const attemptModal =
-        current.current.modalStack[current.current.modalStack.length - 1];
+        modalStateRef.current.modalStack[
+          modalStateRef.current.modalStack.length - 1
+        ];
       actionModal.current = attemptModal;
       setLoadingWalletId(id);
       setError(null);
@@ -232,7 +244,7 @@ export function ReefKnotUIProvider({
       } catch (e) {
         // A late rejection belongs to the screen that started the attempt,
         // never to a picker opened after that screen was dismissed.
-        const stack = current.current.modalStack;
+        const stack = modalStateRef.current.modalStack;
         if (alive.current && stack[stack.length - 1] === attemptModal)
           setError(e instanceof Error ? e : new Error(String(e)));
       } finally {
@@ -280,7 +292,9 @@ export function ReefKnotUIProvider({
     async (provider: EIP6963ProviderDetail) => {
       await run(provider.info.rdns, async () => {
         const screen =
-          current.current.modalStack[current.current.modalStack.length - 1];
+          modalStateRef.current.modalStack[
+            modalStateRef.current.modalStack.length - 1
+          ];
         if (screen?.type === 'eip6963') await screen.props.onSelect(provider);
         else await connectProvider(provider);
         await completeConnection('browserExtension', provider.info.rdns);
@@ -292,7 +306,7 @@ export function ReefKnotUIProvider({
   const connectWallet = useCallback(
     async (wallet: WalletAdapterData) => {
       if (
-        !current.current.termsChecked ||
+        !modalStateRef.current.termsChecked ||
         locked.current ||
         ledgerOpening.current ||
         providerOpening.current ||
@@ -406,11 +420,11 @@ export function ReefKnotUIProvider({
   const clearSearch = useCallback(() => setSearch(''), []);
   const setConsent = useCallback(
     (checked: boolean) => {
-      if (current.current.termsChecked === checked) return;
-      current.current.termsChecked = checked;
+      if (modalStateRef.current.termsChecked === checked) return;
+      modalStateRef.current.termsChecked = checked;
       setTermsChecked(checked);
       if (checked)
-        current.current.modalConfig.onClickTermsAccept?.({
+        modalStateRef.current.modalConfig.onClickTermsAccept?.({
           isAccepted: checked,
         });
     },
