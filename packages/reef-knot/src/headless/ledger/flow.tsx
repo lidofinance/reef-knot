@@ -81,7 +81,7 @@ function LedgerFlowOwner({ children }: React.PropsWithChildren) {
         await transport.disconnectTransport(true);
         try {
           await flow.connectConnector(wallet.createConnectorFn);
-          flow.completeConnection(wallet.walletId);
+          await flow.completeConnection(wallet.walletId);
         } catch (e) {
           transport.setError(interceptLedgerError(e as Error));
         }

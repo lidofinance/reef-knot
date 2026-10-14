@@ -27,7 +27,10 @@ import {
   useReefKnotContext,
   useReefKnotModal,
 } from '../core-react';
-import type { EIP6963ProviderDetail } from '../core-react';
+import type {
+  EIP6963ProviderDetail,
+  ReconnectWalletRecord,
+} from '../core-react';
 import type { ReefKnotWalletsModalConfig } from '../types/reef-knot-wallets-modal';
 import { sortWalletsList } from './helpers/sortWalletsList';
 import { openWindow } from './helpers/openWindow';
@@ -56,7 +59,7 @@ type ConnectionContextValue = {
   connectWallet: (wallet: WalletAdapterData) => Promise<void>;
   selectProvider: (provider: EIP6963ProviderDetail) => Promise<void>;
   connectConnector: (connector: CreateConnectorFn) => Promise<void>;
-  completeConnection: (walletId: string, rdns?: string) => void;
+  completeConnection: (walletId: string, rdns?: string) => Promise<void>;
   notifyStart: (id: string) => void;
   setConsent: (checked: boolean) => void;
   run: (id: string, action: () => Promise<void>) => Promise<void>;
@@ -160,7 +163,7 @@ export function ReefKnotUIProvider({
   // Commit a successful connection: save reconnect, close its screens and notify the app.
   // This runs after connecting; it does not initiate a wallet connection.
   const completeConnection = useCallback(
-    (walletId: string, rdns?: string) => {
+    async (walletId: string, rdns?: string) => {
       const { status, current: uid, connections } = config.state;
       const connector = uid ? connections.get(uid)?.connector : undefined;
       if (
@@ -173,14 +176,26 @@ export function ReefKnotUIProvider({
         throw new Error(
           'The selected wallet is no longer connected. Please retry.',
         );
-      const stack = current.current.modalStack;
-      const target = actionModal.current ?? stack[stack.length - 1];
+      const target =
+        actionModal.current ??
+        current.current.modalStack[current.current.modalStack.length - 1];
       if (target && completedConnectionModal.current === target) return;
       completedConnectionModal.current = target;
-      void config.storage?.setItem(
-        LS_KEY_RECONNECT_WALLET_ID,
-        rdns ?? walletId,
-      );
+      const reconnectWallet: ReconnectWalletRecord = {
+        walletId: rdns ?? walletId,
+        connectorId: connector.id,
+      };
+      // Report success only after the write, so a remount cannot read the previous wallet.
+      try {
+        await config.storage?.setItem(
+          LS_KEY_RECONNECT_WALLET_ID,
+          reconnectWallet,
+        );
+      } catch {
+        // The connection itself succeeded. Auto-connect skips a stale record,
+        // because its `connectorId` does not match the new `recentConnectorId`.
+      }
+      const stack = current.current.modalStack;
       // EIP-6963 completes its own screen and the underlying wallet picker.
       const nested = stack[stack.length - 1]?.type;
       const count =
@@ -268,7 +283,7 @@ export function ReefKnotUIProvider({
           current.current.modalStack[current.current.modalStack.length - 1];
         if (screen?.type === 'eip6963') await screen.props.onSelect(provider);
         else await connectProvider(provider);
-        completeConnection('browserExtension', provider.info.rdns);
+        await completeConnection('browserExtension', provider.info.rdns);
       });
     },
     [run, connectProvider, completeConnection],
@@ -369,7 +384,7 @@ export function ReefKnotUIProvider({
         } else {
           await connectConnector(wallet.createConnectorFn);
         }
-        completeConnection(wallet.walletId);
+        await completeConnection(wallet.walletId);
       });
     },
     [

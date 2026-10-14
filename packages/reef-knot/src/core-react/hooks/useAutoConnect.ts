@@ -4,7 +4,10 @@ import { injected } from 'wagmi/connectors';
 import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
-import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
+import {
+  LS_KEY_RECONNECT_WALLET_ID,
+  isReconnectWalletRecord,
+} from '../constants';
 import { withCallback } from '../helpers/withCallback';
 import { providersStore } from '../eip6963';
 
@@ -26,22 +29,29 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
 
       // If still not connected and there were no errors and the terms of service are accepted,
       // call the default wagmi autoConnect method, which attempts to connect to the last used connector.
-      if (
-        !connectResult &&
-        checkTermsAccepted() &&
-        // We do not want to reconnect if the `recentConnectorId` item was deleted during disconnect
-        (await storage?.getItem('recentConnectorId'))
-      ) {
-        const savedReconnectWalletId = await storage?.getItem(
-          LS_KEY_RECONNECT_WALLET_ID,
-        );
-        const walletData = walletDataList.find(
-          (data) => data.walletId === savedReconnectWalletId,
-        );
+      if (!connectResult && checkTermsAccepted()) {
         // Wait for all EIP-6963 wallets to load their code and fire "eip6963:announceProvider" event
         // Without the delay, this code can be called from a browser's cache faster than wallet extension code
         await new Promise((resolve) => setTimeout(resolve, 100));
 
+        // Read both keys after the delay, so a connection made meanwhile is not mixed with an older one.
+        const [recentConnectorId, savedReconnectWallet] = await Promise.all([
+          storage?.getItem('recentConnectorId'),
+          storage?.getItem(LS_KEY_RECONNECT_WALLET_ID),
+        ]);
+        // We do not want to reconnect if the `recentConnectorId` item was deleted during disconnect,
+        // or if the saved wallet is not the connector wagmi connected last.
+        if (
+          !recentConnectorId ||
+          !isReconnectWalletRecord(savedReconnectWallet) ||
+          savedReconnectWallet.connectorId !== recentConnectorId
+        )
+          return;
+
+        const savedReconnectWalletId = savedReconnectWallet.walletId;
+        const walletData = walletDataList.find(
+          (data) => data.walletId === savedReconnectWalletId,
+        );
         const reconnectWithCallback = withCallback(reconnectAsync, onReconnect);
 
         if (walletData) {

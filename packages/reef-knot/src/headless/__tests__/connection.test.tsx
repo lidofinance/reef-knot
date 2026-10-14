@@ -205,10 +205,10 @@ describe('public headless connection flow', () => {
       walletId: 'metaMask',
       rdns: undefined,
     });
-    expect(mocks.setItem).toHaveBeenCalledWith(
-      LS_KEY_RECONNECT_WALLET_ID,
-      'metaMask',
-    );
+    expect(mocks.setItem).toHaveBeenCalledWith(LS_KEY_RECONNECT_WALLET_ID, {
+      walletId: 'metaMask',
+      connectorId: 'metaMask',
+    });
     expect(modal.currentModal).toBeUndefined();
   });
   it('does not start a replacement connection if disconnect fails', async () => {
@@ -286,10 +286,50 @@ describe('public headless connection flow', () => {
       walletId: 'metaMask',
       rdns: undefined,
     });
-    expect(mocks.setItem).toHaveBeenCalledWith(
-      LS_KEY_RECONNECT_WALLET_ID,
-      'metaMask',
+    expect(mocks.setItem).toHaveBeenCalledWith(LS_KEY_RECONNECT_WALLET_ID, {
+      walletId: 'metaMask',
+      connectorId: 'metaMask',
+    });
+    expect(modal.currentModal).toBeUndefined();
+  });
+  it('reports success only after the reconnect record is stored', async () => {
+    let finishWrite!: () => void;
+    mocks.setItem.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finishWrite = resolve;
+        }),
     );
+    const success = vi.fn();
+    await mount({ onConnectSuccess: success });
+    await act(async () => terms.setChecked(true));
+    let pending!: Promise<void>;
+    await act(async () => {
+      pending = connection.connect();
+    });
+    expect(mocks.setItem).toHaveBeenCalledOnce();
+    expect(success).not.toHaveBeenCalled();
+    expect(modal.currentModal?.type).toBe('wallet');
+    expect(connection.isLoading).toBe(true);
+
+    await act(async () => {
+      finishWrite();
+      await pending;
+    });
+    expect(success).toHaveBeenCalledOnce();
+    expect(modal.currentModal).toBeUndefined();
+    expect(connection.isLoading).toBe(false);
+  });
+  it('completes the connection when the reconnect record cannot be stored', async () => {
+    mocks.setItem.mockRejectedValueOnce(new Error('Quota exceeded'));
+    const success = vi.fn();
+    await mount({ onConnectSuccess: success });
+    await act(async () => terms.setChecked(true));
+    await act(async () => {
+      await connection.connect();
+    });
+    expect(connection.error).toBeNull();
+    expect(success).toHaveBeenCalledOnce();
     expect(modal.currentModal).toBeUndefined();
   });
   it('shares loading and blocks concurrent requests from several hook consumers', async () => {
@@ -491,10 +531,10 @@ describe('public headless connection flow', () => {
       walletId: 'browserExtension',
       rdns: 'org.test.wallet',
     });
-    expect(mocks.setItem).toHaveBeenCalledWith(
-      LS_KEY_RECONNECT_WALLET_ID,
-      'org.test.wallet',
-    );
+    expect(mocks.setItem).toHaveBeenCalledWith(LS_KEY_RECONNECT_WALLET_ID, {
+      walletId: 'org.test.wallet',
+      connectorId: 'org.test.wallet',
+    });
   });
   it('shows requirements when no browser provider exists', async () => {
     await mount({}, 'browserExtension');
