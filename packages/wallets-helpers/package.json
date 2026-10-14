@@ -35,6 +35,7 @@
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
     "lint": "yarn run -T eslint .",
+    "test": "vitest run",
     "typecheck": "yarn run -T tsc --noEmit"
   },
   "dependencies": {
@@ -45,6 +46,7 @@
   "devDependencies": {
     "build-config": "*",
     "react": "18.2.0",
+    "vitest": "^4.1.11",
     "wagmi": ">=3.6"
   },
   "peerDependencies": {
