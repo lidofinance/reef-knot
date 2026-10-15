@@ -1,15 +1,58 @@
 import { useEffect } from 'react';
 import { useConfig, useConnection, useReconnect } from 'wagmi';
 import { injected } from 'wagmi/connectors';
+import type { WalletAdapterData } from '@reef-knot/wallets-helpers';
 import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
 import {
   LS_KEY_RECONNECT_WALLET_ID,
   isReconnectWalletRecord,
+  type ReconnectWalletRecord,
 } from '../constants';
 import { withCallback } from '../helpers/withCallback';
-import { providersStore } from '../eip6963';
+import { providersStore, type EIP6963ProviderDetail } from '../eip6963';
+
+// Some wallets may announce themselves late, for example after a cold browser start.
+const PROVIDER_WAIT_TIMEOUT_MS = 1000;
+
+// Resolves with the announced wallet, or with `undefined` after the timeout.
+const waitForProvider = (rdns: string) =>
+  new Promise<EIP6963ProviderDetail | undefined>((resolve) => {
+    const find = (providers: readonly EIP6963ProviderDetail[]) =>
+      providers.find((p) => p.info.rdns === rdns);
+    const found = find(providersStore.getProviders());
+    if (found) {
+      resolve(found);
+      return;
+    }
+    let unsubscribe = () => {};
+    const timer = setTimeout(() => {
+      unsubscribe();
+      resolve(undefined);
+    }, PROVIDER_WAIT_TIMEOUT_MS);
+    unsubscribe = providersStore.subscribe((providers) => {
+      const detail = find(providers);
+      if (!detail) return;
+      clearTimeout(timer);
+      unsubscribe();
+      resolve(detail);
+    });
+  });
+
+// Returns the rdns to wait for, if the wallet reads its provider from EIP-6963.
+const getAnnouncedRdns = (
+  record: ReconnectWalletRecord,
+  walletData?: WalletAdapterData,
+) => {
+  // Wallets outside `walletDataList` are saved by their rdns.
+  if (!walletData) return record.walletId;
+  // MetaMask and Coinbase also have an rdns, but their SDK connectors do not need an announcement.
+  return walletData.type === injected.type ? walletData.rdns : undefined;
+};
+
+const isSameRecord = (a: ReconnectWalletRecord, b: ReconnectWalletRecord) =>
+  a.walletId === b.walletId && a.connectorId === b.connectorId;
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { storage } = useConfig();
@@ -19,6 +62,22 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { walletDataList, onReconnect } = useReefKnotContext();
 
   useEffect(() => {
+    // Returns the saved wallet only if wagmi connected it last.
+    // We do not want to reconnect if the `recentConnectorId` item was deleted during disconnect.
+    const readSavedWallet = async () => {
+      const [recentConnectorId, savedReconnectWallet] = await Promise.all([
+        storage?.getItem('recentConnectorId'),
+        storage?.getItem(LS_KEY_RECONNECT_WALLET_ID),
+      ]);
+      if (
+        !recentConnectorId ||
+        !isReconnectWalletRecord(savedReconnectWallet) ||
+        savedReconnectWallet.connectorId !== recentConnectorId
+      )
+        return null;
+      return savedReconnectWallet;
+    };
+
     const tryReconnect = async () => {
       // Don't auto-connect if already connected or if the auto-connect feature is disabled
       if (isConnected || !autoConnectEnabled) return;
@@ -35,44 +94,35 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
         await new Promise((resolve) => setTimeout(resolve, 100));
 
         // Read both keys after the delay, so a connection made meanwhile is not mixed with an older one.
-        const [recentConnectorId, savedReconnectWallet] = await Promise.all([
-          storage?.getItem('recentConnectorId'),
-          storage?.getItem(LS_KEY_RECONNECT_WALLET_ID),
-        ]);
-        // We do not want to reconnect if the `recentConnectorId` item was deleted during disconnect,
-        // or if the saved wallet is not the connector wagmi connected last.
-        if (
-          !recentConnectorId ||
-          !isReconnectWalletRecord(savedReconnectWallet) ||
-          savedReconnectWallet.connectorId !== recentConnectorId
-        )
-          return;
+        const savedWallet = await readSavedWallet();
+        if (!savedWallet) return;
 
-        const savedReconnectWalletId = savedReconnectWallet.walletId;
         const walletData = walletDataList.find(
-          (data) => data.walletId === savedReconnectWalletId,
+          (data) => data.walletId === savedWallet.walletId,
         );
+        const rdns = getAnnouncedRdns(savedWallet, walletData);
+        const eip6963Provider = rdns ? await waitForProvider(rdns) : undefined;
+
+        // A new connection may have started while we waited.
+        const currentWallet = await readSavedWallet();
+        if (!currentWallet || !isSameRecord(savedWallet, currentWallet)) return;
+
         const reconnectWithCallback = withCallback(reconnectAsync, onReconnect);
 
         if (walletData) {
+          // If the wallet did not announce itself, its connector has no provider and wagmi skips it.
           await reconnectWithCallback({
             connectors: [walletData.createConnectorFn],
           });
-        } else {
-          const eip6963Provider = providersStore
-            .getProviders()
-            .find((p) => p.info.rdns === savedReconnectWalletId);
-
-          if (eip6963Provider) {
-            const createConnectorFn = injected({
-              target: {
-                id: eip6963Provider.info.rdns,
-                name: eip6963Provider.info.name,
-                provider: () => eip6963Provider.provider,
-              },
-            });
-            await reconnectWithCallback({ connectors: [createConnectorFn] });
-          }
+        } else if (eip6963Provider) {
+          const createConnectorFn = injected({
+            target: {
+              id: eip6963Provider.info.rdns,
+              name: eip6963Provider.info.name,
+              provider: () => eip6963Provider.provider,
+            },
+          });
+          await reconnectWithCallback({ connectors: [createConnectorFn] });
         }
       }
     };
