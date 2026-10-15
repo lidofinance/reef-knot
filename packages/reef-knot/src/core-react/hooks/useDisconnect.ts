@@ -9,30 +9,38 @@ import { useReefKnotModal } from './useReefKnotModal';
 import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
 
 const useDisconnectCleaningStorage = () => {
-  const { storage } = useConfig();
-  const { mutate: disconnect, mutateAsync } = useDisconnectWagmi();
+  const config = useConfig();
+  const { mutateAsync } = useDisconnectWagmi();
 
-  const disconnectCleaningStorage = useCallback(
-    (...args: Parameters<typeof disconnect>) => {
-      disconnect(...args);
-      void storage?.removeItem('recentConnectorId');
-      void storage?.removeItem(LS_KEY_RECONNECT_WALLET_ID);
-    },
-    [disconnect, storage],
-  );
-  const disconnectAsync = useCallback(
-    async (...args: Parameters<typeof mutateAsync>) => {
-      await mutateAsync(...args);
-      // Wagmi may write recentConnectorId while finishing disconnect.
-      // Finish cleanup before a replacement connection writes its own keys.
-      await Promise.all([
-        storage?.removeItem('recentConnectorId'),
-        storage?.removeItem(LS_KEY_RECONNECT_WALLET_ID),
-      ]);
-    },
-    [mutateAsync, storage],
-  );
-  return { disconnect: disconnectCleaningStorage, disconnectAsync };
+  const disconnectAsync = useCallback(async () => {
+    // Wagmi keeps the old connection when another wallet connects.
+    // If we disconnect only the current one, wagmi makes the old one current again.
+    const connectors = [...config.state.connections.values()].map(
+      (connection) => connection.connector,
+    );
+    const errors: unknown[] = [];
+    // One at a time: each wagmi disconnect changes the shared connections map.
+    for (const connector of connectors) {
+      // Keep going, so one failing wallet does not keep the others connected.
+      await mutateAsync({ connector }).catch((e: unknown) => errors.push(e));
+    }
+    // Wagmi writes recentConnectorId while it finishes a disconnect.
+    // Clear the keys after that, and before a new connection saves its own keys.
+    // Clear them even if a wallet failed: the user asked to disconnect,
+    // so a page reload must not connect that wallet again.
+    await Promise.all([
+      config.storage?.removeItem('recentConnectorId'),
+      config.storage?.removeItem(LS_KEY_RECONNECT_WALLET_ID),
+    ]);
+    if (errors.length) throw errors[0];
+  }, [config, mutateAsync]);
+
+  // For callers that don't wait. Like wagmi's mutate, it does not throw.
+  const disconnect = useCallback(() => {
+    disconnectAsync().catch(() => {});
+  }, [disconnectAsync]);
+
+  return { disconnect, disconnectAsync };
 };
 
 export const useForceDisconnect = () => {
