@@ -44,23 +44,6 @@ export type WalletAdapterData = {
   deeplink?: string;
 
   createConnectorFn: CreateConnectorFn;
-
-  // Additional options for wallets based on WalletConnect
-  walletconnectExtras?: {
-    // Option for direct connection via WalletConnect (WC) URI (without QR code modal)
-    connectionViaURI?: {
-      // Should be WC connector with disabled QR code
-      createConnectorFn: CreateConnectorFn;
-      // In which case this connection type must be used instead the default connector
-      condition: boolean;
-      // Where to redirect when WC URI is ready
-      // WC URI will be added to then end of this link,
-      // so it should look similar to "https://<wallet-website-address>/wc?uri="
-      redirectLink: string;
-      // Close the new window, used for redirection, after successful connect
-      closeRedirectionWindow?: boolean;
-    };
-  };
 };
 
 export interface WalletAdapterArgs {

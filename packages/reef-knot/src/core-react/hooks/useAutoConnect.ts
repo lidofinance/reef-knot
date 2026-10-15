@@ -55,13 +55,9 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
         const reconnectWithCallback = withCallback(reconnectAsync, onReconnect);
 
         if (walletData) {
-          let createConnectorFn = walletData.createConnectorFn;
-          if (walletData?.walletconnectExtras?.connectionViaURI?.condition) {
-            createConnectorFn =
-              walletData.walletconnectExtras.connectionViaURI.createConnectorFn;
-          }
-
-          await reconnectWithCallback({ connectors: [createConnectorFn] });
+          await reconnectWithCallback({
+            connectors: [walletData.createConnectorFn],
+          });
         } else {
           const eip6963Provider = providersStore
             .getProviders()

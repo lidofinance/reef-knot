@@ -11,17 +11,14 @@ import {
   useConfig,
   useConnect as useWagmiConnect,
   type CreateConnectorFn,
-  type Connector,
 } from 'wagmi';
 import { injected } from 'wagmi/connectors';
 import {
-  getWalletConnectUri,
   isMobileOrTablet,
   type WalletAdapterData,
 } from '@reef-knot/wallets-helpers';
 import {
   LS_KEY_RECONNECT_WALLET_ID,
-  providersStore,
   useDisconnect,
   useEIP6963Providers,
   useReefKnotContext,
@@ -366,38 +363,7 @@ export function ReefKnotUIProvider({
           else if (wallet.downloadURLs) suggestApp(wallet.downloadURLs);
           return;
         }
-        const uri = wallet.walletconnectExtras?.connectionViaURI;
-        if (wallet.type === 'walletConnect' && uri?.condition) {
-          // Keep the popup in the user gesture; sever opener after obtaining its handle.
-          const popup = window.open('', '_blank');
-          if (popup) {
-            popup.opener = null;
-            popup.document.write(
-              '<!doctype html><html><head><meta name="referrer" content="no-referrer"><title>Wallet loading</title></head><body>Wallet loading</body></html>',
-            );
-          }
-          try {
-            await Promise.all([
-              connectConnector(uri.createConnectorFn),
-              (async () => {
-                const disposable = uri.createConnectorFn({
-                  chains: config.chains,
-                  emitter: {} as Parameters<
-                    typeof uri.createConnectorFn
-                  >[0]['emitter'],
-                  providers: providersStore.getProviders(),
-                }) as Connector;
-                const pairingUri = await getWalletConnectUri(disposable);
-                if (popup)
-                  popup.location.href = `${uri.redirectLink}${encodeURIComponent(pairingUri)}`;
-              })(),
-            ]);
-          } finally {
-            if (uri.closeRedirectionWindow ?? true) popup?.close();
-          }
-        } else {
-          await connectConnector(wallet.createConnectorFn);
-        }
+        await connectConnector(wallet.createConnectorFn);
         await completeConnection(wallet.walletId);
       });
     },
@@ -411,7 +377,6 @@ export function ReefKnotUIProvider({
       connectProvider,
       openModal,
       run,
-      config.chains,
       connectConnector,
       completeConnection,
     ],
