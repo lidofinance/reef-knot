@@ -1,5 +1,35 @@
 # reef-knot
 
+## 9.0.0
+
+### Breaking changes
+
+- Merge the core, types and default wallet catalog into `reef-knot`. Use named imports from `reef-knot`; the old namespace and `reef-knot/*` imports are removed.
+- Move the wallet modal and UI components to `@reef-knot/ui-lido-legacy` and `@reef-knot/ui-lido`. The core no longer requires a UI kit or styled-components.
+- Remove `useWeb3` and `useSupportedChains`. Use wagmi hooks instead.
+- Replace `buttonComponentsByConnectorId` and wallet-specific `Connect*` components with `components.WalletButton`.
+- Remove the `linkDontHaveWallet` modal option and the WalletConnect URI redirect flow, including `walletconnectExtras` and `getWalletConnectUri`.
+- Save wallet and connector IDs together for reconnect. Wallets saved by older versions need one manual connection after upgrading.
+- Remove the shared `@reef-knot/wallets-icons` package. Use wallet adapter icons or provide your own.
+
+### Added
+
+- Add public hooks and providers for custom wallet pickers, Terms, eager connection, EIP-6963 selection and Ledger screens.
+- Add shared modal focus, Escape and scroll-lock hooks, plus a renderer with replaceable screen components.
+- Add `useConnectionFlow().startConnection()`. Keep `useConnect().connect()` as a deprecated wrapper.
+- Add `disconnectAsync()` to `useDisconnect()` for callers that need to wait for cleanup.
+- Add [upgrade instructions](../../docs/migration-guide-8.x-to-9.md) and a [custom UI guide](../../docs/headless-ui.md).
+
+### Fixed
+
+- Show clear connection errors with a way back to the picker. Keep search, expanded wallets and Terms acceptance when dismissing an error.
+- Wait for the old wallet to disconnect before connecting a new one. Ignore errors from dismissed screens and verify the selected connection before reporting success.
+- Disconnect every wallet retained by wagmi and clear reconnect storage, even if a wallet fails to disconnect.
+- Reconnect only when the saved wallet matches wagmi's last connector. Wait for late EIP-6963 announcements before trying to reconnect.
+- Keep Ledger account loading in order and preserve the account screen while handing the device over to the connector.
+- Reject Ledger HID transactions for a chain other than the configured chain.
+- Keep the full page URL in OKX wallet links and encode it safely.
+
 ## 8.4.0
 
 - Add `ledgerForceClearSign` config option for the Ledger HID wallet
