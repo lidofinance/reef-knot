@@ -8,8 +8,6 @@ export type TransitionWrapperProps = Partial<
   Pick<
     TransitionProps<HTMLElement>,
     | 'in'
-    | 'mountOnEnter'
-    | 'unmountOnExit'
     | 'timeout'
     | 'addEndListener'
     | 'onEnter'

@@ -6,6 +6,10 @@ import { TransitionWrapperProps, TransitionInnerProps } from './types';
 
 type WrappedProps<T> = Omit<T, keyof TransitionInnerProps> &
   TransitionWrapperProps;
+type RemovedTransitionProps = {
+  mountOnEnter?: unknown;
+  unmountOnExit?: unknown;
+};
 
 export default function withTransition<
   P extends TransitionInnerProps,
@@ -19,8 +23,9 @@ export default function withTransition<
     const {
       in: state = false,
       timeout = DEFAULT_DURATION,
-      mountOnEnter = true,
-      unmountOnExit = true,
+      // Drop these if an untyped caller still passes them.
+      mountOnEnter: _mountOnEnter,
+      unmountOnExit: _unmountOnExit,
       appear = true,
       enter = true,
       exit = true,
@@ -32,13 +37,15 @@ export default function withTransition<
       onExiting,
       onExited,
       ...rest
-    } = props;
+    } = props as WrappedProps<P> & RemovedTransitionProps;
 
     const transitionProps = {
       in: state,
       timeout,
-      mountOnEnter,
-      unmountOnExit,
+      // Always unmount on exit. An exited child stays mounted as an
+      // invisible layer that still blocks clicks, focus, and scroll.
+      mountOnEnter: true,
+      unmountOnExit: true,
       appear,
       enter,
       exit,
