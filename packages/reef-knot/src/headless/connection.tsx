@@ -10,9 +10,11 @@ import React, {
 import {
   useConfig,
   useConnect as useWagmiConnect,
+  useDisconnect as useWagmiDisconnect,
   type CreateConnectorFn,
 } from 'wagmi';
 import { injected } from 'wagmi/connectors';
+import { isAddress, isAddressEqual } from 'viem';
 import {
   isMobileOrTablet,
   type WalletAdapterData,
@@ -47,6 +49,32 @@ export type WalletPickerState = {
   toggleExpanded: () => void;
 };
 
+type ConnectConnectorOptions = {
+  /**
+   * Runs after old wallets finish disconnecting, before the new connector starts.
+   * Ledger uses this to save the selected derivation path. Saving it earlier
+   * would let the old Ledger's disconnect() erase the new selection.
+   */
+  beforeConnect?: () => void;
+  /**
+   * Currently used only by Ledger: the address chosen in its account picker.
+   * The connector reads the saved path again when connecting. A lost path or
+   * a device change can make it return a different account, even if it connects
+   * successfully. Check the address before saving reconnect data or reporting
+   * success. Other flows do not select an address in advance and omit this option.
+   */
+  expectedAddress?: string;
+};
+
+// Ledger handles this separately to reload accounts without an error screen.
+// It is thrown only after cleanup succeeds; cleanup failures remain normal errors.
+export class AccountMismatchError extends Error {
+  constructor() {
+    super('The connected account does not match the selected account.');
+    this.name = 'AccountMismatchError';
+  }
+}
+
 type ConnectionContextValue = {
   config: ReefKnotWalletsModalConfig;
   picker: WalletPickerState;
@@ -55,7 +83,10 @@ type ConnectionContextValue = {
   dismissError: () => void;
   connectWallet: (wallet: WalletAdapterData) => Promise<void>;
   selectProvider: (provider: EIP6963ProviderDetail) => Promise<void>;
-  connectConnector: (connector: CreateConnectorFn) => Promise<void>;
+  connectConnector: (
+    connector: CreateConnectorFn,
+    options?: ConnectConnectorOptions,
+  ) => Promise<void>;
   completeConnection: (walletId: string, rdns?: string) => Promise<void>;
   notifyStart: (id: string) => void;
   setConsent: (checked: boolean) => void;
@@ -81,6 +112,7 @@ export function ReefKnotUIProvider({
 }: React.PropsWithChildren<{ config: ReefKnotWalletsModalConfig }>) {
   const config = useConfig();
   const { mutateAsync: connectAsync } = useWagmiConnect();
+  const { mutateAsync: disconnectConnectorAsync } = useWagmiDisconnect();
   const { disconnectAsync } = useDisconnect();
   const { walletDataList, loadingWalletId, setLoadingWalletId } =
     useReefKnotContext();
@@ -253,23 +285,55 @@ export function ReefKnotUIProvider({
   );
 
   const connectConnector = useCallback(
-    async (createConnector: CreateConnectorFn) => {
+    async (
+      createConnector: CreateConnectorFn,
+      { beforeConnect, expectedAddress }: ConnectConnectorOptions = {},
+    ) => {
       await disconnectAsync?.();
+      // Ledger disconnect clears the saved path; write the new selection after it.
+      beforeConnect?.();
       let connectorUid: string | undefined;
-      await connectAsync({
+      const result = await connectAsync({
         connector: (args) => {
           connectorUid = args.emitter.uid;
           return createConnector(args);
         },
       });
       // Track the instance, not its id: two instances can describe the same wallet.
-      connectedConnectorUid.current = connectorUid;
       if (!connectorUid)
         throw new Error(
           'The selected wallet connection could not be verified.',
         );
+      if (expectedAddress !== undefined) {
+        // The connector UID identifies the connection, but not the chosen account.
+        // Ledger returns one account, so verify its address against the picker
+        // selection. The saved path alone cannot prove which account connected.
+        const address = result.accounts?.[0];
+        if (
+          !isAddress(expectedAddress, { strict: false }) ||
+          !address ||
+          !isAddress(address, { strict: false }) ||
+          !isAddressEqual(address, expectedAddress)
+        ) {
+          // Only disconnect this attempt; another wallet may now be active.
+          const connector =
+            config.state.connections.get(connectorUid)?.connector;
+          try {
+            if (connector) await disconnectConnectorAsync({ connector });
+          } finally {
+            // Wagmi may rewrite recentConnectorId during disconnect.
+            // Clear both keys afterward, even if disconnect fails.
+            await Promise.all([
+              config.storage?.removeItem(LS_KEY_RECONNECT_WALLET_ID),
+              config.storage?.removeItem('recentConnectorId'),
+            ]);
+          }
+          throw new AccountMismatchError();
+        }
+      }
+      connectedConnectorUid.current = connectorUid;
     },
-    [disconnectAsync, connectAsync],
+    [disconnectAsync, connectAsync, disconnectConnectorAsync, config],
   );
   const connectProvider = useCallback(
     async (provider: EIP6963ProviderDetail) => {

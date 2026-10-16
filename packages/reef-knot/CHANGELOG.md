@@ -27,6 +27,7 @@
 - Disconnect every wallet retained by wagmi and clear reconnect storage, even if a wallet fails to disconnect.
 - Reconnect only when the saved wallet matches wagmi's last connector. Wait for late EIP-6963 announcements before trying to reconnect.
 - Keep Ledger account loading in order and preserve the account screen while handing the device over to the connector.
+- Keep the selected Ledger account when replacing a connection. If Ledger returns a different account, refresh the list and let the user choose again.
 - Reject Ledger HID transactions for a chain other than the configured chain.
 - Keep the full page URL in OKX wallet links and encode it safely.
 
