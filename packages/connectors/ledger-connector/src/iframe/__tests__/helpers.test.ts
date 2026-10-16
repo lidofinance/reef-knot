@@ -6,7 +6,7 @@ const originalParent = window.parent;
 // happy-dom is a top-level window: parent === window. Pretend to be embedded.
 const embedInIframe = () => {
   Object.defineProperty(window, 'parent', {
-    value: {} as Window,
+    value: {},
     configurable: true,
   });
 };

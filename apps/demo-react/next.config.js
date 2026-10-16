@@ -16,11 +16,10 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 // Next's webpack graph, so package rebuilds invalidate Fast Refresh/HMR.
 const withReefKnotPackages = nextTranspileModules([
   'reef-knot',
-  '@reef-knot/connect-wallet-modal',
-  '@reef-knot/core-react',
+  '@reef-knot/ui-lido-legacy',
+  '@reef-knot/ui-lido',
+  '@lidofinance/lido-app-ui',
   '@reef-knot/ledger-connector',
-  '@reef-knot/types',
-  '@reef-knot/ui-react',
   '@reef-knot/wallet-adapter-ambire',
   '@reef-knot/wallet-adapter-anchorage-digital',
   '@reef-knot/wallet-adapter-bitkeep',
@@ -35,13 +34,12 @@ const withReefKnotPackages = nextTranspileModules([
   '@reef-knot/wallet-adapter-safe',
   '@reef-knot/wallet-adapter-walletconnect',
   '@reef-knot/wallets-helpers',
-  '@reef-knot/wallets-icons',
-  '@reef-knot/wallets-list',
-  '@reef-knot/web3-react',
 ]);
 
 export default withReefKnotPackages(
   withBundleAnalyzer({
+    // Next 12 uses the removed legacy API.
+    eslint: { ignoreDuringBuilds: true },
     reactStrictMode: true,
     basePath,
     experimental: {
@@ -92,6 +90,10 @@ export default withReefKnotPackages(
     },
     async headers() {
       return [
+        {
+          source: '/runtime/window-env.js',
+          headers: [{ key: 'Cache-Control', value: 'no-store' }],
+        },
         {
           // required for Gnosis Safe apps
           source: '/manifest.json',

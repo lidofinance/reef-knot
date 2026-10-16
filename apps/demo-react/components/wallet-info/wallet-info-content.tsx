@@ -1,8 +1,8 @@
 import React from 'react';
 import { useConnection, useCapabilities } from 'wagmi';
 import { Close } from '@lidofinance/lido-ui';
-import { useWeb3, useSupportedChains } from 'reef-knot/web3-react';
-import { useConnectorInfo } from 'reef-knot/core-react';
+import { useConnectorInfo } from 'reef-knot';
+import { useSupportedChains } from 'hooks/useSupportedChains';
 
 import {
   HeadingStyle,
@@ -28,10 +28,6 @@ export const WalletInfoContent = ({
     (c) => c.chainId,
   );
 
-  // Get data via web3-react
-  const web3Info = useWeb3();
-
-  // Get data via wagmi
   const {
     address: wagmiAddress,
     status: wagmiStatus,
@@ -85,21 +81,6 @@ export const WalletInfoContent = ({
         </code>
       </div>
 
-      <HeadingStyle>useWeb3 legacy data</HeadingStyle>
-      <div>
-        <code>
-          <DataTableRowStyle title="active">
-            {String(web3Info.active)}
-          </DataTableRowStyle>
-          <DataTableRowStyle title="chain" highlight>
-            {web3Info.chainId}
-          </DataTableRowStyle>
-          <DataTableRowStyle title="error">
-            {web3Info.error?.message}
-          </DataTableRowStyle>
-        </code>
-      </div>
-
       <HeadingStyle>EIP-5792 Capabilities</HeadingStyle>
       <div>
         <code>
@@ -111,11 +92,16 @@ export const WalletInfoContent = ({
           </DataTableRowStyle>
           {capabilities.data &&
             Object.entries(capabilities.data)
-              .filter(([chain]) => supportedChainIds.includes(Number(chain)))
-              .map(([chain, enabledCapabilties]) => (
-                <DataTableRowStyle key="chain" title={chain} highlight>
+              .filter(([chainKey]) =>
+                supportedChainIds.includes(Number(chainKey)),
+              )
+              .map(([chainKey, enabledCapabilties]) => (
+                <DataTableRowStyle key="chain" title={chainKey} highlight>
                   {Object.entries(enabledCapabilties)
-                    .filter(([, capability]) => capability.supported)
+                    .filter(
+                      ([, capability]: [string, { supported?: boolean }]) =>
+                        capability.supported,
+                    )
                     .map(([capabilityTitle]) => capabilityTitle)
                     .join(',')}
                 </DataTableRowStyle>

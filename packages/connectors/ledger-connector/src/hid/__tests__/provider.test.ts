@@ -575,6 +575,144 @@ describe('signing', () => {
   });
 });
 
+describe.each([false, true])(
+  'transaction chain binding (forceClearSign=%s)',
+  (forceClearSign) => {
+    const transactionCases = [
+      { type: '0x0', fees: { gasPrice: '0x3b9aca00' }, exchange: SIGN_TX },
+      { type: '0x1', fees: { gasPrice: '0x3b9aca00' }, exchange: SIGN_TX_2930 },
+      {
+        type: '0x2',
+        fees: {
+          maxFeePerGas: '0x77359400',
+          maxPriorityFeePerGas: '0x3b9aca00',
+        },
+        exchange: SIGN_TX_1559,
+      },
+    ];
+
+    it('rejects a foreign incoming chain before accessing the device or RPC', async () => {
+      const { fetchMock } = stubRpc({});
+      const provider = createProvider({ forceClearSign });
+      const getAccount = vi.spyOn(provider, 'getAccount');
+
+      await expect(
+        send1559(provider, { chainId: '0x89' }),
+      ).rejects.toMatchObject({
+        name: 'ChainMismatchError',
+      });
+      expect(getAccount).not.toHaveBeenCalled();
+      expect(fetchMock).not.toHaveBeenCalled();
+      await expect(provider.request({ method: 'eth_chainId' })).resolves.toBe(
+        '0x1',
+      );
+    });
+
+    it.each(transactionCases)(
+      'rejects a forged fill chain for type $type',
+      async ({ type, fees }) => {
+        const { calls } = stubRpc({
+          eth_fillTransaction: () => ({
+            tx: {
+              chainId: '0x89',
+              type,
+              from: ADDRESS_A,
+              to: ADDRESS_A,
+              input: '0x',
+              value: '0x1',
+              nonce: '0x0',
+              gas: '0x5208',
+              accessList: [],
+              ...fees,
+            },
+          }),
+        });
+        const provider = createProvider({ forceClearSign });
+        const store = injectReplayer(
+          provider,
+          APP_CONFIG,
+          getAddressExchange(ADDRESS_A),
+        );
+        await provider.enable();
+        const withEthApp = vi.spyOn(provider, 'withEthApp');
+        const resolve = vi.spyOn(ledgerService, 'resolveTransaction');
+
+        // Missing gas forces a real viem fill, even though chainId is pinned.
+        await expect(
+          provider.request({
+            method: 'eth_sendTransaction',
+            params: [
+              { from: ADDRESS_A, to: ADDRESS_A, value: '0x1', type, ...fees },
+            ],
+          }),
+        ).rejects.toThrow(
+          'Transaction chain ID does not match the configured Ledger chain',
+        );
+
+        expect(calls).toHaveLength(1);
+        expect(calls[0]).toMatchObject({
+          method: 'eth_fillTransaction',
+        });
+        expect(withEthApp).not.toHaveBeenCalled();
+        expect(resolve).not.toHaveBeenCalled();
+        store.ensureQueueEmpty();
+      },
+    );
+
+    it.each(transactionCases)(
+      'signs a correctly filled chain for type $type',
+      async ({ type, fees, exchange }) => {
+        const { calls } = stubRpc({
+          eth_fillTransaction: () => ({
+            tx: {
+              chainId: '0x1',
+              type,
+              from: ADDRESS_A,
+              to: ADDRESS_A,
+              input: '0x',
+              value: '0x1',
+              nonce: '0x0',
+              gas: '0x5208',
+              accessList: [],
+              ...fees,
+            },
+          }),
+          eth_sendRawTransaction: () => '0xtxhash',
+        });
+        const provider = createProvider({ forceClearSign });
+        const store = injectReplayer(
+          provider,
+          APP_CONFIG,
+          getAddressExchange(ADDRESS_A),
+          APP_CONFIG,
+          exchange,
+        );
+
+        await expect(
+          provider.request({
+            method: 'eth_sendTransaction',
+            params: [
+              {
+                from: ADDRESS_A,
+                chainId: '0x1',
+                to: ADDRESS_A,
+                value: '0x1',
+                type,
+                ...fees,
+              },
+            ],
+          }),
+        ).resolves.toBe('0xtxhash');
+        expect(calls.map((call) => call.method)).toEqual([
+          'eth_fillTransaction',
+          'eth_sendRawTransaction',
+        ]);
+        store.ensureQueueEmpty();
+      },
+    );
+  },
+);
+
 describe('clear signing', () => {
   it('falls back to blind signing when metadata resolution fails', async () => {
     vi.spyOn(ledgerService, 'resolveTransaction').mockRejectedValue(

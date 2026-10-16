@@ -34,18 +34,17 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs .",
-    "typecheck": "tsc --noEmit"
+    "lint": "yarn run -T eslint .",
+    "typecheck": "yarn run -T tsc --noEmit"
   },
   "devDependencies": {
     "@reef-knot/ledger-connector": "*",
-    "@reef-knot/types": "*",
-    "build-config": "*",
-    "eslint-config-custom": "*"
+    "@reef-knot/wallets-helpers": "*",
+    "build-config": "*"
   },
   "peerDependencies": {
     "@reef-knot/ledger-connector": "*",
-    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
     "@tanstack/react-query": "^5.29.0",
     "wagmi": ">=3.6"
   }

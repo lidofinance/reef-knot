@@ -1,0 +1,469 @@
+/* Styles stay scoped to the UI skin's portal. */
+.rk-lido-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  padding: 24px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: rgb(0 0 0 / 40%);
+  font-family: var(--lido-app-ui-font-family);
+  color: var(--lido-app-ui-color-text-default);
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  --rk-lido-wallet-border: var(--lido-app-ui-color-border-default);
+}
+.rk-lido-overlay[data-lido-theme='light'] {
+  --rk-lido-wallet-border: #e5e5ea;
+}
+.rk-lido-dialog-container {
+  width: 100%;
+  margin: auto;
+}
+.rk-lido-dialog-container .rk-lido-dialog {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow: clip;
+  background: var(--lido-app-ui-color-background-surface);
+  width: 100%;
+  padding: 32px;
+  border: 0;
+  border-radius: 20px;
+  gap: 20px;
+  outline: none;
+}
+.rk-lido-header-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rk-lido-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.rk-lido-title,
+.rk-lido-requirements h2 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28.8px;
+  letter-spacing: -0.84px;
+}
+.rk-lido-title {
+  margin: 0;
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rk-lido-subtitle {
+  color: var(--lido-app-ui-color-text-secondary);
+  font-size: var(--lido-app-ui-font-size-label);
+  font-weight: var(--lido-app-ui-font-weight-regular);
+  line-height: var(--lido-app-ui-line-height-label);
+  letter-spacing: var(--lido-app-ui-letter-spacing-label);
+}
+.rk-lido-body {
+  display: flex;
+  flex-direction: column;
+}
+.rk-lido-pagination button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  color: var(--lido-app-ui-color-text-default);
+}
+.rk-lido-pagination button > span {
+  width: 24px;
+  height: 24px;
+}
+.rk-lido-dialog p {
+  margin: 0;
+}
+.rk-lido-dialog a {
+  color: var(--lido-app-ui-color-text-active);
+  text-decoration: none;
+}
+.rk-lido-dialog a:hover {
+  text-decoration: underline;
+}
+.rk-lido-terms a {
+  white-space: nowrap;
+}
+.rk-lido-terms {
+  padding: 8px 0;
+}
+.rk-lido-terms > label {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.rk-lido-terms > label > span:last-child {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+}
+.rk-lido-terms input {
+  inset: 2px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+}
+.rk-lido-terms input:checked {
+  background: var(--lido-app-ui-color-background-action);
+  border-color: var(--lido-app-ui-color-background-action);
+}
+.rk-lido-terms input:checked:not(:disabled):hover {
+  background: var(--lido-app-ui-color-background-action-hover);
+}
+.rk-lido-terms input + svg {
+  inset: 4px;
+  width: 16px;
+  height: 16px;
+}
+.rk-lido-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rk-lido-overlay[data-screen='wallet'] .rk-lido-dialog {
+  padding-bottom: 0;
+}
+.rk-lido-picker-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+.rk-lido-picker-list {
+  max-height: min(466px, calc(100dvh - 210px));
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: 2px 0;
+  border-top: 1px solid transparent;
+}
+.rk-lido-picker-list::-webkit-scrollbar {
+  display: none;
+}
+.rk-lido-picker-list[data-expanded='true'] {
+  max-height: min(466px, calc(100dvh - 280px));
+}
+.rk-lido-picker-list[data-scrolled='true'] {
+  border-top-color: var(--rk-lido-wallet-border);
+}
+.rk-lido-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rk-lido-search > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+.rk-lido-wallets,
+.rk-lido-accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rk-lido-dialog .rk-lido-wallet,
+.rk-lido-dialog .rk-lido-account {
+  width: 100%;
+  min-width: 0;
+  height: 56px;
+  padding: 8px 24px 8px 12px;
+  border: 1px solid var(--rk-lido-wallet-border);
+  border-radius: 16px;
+  color: var(--lido-app-ui-color-text-default);
+  font-size: 14px;
+  line-height: 22px;
+}
+.rk-lido-wallet > span,
+.rk-lido-account > span {
+  width: 100%;
+  padding: 0;
+  gap: 12px;
+}
+.rk-lido-dialog .rk-lido-wallet:focus-visible,
+.rk-lido-dialog .rk-lido-account:focus-visible {
+  outline: 2px solid var(--lido-app-ui-color-border-active);
+  outline-offset: -2px;
+}
+.rk-lido-dialog .rk-lido-wallet:disabled,
+.rk-lido-dialog .rk-lido-account:disabled {
+  background: transparent;
+  color: var(--lido-app-ui-color-text-default);
+  opacity: 0.5;
+}
+.rk-lido-dialog .rk-lido-wallet[aria-busy='true'] {
+  opacity: 1;
+  cursor: wait;
+}
+.rk-lido-wallet-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+.rk-lido-wallet-icon > img,
+.rk-lido-wallet-icon > svg {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.rk-lido-wallet-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rk-lido-browser-icons {
+  display: grid;
+  grid-template-columns: repeat(2, 18px);
+  grid-template-rows: repeat(2, 18px);
+  gap: 4px;
+  width: 40px;
+  height: 40px;
+}
+.rk-lido-browser-icons > img,
+.rk-lido-browser-icons > svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+.rk-lido-connecting {
+  margin-left: auto;
+  color: var(--lido-app-ui-color-text-secondary);
+  font-size: 12px;
+  font-weight: 400;
+}
+.rk-lido-dialog .rk-lido-toggle {
+  display: flex;
+  width: fit-content;
+  margin: 8px auto 24px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 22px;
+}
+.rk-lido-toggle > span {
+  gap: 6px;
+}
+.rk-lido-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+.rk-lido-wallet-help {
+  display: block;
+  text-align: center;
+  padding-bottom: 24px;
+}
+.rk-lido-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rk-lido-path {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  border: 0;
+}
+.rk-lido-path legend {
+  margin-bottom: 8px;
+  padding: 0;
+  color: var(--lido-app-ui-color-text-secondary);
+  font-size: 12px;
+  line-height: 20px;
+}
+.rk-lido-path [aria-haspopup='listbox'] {
+  height: 34px;
+  border-radius: 8px;
+  padding: 6px 16px;
+}
+.rk-lido-path-label {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+.rk-lido-ledger-accounts {
+  gap: 24px;
+}
+.rk-lido-account {
+  font-weight: 400;
+}
+.rk-lido-account-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lido-app-ui-color-text-default);
+}
+.rk-lido-account-address {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rk-lido-account-balance {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.rk-lido-pagination {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+.rk-lido-page-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rk-lido-page-label input {
+  box-sizing: border-box;
+  width: 50px;
+  height: 34px;
+  padding: 6px;
+  background: var(--lido-app-ui-color-background-surface);
+  color: inherit;
+  border: 1px solid var(--lido-app-ui-color-border-default);
+  border-radius: 6px;
+  font: inherit;
+  text-align: center;
+  appearance: textfield;
+}
+.rk-lido-page-label input::-webkit-inner-spin-button,
+.rk-lido-page-label input::-webkit-outer-spin-button {
+  appearance: none;
+}
+.rk-lido-page-label input:focus-visible {
+  outline: 2px solid var(--lido-app-ui-color-border-active);
+  outline-offset: 2px;
+}
+.rk-lido-previous-page-icon {
+  transform: rotate(180deg);
+}
+.rk-lido-pagination button:disabled {
+  opacity: 0.3;
+}
+.rk-lido-ledger-image {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lido-app-ui-color-text-default);
+}
+.rk-lido-ledger-image svg {
+  max-width: 100%;
+}
+.rk-lido-description {
+  color: var(--lido-app-ui-color-text-secondary);
+  text-align: center;
+}
+.rk-lido-dialog .rk-lido-action {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 24px;
+  line-height: 24px;
+}
+.rk-lido-requirements {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.rk-lido-requirements-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+.rk-lido-requirements h2 {
+  margin: 8px 0 0;
+  text-align: center;
+}
+.rk-lido-requirements-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--lido-app-ui-color-background-default);
+  position: relative;
+}
+.rk-lido-requirements-icon::after {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  background: url('./assets/browser.svg') center / contain no-repeat;
+}
+.rk-lido-overlay[data-screen='requirements'] .rk-lido-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.rk-lido-overlay[data-screen='requirements'] .rk-lido-dialog {
+  gap: 24px;
+}
+.rk-lido-overlay[data-lido-theme='dark'] .rk-lido-requirements-icon::after {
+  filter: invert(1);
+}
+.rk-lido-error {
+  color: var(--lido-app-ui-color-text-error);
+  overflow-wrap: anywhere;
+}
+.rk-lido-connection-error {
+  padding-bottom: 32px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 599px) {
+  .rk-lido-overlay {
+    padding: 0;
+  }
+  .rk-lido-dialog-container {
+    margin: 0;
+    display: flex;
+  }
+  .rk-lido-dialog-container .rk-lido-dialog {
+    padding: 20px;
+    min-height: 100dvh;
+    border-radius: 0;
+  }
+  .rk-lido-body {
+    flex: 1;
+    min-height: 0;
+  }
+  .rk-lido-search {
+    flex-wrap: wrap;
+  }
+  .rk-lido-requirements {
+    flex: 1;
+  }
+  .rk-lido-requirements-content {
+    flex: 1;
+    justify-content: center;
+  }
+  .rk-lido-requirements .rk-lido-action {
+    margin-bottom: 90px;
+  }
+  .rk-lido-ledger-connection {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+@media (max-height: 640px) and (min-width: 600px) {
+  .rk-lido-dialog-container {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

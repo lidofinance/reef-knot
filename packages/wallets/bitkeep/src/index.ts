@@ -1,5 +1,5 @@
 import { injected } from 'wagmi/connectors';
-import type { WalletAdapterType } from '@reef-knot/types';
+import type { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import {
   getTargetEIP6963,
   isProviderExistsEIP6963,

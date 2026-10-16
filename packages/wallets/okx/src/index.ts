@@ -1,4 +1,4 @@
-import type { WalletAdapterType } from '@reef-knot/types';
+import type { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { injected } from 'wagmi/connectors';
 import WalletIcon from './icons/okx.svg';
 import WalletIconInverted from './icons/okx-inverted.svg';
@@ -11,11 +11,12 @@ export const id = 'okx';
 export const name = 'OKX Wallet';
 export const rdns = 'com.okex.wallet';
 
-const deeplinkDAppUrl = globalThis.window
-  ? globalThis.window.location.host + globalThis.window.location.pathname
+// Encode both levels, so the page URL can't add query params to the link.
+const currentHref = globalThis.window
+  ? encodeURIComponent(globalThis.window.location.href)
   : '';
-const deeplink = 'okx://wallet/dapp/url?dappUrl=' + deeplinkDAppUrl;
-const urlWithDeeplink = 'https://www.okx.com/download?deeplink=' + deeplink;
+const deeplink = `okx://wallet/dapp/url?dappUrl=${currentHref}`;
+const urlWithDeeplink = `https://www.okx.com/download?deeplink=${encodeURIComponent(deeplink)}`;
 
 export const Okx: WalletAdapterType = ({ providersStore }) => ({
   walletName: name,
