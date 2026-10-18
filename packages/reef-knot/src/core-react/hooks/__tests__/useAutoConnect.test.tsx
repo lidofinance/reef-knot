@@ -69,9 +69,9 @@ function Probe() {
 let root: Root;
 let container: HTMLDivElement;
 
-const save = (recentConnectorId: string | null, record: unknown) => {
+const save = (recentConnectorId: string | null, walletId: unknown) => {
   mocks.items.set('recentConnectorId', recentConnectorId);
-  mocks.items.set(LS_KEY_RECONNECT_WALLET_ID, record);
+  mocks.items.set(LS_KEY_RECONNECT_WALLET_ID, walletId);
 };
 async function mountAndWait(duringDelay?: () => void) {
   await act(async () => root.render(<Probe />));
@@ -107,8 +107,8 @@ afterEach(async () => {
 });
 
 describe('useAutoConnect', () => {
-  it('reconnects the saved wallet when it matches the recent connector', async () => {
-    save('metaMask', { walletId: 'metaMask', connectorId: 'metaMask' });
+  it('restores a wallet id saved by v8', async () => {
+    save('metaMask', 'metaMask');
     await mountAndWait();
     expect(mocks.reconnect).toHaveBeenCalledExactlyOnceWith({
       connectors: [createMetaMask],
@@ -117,41 +117,31 @@ describe('useAutoConnect', () => {
   it('reconnects a saved EIP-6963 wallet by rdns', async () => {
     const provider = { info: { rdns: 'org.test', name: 'Test' }, provider: {} };
     mocks.providers = [provider];
-    save('org.test', { walletId: 'org.test', connectorId: 'org.test' });
+    save('org.test', 'org.test');
     await mountAndWait();
     expect(mocks.reconnect).toHaveBeenCalledOnce();
   });
-  it('does not reconnect a saved wallet of another connector', async () => {
-    save('metaMask', { walletId: 'ledgerHID', connectorId: 'ledgerHID' });
-    await mountAndWait();
-    expect(mocks.reconnect).not.toHaveBeenCalled();
-  });
   it.each([
-    [
-      'no recent connector',
-      null,
-      { walletId: 'metaMask', connectorId: 'metaMask' },
-    ],
+    ['no recent connector', null, 'metaMask'],
     ['no saved wallet', 'metaMask', null],
-    ['a legacy wallet id', 'metaMask', 'metaMask'],
-  ])('does not reconnect with %s', async (_, recent, record) => {
-    save(recent, record);
+    ['an empty wallet id', 'metaMask', ''],
+    ['an invalid wallet id', 'metaMask', 123],
+  ])('does not reconnect with %s', async (_, recent, walletId) => {
+    save(recent, walletId);
     await mountAndWait();
     expect(mocks.reconnect).not.toHaveBeenCalled();
   });
   it('uses the keys stored after the discovery delay', async () => {
-    save('ledgerHID', { walletId: 'ledgerHID', connectorId: 'ledgerHID' });
-    // A newer connection replaces wagmi's key; its record has not been written yet.
-    await mountAndWait(() => mocks.items.set('recentConnectorId', 'metaMask'));
-    expect(mocks.reconnect).not.toHaveBeenCalled();
+    save('ledgerHID', 'ledgerHID');
+    await mountAndWait(() => save('metaMask', 'metaMask'));
+    expect(mocks.reconnect).toHaveBeenCalledExactlyOnceWith({
+      connectors: [createMetaMask],
+    });
   });
 
   describe('waiting for an EIP-6963 wallet', () => {
     it('reconnects an injected wallet after its late announcement', async () => {
-      save('com.okex.wallet', {
-        walletId: 'okx',
-        connectorId: 'com.okex.wallet',
-      });
+      save('com.okex.wallet', 'okx');
       await mountAndWait();
       expect(mocks.reconnect).not.toHaveBeenCalled();
 
@@ -163,10 +153,7 @@ describe('useAutoConnect', () => {
     });
 
     it('leaves wagmi to skip an injected wallet that never announces', async () => {
-      save('com.okex.wallet', {
-        walletId: 'okx',
-        connectorId: 'com.okex.wallet',
-      });
+      save('com.okex.wallet', 'okx');
       await mountAndWait();
       await wait(999);
       expect(mocks.reconnect).not.toHaveBeenCalled();
@@ -180,7 +167,7 @@ describe('useAutoConnect', () => {
     });
 
     it('reconnects a wallet outside the list after its late announcement', async () => {
-      save('org.test', { walletId: 'org.test', connectorId: 'org.test' });
+      save('org.test', 'org.test');
       await mountAndWait();
       await announce({
         info: { rdns: 'org.test', name: 'Test' },
@@ -190,28 +177,32 @@ describe('useAutoConnect', () => {
     });
 
     it('stays disconnected when a wallet outside the list never announces', async () => {
-      save('org.test', { walletId: 'org.test', connectorId: 'org.test' });
+      save('org.test', 'org.test');
       await mountAndWait();
       await wait(1000);
       expect(mocks.reconnect).not.toHaveBeenCalled();
       expect(mocks.listeners.size).toBe(0);
     });
 
-    it('does not reconnect when the keys change during the wait', async () => {
-      save('com.okex.wallet', {
-        walletId: 'okx',
-        connectorId: 'com.okex.wallet',
-      });
-      await mountAndWait();
-      // The user starts a new connection: disconnect clears wagmi's key.
-      mocks.items.set('recentConnectorId', null);
-      await announce(okxDetail);
-      expect(mocks.reconnect).not.toHaveBeenCalled();
-    });
+    it.each([
+      ['recentConnectorId', null],
+      ['recentConnectorId', 'metaMask'],
+      [LS_KEY_RECONNECT_WALLET_ID, null],
+      [LS_KEY_RECONNECT_WALLET_ID, 'metaMask'],
+    ] as const)(
+      'does not reconnect when %s becomes %s during the wait',
+      async (key, value) => {
+        save('com.okex.wallet', 'okx');
+        await mountAndWait();
+        mocks.items.set(key, value);
+        await announce(okxDetail);
+        expect(mocks.reconnect).not.toHaveBeenCalled();
+      },
+    );
 
     it('does not wait for a wallet with an SDK connector', async () => {
       // MetaMask has an rdns, but its connector does not read EIP-6963.
-      save('metaMask', { walletId: 'metaMask', connectorId: 'metaMask' });
+      save('metaMask', 'metaMask');
       await mountAndWait();
       expect(mocks.reconnect).toHaveBeenCalledOnce();
       expect(mocks.listeners.size).toBe(0);

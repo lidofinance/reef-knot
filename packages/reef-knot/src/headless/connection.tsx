@@ -26,10 +26,7 @@ import {
   useReefKnotContext,
   useReefKnotModal,
 } from '../core-react';
-import type {
-  EIP6963ProviderDetail,
-  ReconnectWalletRecord,
-} from '../core-react';
+import type { EIP6963ProviderDetail } from '../core-react';
 import type { ReefKnotWalletsModalConfig } from '../types/reef-knot-wallets-modal';
 import { sortWalletsList } from './helpers/sortWalletsList';
 import { openWindow } from './helpers/openWindow';
@@ -218,19 +215,14 @@ export function ReefKnotUIProvider({
         ];
       if (target && completedConnectionModal.current === target) return;
       completedConnectionModal.current = target;
-      const reconnectWallet: ReconnectWalletRecord = {
-        walletId: rdns ?? walletId,
-        connectorId: connector.id,
-      };
       // Report success only after the write, so a remount cannot read the previous wallet.
       try {
         await config.storage?.setItem(
           LS_KEY_RECONNECT_WALLET_ID,
-          reconnectWallet,
+          rdns ?? walletId,
         );
       } catch {
-        // The connection itself succeeded. Auto-connect skips a stale record,
-        // because its `connectorId` does not match the new `recentConnectorId`.
+        // A storage error must not turn a successful connection into a failure.
       }
       const stack = modalStateRef.current.modalStack;
       // EIP-6963 completes its own screen and the underlying wallet picker.

@@ -61,10 +61,7 @@ beforeEach(async () => {
   for (const connector of config.connectors) {
     await act(async () => void (await connect(config, { connector })));
   }
-  await config.storage?.setItem(LS_KEY_RECONNECT_WALLET_ID, {
-    walletId: 'mock',
-    connectorId: 'mock',
-  });
+  await config.storage?.setItem(LS_KEY_RECONNECT_WALLET_ID, 'mock');
 });
 
 afterEach(async () => {

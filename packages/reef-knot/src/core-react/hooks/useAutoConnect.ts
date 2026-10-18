@@ -5,11 +5,7 @@ import type { WalletAdapterData } from '@reef-knot/wallets-helpers';
 import { useEagerConnect } from './useEagerConnect';
 import { checkTermsAccepted } from '../helpers/checkTermsAccepted';
 import { useReefKnotContext } from './useReefKnotContext';
-import {
-  LS_KEY_RECONNECT_WALLET_ID,
-  isReconnectWalletRecord,
-  type ReconnectWalletRecord,
-} from '../constants';
+import { LS_KEY_RECONNECT_WALLET_ID } from '../constants';
 import { withCallback } from '../helpers/withCallback';
 import { providersStore, type EIP6963ProviderDetail } from '../eip6963';
 
@@ -41,18 +37,12 @@ const waitForProvider = (rdns: string) =>
   });
 
 // Returns the rdns to wait for, if the wallet reads its provider from EIP-6963.
-const getAnnouncedRdns = (
-  record: ReconnectWalletRecord,
-  walletData?: WalletAdapterData,
-) => {
+const getAnnouncedRdns = (walletId: string, walletData?: WalletAdapterData) => {
   // Wallets outside `walletDataList` are saved by their rdns.
-  if (!walletData) return record.walletId;
+  if (!walletData) return walletId;
   // MetaMask and Coinbase also have an rdns, but their SDK connectors do not need an announcement.
   return walletData.type === injected.type ? walletData.rdns : undefined;
 };
-
-const isSameRecord = (a: ReconnectWalletRecord, b: ReconnectWalletRecord) =>
-  a.walletId === b.walletId && a.connectorId === b.connectorId;
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { storage } = useConfig();
@@ -62,20 +52,15 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
   const { walletDataList, onReconnect } = useReefKnotContext();
 
   useEffect(() => {
-    // Returns the saved wallet only if wagmi connected it last.
-    // We do not want to reconnect if the `recentConnectorId` item was deleted during disconnect.
+    // Disconnect clears wagmi's key, so both keys must exist before reconnecting.
     const readSavedWallet = async () => {
-      const [recentConnectorId, savedReconnectWallet] = await Promise.all([
+      const [recentConnectorId, walletId] = await Promise.all([
         storage?.getItem('recentConnectorId'),
         storage?.getItem(LS_KEY_RECONNECT_WALLET_ID),
       ]);
-      if (
-        !recentConnectorId ||
-        !isReconnectWalletRecord(savedReconnectWallet) ||
-        savedReconnectWallet.connectorId !== recentConnectorId
-      )
+      if (!recentConnectorId || typeof walletId !== 'string' || !walletId)
         return null;
-      return savedReconnectWallet;
+      return { walletId, recentConnectorId };
     };
 
     const tryReconnect = async () => {
@@ -100,12 +85,17 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
         const walletData = walletDataList.find(
           (data) => data.walletId === savedWallet.walletId,
         );
-        const rdns = getAnnouncedRdns(savedWallet, walletData);
+        const rdns = getAnnouncedRdns(savedWallet.walletId, walletData);
         const eip6963Provider = rdns ? await waitForProvider(rdns) : undefined;
 
         // A new connection may have started while we waited.
         const currentWallet = await readSavedWallet();
-        if (!currentWallet || !isSameRecord(savedWallet, currentWallet)) return;
+        if (
+          !currentWallet ||
+          currentWallet.walletId !== savedWallet.walletId ||
+          currentWallet.recentConnectorId !== savedWallet.recentConnectorId
+        )
+          return;
 
         const reconnectWithCallback = withCallback(reconnectAsync, onReconnect);
 
