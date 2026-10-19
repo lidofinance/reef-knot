@@ -15,11 +15,13 @@ const mocks = vi.hoisted(() => ({
   reconnect: vi.fn(async () => []),
   providers: [] as ProviderDetail[],
   listeners: new Set<(providers: ProviderDetail[]) => void>(),
+  state: { status: 'disconnected' },
 }));
 vi.mock('wagmi', async (importOriginal) => ({
   ...(await importOriginal<typeof import('wagmi')>()),
   useConfig: () => ({
     storage: { getItem: async (key: string) => mocks.items.get(key) ?? null },
+    state: mocks.state,
   }),
   useReconnect: () => ({ mutateAsync: mocks.reconnect }),
   useConnection: () => ({ isConnected: false }),
@@ -96,6 +98,7 @@ beforeEach(() => {
   mocks.items.clear();
   mocks.providers = [];
   mocks.listeners.clear();
+  mocks.state = { status: 'disconnected' };
   container = document.createElement('div');
   document.body.append(container);
   root = createRoot(container);
@@ -199,6 +202,14 @@ describe('useAutoConnect', () => {
         expect(mocks.reconnect).not.toHaveBeenCalled();
       },
     );
+
+    it('does not reconnect while a manual connection is in progress', async () => {
+      save('com.okex.wallet', 'okx');
+      await mountAndWait();
+      mocks.state.status = 'connecting';
+      await announce(okxDetail);
+      expect(mocks.reconnect).not.toHaveBeenCalled();
+    });
 
     it('does not wait for a wallet with an SDK connector', async () => {
       // MetaMask has an rdns, but its connector does not read EIP-6963.

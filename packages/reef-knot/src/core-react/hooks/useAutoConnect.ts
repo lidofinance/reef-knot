@@ -45,7 +45,7 @@ const getAnnouncedRdns = (walletId: string, walletData?: WalletAdapterData) => {
 };
 
 export const useAutoConnect = (autoConnectEnabled: boolean) => {
-  const { storage } = useConfig();
+  const config = useConfig();
   const { mutateAsync: reconnectAsync } = useReconnect();
   const { isConnected } = useConnection();
   const { eagerConnect } = useEagerConnect();
@@ -55,8 +55,8 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
     // Disconnect clears wagmi's key, so both keys must exist before reconnecting.
     const readSavedWallet = async () => {
       const [recentConnectorId, walletId] = await Promise.all([
-        storage?.getItem('recentConnectorId'),
-        storage?.getItem(LS_KEY_RECONNECT_WALLET_ID),
+        config.storage?.getItem('recentConnectorId'),
+        config.storage?.getItem(LS_KEY_RECONNECT_WALLET_ID),
       ]);
       if (!recentConnectorId || typeof walletId !== 'string' || !walletId)
         return null;
@@ -96,6 +96,8 @@ export const useAutoConnect = (autoConnectEnabled: boolean) => {
           currentWallet.recentConnectorId !== savedWallet.recentConnectorId
         )
           return;
+        // The keys change only after a manual connection succeeds. Do not overwrite one in progress.
+        if (config.state.status === 'connecting') return;
 
         const reconnectWithCallback = withCallback(reconnectAsync, onReconnect);
 
