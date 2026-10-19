@@ -29,6 +29,17 @@ describe('getTargetEIP6963', () => {
     expect(target).toMatchObject({ id: rdns, name: rdns });
     expect(target.provider()).toBeUndefined();
   });
+
+  it('finds a provider announced after the target is created', () => {
+    const providers: EIP6963ProviderDetail[] = [];
+    const target = getTargetEIP6963(storeWith(providers), rdns);
+    const provider = { request: () => {} };
+    providers.push({
+      info: { rdns, name: 'OKX Wallet' },
+      provider,
+    } as unknown as EIP6963ProviderDetail);
+    expect(target.provider()).toBe(provider);
+  });
 });
 
 describe('injected connector with an EIP-6963 target', () => {

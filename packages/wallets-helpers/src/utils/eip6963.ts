@@ -1,13 +1,14 @@
 import type { Store, Rdns } from 'mipd';
 
 export const getTargetEIP6963 = (providersStore: Store, rdns: Rdns) => {
-  const providerDetail = providersStore.findProvider({ rdns });
+  const findProviderDetail = () => providersStore.findProvider({ rdns });
   // Never return undefined: wagmi then falls back to `window.ethereum`,
   // which can belong to another wallet.
   return {
     id: rdns,
-    name: providerDetail?.info.name ?? rdns,
-    provider: () => providerDetail?.provider,
+    name: findProviderDetail()?.info.name ?? rdns,
+    // Look up again on each call. The wallet can announce after this target is created.
+    provider: () => findProviderDetail()?.provider,
   };
 };
 
