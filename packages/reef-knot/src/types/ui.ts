@@ -57,6 +57,7 @@ export type ConnectionErrorViewProps = {
   error: Error;
   /** Concise shortMessage from viem/wagmi, falling back to Error.message. */
   errorMessage: string;
+  /** Returns to the wallet list. The container also gets it as its Back action. */
   onBack: () => void;
 };
 export type EIP6963PickerViewProps = {

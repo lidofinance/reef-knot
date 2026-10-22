@@ -423,8 +423,28 @@
   overflow-wrap: anywhere;
 }
 .rk-lido-connection-error {
-  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 12px;
+  text-align: center;
   overflow-wrap: anywhere;
+}
+.rk-lido-connection-error p {
+  margin: 0;
+  max-width: 360px;
+}
+.rk-lido-connection-error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--lido-app-ui-color-tint-warning);
+  color: var(--lido-app-ui-color-icons-warning);
 }
 @media (max-width: 599px) {
   .rk-lido-overlay {
@@ -455,6 +475,11 @@
   }
   .rk-lido-requirements .rk-lido-action {
     margin-bottom: 90px;
+  }
+  .rk-lido-connection-error {
+    flex: 1;
+    justify-content: center;
+    padding-bottom: 90px;
   }
   .rk-lido-ledger-connection {
     margin-top: auto;

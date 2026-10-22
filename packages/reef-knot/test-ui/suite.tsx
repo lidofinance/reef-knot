@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { mainnet } from 'viem/chains';
 import type { CreateConnectorFn } from 'wagmi';
-import { BaseError } from 'viem';
+import { BaseError, UserRejectedRequestError } from 'viem';
 import {
   ReefKnotProvider,
   useReefKnotModal,
@@ -125,6 +125,16 @@ export function runUISuite(
     Array.from(document.querySelectorAll('button')).find((b) =>
       b.textContent?.includes('MetaMask'),
     )!;
+  const headerButton = (label: 'Go back' | 'Close') =>
+    document.querySelector<HTMLButtonElement>(
+      `[role="dialog"] button[aria-label="${label}"]`,
+    )!;
+  const acceptTerms = () =>
+    act(async () =>
+      (
+        document.querySelector('input[type="checkbox"]') as HTMLInputElement
+      ).click(),
+    );
   describe.each([false, true])('adapter scenarios (dark=%s)', (dark) => {
     it('renders a gated picker, accepts Terms and connects once', async () => {
       const success = await mount(dark);
@@ -142,27 +152,44 @@ export function runUISuite(
       expect(modal.modalStack).toHaveLength(0);
     });
     it('renders connection errors and supports retry', async () => {
-      mocks.connect.mockRejectedValueOnce(new Error('User rejected'));
+      mocks.connect.mockRejectedValueOnce(new Error('Connection failed'));
       await mount(dark);
-      await act(async () =>
-        (
-          document.querySelector('input[type="checkbox"]') as HTMLInputElement
-        ).click(),
-      );
+      await acceptTerms();
       await act(async () => walletButton().click());
       expect(document.querySelector('[role="alert"]')?.textContent).toContain(
-        'User rejected',
+        'Connection failed',
       );
       expect(modal.currentModal?.type).toBe('wallet');
       expect(walletButton()).toBeUndefined();
-      const back = Array.from(document.querySelectorAll('button')).find(
-        (button) => button.textContent === 'Back to wallets',
-      )!;
-      await act(async () => back.click());
+      expect(document.querySelector('[role="alert"] button')).toBeNull();
+      expect(document.querySelector('[role="dialog"]')?.textContent).toContain(
+        'Couldn’t connect',
+      );
+      await act(async () => headerButton('Go back').click());
       expect(walletButton().disabled).toBe(false);
       expect(document.querySelector('[role="alert"]')).toBeNull();
       await act(async () => walletButton().click());
       expect(modal.modalStack).toHaveLength(0);
+    });
+    it('closes the whole modal from the error screen', async () => {
+      mocks.connect.mockRejectedValueOnce(new Error('Connection failed'));
+      await mount(dark);
+      await acceptTerms();
+      await act(async () => walletButton().click());
+      expect(document.querySelector('[role="alert"]')).not.toBeNull();
+      await act(async () => headerButton('Close').click());
+      expect(modal.modalStack).toHaveLength(0);
+    });
+    it('keeps the picker without an error when the user rejects in the wallet', async () => {
+      mocks.connect.mockRejectedValueOnce(
+        new UserRejectedRequestError(new Error('User rejected the request.')),
+      );
+      await mount(dark);
+      await acceptTerms();
+      await act(async () => walletButton().click());
+      expect(document.querySelector('[role="alert"]')).toBeNull();
+      expect(modal.currentModal?.type).toBe('wallet');
+      expect(walletButton().disabled).toBe(false);
     });
     it('displays the viem shortMessage without technical details', async () => {
       mocks.connect.mockRejectedValueOnce(
@@ -177,9 +204,9 @@ export function runUISuite(
         ).click(),
       );
       await act(async () => walletButton().click());
-      expect(document.querySelector('[role="alert"]')?.textContent).toBe(
-        'Connection declined',
-      );
+      const alert = document.querySelector('[role="alert"]')?.textContent;
+      expect(alert).toContain('Connection declined');
+      expect(alert).not.toContain('Technical RPC details');
     });
     it('preserves picker search, expansion and consent after an error', async () => {
       mocks.connect.mockRejectedValueOnce(new Error('Connection failed'));
@@ -215,11 +242,7 @@ export function runUISuite(
       await act(async () => walletButton().click());
       expect(success).not.toHaveBeenCalled();
       expect(mocks.setItem).not.toHaveBeenCalled();
-      await act(async () =>
-        Array.from(document.querySelectorAll('button'))
-          .find((button) => button.textContent === 'Back to wallets')!
-          .click(),
-      );
+      await act(async () => headerButton('Go back').click());
       expect(
         document.querySelector('[data-testid="picker-state"]')?.textContent,
       ).toBe('Meta:true');
@@ -334,10 +357,7 @@ export function runUISuite(
       expect(document.querySelector('[role="alert"]')?.textContent).toContain(
         'Provider failed',
       );
-      const back = Array.from(document.querySelectorAll('button')).find(
-        (item) => item.textContent === 'Back to wallets',
-      )!;
-      await act(async () => back.click());
+      await act(async () => headerButton('Go back').click());
       expect(modal.modalStack).toHaveLength(2);
       expect(modal.currentModal?.type).toBe('eip6963');
       expect(button().disabled).toBe(false);

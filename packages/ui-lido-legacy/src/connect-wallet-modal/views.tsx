@@ -34,6 +34,10 @@ import { LedgerErrorScreen } from './components/Ledger/LedgerErrorScreen';
 import { LedgerAccountScreen } from './components/Ledger/LedgerAccountScreen';
 import { LedgerModalInnerContainer } from './components/Ledger/styles';
 import { BrowserWalletIconsGrid } from './components/BrowserWalletIconsGrid';
+import {
+  ConnectionErrorIconStyle,
+  ConnectionErrorStyle,
+} from './components/ConnectionError/styles';
 
 export function WalletButton(props: WalletButtonViewProps) {
   const { iconUrl, walletId, icon } = props;
@@ -174,16 +178,15 @@ function Requirements(_props: RequirementsViewProps) {
   return null;
 }
 
-function ConnectionError({ errorMessage, onBack }: ConnectionErrorViewProps) {
+// The modal header has Back and Close, so this view has no buttons.
+function ConnectionError({ errorMessage }: ConnectionErrorViewProps) {
   return (
-    <>
-      <ErrorBlock role="alert">{errorMessage}</ErrorBlock>
-      <CommonButtonsContainer>
-        <Button fullwidth onClick={onBack}>
-          Back to wallets
-        </Button>
-      </CommonButtonsContainer>
-    </>
+    <ConnectionErrorStyle role="alert">
+      <ConnectionErrorIconStyle aria-hidden="true">
+        <Warning width={48} height={48} />
+      </ConnectionErrorIconStyle>
+      <div>{errorMessage}</div>
+    </ConnectionErrorStyle>
   );
 }
 

@@ -111,7 +111,7 @@ function getModalPresentation(
  */
 function Renderer(props: ReefKnotModalRendererProps) {
   const { components, theme, containerProps } = props;
-  const { currentModal, closeModal } = useReefKnotModal();
+  const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
   const { error, dismissError } = useConnectionContext();
   if (!currentModal) return null;
 
@@ -129,12 +129,12 @@ function Renderer(props: ReefKnotModalRendererProps) {
           />
         ),
         containerProps: {
-          title: 'Connection error',
+          title: 'Couldn’t connect',
           center: true,
           omitContentStyle: false,
           widthClamp: 480,
           onBack: dismissError,
-          onClose: dismissError,
+          onClose: forceCloseAllModals,
         },
       }
     : getModalPresentation(currentModal, props, closeModal);

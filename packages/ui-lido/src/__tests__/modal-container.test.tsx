@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { ModalContainer } from '../index';
+import { ConnectionError, ModalContainer } from '../index';
 
 vi.mock('reef-knot', async (original) => ({
   ...(await original<typeof import('reef-knot')>()),
@@ -95,4 +95,33 @@ it('closes on Escape and restores focus and scrolling on unmount', async () => {
   expect(document.activeElement).toBe(trigger);
   expect(document.body.style.overflow).toBe(overflow);
   trigger.remove();
+});
+
+it('shows Back only on the connection error screen', async () => {
+  const back = vi.fn();
+  await act(async () =>
+    root.render(
+      <ModalContainer open title="Ledger connect" onBack={back}>
+        Ledger
+      </ModalContainer>,
+    ),
+  );
+  expect(document.querySelector('[aria-label="Go back"]')).toBeNull();
+  await act(async () =>
+    root.render(
+      <ModalContainer open title="Connect wallet" onBack={back}>
+        <ConnectionError
+          error={new Error('Failed')}
+          errorMessage="Failed"
+          onBack={back}
+        />
+      </ModalContainer>,
+    ),
+  );
+  await act(async () =>
+    document
+      .querySelector<HTMLButtonElement>('[aria-label="Go back"]')!
+      .click(),
+  );
+  expect(back).toHaveBeenCalledOnce();
 });

@@ -118,9 +118,14 @@ Run `yarn check-packages` for package TypeScript, lint and scenario tests. The g
 Connection failures in the wallet picker and EIP-6963 picker replace the current
 view with `components.ConnectionError`. Its props contain the original `error`, a prepared `errorMessage`, and an
 `onBack` action. The message uses a non-empty viem/wagmi `shortMessage`, falling
-back to `Error.message` for other errors. Back, Close and Escape dismiss the error without completing or
-cancelling the underlying connection flow; search, expansion, consent and nested
-screens are preserved. Custom interfaces can dismiss errors through
+back to `Error.message` for other errors. A message that is not readable text is
+replaced with a generic one. When the user rejects the request in the wallet, no
+error is shown and the picker stays open.
+
+The container receives `onBack` and `onClose`. Back dismisses the error and
+returns to the previous list; search, expansion, consent and nested screens are
+preserved. Close and Escape close all connection screens. The bundled skins show
+Back in the header and do not add buttons to the error view. Custom interfaces can dismiss errors through
 `useWalletPicker().dismissError()` or `useEIP6963Picker().dismissError()`.
 Ledger retains its dedicated error screen, and eager connection retains its
 inline error and retry action.

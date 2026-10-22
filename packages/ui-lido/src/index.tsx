@@ -7,6 +7,7 @@ import {
   Button,
   Checkbox,
   Input,
+  IconArrowLeft,
   IconCross,
   IconButton,
   IconChevronDown,
@@ -14,6 +15,7 @@ import {
   IconChevronRight,
   TokenSelector,
   IconSearch,
+  IconWarning,
 } from '@lidofinance/lido-app-ui';
 import {
   ReefKnotModalRenderer,
@@ -46,12 +48,17 @@ function PortalDialog({
   children,
   theme = 'light',
   onClose,
-  onBack: _onBack,
+  onBack,
   widthClamp: _widthClamp,
   className,
   ...rest
 }: ModalContainerProps) {
   const { currentModal } = useReefKnotModal();
+  // On other screens Close already goes back one screen, so Back would only repeat it.
+  const showBack =
+    !!onBack &&
+    React.isValidElement(children) &&
+    children.type === ConnectionError;
   const titleId = useId();
   const subtitleId = useId();
   useEscape(onClose);
@@ -91,6 +98,14 @@ function PortalDialog({
         >
           <div className="rk-lido-header-group">
             <div className="rk-lido-header">
+              {showBack && (
+                <IconButton
+                  variant="outline"
+                  aria-label="Go back"
+                  icon={<IconArrowLeft />}
+                  onClick={onBack}
+                />
+              )}
               <h2 className="rk-lido-title" id={titleId}>
                 {titleIcon}
                 <span className="rk-lido-heading">{title}</span>
@@ -349,18 +364,14 @@ export function Requirements({ requirements }: RequirementsViewProps) {
   );
 }
 
-export function ConnectionError({
-  errorMessage,
-  onBack,
-}: ConnectionErrorViewProps) {
+// The container shows Back in the header, so this view has no buttons.
+export function ConnectionError({ errorMessage }: ConnectionErrorViewProps) {
   return (
-    <section className="rk-lido-screen rk-lido-connection-error">
-      <p className="rk-lido-description" role="alert">
-        {errorMessage}
-      </p>
-      <Button className="rk-lido-action" onClick={onBack}>
-        Back to wallets
-      </Button>
+    <section className="rk-lido-connection-error" role="alert">
+      <span className="rk-lido-connection-error-icon" aria-hidden="true">
+        <IconWarning />
+      </span>
+      <p className="rk-lido-description">{errorMessage}</p>
     </section>
   );
 }
