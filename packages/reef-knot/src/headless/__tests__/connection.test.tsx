@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { UserRejectedRequestError } from 'viem';
 import { mainnet } from 'viem/chains';
 import type { CreateConnectorFn } from 'wagmi';
 import {
@@ -434,6 +435,29 @@ describe('public headless connection flow', () => {
       await connection.connect();
     });
     expect(success).toHaveBeenCalledOnce();
+  });
+  it('shows no error when the user rejects the request in the wallet', async () => {
+    mocks.connect.mockRejectedValueOnce(
+      new UserRejectedRequestError(new Error('User rejected the request.')),
+    );
+    await mount();
+    await act(async () => terms.setChecked(true));
+    await act(async () => {
+      await connection.connect();
+    });
+    expect(connection.error).toBeNull();
+    expect(connection.isLoading).toBe(false);
+    expect(modal.currentModal?.type).toBe('wallet');
+  });
+  it('does not show a message from a wallet error that is not an Error', async () => {
+    mocks.connect.mockRejectedValueOnce({ reason: 'unknown' });
+    await mount();
+    await act(async () => terms.setChecked(true));
+    await act(async () => {
+      await connection.connect();
+    });
+    expect(connection.error).toBeInstanceOf(Error);
+    expect(connection.error?.message).not.toContain('[object');
   });
   it.each([false, true])(
     'ignores a late rejection after closing the picker (reopen before rejection: %s)',

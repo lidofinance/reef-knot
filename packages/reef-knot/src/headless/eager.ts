@@ -3,6 +3,7 @@ import { useConfig } from 'wagmi';
 import { getUnsupportedChainError, useReefKnotModal } from '../core-react';
 import type { ReefKnotWalletsModalConfig } from '../types/reef-knot-wallets-modal';
 import { useConnectionContext } from './connection';
+import { getConnectionErrorMessage } from './helpers/getConnectionErrorMessage';
 
 export function useEagerConnectScreen(config?: ReefKnotWalletsModalConfig) {
   const { currentModal, closeModal, termsChecked } = useReefKnotModal();
@@ -26,7 +27,9 @@ export function useEagerConnectScreen(config?: ReefKnotWalletsModalConfig) {
     errorMessage:
       error?.name === 'UnsupportedChainIdError'
         ? getUnsupportedChainError(chains).message
-        : error?.message,
+        : error
+          ? getConnectionErrorMessage(error)
+          : undefined,
     isLoading,
     disabled: !termsChecked || isLoading,
     connect,

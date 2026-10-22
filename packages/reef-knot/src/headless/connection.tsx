@@ -31,6 +31,10 @@ import type { ReefKnotWalletsModalConfig } from '../types/reef-knot-wallets-moda
 import { sortWalletsList } from './helpers/sortWalletsList';
 import { openWindow } from './helpers/openWindow';
 import { suggestApp } from './helpers/suggestApp';
+import {
+  isUserRejectedError,
+  toConnectionError,
+} from './helpers/getConnectionErrorMessage';
 
 export type WalletPickerState = {
   wallets: WalletAdapterData[];
@@ -166,7 +170,7 @@ export function ReefKnotUIProvider({
         if (active) setAllWallets(wallets);
       })
       .catch((e: unknown) => {
-        if (active) setError(e instanceof Error ? e : new Error(String(e)));
+        if (active) setError(toConnectionError(e));
       })
       .finally(() => {
         if (active) setDiscovering(false);
@@ -188,8 +192,14 @@ export function ReefKnotUIProvider({
       setSearch('');
       setExpanded(false);
       setError(null);
-    } else if (currentModal.type === 'eager')
-      setError(currentModal.props.initialError ?? null);
+    } else if (currentModal.type === 'eager') {
+      const { initialError } = currentModal.props;
+      setError(
+        initialError && !isUserRejectedError(initialError)
+          ? toConnectionError(initialError)
+          : null,
+      );
+    }
   }, [currentModal]);
 
   // Commit a successful connection: save reconnect, close its screens and notify the app.
@@ -265,9 +275,14 @@ export function ReefKnotUIProvider({
       } catch (e) {
         // A late rejection belongs to the screen that started the attempt,
         // never to a picker opened after that screen was dismissed.
+        // A rejection in the wallet is a user choice, so keep the current screen.
         const stack = modalStateRef.current.modalStack;
-        if (alive.current && stack[stack.length - 1] === attemptModal)
-          setError(e instanceof Error ? e : new Error(String(e)));
+        if (
+          alive.current &&
+          stack[stack.length - 1] === attemptModal &&
+          !isUserRejectedError(e)
+        )
+          setError(toConnectionError(e));
       } finally {
         locked.current = false;
         setLoadingWalletId(null);
