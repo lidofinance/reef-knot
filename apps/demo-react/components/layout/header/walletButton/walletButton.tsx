@@ -3,7 +3,7 @@ import { ButtonProps } from '@lidofinance/lido-ui';
 
 import { useModal } from 'hooks/useModal';
 import { MODAL } from 'providers';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnection } from 'wagmi';
 import AddressBadge from 'components/layout/header/walletButton/addressBadge';
 
 import {
@@ -14,7 +14,7 @@ import {
 const WalletButton: FC<ButtonProps> = (props) => {
   const { onClick, ...rest } = props;
   const { openModal } = useModal(MODAL.wallet);
-  const { account } = useWeb3();
+  const { address } = useConnection();
 
   return (
     <WalletButtonStyle
@@ -26,7 +26,7 @@ const WalletButton: FC<ButtonProps> = (props) => {
       {...rest}
     >
       <WalletButtonWrapperStyle>
-        <AddressBadge address={account} />
+        <AddressBadge address={address} />
       </WalletButtonWrapperStyle>
     </WalletButtonStyle>
   );

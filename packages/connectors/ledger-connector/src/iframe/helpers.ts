@@ -9,7 +9,7 @@ export const isLedgerLive = () => {
     const isEmbed = !!params.get('embed');
 
     return isIframe() && isEmbed;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

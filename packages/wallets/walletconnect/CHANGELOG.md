@@ -1,5 +1,9 @@
 # @reef-knot/wallet-adapter-walletconnect
 
+## 5.2.0
+
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
+
 ## 5.1.0
 
 - Update wagmi to 3.6.21

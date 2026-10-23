@@ -1,6 +1,8 @@
-import { WalletAdapterType } from '@reef-knot/types';
+import {
+  WalletAdapterType,
+  isProviderExistsEIP6963,
+} from '@reef-knot/wallets-helpers';
 import { coinbaseWallet } from 'wagmi/connectors';
-import { isProviderExistsEIP6963 } from '@reef-knot/wallets-helpers';
 import { WalletIcon } from './icons/index.js';
 
 export const id = 'coinbaseSmartWallet';

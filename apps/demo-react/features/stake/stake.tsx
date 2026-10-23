@@ -1,7 +1,7 @@
 import { FC, useCallback, useState } from 'react';
 import { Input } from '@lidofinance/lido-ui';
 import { useLidoSDK } from 'providers/sdk';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnection } from 'wagmi';
 import { transactionToast } from 'utils/transaction-toast';
 
 import { ActionItem } from 'components';
@@ -14,8 +14,8 @@ export const Stake: FC = () => {
   const referralAddress = referralAddressState
     ? (referralAddressState as `0x{string}`)
     : undefined;
-  const { account: web3account = '0x0' } = useWeb3();
-  const account = web3account as `0x{string}`;
+  const { address = '0x0' } = useConnection();
+  const account = address as `0x{string}`;
 
   const { stake } = useLidoSDK();
 

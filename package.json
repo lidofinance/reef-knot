@@ -17,39 +17,43 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck --continue",
-    "check-packages": "turbo run typecheck lint test --filter='./packages/**/*'",
+    "check-packages": "turbo run typecheck lint test --filter='./packages/**/*' && yarn check-ui-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "new-wallet": "turbo gen wallet"
+    "new-wallet": "turbo gen wallet",
+    "check-ui-types": "tsc -p tsconfig.ui-tests.json --noEmit"
   },
   "devDependencies": {
-    "@lidofinance/eslint-config": "^0.63.0",
+    "@eslint/compat": "2.1.1",
+    "@eslint/js": "10.0.1",
     "@lidofinance/multi-semantic-release": "^1.0.2",
-    "@next/eslint-plugin-next": "^13.5.11",
     "@turbo/gen": "2.10.12",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17",
     "@types/styled-components": "5.1.12",
-    "eslint": "8.57.0",
-    "eslint-config-airbnb": "19.0.4",
-    "eslint-config-prettier": "9.1.2",
-    "eslint-config-turbo": "2.10.12",
-    "eslint-import-resolver-typescript": "3.10.1",
+    "@typescript-eslint/eslint-plugin": "8.71.1",
+    "@typescript-eslint/parser": "8.71.1",
+    "@typescript/native": "npm:typescript@7.0.2",
+    "@vitest/eslint-plugin": "1.6.27",
+    "eslint": "10.12.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-config-turbo": "2.11.7",
+    "eslint-import-resolver-typescript": "4.4.5",
     "eslint-plugin-eslint-comments": "3.2.0",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jest": "27.9.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-prettier": "5.5.6",
-    "eslint-plugin-promise": "6.6.0",
+    "eslint-plugin-promise": "7.3.0",
     "eslint-plugin-react": "7.37.5",
-    "eslint-plugin-react-hooks": "4.6.2",
-    "eslint-plugin-sonarjs": "0.25.1",
-    "eslint-plugin-unicorn": "48.0.1",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-sonarjs": "4.2.2",
+    "eslint-plugin-unicorn": "77.0.0",
+    "globals": "17.13.0",
     "prettier": "^3.9.6",
-    "tsdown": "0.22.14",
+    "tsdown": "0.23.1",
     "tslib": "2.8.1",
     "turbo": "latest",
-    "typescript": "~5.9",
-    "typescript-eslint": "^7.9.0"
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript-eslint": "8.71.1"
   },
   "release": {
     "branches": [
@@ -74,7 +78,12 @@
     ]
   },
   "multi-release": {
-    "sequentialInit": true
+    "sequentialInit": true,
+    "deps": {
+      "bump": "override",
+      "prefix": "",
+      "release": "patch"
+    }
   },
   "resolutions": {
     "basic-ftp": "^5.3.1",
@@ -90,7 +99,7 @@
     "undici@^7.0.0": "^7.29.0"
   },
   "engines": {
-    "node": ">=24.0.0"
+    "node": "^24.11.0 || >=26.0.0"
   },
   "packageManager": "yarn@4.17.1"
 }

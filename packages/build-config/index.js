@@ -1,8 +1,19 @@
 // Using js instead of ts to avoid build step. Otherwise, build-config would need to build itself (circular dependency).
 
 // @ts-check
-import { execSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 import svgr from '@svgr/rollup';
+
+const require = createRequire(import.meta.url);
+// `typescript` supplies the TS 6 API; explicitly select the native TS 7 alias.
+const { default: getNativeCompilerPath } = require(
+  join(
+    dirname(require.resolve('@typescript/native/package.json')),
+    'lib/getExePath.js',
+  ),
+);
+const nativeCompilerPath = getNativeCompilerPath();
 
 // In watch mode all packages start simultaneously, so dist/ must not be cleaned
 // on startup — doing so would create a race condition where tsc in one package
@@ -22,34 +33,6 @@ function isExternal(id) {
 }
 
 /**
- * Runs `tsc --emitDeclarationOnly` after each build via the `build:done` hook.
- *
- * rolldown-plugin-dts (used by tsdown's `dts: true`) has a known bug where it
- * drops `export default` from generated `.d.ts` files, regardless of whether
- * the oxc or tsc transformer is used. Running tsc directly as a CLI subprocess
- * avoids this issue entirely.
- *
- * Type errors are intentionally swallowed here — `yarn typecheck` is the proper
- * gate for type errors; the build step should always produce output.
- *
- * @returns {Partial<import('tsdown').TsdownHooks>}
- */
-function tscDeclarationsHook() {
-  return {
-    'build:done': () => {
-      try {
-        execSync(
-          'tsc --noEmit false --emitDeclarationOnly --noEmitOnError false --declarationMap --outDir dist',
-          { stdio: 'inherit' },
-        );
-      } catch {
-        // tsc exits 1 on type errors; surfaced by `yarn typecheck` instead
-      }
-    },
-  };
-}
-
-/**
  * @param {Record<string, unknown>} [overrides]
  * @returns {import('tsdown').UserConfig}
  */
@@ -61,12 +44,15 @@ export function defineStandardConfig(overrides = {}) {
     target: 'es2020',
     platform: 'browser',
     unbundle: true,
-    // rolldown-plugin-dts drops `export default` — use tsc for declarations instead, see hooks
-    dts: false,
+    tsconfig: 'tsconfig.json',
+    dts: {
+      generator: 'tsgo',
+      tsgo: { path: nativeCompilerPath },
+      sourcemap: true,
+    },
     clean: !isWatchMode,
     // treat all non-relative imports as external
-    external: isExternal,
-    hooks: tscDeclarationsHook(),
+    deps: { neverBundle: isExternal, resolveDepSubpath: true },
     ...overrides,
   };
 }
