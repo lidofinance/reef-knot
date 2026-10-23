@@ -90,7 +90,12 @@ function getModalPresentation(
             <Ledger components={components} />
           </ReefKnotLedgerProvider>
         ),
-        containerProps: { ...defaults, title: 'Ledger connect' },
+        containerProps: {
+          ...defaults,
+          title: 'Ledger connect',
+          // Ledger views have their own width. A wider container moves them off center.
+          widthClamp: undefined,
+        },
       };
     case 'requirements':
       return {
