@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { UserRejectedRequestError } from 'viem';
+import { ResourceUnavailableRpcError, UserRejectedRequestError } from 'viem';
 import {
   getConnectionErrorMessage,
+  isRequestPendingError,
   isUserRejectedError,
   toConnectionError,
 } from '../helpers/getConnectionErrorMessage';
@@ -34,6 +35,28 @@ describe('isUserRejectedError', () => {
   });
 });
 
+const METAMASK_PENDING_MESSAGE =
+  "MetaMask - RPC Error: Request of type 'wallet_requestPermissions' already pending for origin http://localhost:3000. Please wait.";
+
+describe('isRequestPendingError', () => {
+  it.each([
+    ['viem error', new ResourceUnavailableRpcError(new Error('pending'))],
+    ['EIP-1193 object', { code: -32002, message: 'Pending' }],
+    ['MetaMask message', new Error(METAMASK_PENDING_MESSAGE)],
+    ['nested cause', new Error('Wrapped', { cause: { code: -32002 } })],
+  ])('detects a pending request: %s', (_name, error) => {
+    expect(isRequestPendingError(error)).toBe(true);
+  });
+
+  it.each([
+    ['plain error', new Error('Chain not configured')],
+    ['rejection', { code: 4001 }],
+    ['null', null],
+  ])('ignores other errors: %s', (_name, error) => {
+    expect(isRequestPendingError(error)).toBe(false);
+  });
+});
+
 describe('toConnectionError', () => {
   it('keeps Error instances', () => {
     const error = new Error('Failed');
@@ -63,6 +86,15 @@ describe('getConnectionErrorMessage', () => {
 
   it('falls back to message', () => {
     expect(getConnectionErrorMessage(new Error('Failed'))).toBe('Failed');
+  });
+
+  it('replaces a technical message for a pending request', () => {
+    const error = Object.assign(new Error(METAMASK_PENDING_MESSAGE), {
+      code: -32002,
+    });
+    const message = getConnectionErrorMessage(error);
+    expect(message).not.toContain('RPC Error');
+    expect(message).toMatch(/already open in your wallet/);
   });
 
   it.each([
