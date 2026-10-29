@@ -6,6 +6,7 @@ import { AccountRecord, AccountsStorage } from './types';
 import { getDerivationPathsForPage, getFirstIndexOnPage } from './helpers';
 import { TransportError } from '@ledgerhq/hw-transport';
 import { formatBalance } from '../helpers/formatBalance';
+import { UserFacingError } from '../../core-react/helpers/userFacingError';
 
 export const useLedgerContext = () => useContext(LedgerContext);
 
@@ -135,8 +136,9 @@ export const useLedgerAccounts = ({
         console.error(error);
         if (!active) return;
         setError(
-          new Error(
+          new UserFacingError(
             'An error occurred while loading accounts data. Please, try again.',
+            { cause: error },
           ),
         );
       }

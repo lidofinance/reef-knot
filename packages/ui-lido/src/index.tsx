@@ -293,9 +293,9 @@ export function WalletPicker({
             )}
             {children}
           </div>
-          {state.error && (
+          {state.errorMessage && (
             <p className="rk-lido-error" role="alert">
-              {state.error.message}
+              {state.errorMessage}
             </p>
           )}
           {state.showToggle && (
@@ -379,15 +379,15 @@ export function ConnectionError({ errorMessage }: ConnectionErrorViewProps) {
 export function EIP6963Picker({
   terms,
   children,
-  error,
+  errorMessage,
 }: EIP6963PickerViewProps) {
   return (
     <section className="rk-lido-picker">
       {terms}
       <div className="rk-lido-wallets">{children}</div>
-      {error && (
+      {errorMessage && (
         <p className="rk-lido-error" role="alert">
-          {error.message}
+          {errorMessage}
         </p>
       )}
     </section>
@@ -519,7 +519,7 @@ export function LedgerError({ state }: LedgerViewProps) {
     <section className="rk-lido-screen rk-lido-ledger-connection">
       <LedgerImage error />
       <p className="rk-lido-description" role="alert">
-        {state.error?.message}
+        {state.errorMessage}
       </p>
       <Button
         className="rk-lido-action"

@@ -14,7 +14,6 @@ import {
 import { EagerConnect } from './components/EagerConnect';
 import { EIP6963Picker } from './components/EIP6963Picker';
 import { Ledger } from './components/Ledger';
-import { getConnectionErrorMessage } from './helpers/getConnectionErrorMessage';
 
 export type ReefKnotModalRendererProps = WalletPickerProps & {
   containerProps?: Partial<ModalContainerProps>;
@@ -117,19 +116,20 @@ function getModalPresentation(
 function Renderer(props: ReefKnotModalRendererProps) {
   const { components, theme, containerProps } = props;
   const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
-  const { error, dismissError } = useConnectionContext();
+  const { error, errorMessage, dismissError } = useConnectionContext();
   if (!currentModal) return null;
 
   // Replace the view, keeping the underlying picker and modal stack intact.
   const hasConnectionError =
     error &&
+    errorMessage &&
     (currentModal.type === 'wallet' || currentModal.type === 'eip6963');
   const presentation: ModalPresentation = hasConnectionError
     ? {
         body: (
           <components.ConnectionError
             error={error}
-            errorMessage={getConnectionErrorMessage(error)}
+            errorMessage={errorMessage}
             onBack={dismissError}
           />
         ),

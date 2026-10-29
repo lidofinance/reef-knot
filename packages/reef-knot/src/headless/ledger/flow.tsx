@@ -7,10 +7,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useConfig } from 'wagmi';
 import { idLedgerHid } from '@reef-knot/ledger-connector';
 import { interceptLedgerError } from '../../core-react/helpers';
 import { useReefKnotContext } from '../../core-react';
 import { AccountMismatchError, useConnectionContext } from '../connection';
+import { getConnectionErrorMessage } from '../helpers/getConnectionErrorMessage';
 import { LedgerContextProvider } from './LedgerContext';
 import { useLedgerAccounts, useLedgerContext } from './hooks';
 import { DERIVATION_PATHS } from './constants';
@@ -21,6 +23,8 @@ export type LedgerAccount = AccountRecord;
 export type LedgerFlowState = {
   screen: 'connection' | 'accounts' | 'error';
   error: Error | null;
+  /** Safe to show to the user. The original error stays in `error`. */
+  errorMessage: string | null;
   isLoading: boolean;
   isLoadingLedgerLibs: boolean;
   isUserActivationRequired: boolean;
@@ -50,6 +54,7 @@ function LedgerFlowOwner({
   const transport = useLedgerContext();
   const flow = useConnectionContext();
   const { walletDataList } = useReefKnotContext();
+  const { chains } = useConfig();
   const [currentPage, setPage] = useState(1);
   const [derivationPath, setPath] = useState(initialDerivationPath);
   const [accountsStorage, setStorage] = useState<AccountsStorage>({});
@@ -124,6 +129,9 @@ function LedgerFlowOwner({
         ? 'accounts'
         : 'connection',
     error: transport.error,
+    errorMessage: transport.error
+      ? getConnectionErrorMessage(transport.error, chains)
+      : null,
     isLoading:
       flow.busy ||
       (transport.isTransportConnected && accounts.length < ACCOUNTS_PER_PAGE),

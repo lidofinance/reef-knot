@@ -27,11 +27,13 @@ import {
   useReefKnotModal,
 } from '../core-react';
 import type { EIP6963ProviderDetail } from '../core-react';
+import { UserFacingError } from '../core-react/helpers/userFacingError';
 import type { ReefKnotWalletsModalConfig } from '../types/reef-knot-wallets-modal';
 import { sortWalletsList } from './helpers/sortWalletsList';
 import { openWindow } from './helpers/openWindow';
 import { suggestApp } from './helpers/suggestApp';
 import {
+  getConnectionErrorMessage,
   isUserRejectedError,
   toConnectionError,
 } from './helpers/getConnectionErrorMessage';
@@ -44,6 +46,8 @@ export type WalletPickerState = {
   showToggle: boolean;
   isDiscovering: boolean;
   error: Error | null;
+  /** Safe to show to the user. The original error stays in `error`. */
+  errorMessage: string | null;
   setSearch: (value: string) => void;
   dismissError: () => void;
   clearSearch: () => void;
@@ -69,7 +73,7 @@ type ConnectConnectorOptions = {
 
 // Ledger handles this separately to reload accounts without an error screen.
 // It is thrown only after cleanup succeeds; cleanup failures remain normal errors.
-export class AccountMismatchError extends Error {
+export class AccountMismatchError extends UserFacingError {
   constructor() {
     super('The connected account does not match the selected account.');
     this.name = 'AccountMismatchError';
@@ -80,6 +84,7 @@ type ConnectionContextValue = {
   config: ReefKnotWalletsModalConfig;
   picker: WalletPickerState;
   error: Error | null;
+  errorMessage: string | null;
   busy: boolean;
   dismissError: () => void;
   connectWallet: (wallet: WalletAdapterData) => Promise<void>;
@@ -133,6 +138,10 @@ export function ReefKnotUIProvider({
   const [isDiscovering, setDiscovering] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const dismissError = useCallback(() => setError(null), []);
+  const errorMessage = useMemo(
+    () => (error ? getConnectionErrorMessage(error, config.chains) : null),
+    [error, config.chains],
+  );
   const locked = useRef(false);
   const ledgerOpening = useRef(false);
   const providerOpening = useRef(false);
@@ -215,7 +224,7 @@ export function ReefKnotUIProvider({
           ? uid !== connectedConnectorUid.current
           : rdns && connector.id !== rdns)
       )
-        throw new Error(
+        throw new UserFacingError(
           'The selected wallet is no longer connected. Please retry.',
         );
       const target =
@@ -308,7 +317,7 @@ export function ReefKnotUIProvider({
       });
       // Track the instance, not its id: two instances can describe the same wallet.
       if (!connectorUid)
-        throw new Error(
+        throw new UserFacingError(
           'The selected wallet connection could not be verified.',
         );
       if (expectedAddress !== undefined) {
@@ -492,6 +501,7 @@ export function ReefKnotUIProvider({
       expanded,
       isDiscovering,
       error,
+      errorMessage,
       showToggle: expanded || allWallets.length > wallets.length,
       setSearch,
       clearSearch,
@@ -505,6 +515,7 @@ export function ReefKnotUIProvider({
       expanded,
       isDiscovering,
       error,
+      errorMessage,
       toggleExpanded,
       clearSearch,
       dismissError,
@@ -517,6 +528,7 @@ export function ReefKnotUIProvider({
       notifyStart,
       picker,
       error,
+      errorMessage,
       busy: loadingWalletId != null,
       dismissError,
       connectWallet,
@@ -531,6 +543,7 @@ export function ReefKnotUIProvider({
       notifyStart,
       picker,
       error,
+      errorMessage,
       loadingWalletId,
       dismissError,
       connectWallet,
@@ -572,6 +585,7 @@ export function useWalletConnection(
       loadingWalletId === walletId ||
       (walletId === 'browserExtension' && !!loadingWalletId?.includes('.')),
     error: flow.error,
+    errorMessage: flow.errorMessage,
     completeConnection: (reconnectId?: string, rdns?: string) =>
       flow.completeConnection(reconnectId ?? walletId, rdns),
     notifyStart: () => flow.notifyStart(walletId),
@@ -602,6 +616,7 @@ export function useEIP6963Picker(config?: ReefKnotWalletsModalConfig) {
     disabled: !termsChecked || flow.busy,
     loadingWalletId,
     error: flow.error,
+    errorMessage: flow.errorMessage,
     select: flow.selectProvider,
     dismissError: flow.dismissError,
   };

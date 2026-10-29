@@ -316,6 +316,7 @@ describe('public headless connection flow', () => {
       expect(connection.error?.message).toBe(
         'The selected wallet is no longer connected. Please retry.',
       );
+      expect(connection.errorMessage).toBe(connection.error?.message);
       expect(mocks.setItem).not.toHaveBeenCalled();
       expect(success).not.toHaveBeenCalled();
       expect(modal.currentModal?.type).toBe('wallet');
@@ -428,6 +429,10 @@ describe('public headless connection flow', () => {
       await connection.connect();
     });
     expect(connection.error?.message).toBe('Rejected');
+    // The UI must not show the text of an unknown error.
+    expect(connection.errorMessage).toBe(
+      'Something went wrong. Please try again.',
+    );
     expect(connection.isLoading).toBe(false);
     expect(modal.currentModal?.type).toBe('wallet');
     expect(success).not.toHaveBeenCalled();
@@ -574,7 +579,7 @@ describe('public headless connection flow', () => {
     await act(async () => {
       await eager.connect();
     });
-    expect(eager.errorMessage).toBe('Try again');
+    expect(eager.errorMessage).toBe('Something went wrong. Please try again.');
     expect(modal.currentModal?.type).toBe('eager');
     await act(async () => {
       await eager.connect();
@@ -847,6 +852,9 @@ describe('public headless connection flow', () => {
       await act(async () => ledger.selectAccount(selected));
       expect(ledger.screen).toBe('error');
       expect(ledger.error?.message).toBe('Disconnect failed');
+      expect(ledger.errorMessage).toBe(
+        'Something went wrong. Please try again.',
+      );
       expect(mocks.connect).not.toHaveBeenCalled();
       expect(success).not.toHaveBeenCalled();
       expect(JSON.parse(localStorage.getItem(LS_KEY_DERIVATION_PATH)!)).toBe(
@@ -976,6 +984,7 @@ describe('public headless connection flow', () => {
         await act(async () => ledger.selectAccount(selected));
         expect(ledger.screen).toBe('error');
         expect(ledger.error?.message).toContain('loading accounts');
+        expect(ledger.errorMessage).toContain('loading accounts');
         await act(async () => ledger.retry());
         expect(ledger.screen).toBe('accounts');
         expect(ledger.error).toBeNull();

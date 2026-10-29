@@ -20,6 +20,7 @@ export function EIP6963Picker({
       providers={state.providers}
       terms={<Terms components={components} />}
       error={state.error}
+      errorMessage={state.errorMessage}
     >
       {state.providers.map((provider) => (
         <components.WalletButton

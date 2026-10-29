@@ -4,7 +4,11 @@ import { act } from 'react-dom/test-utils';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { mainnet } from 'viem/chains';
 import type { CreateConnectorFn } from 'wagmi';
-import { BaseError, UserRejectedRequestError } from 'viem';
+import {
+  BaseError,
+  UnauthorizedProviderError,
+  UserRejectedRequestError,
+} from 'viem';
 import {
   ReefKnotProvider,
   useReefKnotModal,
@@ -14,6 +18,7 @@ import {
   type WalletAdapterData,
 } from 'reef-knot';
 
+const GENERIC_ERROR = 'Something went wrong. Please try again.';
 const mocks = vi.hoisted(() => ({
   connect: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
   setItem: vi.fn(),
@@ -157,7 +162,7 @@ export function runUISuite(
       await acceptTerms();
       await act(async () => walletButton().click());
       expect(document.querySelector('[role="alert"]')?.textContent).toContain(
-        'Connection failed',
+        GENERIC_ERROR,
       );
       expect(modal.currentModal?.type).toBe('wallet');
       expect(walletButton()).toBeUndefined();
@@ -191,7 +196,7 @@ export function runUISuite(
       expect(modal.currentModal?.type).toBe('wallet');
       expect(walletButton().disabled).toBe(false);
     });
-    it('displays the viem shortMessage without technical details', async () => {
+    it('hides the text of an unknown error', async () => {
       mocks.connect.mockRejectedValueOnce(
         new BaseError('Connection declined', {
           details: 'Technical RPC details',
@@ -205,7 +210,19 @@ export function runUISuite(
       );
       await act(async () => walletButton().click());
       const alert = document.querySelector('[role="alert"]')?.textContent;
-      expect(alert).toContain('Connection declined');
+      expect(alert).toContain(GENERIC_ERROR);
+      expect(alert).not.toContain('Connection declined');
+      expect(alert).not.toContain('Technical RPC details');
+    });
+    it('displays a prepared message for a known wallet error', async () => {
+      mocks.connect.mockRejectedValueOnce(
+        new UnauthorizedProviderError(new Error('Technical RPC details')),
+      );
+      await mount(dark);
+      await acceptTerms();
+      await act(async () => walletButton().click());
+      const alert = document.querySelector('[role="alert"]')?.textContent;
+      expect(alert).toContain('did not authorize this site');
       expect(alert).not.toContain('Technical RPC details');
     });
     it('preserves picker search, expansion and consent after an error', async () => {
@@ -257,7 +274,9 @@ export function runUISuite(
       await mount(dark);
       const retry = vi
         .fn()
-        .mockRejectedValueOnce(new Error('Retry rejected'))
+        .mockRejectedValueOnce(
+          new UnauthorizedProviderError(new Error('Retry rejected')),
+        )
         .mockResolvedValueOnce({});
       await act(async () =>
         modal.openModal({
@@ -269,7 +288,7 @@ export function runUISuite(
         }),
       );
       expect(document.querySelector('[role="alert"]')?.textContent).toContain(
-        'Initial rejection',
+        GENERIC_ERROR,
       );
       await act(async () =>
         (
@@ -281,7 +300,7 @@ export function runUISuite(
       )!;
       await act(async () => connect.click());
       expect(document.querySelector('[role="alert"]')?.textContent).toContain(
-        'Retry rejected',
+        'did not authorize this site',
       );
       await act(async () => connect.click());
       expect(retry).toHaveBeenCalledTimes(2);
@@ -355,7 +374,7 @@ export function runUISuite(
         )!;
       await act(async () => button().click());
       expect(document.querySelector('[role="alert"]')?.textContent).toContain(
-        'Provider failed',
+        GENERIC_ERROR,
       );
       await act(async () => headerButton('Go back').click());
       expect(modal.modalStack).toHaveLength(2);
@@ -369,6 +388,7 @@ export function runUISuite(
         const state: LedgerViewProps['state'] = {
           screen: 'accounts',
           error: null,
+          errorMessage: null,
           isLoading: false,
           isLoadingLedgerLibs: false,
           isUserActivationRequired: false,

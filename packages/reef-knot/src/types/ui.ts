@@ -55,7 +55,7 @@ export type EagerConnectViewProps = {
 export type RequirementsViewProps = { requirements: RequirementsData };
 export type ConnectionErrorViewProps = {
   error: Error;
-  /** Concise shortMessage from viem/wagmi, falling back to Error.message. */
+  /** Safe to show to the user. Unknown errors get a generic message. */
   errorMessage: string;
   /** Returns to the wallet list. The container also gets it as its Back action. */
   onBack: () => void;
@@ -65,6 +65,8 @@ export type EIP6963PickerViewProps = {
   terms: ReactNode;
   children?: ReactNode;
   error?: Error | null;
+  /** Safe to show to the user. Show it instead of `error.message`. */
+  errorMessage?: string | null;
 };
 export type LedgerViewProps = { state: LedgerFlowState };
 export type ReefKnotUIComponents = {

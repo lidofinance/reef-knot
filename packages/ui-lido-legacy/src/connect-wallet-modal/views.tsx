@@ -108,8 +108,8 @@ function Picker(props: WalletPickerViewProps) {
       buttonsFullWidth={props.buttonsFullWidth}
     >
       {props.children}
-      {state.error && (
-        <ErrorBlock role="alert">{state.error.message}</ErrorBlock>
+      {state.errorMessage && (
+        <ErrorBlock role="alert">{state.errorMessage}</ErrorBlock>
       )}
     </ConnectWalletModalLayout>
   );
@@ -190,7 +190,11 @@ function ConnectionError({ errorMessage }: ConnectionErrorViewProps) {
   );
 }
 
-function EIP6963Picker({ terms, children, error }: EIP6963PickerViewProps) {
+function EIP6963Picker({
+  terms,
+  children,
+  errorMessage,
+}: EIP6963PickerViewProps) {
   return (
     <>
       <ContentHeader>
@@ -206,7 +210,7 @@ function EIP6963Picker({ terms, children, error }: EIP6963PickerViewProps) {
           {children}
         </WalletsButtonsContainer>
       </WalletsButtonsScrollBox>
-      {error && <ErrorBlock role="alert">{error.message}</ErrorBlock>}
+      {errorMessage && <ErrorBlock role="alert">{errorMessage}</ErrorBlock>}
     </>
   );
 }
@@ -237,7 +241,7 @@ function LedgerError({ state }: LedgerViewProps) {
   return (
     <LedgerModalInnerContainer>
       <LedgerErrorScreen
-        message={state.error?.message}
+        message={state.errorMessage}
         onClickRetry={() => {
           void state.retry();
         }}

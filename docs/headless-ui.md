@@ -117,10 +117,16 @@ Run `yarn check-packages` for package TypeScript, lint and scenario tests. The g
 
 Connection failures in the wallet picker and EIP-6963 picker replace the current
 view with `components.ConnectionError`. Its props contain the original `error`, a prepared `errorMessage`, and an
-`onBack` action. The message uses a non-empty viem/wagmi `shortMessage`, falling
-back to `Error.message` for other errors. A message that is not readable text is
-replaced with a generic one. When the user rejects the request in the wallet, no
-error is shown and the picker stays open.
+`onBack` action. The message never contains error text from wallets or libraries.
+Only a fixed set of errors gets a specific message: a pending wallet request,
+an unsupported chain, a missing wallet, an unauthorized site and a disconnected wallet.
+Errors that reef-knot throws with text for the user (`UserFacingError`, including
+mapped Ledger errors) keep their message. All other errors show
+"Something went wrong. Please try again." The original error stays available in
+`error`, for example for logging. The pickers and the Ledger flow expose the same
+safe text as `errorMessage`; custom interfaces should render it instead of
+`error.message`. When the user rejects the request in the wallet, no error is
+shown and the picker stays open.
 
 The container receives `onBack` and `onClose`. Back dismisses the error and
 returns to the previous list; search, expansion, consent and nested screens are

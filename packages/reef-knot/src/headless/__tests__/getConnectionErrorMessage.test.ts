@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { ResourceUnavailableRpcError, UserRejectedRequestError } from 'viem';
+import {
+  ChainDisconnectedError,
+  ResourceUnavailableRpcError,
+  UnauthorizedProviderError,
+  UserRejectedRequestError,
+} from 'viem';
+import { mainnet, sepolia } from 'viem/chains';
+import { ConnectorNotFoundError, ProviderNotFoundError } from 'wagmi';
+import { UserFacingError } from '../../core-react/helpers/userFacingError';
+import { interceptLedgerError } from '../../core-react/helpers/interceptLedgerError';
 import {
   getConnectionErrorMessage,
   isRequestPendingError,
@@ -76,34 +85,112 @@ describe('toConnectionError', () => {
   });
 });
 
+const FALLBACK = 'Something went wrong. Please try again.';
+
 describe('getConnectionErrorMessage', () => {
-  it('prefers shortMessage', () => {
-    const error = Object.assign(new Error('Long details'), {
-      shortMessage: 'Short',
-    });
-    expect(getConnectionErrorMessage(error)).toBe('Short');
+  it.each([
+    [
+      'TypeError',
+      new TypeError(
+        "Cannot read properties of undefined (reading 'sendMessage')",
+      ),
+    ],
+    ['plain error', new Error('Failed')],
+    [
+      'viem shortMessage',
+      Object.assign(new Error('Long details'), { shortMessage: 'Short' }),
+    ],
+    ['object message', Object.assign(new Error(), { message: {} })],
+    ['string', 'Failed'],
+    ['null', null],
+  ])('hides the text of an unknown error: %s', (_name, error) => {
+    expect(getConnectionErrorMessage(error)).toBe(FALLBACK);
   });
 
-  it('falls back to message', () => {
-    expect(getConnectionErrorMessage(new Error('Failed'))).toBe('Failed');
+  it('shows the message of a UserFacingError', () => {
+    const error = new UserFacingError('Reconnect the wallet.');
+    expect(getConnectionErrorMessage(error)).toBe('Reconnect the wallet.');
+  });
+
+  it('finds a UserFacingError in the cause chain', () => {
+    const error = new Error('Wrapped', {
+      cause: new UserFacingError('Reconnect the wallet.'),
+    });
+    expect(getConnectionErrorMessage(error)).toBe('Reconnect the wallet.');
   });
 
   it('replaces a technical message for a pending request', () => {
     const error = Object.assign(new Error(METAMASK_PENDING_MESSAGE), {
       code: -32002,
     });
-    const message = getConnectionErrorMessage(error);
-    expect(message).not.toContain('RPC Error');
-    expect(message).toMatch(/already open in your wallet/);
+    expect(getConnectionErrorMessage(error)).toMatch(
+      /already open in your wallet/,
+    );
+  });
+
+  it('shows a rejection message', () => {
+    expect(getConnectionErrorMessage({ code: 4001 })).toMatch(/rejected/);
   });
 
   it.each([
-    ['object message', Object.assign(new Error(), { message: {} })],
-    ['stringified object', new Error('[object Object]')],
-    ['empty message', new Error('  ')],
-  ])('hides an unreadable message: %s', (_name, error) => {
-    const message = getConnectionErrorMessage(error);
-    expect(message).not.toContain('[object');
-    expect(message.trim()).not.toBe('');
+    [
+      'legacy name',
+      Object.assign(new Error(), { name: 'UnsupportedChainIdError' }),
+    ],
+    [
+      'wagmi name',
+      Object.assign(new Error(), { name: 'ChainNotConfiguredError' }),
+    ],
+    ['EIP-1193 code', { code: 4902 }],
+  ])('names the supported chains: %s', (_name, error) => {
+    expect(getConnectionErrorMessage(error, [mainnet, sepolia])).toBe(
+      'Unsupported chain. Please switch to Ethereum or Sepolia in your wallet.',
+    );
+  });
+
+  it('shows a generic chain message without chains', () => {
+    expect(getConnectionErrorMessage({ code: 4902 })).toMatch(
+      /^Unsupported chain/,
+    );
+  });
+
+  it.each([
+    ['wagmi provider', new ProviderNotFoundError()],
+    ['wagmi connector', new ConnectorNotFoundError()],
+  ])('shows a "not found" message: %s', (_name, error) => {
+    expect(getConnectionErrorMessage(error)).toMatch(/^Wallet not found/);
+  });
+
+  it('shows an authorization message', () => {
+    const error = new UnauthorizedProviderError(new Error('4100'));
+    expect(getConnectionErrorMessage(error)).toMatch(/did not authorize/);
+  });
+
+  it('shows a disconnection message', () => {
+    const error = new ChainDisconnectedError(new Error('4901'));
+    expect(getConnectionErrorMessage(error)).toMatch(/disconnected/);
+  });
+});
+
+describe('interceptLedgerError', () => {
+  it('maps a known Ledger error to a UserFacingError', () => {
+    const error = Object.assign(new Error('0x5515'), {
+      name: 'LockedDeviceError',
+    });
+    const mapped = interceptLedgerError(error);
+    expect(mapped).toBeInstanceOf(UserFacingError);
+    expect(mapped.cause).toBe(error);
+    expect(getConnectionErrorMessage(mapped)).toMatch(/device is locked/);
+  });
+
+  it.each([
+    [
+      'without a message',
+      Object.assign(new Error('x'), { name: 'TransportError' }),
+    ],
+    ['unknown', new Error('Internal')],
+  ])('keeps a Ledger error %s', (_name, error) => {
+    expect(interceptLedgerError(error)).toBe(error);
+    expect(getConnectionErrorMessage(error)).toBe(FALLBACK);
   });
 });

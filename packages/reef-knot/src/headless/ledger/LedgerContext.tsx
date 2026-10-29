@@ -11,6 +11,7 @@ import React, {
 import type Eth from '@ledgerhq/hw-app-eth';
 import type Transport from '@ledgerhq/hw-transport';
 import { interceptLedgerError } from '../../core-react/helpers';
+import { UserFacingError } from '../../core-react/helpers/userFacingError';
 import { getTransport, isHIDSupported } from './helpers';
 
 const USER_ACTIVATION_TIMEOUT = 3000;
@@ -88,7 +89,7 @@ export const LedgerContextProvider = ({
 
     if (!isHIDSupported()) {
       setError(
-        new Error(
+        new UserFacingError(
           "Your browser doesn't support direct connection with Ledger. Please, try another browser.",
         ),
       );
