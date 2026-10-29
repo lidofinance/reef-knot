@@ -1,6 +1,7 @@
 import type Eth from '@ledgerhq/hw-app-eth';
 import type TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import {
+  ChainMismatchError,
   createPublicClient,
   createWalletClient,
   getAddress,
@@ -69,6 +70,10 @@ type RequestArguments = {
   params?: unknown[];
 };
 
+// Some callers include chainId in eth_sendTransaction, although viem's RPC
+// request union does not include it for every transaction type.
+type LedgerTransactionRequest = RpcTransactionRequest & { chainId?: Hex };
+
 type ProviderEvent = 'disconnect';
 type Listener = () => void;
 
@@ -116,7 +121,6 @@ export class LedgerHQProvider {
     this.forceClearSign = forceClearSign;
 
     if (!rpcUrl) {
-      // eslint-disable-next-line no-console
       console.warn(
         `[reef-knot] No RPC URL configured for chain ${chain.id} (${chain.name}), ` +
           `falling back to its default public RPC endpoint`,
@@ -254,6 +258,7 @@ export class LedgerHQProvider {
         });
 
       this.account = createLedgerAccount(address, path, withVerifyingEthApp, {
+        chainId: this.chain.id,
         forceClearSign: this.forceClearSign,
       });
       this.accountPath = path;
@@ -308,8 +313,16 @@ export class LedgerHQProvider {
   }
 
   private async sendTransaction(
-    transaction: RpcTransactionRequest,
+    transaction: LedgerTransactionRequest,
   ): Promise<Hex> {
+    if (transaction.chainId != null) {
+      const chainId = hexToNumber(transaction.chainId);
+      if (chainId !== this.chain.id)
+        throw new ChainMismatchError({
+          chain: this.chain,
+          currentChainId: chainId,
+        });
+    }
     const walletClient = await this.getWalletClient();
     const account = walletClient.account as LocalAccount;
 
@@ -334,6 +347,7 @@ export class LedgerHQProvider {
     const request = {
       account,
       chain: this.chain,
+      chainId: this.chain.id,
       to: transaction.to ?? undefined,
       data: transaction.data,
       value: transaction.value ? hexToBigInt(transaction.value) : undefined,
@@ -393,7 +407,7 @@ export class LedgerHQProvider {
         return [await this.getAddress()];
 
       case 'eth_sendTransaction':
-        return this.sendTransaction(params[0] as RpcTransactionRequest);
+        return this.sendTransaction(params[0] as LedgerTransactionRequest);
 
       case 'personal_sign': {
         const messageHex = params[0];
@@ -415,7 +429,9 @@ export class LedgerHQProvider {
         if (typeof params[1] !== 'string')
           throw new Error('eth_signTypedData_v4 arg 1 is not a string');
         const account = await this.getAccount();
-        return account.signTypedData(JSON.parse(params[1]));
+        return account.signTypedData(
+          JSON.parse(params[1]) as Parameters<typeof account.signTypedData>[0],
+        );
       }
 
       case 'wallet_getCapabilities': {

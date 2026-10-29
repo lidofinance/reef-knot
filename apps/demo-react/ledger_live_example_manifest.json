@@ -12,10 +12,10 @@
         "chainID": 1,
         "nodeURL": "https://rpc.ankr.com/eth"
       },
-       {
-        "currency": "ethereum_holesky",
-        "chainID": 17000,
-        "nodeURL": "https://ethereum-holesky-rpc.publicnode.com"
+      {
+        "currency": "ethereum_hoodi",
+        "chainID": 560048,
+        "nodeURL": "https://0xrpc.io/hoodi"
       }
     ]
   },
@@ -36,6 +36,9 @@
     }
   },
   "permissions": [],
-  "domains": ["https://dapp-browser.apps.ledger.com", "https://lidofinance.github.io/"],
+  "domains": [
+    "https://dapp-browser.apps.ledger.com",
+    "https://lidofinance.github.io/"
+  ],
   "visibility": "complete"
 }

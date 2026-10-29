@@ -1,5 +1,11 @@
 # @reef-knot/ledger-connector
 
+## 5.3.0
+
+- Reject Ledger HID transactions for a chain other than the configured chain, including when the RPC returns a different chain ID.
+- Use bundler module resolution for TypeScript checks to support dependencies with package exports.
+- Add tests for transaction chain checks and include connector tests in TypeScript checks.
+
 ## 5.2.0
 
 - Updated @ledgerhq/hw-app-eth to 7.8.12, @ledgerhq/hw-transport to 6.35.7, @ledgerhq/hw-transport-webhid to 6.36.0, @ledgerhq/iframe-provider to 0.4.3

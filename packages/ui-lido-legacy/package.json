@@ -1,0 +1,73 @@
+{
+  "name": "@reef-knot/ui-lido-legacy",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/ui-lido-legacy"
+  },
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
+    "lint": "yarn run -T eslint .",
+    "typecheck": "yarn run -T tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react-transition-group": "4",
+    "use-callback-ref": "1.2.5"
+  },
+  "peerDependencies": {
+    "@lidofinance/lido-ui": "^3.18.0",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "reef-knot": "^9",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "@lidofinance/lido-ui": "^3.18.0",
+    "@tanstack/react-query": "^5.51.1",
+    "@types/react": "18.2.45",
+    "@types/react-dom": "18.2.17",
+    "@types/react-transition-group": "4.4.12",
+    "build-config": "*",
+    "happy-dom": "^20.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "reef-knot": "*",
+    "styled-components": "^5.3.6",
+    "tsconfig": "*",
+    "viem": ">=2.50",
+    "vitest": "^4.1.11",
+    "wagmi": ">=3.6"
+  }
+}

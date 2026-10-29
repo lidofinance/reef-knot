@@ -1,0 +1,11 @@
+{
+  "extends": "tsconfig/react-library.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.*"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "paths": {
+      "@lidofinance/lido-ui": ["../../node_modules/@lidofinance/lido-ui/dist/types/index.d.ts"]
+    },
+  }
+}

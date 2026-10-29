@@ -1,9 +1,9 @@
-import type { WalletAdapterType } from '@reef-knot/types';
-import { injected } from 'wagmi/connectors';
+import type { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import {
   getTargetEIP6963,
   isProviderExistsEIP6963,
 } from '@reef-knot/wallets-helpers';
+import { injected } from 'wagmi/connectors';
 import { WalletIcon } from './icons/index.js';
 
 // This generator is intended to be used for a wallet app working via EIP-6963
