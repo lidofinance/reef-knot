@@ -44,7 +44,7 @@
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "build-config": "*",
     "eslint-config-custom": "*",
-    "happy-dom": "^20.0.0",
+    "happy-dom": "^21.0.4",
     "vitest": "^4.1.11"
   },
   "peerDependencies": {

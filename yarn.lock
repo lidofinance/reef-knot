@@ -4926,7 +4926,7 @@ __metadata:
     "@types/w3c-web-hid": "npm:^1.0.7"
     build-config: "npm:*"
     eslint-config-custom: "npm:*"
-    happy-dom: "npm:^20.0.0"
+    happy-dom: "npm:^21.0.4"
     viem: "npm:>=2.50"
     vitest: "npm:^4.1.11"
     wagmi: "npm:>=3.6"
@@ -5164,7 +5164,7 @@ __metadata:
     "@safe-global/safe-apps-sdk": "npm:^9.1.0"
     build-config: "npm:*"
     eslint-config-custom: "npm:*"
-    happy-dom: "npm:^20.0.0"
+    happy-dom: "npm:^21.0.4"
     vitest: "npm:^4.1.11"
   peerDependencies:
     "@reef-knot/types": "*"
@@ -13005,9 +13005,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^20.0.0":
-  version: 20.14.0
-  resolution: "happy-dom@npm:20.14.0"
+"happy-dom@npm:^21.0.4":
+  version: 21.0.4
+  resolution: "happy-dom@npm:21.0.4"
   dependencies:
     "@types/node": "npm:>=20.0.0"
     "@types/whatwg-mimetype": "npm:^3.0.2"
@@ -13016,7 +13016,7 @@ __metadata:
     entities: "npm:^7.0.1"
     whatwg-mimetype: "npm:^3.0.0"
     ws: "npm:^8.21.0"
-  checksum: 10/d6cc3d22c4cec42e163225eddf2afe7fe9c98d38a69d5870d0b6195c83478f0d833c9747ba44f4a3cfb99f94d0c6ce4ab9a5b8174e8500a8d6b7f53f21bc0426
+  checksum: 10/708a07432283cab0a29a10571b06cf27c0e30a933bf5f7fe948e18f78ce3875127b09fbed9aa7c6c5d23b06f4dad824eb73bc7a0cbe356febf5f66efb36aabce
   languageName: node
   linkType: hard
 
