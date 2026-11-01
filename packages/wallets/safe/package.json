@@ -44,8 +44,8 @@
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "build-config": "*",
     "eslint-config-custom": "*",
-    "happy-dom": "^20.0.0",
-    "vitest": "^4.1.11"
+    "happy-dom": "^20.14.6",
+    "vitest": "^4.1.12"
   },
   "peerDependencies": {
     "@reef-knot/types": "*",
