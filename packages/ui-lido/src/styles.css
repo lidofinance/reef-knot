@@ -229,7 +229,9 @@
   color: var(--lido-app-ui-color-text-default);
   opacity: 0.5;
 }
+/* The wallet that connects now has a gray background, so it shows as selected. */
 .rk-lido-dialog .rk-lido-wallet[aria-busy='true'] {
+  background: var(--lido-app-ui-color-background-default);
   opacity: 1;
   cursor: wait;
 }
