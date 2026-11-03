@@ -116,12 +116,18 @@
   height: 20px;
   background: transparent;
 }
+/* The design uses the same blue in both themes. */
 .rk-lido-terms input:checked {
-  background: var(--lido-app-ui-color-background-action);
-  border-color: var(--lido-app-ui-color-background-action);
+  background: var(--lido-app-ui-palette-blue-600);
+  border-color: var(--lido-app-ui-palette-blue-600);
 }
 .rk-lido-terms input:checked:not(:disabled):hover {
-  background: var(--lido-app-ui-color-background-action-hover);
+  background: var(--lido-app-ui-palette-blue-700);
+  border-color: var(--lido-app-ui-palette-blue-700);
+}
+/* The library tick turns black in the dark theme. Keep it white on blue. */
+.rk-lido-terms input:checked + svg {
+  color: var(--lido-app-ui-palette-white-a900);
 }
 .rk-lido-terms input + svg {
   inset: 4px;
@@ -172,6 +178,14 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.rk-lido-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0 24px 0;
+  text-align: center;
 }
 .rk-lido-dialog .rk-lido-wallet,
 .rk-lido-dialog .rk-lido-account {
@@ -250,7 +264,8 @@
 .rk-lido-dialog .rk-lido-toggle {
   display: flex;
   width: fit-content;
-  margin: 8px auto 24px;
+  /* The list adds 2px below. This makes both gaps 16px. */
+  margin: 16px auto 14px;
   padding: 8px 12px;
   font-size: 14px;
   line-height: 22px;
@@ -465,6 +480,20 @@
   }
   .rk-lido-search {
     flex-wrap: wrap;
+  }
+  /* The wallet list fills the screen and scrolls inside the dialog. */
+  .rk-lido-dialog-container .rk-lido-dialog:has(.rk-lido-picker) {
+    height: 100dvh;
+  }
+  .rk-lido-picker,
+  .rk-lido-picker-content {
+    flex: 1;
+    min-height: 0;
+  }
+  .rk-lido-picker-list,
+  .rk-lido-picker-list[data-expanded='true'] {
+    flex: 1;
+    max-height: none;
   }
   .rk-lido-requirements {
     flex: 1;

@@ -112,7 +112,8 @@ function PortalDialog({
               </h2>
               {onClose && (
                 <IconButton
-                  variant="outline"
+                  variant="ghost"
+                  className="rk-lido-close"
                   aria-label="Close"
                   icon={<IconCross />}
                   onClick={onClose}
@@ -270,7 +271,6 @@ export function WalletPicker({
               onChange={(event) => state.setSearch(event.currentTarget.value)}
               placeholder="Search wallets"
               aria-label="Search wallets"
-              size="small"
             />
           </div>
         )}
@@ -286,9 +286,15 @@ export function WalletPicker({
               <p role="status">Discovering wallets…</p>
             )}
             {!state.isDiscovering && state.wallets.length === 0 && (
-              <div>
+              <div className="rk-lido-empty">
                 <p>No wallets found</p>
-                <Button onClick={state.clearSearch}>Clear search</Button>
+                <Button
+                  variant="outline"
+                  size="small"
+                  onClick={state.clearSearch}
+                >
+                  Clear search
+                </Button>
               </div>
             )}
             {children}
