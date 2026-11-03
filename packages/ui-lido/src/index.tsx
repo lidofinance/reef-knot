@@ -41,6 +41,11 @@ import type {
   ReefKnotTheme,
 } from 'reef-knot';
 
+// The core sends only the kind for this screen. The skin gives the text.
+const NO_WALLETS_TITLE = 'No browser wallet detected';
+const NO_WALLETS_TEXT =
+  "This connection method requires a browser wallet. Install a compatible wallet extension or enable it if it's already installed, then reload the page.";
+
 function PortalDialog({
   title,
   subtitle,
@@ -49,16 +54,24 @@ function PortalDialog({
   theme = 'light',
   onClose,
   onBack,
+  center,
   widthClamp: _widthClamp,
   className,
   ...rest
 }: ModalContainerProps) {
   const { currentModal } = useReefKnotModal();
+  // The core shows a connection error on top of the wallet or EIP-6963 screen.
+  const isConnectionError =
+    React.isValidElement(children) && children.type === ConnectionError;
+  // Status screens show Back to return to the wallet list.
   // On other screens Close already goes back one screen, so Back would only repeat it.
   const showBack =
-    !!onBack &&
-    React.isValidElement(children) &&
-    children.type === ConnectionError;
+    !!onBack && (isConnectionError || currentModal?.type === 'requirements');
+  const heading =
+    currentModal?.type === 'requirements' &&
+    currentModal.props.kind === 'no-wallets'
+      ? NO_WALLETS_TITLE
+      : title;
   const titleId = useId();
   const subtitleId = useId();
   useEscape(onClose);
@@ -71,7 +84,7 @@ function PortalDialog({
       className="rk-lido-overlay"
       role="presentation"
       data-lido-theme={theme}
-      data-screen={currentModal?.type}
+      data-screen={isConnectionError ? 'connection-error' : currentModal?.type}
       onClick={handleClick}
       ref={(node) => {
         const dialog =
@@ -91,16 +104,18 @@ function PortalDialog({
           className={`rk-lido-dialog ${className ?? ''}`}
           role="dialog"
           aria-modal="true"
-          aria-labelledby={title != null ? titleId : undefined}
-          aria-label={title == null ? 'Wallet connection' : undefined}
+          aria-labelledby={heading != null ? titleId : undefined}
+          aria-label={heading == null ? 'Wallet connection' : undefined}
           aria-describedby={subtitle != null ? subtitleId : undefined}
           tabIndex={-1}
         >
           <div className="rk-lido-header-group">
-            <div className="rk-lido-header">
+            <div
+              className={`rk-lido-header ${center ? 'rk-lido-header-center' : ''}`}
+            >
               {showBack && (
                 <IconButton
-                  variant="outline"
+                  variant="ghost"
                   aria-label="Go back"
                   icon={<IconArrowLeft />}
                   onClick={onBack}
@@ -108,7 +123,7 @@ function PortalDialog({
               )}
               <h2 className="rk-lido-title" id={titleId}>
                 {titleIcon}
-                <span className="rk-lido-heading">{title}</span>
+                <span className="rk-lido-heading">{heading}</span>
               </h2>
               {onClose && (
                 <IconButton
@@ -136,7 +151,6 @@ function PortalDialog({
 export function ModalContainer({
   open,
   onExited,
-  center: _center,
   omitContentStyle: _omit,
   clampHeightByWindow: _clamp,
   stretchHeightByWindow: _stretch,
@@ -348,16 +362,9 @@ export function Requirements({ requirements }: RequirementsViewProps) {
   return (
     <section className="rk-lido-requirements">
       <div className="rk-lido-requirements-content">
-        {noWallets ? (
-          <span className="rk-lido-requirements-icon" aria-hidden="true" />
-        ) : (
-          requirements.icon
-        )}
-        <h2>{noWallets ? 'No browser wallet detected' : requirements.title}</h2>
+        {requirements.icon}
         <div className="rk-lido-description">
-          {noWallets
-            ? "This connection method requires a browser wallet. Install a compatible wallet extension or enable it if it's already installed, then reload the page."
-            : requirements.text}
+          {noWallets ? NO_WALLETS_TEXT : requirements.text}
         </div>
       </div>
       <Button
@@ -374,7 +381,10 @@ export function Requirements({ requirements }: RequirementsViewProps) {
 export function ConnectionError({ errorMessage }: ConnectionErrorViewProps) {
   return (
     <section className="rk-lido-connection-error" role="alert">
-      <span className="rk-lido-connection-error-icon" aria-hidden="true">
+      <span
+        className="rk-lido-status-icon rk-lido-status-icon-warning"
+        aria-hidden="true"
+      >
         <IconWarning />
       </span>
       <p className="rk-lido-description">{errorMessage}</p>
@@ -422,6 +432,23 @@ export function LedgerConnection({ state }: LedgerViewProps) {
   );
 }
 
+// Returns [0, 1, …, count - 1].
+const range = (count: number) =>
+  Array.from({ length: count }, (_, index) => index);
+
+// Same frame as an account button, so the list does not jump when accounts load.
+function AccountSkeleton() {
+  return (
+    <div className="rk-lido-account-skeleton" aria-hidden="true">
+      <span className="rk-lido-account-icon">
+        <LedgerAccountIcon />
+      </span>
+      <span className="rk-lido-skeleton-bar" />
+      <span className="rk-lido-skeleton-bar rk-lido-skeleton-bar-short" />
+    </div>
+  );
+}
+
 export function LedgerAccounts({ state }: LedgerViewProps) {
   return (
     <section className="rk-lido-screen rk-lido-ledger-accounts">
@@ -454,7 +481,14 @@ export function LedgerAccounts({ state }: LedgerViewProps) {
       </fieldset>
       <div className="rk-lido-accounts">
         {state.accounts.length < state.accountsPerPage ? (
-          <p role="status">Loading accounts…</p>
+          <>
+            <p className="rk-lido-visually-hidden" role="status">
+              Loading accounts…
+            </p>
+            {range(state.accountsPerPage).map((index) => (
+              <AccountSkeleton key={index} />
+            ))}
+          </>
         ) : (
           state.accounts.map((account) => (
             <Button

@@ -2,11 +2,15 @@ import React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import type { ModalTypes } from 'reef-knot';
 import { ConnectionError, ModalContainer } from '../index';
 
+const modal = vi.hoisted((): { current: ModalTypes } => ({
+  current: { type: 'wallet' },
+}));
 vi.mock('reef-knot', async (original) => ({
   ...(await original<typeof import('reef-knot')>()),
-  useReefKnotModal: () => ({ currentModal: { type: 'wallet' } }),
+  useReefKnotModal: () => ({ currentModal: modal.current }),
 }));
 
 let root: Root;
@@ -25,7 +29,30 @@ afterEach(async () => {
   container.remove();
   vi.restoreAllMocks();
   document.getElementById('reef-knot-modal-root')?.remove();
+  modal.current = { type: 'wallet' };
 });
+
+it.each([
+  [{ kind: 'no-wallets' }, 'No browser wallet detected'],
+  [{ title: 'Install the app' }, 'Install the app'],
+] as const)(
+  'shows the requirements title in the header (%o)',
+  async (props, heading) => {
+    modal.current = { type: 'requirements', props };
+    await act(async () =>
+      root.render(
+        <ModalContainer open title={'title' in props ? props.title : undefined}>
+          Requirements
+        </ModalContainer>,
+      ),
+    );
+    const dialog = document.querySelector<HTMLElement>('[role="dialog"]')!;
+    expect(
+      document.getElementById(dialog.getAttribute('aria-labelledby')!)
+        ?.textContent,
+    ).toBe(heading);
+  },
+);
 
 it.each(['light', 'dark'] as const)(
   'labels the dialog and closes via App UI button (%s)',
@@ -97,7 +124,25 @@ it('closes on Escape and restores focus and scrolling on unmount', async () => {
   trigger.remove();
 });
 
-it('shows Back only on the connection error screen', async () => {
+it('shows Back on the requirements screen', async () => {
+  const back = vi.fn();
+  modal.current = { type: 'requirements', props: { kind: 'no-wallets' } };
+  await act(async () =>
+    root.render(
+      <ModalContainer open onBack={back}>
+        Requirements
+      </ModalContainer>,
+    ),
+  );
+  await act(async () =>
+    document
+      .querySelector<HTMLButtonElement>('[aria-label="Go back"]')!
+      .click(),
+  );
+  expect(back).toHaveBeenCalledOnce();
+});
+
+it('shows Back on the connection error screen but not on Ledger', async () => {
   const back = vi.fn();
   await act(async () =>
     root.render(
@@ -124,4 +169,19 @@ it('shows Back only on the connection error screen', async () => {
       .click(),
   );
   expect(back).toHaveBeenCalledOnce();
+});
+
+it.each([true, false])('centers the header title: %s', async (center) => {
+  await act(async () =>
+    root.render(
+      <ModalContainer open title="Couldn’t connect" center={center}>
+        Error
+      </ModalContainer>,
+    ),
+  );
+  expect(
+    document
+      .querySelector('.rk-lido-header')
+      ?.classList.contains('rk-lido-header-center'),
+  ).toBe(center);
 });

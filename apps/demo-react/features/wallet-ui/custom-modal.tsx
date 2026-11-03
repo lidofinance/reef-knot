@@ -333,7 +333,10 @@ const CustomContent = ({ theme }: { theme: ReefKnotTheme }) => {
       : currentModal.type === 'ledger'
         ? 'Ledger connect'
         : currentModal.type === 'requirements'
-          ? (currentModal.props.title ?? 'Wallet requirements')
+          ? (currentModal.props.title ??
+            (currentModal.props.kind === 'no-wallets'
+              ? 'No browser wallet detected'
+              : 'Wallet requirements'))
           : 'Connect wallet';
   const body =
     currentModal.type === 'wallet' ? (

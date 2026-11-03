@@ -115,9 +115,22 @@ function Picker(props: WalletPickerViewProps) {
   );
 }
 
+// The core sends only the kind for this screen. The skin gives the text.
+const NO_WALLETS_TITLE = 'No wallets detected';
+
 function ModalContainer({ theme: _theme, ...props }: ModalContainerProps) {
   const { expanded } = useWalletPicker();
   const { currentModal } = useReefKnotModal();
+  const requirements =
+    currentModal?.type === 'requirements' ? currentModal.props : undefined;
+  const noWallets = requirements?.kind === 'no-wallets';
+  const titleIcon = noWallets ? (
+    <Warning />
+  ) : requirements ? (
+    requirements.icon
+  ) : (
+    props.titleIcon
+  );
   const [smallHeight, setSmallHeight] = useState(false);
   useEffect(() => {
     const query = window.matchMedia(MEDIA_MOBILE_HEIGHT);
@@ -131,19 +144,9 @@ function ModalContainer({ theme: _theme, ...props }: ModalContainerProps) {
   return (
     <Modal
       {...props}
-      titleIcon={
-        currentModal?.type === 'requirements'
-          ? (currentModal.props.icon ??
-            (currentModal.props.kind === 'no-wallets' ? (
-              <Warning />
-            ) : undefined))
-          : props.titleIcon
-      }
-      subtitle={
-        currentModal?.type === 'requirements'
-          ? currentModal.props.text
-          : props.subtitle
-      }
+      title={noWallets ? NO_WALLETS_TITLE : props.title}
+      titleIcon={titleIcon}
+      subtitle={requirements ? requirements.text : props.subtitle}
       clampHeightByWindow={picker && !expanded && smallHeight}
       stretchHeightByWindow={picker && expanded && smallHeight}
     />

@@ -46,14 +46,27 @@
   gap: 12px;
   align-items: center;
 }
-.rk-lido-title,
-.rk-lido-requirements h2 {
+/* Fixed side columns keep the title in the dialog center with one or two buttons. */
+.rk-lido-header-center {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+}
+.rk-lido-header-center > :first-child:not(.rk-lido-title) {
+  grid-column: 1;
+}
+.rk-lido-header-center > .rk-lido-title {
+  grid-column: 2;
+  justify-content: center;
+  text-align: center;
+}
+.rk-lido-header-center > .rk-lido-close {
+  grid-column: 3;
+}
+.rk-lido-title {
   font-size: 24px;
   font-weight: 500;
   line-height: 28.8px;
   letter-spacing: -0.84px;
-}
-.rk-lido-title {
   margin: 0;
   min-width: 0;
   flex: 1;
@@ -334,6 +347,55 @@
   margin-left: auto;
   white-space: nowrap;
 }
+/* Same size and frame as an account button. */
+.rk-lido-account-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  height: 56px;
+  padding: 8px 24px 8px 12px;
+  border: 1px solid var(--rk-lido-wallet-border);
+  border-radius: 16px;
+}
+.rk-lido-account-skeleton .rk-lido-account-icon {
+  opacity: 0.3;
+}
+.rk-lido-skeleton-bar {
+  width: 136px;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(
+      90deg,
+      var(--lido-app-ui-color-background-default) 0%,
+      var(--lido-app-ui-color-background-default-hover) 50%,
+      var(--lido-app-ui-color-background-default) 100%
+    )
+    0 0 / 200% 100%;
+  animation: rk-lido-shimmer 1.5s ease-in-out infinite;
+}
+.rk-lido-skeleton-bar-short {
+  width: 64px;
+  margin-left: auto;
+}
+@keyframes rk-lido-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rk-lido-skeleton-bar {
+    animation: none;
+  }
+}
+.rk-lido-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .rk-lido-pagination {
   display: flex;
   gap: 16px;
@@ -403,35 +465,10 @@
   gap: 16px;
   align-items: center;
 }
-.rk-lido-requirements h2 {
-  margin: 8px 0 0;
-  text-align: center;
-}
-.rk-lido-requirements-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--lido-app-ui-color-background-default);
-  position: relative;
-}
-.rk-lido-requirements-icon::after {
-  content: '';
-  position: absolute;
-  inset: 16px;
-  background: url('./assets/browser.svg') center / contain no-repeat;
-}
-.rk-lido-overlay[data-screen='requirements'] .rk-lido-heading {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-}
-.rk-lido-overlay[data-screen='requirements'] .rk-lido-dialog {
+/* Status screens: title, 24px, icon, 16px, text, 24px, button, 32px padding. */
+.rk-lido-overlay[data-screen='requirements'] .rk-lido-dialog,
+.rk-lido-overlay[data-screen='connection-error'] .rk-lido-dialog {
   gap: 24px;
-}
-.rk-lido-overlay[data-lido-theme='dark'] .rk-lido-requirements-icon::after {
-  filter: invert(1);
 }
 .rk-lido-error {
   color: var(--lido-app-ui-color-text-error);
@@ -441,23 +478,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 4px 0 12px;
-  text-align: center;
+  gap: 16px;
   overflow-wrap: anywhere;
 }
-.rk-lido-connection-error p {
-  margin: 0;
-  max-width: 360px;
-}
-.rk-lido-connection-error-icon {
+.rk-lido-status-icon {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 8px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
+  background: var(--lido-app-ui-color-background-default);
+  color: var(--lido-app-ui-color-icons-default);
+}
+.rk-lido-status-icon svg {
+  width: 32px;
+  height: 32px;
+}
+.rk-lido-status-icon-warning {
   background: var(--lido-app-ui-color-tint-warning);
   color: var(--lido-app-ui-color-icons-warning);
 }

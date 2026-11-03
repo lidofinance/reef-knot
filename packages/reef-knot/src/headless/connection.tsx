@@ -427,7 +427,7 @@ export function ReefKnotUIProvider({
         if (typeof globalThis.window?.ethereum?.request !== 'function') {
           openModal({
             type: 'requirements',
-            props: { kind: 'no-wallets', title: 'No wallets detected' },
+            props: { kind: 'no-wallets' },
           });
           return;
         }
