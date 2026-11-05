@@ -10,7 +10,7 @@ type MessageRule = {
   message: string | ((chains?: Chains) => string);
 };
 
-const FALLBACK_MESSAGE = 'Something went wrong. Please try again.';
+const FALLBACK_MESSAGE = 'Connection error. Please try again.';
 // EIP-1193 code for a request that the user rejected in the wallet.
 const USER_REJECTED_CODE = 4001;
 const USER_REJECTED_MESSAGE = /user (rejected|denied|cancel+ed)/i;

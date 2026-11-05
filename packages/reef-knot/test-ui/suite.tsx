@@ -18,7 +18,7 @@ import {
   type WalletAdapterData,
 } from 'reef-knot';
 
-const GENERIC_ERROR = 'Something went wrong. Please try again.';
+const GENERIC_ERROR = 'Connection error. Please try again.';
 const mocks = vi.hoisted(() => ({
   connect: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
   setItem: vi.fn(),

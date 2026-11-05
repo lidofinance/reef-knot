@@ -122,7 +122,7 @@ Only a fixed set of errors gets a specific message: a pending wallet request,
 an unsupported chain, a missing wallet, an unauthorized site and a disconnected wallet.
 Errors that reef-knot throws with text for the user (`UserFacingError`, including
 mapped Ledger errors) keep their message. All other errors show
-"Something went wrong. Please try again." The original error stays available in
+"Connection error. Please try again." The original error stays available in
 `error`, for example for logging. The pickers and the Ledger flow expose the same
 safe text as `errorMessage`; custom interfaces should render it instead of
 `error.message`. When the user rejects the request in the wallet, no error is

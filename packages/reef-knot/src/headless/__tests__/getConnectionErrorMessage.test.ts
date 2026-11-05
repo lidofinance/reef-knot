@@ -85,7 +85,7 @@ describe('toConnectionError', () => {
   });
 });
 
-const FALLBACK = 'Something went wrong. Please try again.';
+const FALLBACK = 'Connection error. Please try again.';
 
 describe('getConnectionErrorMessage', () => {
   it.each([

@@ -430,9 +430,7 @@ describe('public headless connection flow', () => {
     });
     expect(connection.error?.message).toBe('Rejected');
     // The UI must not show the text of an unknown error.
-    expect(connection.errorMessage).toBe(
-      'Something went wrong. Please try again.',
-    );
+    expect(connection.errorMessage).toBe('Connection error. Please try again.');
     expect(connection.isLoading).toBe(false);
     expect(modal.currentModal?.type).toBe('wallet');
     expect(success).not.toHaveBeenCalled();
@@ -579,7 +577,7 @@ describe('public headless connection flow', () => {
     await act(async () => {
       await eager.connect();
     });
-    expect(eager.errorMessage).toBe('Something went wrong. Please try again.');
+    expect(eager.errorMessage).toBe('Connection error. Please try again.');
     expect(modal.currentModal?.type).toBe('eager');
     await act(async () => {
       await eager.connect();
@@ -869,9 +867,7 @@ describe('public headless connection flow', () => {
       await act(async () => ledger.selectAccount(selected));
       expect(ledger.screen).toBe('error');
       expect(ledger.error?.message).toBe('Disconnect failed');
-      expect(ledger.errorMessage).toBe(
-        'Something went wrong. Please try again.',
-      );
+      expect(ledger.errorMessage).toBe('Connection error. Please try again.');
       expect(mocks.connect).not.toHaveBeenCalled();
       expect(success).not.toHaveBeenCalled();
       expect(JSON.parse(localStorage.getItem(LS_KEY_DERIVATION_PATH)!)).toBe(
