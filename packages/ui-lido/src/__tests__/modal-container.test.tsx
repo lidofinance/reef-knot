@@ -124,6 +124,31 @@ it('closes on Escape and restores focus and scrolling on unmount', async () => {
   trigger.remove();
 });
 
+it('pins the page on touch devices and restores the scroll position', async () => {
+  vi.spyOn(navigator, 'maxTouchPoints', 'get').mockReturnValue(5);
+  vi.spyOn(window, 'scrollY', 'get').mockReturnValue(120);
+  const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  await act(async () =>
+    root.render(
+      <ModalContainer open title="Connect wallet">
+        Wallets
+      </ModalContainer>,
+    ),
+  );
+  expect(document.body.style.position).toBe('fixed');
+  expect(document.body.style.top).toBe('-120px');
+  expect(document.documentElement.style.overflow).toBe('hidden');
+  await act(async () => root.render(null));
+  expect(document.body.style.position).toBe('');
+  expect(document.body.style.top).toBe('');
+  expect(document.documentElement.style.overflow).toBe('');
+  expect(scrollTo).toHaveBeenCalledWith({
+    left: 0,
+    top: 120,
+    behavior: 'instant',
+  });
+});
+
 it('shows Back on the requirements screen', async () => {
   const back = vi.fn();
   modal.current = { type: 'requirements', props: { kind: 'no-wallets' } };

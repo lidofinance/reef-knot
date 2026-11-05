@@ -42,29 +42,65 @@ const setStyleProperty = (
   }
 };
 
+// Save the old inline values, so the unlock step can return them.
+const setStyles = (
+  element: HTMLElement,
+  styles: Record<string, string>,
+): (() => void) => {
+  const previous = Object.keys(styles).map(
+    (property) => [property, element.style.getPropertyValue(property)] as const,
+  );
+  Object.entries(styles).forEach(([property, value]) =>
+    setStyleProperty(element, property, value),
+  );
+  return () =>
+    previous.forEach(([property, value]) =>
+      setStyleProperty(element, property, value),
+    );
+};
+
+const isTouchDevice = (): boolean =>
+  typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0;
+
+// iOS Safari ignores `overflow: hidden` on body.
+// The page scrolls on touch and when the keyboard opens.
+// A fixed body cannot scroll. Keep the scroll position in `top` and restore it on unlock.
+const pinBody = (): (() => void) => {
+  const { scrollX, scrollY } = window;
+  const unlockHtml = setStyles(document.documentElement, {
+    overflow: 'hidden',
+  });
+  const unlockBody = setStyles(document.body, {
+    position: 'fixed',
+    top: `-${scrollY}px`,
+    left: '0',
+    right: '0',
+  });
+
+  return () => {
+    unlockBody();
+    unlockHtml();
+    window.scrollTo({ left: scrollX, top: scrollY, behavior: 'instant' });
+  };
+};
+
 export const useLockScroll = (element?: HTMLElement): void => {
   const lockScroll = useCallback(() => {
     const target =
       element ?? (typeof document === 'undefined' ? undefined : document.body);
     if (!target || !isVerticalScroll(target)) return;
 
-    const previousValues = {
-      paddingRight: target.style.paddingRight,
-      overflow: target.style.overflow,
+    const unlockTarget = setStyles(target, {
+      'padding-right': `${getPaddingRight(target) + getScrollbarSize()}px`,
+      overflow: 'hidden',
+    });
+    if (target !== document.body || !isTouchDevice()) return unlockTarget;
+
+    const unpinBody = pinBody();
+    return () => {
+      unlockTarget();
+      unpinBody();
     };
-
-    const newPaddingRight = getPaddingRight(target) + getScrollbarSize();
-    setStyleProperty(target, 'padding-right', `${newPaddingRight}px`);
-    setStyleProperty(target, 'overflow', 'hidden');
-
-    const unlockScroll = () => {
-      const { paddingRight, overflow } = previousValues;
-
-      setStyleProperty(target, 'padding-right', paddingRight);
-      setStyleProperty(target, 'overflow', overflow);
-    };
-
-    return unlockScroll;
   }, [element]);
 
   useLayoutEffect(() => {

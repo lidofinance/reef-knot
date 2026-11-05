@@ -6,6 +6,8 @@
   display: flex;
   padding: 24px;
   overflow-y: auto;
+  /* Do not pass the scroll to the page at the end of the modal content. */
+  overscroll-behavior: contain;
   box-sizing: border-box;
   background: rgb(0 0 0 / 40%);
   font-family: var(--lido-app-ui-font-family);
@@ -164,6 +166,7 @@
 .rk-lido-picker-list {
   max-height: min(466px, calc(100dvh - 210px));
   overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: none;
   padding: 2px 0;
   border-top: 1px solid transparent;
