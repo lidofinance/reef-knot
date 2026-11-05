@@ -13,7 +13,8 @@ type MessageRule = {
 const FALLBACK_MESSAGE = 'Connection error. Please try again.';
 // EIP-1193 code for a request that the user rejected in the wallet.
 const USER_REJECTED_CODE = 4001;
-const USER_REJECTED_MESSAGE = /user (rejected|denied|cancel+ed)/i;
+// MetaMask Connect throws "User closed modal" without a code when the user closes its QR modal.
+const USER_REJECTED_MESSAGE = /user (rejected|denied|cancel+ed|closed)/i;
 // EIP-1474 code. MetaMask uses it when a request prompt is already open.
 const RESOURCE_UNAVAILABLE_CODE = -32002;
 const REQUEST_PENDING_MESSAGE = /already pending/i;

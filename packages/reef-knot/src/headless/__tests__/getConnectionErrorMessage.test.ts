@@ -23,6 +23,7 @@ describe('isUserRejectedError', () => {
     ['ethers code', { code: 'ACTION_REJECTED' }],
     ['message only', new Error('User rejected the request.')],
     ['message only', new Error('User denied account authorization')],
+    ['MetaMask modal closed', new Error('User closed modal')],
     ['nested cause', new Error('Wrapped', { cause: { code: 4001 } })],
   ])('detects a rejection: %s', (_name, error) => {
     expect(isUserRejectedError(error)).toBe(true);
