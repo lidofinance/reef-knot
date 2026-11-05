@@ -449,6 +449,7 @@
 .rk-lido-description {
   color: var(--lido-app-ui-color-text-secondary);
   text-align: center;
+  font-weight: 400;
 }
 .rk-lido-dialog .rk-lido-action {
   width: 100%;
