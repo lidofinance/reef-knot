@@ -46,7 +46,8 @@ export type ModalTypes =
     };
 
 export type ModalResult = {
-  success: boolean;
+  /** False when the screen closed without a wallet connection. */
+  connected: boolean;
 };
 
 export type ModalStateEntry = {
@@ -64,6 +65,8 @@ export type ReefKnotModalContextValue = {
   openModalAsync: (params: AsyncModalOpenParams) => Promise<ModalResult>;
   forceCloseAllModals: () => void;
   closeModal: (result: ModalResult) => void;
+  /** Removes the top screen. The screen below becomes active again. */
+  goBack: () => void;
   modalStack: ModalStateEntry[];
   currentModal: ModalStateEntry | undefined;
   termsChecked: boolean;
@@ -85,8 +88,17 @@ export const ReefKnotModalContextProvider = ({
   );
   const [modalStack, updateModalStack] = useState<ModalStateEntry[]>([]);
   const modalStackRef = useRef<ModalStateEntry[]>([]);
-  const stableCallbacks = useMemo(
-    () => ({
+  const stableCallbacks = useMemo(() => {
+    const closeModal = (result: ModalResult) => {
+      const old = modalStackRef.current;
+      const modal = old[old.length - 1];
+      const next = old.slice(0, -1);
+
+      modalStackRef.current = next;
+      updateModalStack(next);
+      modal?.onClose(result);
+    };
+    return {
       openModal: ({ onClose = NOOP, ...props }: ModalOpenParams) => {
         const next = [...modalStackRef.current, { ...props, onClose }];
 
@@ -109,27 +121,19 @@ export const ReefKnotModalContextProvider = ({
           updateModalStack(next);
         });
       },
-      closeModal: (result: ModalResult) => {
-        const old = modalStackRef.current;
-        const modal = old[old.length - 1];
-        const next = old.slice(0, -1);
-
-        modalStackRef.current = next;
-        updateModalStack(next);
-        modal?.onClose(result);
-      },
+      closeModal,
+      goBack: () => closeModal({ connected: false }),
       forceCloseAllModals: () => {
         const old = modalStackRef.current;
 
         modalStackRef.current = [];
         for (let i = old.length - 1; i >= 0; i -= 1) {
-          old[i]?.onClose({ success: false });
+          old[i]?.onClose({ connected: false });
         }
         updateModalStack([]);
       },
-    }),
-    [],
-  );
+    };
+  }, []);
 
   const contextValue = useMemo(
     () => ({

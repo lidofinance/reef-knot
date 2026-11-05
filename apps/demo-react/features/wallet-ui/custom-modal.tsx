@@ -307,7 +307,7 @@ const ModalContainer = ({
 };
 
 const CustomContent = ({ theme }: { theme: ReefKnotTheme }) => {
-  const { currentModal, closeModal } = useReefKnotModal();
+  const { currentModal, goBack, forceCloseAllModals } = useReefKnotModal();
   const [root, setRoot] = useState<HTMLElement | null>(null);
   useEffect(() => {
     const element = document.createElement('div');
@@ -316,17 +316,12 @@ const CustomContent = ({ theme }: { theme: ReefKnotTheme }) => {
     return () => element.remove();
   }, []);
   if (!currentModal || !root) return null;
-  const reject = () => closeModal({ success: false });
   const onClose =
-    currentModal.type === 'eager'
-      ? undefined
-      : currentModal.type === 'requirements' || currentModal.type === 'eip6963'
-        ? () => closeModal({ success: true })
-        : reject;
+    currentModal.type === 'eager' ? undefined : forceCloseAllModals;
   const onBack =
     currentModal.type === 'wallet' || currentModal.type === 'eager'
       ? undefined
-      : reject;
+      : goBack;
   const title =
     currentModal.type === 'eager'
       ? 'Confirm connection'

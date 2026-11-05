@@ -63,10 +63,6 @@ function PortalDialog({
   // The core shows a connection error on top of the wallet or EIP-6963 screen.
   const isConnectionError =
     React.isValidElement(children) && children.type === ConnectionError;
-  // Status screens show Back to return to the wallet list.
-  // On other screens Close already goes back one screen, so Back would only repeat it.
-  const showBack =
-    !!onBack && (isConnectionError || currentModal?.type === 'requirements');
   const heading =
     currentModal?.type === 'requirements' &&
     currentModal.props.kind === 'no-wallets'
@@ -113,7 +109,7 @@ function PortalDialog({
             <div
               className={`rk-lido-header ${center ? 'rk-lido-header-center' : ''}`}
             >
-              {showBack && (
+              {onBack && (
                 <IconButton
                   variant="ghost"
                   aria-label="Go back"
@@ -357,7 +353,7 @@ export function EagerConnect({ state, terms }: EagerConnectViewProps) {
 }
 
 export function Requirements({ requirements }: RequirementsViewProps) {
-  const { closeModal } = useReefKnotModal();
+  const { goBack } = useReefKnotModal();
   const noWallets = requirements.kind === 'no-wallets';
   return (
     <section className="rk-lido-requirements">
@@ -367,10 +363,7 @@ export function Requirements({ requirements }: RequirementsViewProps) {
           {noWallets ? NO_WALLETS_TEXT : requirements.text}
         </div>
       </div>
-      <Button
-        className="rk-lido-action"
-        onClick={() => closeModal({ success: false })}
-      >
+      <Button className="rk-lido-action" onClick={goBack}>
         Select another wallet
       </Button>
     </section>

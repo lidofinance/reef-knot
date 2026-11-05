@@ -36,17 +36,15 @@ type ModalPresentation = {
 function getModalPresentation(
   modal: ModalStateEntry,
   props: ReefKnotModalRendererProps,
-  closeModal: ReefKnotModalContextValue['closeModal'],
+  { goBack, forceCloseAllModals }: ReefKnotModalContextValue,
 ): ModalPresentation {
   const { components, theme } = props;
-  const reject = () => closeModal({ success: false });
-  const dismiss = () => closeModal({ success: true });
   const defaults = {
     widthClamp: 480,
     center: false,
     omitContentStyle: false,
-    onClose: reject,
-    onBack: reject,
+    onClose: forceCloseAllModals,
+    onBack: goBack,
   };
 
   switch (modal.type) {
@@ -79,7 +77,6 @@ function getModalPresentation(
           title: 'Connect wallet',
           widthClamp: 660,
           omitContentStyle: true,
-          onClose: dismiss,
         },
       };
     case 'ledger':
@@ -103,7 +100,6 @@ function getModalPresentation(
           ...defaults,
           title: modal.props.title,
           center: true,
-          onClose: dismiss,
         },
       };
   }
@@ -115,7 +111,8 @@ function getModalPresentation(
  */
 function Renderer(props: ReefKnotModalRendererProps) {
   const { components, theme, containerProps } = props;
-  const { currentModal, closeModal, forceCloseAllModals } = useReefKnotModal();
+  const modal = useReefKnotModal();
+  const { currentModal, forceCloseAllModals } = modal;
   const { error, errorMessage, dismissError } = useConnectionContext();
   if (!currentModal) return null;
 
@@ -142,7 +139,7 @@ function Renderer(props: ReefKnotModalRendererProps) {
           onClose: forceCloseAllModals,
         },
       }
-    : getModalPresentation(currentModal, props, closeModal);
+    : getModalPresentation(currentModal, props, modal);
   return (
     <components.ModalContainer
       {...containerProps}

@@ -142,16 +142,19 @@ it('shows Back on the requirements screen', async () => {
   expect(back).toHaveBeenCalledOnce();
 });
 
-it('shows Back on the connection error screen but not on Ledger', async () => {
-  const back = vi.fn();
+it('shows Back only when the core gives onBack', async () => {
   await act(async () =>
     root.render(
-      <ModalContainer open title="Ledger connect" onBack={back}>
-        Ledger
+      <ModalContainer open title="Connect wallet" onClose={vi.fn()}>
+        Wallets
       </ModalContainer>,
     ),
   );
   expect(document.querySelector('[aria-label="Go back"]')).toBeNull();
+});
+
+it('shows Back on the connection error screen', async () => {
+  const back = vi.fn();
   await act(async () =>
     root.render(
       <ModalContainer open title="Connect wallet" onBack={back}>

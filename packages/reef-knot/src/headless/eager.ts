@@ -16,7 +16,7 @@ export function useEagerConnectScreen(config?: ReefKnotWalletsModalConfig) {
     await connection.run('eager', async () => {
       await props.tryConnection();
       // A cancelled request must not close a newly opened screen.
-      if (latest.current === currentModal) closeModal({ success: true });
+      if (latest.current === currentModal) closeModal({ connected: true });
     });
   }, [props, termsChecked, closeModal, connection, currentModal]);
   return {

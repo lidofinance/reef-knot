@@ -482,7 +482,7 @@ describe('public headless connection flow', () => {
         pending = connection.connect();
       });
       expect(connection.isLoading).toBe(true);
-      await act(async () => modal.closeModal({ success: false }));
+      await act(async () => modal.goBack());
       if (reopenBeforeRejection)
         await act(async () => modal.openModal({ type: 'wallet' }));
 
@@ -534,7 +534,7 @@ describe('public headless connection flow', () => {
     await act(async () => {
       pending = providers.select(provider);
     });
-    await act(async () => modal.closeModal({ success: false }));
+    await act(async () => modal.goBack());
     await act(async () => {
       rejectConnection(new Error('Late provider rejection'));
       await pending;
@@ -651,7 +651,7 @@ describe('public headless connection flow', () => {
       pending = connection.connect();
     });
     await act(async () => {
-      modal.closeModal({ success: false });
+      modal.goBack();
       modal.openModal({
         type: 'requirements',
         props: { title: 'Other screen' },
@@ -663,14 +663,31 @@ describe('public headless connection flow', () => {
     });
     expect(modal.currentModal?.type).toBe('requirements');
   });
-  it('resolves cancelled modal promises without reporting success', async () => {
+  it('resolves cancelled modal promises as not connected', async () => {
     await mount();
-    let result!: Promise<{ success: boolean }>;
+    let result!: Promise<{ connected: boolean }>;
     await act(async () => {
       result = modal.openModalAsync({ type: 'ledger' });
     });
     await act(async () => modal.forceCloseAllModals());
-    expect(await result).toEqual({ success: false });
+    expect(await result).toEqual({ connected: false });
+  });
+  it('goes back only from the top screen', async () => {
+    await mount();
+    let wallet!: Promise<{ connected: boolean }>;
+    let ledger!: Promise<{ connected: boolean }>;
+    const walletSettled = vi.fn();
+    await act(async () => {
+      wallet = modal.openModalAsync({ type: 'wallet' });
+      void wallet.then(walletSettled);
+      ledger = modal.openModalAsync({ type: 'ledger' });
+    });
+    await act(async () => modal.goBack());
+    expect(await ledger).toEqual({ connected: false });
+    expect(modal.currentModal?.type).toBe('wallet');
+    expect(walletSettled).not.toHaveBeenCalled();
+    await act(async () => modal.forceCloseAllModals());
+    expect(await wallet).toEqual({ connected: false });
   });
   describe('replacing a connected Ledger', () => {
     const DEFAULT_PATH = "m/44'/60'/0'/0/0";

@@ -42,7 +42,7 @@ Start the connection flow from your connect button:
 
 ```tsx
 const { startConnection } = useConnectionFlow();
-const result = await startConnection(); // { success: boolean }
+const result = await startConnection(); // { connected: boolean }
 ```
 
 The promise resolves when eager connection finishes or the picker is closed. The deprecated `useConnect().connect()` API remains available with the same behavior and result.
@@ -59,16 +59,16 @@ Mount `ReefKnotUIProvider` inside `ReefKnotProvider`, with the modal configurati
 
 Hooks read the provider configuration. Their optional `config` argument must be the same object passed to the provider.
 
-| API                                      | Returned state and actions                                                                                 |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `useConnectionFlow()`                    | `startConnection()` starts eager connection or opens the picker                                            |
-| `useReefKnotModal()`                     | Current screen, stack, `openModal()`, `openModalAsync()`, `closeModal(result)` and `forceCloseAllModals()` |
-| `useWalletPicker(config?)`               | Sorted wallets, search, expansion, discovery, errors and list actions                                      |
-| `useWalletConnection(walletId, config?)` | Wallet data, visibility, disabled/loading/error and `connect()`                                            |
-| `useTerms(config?)`                      | Consent, links and `setChecked(boolean)`                                                                   |
-| `useEagerConnectScreen(config?)`         | Retry action, loading and mapped error message                                                             |
-| `useEIP6963Picker(config?)`              | Announced providers, loading, error and `select(provider)`                                                 |
-| `useLedgerFlow()`                        | Device screen, accounts, pagination, derivation paths, retry and account selection                         |
+| API                                      | Returned state and actions                                                                                             |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `useConnectionFlow()`                    | `startConnection()` starts eager connection or opens the picker                                                        |
+| `useReefKnotModal()`                     | Current screen, stack, `openModal()`, `openModalAsync()`, `closeModal(result)`, `goBack()` and `forceCloseAllModals()` |
+| `useWalletPicker(config?)`               | Sorted wallets, search, expansion, discovery, errors and list actions                                                  |
+| `useWalletConnection(walletId, config?)` | Wallet data, visibility, disabled/loading/error and `connect()`                                                        |
+| `useTerms(config?)`                      | Consent, links and `setChecked(boolean)`                                                                               |
+| `useEagerConnectScreen(config?)`         | Retry action, loading and mapped error message                                                                         |
+| `useEIP6963Picker(config?)`              | Announced providers, loading, error and `select(provider)`                                                             |
+| `useLedgerFlow()`                        | Device screen, accounts, pagination, derivation paths, retry and account selection                                     |
 
 Render `ReefKnotLedgerProvider` only while displaying the Ledger flow, inside `ReefKnotUIProvider`. Its `isActive` prop defaults to true. It owns the transport and account discovery; view components never receive the transport itself.
 

@@ -81,7 +81,7 @@ const { address, isConnected } = useConnection();
 const { startConnection } = useConnectionFlow();
 ```
 
-`startConnection()` attempts eager connection or opens the wallet picker. Its promise returns `{ success: boolean }` when that scenario finishes. It does not provide connection state. Reef Knot's older `useConnect().connect()` remains available as a deprecated wrapper; wagmi's hook of the same name has a different contract.
+`startConnection()` attempts eager connection or opens the wallet picker. Its promise returns `{ connected: boolean }` when that scenario finishes. It does not provide connection state. Reef Knot's older `useConnect().connect()` remains available as a deprecated wrapper; wagmi's hook of the same name has a different contract.
 
 ## 5. Review the wallet catalog and UI customizations
 

@@ -253,7 +253,7 @@ export function ReefKnotUIProvider({
           : 1;
       if (stack[stack.length - 1] === target) {
         for (let i = 0; i < count; i += 1)
-          modalStateRef.current.closeModal({ success: true });
+          modalStateRef.current.closeModal({ connected: true });
       }
       modalStateRef.current.modalConfig.onConnectSuccess?.({ walletId, rdns });
     },

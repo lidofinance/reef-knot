@@ -133,7 +133,7 @@ Before:
 ```tsx
 import { useConnect } from 'reef-knot/core-react';
 const { connect } = useConnect();
-await connect();
+const result = await connect(); // { success: boolean }
 ```
 
 After:
@@ -141,10 +141,10 @@ After:
 ```tsx
 import { useConnectionFlow } from 'reef-knot';
 const { startConnection } = useConnectionFlow();
-const result = await startConnection(); // { success: boolean }
+const result = await startConnection(); // { connected: boolean }
 ```
 
-This starts eager connection or opens the picker and waits for the scenario's result. `useConnect().connect()` remains available as a deprecated compatibility wrapper, so this rename can be migrated separately from the required UI import changes. Wagmi's `useConnect` is unchanged and does not replace the Reef Knot entry point.
+This starts eager connection or opens the picker and waits for the scenario's result. The result field is renamed from `success` to `connected`. The rename also applies to `useConnect().connect()`, `openModalAsync()` and `closeModal()`. `useConnect().connect()` remains available as a deprecated compatibility wrapper, so this rename can be migrated separately from the required UI import changes. Wagmi's `useConnect` is unchanged and does not replace the Reef Knot entry point.
 
 ## Replace removed web3-react hooks
 

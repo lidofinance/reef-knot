@@ -49,8 +49,8 @@ afterEach(async () => {
 });
 
 it.each([true, false])(
-  'waits for the picker result (success=%s)',
-  async (success) => {
+  'waits for the picker result (connected=%s)',
+  async (connected) => {
     let result!: ReturnType<typeof flow.startConnection>;
     const settled = vi.fn();
     await act(async () => {
@@ -61,18 +61,18 @@ it.each([true, false])(
     expect(settled).not.toHaveBeenCalled();
     expect(mocks.eager).not.toHaveBeenCalled();
 
-    await act(async () => modal.closeModal({ success }));
-    await expect(result).resolves.toEqual({ success });
-    expect(settled).toHaveBeenCalledExactlyOnceWith({ success });
+    await act(async () => modal.closeModal({ connected }));
+    await expect(result).resolves.toEqual({ connected });
+    expect(settled).toHaveBeenCalledExactlyOnceWith({ connected });
   },
 );
 
 it.each([true, false])(
-  'returns the eager outcome without opening a picker (success=%s)',
-  async (success) => {
+  'returns the eager outcome without opening a picker (connected=%s)',
+  async (connected) => {
     mocks.check.mockResolvedValue(true);
-    mocks.eager.mockResolvedValue(success);
-    await expect(flow.startConnection()).resolves.toEqual({ success });
+    mocks.eager.mockResolvedValue(connected);
+    await expect(flow.startConnection()).resolves.toEqual({ connected });
     expect(mocks.eager).toHaveBeenCalledOnce();
     expect(modal.currentModal).toBeUndefined();
   },
@@ -92,6 +92,6 @@ it('keeps the deprecated connect callback compatible with the picker flow', asyn
     result = legacy.connect();
   });
   expect(modal.currentModal?.type).toBe('wallet');
-  await act(async () => modal.closeModal({ success: false }));
-  await expect(result).resolves.toEqual({ success: false });
+  await act(async () => modal.goBack());
+  await expect(result).resolves.toEqual({ connected: false });
 });

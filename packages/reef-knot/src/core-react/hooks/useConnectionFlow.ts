@@ -12,7 +12,7 @@ export const useConnectionFlow = () => {
   const startConnection = useCallback(async () => {
     if (await checkIfShouldAutoConnect()) {
       const result = await eagerConnect();
-      return { success: !!result };
+      return { connected: !!result };
     } else {
       return openModalAsync({ type: 'wallet' });
     }

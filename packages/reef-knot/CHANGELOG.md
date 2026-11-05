@@ -11,11 +11,14 @@
 - Remove the `linkDontHaveWallet` modal option and the WalletConnect URI redirect flow, including `walletconnectExtras` and `getWalletConnectUri`.
 - Save wallet and connector IDs together for reconnect. Wallets saved by older versions need one manual connection after upgrading.
 - Remove the shared `@reef-knot/wallets-icons` package. Use wallet adapter icons or provide your own.
+- Rename the modal result field from `success` to `connected`. This changes the results of `startConnection()`, `connect()`, `openModalAsync()` and the `closeModal()` argument.
+- The modal Close action now closes all screens. Use Back to return to the previous screen.
 
 ### Added
 
 - Add public hooks and providers for custom wallet pickers, Terms, eager connection, EIP-6963 selection and Ledger screens.
 - Add shared modal focus, Escape and scroll-lock hooks, plus a renderer with replaceable screen components.
+- Add `goBack()` to `useReefKnotModal()`. It removes the top screen and shows the previous one.
 - Add `useConnectionFlow().startConnection()`. Keep `useConnect().connect()` as a deprecated wrapper.
 - Add `disconnectAsync()` to `useDisconnect()` for callers that need to wait for cleanup.
 - Add [upgrade instructions](../../docs/migration-guide-8.x-to-9.md) and a [custom UI guide](../../docs/headless-ui.md).
