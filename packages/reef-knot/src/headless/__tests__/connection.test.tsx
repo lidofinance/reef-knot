@@ -674,20 +674,20 @@ describe('public headless connection flow', () => {
   });
   it('goes back only from the top screen', async () => {
     await mount();
-    let wallet!: Promise<{ connected: boolean }>;
-    let ledger!: Promise<{ connected: boolean }>;
+    let walletResult!: Promise<{ connected: boolean }>;
+    let ledgerResult!: Promise<{ connected: boolean }>;
     const walletSettled = vi.fn();
     await act(async () => {
-      wallet = modal.openModalAsync({ type: 'wallet' });
-      void wallet.then(walletSettled);
-      ledger = modal.openModalAsync({ type: 'ledger' });
+      walletResult = modal.openModalAsync({ type: 'wallet' });
+      void walletResult.then(walletSettled);
+      ledgerResult = modal.openModalAsync({ type: 'ledger' });
     });
     await act(async () => modal.goBack());
-    expect(await ledger).toEqual({ connected: false });
+    expect(await ledgerResult).toEqual({ connected: false });
     expect(modal.currentModal?.type).toBe('wallet');
     expect(walletSettled).not.toHaveBeenCalled();
     await act(async () => modal.forceCloseAllModals());
-    expect(await wallet).toEqual({ connected: false });
+    expect(await walletResult).toEqual({ connected: false });
   });
   describe('replacing a connected Ledger', () => {
     const DEFAULT_PATH = "m/44'/60'/0'/0/0";
