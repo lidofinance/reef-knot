@@ -46,7 +46,7 @@
   "devDependencies": {
     "build-config": "*",
     "react": "18.2.0",
-    "vitest": "^4.1.11",
+    "vitest": "^4.1.12",
     "wagmi": ">=3.6"
   },
   "peerDependencies": {
