@@ -55,11 +55,11 @@
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17",
     "build-config": "*",
-    "happy-dom": "^20.0.0",
+    "happy-dom": "^20.14.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "reef-knot": "*",
     "tsconfig": "*",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }

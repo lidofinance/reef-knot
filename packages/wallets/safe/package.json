@@ -43,8 +43,8 @@
     "@safe-global/safe-apps-provider": "^0.18.6",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "build-config": "*",
-    "happy-dom": "^20.0.0",
-    "vitest": "^4.1.11"
+    "happy-dom": "^20.14.6",
+    "vitest": "^4.1.12"
   },
   "peerDependencies": {
     "@reef-knot/wallets-helpers": "*",
