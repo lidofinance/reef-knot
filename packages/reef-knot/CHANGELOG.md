@@ -5,7 +5,7 @@
 ### Breaking changes
 
 - Merge the core, types and default wallet catalog into `reef-knot`. Use named imports from `reef-knot`; the old namespace and `reef-knot/*` imports are removed.
-- Move the wallet modal and UI components to `@reef-knot/ui-lido-legacy` and `@reef-knot/ui-lido`. The core no longer requires a UI kit or styled-components.
+- Add two new UI skin packages and move the wallet modal and UI components into them: `@reef-knot/ui-lido-legacy` keeps the previous Lido appearance, and `@reef-knot/ui-lido` uses Lido App UI. Use a skin for a ready-made modal, or build a custom skin with the public headless hooks. The core no longer requires a UI kit or styled-components.
 - Remove `useWeb3` and `useSupportedChains`. Use wagmi hooks instead.
 - Replace `buttonComponentsByConnectorId` and wallet-specific `Connect*` components with `components.WalletButton`.
 - Remove the `linkDontHaveWallet` modal option and the WalletConnect URI redirect flow, including `walletconnectExtras` and `getWalletConnectUri`.
