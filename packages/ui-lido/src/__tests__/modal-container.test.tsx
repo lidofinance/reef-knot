@@ -149,6 +149,36 @@ it('pins the page on touch devices and restores the scroll position', async () =
   });
 });
 
+it('calls the latest onExited only when the modal closes', async () => {
+  const first = vi.fn();
+  const second = vi.fn();
+  await act(async () =>
+    root.render(
+      <ModalContainer open title="Connect wallet" onExited={first}>
+        Wallets
+      </ModalContainer>,
+    ),
+  );
+  await act(async () =>
+    root.render(
+      <ModalContainer open title="Connect wallet" onExited={second}>
+        Wallets
+      </ModalContainer>,
+    ),
+  );
+  expect(first).not.toHaveBeenCalled();
+  expect(second).not.toHaveBeenCalled();
+  await act(async () =>
+    root.render(
+      <ModalContainer open={false} title="Connect wallet" onExited={second}>
+        Wallets
+      </ModalContainer>,
+    ),
+  );
+  expect(first).not.toHaveBeenCalled();
+  expect(second).toHaveBeenCalledOnce();
+});
+
 it('shows Back on the requirements screen', async () => {
   const back = vi.fn();
   modal.current = { type: 'requirements', props: { kind: 'no-wallets' } };

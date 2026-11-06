@@ -153,6 +153,9 @@ export function ModalContainer({
   ...props
 }: ModalContainerProps): React.ReactPortal | null {
   const [root, setRoot] = useState<HTMLElement | null>(null);
+  // Keep the latest callback. A new callback must not count as an exit.
+  const onExitedRef = useRef(onExited);
+  onExitedRef.current = onExited;
   useEffect(() => {
     if (!open) return;
     let element = document.getElementById('reef-knot-modal-root');
@@ -163,9 +166,9 @@ export function ModalContainer({
     }
     setRoot(element);
     return () => {
-      onExited?.();
+      onExitedRef.current?.();
     };
-  }, [open, onExited]);
+  }, [open]);
   return open && root ? createPortal(<PortalDialog {...props} />, root) : null;
 }
 
