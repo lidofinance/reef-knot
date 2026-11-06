@@ -42,7 +42,7 @@
     "@ledgerhq/hw-transport-mocker": "6.34.7",
     "@types/w3c-web-hid": "^1.0.7",
     "build-config": "*",
-    "happy-dom": "^20.0.0",
+    "happy-dom": "^21.0.4",
     "viem": ">=2.50",
     "vitest": "^4.1.11",
     "wagmi": ">=3.6"
