@@ -48,12 +48,27 @@ describe('isUserRejectedError', () => {
 const METAMASK_PENDING_MESSAGE =
   "MetaMask - RPC Error: Request of type 'wallet_requestPermissions' already pending for origin http://localhost:3000. Please wait.";
 
+// Ledger Live wraps every non-4001 error in ResourceUnavailableRpcError.
+const LEDGER_LIVE_TIMEOUT = new ResourceUnavailableRpcError(
+  new Error('RPC ID "1" timed out after 240000 milliseconds'),
+);
+
 describe('isRequestPendingError', () => {
   it.each([
-    ['viem error', new ResourceUnavailableRpcError(new Error('pending'))],
-    ['EIP-1193 object', { code: -32002, message: 'Pending' }],
+    [
+      'viem error',
+      new ResourceUnavailableRpcError(new Error(METAMASK_PENDING_MESSAGE)),
+    ],
+    ['EIP-1193 object', { code: -32002, message: METAMASK_PENDING_MESSAGE }],
     ['MetaMask message', new Error(METAMASK_PENDING_MESSAGE)],
-    ['nested cause', new Error('Wrapped', { cause: { code: -32002 } })],
+    [
+      'MetaMask eth_requestAccounts',
+      new Error('Already processing eth_requestAccounts. Please wait.'),
+    ],
+    [
+      'nested cause',
+      new Error('Wrapped', { cause: new Error(METAMASK_PENDING_MESSAGE) }),
+    ],
   ])('detects a pending request: %s', (_name, error) => {
     expect(isRequestPendingError(error)).toBe(true);
   });
@@ -61,6 +76,8 @@ describe('isRequestPendingError', () => {
   it.each([
     ['plain error', new Error('Chain not configured')],
     ['rejection', { code: 4001 }],
+    ['code -32002 only', { code: -32002, message: 'Resource unavailable' }],
+    ['Ledger Live timeout', LEDGER_LIVE_TIMEOUT],
     ['null', null],
   ])('ignores other errors: %s', (_name, error) => {
     expect(isRequestPendingError(error)).toBe(false);
@@ -127,6 +144,14 @@ describe('getConnectionErrorMessage', () => {
     expect(getConnectionErrorMessage(error)).toMatch(
       /already open in your wallet/,
     );
+  });
+
+  it('shows the generic message for a Ledger Live timeout', () => {
+    expect(getConnectionErrorMessage(LEDGER_LIVE_TIMEOUT)).toBe(FALLBACK);
+  });
+
+  it('shows the generic message for code -32002 without pending text', () => {
+    expect(getConnectionErrorMessage({ code: -32002 })).toBe(FALLBACK);
   });
 
   it('shows a rejection message', () => {

@@ -15,9 +15,8 @@ const FALLBACK_MESSAGE = 'Connection error. Please try again.';
 const USER_REJECTED_CODE = 4001;
 // MetaMask Connect throws "User closed modal" without a code when the user closes its QR modal.
 const USER_REJECTED_MESSAGE = /user (rejected|denied|cancel+ed|closed)/i;
-// EIP-1474 code. MetaMask uses it when a request prompt is already open.
-const RESOURCE_UNAVAILABLE_CODE = -32002;
-const REQUEST_PENDING_MESSAGE = /already pending/i;
+// MetaMask text for a request prompt that is already open.
+const REQUEST_PENDING_MESSAGE = /already (pending|processing)/i;
 // Stop on cyclic cause chains.
 const MAX_CAUSE_DEPTH = 10;
 
@@ -59,11 +58,12 @@ const isUserRejected: ErrorMatcher = (value) =>
     ['UserRejectedRequestError'],
   )(value) || USER_REJECTED_MESSAGE.test(readString(value, 'message') ?? '');
 
+/**
+ * Check only the text. Code -32002 and viem ResourceUnavailableRpcError also
+ * cover other failures: Ledger Live uses them for every error, also for timeouts.
+ */
 const isRequestPending: ErrorMatcher = (value) =>
-  matchesCodeOrName(
-    [RESOURCE_UNAVAILABLE_CODE],
-    ['ResourceUnavailableRpcError'],
-  )(value) || REQUEST_PENDING_MESSAGE.test(readString(value, 'message') ?? '');
+  REQUEST_PENDING_MESSAGE.test(readString(value, 'message') ?? '');
 
 /**
  * The only errors with a specific message. Error text from wallets and libraries
