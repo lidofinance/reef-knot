@@ -10,7 +10,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Wallet connection (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
-    async () => {
+    () => {
       test.describe.configure({ mode: 'serial' }); // Serial mode is used because the tests in this test.describe are related to each other.
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
@@ -36,13 +36,15 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
             'The statistic block should not be visible before the wallet is connected',
-          ).not.toBeVisible();
+          ).toBeHidden();
           await expect(
             reefKnotPage.header.accountButton,
             'The account button should not be visible before the wallet is connected',
-          ).not.toBeVisible();
+          ).toBeHidden();
         });
+
         await reefKnotService.connectWallet();
+
         await test.step('Check the stand appearance after wallet connection', async () => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
@@ -53,6 +55,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             'The account button should be visible after the wallet is connected',
           ).toBeVisible();
         });
+
         await test.step('Check local storage with connected', async () => {
           expect(
             await reefKnotPage.getStorageData('wagmi.recentConnectorId'),
@@ -92,16 +95,18 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         await qase.parameters({ wallet: wallet.name });
 
         await reefKnotPage.disconnectWallet();
+
         await test.step('Check the stand appearance after wallet disconnection', async () => {
           await expect(
             reefKnotPage.statsBlock.mainComponent,
             'The statistic block should not be visible after the wallet is disconnected',
-          ).not.toBeVisible();
+          ).toBeHidden();
           await expect(
             reefKnotPage.header.accountButton,
             'The account button should not be visible after the wallet is disconnected',
-          ).not.toBeVisible();
+          ).toBeHidden();
         });
+
         await test.step('Check local storage with connected', async () => {
           expect(
             await reefKnotPage.getStorageData('wagmi.recentConnectorId'),
@@ -117,7 +122,9 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
           const storageValue = await reefKnotPage.getStorageData(
             connectedWalletStorageData.get(wallet.name).disconnectWalletKey,
           );
+          // eslint-disable-next-line playwright/no-conditional-in-test -- Some wallets do not persist a disconnection marker.
           if (storageValue) {
+            // eslint-disable-next-line playwright/no-conditional-expect -- Check the marker when the wallet supports it.
             expect(
               storageValue,
               'The recent wallet disconnection status should be "true"',
@@ -138,11 +145,11 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
           await expect(
             reefKnotPage.header.accountButton,
             'The account button should not be visible after the page is reloaded',
-          ).not.toBeVisible();
+          ).toBeHidden();
           await expect(
             reefKnotPage.statsBlock.mainComponent,
             'The statistic block should not be visible after the page is reloaded',
-          ).not.toBeVisible();
+          ).toBeHidden();
         },
       );
     },

@@ -1,9 +1,17 @@
 # @reef-knot/wallet-adapter-okx
 
+## 5.3.0
+
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
+- Keep the full page URL, including query parameters and fragments, in wallet links. Encode both the page URL and the nested download link.
+
+## 5.2.0
+
+- Raise the minimum wagmi version to 3.6.
+
 ## 5.1.0
 
-- Update wagmi to 3.6.21
-- Update peerDependencies requirements: wagmi >=3.6
+- Expose the wallet's EIP-6963 ID so the Browser Wallet picker can hide duplicate entries.
 
 ## 5.0.0
 

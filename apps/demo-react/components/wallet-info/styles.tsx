@@ -1,5 +1,11 @@
+import {
+  ThemeName,
+  DataTableRow,
+  ButtonIcon,
+  Button,
+  Input,
+} from '@lidofinance/lido-ui';
 import styled from 'styled-components';
-import { DataTableRow, ButtonIcon, Button, Input } from '@lidofinance/lido-ui';
 
 export const ContainerStyle = styled.div`
   position: fixed;
@@ -16,7 +22,7 @@ export const WrapperStyle = styled.div<{ $show: boolean }>`
   height: 100vh;
   padding: 22px 40px;
   background-color: ${({ theme }) =>
-    theme.name === 'dark' ? '#1e2938' : '#dddfe2'};
+    theme.name === ThemeName.dark ? '#1e2938' : '#dddfe2'};
   position: absolute;
   left: 100%;
   top: 0%;

@@ -1,13 +1,14 @@
 import { memo } from 'react';
 import { formatEther } from 'viem';
 import { ThemeProvider, themeLight } from '@lidofinance/lido-ui';
-import { useWeb3 } from 'reef-knot/web3-react';
-import { useConnectorInfo } from 'reef-knot/core-react';
+import { useConnection } from 'wagmi';
+import { useConnectorInfo } from 'reef-knot';
 
 import { StatsItem, TokenInput } from 'components';
 import { useETHBalance } from 'hooks/ethBalance';
 import { useStETHBalance } from 'hooks/stethBalance';
 import { useWstETHBalance } from 'hooks/wstethBalance';
+import { useSupportedChains } from 'hooks/useSupportedChains';
 import { WalletFallback } from 'components/wallet-fallback';
 
 import { useInputValueSDK } from 'providers';
@@ -29,7 +30,7 @@ const StatsComponent = () => {
   const wstethBalance = useWstETHBalance();
 
   const { connectorName } = useConnectorInfo();
-  const web3Info = useWeb3();
+  const { chainId } = useConnection();
 
   const ethAmount = ethBalance.error
     ? 'N/A'
@@ -60,11 +61,15 @@ const StatsComponent = () => {
         <InfoWrapperStyle>
           <div>
             <WalletInfoTitleStyle>Provider:</WalletInfoTitleStyle>
-            <WalletInfoValueStyle data-testid="providerName">{connectorName}</WalletInfoValueStyle>
+            <WalletInfoValueStyle data-testid="providerName">
+              {connectorName}
+            </WalletInfoValueStyle>
           </div>
           <div>
             <WalletInfoTitleStyle>Network:</WalletInfoTitleStyle>
-            <WalletInfoValueStyle data-testid="chainId">{web3Info.chainId}</WalletInfoValueStyle>
+            <WalletInfoValueStyle data-testid="chainId">
+              {chainId}
+            </WalletInfoValueStyle>
           </div>
         </InfoWrapperStyle>
         <BalancesWrapperStyle>
@@ -90,7 +95,9 @@ const StatsComponent = () => {
 };
 
 export const Stats = memo((props) => {
-  const { active } = useWeb3();
+  const { isConnected } = useConnection();
+  const { isUnsupported } = useSupportedChains();
+  const active = isConnected && !isUnsupported;
 
   return active ? <StatsComponent {...props} /> : <WalletFallback {...props} />;
 });

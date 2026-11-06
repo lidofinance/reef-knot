@@ -30,10 +30,10 @@ where <wallet-id> corresponds to the ID you've specified.
 
 ### 3. Add to Wallets List
 
-1. Open the `package.json` file of the generated wallet adapter, located in `packages/wallets-list/<wallet-id>`.
+1. Open the `package.json` file of the generated wallet adapter, located in `packages/wallets/<wallet-id>`.
 2. Copy the name of the package. It should look like `@reef-knot/wallet-adapter-<wallet-id>`.
-3. Open `packages/wallets-list/package.json` and add the copied package name (from step 2) to the `dependencies` field, specifying version `1.0`.
-4. Open `packages/wallets-list/src/ethereum.ts` and include the new adapter in the list.
+3. Open `packages/reef-knot/package.json` and add the copied package name (from step 2) to the `dependencies` field, specifying version `1.0`.
+4. Open `packages/reef-knot/src/wallets-list/ethereum.ts` and include the new adapter in the list.
 5. Run `yarn install`.
 
 ### 4. Enable Wallet
@@ -41,7 +41,7 @@ where <wallet-id> corresponds to the ID you've specified.
 To display the wallet in the Wallet Connection Modal, its `id` must be included in the `walletsShown` prop of the `ReefKnotWalletsModal` component.
 
 This can be achieved by modifying the `walletsShown` prop at the application level. Additionally, you may consider editing the `WALLETS_MODAL_DISPLAY_CONFIG_DEFAULT` constant, located at:  
-`packages/connect-wallet-modal/src/components/ReefKnotWalletsModal/getDefaultWalletsModalConfig.ts`.
+`packages/reef-knot/src/headless/getDefaultWalletsModalConfig.ts`.
 
 ### 5. Configure the adapter
 

@@ -14,7 +14,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Unwrap transaction (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
-    async () => {
+    () => {
       const unwrapAmount = '0.0003';
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;

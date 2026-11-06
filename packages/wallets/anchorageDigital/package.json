@@ -32,18 +32,16 @@
     "access": "public"
   },
   "scripts": {
-    "build": "yarn run -T tsdown && yarn run -T tsc --noEmit false --noEmitOnError false --emitDeclarationOnly --outDir dist || true",
+    "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs ."
+    "lint": "yarn run -T eslint .",
+    "typecheck": "yarn run -T tsc --noEmit"
   },
   "devDependencies": {
-    "@reef-knot/types": "*",
     "@reef-knot/wallets-helpers": "*",
-    "build-config": "*",
-    "eslint-config-custom": "*"
+    "build-config": "*"
   },
   "peerDependencies": {
-    "@reef-knot/types": "*",
     "@reef-knot/wallets-helpers": "*",
     "wagmi": ">=3.6"
   }

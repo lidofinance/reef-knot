@@ -1,12 +1,13 @@
 import {
   useConnectorInfo,
   getUnsupportedChainError,
-} from 'reef-knot/core-react';
-import { helpers, useSupportedChains, useWeb3 } from 'reef-knot/web3-react';
-import { useConnection, useConfig } from 'wagmi';
+  interceptLedgerError,
+} from 'reef-knot';
+import { useConnection, useConfig, useConnect } from 'wagmi';
+import { useSupportedChains } from 'hooks/useSupportedChains';
 
 export const useErrorMessage = (): string | undefined => {
-  const { error } = useWeb3();
+  const { error } = useConnect();
   const { chains } = useConfig();
   const { isConnected } = useConnection();
   const { isUnsupported } = useSupportedChains();
@@ -21,7 +22,7 @@ export const useErrorMessage = (): string | undefined => {
   }
 
   if (isLedger) {
-    return helpers.interceptLedgerError(error).message;
+    return interceptLedgerError(error).message;
   }
 
   return error?.message;

@@ -26,14 +26,17 @@ const extractErrorMessage = (error: unknown): string => {
 
 const extractError = async (response: Response) => {
   try {
-    const error = await response.json();
+    const error: unknown = await response.json();
     return extractErrorMessage(error);
-  } catch (error) {
+  } catch {
     return 'An error occurred while fetching the data';
   }
 };
 
-export const standardFetcher: StandardFetcher = async (url, params) => {
+export const standardFetcher: StandardFetcher = async <T>(
+  url: string,
+  params?: RequestInit,
+) => {
   const response = await fetch(url, {
     ...DEFAULT_PARAMS,
     ...params,
@@ -43,5 +46,5 @@ export const standardFetcher: StandardFetcher = async (url, params) => {
     throw new FetcherError(await extractError(response), response.status);
   }
 
-  return await response.json();
+  return (await response.json()) as T;
 };

@@ -1,10 +1,17 @@
 import { LidoSDK, VIEM_CHAINS } from '@lidofinance/lido-ethereum-sdk';
-import { createWalletClient, formatEther, http, type Address } from 'viem';
+import {
+  createWalletClient,
+  formatEther,
+  http,
+  type Address,
+  type Chain,
+} from 'viem';
 import { ENV_CONFIG, REEF_KNOT_CONFIG } from '@config';
 import { toCutDecimalsDigit } from './helpers';
 import { mnemonicToAccount } from 'viem/accounts';
 
 global.fetch = fetch;
+const sdkChains: Partial<Record<number, Chain>> = VIEM_CHAINS;
 
 export enum sdkToken {
   ETH = 'ETH',
@@ -19,7 +26,7 @@ export class SdkService extends LidoSDK {
       rpcUrls: [REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl],
       web3Provider: createWalletClient({
         account: mnemonicToAccount(ENV_CONFIG.WALLET_SECRET_PHRASE),
-        chain: VIEM_CHAINS[REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId],
+        chain: sdkChains[REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.chainId],
         transport: http(REEF_KNOT_CONFIG.STAND_CONFIG.networkConfig.rpcUrl),
       }),
       logMode: 'none',
@@ -50,14 +57,14 @@ export class SdkService extends LidoSDK {
     return toCutDecimalsDigit(balance, decimalPlaces, true);
   }
 
-  async exchangeStEthToWstEth(amount: any) {
+  async exchangeStEthToWstEth(amount: string) {
     const wstethRate = formatEther(
       await this.wrap.convertStethToWsteth(1000000000000000000n),
     );
     return parseFloat(wstethRate) * parseFloat(amount);
   }
 
-  async exchangeWstEthToStEth(amount: any) {
+  async exchangeWstEthToStEth(amount: string) {
     const wstethRate = formatEther(
       await this.wrap.convertWstethToSteth(1000000000000000000n),
     );

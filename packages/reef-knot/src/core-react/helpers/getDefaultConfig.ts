@@ -1,0 +1,111 @@
+import { http, Chain, Transport } from 'viem';
+import { createConfig } from 'wagmi';
+import type {
+  ReefKnotWalletsModalConfig,
+  ReefKnotProviderConfig,
+  ReefKnotConfig,
+} from '../../types/index';
+import {
+  getWalletsDataList,
+  GetWalletsDataListArgs,
+} from './getWalletsDataList';
+
+type RpcMap = Record<number, string>;
+type Transports = Record<number, Transport>;
+type Chains = readonly [Chain, ...Chain[]];
+
+type WagmiConfigArgs = Omit<
+  Parameters<typeof createConfig>[0],
+  // Args `connectors` and `client` are disabled because reef-knot uses
+  // opinionated way to handle connectors and it is designed to utilize
+  // `transports` argument.
+  // It could be changed in future, if there will be such request.
+  'connectors' | 'client'
+>;
+
+export type DefaultConfigArgs<I extends string = string> = ReefKnotConfig &
+  ReefKnotWalletsModalConfig<I> &
+  GetWalletsDataListArgs &
+  WagmiConfigArgs;
+
+const getDefaultTransports = (chains: Chains, rpc: RpcMap) =>
+  chains.reduce<Transports>(
+    (result, chain) => ({
+      ...result,
+      [chain.id]: http(rpc[chain.id], { batch: true }),
+    }),
+    {},
+  );
+
+export const getDefaultConfig = <I extends string = string>({
+  // Reef-Knot config args
+  rpc,
+  defaultChain,
+  walletconnectProjectId,
+  walletsList,
+  safeAllowedDomains,
+  ledgerForceClearSign,
+  chains,
+  transports,
+  autoConnect,
+  onAutoConnect,
+  onReconnect,
+
+  // Wallets config args
+  walletsShown,
+  walletsPinned,
+  walletsDisplayInitialCount,
+  linkTerms,
+  linkPrivacyNotice,
+  onClickTermsAccept,
+  onClickWalletsLess,
+  onClickWalletsMore,
+  onConnectStart,
+  onConnectSuccess,
+
+  // Wagmi config args
+  ...wagmiArgs
+}: DefaultConfigArgs<I>) => {
+  const { walletsDataList } = getWalletsDataList({
+    rpc,
+    defaultChain,
+    walletsList,
+    walletconnectProjectId,
+    safeAllowedDomains,
+    ledgerForceClearSign,
+  });
+
+  const reefKnotConfig: ReefKnotProviderConfig = {
+    autoConnect,
+    walletDataList: walletsDataList,
+    onAutoConnect,
+    onReconnect,
+  };
+
+  const wagmiConfig = createConfig({
+    chains,
+    transports: transports || getDefaultTransports(chains, rpc),
+    multiInjectedProviderDiscovery: false,
+    ...wagmiArgs,
+  });
+
+  const walletsModalConfig: ReefKnotWalletsModalConfig<I> = {
+    walletsShown,
+    walletsPinned,
+    walletsDisplayInitialCount,
+    linkTerms,
+    linkPrivacyNotice,
+    onClickTermsAccept,
+    onClickWalletsLess,
+    onClickWalletsMore,
+    onConnectStart,
+    onConnectSuccess,
+  };
+
+  return {
+    wagmiConfig,
+    reefKnotConfig,
+    walletsDataList,
+    walletsModalConfig,
+  };
+};

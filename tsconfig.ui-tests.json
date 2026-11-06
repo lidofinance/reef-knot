@@ -1,0 +1,26 @@
+{
+  "extends": "./packages/tsconfig/react-library.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "@lidofinance/lido-ui": ["./node_modules/@lidofinance/lido-ui/dist/types/index.d.ts"],
+      "reef-knot": ["./packages/reef-knot/src/index.ts"],
+      "vitest": ["./node_modules/vitest/dist/index.d.ts"],
+      "vitest/config": ["./node_modules/vitest/dist/config.d.ts"]
+    }
+  },
+  "include": [
+    "packages/reef-knot/src/headless/**/*.test.tsx",
+    "packages/reef-knot/test-ui/**/*.tsx",
+    "packages/ui-lido-legacy/src/__tests__/**/*.tsx",
+    "packages/ui-lido/src/__tests__/**/*.tsx",
+    "packages/reef-knot/vitest.config.ts",
+    "packages/ui-lido-legacy/vitest.config.ts",
+    "packages/ui-lido/vitest.config.ts",
+    "packages/reef-knot/tsdown.config.ts",
+    "packages/ui-lido-legacy/tsdown.config.ts",
+    "packages/ui-lido/tsdown.config.ts",
+    "packages/ui-lido-legacy/src/connect-wallet-modal/custom.d.ts"
+  ],
+  "exclude": ["node_modules", "**/dist"]
+}

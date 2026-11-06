@@ -1,9 +1,21 @@
 # @reef-knot/wallet-adapter-ambire
 
+## 6.3.0
+
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
+- Keep connections tied to the selected EIP-6963 wallet when its provider is missing, instead of falling back to another browser wallet.
+
+## 6.2.1
+
+- Update the `@reef-knot/types` dependency to 5.2.1.
+
+## 6.2.0
+
+- Raise the minimum wagmi version to 3.6.
+
 ## 6.1.0
 
-- Update wagmi to 3.6.21
-- Update peerDependencies requirements: wagmi >=3.6
+- Expose the wallet's EIP-6963 ID so the Browser Wallet picker can hide duplicate entries.
 
 ## 6.0.0
 

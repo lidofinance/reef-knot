@@ -13,22 +13,21 @@ export type PersistedLedgerAccount = {
 export const isLockedDeviceError = (error: unknown): boolean =>
   (error as { name?: string } | null)?.name === 'LockedDeviceError';
 
-export const checkError = (error: any): never => {
-  if (error.statusText === 'INS_NOT_SUPPORTED') {
-    // eslint-disable-next-line no-param-reassign
-    error.message =
+export const checkError = (error: unknown): never => {
+  // Ledger transport errors expose statusText in addition to the standard Error fields.
+  const ledgerError = error as { statusText?: string; message?: string };
+  if (ledgerError.statusText === 'INS_NOT_SUPPORTED') {
+    ledgerError.message =
       'Device is not supported. Make sure the Ethereum app is open on the device.';
   }
 
-  if (error.statusText === 'UNKNOWN_ERROR') {
-    // eslint-disable-next-line no-param-reassign
-    error.message =
+  if (ledgerError.statusText === 'UNKNOWN_ERROR') {
+    ledgerError.message =
       'Unknown error. Make sure the device is connected and the Ethereum app is open on the device.';
   }
 
-  if (error.statusText === 'CONDITIONS_OF_USE_NOT_SATISFIED') {
-    // eslint-disable-next-line no-param-reassign
-    error.message = 'User rejected the request';
+  if (ledgerError.statusText === 'CONDITIONS_OF_USE_NOT_SATISFIED') {
+    ledgerError.message = 'User rejected the request';
   }
 
   throw error;

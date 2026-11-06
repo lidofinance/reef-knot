@@ -1,6 +1,6 @@
 import { EIP1193Provider } from 'viem';
 import { injected } from 'wagmi/connectors';
-import { WalletAdapterType } from '@reef-knot/types';
+import { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { WalletIcon } from './icons/index.js';
 
 declare global {

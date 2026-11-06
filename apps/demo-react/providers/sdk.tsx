@@ -50,15 +50,14 @@ export const LidoSDKProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [isConnected]);
 
   const contextValue = useMemo(() => {
-    // @ts-expect-error: typing (viem + LidoSDK)
     const sdk = new LidoSDK({
-      chainId: publicClient?.chain.id as any,
+      chainId: publicClient?.chain.id,
       logMode: 'none',
       rpcProvider: publicClient,
       web3Provider: walletClient,
-    });
+    } as unknown as ConstructorParameters<typeof LidoSDK>[0]);
     // inject lido_sdk for console access
-    if (typeof window !== 'undefined') (window as any).lido_sdk = sdk;
+    if (typeof window !== 'undefined') window.lido_sdk = sdk;
     return sdk;
   }, [publicClient, walletClient]);
 

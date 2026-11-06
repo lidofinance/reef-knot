@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
 import type {
   ReefKnotWalletsModalConfig,
   ReefKnotConfig,
-} from '@reef-knot/types';
-import type { WalletIdsEthereum } from '@reef-knot/wallets-list';
+  WalletIdsEthereum,
+} from 'reef-knot';
 
 type MetricProps = Pick<
   ReefKnotWalletsModalConfig<WalletIdsEthereum>,

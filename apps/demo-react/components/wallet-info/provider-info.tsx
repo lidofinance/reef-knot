@@ -6,7 +6,7 @@ const HIDDEN_KEYS = ['_jsonRpcConnection'];
 const stringify = (obj: object) => {
   let cache: unknown[] | null = [];
   try {
-    return JSON.stringify(obj, function (_key, value) {
+    return JSON.stringify(obj, function (_key, value: unknown) {
       if (typeof value === 'object' && value !== null) {
         if (cache?.indexOf(value) !== -1) {
           // Circular reference found, discard key

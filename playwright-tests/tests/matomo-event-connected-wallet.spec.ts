@@ -10,7 +10,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Matomo events (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
-    async () => {
+    () => {
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
       let reefKnotPage: ReefKnotPage;
@@ -55,7 +55,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
 test.describe(
   `ReefKnot. Matomo events (Browser)`,
   { tag: [Tags.connectedWallet, '@browser'] },
-  async () => {
+  () => {
     let browserService: BrowserService;
     let reefKnotService: ReefKnotService;
     let reefKnotPage: ReefKnotPage;

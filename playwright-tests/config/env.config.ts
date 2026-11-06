@@ -1,5 +1,7 @@
-import { NetworkConfig } from '@lidofinance/wallets-testing-wallets';
-import { NETWORKS_CONFIG } from '@lidofinance/wallets-testing-wallets';
+import {
+  NetworkConfig,
+  NETWORKS_CONFIG,
+} from '@lidofinance/wallets-testing-wallets';
 import { ENV_CONFIG } from './env.validation';
 
 export interface StandConfig {

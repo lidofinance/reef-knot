@@ -149,7 +149,9 @@ export function ledgerLiveConnector({
 
       async getAccounts() {
         const provider = await this.getProvider();
-        const accounts = await provider.send('eth_requestAccounts');
+        const accounts = await provider.send<unknown[], string[]>(
+          'eth_requestAccounts',
+        );
         // Checksum each address; the explicit lambda keeps Array.map's index
         // out of getAddress's second (chainId, EIP-1191) parameter.
         return accounts.map((account: string) => getAddress(account));
@@ -157,14 +159,16 @@ export function ledgerLiveConnector({
 
       async getChainId() {
         const provider = await this.getProvider();
-        const chainId = await provider.send('eth_chainId');
+        const chainId: unknown = await provider.send('eth_chainId');
         return Number(chainId);
       },
 
       async isAuthorized() {
         try {
           const provider = await this.getProvider();
-          const accounts = await provider.send('eth_accounts');
+          const accounts = await provider.send<unknown[], string[]>(
+            'eth_accounts',
+          );
           const account = accounts[0];
           return !!account;
         } catch {
@@ -180,7 +184,6 @@ export function ledgerLiveConnector({
         handlers.onChainChanged(chainId);
       },
 
-      // eslint-disable-next-line @typescript-eslint/require-await
       async disconnect() {
         handlers.detach();
       },

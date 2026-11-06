@@ -94,4 +94,3 @@ export const TokenInput: TokenInputComponent = ({
     </TokenInputStyle>
   );
 };
-

@@ -1,7 +1,7 @@
 import { FC, useCallback, useState } from 'react';
 import { Select, Option } from '@lidofinance/lido-ui';
 import { useLidoSDK } from 'providers/sdk';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnection } from 'wagmi';
 import { LIDO_CONTRACT_NAMES } from '@lidofinance/lido-ethereum-sdk/common';
 
 import { ActionItem } from 'components';
@@ -16,8 +16,8 @@ export const Permit: FC = () => {
   const { inputValue } = useInputValueSDK();
 
   const [token, setType] = useState<TokenType>(TokenType.stETH);
-  const { account: web3account = '0x0' } = useWeb3();
-  const account = web3account as `0x{string}`;
+  const { address = '0x0' } = useConnection();
+  const account = address as `0x{string}`;
 
   const { core } = useLidoSDK();
 

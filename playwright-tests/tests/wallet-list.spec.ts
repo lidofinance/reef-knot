@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { ReefKnotPage } from '@pages';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe(`ReefKnot. Wallet list`, async () => {
+test.describe(`ReefKnot. Wallet list`, () => {
   let reefKnotPage: ReefKnotPage;
   const expectedWalletCount = 10;
 
@@ -24,11 +24,10 @@ test.describe(`ReefKnot. Wallet list`, async () => {
       });
 
       await test.step('Check the count of the available options to connect wallet', async () => {
-        const walletCount = await reefKnotPage.walletListModal.walletList
-          .getByRole('button')
-          .count();
+        const walletCount =
+          reefKnotPage.walletListModal.walletList.getByRole('button');
 
-        expect(walletCount).toBe(expectedWalletCount);
+        await expect(walletCount).toHaveCount(expectedWalletCount);
       });
     },
   );

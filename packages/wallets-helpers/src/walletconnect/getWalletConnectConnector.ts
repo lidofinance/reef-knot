@@ -2,12 +2,21 @@ import { walletConnect } from 'wagmi/connectors';
 
 type WCConnector = ReturnType<typeof walletConnect>;
 
-const cache: Record<string, WCConnector> = {};
+// Reusing factories avoids repeated WalletConnect Core initialization.
+// The key must include every factory input, otherwise a later config would get
+// a factory bound to the first projectId seen in this runtime.
+const cache = new Map<string, WCConnector>();
 
-const memoize = (key: string, getter: () => WCConnector) => {
-  if (!cache[key]) cache[key] = getter();
-  return cache[key];
-};
+const createConnector = (projectId: string, qrcode: boolean) =>
+  walletConnect({
+    projectId,
+    showQrModal: qrcode,
+    qrModalOptions: {
+      themeVariables: {
+        '--wcm-z-index': '1000',
+      },
+    },
+  });
 
 getWalletConnectConnector.type = walletConnect.type;
 export function getWalletConnectConnector({
@@ -21,17 +30,15 @@ export function getWalletConnectConnector({
     console.warn(
       'No WalletConnect Project ID found, it is required by WalletConnect v2: https://docs.walletconnect.com/2.0/cloud/relay#project-id',
     );
+    // Not cached, so a later config with a valid projectId is not shadowed
+    return createConnector(projectId, qrcode);
   }
 
-  return memoize(qrcode ? 'qrcode' : 'no-qrcode', () =>
-    walletConnect({
-      projectId,
-      showQrModal: qrcode,
-      qrModalOptions: {
-        themeVariables: {
-          '--wcm-z-index': '1000',
-        },
-      },
-    }),
-  );
+  const key = `${projectId}:${qrcode ? 'qrcode' : 'no-qrcode'}`;
+  let connector = cache.get(key);
+  if (!connector) {
+    connector = createConnector(projectId, qrcode);
+    cache.set(key, connector);
+  }
+  return connector;
 }

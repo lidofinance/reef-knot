@@ -14,7 +14,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Wrap transaction (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
-    async () => {
+    () => {
       const wrapAmount = '0.0003';
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
@@ -91,6 +91,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
         });
 
         await test.step('Set up correct allowance before test', async () => {
+          // eslint-disable-next-line playwright/no-conditional-in-test -- Reset an existing allowance only when approval would otherwise be skipped.
           if (
             (await reefKnotService.sdkService.getStEthAllowance()) >=
             parseFloat(wrapAmount)
@@ -128,15 +129,14 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
             'The Wrap button should be disabled',
           ).toBeDisabled();
 
-          reefKnotPage.toast.successToast.waitFor({
+          await reefKnotPage.toast.successToast.waitFor({
             state: 'visible',
             timeout: TIMEOUT.RPC_WAIT,
           });
-          await test.step('Wait for the toast to be disappeared', async () => {
-            await reefKnotPage.toast.successToast.waitFor({
-              state: 'hidden',
-              timeout: TIMEOUT.HIGH,
-            });
+
+          await reefKnotPage.toast.successToast.waitFor({
+            state: 'hidden',
+            timeout: TIMEOUT.HIGH,
           });
         });
 

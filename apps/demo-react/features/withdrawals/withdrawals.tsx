@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react';
 import { Select, Option } from '@lidofinance/lido-ui';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnection } from 'wagmi';
 import { useLidoSDK } from 'providers/sdk';
 
 import { transactionToast } from 'utils/transaction-toast';
@@ -16,8 +16,8 @@ export const Withdrawals: FC = () => {
   const { inputValue } = useInputValueSDK();
 
   const [token, setType] = useState<TokenType>(TokenType.stETH);
-  const { account: web3account = '0x0' } = useWeb3();
-  const account = web3account as `0x{string}`;
+  const { address = '0x0' } = useConnection();
+  const account = address as `0x{string}`;
 
   const { withdraw } = useLidoSDK();
 

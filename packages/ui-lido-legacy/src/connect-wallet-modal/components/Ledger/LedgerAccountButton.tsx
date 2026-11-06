@@ -1,0 +1,122 @@
+import React, { FC } from 'react';
+import { Address, Text, useBreakpoint } from '@lidofinance/lido-ui';
+import styled, { keyframes } from '../../../ui-react/utils/styledWrapper';
+import { LedgerWalletIcon } from './icons/LedgerWalletIcon';
+import type { LedgerAccount as AccountRecord } from 'reef-knot';
+
+const ButtonStyled = styled.button`
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  :disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+  width: 100%;
+  background-color: var(--lido-color-backgroundSecondary);
+  border-radius: 10px;
+  display: flex;
+  padding: 16px 20px;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+
+  margin-top: 10px;
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  :hover {
+    cursor: pointer;
+    background-color: var(--lido-color-backgroundDarken);
+  }
+`;
+
+const AddressContainerStyled = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+`;
+
+const IconContainerStyled = styled.div`
+  margin-right: 20px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin-right: 10px;
+  }
+`;
+
+const gradientKeyframes = keyframes`
+  100% {
+    background-position: 368px 0;
+  }
+`;
+
+const SkeletonWrapper = styled(ButtonStyled)`
+  background: linear-gradient(
+      270deg,
+      var(--lido-color-backgroundSecondary) 0%,
+      var(--lido-color-foreground) 34.14%,
+      var(--lido-color-backgroundSecondary) 100%
+    )
+    0 0;
+  animation: ${gradientKeyframes} 2s ease infinite;
+`;
+
+const BalanceWrapper = styled.div`
+  display: flex;
+  white-space: nowrap;
+`;
+
+const BalanceValueWrapper = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 70px;
+  }
+`;
+
+const BalanceTokenWrapper = styled.span``;
+
+type Props = { onClick: () => void; disabled?: boolean } & Pick<
+  AccountRecord,
+  'address' | 'balance' | 'token'
+>;
+
+export const AccountButton: FC<Props> = ({
+  address,
+  balance,
+  token,
+  onClick,
+  disabled,
+}) => {
+  const roundedBalance =
+    balance === undefined || balance === 0 ? '0' : Number(balance).toFixed(4);
+
+  return (
+    <ButtonStyled type="button" disabled={disabled} onClick={onClick}>
+      <AddressContainerStyled>
+        <IconContainerStyled>
+          <LedgerWalletIcon />
+        </IconContainerStyled>
+        <Address address={address} symbols={useBreakpoint('md') ? 6 : 8} />
+      </AddressContainerStyled>
+      <Text size="xs" strong as={'span'}>
+        <BalanceWrapper>
+          <BalanceValueWrapper>{roundedBalance}</BalanceValueWrapper>
+          <BalanceTokenWrapper>&nbsp;{token}</BalanceTokenWrapper>
+        </BalanceWrapper>
+      </Text>
+    </ButtonStyled>
+  );
+};
+
+export const AccountButtonSkeleton = () => (
+  <SkeletonWrapper type="button" disabled aria-hidden="true">
+    <LedgerWalletIcon />
+  </SkeletonWrapper>
+);

@@ -1,5 +1,5 @@
 import { injected, metaMask } from 'wagmi/connectors';
-import type { WalletAdapterType } from '@reef-knot/types';
+import type { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { isProviderExistsEIP6963 } from '@reef-knot/wallets-helpers';
 import { WalletIcon } from './icons/index.js';
 

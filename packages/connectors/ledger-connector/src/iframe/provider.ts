@@ -2,7 +2,7 @@ import { IFrameEthereumProvider } from '@ledgerhq/iframe-provider';
 
 interface RequestArguments {
   readonly method: string;
-  readonly params?: any[];
+  readonly params?: unknown[];
 }
 
 export class LedgerIFrameProvider extends IFrameEthereumProvider {

@@ -34,15 +34,14 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "lint": "yarn run -T eslint .",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "yarn run -T tsc --noEmit"
   },
   "devDependencies": {
     "@ledgerhq/hw-transport-mocker": "6.34.7",
     "@types/w3c-web-hid": "^1.0.7",
     "build-config": "*",
-    "eslint-config-custom": "*",
     "happy-dom": "^20.0.0",
     "viem": ">=2.50",
     "vitest": "^4.1.11",

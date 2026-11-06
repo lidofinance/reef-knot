@@ -1,5 +1,21 @@
 # @reef-knot/wallets-helpers
 
+## 3.2.0
+
+### Breaking changes
+
+- Remove `getWalletConnectUri` and the `walletconnectExtras` adapter option. Use the standard WalletConnect connection flow.
+
+### Added
+
+- Export the shared wallet adapter types previously provided by `@reef-knot/types`.
+- Include `mipd` as a dependency so the exported provider-store types are available to consumers.
+
+### Fixed
+
+- Cache WalletConnect connectors by project ID and QR modal setting so separate configurations do not share the wrong connector.
+- Keep EIP-6963 connections tied to the requested wallet when its provider is missing, instead of falling back to another browser wallet.
+
 ## 3.1.0
 
 - Update wagmi to 3.6.21

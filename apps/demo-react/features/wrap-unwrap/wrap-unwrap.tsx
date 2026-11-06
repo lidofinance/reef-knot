@@ -2,7 +2,7 @@ import { FC, useCallback, useState } from 'react';
 import { Select, Option } from '@lidofinance/lido-ui';
 import { WrapProps } from '@lidofinance/lido-ethereum-sdk';
 import { useLidoSDK } from 'providers/sdk';
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnection } from 'wagmi';
 import { transactionToast } from 'utils/transaction-toast';
 
 import { ActionItem } from 'components';
@@ -18,8 +18,8 @@ export const WrapUnwrap: FC = () => {
   const { inputValue } = useInputValueSDK();
   const [type, setType] = useState<CallType>(CallType.wrapEth);
 
-  const { account: web3account = '0x0' } = useWeb3();
-  const account = web3account as `0x{string}`;
+  const { address = '0x0' } = useConnection();
+  const account = address as `0x{string}`;
 
   const { wrap } = useLidoSDK();
   const isWrapTx = type === CallType.wrapEth || type === CallType.wrapSteth;
