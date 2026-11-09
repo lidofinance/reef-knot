@@ -15,3 +15,12 @@ export const supportedChains = process.env?.SUPPORTED_CHAINS?.split(',').map(
 ) ?? [1, 17000];
 /** @type string */
 export const walletconnectProjectId = process.env.WALLETCONNECT_PROJECT_ID;
+/** @type string */
+export const ledgerWalletProviderApiKey =
+  process.env.LEDGER_WALLET_PROVIDER_API_KEY;
+/** @type string */
+export const ledgerWalletProviderDAppId =
+  process.env.LEDGER_WALLET_PROVIDER_DAPP_ID;
+/** @type string */
+export const ledgerWalletProviderEnvironment =
+  process.env.LEDGER_WALLET_PROVIDER_ENVIRONMENT || 'trial';

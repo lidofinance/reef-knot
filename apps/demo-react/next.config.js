@@ -1,8 +1,34 @@
 import buildDynamics from './scripts/build-dynamics.mjs';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 import nextTranspileModules from 'next-transpile-modules';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 
 buildDynamics();
+
+// Ledger Wallet Provider packages list the "default" export condition before
+// "import", which webpack 5 rejects. Point webpack at the files directly.
+const require = createRequire(import.meta.url);
+const ledgerPackageFile = (pkg, file) =>
+  join(dirname(require.resolve(`${pkg}/package.json`)), file);
+const ledgerWalletProviderAliases = {
+  '@ledgerhq/ledger-wallet-provider$': ledgerPackageFile(
+    '@ledgerhq/ledger-wallet-provider',
+    'dist/index.js',
+  ),
+  '@ledgerhq/ledger-wallet-provider/styles.css': ledgerPackageFile(
+    '@ledgerhq/ledger-wallet-provider',
+    'dist/styles.css',
+  ),
+  '@ledgerhq/ledger-wallet-provider-core$': ledgerPackageFile(
+    '@ledgerhq/ledger-wallet-provider-core',
+    'dist/index.js',
+  ),
+  '@ledgerhq/ledger-wallet-provider-evm$': ledgerPackageFile(
+    '@ledgerhq/ledger-wallet-provider-evm',
+    'dist/index.js',
+  ),
+};
 
 const ANALYZE_BUNDLE = process.env.ANALYZE_BUNDLE === 'true';
 const basePath = process.env.BASE_PATH || '';
@@ -30,6 +56,7 @@ const withReefKnotPackages = nextTranspileModules([
   '@reef-knot/wallet-adapter-imtoken',
   '@reef-knot/wallet-adapter-ledger-hid',
   '@reef-knot/wallet-adapter-ledger-live',
+  '@reef-knot/wallet-adapter-ledger-wallet-provider',
   '@reef-knot/wallet-adapter-metamask',
   '@reef-knot/wallet-adapter-okx',
   '@reef-knot/wallet-adapter-safe',
@@ -79,6 +106,11 @@ export default withReefKnotPackages(
           },
         },
       );
+
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        ...ledgerWalletProviderAliases,
+      };
 
       config.resolve.fallback = {
         porto: false,

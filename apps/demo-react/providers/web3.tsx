@@ -14,6 +14,7 @@ import {
 import { metricProps } from 'utils/metrics';
 import { useClientConfig } from 'providers/client-config';
 import { useRpcUrls } from 'hooks/useRpcUrls';
+import { LedgerWalletProviderInit } from './ledger-wallet-provider';
 
 type ChainsList = [wagmiChains.Chain, ...wagmiChains.Chain[]];
 
@@ -58,6 +59,14 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
   }, [supportedChains, backendRPC]);
 
   const { wagmiConfig, reefKnotConfig, walletsModalConfig } = useMemo(() => {
+    const defaultModalConfig = getDefaultWalletsModalConfig();
+    // Spike: show Ledger Wallet Provider next to the Ledger HID button.
+    const walletsShown = defaultModalConfig.walletsShown.flatMap((walletId) =>
+      walletId === 'ledgerHID'
+        ? [walletId, 'ledgerWalletProvider' as const]
+        : [walletId],
+    );
+
     return getDefaultConfig({
       // Reef-Knot config args
       rpc: backendRPC,
@@ -73,7 +82,8 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
 
       // Wallets config args
       // TODO: We could call `getDefaultWalletsModalConfig` inside `getDefaultConfig`, but it cause package dependency cycle rn
-      ...getDefaultWalletsModalConfig(),
+      ...defaultModalConfig,
+      walletsShown,
       ...metricProps,
     });
   }, [
@@ -90,6 +100,7 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
     <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
       <QueryClientProvider client={queryClient}>
         <ReefKnotProvider config={reefKnotConfig}>
+          <LedgerWalletProviderInit />
           <ReefKnotWalletsModal
             config={walletsModalConfig}
             darkThemeEnabled={themeName === 'dark'}

@@ -47,6 +47,7 @@
     "@reef-knot/wallet-adapter-imtoken": "*",
     "@reef-knot/wallet-adapter-ledger-hid": "*",
     "@reef-knot/wallet-adapter-ledger-live": "*",
+    "@reef-knot/wallet-adapter-ledger-wallet-provider": "*",
     "@reef-knot/wallet-adapter-metamask": "*",
     "@reef-knot/wallet-adapter-okx": "*",
     "@reef-knot/wallet-adapter-safe": "*",

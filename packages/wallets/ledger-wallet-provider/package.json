@@ -1,0 +1,53 @@
+{
+  "name": "@reef-knot/wallet-adapter-ledger-wallet-provider",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lidofinance/reef-knot",
+  "bugs": {
+    "url": "https://github.com/lidofinance/reef-knot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lidofinance/reef-knot.git",
+    "directory": "packages/wallets/ledger-wallet-provider"
+  },
+  "scripts": {
+    "build": "yarn run -T tsdown",
+    "dev": "yarn run -T tsdown --watch",
+    "lint": "eslint --ext ts,tsx,js,mjs .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
+    "build-config": "*",
+    "eslint-config-custom": "*"
+  },
+  "peerDependencies": {
+    "@reef-knot/types": "*",
+    "@reef-knot/wallets-helpers": "*",
+    "@tanstack/react-query": "^5.29.0",
+    "wagmi": ">=3.6"
+  },
+  "dependencies": {
+    "@ledgerhq/ledger-wallet-provider": "2.0.2",
+    "@ledgerhq/ledger-wallet-provider-evm": "1.0.1"
+  }
+}

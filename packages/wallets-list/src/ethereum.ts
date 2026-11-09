@@ -21,6 +21,10 @@ import {
   id as idLedgerLive,
 } from '@reef-knot/wallet-adapter-ledger-live';
 import {
+  LedgerWalletProvider,
+  id as idLedgerWalletProvider,
+} from '@reef-knot/wallet-adapter-ledger-wallet-provider';
+import {
   DAppBrowserInjected,
   id as idDAppBrowserInjected,
 } from '@reef-knot/wallet-adapter-dapp-browser-injected';
@@ -37,6 +41,7 @@ export const WalletsListEthereum = {
   [idWalletConnect]: WalletConnect,
   [idLedger]: Ledger,
   [idLedgerLive]: LedgerLive,
+  [idLedgerWalletProvider]: LedgerWalletProvider,
   [idAnchorageDigital]: AnchorageDigital,
   [idAmbire]: Ambire,
   [idBitKeep]: BitKeep,
