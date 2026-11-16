@@ -46,6 +46,6 @@
     "@reef-knot/ledger-connector": "*",
     "@reef-knot/wallets-helpers": "*",
     "@tanstack/react-query": "^5.29.0",
-    "wagmi": ">=3.6"
+    "wagmi": ">=3.7"
   }
 }

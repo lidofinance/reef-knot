@@ -44,7 +44,7 @@
   "peerDependencies": {
     "@reef-knot/wallets-helpers": "*",
     "@tanstack/react-query": "^5.29.0",
-    "viem": ">=2.50",
-    "wagmi": ">=3.6"
+    "viem": ">=2.56",
+    "wagmi": ">=3.7"
   }
 }

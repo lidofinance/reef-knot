@@ -646,7 +646,7 @@ describe.each([false, true])(
             ],
           }),
         ).rejects.toThrow(
-          'Transaction chain ID does not match the configured Ledger chain',
+          /Transaction chain ID does not match the configured Ledger chain|The current chain of the wallet \(id: 137\) does not match the target chain/,
         );
 
         expect(calls).toHaveLength(1);

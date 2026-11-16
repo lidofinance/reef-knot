@@ -43,6 +43,6 @@
   },
   "peerDependencies": {
     "@reef-knot/wallets-helpers": "*",
-    "wagmi": ">=3.6"
+    "wagmi": ">=3.7"
   }
 }

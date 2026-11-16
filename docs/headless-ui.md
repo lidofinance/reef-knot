@@ -10,9 +10,17 @@ A UI skin supplies the visual components for the connection screens. Wallet adap
 | `@reef-knot/ui-lido-legacy` | lido-ui v3 and styled-components 5                 |
 | `@reef-knot/ui-lido`        | lido-app-ui (React 18)                             |
 
-The `@reef-knot/ui-lido` UI skin is verified with `@lidofinance/lido-app-ui@1.4.0`, developed on the [app-ui branch](https://github.com/lidofinance/ui/tree/app-ui), and declares a `~1.4.0` peer range. The modal container uses the skin's own markup and classes, with App UI buttons and tokens. TokenSelector labels also use the skin's own classes; styles do not match the kit's generated CSS-module class names. Its React and React DOM peers match the UI kit: React 18. One application uses one UI skin.
+The `@reef-knot/ui-lido` UI skin supports `@lidofinance/lido-app-ui` versions `^1.16.0`. The demo and skin tests use 1.16.0. The modal container uses the skin's own markup and classes, with App UI buttons and tokens. TokenSelector labels also use the skin's own classes; styles do not match the kit's generated CSS-module class names. Its React and React DOM peers match the UI kit: React 18. One application uses one UI skin.
 
 ## Ready-made UI
+
+Install the App UI skin and its UI dependencies:
+
+```sh
+yarn add reef-knot@^9 @reef-knot/ui-lido @lidofinance/lido-app-ui@^1.16.0 @inline-svg-unique-id/react@^1.2.3
+```
+
+Use React and React DOM 18. App UI 1.16.0 requires `@inline-svg-unique-id/react` as a peer dependency. Also install Reef Knot's connection peers: `wagmi@>=3.7`, `viem@>=2.56` and `@tanstack/react-query@^5.51.1`. Use compatible v9 prereleases until the stable packages are published.
 
 Providers and `useConnectionFlow()` stay in `reef-knot`. Import `ReefKnotWalletsModal` from your UI skin and mount it inside `ReefKnotProvider`.
 

@@ -15,7 +15,7 @@ For older integrations, start with [0.x → latest](migration-guide-0.x-to-lates
 | Connection entry point    | `useConnect().connect()`                     | `useConnectionFlow().startConnection()`; old call is deprecated |
 | Custom interface          | Connection behavior mixed into UI components | Public headless hooks and view contracts                        |
 
-Wagmi v3 was already introduced in Reef Knot 8.0. The minimum wagmi 3.6 and viem 2.50 requirements were introduced in 8.3; they are not new v9 requirements. If you are upgrading from an earlier 8.x release, update these dependencies too. The current development setup uses wagmi 3.6.21 and viem 2.51.3. Current wagmi types require [TypeScript 5.9.3 or later](https://wagmi.sh/react/typescript).
+Wagmi v3 was already introduced in Reef Knot 8.0. The minimum wagmi 3.6 and viem 2.50 requirements were introduced in 8.3; they are not new v9 requirements. If you are upgrading from an earlier 8.x release, update these dependencies too. The current peer requirements are wagmi >=3.7 and viem >=2.56. The development setup uses wagmi 3.7.7 and viem 2.57.20. Current wagmi types require [TypeScript 5.9.3 or later](https://wagmi.sh/react/typescript).
 
 ## Choose and install one UI skin
 
@@ -34,10 +34,10 @@ Keep the existing legacy Lido UI ThemeProvider and styled-components SSR setup. 
 After the v9 release:
 
 ```sh
-yarn add reef-knot@^9 @reef-knot/ui-lido @lidofinance/lido-app-ui@1.4.0
+yarn add reef-knot@^9 @reef-knot/ui-lido @lidofinance/lido-app-ui@^1.16.0 @inline-svg-unique-id/react@^1.2.3
 ```
 
-The Lido App UI skin requires React and React DOM 18. It does not require legacy `@lidofinance/lido-ui` or styled-components. Remove those dependencies only if no other part of the application uses them. Load both CSS exports from your global stylesheet entry, such as `_app.tsx` in Next.js Pages Router:
+The Lido App UI skin requires React and React DOM 18. App UI 1.16.0 also requires `@inline-svg-unique-id/react` as a peer dependency. It does not require legacy `@lidofinance/lido-ui` or styled-components. Remove those dependencies only if no other part of the application uses them. Load both CSS exports from your global stylesheet entry, such as `_app.tsx` in Next.js Pages Router:
 
 ```tsx
 import '@lidofinance/lido-app-ui/index.css';
