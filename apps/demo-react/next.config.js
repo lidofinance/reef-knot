@@ -79,6 +79,8 @@ export default withReefKnotPackages(
       );
 
       config.resolve.fallback = {
+        // The demo does not use Tempo payments, which require this optional viem peer.
+        'mppx/client': false,
         porto: false,
         '@gemini-wallet/core': false,
         '@base-org/account': false,

@@ -138,6 +138,24 @@ The `startConnection` callback determines the current environment (e.g., desktop
 
 ## Troubleshooting
 
+### Next.js build cannot resolve `mppx/client`
+
+With viem 2.57.20, the Next.js 12 demo can fail with `Module not found: Can't resolve 'mppx/client'`. The `wagmi/connectors` exports include Tempo code, which imports `viem/tempo`. Webpack then tries to resolve its dynamic import of `mppx/client`, even when the application does not use Tempo payments. `mppx` is an optional viem peer dependency.
+
+For applications that do not use Tempo payments, add this fallback to the existing webpack configuration in `next.config.js`:
+
+```js
+webpack(config) {
+  config.resolve.fallback = {
+    ...config.resolve.fallback,
+    'mppx/client': false,
+  };
+  return config;
+}
+```
+
+The [demo configuration](apps/demo-react/next.config.js) already includes this fallback. It disables resolution of `mppx/client`; use it only when the application does not need Tempo payments. Applications that use those payments must install a compatible `mppx` version instead. Run `yarn build` to verify the production bundle; type checks and unit tests do not exercise webpack module resolution.
+
 ### NoSSRWrapper
 
 If you encounter errors during server-side rendering, you may need to wrap certain parts of your code in a `NoSSRWrapper`. This wrapper disables server-side rendering for the specified area, helping to avoid SSR-related issues.
