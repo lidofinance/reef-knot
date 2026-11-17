@@ -81,7 +81,14 @@ function PortalDialog({
       role="presentation"
       data-lido-theme={theme}
       data-screen={isConnectionError ? 'connection-error' : currentModal?.type}
-      onClick={handleClick}
+      onClick={(event) => {
+        // Nested portals send React events from outside the overlay.
+        if (
+          event.target instanceof Node &&
+          event.currentTarget.contains(event.target)
+        )
+          handleClick(event);
+      }}
       ref={(node) => {
         const dialog =
           node?.querySelector<HTMLDivElement>('[role="dialog"]') ?? null;

@@ -29,7 +29,7 @@ In v9, `reef-knot` contains providers, wallet catalogs, configuration and headle
 | Choice                   | Package                     | Additional UI dependencies                                 |
 | ------------------------ | --------------------------- | ---------------------------------------------------------- |
 | Previous Lido appearance | `@reef-knot/ui-lido-legacy` | `@lidofinance/lido-ui` 3.x and styled-components 5         |
-| Lido App UI appearance   | `@reef-knot/ui-lido`        | `@lidofinance/lido-app-ui` (verified with 1.4.0), React 18 |
+| Lido App UI appearance   | `@reef-knot/ui-lido`        | `@lidofinance/lido-app-ui` (`^1.16.0`), React 18; 1.16.0 also needs `@inline-svg-unique-id/react` |
 | Custom UI                | None                        | Your own view components                                   |
 
 The legacy skin is the simplest starting point for preserving the previous appearance. Custom components from a 0.x integration still need migration; choosing the legacy skin does not restore the old connection APIs.

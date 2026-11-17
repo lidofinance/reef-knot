@@ -410,7 +410,7 @@ export function runUISuite(
           WalletPicker: () => <LedgerAccounts state={state} />,
         });
         const input = document.querySelector<HTMLElement>(
-          'input, button[aria-haspopup="listbox"]',
+          'input:not([type="checkbox"]), button[aria-haspopup]',
         )!;
         await act(async () => {
           input.click();
