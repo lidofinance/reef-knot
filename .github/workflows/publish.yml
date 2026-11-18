@@ -16,6 +16,7 @@ jobs:
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   publish:
+    needs: pre-publish
     runs-on: ubuntu-latest
     environment: production
     steps:
