@@ -1,3 +1,5 @@
+import '@lidofinance/lido-app-ui/index.css';
+import '@reef-knot/ui-lido/styles.css';
 import { memo } from 'react';
 import { AppProps } from 'next/app';
 import { ToastContainer, CookiesTooltip } from '@lidofinance/lido-ui';

@@ -14,7 +14,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Request withdraw transaction (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
-    async () => {
+    () => {
       const txAmount = '0.0003';
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;

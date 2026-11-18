@@ -4,7 +4,8 @@ import { Button } from '@lidofinance/lido-ui';
 import { PropsWithChildren, useReducer } from 'react';
 import { type SDKError } from '@lidofinance/lido-ethereum-sdk';
 
-import { useWeb3 } from 'reef-knot/web3-react';
+import { useConnection } from 'wagmi';
+import { useSupportedChains } from 'hooks/useSupportedChains';
 import { Accordion } from 'components';
 import {
   ActionBlock,
@@ -101,7 +102,8 @@ const defaultRenderError = (error: SDKError) => {
 const defaultRenderResult = <TResult,>(result: TResult) => {
   const stringfyed = JSON.stringify(
     result,
-    (_, value) => (typeof value === 'bigint' ? value.toString() : value),
+    (_, value: unknown) =>
+      typeof value === 'bigint' ? value.toString() : value,
     2,
   );
 
@@ -114,7 +116,7 @@ const defaultRenderResult = <TResult,>(result: TResult) => {
         theme="pop"
         name={null}
         displayDataTypes={false}
-        src={JSON.parse(stringfyed)}
+        src={JSON.parse(stringfyed) as object}
         collapseStringsAfterLength={30}
       />
     </Accordion>
@@ -130,7 +132,9 @@ export const Action = <TResult,>({
   children,
   ...rest
 }: ActionProps<TResult>) => {
-  const { active } = useWeb3();
+  const { isConnected } = useConnection();
+  const { isUnsupported } = useSupportedChains();
+  const active = isConnected && !isUnsupported;
   const [{ result, error, loading }, dispatch] = useReducer(
     reducer<TResult>,
     {
@@ -144,10 +148,9 @@ export const Action = <TResult,>({
   const startLoading = async () => {
     try {
       dispatch({ type: 'loading' });
-      const result = await action();
+      const actionResult = await action();
 
-      dispatch({ type: 'success', result });
-      // eslint-disable-next-line @typescript-eslint/no-shadow
+      dispatch({ type: 'success', result: actionResult });
     } catch (error) {
       console.error(error);
       dispatch({ type: 'error', error: error as SDKError });
@@ -162,7 +165,9 @@ export const Action = <TResult,>({
           <Button
             disabled={walletAction && !active}
             loading={loading}
-            onClick={startLoading}
+            onClick={() => {
+              void startLoading();
+            }}
             fullwidth
           >
             {title}

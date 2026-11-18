@@ -10,7 +10,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Check statistic (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
-    async () => {
+    () => {
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;
       let reefKnotPage: ReefKnotPage;

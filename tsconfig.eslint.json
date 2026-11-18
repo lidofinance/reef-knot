@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.ui-tests.json",
+  "include": [
+    "packages/**/*.test.ts",
+    "packages/**/*.test.tsx",
+    "packages/**/test-ui/**/*.ts",
+    "packages/**/test-ui/**/*.tsx",
+    "packages/**/*.config.ts",
+    "packages/ui-lido-legacy/src/connect-wallet-modal/custom.d.ts",
+    "turbo/generators/**/*.ts"
+  ],
+  "exclude": ["node_modules", "**/dist", "turbo/generators/wallet/templates"]
+}

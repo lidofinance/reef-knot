@@ -34,21 +34,24 @@
   "scripts": {
     "build": "yarn run -T tsdown",
     "dev": "yarn run -T tsdown --watch",
-    "lint": "eslint --ext ts,tsx,js,mjs .",
-    "typecheck": "tsc --noEmit"
+    "lint": "yarn run -T eslint .",
+    "test": "vitest run",
+    "typecheck": "yarn run -T tsc --noEmit"
   },
   "dependencies": {
     "@types/ua-parser-js": "0.7.39",
-    "ua-parser-js": "1.0.37"
+    "mipd": "0.0.7",
+    "ua-parser-js": "1.0.41"
   },
   "devDependencies": {
     "build-config": "*",
-    "eslint-config-custom": "*",
-    "wagmi": ">=3.6"
+    "react": "18.3.1",
+    "vitest": "^4.1.12",
+    "wagmi": ">=3.7"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.29.0",
     "react": ">=18",
-    "wagmi": ">=3.6"
+    "wagmi": ">=3.7"
   }
 }

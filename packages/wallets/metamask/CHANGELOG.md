@@ -1,11 +1,17 @@
 # @reef-knot/wallet-adapter-metamask
 
+## 5.3.0
+
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
+
+## 5.2.0
+
+- Raise the minimum wagmi version to 3.6.
+- Update the MetaMask icon and use the same icon for light and dark themes.
+
 ## 5.1.0
 
-- Update viem to 2.51.3, wagmi to 3.6.21
-- Update wallet icon to new MetaMask design
-- Remove dark mode inverted icon variant (not needed with new design)
-- Update peerDependencies requirements: wagmi >=3.6
+- Expose the wallet's EIP-6963 ID so the Browser Wallet picker can hide duplicate entries.
 
 ## 5.0.0
 

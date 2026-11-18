@@ -1,9 +1,17 @@
 # @reef-knot/wallet-adapter-bitkeep
 
+## 5.3.0
+
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
+- Keep connections tied to the selected EIP-6963 wallet when its provider is missing, instead of falling back to another browser wallet.
+
+## 5.2.0
+
+- Raise the minimum wagmi version to 3.6.
+
 ## 5.1.0
 
-- Update wagmi to 3.6.21
-- Update peerDependencies requirements: wagmi >=3.6
+- Expose the wallet's EIP-6963 ID so the Browser Wallet picker can hide duplicate entries.
 
 ## 5.0.0
 

@@ -1,5 +1,5 @@
 import 'viem/window';
-import { WalletAdapterType } from '@reef-knot/types';
+import { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { injected } from 'wagmi/connectors';
 import { WalletIcon } from './icons/index.js';
 

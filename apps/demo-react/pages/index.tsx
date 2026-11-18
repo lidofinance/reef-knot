@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { WalletInfo } from 'components';
 import Layout from 'components/layout';
 import { WalletTesting, Stats } from 'features';
+import { WalletUISelector } from '../features/wallet-ui/wallet-ui';
 
 export const Web = () => {
   return (
@@ -14,6 +15,7 @@ export const Web = () => {
         <Head>
           <title>Lido | Reef Knot demo app</title>
         </Head>
+        <WalletUISelector />
         <Stats />
         <WalletTesting />
       </Layout>

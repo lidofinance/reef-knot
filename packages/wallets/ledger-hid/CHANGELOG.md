@@ -2,6 +2,7 @@
 
 ## 6.2.0
 
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
 - Pass `ledgerForceClearSign` to the HID connector as `forceClearSign`
 
 ## 6.1.0

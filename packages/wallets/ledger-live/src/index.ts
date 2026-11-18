@@ -1,4 +1,4 @@
-import { WalletAdapterType } from '@reef-knot/types';
+import { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { ledgerLiveConnector, isLedgerLive } from '@reef-knot/ledger-connector';
 
 export const id = 'ledgerLive';

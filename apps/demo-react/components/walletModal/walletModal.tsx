@@ -16,10 +16,10 @@ import {
   useChainId,
   useChains,
   useSwitchChain,
-  useConnections
+  useConnections,
 } from 'wagmi';
 
-import { useForceDisconnect, useConnectorInfo } from 'reef-knot/core-react';
+import { useForceDisconnect, useConnectorInfo } from 'reef-knot';
 import { useCopyToClipboard } from 'hooks/useCopyToClipboard';
 import {
   WalletModalContentStyle,
@@ -57,7 +57,7 @@ const WalletModal: FC<ModalProps> = (props) => {
   };
   return (
     <Modal title="Account" {...props}>
-      <WalletModalContentStyle data-testid='walletModal'>
+      <WalletModalContentStyle data-testid="walletModal">
         <WalletModalConnectedStyle>
           {connectorName && (
             <WalletModalConnectorStyle>
@@ -70,7 +70,7 @@ const WalletModal: FC<ModalProps> = (props) => {
               size="xs"
               variant="outlined"
               onClick={handleDisconnect}
-              data-testid='disconnectBtn'
+              data-testid="disconnectBtn"
             >
               Disconnect
             </WalletModalDisconnectStyle>

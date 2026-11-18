@@ -14,7 +14,7 @@ REEF_KNOT_CONFIG.WALLETS.forEach((wallet) => {
   test.describe(
     `ReefKnot. Stake ETH transaction (${wallet.name})`,
     { tag: [Tags.connectedWallet, `@${wallet.name}`] },
-    async () => {
+    () => {
       const stakeAmount = '0.0003';
       let browserService: BrowserService;
       let reefKnotService: ReefKnotService;

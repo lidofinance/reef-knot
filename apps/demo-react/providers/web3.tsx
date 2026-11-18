@@ -1,15 +1,16 @@
 import { FC, PropsWithChildren, useMemo } from 'react';
-import { useThemeToggle } from '@lidofinance/lido-ui';
-import { ReefKnotProvider, getDefaultConfig } from 'reef-knot/core-react';
-import { WalletsListEthereum } from 'reef-knot/wallets';
+import { useThemeToggle, ThemeName } from '@lidofinance/lido-ui';
+import {
+  ReefKnotProvider,
+  WalletsListEthereum,
+  getDefaultConfig,
+  getDefaultWalletsModalConfig,
+} from 'reef-knot';
+import { WalletUIProvider } from '../features/wallet-ui/wallet-ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http } from 'wagmi';
 import * as wagmiChains from 'wagmi/chains';
 import type { Transport } from 'viem';
-import {
-  ReefKnotWalletsModal,
-  getDefaultWalletsModalConfig,
-} from 'reef-knot/connect-wallet-modal';
 
 import { metricProps } from 'utils/metrics';
 import { useClientConfig } from 'providers/client-config';
@@ -17,7 +18,7 @@ import { useRpcUrls } from 'hooks/useRpcUrls';
 
 type ChainsList = [wagmiChains.Chain, ...wagmiChains.Chain[]];
 
-const wagmiChainsArray = Object.values(wagmiChains) as any as ChainsList;
+const wagmiChainsArray = Object.values(wagmiChains) as unknown as ChainsList;
 
 const queryClient = new QueryClient();
 
@@ -40,7 +41,11 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       supportedChains[0]; // first supported chain as fallback
 
     return {
-      supportedChains: supportedChains as ChainsList,
+      // Wagmi initializes its active chain from chains[0] when no state is saved.
+      supportedChains: [
+        defaultChain,
+        ...supportedChains.filter((chain) => chain.id !== defaultChain.id),
+      ] as ChainsList,
       defaultChain,
     };
   }, [defaultChainId, supportedChainIds]);
@@ -72,7 +77,6 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       ssr: true,
 
       // Wallets config args
-      // TODO: We could call `getDefaultWalletsModalConfig` inside `getDefaultConfig`, but it cause package dependency cycle rn
       ...getDefaultWalletsModalConfig(),
       ...metricProps,
     });
@@ -90,11 +94,12 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
     <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
       <QueryClientProvider client={queryClient}>
         <ReefKnotProvider config={reefKnotConfig}>
-          <ReefKnotWalletsModal
+          <WalletUIProvider
             config={walletsModalConfig}
-            darkThemeEnabled={themeName === 'dark'}
-          />
-          {children}
+            theme={themeName === ThemeName.dark ? 'dark' : 'light'}
+          >
+            {children}
+          </WalletUIProvider>
         </ReefKnotProvider>
       </QueryClientProvider>
     </WagmiProvider>

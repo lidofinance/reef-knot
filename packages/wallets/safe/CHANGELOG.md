@@ -1,5 +1,9 @@
 # @reef-knot/wallet-adapter-safe
 
+## 5.2.0
+
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
+
 ## 5.1.1
 
 - Harden default allowed Safe domains

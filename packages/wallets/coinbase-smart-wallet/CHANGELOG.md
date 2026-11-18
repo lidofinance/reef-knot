@@ -1,9 +1,16 @@
 # @reef-knot/wallet-adapter-coinbase-smart-wallet
 
+## 4.3.0
+
+- Replace the `@reef-knot/types` peer dependency with `@reef-knot/wallets-helpers` for shared wallet adapter types.
+
+## 4.2.0
+
+- Raise the minimum wagmi version to 3.6.
+
 ## 4.1.0
 
-- Update wagmi to 3.6.21
-- Update peerDependencies requirements: wagmi >=3.6
+- Expose the wallet's EIP-6963 ID so the Browser Wallet picker can hide duplicate entries.
 
 ## 4.0.0
 

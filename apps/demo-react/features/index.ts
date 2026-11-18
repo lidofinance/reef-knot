@@ -5,3 +5,4 @@ export * from './withdrawals';
 export * from './permit';
 export * from './stats';
 export * from './claim';
+export * from './eip712/eip712';

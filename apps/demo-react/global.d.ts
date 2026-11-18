@@ -1,14 +1,10 @@
 interface Window {
   ethereum?: Record<string, unknown>;
+  lido_sdk?: import('@lidofinance/lido-ethereum-sdk').LidoSDK;
 }
 
 declare module '*.svg' {
-  /**
-   * Use `any` to avoid conflicts with
-   * `@svgr/webpack` plugin or
-   * `babel-plugin-inline-react-svg` plugin.
-   */
-  const content: any;
+  const content: string;
   export const ReactComponent: React.FunctionComponent<
     React.ComponentProps<'svg'>
   >;

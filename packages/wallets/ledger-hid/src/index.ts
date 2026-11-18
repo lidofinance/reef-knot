@@ -1,4 +1,4 @@
-import { WalletAdapterType } from '@reef-knot/types';
+import { WalletAdapterType } from '@reef-knot/wallets-helpers';
 import { WalletIcon, WalletIconInverted } from './icons/index.js';
 import { ledgerHIDConnector } from '@reef-knot/ledger-connector';
 

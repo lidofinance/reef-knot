@@ -109,7 +109,6 @@ export function ledgerHIDConnector({
         }
       },
 
-      // eslint-disable-next-line @typescript-eslint/require-await
       async disconnect() {
         forgetSession();
       },
@@ -139,7 +138,6 @@ export function ledgerHIDConnector({
         }
       },
 
-      // eslint-disable-next-line @typescript-eslint/require-await
       async switchChain({ chainId }) {
         const chain = chains.find((x) => x.id === chainId);
         if (!chain) throw new SwitchChainError(new ChainNotConfiguredError());
